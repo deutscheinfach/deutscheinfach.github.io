@@ -11,366 +11,553 @@
 
 <style>
 
-    * {
-        box-sizing: border-box;
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background:
+        linear-gradient(135deg, #f8f8f8, #ffffff);
+    color: #222;
+}
+
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px 50px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #f0c400;
+    margin-bottom: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+h1 {
+    margin: 5px 0;
+    color: #d60000;
+    font-size: 30px;
+}
+
+.welcome {
+    color: #666;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+
+/* =========================
+   QUICK PROFILE CARD
+========================= */
+
+.profile-card {
+    background: white;
+    border-radius: 22px;
+    padding: 22px;
+    margin: 25px 0;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    border-right: 5px solid #d60000;
+}
+
+.profile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-info h3 {
+    margin: 0 0 7px;
+    color: #d60000;
+}
+
+.profile-info p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.profile-badge {
+    background: #fff8c7;
+    border: 2px solid #f0c400;
+    padding: 10px 16px;
+    border-radius: 14px;
+    font-weight: bold;
+    color: #8a6d00;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.progress-card {
+    background: linear-gradient(135deg, #d60000, #b40000);
+    color: white;
+    border-radius: 22px;
+    padding: 24px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(214,0,0,0.20);
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.progress-header h3 {
+    margin: 0;
+}
+
+.progress-percent {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 35%;
+    height: 100%;
+    background: #f0c400;
+    border-radius: 20px;
+}
+
+.progress-text {
+    margin: 12px 0 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+
+/* =========================
+   LEVEL BUTTONS
+========================= */
+
+.level-title {
+    text-align: center;
+    margin-bottom: 12px;
+    color: #555;
+}
+
+.level-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 0 auto 20px;
+    max-width: 600px;
+}
+
+.level-button {
+    border: 2px solid #f0c400;
+    padding: 18px;
+    border-radius: 15px;
+    background: white;
+    box-shadow: 0 7px 20px rgba(0,0,0,0.10);
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.level-button:hover {
+    transform: translateY(-3px);
+}
+
+.level-button.active {
+    background: #d60000;
+    color: white;
+    border-color: #d60000;
+}
+
+
+/* =========================
+   SELECTED LEVEL
+========================= */
+
+.selected-level {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.selected-level h2 {
+    color: #d60000;
+    margin: 0;
+}
+
+
+/* =========================
+   MAIN BUTTONS
+========================= */
+
+.main-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.main-button {
+    border: none;
+    padding: 20px 10px;
+    border-radius: 18px;
+    background: white;
+    box-shadow: 0 7px 20px rgba(0,0,0,0.10);
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.main-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.14);
+}
+
+.main-button.active {
+    background: #d60000;
+    color: white;
+}
+
+
+/* =========================
+   CONTENT CARD
+========================= */
+
+.content-card {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+    transition: 0.3s;
+}
+
+.content-card h2 {
+    text-align: center;
+    color: #d60000;
+    margin-top: 0;
+}
+
+.content-card p {
+    text-align: center;
+    color: #666;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   TEIL BUTTONS
+========================= */
+
+.teil-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.teil-button {
+    padding: 22px;
+    border-radius: 15px;
+    border: 2px solid #f0c400;
+    background: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.teil-button:hover {
+    background: #fff8c7;
+    transform: translateY(-3px);
+}
+
+
+/* =========================
+   INFO BOX
+========================= */
+
+.info-box {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 15px;
+    text-align: center;
+    color: #555;
+}
+
+
+/* =========================
+   OTHER CONTENT
+========================= */
+
+.other-content {
+    text-align: center;
+    padding: 40px 10px;
+}
+
+.other-content h2 {
+    color: #d60000;
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+.logout {
+    display: block;
+    width: 180px;
+    margin: 30px auto 0;
+    padding: 13px;
+    border: none;
+    border-radius: 12px;
+    background: #111;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.thema-choice-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    backdrop-filter: blur(5px);
+}
+
+.thema-choice-overlay.show {
+    display: flex;
+    animation: overlayShow 0.3s ease;
+}
+
+.thema-choice-box {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 25px;
+    padding: 30px;
+    border: 3px solid #f0c400;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+    text-align: center;
+    animation: choiceBoxShow 0.4s ease;
+}
+
+.thema-choice-box h2 {
+    margin-top: 0;
+    color: #d60000;
+    font-size: 26px;
+}
+
+.thema-choice-box p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.choice-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.choice-button {
+    width: 100%;
+    padding: 18px;
+    border-radius: 15px;
+    background: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.choice-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.choice-assassi {
+    border: 2px solid #d60000;
+    color: #d60000;
+}
+
+.choice-assassi:hover {
+    background: #fff1f1;
+}
+
+.choice-mo3adal {
+    border: 2px solid #f0c400;
+    color: #9a7900;
+}
+
+.choice-mo3adal:hover {
+    background: #fff8c7;
+}
+
+.close-choice {
+    margin-top: 18px;
+    border: none;
+    background: #eee;
+    color: #555;
+    padding: 11px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+.section-effect {
+    animation: sectionEffect 0.55s ease;
+}
+
+@keyframes sectionEffect {
+
+    0% {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
     }
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #f8f8f8, #ffffff);
-        color: #222;
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
+
+}
+
+@keyframes overlayShow {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+@keyframes choiceBoxShow {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
 
     .container {
-        width: 92%;
-        max-width: 1100px;
-        margin: auto;
-        padding: 35px 20px;
-    }
-
-    .header {
-        text-align: center;
-        margin-bottom: 25px;
-    }
-
-    .logo {
-        width: 90px;
-        height: 90px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid #f0c400;
-        margin-bottom: 10px;
+        width: 95%;
+        padding: 20px 10px 40px;
     }
 
     h1 {
-        margin: 5px 0;
-        color: #d60000;
+        font-size: 25px;
     }
 
-    .welcome {
-        color: #666;
-        font-size: 16px;
+    .logo {
+        width: 75px;
+        height: 75px;
     }
 
-    .level-buttons {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        margin: 25px auto 20px;
-        max-width: 600px;
-    }
-
-    .level-button {
-        border: 2px solid #f0c400;
-        padding: 18px;
-        border-radius: 15px;
-        background: white;
-        box-shadow: 0 7px 20px rgba(0,0,0,0.10);
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .level-button:hover {
-        transform: translateY(-3px);
-    }
-
-    .level-button.active {
-        background: #d60000;
-        color: white;
-        border-color: #d60000;
-    }
-
-    .selected-level {
+    .profile-top {
+        flex-direction: column;
         text-align: center;
-        margin-bottom: 25px;
     }
 
-    .selected-level h2 {
-        color: #d60000;
-        margin: 0;
+    .profile-badge {
+        width: 100%;
     }
 
     .main-buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-        margin-bottom: 35px;
-    }
-
-    .main-button {
-        border: none;
-        padding: 18px 10px;
-        border-radius: 15px;
-        background: white;
-        box-shadow: 0 7px 20px rgba(0,0,0,0.10);
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .main-button:hover {
-        transform: translateY(-3px);
-    }
-
-    .main-button.active {
-        background: #d60000;
-        color: white;
-    }
-
-    .content-card {
-        background: white;
-        padding: 30px;
-        border-radius: 25px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.10);
-        transition: 0.3s;
-    }
-
-    .content-card h2 {
-        text-align: center;
-        color: #d60000;
-        margin-top: 0;
-    }
-
-    .content-card p {
-        text-align: center;
-        color: #666;
-        line-height: 1.8;
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .teil-buttons {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        margin-top: 25px;
-    }
-
-    .teil-button {
-        padding: 22px;
-        border-radius: 15px;
-        border: 2px solid #f0c400;
-        background: #fff;
-        font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .teil-button:hover {
-        background: #fff8c7;
-        transform: translateY(-3px);
-    }
-
-    .info-box {
-        margin-top: 30px;
-        padding: 20px;
-        background: #f8f8f8;
-        border-radius: 15px;
-        text-align: center;
-    }
-
-    .section-effect {
-        animation: sectionEffect 0.55s ease;
-    }
-
-    @keyframes sectionEffect {
-
-        0% {
-            opacity: 0;
-            transform: translateY(18px) scale(0.98);
-        }
-
-        100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-    }
-
-    .other-content {
-        text-align: center;
-        padding: 40px 10px;
-    }
-
-    .other-content h2 {
-        color: #d60000;
-    }
-
-    .logout {
-        display: block;
-        width: 180px;
-        margin: 30px auto 0;
-        padding: 13px;
-        border: none;
-        border-radius: 12px;
-        background: #111;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .logout:hover {
-        background: #333;
-    }
-
-
-    /* =========================
-       THEMA CHOICE POPUP
-    ========================= */
-
-    .thema-choice-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.55);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        padding: 20px;
-        backdrop-filter: blur(5px);
-    }
-
-    .thema-choice-overlay.show {
-        display: flex;
-        animation: overlayShow 0.3s ease;
-    }
-
-    .thema-choice-box {
-        width: 100%;
-        max-width: 500px;
-        background: white;
-        border-radius: 25px;
-        padding: 30px;
-        border: 3px solid #f0c400;
-        box-shadow: 0 15px 45px rgba(0,0,0,0.25);
-        text-align: center;
-        animation: choiceBoxShow 0.4s ease;
-    }
-
-    .thema-choice-box h2 {
-        margin-top: 0;
-        color: #d60000;
-        font-size: 26px;
-    }
-
-    .thema-choice-box p {
-        color: #666;
-        margin-bottom: 25px;
-    }
-
-    .choice-buttons {
-        display: grid;
         grid-template-columns: 1fr;
-        gap: 15px;
     }
 
-    .choice-button {
-        width: 100%;
-        padding: 18px;
-        border-radius: 15px;
-        background: white;
+    .content-card {
+        padding: 22px 15px;
+    }
+
+    .level-button {
+        padding: 15px 8px;
         font-size: 18px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.25s ease;
     }
 
-    .choice-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    }
-
-    .choice-assassi {
-        border: 2px solid #d60000;
-        color: #d60000;
-    }
-
-    .choice-assassi:hover {
-        background: #fff1f1;
-    }
-
-    .choice-mo3adal {
-        border: 2px solid #f0c400;
-        color: #9a7900;
-    }
-
-    .choice-mo3adal:hover {
-        background: #fff8c7;
-    }
-
-    .close-choice {
-        margin-top: 18px;
-        border: none;
-        background: #eee;
-        color: #555;
-        padding: 11px 25px;
-        border-radius: 12px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.2s;
-    }
-
-    .close-choice:hover {
-        background: #ddd;
-    }
-
-    @keyframes overlayShow {
-
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
-
-    }
-
-    @keyframes choiceBoxShow {
-
-        from {
-            opacity: 0;
-            transform: translateY(25px) scale(0.94);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-    }
-
-
-    @media (max-width: 700px) {
-
-        .level-buttons {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .main-buttons {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .teil-buttons {
-            grid-template-columns: 1fr;
-        }
-
-    }
+}
 
 </style>
 
 </head>
 
+
 <body>
+
 
 <div class="container">
 
 
-<!-- HEADER -->
+<!-- =========================
+     HEADER
+========================= -->
 
 <div class="header">
 
@@ -394,7 +581,76 @@
 </div>
 
 
-<!-- B1 / B2 -->
+<!-- =========================
+     PROFILE
+========================= -->
+
+<div class="profile-card">
+
+    <div class="profile-top">
+
+        <div class="profile-info">
+
+            <h3 id="profileName">
+                👤 مرحباً بك
+            </h3>
+
+            <p id="profileEmail">
+                الحساب ديالك جاهز للتعلم 🇩🇪
+            </p>
+
+        </div>
+
+        <div class="profile-badge">
+            🎓 TELC B1 & B2
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<div class="progress-card">
+
+    <div class="progress-header">
+
+        <h3>
+            📊 التقدم ديالك
+        </h3>
+
+        <div class="progress-percent">
+            35%
+        </div>
+
+    </div>
+
+    <div class="progress-bar">
+
+        <div class="progress-fill"></div>
+
+    </div>
+
+    <p class="progress-text">
+        كمّل التدريب ديالك باش تطور المستوى ديالك 💪🇩🇪
+    </p>
+
+</div>
+
+
+<!-- =========================
+     LEVEL
+========================= -->
+
+<div class="level-title">
+    <strong>
+        اختار المستوى ديالك
+    </strong>
+</div>
+
 
 <div class="level-buttons">
 
@@ -405,7 +661,6 @@
     >
         🇩🇪 B1
     </button>
-
 
     <button
         id="b2Button"
@@ -418,7 +673,9 @@
 </div>
 
 
-<!-- SELECTED LEVEL -->
+<!-- =========================
+     SELECTED LEVEL
+========================= -->
 
 <div class="selected-level">
 
@@ -429,7 +686,9 @@
 </div>
 
 
-<!-- MAIN BUTTONS -->
+<!-- =========================
+     MAIN SECTIONS
+========================= -->
 
 <div class="main-buttons">
 
@@ -441,7 +700,6 @@
         📖 Lesen
     </button>
 
-
     <button
         id="hörenButton"
         class="main-button"
@@ -450,7 +708,6 @@
         🎧 Hören
     </button>
 
-
     <button
         id="schreibenButton"
         class="main-button"
@@ -458,7 +715,6 @@
     >
         ✍️ Schreiben
     </button>
-
 
     <button
         id="sprechenButton"
@@ -471,7 +727,9 @@
 </div>
 
 
-<!-- CONTENT -->
+<!-- =========================
+     CONTENT
+========================= -->
 
 <div
     class="content-card"
@@ -479,160 +737,163 @@
 >
 
 
-    <!-- LESEN -->
+<!-- =========================
+     LESEN
+========================= -->
 
-    <div id="lesen">
+<div id="lesen">
 
-        <h2>
-            📖 Lesen
-        </h2>
+    <h2>
+        📖 Lesen
+    </h2>
 
-
-        <p id="lesenText">
-            اختار Teil باش تبدأ تدريب Lesen ديال TELC B2.
-        </p>
-
-
-        <div class="teil-buttons">
-
-            <button
-                class="teil-button"
-                onclick="openTeil(1)"
-            >
-                📄 Lesen – Teil 1
-            </button>
+    <p id="lesenText">
+        اختار Teil باش تبدأ تدريب Lesen ديال TELC B2.
+    </p>
 
 
-            <button
-                class="teil-button"
-                onclick="openTeil(2)"
-            >
-                📄 Lesen – Teil 2
-            </button>
+    <div class="teil-buttons">
 
+        <button
+            class="teil-button"
+            onclick="openTeil(1)"
+        >
+            📄 Lesen – Teil 1
+        </button>
 
-            <button
-                class="teil-button"
-                onclick="openTeil(3)"
-            >
-                📄 Lesen – Teil 3
-            </button>
+        <button
+            class="teil-button"
+            onclick="openTeil(2)"
+        >
+            📄 Lesen – Teil 2
+        </button>
 
-        </div>
-
-
-        <div class="info-box">
-
-            🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
-
-        </div>
+        <button
+            class="teil-button"
+            onclick="openTeil(3)"
+        >
+            📄 Lesen – Teil 3
+        </button>
 
     </div>
 
 
-    <!-- HÖREN -->
+    <div class="info-box">
 
-    <div
-        id="hören"
-        style="display:none;"
-    >
-
-        <h2>
-            🎧 Hören
-        </h2>
-
-
-        <p id="hörenText">
-            اختار Teil باش تبدأ تدريب Hören ديال TELC B2.
-        </p>
-
-
-        <div class="teil-buttons">
-
-            <button
-                class="teil-button"
-                onclick="openHorenTeil(1)"
-            >
-                🎧 Hören – Teil 1
-            </button>
-
-
-            <button
-                class="teil-button"
-                onclick="openHorenTeil(2)"
-            >
-                🎧 Hören – Teil 2
-            </button>
-
-
-            <button
-                class="teil-button"
-                onclick="openHorenTeil(3)"
-            >
-                🎧 Hören – Teil 3
-            </button>
-
-        </div>
-
-
-        <div class="info-box">
-
-            🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
-
-        </div>
-
-    </div>
-
-
-    <!-- SCHREIBEN -->
-
-    <div
-        id="schreiben"
-        style="display:none;"
-    >
-
-        <div class="other-content">
-
-            <h2>
-                ✍️ Schreiben
-            </h2>
-
-
-            <p id="schreibenText">
-                هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC B2.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- SPRECHEN -->
-
-    <div
-        id="sprechen"
-        style="display:none;"
-    >
-
-        <div class="other-content">
-
-            <h2>
-                🗣️ Sprechen
-            </h2>
-
-
-            <p id="sprechenText">
-                هنا غادي تلقى تمارين Sprechen ديال TELC B2.
-            </p>
-
-        </div>
+        🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
 
     </div>
 
 </div>
 
 
-<!-- LOGOUT -->
+<!-- =========================
+     HÖREN
+========================= -->
+
+<div
+    id="hören"
+    style="display:none;"
+>
+
+    <h2>
+        🎧 Hören
+    </h2>
+
+    <p id="hörenText">
+        اختار Teil باش تبدأ تدريب Hören ديال TELC B2.
+    </p>
+
+
+    <div class="teil-buttons">
+
+        <button
+            class="teil-button"
+            onclick="openHorenTeil(1)"
+        >
+            🎧 Hören – Teil 1
+        </button>
+
+        <button
+            class="teil-button"
+            onclick="openHorenTeil(2)"
+        >
+            🎧 Hören – Teil 2
+        </button>
+
+        <button
+            class="teil-button"
+            onclick="openHorenTeil(3)"
+        >
+            🎧 Hören – Teil 3
+        </button>
+
+    </div>
+
+
+    <div class="info-box">
+
+        🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SCHREIBEN
+========================= -->
+
+<div
+    id="schreiben"
+    style="display:none;"
+>
+
+    <div class="other-content">
+
+        <h2>
+            ✍️ Schreiben
+        </h2>
+
+        <p id="schreibenText">
+            هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC B2.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     SPRECHEN
+========================= -->
+
+<div
+    id="sprechen"
+    style="display:none;"
+>
+
+    <div class="other-content">
+
+        <h2>
+            🗣️ Sprechen
+        </h2>
+
+        <p id="sprechenText">
+            هنا غادي تلقى تمارين Sprechen ديال TELC B2.
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     LOGOUT
+========================= -->
 
 <button
     class="logout"
@@ -644,8 +905,9 @@
 
 </div>
 
+
 <!-- =========================
-     THEMA CHOICE POPUP
+     THEMA POPUP
 ========================= -->
 
 <div
@@ -653,7 +915,6 @@
     id="themaChoice"
     onclick="closeThemaChoice(event)"
 >
-
 
 <div
     class="thema-choice-box"
@@ -702,8 +963,8 @@
 
 </div>
 
-
 </div>
+
 
 <!-- =========================
      FIREBASE
@@ -711,392 +972,373 @@
 
 <script type="module">
 
-    import {
-        initializeApp
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    signOut,
+    onAuthStateChanged,
+    setPersistence,
+    browserLocalPersistence
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    doc,
+    onSnapshot
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+    authDomain:
+        "deutsch-einfach-4c81f.firebaseapp.com",
+
+    projectId:
+        "deutsch-einfach-4c81f",
+
+    storageBucket:
+        "deutsch-einfach-4c81f.firebasestorage.app",
+
+    messagingSenderId:
+        "152448766933",
+
+    appId:
+        "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+    measurementId:
+        "G-9QV234Z0KZ"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+/* =========================
+   PERSISTENCE
+========================= */
+
+setPersistence(
+    auth,
+    browserLocalPersistence
+)
+.catch(function(error) {
+
+    console.error(
+        "Persistence error:",
+        error
+    );
+
+});
+
+
+/* =========================
+   CURRENT USER
+========================= */
+
+let currentUser = null;
+
+let authReady = false;
+
+let stopSessionListener = null;
+
+
+/* =========================
+   SESSION MONITOR
+========================= */
+
+function startSessionListener(user) {
+
+    if (stopSessionListener) {
+
+        stopSessionListener();
+
+        stopSessionListener = null;
+
     }
-    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
-    import {
-        getAuth,
-        signOut,
-        onAuthStateChanged,
-        setPersistence,
-        browserLocalPersistence
-    }
-    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-    import {
-        getFirestore,
-        doc,
-        onSnapshot
-    }
-    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
-
-    /* =========================
-       FIREBASE CONFIG
-    ========================= */
-
-    const firebaseConfig = {
-
-        apiKey:
-            "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-
-        authDomain:
-            "deutsch-einfach-4c81f.firebaseapp.com",
-
-        projectId:
-            "deutsch-einfach-4c81f",
-
-        storageBucket:
-            "deutsch-einfach-4c81f.firebasestorage.app",
-
-        messagingSenderId:
-            "152448766933",
-
-        appId:
-            "1:152448766933:web:f7824c4db8ab3caccbe35c",
-
-        measurementId:
-            "G-9QV234Z0KZ"
-
-    };
-
-
-    /* =========================
-       INITIALIZE FIREBASE
-    ========================= */
-
-    const app =
-        initializeApp(firebaseConfig);
-
-    const auth =
-        getAuth(app);
-
-    const db =
-        getFirestore(app);
-
-
-    /* =========================
-       LOGIN PERSISTENCE
-    ========================= */
-
-    setPersistence(
-        auth,
-        browserLocalPersistence
-    )
-    .then(function() {
-
-        console.log(
-            "Firebase persistence enabled ✅"
+    const mySessionId =
+        localStorage.getItem(
+            "deutschEinfachSessionId"
         );
 
-    })
-    .catch(function(error) {
 
-        console.error(
-            "Persistence error:",
-            error
+    if (!mySessionId) {
+
+        console.warn(
+            "No local session ID found."
         );
 
-    });
+        return;
+
+    }
 
 
-    /* =========================
-       CURRENT USER
-    ========================= */
-
-    let currentUser = null;
-    let authReady = false;
-
-    let stopSessionListener = null;
+    const userRef =
+        doc(
+            db,
+            "users",
+            user.uid
+        );
 
 
-    /* =========================
-       SESSION CHECK
-    ========================= */
+    stopSessionListener =
+        onSnapshot(
+            userRef,
 
-    function startSessionListener(user) {
+            async function(snapshot) {
 
-        /* إذا كان كاين listener قديم، نوقفوه */
+                if (!snapshot.exists()) {
 
-        if (stopSessionListener) {
+                    return;
 
-            stopSessionListener();
-
-            stopSessionListener = null;
-
-        }
+                }
 
 
-        /* sessionId اللي تخزنات ملي دخل هاد الجهاز */
-
-        const mySessionId =
-            localStorage.getItem(
-                "deutschEinfachSessionId"
-            );
+                const data =
+                    snapshot.data();
 
 
-        if (!mySessionId) {
-
-            console.warn(
-                "No local session ID found."
-            );
-
-            return;
-
-        }
+                const currentSessionId =
+                    data.sessionId;
 
 
-        /* document ديال المستخدم */
+                console.log(
+                    "My session:",
+                    mySessionId
+                );
 
-        const userRef =
-            doc(
-                db,
-                "users",
-                user.uid
-            );
+                console.log(
+                    "Current session:",
+                    currentSessionId
+                );
 
 
-        /* =========================
-           LISTEN TO FIRESTORE
-        ========================= */
+                if (
+                    currentSessionId &&
+                    currentSessionId !== mySessionId
+                ) {
 
-        stopSessionListener =
-            onSnapshot(
-                userRef,
-                async function(snapshot) {
+                    console.log(
+                        "NEW DEVICE LOGIN DETECTED ❌"
+                    );
 
-                    if (!snapshot.exists()) {
 
-                        console.warn(
-                            "User document does not exist."
-                        );
+                    if (stopSessionListener) {
 
-                        return;
+                        stopSessionListener();
+
+                        stopSessionListener = null;
 
                     }
 
 
-                    const data =
-                        snapshot.data();
-
-
-                    const currentSessionId =
-                        data.sessionId;
-
-
-                    console.log(
-                        "My session:",
-                        mySessionId
-                    );
-
-                    console.log(
-                        "Current session:",
-                        currentSessionId
+                    localStorage.removeItem(
+                        "deutschEinfachSessionId"
                     );
 
 
-                    /* =========================
-                       NEW DEVICE DETECTED
-                    ========================= */
+                    try {
 
-                    if (
-                        currentSessionId &&
-                        currentSessionId !== mySessionId
-                    ) {
+                        await signOut(auth);
 
-                        console.log(
-                            "NEW DEVICE LOGIN DETECTED ❌"
-                        );
+                    }
 
+                    catch (error) {
 
-                        /* نوقفو المراقبة */
-
-                        if (stopSessionListener) {
-
-                            stopSessionListener();
-
-                            stopSessionListener = null;
-
-                        }
-
-
-                        /* نحيدو session المحلية */
-
-                        localStorage.removeItem(
-                            "deutschEinfachSessionId"
-                        );
-
-
-                        /* نسجلو الخروج */
-
-                        try {
-
-                            await signOut(
-                                auth
-                            );
-
-                        }
-
-                        catch (error) {
-
-                            console.error(
-                                "Auto logout error:",
-                                error
-                            );
-
-                        }
-
-
-                        alert(
-                            "🔐 تم تسجيل الدخول من جهاز آخر.\n\n" +
-                            "تم تسجيل خروج هذا الجهاز تلقائياً."
-                        );
-
-
-                        window.location.replace(
-                            "login.html"
+                        console.error(
+                            "Auto logout error:",
+                            error
                         );
 
                     }
 
-                },
-                function(error) {
 
-                    console.error(
-                        "Session listener error:",
-                        error
+                    alert(
+                        "🔐 تم تسجيل الدخول من جهاز آخر.\n\n" +
+                        "تم تسجيل خروج هذا الجهاز تلقائياً."
+                    );
+
+
+                    window.location.replace(
+                        "login.html"
                     );
 
                 }
+
+            },
+
+            function(error) {
+
+                console.error(
+                    "Session listener error:",
+                    error
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(
+    auth,
+
+    function(user) {
+
+        currentUser = user;
+
+        authReady = true;
+
+
+        const welcomeText =
+            document.getElementById(
+                "welcomeText"
             );
+
+
+        const profileName =
+            document.getElementById(
+                "profileName"
+            );
+
+
+        const profileEmail =
+            document.getElementById(
+                "profileEmail"
+            );
+
+
+        if (user) {
+
+            const name =
+                user.displayName ||
+                user.email ||
+                "";
+
+
+            welcomeText.textContent =
+                "مرحباً " +
+                name +
+                " 👋";
+
+
+            profileName.textContent =
+                "👤 " +
+                name;
+
+
+            profileEmail.textContent =
+                user.email ||
+                "الحساب ديالك جاهز للتعلم 🇩🇪";
+
+
+            startSessionListener(user);
+
+        }
+
+        else {
+
+            welcomeText.textContent =
+                "مرحباً بك! اختار المستوى اللي بغيتي تتعلم.";
+
+
+            profileName.textContent =
+                "👤 مرحباً بك";
+
+
+            profileEmail.textContent =
+                "الحساب ديالك جاهز للتعلم 🇩🇪";
+
+        }
 
     }
 
-
-    /* =========================
-       AUTH STATE
-    ========================= */
-
-    onAuthStateChanged(
-        auth,
-        function(user) {
-
-            currentUser = user;
-            authReady = true;
+);
 
 
-            console.log(
-                "AUTH:",
-                user
-                    ? "LOGGED IN ✅"
-                    : "NOT LOGGED IN ❌"
-            );
+/* =========================
+   LEVEL
+========================= */
+
+let currentLevel = "B2";
 
 
-            const welcomeText =
-                document.getElementById(
-                    "welcomeText"
-                );
+/* =========================
+   URL
+========================= */
 
-
-            if (user) {
-
-                welcomeText.textContent =
-                    "مرحباً " +
-                    (
-                        user.displayName ||
-                        user.email ||
-                        ""
-                    ) +
-                    " 👋";
-
-
-                /* =========================
-                   START SESSION MONITOR
-                ========================= */
-
-                startSessionListener(
-                    user
-                );
-
-            }
-
-            else {
-
-                welcomeText.textContent =
-                    "مرحباً بك! اختار المستوى اللي بغيتي تتعلم.";
-
-            }
-
-        }
+const params =
+    new URLSearchParams(
+        window.location.search
     );
 
 
-    /* =========================
-       LEVEL
-    ========================= */
-
-    let currentLevel = "B2";
-
-
-    /* =========================
-       URL
-    ========================= */
-
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
+const sectionFromURL =
+    params.get(
+        "section"
+    );
 
 
-    const sectionFromURL =
-        params.get(
-            "section"
-        );
+const sectionMap = {
+
+    lesen: "lesen",
+
+    hoeren: "hören",
+
+    schreiben: "schreiben",
+
+    sprechen: "sprechen"
+
+};
 
 
-    /* =========================
-       SECTION MAP
-    ========================= */
+/* =========================
+   SELECT LEVEL
+========================= */
 
-    const sectionMap = {
+window.selectLevel =
+    function(
+        level,
+        button
+    ) {
 
-        lesen: "lesen",
-
-        hoeren: "hören",
-
-        schreiben: "schreiben",
-
-        sprechen: "sprechen"
-
-    };
+        currentLevel =
+            level;
 
 
-    /* =========================
-       SELECT LEVEL
-    ========================= */
-
-    window.selectLevel =
-        function(
-            level,
-            button
-        ) {
-
-            currentLevel =
-                level;
-
-
-            const levelButtons =
-                document.querySelectorAll(
-                    ".level-button"
-                );
-
-
-            levelButtons.forEach(
+        document
+            .querySelectorAll(
+                ".level-button"
+            )
+            .forEach(
                 function(btn) {
 
                     btn.classList.remove(
@@ -1107,50 +1349,484 @@
             );
 
 
+        button.classList.add(
+            "active"
+        );
+
+
+        document.getElementById(
+            "selectedLevelText"
+        ).textContent =
+            "المستوى المختار: " +
+            level +
+            " 🇩🇪";
+
+
+        document.getElementById(
+            "lesenText"
+        ).textContent =
+            "اختار Teil باش تبدأ تدريب Lesen ديال TELC " +
+            level +
+            ".";
+
+
+        document.getElementById(
+            "hörenText"
+        ).textContent =
+            "اختار Teil باش تبدأ تدريب Hören ديال TELC " +
+            level +
+            ".";
+
+
+        document.getElementById(
+            "schreibenText"
+        ).textContent =
+            "هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC " +
+            level +
+            ".";
+
+
+        document.getElementById(
+            "sprechenText"
+        ).textContent =
+            "هنا غادي تلقى تمارين Sprechen ديال TELC " +
+            level +
+            ".";
+
+
+        showSection(
+            "lesen",
+            document.getElementById(
+                "lesenButton"
+            )
+        );
+
+    };
+
+
+/* =========================
+   SHOW SECTION
+========================= */
+
+window.showSection =
+    function(
+        section,
+        button
+    ) {
+
+        document.getElementById(
+            "lesen"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "hören"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "schreiben"
+        ).style.display = "none";
+
+
+        document.getElementById(
+            "sprechen"
+        ).style.display = "none";
+
+
+        const selectedSection =
+            document.getElementById(
+                section
+            );
+
+
+        if (!selectedSection) {
+
+            return;
+
+        }
+
+
+        selectedSection.style.display =
+            "block";
+
+
+        document
+            .querySelectorAll(
+                ".main-button"
+            )
+            .forEach(
+                function(btn) {
+
+                    btn.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+        if (button) {
+
             button.classList.add(
                 "active"
             );
 
+        }
 
+
+        const content =
             document.getElementById(
-                "selectedLevelText"
-            ).textContent =
-                "المستوى المختار: " +
-                level +
-                " 🇩🇪";
+                "content"
+            );
 
+
+        content.classList.remove(
+            "section-effect"
+        );
+
+
+        void content.offsetWidth;
+
+
+        content.classList.add(
+            "section-effect"
+        );
+
+    };
+
+
+/* =========================
+   WAIT FOR AUTH
+========================= */
+
+async function waitForAuth() {
+
+    if (authReady) {
+
+        return currentUser;
+
+    }
+
+
+    return new Promise(
+        function(resolve) {
+
+            const check =
+                setInterval(
+                    function() {
+
+                        if (authReady) {
+
+                            clearInterval(
+                                check
+                            );
+
+                            resolve(
+                                currentUser
+                            );
+
+                        }
+
+                    },
+                    50
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   LESEN
+========================= */
+
+window.openTeil =
+    async function(number) {
+
+        const user =
+            await waitForAuth();
+
+
+        if (!user) {
+
+            alert(
+                "🔒 خاصك تسجل فالموقع باش تشوف Themen."
+            );
+
+
+            window.location.replace(
+                "signup.html"
+            );
+
+
+            return;
+
+        }
+
+
+        if (number === 1) {
 
             document.getElementById(
                 "lesenText"
-            ).textContent =
-                "اختار Teil باش تبدأ تدريب Lesen ديال TELC " +
-                level +
-                ".";
+            ).innerHTML =
+                "اختار Thema باش تبدأ التدريب ديال Lesen Teil 1.";
 
+
+            document.querySelector(
+                "#lesen .teil-buttons"
+            ).innerHTML = `
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(1)"
+                >
+                    📖 Sport ist gesund
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(2)"
+                >
+                    📖 Thema 2
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(3)"
+                >
+                    📖 Thema 3
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(4)"
+                >
+                    📖 Thema 4
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(5)"
+                >
+                    📖 Thema 5
+                </button>
+
+            `;
+
+            return;
+
+        }
+
+
+        alert(
+            "📚 Lesen – Teil " +
+            number +
+            "\n\n" +
+            "المحتوى غادي نضيفوه هنا قريباً 🔥"
+        );
+
+    };
+
+
+/* =========================
+   THEMA
+========================= */
+
+window.openThema =
+    function(number) {
+
+        if (number === 1) {
 
             document.getElementById(
-                "hörenText"
-            ).textContent =
-                "اختار Teil باش تبدأ تدريب Hören ديال TELC " +
-                level +
-                ".";
+                "themaChoice"
+            ).classList.add(
+                "show"
+            );
+
+            return;
+
+        }
 
 
-            document.getElementById(
-                "schreibenText"
-            ).textContent =
-                "هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC " +
-                level +
-                ".";
+        alert(
+            "🔒 هاد Thema مازال ما تضافش."
+        );
+
+    };
 
 
-            document.getElementById(
-                "sprechenText"
-            ).textContent =
-                "هنا غادي تلقى تمارين Sprechen ديال TELC " +
-                level +
-                ".";
+/* =========================
+   ASSASSI
+========================= */
 
+window.openAssassi =
+    function() {
+
+        window.location.href =
+            "thema1.html";
+
+    };
+
+
+/* =========================
+   MO3ADAL
+========================= */
+
+window.openMo3adal =
+    function() {
+
+        window.location.href =
+            "thema1-mo3adal.html";
+
+    };
+
+
+/* =========================
+   CLOSE POPUP
+========================= */
+
+window.closeThemaChoice =
+    function(event) {
+
+        if (
+            event &&
+            event.target !== event.currentTarget
+        ) {
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "themaChoice"
+        ).classList.remove(
+            "show"
+        );
+
+    };
+
+
+/* =========================
+   HÖREN
+========================= */
+
+window.openHorenTeil =
+    async function(number) {
+
+        const user =
+            await waitForAuth();
+
+
+        if (!user) {
+
+            alert(
+                "🔒 خاصك تسجل فالموقع باش تشوف Thema."
+            );
+
+
+            window.location.replace(
+                "signup.html"
+            );
+
+
+            return;
+
+        }
+
+
+        alert(
+            "✅ مرحباً " +
+            (
+                user.displayName ||
+                user.email ||
+                ""
+            ) +
+            "\n\n" +
+            currentLevel +
+            " – Hören – Teil " +
+            number +
+            "\n\n" +
+            "الحساب ديالك مسجل الدخول ✅\n" +
+            "المحتوى الحقيقي ديال Thema غادي نضيفوه هنا 🔥"
+        );
+
+    };
+
+
+/* =========================
+   URL SECTION
+========================= */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        if (
+            sectionFromURL &&
+            sectionMap[
+                sectionFromURL
+            ]
+        ) {
+
+            const section =
+                sectionMap[
+                    sectionFromURL
+                ];
+
+
+            let buttonId;
+
+
+            if (
+                sectionFromURL === "lesen"
+            ) {
+
+                buttonId =
+                    "lesenButton";
+
+            }
+
+            else if (
+                sectionFromURL === "hoeren"
+            ) {
+
+                buttonId =
+                    "hörenButton";
+
+            }
+
+            else if (
+                sectionFromURL === "schreiben"
+            ) {
+
+                buttonId =
+                    "schreibenButton";
+
+            }
+
+            else if (
+                sectionFromURL === "sprechen"
+            ) {
+
+                buttonId =
+                    "sprechenButton";
+
+            }
+
+
+            showSection(
+                section,
+                document.getElementById(
+                    buttonId
+                )
+            );
+
+        }
+
+        else {
 
             showSection(
                 "lesen",
@@ -1159,535 +1835,65 @@
                 )
             );
 
-        };
-
-
-    /* =========================
-       SHOW SECTION
-    ========================= */
-
-    window.showSection =
-        function(
-            section,
-            button
-        ) {
-
-            document.getElementById(
-                "lesen"
-            ).style.display =
-                "none";
-
-
-            document.getElementById(
-                "hören"
-            ).style.display =
-                "none";
-
-
-            document.getElementById(
-                "schreiben"
-            ).style.display =
-                "none";
-
-
-            document.getElementById(
-                "sprechen"
-            ).style.display =
-                "none";
-
-
-            const selectedSection =
-                document.getElementById(
-                    section
-                );
-
-
-            if (!selectedSection) {
-
-                return;
-
-            }
-
-
-            selectedSection.style.display =
-                "block";
-
-
-            const buttons =
-                document.querySelectorAll(
-                    ".main-button"
-                );
-
-
-            buttons.forEach(
-                function(btn) {
-
-                    btn.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-
-            if (button) {
-
-                button.classList.add(
-                    "active"
-                );
-
-            }
-
-
-            const content =
-                document.getElementById(
-                    "content"
-                );
-
-
-            content.classList.remove(
-                "section-effect"
-            );
-
-
-            void content.offsetWidth;
-
-
-            content.classList.add(
-                "section-effect"
-            );
-
-        };
-
-
-    /* =========================
-       WAIT FOR FIREBASE
-    ========================= */
-
-    async function waitForAuth() {
-
-        if (authReady) {
-
-            return currentUser;
-
         }
-
-
-        return new Promise(
-            function(resolve) {
-
-                const check =
-                    setInterval(
-                        function() {
-
-                            if (authReady) {
-
-                                clearInterval(
-                                    check
-                                );
-
-                                resolve(
-                                    currentUser
-                                );
-
-                            }
-
-                        },
-                        50
-                    );
-
-            }
-        );
 
     }
+);
 
 
-    /* =========================
-       LESEN TEIL
-    ========================= */
+/* =========================
+   LOGOUT
+========================= */
 
-    window.openTeil =
-        async function(number) {
+window.logout =
+    async function() {
 
-            const user =
-                await waitForAuth();
+        try {
+
+            if (stopSessionListener) {
+
+                stopSessionListener();
+
+                stopSessionListener = null;
+
+            }
 
 
-            console.log(
-                "Lesen clicked:",
-                number,
-                "User:",
-                user
+            localStorage.removeItem(
+                "deutschEinfachSessionId"
             );
 
 
-            if (!user) {
-
-                alert(
-                    "🔒 خاصك تسجل فالموقع باش تشوف Themen."
-                );
-
-
-                window.location.replace(
-                    "signup.html"
-                );
-
-
-                return;
-
-            }
-
-
-            if (number === 1) {
-
-                document.getElementById(
-                    "lesenText"
-                ).innerHTML = `
-                    اختار Thema باش تبدأ التدريب ديال Lesen Teil 1.
-                `;
-
-
-                document.querySelector(
-                    "#lesen .teil-buttons"
-                ).innerHTML = `
-
-                    <button
-                        class="teil-button"
-                        onclick="openThema(1)"
-                    >
-                        📖 Sport ist gesund
-                    </button>
-
-                    <button
-                        class="teil-button"
-                        onclick="openThema(2)"
-                    >
-                        📖 Thema 2
-                    </button>
-
-                    <button
-                        class="teil-button"
-                        onclick="openThema(3)"
-                    >
-                        📖 Thema 3
-                    </button>
-
-                    <button
-                        class="teil-button"
-                        onclick="openThema(4)"
-                    >
-                        📖 Thema 4
-                    </button>
-
-                    <button
-                        class="teil-button"
-                        onclick="openThema(5)"
-                    >
-                        📖 Thema 5
-                    </button>
-
-                `;
-
-
-                return;
-
-            }
-
-
-            alert(
-                "📚 Lesen – Teil " +
-                number +
-                "\n\n" +
-                "المحتوى غادي نضيفوه هنا قريباً 🔥"
-            );
-
-        };
-
-
-    /* =========================
-       OPEN THEMA
-    ========================= */
-
-    window.openThema =
-        function(number) {
-
-            if (number === 1) {
-
-                document.getElementById(
-                    "themaChoice"
-                ).classList.add(
-                    "show"
-                );
-
-                return;
-
-            }
-
-
-            alert(
-                "🔒 هاد Thema مازال ما تضافش."
-            );
-
-        };
-
-
-    /* =========================
-       OPEN ASSASSI
-    ========================= */
-
-    window.openAssassi =
-        function() {
-
-            window.location.href =
-                "thema1.html";
-
-        };
-
-
-    /* =========================
-       OPEN MO3ADAL
-    ========================= */
-
-    window.openMo3adal =
-        function() {
-
-            window.location.href =
-                "thema1-mo3adal.html";
-
-        };
-
-
-    /* =========================
-       CLOSE CHOICE
-    ========================= */
-
-    window.closeThemaChoice =
-        function(event) {
-
-            if (
-                event &&
-                event.target !== event.currentTarget
-            ) {
-
-                return;
-
-            }
-
-
-            document.getElementById(
-                "themaChoice"
-            ).classList.remove(
-                "show"
-            );
-
-        };
-
-
-    /* =========================
-       HÖREN TEIL
-    ========================= */
-
-    window.openHorenTeil =
-        async function(number) {
-
-            const user =
-                await waitForAuth();
-
-
-            console.log(
-                "Hören clicked:",
-                number,
-                "User:",
-                user
+            await signOut(
+                auth
             );
 
 
-            if (!user) {
-
-                alert(
-                    "🔒 خاصك تسجل فالموقع باش تشوف Thema."
-                );
-
-
-                window.location.replace(
-                    "signup.html"
-                );
-
-
-                return;
-
-            }
-
-
-            alert(
-                "✅ مرحباً " +
-                (
-                    user.displayName ||
-                    user.email ||
-                    ""
-                ) +
-                "\n\n" +
-                currentLevel +
-                " – Hören – Teil " +
-                number +
-                "\n\n" +
-                "الحساب ديالك مسجل الدخول ✅\n" +
-                "المحتوى الحقيقي ديال Thema غادي نضيفوه هنا 🔥"
+            window.location.replace(
+                "login.html"
             );
-
-        };
-
-
-    /* =========================
-       URL SECTION
-    ========================= */
-
-    window.addEventListener(
-        "DOMContentLoaded",
-        function() {
-
-            if (
-                sectionFromURL &&
-                sectionMap[
-                    sectionFromURL
-                ]
-            ) {
-
-                const section =
-                    sectionMap[
-                        sectionFromURL
-                    ];
-
-
-                let buttonId;
-
-
-                if (
-                    sectionFromURL ===
-                    "lesen"
-                ) {
-
-                    buttonId =
-                        "lesenButton";
-
-                }
-
-                else if (
-                    sectionFromURL ===
-                    "hoeren"
-                ) {
-
-                    buttonId =
-                        "hörenButton";
-
-                }
-
-                else if (
-                    sectionFromURL ===
-                    "schreiben"
-                ) {
-
-                    buttonId =
-                        "schreibenButton";
-
-                }
-
-                else if (
-                    sectionFromURL ===
-                    "sprechen"
-                ) {
-
-                    buttonId =
-                        "sprechenButton";
-
-                }
-
-
-                const button =
-                    document.getElementById(
-                        buttonId
-                    );
-
-
-                showSection(
-                    section,
-                    button
-                );
-
-            }
-
-            else {
-
-                showSection(
-                    "lesen",
-                    document.getElementById(
-                        "lesenButton"
-                    )
-                );
-
-            }
 
         }
-    );
+
+        catch (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
 
 
-    /* =========================
-       LOGOUT
-    ========================= */
+            alert(
+                "وقع مشكل ف تسجيل الخروج."
+            );
 
-    window.logout =
-        async function() {
+        }
 
-            try {
-
-                /* نوقفو مراقبة session */
-
-                if (stopSessionListener) {
-
-                    stopSessionListener();
-
-                    stopSessionListener = null;
-
-                }
-
-
-                /* نحيدو session المحلية */
-
-                localStorage.removeItem(
-                    "deutschEinfachSessionId"
-                );
-
-
-                await signOut(
-                    auth
-                );
-
-
-                window.location.replace(
-                    "login.html"
-                );
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
-
-                alert(
-                    "وقع مشكل ف تسجيل الخروج."
-                );
-
-            }
-
-        };
+    };
 
 </script>
-
 
 </body>
 
 </html>
+
