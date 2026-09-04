@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="de" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>طرق الدفع والاشتراك – Deutsch Einfach</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f8f8f8, #ffffff);
+            color: #222;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 15px;
+        }
+
+        /* =========================
+           زر الرجوع
+        ========================== */
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 11px 18px;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           العنوان
+        ========================== */
+
+        h1 {
+            text-align: center;
+            color: #111;
+            font-size: 36px;
+            margin: 0 0 10px;
+        }
+
+        .main-description {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        /* =========================
+           العروض
+        ========================== */
+
+        .offers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        /* =========================
+           Cadre ديال العرض
+        ========================== */
+
+        .offer {
+            background: white;
+            border-radius: 22px;
+            padding: 28px 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
+            border: 2px solid #eeeeee;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s;
+        }
+
+        .offer:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.13);
+        }
+
+        /* =========================
+           عنوان العرض
+        ========================== */
+
+        .offer-title {
+            text-align: center;
+            font-size: 25px;
+            color: #d60000;
+            margin: 0 0 8px;
+        }
+
+        .offer-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+
+        /* =========================
+           الثمن
+        ========================== */
+
+        .price {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .price-number {
+            font-size: 34px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .price-period {
+            font-size: 17px;
+            color: #666;
+        }
+
+        /* =========================
+           اللائحة
+        ========================== */
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin-bottom: 16px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .check {
+            color: #25a244;
+            font-size: 19px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* =========================
+           زر WhatsApp
+        ========================== */
+
+        .whatsapp-button {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 10px;
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .whatsapp-button:hover {
+            background: #1ebe5d;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           الهاتف
+        ========================== */
+
+        @media (max-width: 900px) {
+
+            .offers {
+                grid-template-columns: 1fr;
+            }
+
+            .offer {
+                max-width: 600px;
+                width: 100%;
+                margin: auto;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 95%;
+                padding: 25px 10px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .main-description {
+                font-size: 16px;
+            }
+
+            .offer {
+                padding: 25px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+
+        <!-- =========================
+             الرجوع للموقع
+        ========================== -->
+
+        <a href="index.html" class="back-button">
+            ← الرجوع للموقع
+        </a>
+
+
+        <!-- =========================
+             العنوان
+        ========================== -->
+
+        <h1>
+            اختر الباقة المناسبة لك
+        </h1>
+
+        <p class="main-description">
+            اختر الاشتراك الذي يناسبك وابدأ التحضير لـ TELC B1 & B2
+        </p>
+
+
+        <!-- =========================
+             جميع العروض
+        ========================== -->
+
+        <div class="offers">
+
+
+            <!-- =========================
+                 العرض 1
+            ========================== -->
+
+            <div class="offer">
+
+                <h2 class="offer-title">
+                    باقة 15 يوم
+                </h2>
+
+                <p class="offer-subtitle">
+                    بداية سريعة ومميزة.
+                </p>
+
+
+                <div class="price">
+
+                    <span class="price-number">
+                        49 DH
+                    </span>
+
+                    <span class="price-period">
+                        / 15 يوم
+                    </span>
+
+                </div>
+
+
+                <ul class="features-list">
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لمواضيع Lesen</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>إمكانية العمل على كل Teil وحده</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لجميع أجزاء Hören</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>الاستماع للمقاطع الصوتية المسربة في Hören</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لنماذج Schreiben</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>تصحيح Schreiben بالذكاء الاصطناعي (لامحدود)</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>المساعد الذكي للقراءة (لامحدود)</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>لمدة 15 يوماً.</strong>
+                    </li>
+
+                </ul>
+
+
+                <a
+                    href="https://wa.me/212653618205?text=السلام%20عليكم،%20بغيت%20نشترك%20في%20باقة%2015%20يوم%20بثمن%2049%20DH."
+                    target="_blank"
+                    class="whatsapp-button"
+                >
+                    الترقية عبر WhatsApp
+                </a>
+
+            </div>
+
+
+            <!-- =========================
+                 العرض 2
+            ========================== -->
+
+            <div class="offer">
+
+                <h2 class="offer-title">
+                    باقة شهر واحد
+                </h2>
+
+                <p class="offer-subtitle">
+                    تحضير أقوى ووقت أكثر.
+                </p>
+
+
+                <div class="price">
+
+                    <span class="price-number">
+                        99 DH
+                    </span>
+
+                    <span class="price-period">
+                        / شهر
+                    </span>
+
+                </div>
+
+
+                <ul class="features-list">
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لمواضيع Lesen</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>إمكانية العمل على كل Teil وحده</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لجميع أجزاء Hören</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>الاستماع للمقاطع الصوتية المسربة في Hören</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لنماذج Schreiben</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>تصحيح Schreiben بالذكاء الاصطناعي (لامحدود)</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>المساعد الذكي للقراءة (لامحدود)</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>لمدة شهر كامل.</strong>
+                    </li>
+
+                </ul>
+
+
+                <a
+                    href="https://wa.me/212653618205?text=السلام%20عليكم،%20بغيت%20نشترك%20في%20باقة%20شهر%20واحد%20بثمن%2099%20DH."
+                    target="_blank"
+                    class="whatsapp-button"
+                >
+                    الترقية عبر WhatsApp
+                </a>
+
+            </div>
+
+
+            <!-- =========================
+                 العرض 3
+            ========================== -->
+
+            <div class="offer">
+
+                <h2 class="offer-title">
+                    باقة شهرين
+                </h2>
+
+                <p class="offer-subtitle">
+                    أفضل اختيار للتحضير المكثف.
+                </p>
+
+
+                <div class="price">
+
+                    <span class="price-number">
+                        150 DH
+                    </span>
+
+                    <span class="price-period">
+                        / شهرين
+                    </span>
+
+                </div>
+
+
+                <ul class="features-list">
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لمواضيع Lesen</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>إمكانية العمل على كل Teil وحده</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لجميع أجزاء Hören</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>الاستماع للمقاطع الصوتية المسربة في Hören</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>وصول كامل لنماذج Schreiben</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>تصحيح Schreiben بالذكاء الاصطناعي (لامحدود)</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>المساعد الذكي للقراءة (لامحدود)</strong>
+                    </li>
+
+                    <li>
+                        <span class="check">✓</span>
+                        <strong>لمدة شهرين كاملين.</strong>
+                    </li>
+
+                </ul>
+
+
+                <a
+                    href="https://wa.me/212653618205?text=السلام%20عليكم،%20بغيت%20نشترك%20في%20باقة%20شهرين%20بثمن%20150%20DH."
+                    target="_blank"
+                    class="whatsapp-button"
+                >
+                    الترقية عبر WhatsApp
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

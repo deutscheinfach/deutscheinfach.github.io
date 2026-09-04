@@ -1,0 +1,629 @@
+```html
+<!DOCTYPE html>
+<html lang="de" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>إنشاء حساب – Deutsch Einfach</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f8f8f8, #ffffff);
+            color: #222;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 25px;
+            padding: 11px 18px;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+        }
+
+        h1 {
+            text-align: center;
+            color: #d60000;
+            margin-top: 0;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #d60000;
+        }
+
+        .signup-submit {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #d60000;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .signup-submit:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 25px;
+            color: #555;
+        }
+
+        .login-text a {
+            color: #d60000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <a href="index.html" class="back-button">
+        ← الرجوع للموقع
+    </a>
+
+
+    <div class="card">
+
+        <h1>إنشاء حساب</h1>
+
+        <p class="subtitle">
+            أنشئ حسابك في Deutsch Einfach وابدأ التحضير لـ TELC B1 & B2
+        </p>
+
+
+        <form id="signup-form">
+
+            <label for="name">
+                الاسم الكامل
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="دخل الاسم ديالك"
+                required
+            >
+
+
+            <label for="email">
+                البريد الإلكتروني
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="example@gmail.com"
+                required
+            >
+
+
+            <label for="password">
+                كلمة المرور
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="دخل كلمة المرور"
+                minlength="6"
+                required
+            >
+
+
+            <label for="confirm-password">
+                تأكيد كلمة المرور
+            </label>
+
+            <input
+                type="password"
+                id="confirm-password"
+                placeholder="عاود دخل كلمة المرور"
+                minlength="6"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="signup-submit"
+                id="signup-button"
+            >
+                إنشاء الحساب
+            </button>
+
+        </form>
+
+
+        <p class="login-text">
+
+            عندك حساب من قبل؟
+
+            <a href="login.html">
+                تسجيل الدخول
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+    // =========================
+    // FIREBASE
+    // =========================
+
+    import {
+        initializeApp
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+        getAuth,
+        createUserWithEmailAndPassword,
+        updateProfile,
+        setPersistence,
+        browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    import {
+        getFirestore,
+        doc,
+        setDoc,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    // =========================
+    // CONFIG
+    // =========================
+
+    const firebaseConfig = {
+
+        apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+        authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+
+        projectId: "deutsch-einfach-4c81f",
+
+        storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+
+        messagingSenderId: "152448766933",
+
+        appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+        measurementId: "G-9QV234Z0KZ"
+
+    };
+
+
+    // =========================
+    // INIT
+    // =========================
+
+    const app =
+        initializeApp(firebaseConfig);
+
+
+    const auth =
+        getAuth(app);
+
+
+    const db =
+        getFirestore(app);
+
+
+    console.log("Firebase OK ✅");
+
+
+    // =========================
+    // PERSISTENCE
+    // =========================
+
+    try {
+
+        await setPersistence(
+            auth,
+            browserLocalPersistence
+        );
+
+        console.log(
+            "Persistence OK ✅"
+        );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Persistence problem:",
+            error
+        );
+
+        /*
+        ما نوقفوش التسجيل.
+        الحساب يقدر يتخلق عادي.
+        */
+
+    }
+
+
+    // =========================
+    // FORM
+    // =========================
+
+    const form =
+        document.getElementById(
+            "signup-form"
+        );
+
+
+    const button =
+        document.getElementById(
+            "signup-button"
+        );
+
+
+    // =========================
+    // SIGNUP
+    // =========================
+
+    form.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document
+                    .getElementById("name")
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+
+            const confirmPassword =
+                document
+                    .getElementById("confirm-password")
+                    .value;
+
+
+            // =========================
+            // CHECK
+            // =========================
+
+            if (name.length < 2) {
+
+                alert(
+                    "دخل الاسم الكامل ديالك ❌"
+                );
+
+                return;
+            }
+
+
+            if (password.length < 6) {
+
+                alert(
+                    "كلمة المرور خاصها تكون على الأقل 6 حروف ❌"
+                );
+
+                return;
+            }
+
+
+            if (password !== confirmPassword) {
+
+                alert(
+                    "كلمتا المرور غير متطابقتين ❌"
+                );
+
+                return;
+            }
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "جاري إنشاء الحساب...";
+
+
+            try {
+
+                // =========================
+                // CREATE AUTH ACCOUNT
+                // =========================
+
+                console.log(
+                    "Creating account..."
+                );
+
+
+                const result =
+                    await createUserWithEmailAndPassword(
+                        auth,
+                        email,
+                        password
+                    );
+
+
+                const user =
+                    result.user;
+
+
+                console.log(
+                    "ACCOUNT CREATED ✅",
+                    user.uid
+                );
+
+
+                // =========================
+                // NAME
+                // =========================
+
+                try {
+
+                    await updateProfile(
+                        user,
+                        {
+                            displayName: name
+                        }
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.warn(
+                        "Name error:",
+                        error
+                    );
+
+                }
+
+
+                // =========================
+                // FIRESTORE
+                // =========================
+
+                try {
+
+                    await setDoc(
+                        doc(
+                            db,
+                            "users",
+                            user.uid
+                        ),
+                        {
+
+                            name: name,
+
+                            email: email,
+
+                            plan: "free",
+
+                            subscriptionActive: false,
+
+                            subscriptionStart: null,
+
+                            subscriptionEnd: null,
+
+                            createdAt:
+                                serverTimestamp()
+
+                        }
+                    );
+
+
+                    console.log(
+                        "FIRESTORE CREATED ✅"
+                    );
+
+                }
+
+                catch (firestoreError) {
+
+                    console.warn(
+                        "Firestore failed:",
+                        firestoreError
+                    );
+
+                    /*
+                    حتى إلا Firestore فشل،
+                    Auth راه خدام والحساب تخلق.
+                    ما نوقفوش المستخدم.
+                    */
+
+                }
+
+
+                // =========================
+                // SUCCESS
+                // =========================
+
+                console.log(
+                    "REGISTRATION SUCCESS ✅"
+                );
+
+
+                button.textContent =
+                    "تم إنشاء الحساب ✅";
+
+
+                /*
+                ما غاديش نخلي alert يوقف
+                الانتقال للصفحة.
+                */
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+
+
+            catch (error) {
+
+                console.error(
+                    "SIGNUP ERROR:",
+                    error
+                );
+
+
+                button.disabled = false;
+
+                button.textContent =
+                    "إنشاء الحساب";
+
+
+                if (
+                    error.code ===
+                    "auth/email-already-in-use"
+                ) {
+
+                    alert(
+                        "هاد الإيميل مسجل من قبل ❌\n\n" +
+                        "دخل من صفحة تسجيل الدخول."
+                    );
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/invalid-email"
+                ) {
+
+                    alert(
+                        "الإيميل غير صحيح ❌"
+                    );
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/weak-password"
+                ) {
+
+                    alert(
+                        "كلمة المرور ضعيفة ❌"
+                    );
+
+                }
+
+                else if (
+                    error.code ===
+                    "auth/network-request-failed"
+                ) {
+
+                    alert(
+                        "كاين مشكل فالإنترنت أو الاتصال بـ Firebase ❌"
+                    );
+
+                }
+
+                else {
+
+                    alert(
+                        "وقع مشكل فالتسجيل ❌\n\n" +
+                        "CODE: " +
+                        (
+                            error.code ||
+                            "unknown"
+                        ) +
+                        "\n\n" +
+                        (
+                            error.message ||
+                            "Unknown error"
+                        )
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
+```
