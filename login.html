@@ -4,7 +4,6 @@
 
 <head>
 
-```
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -146,19 +145,16 @@
     }
 
 </style>
-```
 
 </head>
 
 <body>
 
-```
 <div class="container">
 
     <a href="index.html" class="back-button">
         ← الرجوع للموقع
     </a>
-
 
     <div class="card">
 
@@ -171,7 +167,6 @@
             <br>
             سجل الدخول باش تكمل التحضير لـ TELC B1 & B2
         </p>
-
 
         <form id="login-form">
 
@@ -187,7 +182,6 @@
                 required
             >
 
-
             <label for="password">
                 كلمة المرور
             </label>
@@ -200,11 +194,9 @@
                 required
             >
 
-
             <a href="forgot-password.html" class="forgot-password">
                 نسيت كلمة المرور؟
             </a>
-
 
             <button
                 type="submit"
@@ -215,7 +207,6 @@
             </button>
 
         </form>
-
 
         <p class="signup-text">
 
@@ -232,11 +223,15 @@
 </div>
 
 
-<!-- Firebase -->
+<!-- =========================
+     FIREBASE
+========================= -->
 
 <script type="module">
 
-    import { initializeApp }
+    import {
+        initializeApp
+    }
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
@@ -252,7 +247,8 @@
     import {
         getFirestore,
         doc,
-        getDoc
+        getDoc,
+        setDoc
     }
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
@@ -263,17 +259,26 @@
 
     const firebaseConfig = {
 
-        apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+        apiKey:
+            "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
 
-        authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+        authDomain:
+            "deutsch-einfach-4c81f.firebaseapp.com",
 
-        projectId: "deutsch-einfach-4c81f",
+        projectId:
+            "deutsch-einfach-4c81f",
 
-        storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+        storageBucket:
+            "deutsch-einfach-4c81f.firebasestorage.app",
 
-        messagingSenderId: "152448766933",
+        messagingSenderId:
+            "152448766933",
 
-        appId: "1:152448766933:web:f7824c4db8ab3caccbe35c"
+        appId:
+            "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+        measurementId:
+            "G-9QV234Z0KZ"
 
     };
 
@@ -282,11 +287,37 @@
        INITIALIZE FIREBASE
     ========================= */
 
-    const app = initializeApp(firebaseConfig);
+    const app =
+        initializeApp(firebaseConfig);
 
-    const auth = getAuth(app);
+    const auth =
+        getAuth(app);
 
-    const db = getFirestore(app);
+    const db =
+        getFirestore(app);
+
+
+    /* =========================
+       DEVICE ID
+    ========================= */
+
+    let deviceId =
+        localStorage.getItem(
+            "deutschEinfachDeviceId"
+        );
+
+
+    if (!deviceId) {
+
+        deviceId =
+            crypto.randomUUID();
+
+        localStorage.setItem(
+            "deutschEinfachDeviceId",
+            deviceId
+        );
+
+    }
 
 
     /* =========================
@@ -294,10 +325,14 @@
     ========================= */
 
     const form =
-        document.getElementById("login-form");
+        document.getElementById(
+            "login-form"
+        );
 
     const button =
-        document.getElementById("login-button");
+        document.getElementById(
+            "login-button"
+        );
 
 
     form.addEventListener(
@@ -328,7 +363,7 @@
 
 
                 /* =========================
-                   SAVE LOGIN SESSION
+                   PERSISTENCE
                 ========================= */
 
                 await setPersistence(
@@ -354,27 +389,107 @@
 
 
                 /* =========================
-                   GET FIRESTORE USER
+                   CREATE NEW SESSION
                 ========================= */
 
-                const userDoc =
+                const sessionId =
+                    crypto.randomUUID();
+
+
+                console.log(
+                    "🔥 New session:",
+                    sessionId
+                );
+
+
+                /* =========================
+                   USER DOCUMENT
+                ========================= */
+
+                const userRef =
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    );
+
+
+                /* =========================
+                   GET OLD DATA
+                ========================= */
+
+                const oldUserDoc =
                     await getDoc(
-                        doc(
-                            db,
-                            "users",
-                            user.uid
-                        )
+                        userRef
                     );
 
 
-                if (userDoc.exists()) {
+                let oldData = {};
 
-                    console.log(
-                        "معلومات المستخدم:",
-                        userDoc.data()
-                    );
+                if (oldUserDoc.exists()) {
+
+                    oldData =
+                        oldUserDoc.data();
 
                 }
+
+
+                /* =========================
+                   SAVE NEW SESSION
+                ========================= */
+
+                await setDoc(
+                    userRef,
+                    {
+
+                        ...oldData,
+
+                        email:
+                            user.email ||
+                            email,
+
+                        name:
+                            user.displayName ||
+                            oldData.name ||
+                            "",
+
+                        sessionId:
+                            sessionId,
+
+                        deviceId:
+                            deviceId,
+
+                        sessionUpdatedAt:
+                            new Date()
+
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+
+                console.log(
+                    "✅ New session saved in Firestore"
+                );
+
+
+                /* =========================
+                   SAVE SESSION LOCALLY
+                ========================= */
+
+                localStorage.setItem(
+                    "deutschEinfachSessionId",
+                    sessionId
+                );
+
+
+                console.log(
+                    "✅ Local session saved:",
+                    localStorage.getItem(
+                        "deutschEinfachSessionId"
+                    )
+                );
 
 
                 /* =========================
@@ -386,16 +501,17 @@
                 );
 
 
-                window.location.href =
-                    "dashboard.html";
-
+                window.location.replace(
+                    "dashboard.html"
+                );
 
             }
+
 
             catch (error) {
 
                 console.error(
-                    "Login error:",
+                    "❌ Login error:",
                     error
                 );
 
@@ -431,7 +547,7 @@
                 else {
 
                     alert(
-                        "وقع مشكل أثناء تسجيل الدخول ❌\n" +
+                        "وقع مشكل أثناء تسجيل الدخول ❌\n\n" +
                         "حاول مرة أخرى."
                     );
 
@@ -449,8 +565,8 @@
     );
 
 </script>
-```
 
 </body>
 
 </html>
+
