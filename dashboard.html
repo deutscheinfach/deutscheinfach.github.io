@@ -1,6 +1,4 @@
-```html
 <!DOCTYPE html>
-
 <html lang="de" dir="rtl">
 
 <head>
@@ -217,6 +215,134 @@
     .logout:hover {
         background: #333;
     }
+
+
+    /* =========================
+       THEMA CHOICE POPUP
+    ========================= */
+
+    .thema-choice-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.55);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+        backdrop-filter: blur(5px);
+    }
+
+    .thema-choice-overlay.show {
+        display: flex;
+        animation: overlayShow 0.3s ease;
+    }
+
+    .thema-choice-box {
+        width: 100%;
+        max-width: 500px;
+        background: white;
+        border-radius: 25px;
+        padding: 30px;
+        border: 3px solid #f0c400;
+        box-shadow: 0 15px 45px rgba(0,0,0,0.25);
+        text-align: center;
+        animation: choiceBoxShow 0.4s ease;
+    }
+
+    .thema-choice-box h2 {
+        margin-top: 0;
+        color: #d60000;
+        font-size: 26px;
+    }
+
+    .thema-choice-box p {
+        color: #666;
+        margin-bottom: 25px;
+    }
+
+    .choice-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .choice-button {
+        width: 100%;
+        padding: 18px;
+        border-radius: 15px;
+        background: white;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+    .choice-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .choice-assassi {
+        border: 2px solid #d60000;
+        color: #d60000;
+    }
+
+    .choice-assassi:hover {
+        background: #fff1f1;
+    }
+
+    .choice-mo3adal {
+        border: 2px solid #f0c400;
+        color: #9a7900;
+    }
+
+    .choice-mo3adal:hover {
+        background: #fff8c7;
+    }
+
+    .close-choice {
+        margin-top: 18px;
+        border: none;
+        background: #eee;
+        color: #555;
+        padding: 11px 25px;
+        border-radius: 12px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .close-choice:hover {
+        background: #ddd;
+    }
+
+    @keyframes overlayShow {
+
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+
+    }
+
+    @keyframes choiceBoxShow {
+
+        from {
+            opacity: 0;
+            transform: translateY(25px) scale(0.94);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+    }
+
 
     @media (max-width: 700px) {
 
@@ -518,6 +644,65 @@
 </div>
 
 
+<!-- =========================
+     THEMA CHOICE POPUP
+========================= -->
+
+<div
+    class="thema-choice-overlay"
+    id="themaChoice"
+    onclick="closeThemaChoice(event)"
+>
+
+    <div
+        class="thema-choice-box"
+        onclick="event.stopPropagation()"
+    >
+
+        <h2>
+            📖 Sport ist gesund
+        </h2>
+
+        <p>
+            اختار النسخة اللي بغيتي تبدأ بها:
+        </p>
+
+
+        <div class="choice-buttons">
+
+            <button
+                class="choice-button choice-assassi"
+                onclick="openAssassi()"
+            >
+                🔴 Sport ist gesund
+                <br>
+                <small>Assassi</small>
+            </button>
+
+
+            <button
+                class="choice-button choice-mo3adal"
+                onclick="openMo3adal()"
+            >
+                🟡 Sport ist gesund
+                <br>
+                <small>Mo3adal</small>
+            </button>
+
+        </div>
+
+
+        <button
+            class="close-choice"
+            onclick="closeThemaChoice()"
+        >
+            ✖️ Schließen
+        </button>
+
+    </div>
+
+</div>
+
 
 <!-- =========================
      FIREBASE
@@ -621,11 +806,6 @@
 
     let currentUser = null;
 
-
-    /*
-     * Firebase ملي كيكمل التحقق
-     * كيحدث currentUser.
-     */
 
     onAuthStateChanged(
         auth,
@@ -902,11 +1082,6 @@
 
     function checkUser() {
 
-        /*
-         * أهم تغيير:
-         * ما بقيناش كنتسناو Promise.
-         */
-
         return auth.currentUser;
 
     }
@@ -916,64 +1091,191 @@
        LESEN TEIL
     ========================= */
 
-    window.openTeil =
-        function(number) {
+    window.openTeil = function(number) {
 
-            const user =
-                checkUser();
+        const user = checkUser();
 
 
-            console.log(
-                "Lesen clicked:",
-                number,
-                "User:",
-                user
-            );
+        console.log(
+            "Lesen clicked:",
+            number,
+            "User:",
+            user
+        );
 
 
-            if (!user) {
+        /* LOGIN CHECK */
 
-                alert(
-                    "🔒 خاصك تسجل فالموقع باش تشوف Thema."
-                );
-
-
-                /*
-                 * ملي المستخدم يدير OK
-                 * يمشي مباشرة لإنشاء الحساب.
-                 */
-
-                window.location.replace(
-                    "signup.html"
-                );
-
-
-                return;
-
-            }
-
-
-            /*
-             * User مسجل الدخول.
-             */
+        if (!user) {
 
             alert(
-                "✅ مرحباً " +
-                (
-                    user.displayName ||
-                    user.email ||
-                    ""
-                ) +
-                "\n\n" +
-                currentLevel +
-                " – Lesen – Teil " +
-                number +
-                "\n\n" +
-                "الحساب ديالك مسجل الدخول ✅\n" +
-                "المحتوى الحقيقي ديال Thema غادي نضيفوه هنا 🔥"
+                "🔒 خاصك تسجل فالموقع باش تشوف Themen."
             );
 
-        };
+
+            window.location.replace(
+                "signup.html"
+            );
+
+
+            return;
+        }
+
+
+        /* TEIL 1 */
+
+        if (number === 1) {
+
+            document.getElementById(
+                "lesenText"
+            ).innerHTML = `
+                اختار Thema باش تبدأ التدريب ديال Lesen Teil 1.
+            `;
+
+
+            document.querySelector(
+                "#lesen .teil-buttons"
+            ).innerHTML = `
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(1)"
+                >
+                    📖 Sport ist gesund
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(2)"
+                >
+                    📖 Thema 2
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(3)"
+                >
+                    📖 Thema 3
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(4)"
+                >
+                    📖 Thema 4
+                </button>
+
+                <button
+                    class="teil-button"
+                    onclick="openThema(5)"
+                >
+                    📖 Thema 5
+                </button>
+
+            `;
+
+
+            return;
+        }
+
+
+        /* TEIL 2 / TEIL 3 */
+
+        alert(
+            "📚 Lesen – Teil " +
+            number +
+            "\n\n" +
+            "المحتوى غادي نضيفوه هنا قريباً 🔥"
+        );
+
+    };
+
+
+    /* =========================
+       OPEN THEMA
+    ========================= */
+
+    window.openThema = function(number) {
+
+        if (number === 1) {
+
+            /*
+             * هنا ما غاديش نمشيو مباشرة
+             * لـ thema1.html.
+             *
+             * غادي نطلعو الاختيار:
+             * Assassi / Mo3adal
+             */
+
+            document.getElementById(
+                "themaChoice"
+            ).classList.add(
+                "show"
+            );
+
+            return;
+        }
+
+
+        alert(
+            "🔒 هاد Thema مازال ما تضافش."
+        );
+
+    };
+
+
+    /* =========================
+       OPEN ASSASSI
+    ========================= */
+
+    window.openAssassi = function() {
+
+        window.location.href =
+            "thema1.html";
+
+    };
+
+
+    /* =========================
+       OPEN MO3ADAL
+    ========================= */
+
+    window.openMo3adal = function() {
+
+        window.location.href =
+            "thema1-mo3adal.html";
+
+    };
+
+
+    /* =========================
+       CLOSE CHOICE
+    ========================= */
+
+    window.closeThemaChoice = function(event) {
+
+        /*
+         * إلا ضغط المستخدم على الخلفية
+         * يسد popup.
+         */
+
+        if (
+            event &&
+            event.target !== event.currentTarget
+        ) {
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "themaChoice"
+        ).classList.remove(
+            "show"
+        );
+
+    };
 
 
     /* =========================
