@@ -369,7 +369,7 @@
 
 <div class="container">
 
-```
+
 <!-- HEADER -->
 
 <div class="header">
@@ -640,7 +640,7 @@
 >
     تسجيل الخروج
 </button>
-```
+
 
 </div>
 
@@ -654,7 +654,7 @@
     onclick="closeThemaChoice(event)"
 >
 
-```
+
 <div
     class="thema-choice-box"
     onclick="event.stopPropagation()"
@@ -701,7 +701,7 @@
     </button>
 
 </div>
-```
+
 
 </div>
 
@@ -725,6 +725,14 @@
         browserLocalPersistence
     }
     from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    import {
+        getFirestore,
+        doc,
+        onSnapshot
+    }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
     /* =========================
@@ -758,17 +766,17 @@
 
 
     /* =========================
-       INITIALIZE
+       INITIALIZE FIREBASE
     ========================= */
 
     const app =
-        initializeApp(
-            firebaseConfig
-        );
-
+        initializeApp(firebaseConfig);
 
     const auth =
         getAuth(app);
+
+    const db =
+        getFirestore(app);
 
 
     /* =========================
@@ -779,25 +787,21 @@
         auth,
         browserLocalPersistence
     )
-    .then(
-        function() {
+    .then(function() {
 
-            console.log(
-                "Firebase persistence enabled ✅"
-            );
+        console.log(
+            "Firebase persistence enabled ✅"
+        );
 
-        }
-    )
-    .catch(
-        function(error) {
+    })
+    .catch(function(error) {
 
-            console.log(
-                "Persistence error:",
-                error
-            );
+        console.error(
+            "Persistence error:",
+            error
+        );
 
-        }
-    );
+    });
 
 
     /* =========================
@@ -807,6 +811,175 @@
     let currentUser = null;
     let authReady = false;
 
+    let stopSessionListener = null;
+
+
+    /* =========================
+       SESSION CHECK
+    ========================= */
+
+    function startSessionListener(user) {
+
+        /* إذا كان كاين listener قديم، نوقفوه */
+
+        if (stopSessionListener) {
+
+            stopSessionListener();
+
+            stopSessionListener = null;
+
+        }
+
+
+        /* sessionId اللي تخزنات ملي دخل هاد الجهاز */
+
+        const mySessionId =
+            localStorage.getItem(
+                "deutschEinfachSessionId"
+            );
+
+
+        if (!mySessionId) {
+
+            console.warn(
+                "No local session ID found."
+            );
+
+            return;
+
+        }
+
+
+        /* document ديال المستخدم */
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                user.uid
+            );
+
+
+        /* =========================
+           LISTEN TO FIRESTORE
+        ========================= */
+
+        stopSessionListener =
+            onSnapshot(
+                userRef,
+                async function(snapshot) {
+
+                    if (!snapshot.exists()) {
+
+                        console.warn(
+                            "User document does not exist."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const data =
+                        snapshot.data();
+
+
+                    const currentSessionId =
+                        data.sessionId;
+
+
+                    console.log(
+                        "My session:",
+                        mySessionId
+                    );
+
+                    console.log(
+                        "Current session:",
+                        currentSessionId
+                    );
+
+
+                    /* =========================
+                       NEW DEVICE DETECTED
+                    ========================= */
+
+                    if (
+                        currentSessionId &&
+                        currentSessionId !== mySessionId
+                    ) {
+
+                        console.log(
+                            "NEW DEVICE LOGIN DETECTED ❌"
+                        );
+
+
+                        /* نوقفو المراقبة */
+
+                        if (stopSessionListener) {
+
+                            stopSessionListener();
+
+                            stopSessionListener = null;
+
+                        }
+
+
+                        /* نحيدو session المحلية */
+
+                        localStorage.removeItem(
+                            "deutschEinfachSessionId"
+                        );
+
+
+                        /* نسجلو الخروج */
+
+                        try {
+
+                            await signOut(
+                                auth
+                            );
+
+                        }
+
+                        catch (error) {
+
+                            console.error(
+                                "Auto logout error:",
+                                error
+                            );
+
+                        }
+
+
+                        alert(
+                            "🔐 تم تسجيل الدخول من جهاز آخر.\n\n" +
+                            "تم تسجيل خروج هذا الجهاز تلقائياً."
+                        );
+
+
+                        window.location.replace(
+                            "login.html"
+                        );
+
+                    }
+
+                },
+                function(error) {
+
+                    console.error(
+                        "Session listener error:",
+                        error
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =========================
+       AUTH STATE
+    ========================= */
 
     onAuthStateChanged(
         auth,
@@ -840,6 +1013,15 @@
                         ""
                     ) +
                     " 👋";
+
+
+                /* =========================
+                   START SESSION MONITOR
+                ========================= */
+
+                startSessionListener(
+                    user
+                );
 
             }
 
@@ -1079,17 +1261,6 @@
 
 
     /* =========================
-       CHECK USER
-    ========================= */
-
-    function checkUser() {
-
-        return currentUser;
-
-    }
-
-
-    /* =========================
        WAIT FOR FIREBASE
     ========================= */
 
@@ -1150,8 +1321,6 @@
             );
 
 
-            /* LOGIN CHECK */
-
             if (!user) {
 
                 alert(
@@ -1168,10 +1337,6 @@
 
             }
 
-
-            /* =========================
-               TEIL 1
-            ========================= */
 
             if (number === 1) {
 
@@ -1228,10 +1393,6 @@
 
             }
 
-
-            /* =========================
-               TEIL 2 / TEIL 3
-            ========================= */
 
             alert(
                 "📚 Lesen – Teil " +
@@ -1479,6 +1640,24 @@
 
             try {
 
+                /* نوقفو مراقبة session */
+
+                if (stopSessionListener) {
+
+                    stopSessionListener();
+
+                    stopSessionListener = null;
+
+                }
+
+
+                /* نحيدو session المحلية */
+
+                localStorage.removeItem(
+                    "deutschEinfachSessionId"
+                );
+
+
                 await signOut(
                     auth
                 );
@@ -1506,8 +1685,8 @@
 
         };
 
-
 </script>
+
 
 </body>
 
