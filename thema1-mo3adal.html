@@ -4,7 +4,6 @@
 
 <head>
 
-```
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -758,26 +757,246 @@
 
 </div>
 
-<script>
+<script type="module">
+
+    /* ========================================= */
+    /* FIREBASE */
+    /* ========================================= */
+
+    import { initializeApp }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+    import {
+        getAuth,
+        onAuthStateChanged
+    }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc
+    }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+
+        apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+        authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+
+        projectId: "deutsch-einfach-4c81f",
+
+        storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+
+        messagingSenderId: "152448766933",
+
+        appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+        measurementId: "G-9QV234Z0KZ"
+
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+    const db = getFirestore(app);
+
+
+    let currentUser = null;
+
+
+    /* ========================================= */
+    /* USER LOGIN */
+    /* ========================================= */
+
+    onAuthStateChanged(auth, function(user) {
+
+        currentUser = user;
+
+        if (!user) {
+
+            console.log(
+                "Kein Benutzer angemeldet."
+            );
+
+        } else {
+
+            console.log(
+                "Benutzer angemeldet:",
+                user.email
+            );
+
+        }
+
+    });
+
+
+    /* ========================================= */
+    /* THEMA 1 PROGRESS */
+    /* ========================================= */
+
+    async function saveThemaProgress() {
+
+        /*
+         * Benutzer muss eingeloggt sein
+         */
+
+        if (!currentUser) {
+
+            alert(
+                "⚠️ Du musst angemeldet sein, " +
+                "damit dein Fortschritt gespeichert werden kann."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                );
+
+
+            const userSnapshot =
+                await getDoc(userRef);
+
+
+            let userData = {};
+
+
+            if (userSnapshot.exists()) {
+
+                userData =
+                    userSnapshot.data();
+
+            }
+
+
+            /*
+             * Bereits abgeschlossene Themen
+             */
+
+            const completedThemas =
+                userData.completedThemas || {};
+
+
+            /*
+             * WICHTIG:
+             *
+             * Mo3adal und Grundversion
+             * benutzen beide "thema1".
+             *
+             * Dadurch wird Thema 1
+             * niemals doppelt gezählt.
+             */
+
+            if (
+                completedThemas.thema1 === true
+            ) {
+
+                console.log(
+                    "Thema 1 ist bereits abgeschlossen."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Thema 1 speichern
+             */
+
+            completedThemas.thema1 = true;
+
+
+            await setDoc(
+
+                userRef,
+
+                {
+                    completedThemas:
+                        completedThemas
+                },
+
+                {
+                    merge: true
+                }
+
+            );
+
+
+            console.log(
+                "Thema 1 erfolgreich gespeichert."
+            );
+
+
+            alert(
+                "🎉 Sehr gut!\n\n" +
+                "Thema 1 wurde erfolgreich abgeschlossen. ✅\n\n" +
+                "Dein Fortschritt wurde gespeichert."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Progress error:",
+                error
+            );
+
+
+            alert(
+                "⚠️ Dein Ergebnis ist richtig, " +
+                "aber der Fortschritt konnte nicht gespeichert werden."
+            );
+
+        }
+
+    }
+
+
+    /* ========================================= */
+    /* EXERCISE */
+    /* ========================================= */
 
     let selectedText = null;
 
 
     let userAnswers = {
+
         1: null,
         2: null,
         3: null,
         4: null,
         5: null
+
     };
 
 
+    /* ========================================= */
+    /* RICHTIGE ANTWORTEN */
+    /* ========================================= */
+
     const correctAnswers = {
+
         1: "G",
         2: "E",
         3: "A",
         4: "C",
         5: "D"
+
     };
 
 
@@ -806,56 +1025,74 @@
     };
 
 
-    /*
-        Text auswählen
-    */
+    /* ========================================= */
+    /* TEXT AUSWÄHLEN */
+    /* ========================================= */
 
-    function selectText(number) {
+    window.selectText = function(number) {
 
         selectedText = number;
 
 
-        document.querySelectorAll(".text-card")
+        document
+            .querySelectorAll(".text-card")
             .forEach(card => {
 
-                card.classList.remove("selected");
+                card.classList.remove(
+                    "selected"
+                );
 
             });
 
 
-        document.getElementById("text" + number)
-            .classList.add("selected");
+        document
+            .getElementById(
+                "text" + number
+            )
+            .classList.add(
+                "selected"
+            );
 
 
-        document.querySelectorAll(".heading")
+        document
+            .querySelectorAll(".heading")
             .forEach(h => {
 
-                h.classList.remove("selected");
+                h.classList.remove(
+                    "selected"
+                );
 
             });
 
-    }
+    };
 
 
-    /*
-        Heading auswählen
-    */
+    /* ========================================= */
+    /* HEADING AUSWÄHLEN */
+    /* ========================================= */
 
-    function selectHeading(letter) {
+    window.selectHeading = function(letter) {
 
         if (!selectedText) {
 
-            alert("Bitte zuerst einen Text auswählen.");
+            alert(
+                "Bitte zuerst einen Text auswählen."
+            );
 
             return;
+
         }
 
 
         /*
-            Prüfen ob Heading schon benutzt wird
-        */
+         * Prüfen ob Heading bereits benutzt wird
+         */
 
-        for (let i = 1; i <= 5; i++) {
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
 
             if (
                 i !== selectedText &&
@@ -869,13 +1106,15 @@
                 );
 
                 return;
+
             }
+
         }
 
 
         /*
-            Alte Antwort entfernen
-        */
+         * Alte Antwort entfernen
+         */
 
         const oldAnswer =
             userAnswers[selectedText];
@@ -883,44 +1122,56 @@
 
         if (oldAnswer) {
 
-            document.getElementById(
-                "heading" + oldAnswer
-            ).classList.remove("used");
+            document
+                .getElementById(
+                    "heading" + oldAnswer
+                )
+                .classList.remove(
+                    "used"
+                );
 
         }
 
 
         /*
-            Neue Antwort speichern
-        */
+         * Neue Antwort speichern
+         */
 
-        userAnswers[selectedText] = letter;
-
-
-        /*
-            Heading als benutzt markieren
-        */
-
-        document.getElementById(
-            "heading" + letter
-        ).classList.add("used");
+        userAnswers[selectedText] =
+            letter;
 
 
         /*
-            Heading selected entfernen
-        */
+         * Heading als benutzt markieren
+         */
 
-        document.querySelectorAll(".heading")
+        document
+            .getElementById(
+                "heading" + letter
+            )
+            .classList.add(
+                "used"
+            );
+
+
+        /*
+         * Heading Auswahl entfernen
+         */
+
+        document
+            .querySelectorAll(".heading")
             .forEach(h => {
 
-                h.classList.remove("selected");
+                h.classList.remove(
+                    "selected"
+                );
 
             });
 
 
         /*
-            Antwort anzeigen
-        */
+         * Antwort anzeigen
+         */
 
         const answerBox =
             document.getElementById(
@@ -933,16 +1184,23 @@
             <div class="answer-content">
 
                 <span class="answer-letter">
+
                     ${letter}
+
                 </span>
 
                 <span>
+
                     — ${headingTitles[letter]}
+
                 </span>
 
                 <button
+
                     class="remove-answer"
+
                     onclick="removeAnswer(${selectedText}, event)"
+
                     title="Antwort entfernen">
 
                     ✕
@@ -955,8 +1213,8 @@
 
 
         /*
-            Status zurücksetzen
-        */
+         * Status zurücksetzen
+         */
 
         answerBox.classList.remove(
             "wrong",
@@ -964,44 +1222,53 @@
         );
 
 
-        answerBox.classList.add("filled");
-
-
-        /*
-            Wichtig:
-            Text bekommt noch KEINE Farbe.
-            Die Farbe kommt erst nach Antwort.
-        */
-
-        document.getElementById(
-            "text" + selectedText
-        ).classList.remove(
-            "correct-answer",
-            "wrong-answer"
+        answerBox.classList.add(
+            "filled"
         );
 
 
         /*
-            Animation
-        */
+         * Text bekommt noch keine Farbe
+         */
+
+        document
+            .getElementById(
+                "text" + selectedText
+            )
+            .classList.remove(
+                "correct-answer",
+                "wrong-answer"
+            );
+
+
+        /*
+         * Animation
+         */
 
         setTimeout(() => {
 
-            answerBox.classList.remove("filled");
+            answerBox.classList.remove(
+                "filled"
+            );
 
         }, 450);
 
-    }
+    };
 
 
-    /*
-        Antwort löschen
-    */
+    /* ========================================= */
+    /* ANTWORT LÖSCHEN */
+    /* ========================================= */
 
-    function removeAnswer(textNumber, event) {
+    window.removeAnswer = function(
+        textNumber,
+        event
+    ) {
 
         if (event) {
+
             event.stopPropagation();
+
         }
 
 
@@ -1010,29 +1277,36 @@
 
 
         if (!oldAnswer) {
+
             return;
+
         }
 
 
         /*
-            Heading wieder verfügbar
-        */
+         * Heading wieder verfügbar
+         */
 
-        document.getElementById(
-            "heading" + oldAnswer
-        ).classList.remove("used");
-
-
-        /*
-            Antwort löschen
-        */
-
-        userAnswers[textNumber] = null;
+        document
+            .getElementById(
+                "heading" + oldAnswer
+            )
+            .classList.remove(
+                "used"
+            );
 
 
         /*
-            Answer Box zurücksetzen
-        */
+         * Antwort löschen
+         */
+
+        userAnswers[textNumber] =
+            null;
+
+
+        /*
+         * Answer Box zurücksetzen
+         */
 
         const answerBox =
             document.getElementById(
@@ -1052,49 +1326,65 @@
 
 
         /*
-            Text-Farbe entfernen
-        */
+         * Textfarbe entfernen
+         */
 
-        document.getElementById(
-            "text" + textNumber
-        ).classList.remove(
-            "correct-answer",
-            "wrong-answer"
-        );
-
-
-        /*
-            Selected entfernen
-        */
-
-        document.getElementById(
-            "text" + textNumber
-        ).classList.remove("selected");
+        document
+            .getElementById(
+                "text" + textNumber
+            )
+            .classList.remove(
+                "correct-answer",
+                "wrong-answer"
+            );
 
 
         /*
-            Selected Text löschen
-        */
+         * Selected entfernen
+         */
 
-        if (selectedText === textNumber) {
+        document
+            .getElementById(
+                "text" + textNumber
+            )
+            .classList.remove(
+                "selected"
+            );
+
+
+        /*
+         * Aktuellen Text löschen
+         */
+
+        if (
+            selectedText === textNumber
+        ) {
 
             selectedText = null;
 
         }
 
-    }
+    };
 
 
-    /*
-        Antworten prüfen
-    */
+    /* ========================================= */
+    /* ANTWORTEN PRÜFEN */
+    /* ========================================= */
 
-    function checkAnswers() {
+    window.checkAnswers = async function() {
 
         let score = 0;
 
 
-        for (let i = 1; i <= 5; i++) {
+        /*
+         * Alle 5 Antworten prüfen
+         */
+
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
 
             const answerBox =
                 document.getElementById(
@@ -1113,8 +1403,8 @@
 
 
             /*
-                Alten Status entfernen
-            */
+             * Alten Status entfernen
+             */
 
             answerBox.classList.remove(
                 "correct",
@@ -1129,12 +1419,16 @@
 
 
             /*
-                RICHTIG
-            */
+             * RICHTIG
+             */
 
             if (
+
                 userAnswer &&
-                userAnswer === correctAnswers[i]
+
+                userAnswer ===
+                correctAnswers[i]
+
             ) {
 
                 score++;
@@ -1155,12 +1449,17 @@
                     <div class="answer-content">
 
                         <span>
+
                             ✅ ${userAnswer} — Richtig
+
                         </span>
 
                         <button
+
                             class="remove-answer"
+
                             onclick="removeAnswer(${i}, event)"
+
                             title="Antwort entfernen">
 
                             ✕
@@ -1175,8 +1474,8 @@
 
 
             /*
-                Keine Antwort
-            */
+             * KEINE ANTWORT
+             */
 
             else if (!userAnswer) {
 
@@ -1195,7 +1494,9 @@
                     <div class="answer-content">
 
                         <span>
+
                             ❌ Keine Antwort
+
                         </span>
 
                     </div>
@@ -1206,8 +1507,8 @@
 
 
             /*
-                FALSCH
-            */
+             * FALSCH
+             */
 
             else {
 
@@ -1226,12 +1527,17 @@
                     <div class="answer-content">
 
                         <span>
+
                             ❌ ${userAnswer} — Falsch
+
                         </span>
 
                         <button
+
                             class="remove-answer"
+
                             onclick="removeAnswer(${i}, event)"
+
                             title="Antwort entfernen">
 
                             ✕
@@ -1247,9 +1553,9 @@
         }
 
 
-        /*
-            Ergebnis
-        */
+        /* ========================================= */
+        /* ERGEBNIS */
+        /* ========================================= */
 
         const result =
             document.getElementById(
@@ -1262,28 +1568,52 @@
             result.textContent =
                 "🏆 Ergebnis: 5 / 5 — Sehr gut! 🎉";
 
-        } else {
+
+            /*
+             * ⭐ PROGRESS ⭐
+             *
+             * Nur wenn alle 5 Antworten
+             * richtig sind.
+             */
+
+            await saveThemaProgress();
+
+        }
+
+        else {
 
             result.textContent =
-                "Ergebnis: " + score + " / 5";
+                "Ergebnis: " +
+                score +
+                " / 5";
 
         }
 
 
-        result.classList.remove("show");
+        /*
+         * Ergebnis anzeigen
+         */
+
+        result.classList.remove(
+            "show"
+        );
+
 
         void result.offsetWidth;
 
-        result.classList.add("show");
 
-    }
+        result.classList.add(
+            "show"
+        );
+
+    };
 
 
-    /*
-        Wiederholen
-    */
+    /* ========================================= */
+    /* WIEDERHOLEN */
+    /* ========================================= */
 
-    function repeatExercise() {
+    window.repeatExercise = function() {
 
         userAnswers = {
 
@@ -1300,10 +1630,11 @@
 
 
         /*
-            Text zurücksetzen
-        */
+         * Texte zurücksetzen
+         */
 
-        document.querySelectorAll(".text-card")
+        document
+            .querySelectorAll(".text-card")
             .forEach(card => {
 
                 card.classList.remove(
@@ -1316,10 +1647,11 @@
 
 
         /*
-            Headings zurücksetzen
-        */
+         * Headings zurücksetzen
+         */
 
-        document.querySelectorAll(".heading")
+        document
+            .querySelectorAll(".heading")
             .forEach(heading => {
 
                 heading.classList.remove(
@@ -1331,10 +1663,14 @@
 
 
         /*
-            Answer Boxes zurücksetzen
-        */
+         * Answer Boxes zurücksetzen
+         */
 
-        for (let i = 1; i <= 5; i++) {
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
 
             const answerBox =
                 document.getElementById(
@@ -1356,8 +1692,8 @@
 
 
         /*
-            Result zurücksetzen
-        */
+         * Result zurücksetzen
+         */
 
         const result =
             document.getElementById(
@@ -1365,11 +1701,18 @@
             );
 
 
-        result.classList.remove("show");
+        result.classList.remove(
+            "show"
+        );
+
 
         result.textContent =
             "Ergebnis: 0 / 5";
 
+
+        /*
+         * Nach oben scrollen
+         */
 
         window.scrollTo({
 
@@ -1379,29 +1722,32 @@
 
         });
 
-    }
+    };
 
 
-    /*
-        Zurück
-    */
+    /* ========================================= */
+    /* ZURÜCK */
+    /* ========================================= */
 
-    function goBack() {
+    window.goBack = function() {
 
         if (document.referrer) {
 
             history.back();
 
-        } else {
+        }
+
+        else {
 
             window.location.href =
                 "dashboard.html";
 
         }
 
-    }
+    };
 
 </script>
+
 
 </body>
 
