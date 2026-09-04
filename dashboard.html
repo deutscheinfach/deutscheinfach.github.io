@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="de" dir="rtl">
 
 <head>
@@ -364,285 +365,284 @@
 
 </head>
 
-
 <body>
 
 <div class="container">
 
+```
+<!-- HEADER -->
 
-    <!-- HEADER -->
+<div class="header">
 
-    <div class="header">
+    <img
+        src="icon1.png"
+        alt="Deutsch Einfach"
+        class="logo"
+    >
 
-        <img
-            src="icon1.png"
-            alt="Deutsch Einfach"
-            class="logo"
-        >
-
-        <h1>
-            Deutsch Einfach 🇩🇪
-        </h1>
-
-        <div
-            class="welcome"
-            id="welcomeText"
-        >
-            مرحباً بك! اختار المستوى اللي بغيتي تتعلم.
-        </div>
-
-    </div>
-
-
-    <!-- B1 / B2 -->
-
-    <div class="level-buttons">
-
-        <button
-            id="b1Button"
-            class="level-button"
-            onclick="selectLevel('B1', this)"
-        >
-            🇩🇪 B1
-        </button>
-
-
-        <button
-            id="b2Button"
-            class="level-button active"
-            onclick="selectLevel('B2', this)"
-        >
-            🇩🇪 B2
-        </button>
-
-    </div>
-
-
-    <!-- SELECTED LEVEL -->
-
-    <div class="selected-level">
-
-        <h2 id="selectedLevelText">
-            المستوى المختار: B2 🇩🇪
-        </h2>
-
-    </div>
-
-
-    <!-- MAIN BUTTONS -->
-
-    <div class="main-buttons">
-
-        <button
-            id="lesenButton"
-            class="main-button active"
-            onclick="showSection('lesen', this)"
-        >
-            📖 Lesen
-        </button>
-
-
-        <button
-            id="hörenButton"
-            class="main-button"
-            onclick="showSection('hören', this)"
-        >
-            🎧 Hören
-        </button>
-
-
-        <button
-            id="schreibenButton"
-            class="main-button"
-            onclick="showSection('schreiben', this)"
-        >
-            ✍️ Schreiben
-        </button>
-
-
-        <button
-            id="sprechenButton"
-            class="main-button"
-            onclick="showSection('sprechen', this)"
-        >
-            🗣️ Sprechen
-        </button>
-
-    </div>
-
-
-    <!-- CONTENT -->
+    <h1>
+        Deutsch Einfach 🇩🇪
+    </h1>
 
     <div
-        class="content-card"
-        id="content"
+        class="welcome"
+        id="welcomeText"
     >
-
-
-        <!-- LESEN -->
-
-        <div id="lesen">
-
-            <h2>
-                📖 Lesen
-            </h2>
-
-
-            <p id="lesenText">
-                اختار Teil باش تبدأ تدريب Lesen ديال TELC B2.
-            </p>
-
-
-            <div class="teil-buttons">
-
-                <button
-                    class="teil-button"
-                    onclick="openTeil(1)"
-                >
-                    📄 Lesen – Teil 1
-                </button>
-
-
-                <button
-                    class="teil-button"
-                    onclick="openTeil(2)"
-                >
-                    📄 Lesen – Teil 2
-                </button>
-
-
-                <button
-                    class="teil-button"
-                    onclick="openTeil(3)"
-                >
-                    📄 Lesen – Teil 3
-                </button>
-
-            </div>
-
-
-            <div class="info-box">
-
-                🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
-
-            </div>
-
-        </div>
-
-
-        <!-- HÖREN -->
-
-        <div
-            id="hören"
-            style="display:none;"
-        >
-
-            <h2>
-                🎧 Hören
-            </h2>
-
-
-            <p id="hörenText">
-                اختار Teil باش تبدأ تدريب Hören ديال TELC B2.
-            </p>
-
-
-            <div class="teil-buttons">
-
-                <button
-                    class="teil-button"
-                    onclick="openHorenTeil(1)"
-                >
-                    🎧 Hören – Teil 1
-                </button>
-
-
-                <button
-                    class="teil-button"
-                    onclick="openHorenTeil(2)"
-                >
-                    🎧 Hören – Teil 2
-                </button>
-
-
-                <button
-                    class="teil-button"
-                    onclick="openHorenTeil(3)"
-                >
-                    🎧 Hören – Teil 3
-                </button>
-
-            </div>
-
-
-            <div class="info-box">
-
-                🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
-
-            </div>
-
-        </div>
-
-
-        <!-- SCHREIBEN -->
-
-        <div
-            id="schreiben"
-            style="display:none;"
-        >
-
-            <div class="other-content">
-
-                <h2>
-                    ✍️ Schreiben
-                </h2>
-
-
-                <p id="schreibenText">
-                    هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC B2.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- SPRECHEN -->
-
-        <div
-            id="sprechen"
-            style="display:none;"
-        >
-
-            <div class="other-content">
-
-                <h2>
-                    🗣️ Sprechen
-                </h2>
-
-
-                <p id="sprechenText">
-                    هنا غادي تلقى تمارين Sprechen ديال TELC B2.
-                </p>
-
-            </div>
-
-        </div>
-
+        مرحباً بك! اختار المستوى اللي بغيتي تتعلم.
     </div>
 
+</div>
 
-    <!-- LOGOUT -->
+
+<!-- B1 / B2 -->
+
+<div class="level-buttons">
 
     <button
-        class="logout"
-        onclick="logout()"
+        id="b1Button"
+        class="level-button"
+        onclick="selectLevel('B1', this)"
     >
-        تسجيل الخروج
+        🇩🇪 B1
+    </button>
+
+
+    <button
+        id="b2Button"
+        class="level-button active"
+        onclick="selectLevel('B2', this)"
+    >
+        🇩🇪 B2
     </button>
 
 </div>
 
+
+<!-- SELECTED LEVEL -->
+
+<div class="selected-level">
+
+    <h2 id="selectedLevelText">
+        المستوى المختار: B2 🇩🇪
+    </h2>
+
+</div>
+
+
+<!-- MAIN BUTTONS -->
+
+<div class="main-buttons">
+
+    <button
+        id="lesenButton"
+        class="main-button active"
+        onclick="showSection('lesen', this)"
+    >
+        📖 Lesen
+    </button>
+
+
+    <button
+        id="hörenButton"
+        class="main-button"
+        onclick="showSection('hören', this)"
+    >
+        🎧 Hören
+    </button>
+
+
+    <button
+        id="schreibenButton"
+        class="main-button"
+        onclick="showSection('schreiben', this)"
+    >
+        ✍️ Schreiben
+    </button>
+
+
+    <button
+        id="sprechenButton"
+        class="main-button"
+        onclick="showSection('sprechen', this)"
+    >
+        🗣️ Sprechen
+    </button>
+
+</div>
+
+
+<!-- CONTENT -->
+
+<div
+    class="content-card"
+    id="content"
+>
+
+
+    <!-- LESEN -->
+
+    <div id="lesen">
+
+        <h2>
+            📖 Lesen
+        </h2>
+
+
+        <p id="lesenText">
+            اختار Teil باش تبدأ تدريب Lesen ديال TELC B2.
+        </p>
+
+
+        <div class="teil-buttons">
+
+            <button
+                class="teil-button"
+                onclick="openTeil(1)"
+            >
+                📄 Lesen – Teil 1
+            </button>
+
+
+            <button
+                class="teil-button"
+                onclick="openTeil(2)"
+            >
+                📄 Lesen – Teil 2
+            </button>
+
+
+            <button
+                class="teil-button"
+                onclick="openTeil(3)"
+            >
+                📄 Lesen – Teil 3
+            </button>
+
+        </div>
+
+
+        <div class="info-box">
+
+            🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
+
+        </div>
+
+    </div>
+
+
+    <!-- HÖREN -->
+
+    <div
+        id="hören"
+        style="display:none;"
+    >
+
+        <h2>
+            🎧 Hören
+        </h2>
+
+
+        <p id="hörenText">
+            اختار Teil باش تبدأ تدريب Hören ديال TELC B2.
+        </p>
+
+
+        <div class="teil-buttons">
+
+            <button
+                class="teil-button"
+                onclick="openHorenTeil(1)"
+            >
+                🎧 Hören – Teil 1
+            </button>
+
+
+            <button
+                class="teil-button"
+                onclick="openHorenTeil(2)"
+            >
+                🎧 Hören – Teil 2
+            </button>
+
+
+            <button
+                class="teil-button"
+                onclick="openHorenTeil(3)"
+            >
+                🎧 Hören – Teil 3
+            </button>
+
+        </div>
+
+
+        <div class="info-box">
+
+            🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
+
+        </div>
+
+    </div>
+
+
+    <!-- SCHREIBEN -->
+
+    <div
+        id="schreiben"
+        style="display:none;"
+    >
+
+        <div class="other-content">
+
+            <h2>
+                ✍️ Schreiben
+            </h2>
+
+
+            <p id="schreibenText">
+                هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC B2.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SPRECHEN -->
+
+    <div
+        id="sprechen"
+        style="display:none;"
+    >
+
+        <div class="other-content">
+
+            <h2>
+                🗣️ Sprechen
+            </h2>
+
+
+            <p id="sprechenText">
+                هنا غادي تلقى تمارين Sprechen ديال TELC B2.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- LOGOUT -->
+
+<button
+    class="logout"
+    onclick="logout()"
+>
+    تسجيل الخروج
+</button>
+```
+
+</div>
 
 <!-- =========================
      THEMA CHOICE POPUP
@@ -654,62 +654,62 @@
     onclick="closeThemaChoice(event)"
 >
 
-    <div
-        class="thema-choice-box"
-        onclick="event.stopPropagation()"
-    >
+```
+<div
+    class="thema-choice-box"
+    onclick="event.stopPropagation()"
+>
 
-        <h2>
-            📖 Sport ist gesund
-        </h2>
+    <h2>
+        📖 Sport ist gesund
+    </h2>
 
-        <p>
-            اختار النسخة اللي بغيتي تبدأ بها:
-        </p>
-
-
-        <div class="choice-buttons">
-
-            <button
-                class="choice-button choice-assassi"
-                onclick="openAssassi()"
-            >
-                🔴 Sport ist gesund
-                <br>
-                <small>Assassi</small>
-            </button>
+    <p>
+        اختار النسخة اللي بغيتي تبدأ بها:
+    </p>
 
 
-            <button
-                class="choice-button choice-mo3adal"
-                onclick="openMo3adal()"
-            >
-                🟡 Sport ist gesund
-                <br>
-                <small>Mo3adal</small>
-            </button>
+    <div class="choice-buttons">
 
-        </div>
+        <button
+            class="choice-button choice-assassi"
+            onclick="openAssassi()"
+        >
+            🔴 Sport ist gesund
+            <br>
+            <small>Assassi</small>
+        </button>
 
 
         <button
-            class="close-choice"
-            onclick="closeThemaChoice()"
+            class="choice-button choice-mo3adal"
+            onclick="openMo3adal()"
         >
-            ✖️ Schließen
+            🟡 Sport ist gesund
+            <br>
+            <small>Mo3adal</small>
         </button>
 
     </div>
 
-</div>
 
+    <button
+        class="close-choice"
+        onclick="closeThemaChoice()"
+    >
+        ✖️ Schließen
+    </button>
+
+</div>
+```
+
+</div>
 
 <!-- =========================
      FIREBASE
 ========================= -->
 
 <script type="module">
-
 
     import {
         initializeApp
@@ -805,6 +805,7 @@
     ========================= */
 
     let currentUser = null;
+    let authReady = false;
 
 
     onAuthStateChanged(
@@ -812,6 +813,7 @@
         function(user) {
 
             currentUser = user;
+            authReady = true;
 
 
             console.log(
@@ -1082,7 +1084,49 @@
 
     function checkUser() {
 
-        return auth.currentUser;
+        return currentUser;
+
+    }
+
+
+    /* =========================
+       WAIT FOR FIREBASE
+    ========================= */
+
+    async function waitForAuth() {
+
+        if (authReady) {
+
+            return currentUser;
+
+        }
+
+
+        return new Promise(
+            function(resolve) {
+
+                const check =
+                    setInterval(
+                        function() {
+
+                            if (authReady) {
+
+                                clearInterval(
+                                    check
+                                );
+
+                                resolve(
+                                    currentUser
+                                );
+
+                            }
+
+                        },
+                        50
+                    );
+
+            }
+        );
 
     }
 
@@ -1091,191 +1135,191 @@
        LESEN TEIL
     ========================= */
 
-    window.openTeil = function(number) {
+    window.openTeil =
+        async function(number) {
 
-        const user = checkUser();
-
-
-        console.log(
-            "Lesen clicked:",
-            number,
-            "User:",
-            user
-        );
+            const user =
+                await waitForAuth();
 
 
-        /* LOGIN CHECK */
+            console.log(
+                "Lesen clicked:",
+                number,
+                "User:",
+                user
+            );
 
-        if (!user) {
+
+            /* LOGIN CHECK */
+
+            if (!user) {
+
+                alert(
+                    "🔒 خاصك تسجل فالموقع باش تشوف Themen."
+                );
+
+
+                window.location.replace(
+                    "signup.html"
+                );
+
+
+                return;
+
+            }
+
+
+            /* =========================
+               TEIL 1
+            ========================= */
+
+            if (number === 1) {
+
+                document.getElementById(
+                    "lesenText"
+                ).innerHTML = `
+                    اختار Thema باش تبدأ التدريب ديال Lesen Teil 1.
+                `;
+
+
+                document.querySelector(
+                    "#lesen .teil-buttons"
+                ).innerHTML = `
+
+                    <button
+                        class="teil-button"
+                        onclick="openThema(1)"
+                    >
+                        📖 Sport ist gesund
+                    </button>
+
+                    <button
+                        class="teil-button"
+                        onclick="openThema(2)"
+                    >
+                        📖 Thema 2
+                    </button>
+
+                    <button
+                        class="teil-button"
+                        onclick="openThema(3)"
+                    >
+                        📖 Thema 3
+                    </button>
+
+                    <button
+                        class="teil-button"
+                        onclick="openThema(4)"
+                    >
+                        📖 Thema 4
+                    </button>
+
+                    <button
+                        class="teil-button"
+                        onclick="openThema(5)"
+                    >
+                        📖 Thema 5
+                    </button>
+
+                `;
+
+
+                return;
+
+            }
+
+
+            /* =========================
+               TEIL 2 / TEIL 3
+            ========================= */
 
             alert(
-                "🔒 خاصك تسجل فالموقع باش تشوف Themen."
+                "📚 Lesen – Teil " +
+                number +
+                "\n\n" +
+                "المحتوى غادي نضيفوه هنا قريباً 🔥"
             );
 
-
-            window.location.replace(
-                "signup.html"
-            );
-
-
-            return;
-        }
-
-
-        /* TEIL 1 */
-
-        if (number === 1) {
-
-            document.getElementById(
-                "lesenText"
-            ).innerHTML = `
-                اختار Thema باش تبدأ التدريب ديال Lesen Teil 1.
-            `;
-
-
-            document.querySelector(
-                "#lesen .teil-buttons"
-            ).innerHTML = `
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(1)"
-                >
-                    📖 Sport ist gesund
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(2)"
-                >
-                    📖 Thema 2
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(3)"
-                >
-                    📖 Thema 3
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(4)"
-                >
-                    📖 Thema 4
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(5)"
-                >
-                    📖 Thema 5
-                </button>
-
-            `;
-
-
-            return;
-        }
-
-
-        /* TEIL 2 / TEIL 3 */
-
-        alert(
-            "📚 Lesen – Teil " +
-            number +
-            "\n\n" +
-            "المحتوى غادي نضيفوه هنا قريباً 🔥"
-        );
-
-    };
+        };
 
 
     /* =========================
        OPEN THEMA
     ========================= */
 
-    window.openThema = function(number) {
+    window.openThema =
+        function(number) {
 
-        if (number === 1) {
+            if (number === 1) {
 
-            /*
-             * هنا ما غاديش نمشيو مباشرة
-             * لـ thema1.html.
-             *
-             * غادي نطلعو الاختيار:
-             * Assassi / Mo3adal
-             */
+                document.getElementById(
+                    "themaChoice"
+                ).classList.add(
+                    "show"
+                );
 
-            document.getElementById(
-                "themaChoice"
-            ).classList.add(
-                "show"
+                return;
+
+            }
+
+
+            alert(
+                "🔒 هاد Thema مازال ما تضافش."
             );
 
-            return;
-        }
-
-
-        alert(
-            "🔒 هاد Thema مازال ما تضافش."
-        );
-
-    };
+        };
 
 
     /* =========================
        OPEN ASSASSI
     ========================= */
 
-    window.openAssassi = function() {
+    window.openAssassi =
+        function() {
 
-        window.location.href =
-            "thema1.html";
+            window.location.href =
+                "thema1.html";
 
-    };
+        };
 
 
     /* =========================
        OPEN MO3ADAL
     ========================= */
 
-    window.openMo3adal = function() {
+    window.openMo3adal =
+        function() {
 
-        window.location.href =
-            "thema1-mo3adal.html";
+            window.location.href =
+                "thema1-mo3adal.html";
 
-    };
+        };
 
 
     /* =========================
        CLOSE CHOICE
     ========================= */
 
-    window.closeThemaChoice = function(event) {
+    window.closeThemaChoice =
+        function(event) {
 
-        /*
-         * إلا ضغط المستخدم على الخلفية
-         * يسد popup.
-         */
+            if (
+                event &&
+                event.target !== event.currentTarget
+            ) {
 
-        if (
-            event &&
-            event.target !== event.currentTarget
-        ) {
+                return;
 
-            return;
-
-        }
+            }
 
 
-        document.getElementById(
-            "themaChoice"
-        ).classList.remove(
-            "show"
-        );
+            document.getElementById(
+                "themaChoice"
+            ).classList.remove(
+                "show"
+            );
 
-    };
+        };
 
 
     /* =========================
@@ -1283,10 +1327,10 @@
     ========================= */
 
     window.openHorenTeil =
-        function(number) {
+        async function(number) {
 
             const user =
-                checkUser();
+                await waitForAuth();
 
 
             console.log(
@@ -1341,14 +1385,12 @@
         "DOMContentLoaded",
         function() {
 
-
             if (
                 sectionFromURL &&
                 sectionMap[
                     sectionFromURL
                 ]
             ) {
-
 
                 const section =
                     sectionMap[
@@ -1411,11 +1453,9 @@
                     button
                 );
 
-
             }
 
             else {
-
 
                 showSection(
                     "lesen",
@@ -1472,4 +1512,3 @@
 </body>
 
 </html>
-```
