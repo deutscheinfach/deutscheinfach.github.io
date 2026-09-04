@@ -22,9 +22,78 @@
             min-height: 100vh;
         }
 
+        /* ========================================= */
+        /* TOP NAVIGATION */
+        /* ========================================= */
+
+        .top-navigation {
+            width: 95%;
+            max-width: 1400px;
+            margin: 18px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .nav-left,
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn {
+            border: none;
+            padding: 11px 17px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-back {
+            background: #333;
+            color: white;
+        }
+
+        .nav-home {
+            background: white;
+            color: #d62828;
+            border: 2px solid #ffd166;
+        }
+
+        .nav-offer {
+            background: #d62828;
+            color: white;
+        }
+
+        .page-progress {
+            background: white;
+            border: 2px solid #ffd166;
+            border-radius: 15px;
+            padding: 9px 18px;
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+            line-height: 1.5;
+        }
+
+        /* ========================================= */
+        /* HEADER */
+        /* ========================================= */
+
         header {
             background: white;
             padding: 20px;
+            margin-top: 15px;
             text-align: center;
             border-bottom: 4px solid #ffd166;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
@@ -65,6 +134,10 @@
             font-weight: bold;
         }
 
+        /* ========================================= */
+        /* CONTAINER */
+        /* ========================================= */
+
         .container {
             width: 95%;
             max-width: 1400px;
@@ -89,6 +162,10 @@
             color: #555;
             line-height: 1.6;
         }
+
+        /* ========================================= */
+        /* EXERCISE */
+        /* ========================================= */
 
         .exercise {
             display: grid;
@@ -179,6 +256,10 @@
             text-align: justify;
         }
 
+        /* ========================================= */
+        /* ANSWER BOX */
+        /* ========================================= */
+
         .answer-box {
             margin-top: 18px;
             min-height: 52px;
@@ -219,8 +300,30 @@
             color: #a51d1d;
         }
 
-        @keyframes answerPop {
+        .correct-answer-text {
+            display: block;
+            margin-top: 8px;
+            padding: 9px 12px;
+            background: #e7fff7;
+            border: 1px solid #2a9d8f;
+            border-radius: 9px;
+            color: #176b5f;
+            font-weight: bold;
+            line-height: 1.5;
+        }
 
+        .wrong-answer-text {
+            display: block;
+            margin-bottom: 6px;
+            color: #a51d1d;
+            font-weight: bold;
+        }
+
+        .answer-content {
+            width: 100%;
+        }
+
+        @keyframes answerPop {
             0% {
                 transform: scale(0.97);
                 opacity: 0.5;
@@ -230,34 +333,24 @@
                 transform: scale(1);
                 opacity: 1;
             }
-
         }
 
         .remove-answer {
             margin-left: 10px;
-
             width: 30px;
             height: 30px;
-
             padding: 0;
-
             border: none;
             border-radius: 50%;
-
             background: #eeeeee;
             color: #000000;
-
             font-size: 16px;
             font-weight: bold;
-
             cursor: pointer;
-
             display: inline-flex;
             align-items: center;
             justify-content: center;
-
             transition: 0.2s ease;
-
             flex-shrink: 0;
         }
 
@@ -267,20 +360,18 @@
             transform: scale(1.1);
         }
 
+        /* ========================================= */
+        /* HEADINGS */
+        /* ========================================= */
+
         .headings {
             position: sticky;
             top: 20px;
-
             background: white;
-
             border-radius: 18px;
-
             padding: 20px;
-
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-
             border: 3px solid #ffd166;
-
             max-height: 80vh;
             overflow-y: auto;
         }
@@ -293,21 +384,13 @@
 
         .heading {
             position: relative;
-
             background: #fffaf0;
-
             border: 2px solid #ffd166;
-
             border-radius: 12px;
-
             padding: 14px 45px 14px 14px;
-
             margin-bottom: 12px;
-
             cursor: pointer;
-
             transition: 0.2s ease;
-
             line-height: 1.45;
         }
 
@@ -319,20 +402,15 @@
         .heading.selected {
             border-color: #d62828;
             background: #fff0f0;
-
             box-shadow:
                 0 0 0 3px rgba(214,40,40,0.10);
         }
 
         .heading.used {
             opacity: 0.5;
-
             background: #eeeeee;
-
             border-color: #aaa;
-
             cursor: not-allowed;
-
             position: relative;
         }
 
@@ -343,80 +421,57 @@
 
         .heading.used::after {
             content: "✓";
-
             position: absolute;
-
             right: 10px;
             top: 50%;
-
             transform: translateY(-50%);
-
             width: 28px;
             height: 28px;
-
             border-radius: 50%;
-
             background: #2a9d8f;
             color: white;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             font-weight: bold;
             font-size: 17px;
         }
 
         .letter {
             display: inline-flex;
-
             width: 30px;
             height: 30px;
-
             align-items: center;
             justify-content: center;
-
             border-radius: 50%;
-
             background: #d62828;
             color: white;
-
             font-weight: bold;
-
             margin-right: 8px;
-
             flex-shrink: 0;
         }
 
+        /* ========================================= */
+        /* CONTROLS */
+        /* ========================================= */
+
         .controls {
             margin-top: 30px;
-
             background: white;
-
             padding: 20px;
-
             border-radius: 18px;
-
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-
             text-align: center;
         }
 
         .btn {
             border: none;
-
             padding: 13px 25px;
-
             margin: 5px;
-
             border-radius: 12px;
-
             font-size: 16px;
-
             font-weight: bold;
-
             cursor: pointer;
-
             transition: 0.2s ease;
         }
 
@@ -441,40 +496,26 @@
 
         .result {
             margin-top: 20px;
-
             padding: 15px;
-
             border-radius: 12px;
-
             background: #effff9;
-
             border: 2px solid #2a9d8f;
-
             color: #176b5f;
-
             font-size: 22px;
-
             font-weight: bold;
-
             opacity: 0;
-
             transform: translateY(10px);
-
             pointer-events: none;
         }
 
         .result.show {
             opacity: 1;
-
             transform: translateY(0);
-
             pointer-events: auto;
-
             animation: resultShow 0.5s ease;
         }
 
         @keyframes resultShow {
-
             0% {
                 opacity: 0;
                 transform: scale(0.95);
@@ -484,16 +525,108 @@
                 opacity: 1;
                 transform: scale(1);
             }
-
         }
+
+        /* ========================================= */
+        /* OFFER MODAL */
+        /* ========================================= */
+
+        .offer-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .offer-modal.show {
+            display: flex;
+        }
+
+        .offer-box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            animation: offerShow 0.3s ease;
+        }
+
+        .offer-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .offer-box h2 {
+            color: #d62828;
+            margin-bottom: 12px;
+        }
+
+        .offer-box p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .offer-item {
+            background: #fffaf0;
+            border: 2px solid #ffd166;
+            border-radius: 12px;
+            padding: 13px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .offer-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 50%;
+            background: #eeeeee;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .offer-close:hover {
+            background: #d62828;
+            color: white;
+        }
+
+        @keyframes offerShow {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ========================================= */
+        /* FOOTER */
+        /* ========================================= */
 
         footer {
             text-align: center;
-
             padding: 30px 15px;
-
             color: #777;
         }
+
+        /* ========================================= */
+        /* RESPONSIVE */
+        /* ========================================= */
 
         @media (max-width: 850px) {
 
@@ -514,13 +647,130 @@
                 font-size: 15px;
             }
 
+            .top-navigation {
+                flex-wrap: wrap;
+            }
+
+            .page-progress {
+                order: 3;
+                width: 100%;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .top-navigation {
+                width: 92%;
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 9px 11px;
+                font-size: 13px;
+            }
+
+            .nav-offer {
+                padding: 9px 12px;
+            }
+
+            .logo {
+                width: 55px;
+                height: 55px;
+            }
+
+            header h1 {
+                font-size: 21px;
+            }
+
+            header p {
+                font-size: 16px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .text-card {
+                padding: 17px;
+            }
+
+            .heading {
+                padding: 12px 40px 12px 10px;
+            }
+
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .offer-box {
+                padding: 25px 18px;
+            }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
+
+
+<!-- ========================================= -->
+<!-- TOP NAVIGATION -->
+<!-- ========================================= -->
+
+<div class="top-navigation">
+
+    <div class="nav-left">
+
+        <button
+            class="nav-btn nav-back"
+            onclick="goBack()"
+        >
+            ← Zurück
+        </button>
+
+        <button
+            class="nav-btn nav-home"
+            onclick="goHome()"
+        >
+            🏠 Home
+        </button>
+
+    </div>
+
+
+    <div class="page-progress">
+
+        📖 Lesen Teil 1
+
+        <br>
+
+        Thema 1 / 45
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <button
+            class="nav-btn nav-offer"
+            onclick="showOffer()"
+        >
+            💼 Angebot
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- HEADER -->
+<!-- ========================================= -->
 
 <header>
 
@@ -530,9 +780,13 @@
         alt="Deutsch Einfach Logo"
     >
 
-    <h1>Deutsch Einfach 🇩🇪</h1>
+    <h1>
+        Deutsch Einfach 🇩🇪
+    </h1>
 
-    <p>Leseverstehen Teil 1</p>
+    <p>
+        Leseverstehen Teil 1
+    </p>
 
     <div class="badge">
         🟢 Sport ist gesund – Grundversion
@@ -541,11 +795,18 @@
 </header>
 
 
+<!-- ========================================= -->
+<!-- MAIN -->
+<!-- ========================================= -->
+
 <div class="container">
+
 
     <div class="intro">
 
-        <h2>📝 Aufgabe</h2>
+        <h2>
+            📝 Aufgabe
+        </h2>
 
         <p>
             Lies die fünf Texte aufmerksam durch und ordne jedem Text
@@ -558,7 +819,15 @@
 
     <div class="exercise">
 
+
+        <!-- ================================= -->
+        <!-- TEXTS -->
+        <!-- ================================= -->
+
         <div class="texts">
+
+
+            <!-- TEXT 1 -->
 
             <div
                 class="text-card"
@@ -601,6 +870,8 @@
 
             </div>
 
+
+            <!-- TEXT 2 -->
 
             <div
                 class="text-card"
@@ -647,6 +918,8 @@
             </div>
 
 
+            <!-- TEXT 3 -->
+
             <div
                 class="text-card"
                 id="text3"
@@ -687,6 +960,8 @@
             </div>
 
 
+            <!-- TEXT 4 -->
+
             <div
                 class="text-card"
                 id="text4"
@@ -726,6 +1001,8 @@
 
             </div>
 
+
+            <!-- TEXT 5 -->
 
             <div
                 class="text-card"
@@ -771,11 +1048,16 @@
         </div>
 
 
+        <!-- ================================= -->
+        <!-- HEADINGS -->
+        <!-- ================================= -->
+
         <div class="headings">
 
             <h2>
                 Überschriften
             </h2>
+
 
             <div
                 class="heading"
@@ -786,6 +1068,7 @@
                 Sport ist gesund - wenn man einige wichtige Regeln beachtet.
             </div>
 
+
             <div
                 class="heading"
                 id="headingB"
@@ -794,6 +1077,7 @@
                 <span class="letter">B</span>
                 Griechische Sportler so erfolgreich wie nie zuvor.
             </div>
+
 
             <div
                 class="heading"
@@ -804,6 +1088,7 @@
                 Fitness auch mit wenig Zeitaufwand erreichbar.
             </div>
 
+
             <div
                 class="heading"
                 id="headingD"
@@ -812,6 +1097,7 @@
                 <span class="letter">D</span>
                 Geprüfte Qualität für Babys.
             </div>
+
 
             <div
                 class="heading"
@@ -822,6 +1108,7 @@
                 Bluthochdruck beschleunigt das Abnehmen.
             </div>
 
+
             <div
                 class="heading"
                 id="headingF"
@@ -830,6 +1117,7 @@
                 <span class="letter">F</span>
                 Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.
             </div>
+
 
             <div
                 class="heading"
@@ -840,6 +1128,7 @@
                 Täglich kurzes Sprints besser als langes Ausdauertraining.
             </div>
 
+
             <div
                 class="heading"
                 id="headingH"
@@ -849,6 +1138,7 @@
                 Ein Leistungssport für jedes Alter.
             </div>
 
+
             <div
                 class="heading"
                 id="headingI"
@@ -857,6 +1147,7 @@
                 <span class="letter">I</span>
                 Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.
             </div>
+
 
             <div
                 class="heading"
@@ -872,6 +1163,10 @@
     </div>
 
 
+    <!-- ========================================= -->
+    <!-- CONTROLS -->
+    <!-- ========================================= -->
+
     <div class="controls">
 
         <button
@@ -881,6 +1176,7 @@
             ✅ Antwort
         </button>
 
+
         <button
             class="btn btn-repeat"
             onclick="repeatExercise()"
@@ -888,12 +1184,14 @@
             🔄 Wiederholen
         </button>
 
+
         <button
             class="btn btn-back"
             onclick="goBack()"
         >
             ← Zurück
         </button>
+
 
         <div
             class="result"
@@ -904,6 +1202,76 @@
 
 </div>
 
+
+<!-- ========================================= -->
+<!-- OFFER MODAL -->
+<!-- ========================================= -->
+
+<div
+    id="offerModal"
+    class="offer-modal"
+>
+
+    <div class="offer-box">
+
+        <button
+            class="offer-close"
+            onclick="closeOffer()"
+        >
+            ✕
+        </button>
+
+
+        <div class="offer-icon">
+            💼
+        </div>
+
+
+        <h2>
+            Unsere Angebote
+        </h2>
+
+
+        <p>
+
+            Entdecke unsere Angebote von
+            <strong>Deutsch Einfach</strong>
+            und bereite dich optimal auf
+            die TELC B1 & B2 Prüfung vor.
+
+        </p>
+
+
+        <div class="offer-item">
+            🇩🇪 Deutsch B1
+        </div>
+
+
+        <div class="offer-item">
+            🇩🇪 Deutsch B2
+        </div>
+
+
+        <div class="offer-item">
+            📚 TELC Prüfungsvorbereitung
+        </div>
+
+
+        <button
+            class="btn btn-back"
+            onclick="closeOffer()"
+        >
+            Schließen
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- FOOTER -->
+<!-- ========================================= -->
 
 <footer>
 
@@ -965,17 +1333,15 @@
     let currentUser = null;
 
 
-    /*
-     * المستخدم الحالي
-     */
-
     onAuthStateChanged(auth, function(user) {
 
         currentUser = user;
 
         if (!user) {
 
-            console.log("Kein Benutzer angemeldet.");
+            console.log(
+                "Kein Benutzer angemeldet."
+            );
 
         } else {
 
@@ -994,10 +1360,6 @@
     /* ========================================= */
 
     async function saveThemaProgress() {
-
-        /*
-         * خاص المستخدم يكون داخل الحساب
-         */
 
         if (!currentUser) {
 
@@ -1036,37 +1398,51 @@
             }
 
 
-            /*
-             * جميع المواضيع المكتملة
-             */
+            /* ================================= */
+            /* NEW PROGRESS SYSTEM */
+            /* ================================= */
+
+            const oldProgress =
+                userData.progress || {};
+
+
+            const lesenProgress =
+                oldProgress.lesen || {};
+
+
+            const teil1Progress =
+                lesenProgress.teil1 || {};
+
+
+            teil1Progress.thema1 = true;
+
+
+            const newProgress = {
+
+                ...oldProgress,
+
+                lesen: {
+
+                    ...lesenProgress,
+
+                    teil1: {
+
+                        ...teil1Progress
+
+                    }
+
+                }
+
+            };
+
+
+            /* ================================= */
+            /* LEGACY SYSTEM KEPT */
+            /* ================================= */
 
             const completedThemas =
                 userData.completedThemas || {};
 
-
-            /*
-             * Thema 1 سبق تسجل؟
-             *
-             * إلا نعم:
-             * ما نزيدوش مرة ثانية.
-             */
-
-            if (
-                completedThemas.thema1 === true
-            ) {
-
-                console.log(
-                    "Thema 1 bereits abgeschlossen."
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * تسجيل Thema 1
-             */
 
             completedThemas.thema1 = true;
 
@@ -1076,12 +1452,18 @@
                 userRef,
 
                 {
+
+                    progress: newProgress,
+
                     completedThemas:
                         completedThemas
+
                 },
 
                 {
+
                     merge: true
+
                 }
 
             );
@@ -1148,25 +1530,35 @@
 
     const headingTitles = {
 
-        A: "Sport ist gesund - wenn man einige wichtige Regeln beachtet.",
+        A:
+            "Sport ist gesund - wenn man einige wichtige Regeln beachtet.",
 
-        B: "Griechische Sportler so erfolgreich wie nie zuvor.",
+        B:
+            "Griechische Sportler so erfolgreich wie nie zuvor.",
 
-        C: "Fitness auch mit wenig Zeitaufwand erreichbar.",
+        C:
+            "Fitness auch mit wenig Zeitaufwand erreichbar.",
 
-        D: "Geprüfte Qualität für Babys.",
+        D:
+            "Geprüfte Qualität für Babys.",
 
-        E: "Bluthochdruck beschleunigt das Abnehmen.",
+        E:
+            "Bluthochdruck beschleunigt das Abnehmen.",
 
-        F: "Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.",
+        F:
+            "Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.",
 
-        G: "Täglich kurzes Sprints besser als langes Ausdauertraining.",
+        G:
+            "Täglich kurzes Sprints besser als langes Ausdauertraining.",
 
-        H: "Ein Leistungssport für jedes Alter.",
+        H:
+            "Ein Leistungssport für jedes Alter.",
 
-        I: "Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.",
+        I:
+            "Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.",
 
-        J: "Autoindustrie: In Zukunft Mobilität ohne Grenzen."
+        J:
+            "Autoindustrie: In Zukunft Mobilität ohne Grenzen."
 
     };
 
@@ -1184,7 +1576,9 @@
             .querySelectorAll(".text-card")
             .forEach(card => {
 
-                card.classList.remove("selected");
+                card.classList.remove(
+                    "selected"
+                );
 
             });
 
@@ -1230,6 +1624,11 @@
         }
 
 
+        /*
+         * Prüfen, ob die Überschrift
+         * schon für einen anderen Text benutzt wird.
+         */
+
         for (
             let i = 1;
             i <= 5;
@@ -1258,6 +1657,10 @@
             userAnswers[selectedText];
 
 
+        /*
+         * Alte Antwort freigeben.
+         */
+
         if (oldAnswer) {
 
             document
@@ -1270,6 +1673,10 @@
 
         }
 
+
+        /*
+         * Neue Antwort speichern.
+         */
 
         userAnswers[selectedText] =
             letter;
@@ -1493,6 +1900,10 @@
             );
 
 
+            /* =============================== */
+            /* RICHTIG */
+            /* =============================== */
+
             if (
                 userAnswer &&
                 userAnswer === answers[i]
@@ -1534,6 +1945,10 @@
             }
 
 
+            /* =============================== */
+            /* KEINE ANTWORT */
+            /* =============================== */
+
             else if (!userAnswer) {
 
                 answerBox.classList.add(
@@ -1550,8 +1965,13 @@
 
                     <div class="answer-content">
 
-                        <span>
+                        <span class="wrong-answer-text">
                             ❌ Keine Antwort
+                        </span>
+
+                        <span class="correct-answer-text">
+                            ✅ Richtige Antwort:
+                            ${answers[i]} — ${headingTitles[answers[i]]}
                         </span>
 
                     </div>
@@ -1560,6 +1980,10 @@
 
             }
 
+
+            /* =============================== */
+            /* FALSCHE ANTWORT */
+            /* =============================== */
 
             else {
 
@@ -1577,17 +2001,15 @@
 
                     <div class="answer-content">
 
-                        <span>
-                            ❌ ${userAnswer} — Falsch
+                        <span class="wrong-answer-text">
+                            ❌ Deine Antwort:
+                            ${userAnswer} — Falsch
                         </span>
 
-                        <button
-                            class="remove-answer"
-                            onclick="removeAnswer(${i}, event)"
-                            title="Antwort entfernen"
-                        >
-                            ✕
-                        </button>
+                        <span class="correct-answer-text">
+                            ✅ Richtige Antwort:
+                            ${answers[i]} — ${headingTitles[answers[i]]}
+                        </span>
 
                     </div>
 
@@ -1609,13 +2031,6 @@
             result.textContent =
                 "🏆 Ergebnis: 5 / 5 — Sehr gut! 🎉";
 
-
-            /*
-             * ⭐ WICHTIG ⭐
-             *
-             * غير إلا كانت 5/5
-             * كنحسبو Thema 1.
-             */
 
             await saveThemaProgress();
 
@@ -1742,27 +2157,76 @@
 
 
     /* ========================================= */
+    /* HOME */
+    /* ========================================= */
+
+    window.goHome = function() {
+
+        window.location.href =
+            "dashboard.html";
+
+    };
+
+
+    /* ========================================= */
     /* ZURÜCK */
     /* ========================================= */
 
     window.goBack = function() {
 
-        if (document.referrer) {
-
-            history.back();
-
-        }
-
-        else {
-
-            window.location.href =
-                "dashboard.html";
-
-        }
+        window.location.href =
+            "lesen-teil1.html";
 
     };
+
+
+    /* ========================================= */
+    /* ANGEBOT */
+    /* ========================================= */
+
+    window.showOffer = function() {
+
+        document
+            .getElementById("offerModal")
+            .classList.add("show");
+
+    };
+
+
+    window.closeOffer = function() {
+
+        document
+            .getElementById("offerModal")
+            .classList.remove("show");
+
+    };
+
+
+    /* ========================================= */
+    /* MODAL OUTSIDE CLICK */
+    /* ========================================= */
+
+    document
+        .getElementById("offerModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeOffer();
+
+                }
+
+            }
+        );
+
 
 </script>
 
 </body>
+
 </html>
+
