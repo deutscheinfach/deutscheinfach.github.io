@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
 
@@ -126,7 +125,6 @@
                 0 12px 25px rgba(214,40,40,0.15);
         }
 
-        /* GREEN ONLY AFTER CHECK */
         .text-card.correct-answer {
             border-color: #2a9d8f;
             background: linear-gradient(
@@ -144,7 +142,6 @@
             border-color: #2a9d8f;
         }
 
-        /* RED ONLY AFTER CHECK */
         .text-card.wrong-answer {
             border-color: #d62828;
             background: linear-gradient(
@@ -236,7 +233,6 @@
 
         }
 
-        /* BLACK REMOVE BUTTON */
         .remove-answer {
             margin-left: 10px;
 
@@ -328,7 +324,6 @@
                 0 0 0 3px rgba(214,40,40,0.10);
         }
 
-        /* USED HEADING */
         .heading.used {
             opacity: 0.5;
 
@@ -563,15 +558,7 @@
 
     <div class="exercise">
 
-
-        <!-- ========================= -->
-        <!-- TEXTS -->
-        <!-- ========================= -->
-
         <div class="texts">
-
-
-            <!-- TEXT 1 -->
 
             <div
                 class="text-card"
@@ -614,8 +601,6 @@
 
             </div>
 
-
-            <!-- TEXT 2 -->
 
             <div
                 class="text-card"
@@ -662,8 +647,6 @@
             </div>
 
 
-            <!-- TEXT 3 -->
-
             <div
                 class="text-card"
                 id="text3"
@@ -704,8 +687,6 @@
             </div>
 
 
-            <!-- TEXT 4 -->
-
             <div
                 class="text-card"
                 id="text4"
@@ -745,8 +726,6 @@
 
             </div>
 
-
-            <!-- TEXT 5 -->
 
             <div
                 class="text-card"
@@ -792,16 +771,11 @@
         </div>
 
 
-        <!-- ========================= -->
-        <!-- HEADINGS -->
-        <!-- ========================= -->
-
         <div class="headings">
 
             <h2>
                 Überschriften
             </h2>
-
 
             <div
                 class="heading"
@@ -812,7 +786,6 @@
                 Sport ist gesund - wenn man einige wichtige Regeln beachtet.
             </div>
 
-
             <div
                 class="heading"
                 id="headingB"
@@ -821,7 +794,6 @@
                 <span class="letter">B</span>
                 Griechische Sportler so erfolgreich wie nie zuvor.
             </div>
-
 
             <div
                 class="heading"
@@ -832,7 +804,6 @@
                 Fitness auch mit wenig Zeitaufwand erreichbar.
             </div>
 
-
             <div
                 class="heading"
                 id="headingD"
@@ -841,7 +812,6 @@
                 <span class="letter">D</span>
                 Geprüfte Qualität für Babys.
             </div>
-
 
             <div
                 class="heading"
@@ -852,7 +822,6 @@
                 Bluthochdruck beschleunigt das Abnehmen.
             </div>
 
-
             <div
                 class="heading"
                 id="headingF"
@@ -861,7 +830,6 @@
                 <span class="letter">F</span>
                 Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.
             </div>
-
 
             <div
                 class="heading"
@@ -872,7 +840,6 @@
                 Täglich kurzes Sprints besser als langes Ausdauertraining.
             </div>
 
-
             <div
                 class="heading"
                 id="headingH"
@@ -882,7 +849,6 @@
                 Ein Leistungssport für jedes Alter.
             </div>
 
-
             <div
                 class="heading"
                 id="headingI"
@@ -891,7 +857,6 @@
                 <span class="letter">I</span>
                 Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.
             </div>
-
 
             <div
                 class="heading"
@@ -907,10 +872,6 @@
     </div>
 
 
-    <!-- ========================= -->
-    <!-- CONTROLS -->
-    <!-- ========================= -->
-
     <div class="controls">
 
         <button
@@ -920,7 +881,6 @@
             ✅ Antwort
         </button>
 
-
         <button
             class="btn btn-repeat"
             onclick="repeatExercise()"
@@ -928,14 +888,12 @@
             🔄 Wiederholen
         </button>
 
-
         <button
             class="btn btn-back"
             onclick="goBack()"
         >
             ← Zurück
         </button>
-
 
         <div
             class="result"
@@ -954,7 +912,214 @@
 </footer>
 
 
-<script>
+<script type="module">
+
+    /* ========================================= */
+    /* FIREBASE */
+    /* ========================================= */
+
+    import { initializeApp }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+    import {
+        getAuth,
+        onAuthStateChanged
+    }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    import {
+        getFirestore,
+        doc,
+        getDoc,
+        setDoc
+    }
+        from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+
+        apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+        authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+
+        projectId: "deutsch-einfach-4c81f",
+
+        storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+
+        messagingSenderId: "152448766933",
+
+        appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+        measurementId: "G-9QV234Z0KZ"
+
+    };
+
+
+    const app = initializeApp(firebaseConfig);
+
+    const auth = getAuth(app);
+
+    const db = getFirestore(app);
+
+
+    let currentUser = null;
+
+
+    /*
+     * المستخدم الحالي
+     */
+
+    onAuthStateChanged(auth, function(user) {
+
+        currentUser = user;
+
+        if (!user) {
+
+            console.log("Kein Benutzer angemeldet.");
+
+        } else {
+
+            console.log(
+                "Benutzer angemeldet:",
+                user.email
+            );
+
+        }
+
+    });
+
+
+    /* ========================================= */
+    /* PROGRESS SYSTEM */
+    /* ========================================= */
+
+    async function saveThemaProgress() {
+
+        /*
+         * خاص المستخدم يكون داخل الحساب
+         */
+
+        if (!currentUser) {
+
+            alert(
+                "⚠️ Du musst angemeldet sein, " +
+                "damit dein Fortschritt gespeichert werden kann."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                );
+
+
+            const userSnapshot =
+                await getDoc(userRef);
+
+
+            let userData = {};
+
+
+            if (userSnapshot.exists()) {
+
+                userData =
+                    userSnapshot.data();
+
+            }
+
+
+            /*
+             * جميع المواضيع المكتملة
+             */
+
+            const completedThemas =
+                userData.completedThemas || {};
+
+
+            /*
+             * Thema 1 سبق تسجل؟
+             *
+             * إلا نعم:
+             * ما نزيدوش مرة ثانية.
+             */
+
+            if (
+                completedThemas.thema1 === true
+            ) {
+
+                console.log(
+                    "Thema 1 bereits abgeschlossen."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * تسجيل Thema 1
+             */
+
+            completedThemas.thema1 = true;
+
+
+            await setDoc(
+
+                userRef,
+
+                {
+                    completedThemas:
+                        completedThemas
+                },
+
+                {
+                    merge: true
+                }
+
+            );
+
+
+            console.log(
+                "Thema 1 erfolgreich abgeschlossen."
+            );
+
+
+            alert(
+                "🎉 Sehr gut!\n\n" +
+                "Thema 1 wurde erfolgreich abgeschlossen. ✅\n\n" +
+                "Dein Fortschritt wurde gespeichert."
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Progress error:",
+                error
+            );
+
+
+            alert(
+                "⚠️ Dein Ergebnis ist richtig, " +
+                "aber dein Fortschritt konnte nicht gespeichert werden."
+            );
+
+        }
+
+    }
+
+
+    /* ========================================= */
+    /* EXERCISE */
+    /* ========================================= */
 
     let selectedText = null;
 
@@ -1006,11 +1171,11 @@
     };
 
 
-    /* ========================= */
+    /* ========================================= */
     /* TEXT AUSWÄHLEN */
-    /* ========================= */
+    /* ========================================= */
 
-    function selectText(number) {
+    window.selectText = function(number) {
 
         selectedText = number;
 
@@ -1025,28 +1190,34 @@
 
 
         const selectedCard =
-            document.getElementById("text" + number);
+            document.getElementById(
+                "text" + number
+            );
 
 
-        selectedCard.classList.add("selected");
+        selectedCard.classList.add(
+            "selected"
+        );
 
 
         document
             .querySelectorAll(".heading")
             .forEach(h => {
 
-                h.classList.remove("selected");
+                h.classList.remove(
+                    "selected"
+                );
 
             });
 
-    }
+    };
 
 
-    /* ========================= */
+    /* ========================================= */
     /* ÜBERSCHRIFT AUSWÄHLEN */
-    /* ========================= */
+    /* ========================================= */
 
-    function selectHeading(letter) {
+    window.selectHeading = function(letter) {
 
         if (!selectedText) {
 
@@ -1059,13 +1230,11 @@
         }
 
 
-        /*
-         * Prüfen:
-         * Ist diese Überschrift schon
-         * bei einem anderen Text benutzt?
-         */
-
-        for (let i = 1; i <= 5; i++) {
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
 
             if (
                 i !== selectedText &&
@@ -1085,10 +1254,6 @@
         }
 
 
-        /*
-         * Alte Antwort entfernen
-         */
-
         const oldAnswer =
             userAnswers[selectedText];
 
@@ -1099,56 +1264,45 @@
                 .getElementById(
                     "heading" + oldAnswer
                 )
-                .classList.remove("used");
+                .classList.remove(
+                    "used"
+                );
 
         }
 
 
-        /*
-         * Neue Antwort speichern
-         */
+        userAnswers[selectedText] =
+            letter;
 
-        userAnswers[selectedText] = letter;
-
-
-        /*
-         * Heading als benutzt markieren
-         */
 
         document
             .getElementById(
                 "heading" + letter
             )
-            .classList.add("used");
+            .classList.add(
+                "used"
+            );
 
-
-        /*
-         * Heading Auswahl entfernen
-         */
 
         document
             .querySelectorAll(".heading")
             .forEach(h => {
 
-                h.classList.remove("selected");
+                h.classList.remove(
+                    "selected"
+                );
 
             });
 
-
-        /*
-         * Text weiterhin ausgewählt lassen
-         */
 
         document
             .getElementById(
                 "text" + selectedText
             )
-            .classList.add("selected");
+            .classList.add(
+                "selected"
+            );
 
-
-        /*
-         * Antwort anzeigen
-         */
 
         const answerBox =
             document.getElementById(
@@ -1177,33 +1331,16 @@
         `;
 
 
-        /*
-         * Alte Ergebnisfarbe entfernen
-         */
-
         answerBox.classList.remove(
             "wrong",
             "correct"
         );
 
 
-        /*
-         * Animation
-
-         */
-
         answerBox.classList.add(
             "filled"
         );
 
-
-        /*
-         * WICHTIG:
-         * Text wird hier NICHT grün.
-         *
-         * Grün/Rot kommt erst nach
-         * dem Klick auf "Antwort".
-         */
 
         document
             .getElementById(
@@ -1223,14 +1360,14 @@
 
         }, 450);
 
-    }
+    };
 
 
-    /* ========================= */
+    /* ========================================= */
     /* ANTWORT ENTFERNEN */
-    /* ========================= */
+    /* ========================================= */
 
-    function removeAnswer(
+    window.removeAnswer = function(
         textNumber,
         event
     ) {
@@ -1253,27 +1390,18 @@
         }
 
 
-        /*
-         * Heading wieder verfügbar
-         */
-
         document
             .getElementById(
                 "heading" + oldAnswer
             )
-            .classList.remove("used");
+            .classList.remove(
+                "used"
+            );
 
 
-        /*
-         * Antwort löschen
-         */
+        userAnswers[textNumber] =
+            null;
 
-        userAnswers[textNumber] = null;
-
-
-        /*
-         * Answer Box zurücksetzen
-         */
 
         const answerBox =
             document.getElementById(
@@ -1292,10 +1420,6 @@
         );
 
 
-        /*
-         * Textfarbe zurücksetzen
-         */
-
         document
             .getElementById(
                 "text" + textNumber
@@ -1306,10 +1430,6 @@
             );
 
 
-        /*
-         * Textauswahl entfernen
-         */
-
         document
             .getElementById(
                 "text" + textNumber
@@ -1319,11 +1439,6 @@
             );
 
 
-        /*
-         * Nur wenn der aktuelle Text
-         * entfernt wurde
-         */
-
         if (
             selectedText === textNumber
         ) {
@@ -1332,20 +1447,23 @@
 
         }
 
-    }
+    };
 
 
-    /* ========================= */
+    /* ========================================= */
     /* ANTWORTEN PRÜFEN */
-    /* ========================= */
+    /* ========================================= */
 
-    function checkAnswers() {
+    window.checkAnswers = async function() {
 
         let score = 0;
 
 
-        for (let i = 1; i <= 5; i++) {
-
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
 
             const answerBox =
                 document.getElementById(
@@ -1363,10 +1481,6 @@
                 userAnswers[i];
 
 
-            /*
-             * Alte Farben entfernen
-             */
-
             answerBox.classList.remove(
                 "correct",
                 "wrong"
@@ -1378,10 +1492,6 @@
                 "wrong-answer"
             );
 
-
-            /*
-             * RICHTIG
-             */
 
             if (
                 userAnswer &&
@@ -1424,10 +1534,6 @@
             }
 
 
-            /*
-             * KEINE ANTWORT
-             */
-
             else if (!userAnswer) {
 
                 answerBox.classList.add(
@@ -1454,10 +1560,6 @@
 
             }
 
-
-            /*
-             * FALSCH
-             */
 
             else {
 
@@ -1496,10 +1598,6 @@
         }
 
 
-        /*
-         * Ergebnis
-         */
-
         const result =
             document.getElementById(
                 "result"
@@ -1511,12 +1609,24 @@
             result.textContent =
                 "🏆 Ergebnis: 5 / 5 — Sehr gut! 🎉";
 
+
+            /*
+             * ⭐ WICHTIG ⭐
+             *
+             * غير إلا كانت 5/5
+             * كنحسبو Thema 1.
+             */
+
+            await saveThemaProgress();
+
         }
 
         else {
 
             result.textContent =
-                "Ergebnis: " + score + " / 5";
+                "Ergebnis: " +
+                score +
+                " / 5";
 
         }
 
@@ -1533,14 +1643,14 @@
             "show"
         );
 
-    }
+    };
 
 
-    /* ========================= */
+    /* ========================================= */
     /* WIEDERHOLEN */
-    /* ========================= */
+    /* ========================================= */
 
-    function repeatExercise() {
+    window.repeatExercise = function() {
 
         userAnswers = {
 
@@ -1556,10 +1666,6 @@
         selectedText = null;
 
 
-        /*
-         * Texte zurücksetzen
-         */
-
         document
             .querySelectorAll(".text-card")
             .forEach(card => {
@@ -1573,10 +1679,6 @@
             });
 
 
-        /*
-         * Headings zurücksetzen
-         */
-
         document
             .querySelectorAll(".heading")
             .forEach(heading => {
@@ -1589,11 +1691,11 @@
             });
 
 
-        /*
-         * Answer Boxes zurücksetzen
-         */
-
-        for (let i = 1; i <= 5; i++) {
+        for (
+            let i = 1;
+            i <= 5;
+            i++
+        ) {
 
             const answerBox =
                 document.getElementById(
@@ -1614,10 +1716,6 @@
         }
 
 
-        /*
-         * Ergebnis löschen
-         */
-
         const result =
             document.getElementById(
                 "result"
@@ -1632,10 +1730,6 @@
         result.textContent = "";
 
 
-        /*
-         * Nach oben scrollen
-         */
-
         window.scrollTo({
 
             top: 0,
@@ -1644,14 +1738,14 @@
 
         });
 
-    }
+    };
 
 
-    /* ========================= */
+    /* ========================================= */
     /* ZURÜCK */
-    /* ========================= */
+    /* ========================================= */
 
-    function goBack() {
+    window.goBack = function() {
 
         if (document.referrer) {
 
@@ -1666,10 +1760,9 @@
 
         }
 
-    }
+    };
 
 </script>
 
 </body>
 </html>
-```
