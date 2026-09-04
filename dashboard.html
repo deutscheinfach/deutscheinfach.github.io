@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Deutsch Einfach – لوحة التعلم</title>
+<title>Deutsch Einfach – Dashboard</title>
 
 <style>
 
@@ -15,174 +15,247 @@
     box-sizing: border-box;
 }
 
+:root {
+    --red: #d60000;
+    --red-dark: #a90000;
+    --yellow: #f0c400;
+    --yellow-light: #fff8c7;
+    --dark: #171717;
+    --gray: #6b6b6b;
+    --light: #f6f7f9;
+    --white: #ffffff;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background:
-        linear-gradient(135deg, #f8f8f8, #ffffff);
-    color: #222;
+        radial-gradient(circle at top right, #fff5c4 0%, transparent 28%),
+        radial-gradient(circle at bottom left, #ffe8e8 0%, transparent 30%),
+        linear-gradient(135deg, #f5f6f8, #ffffff);
+    color: var(--dark);
+    min-height: 100vh;
 }
 
-.container {
-    width: 92%;
-    max-width: 1100px;
-    margin: auto;
-    padding: 30px 20px 50px;
+button {
+    font-family: inherit;
 }
 
 
 /* =========================
-   HEADER
+   CONTAINER
+========================= */
+
+.container {
+    width: 94%;
+    max-width: 1180px;
+    margin: auto;
+    padding: 28px 15px 55px;
+}
+
+
+/* =========================
+   TOP HEADER
 ========================= */
 
 .header {
+    position: relative;
     text-align: center;
-    margin-bottom: 25px;
+    padding: 15px 0 25px;
 }
 
 .logo {
-    width: 90px;
-    height: 90px;
+    width: 92px;
+    height: 92px;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid #f0c400;
+    border: 4px solid var(--yellow);
+    background: white;
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.14),
+        0 0 0 7px rgba(240,196,0,0.08);
     margin-bottom: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 h1 {
     margin: 5px 0;
-    color: #d60000;
-    font-size: 30px;
+    color: var(--red);
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
 }
 
 .welcome {
-    color: #666;
-    font-size: 16px;
+    color: var(--gray);
+    font-size: 15px;
     margin-top: 8px;
 }
 
 
 /* =========================
-   QUICK PROFILE CARD
+   PROFILE
 ========================= */
 
 .profile-card {
-    background: white;
-    border-radius: 22px;
-    padding: 22px;
-    margin: 25px 0;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    border-right: 5px solid #d60000;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255,255,255,0.95);
+    border-radius: 24px;
+    padding: 22px 25px;
+    margin: 12px 0 22px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.profile-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 7px;
+    height: 100%;
+    background: linear-gradient(
+        #d60000,
+        #f0c400
+    );
 }
 
 .profile-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .profile-info h3 {
     margin: 0 0 7px;
-    color: #d60000;
+    color: var(--red);
+    font-size: 20px;
 }
 
 .profile-info p {
     margin: 0;
-    color: #666;
+    color: var(--gray);
     font-size: 14px;
 }
 
 .profile-badge {
-    background: #fff8c7;
-    border: 2px solid #f0c400;
-    padding: 10px 16px;
-    border-radius: 14px;
+    background: linear-gradient(
+        135deg,
+        #fff9d7,
+        #fff3a4
+    );
+    border: 1px solid #e5c000;
+    padding: 12px 18px;
+    border-radius: 15px;
     font-weight: bold;
-    color: #8a6d00;
+    color: #806700;
+    white-space: nowrap;
 }
 
 
 /* =========================
-   PROGRESS
+   MAIN PROGRESS
 ========================= */
 
 .progress-card {
-    background: linear-gradient(135deg, #d60000, #b40000);
+    position: relative;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            135deg,
+            #d60000,
+            #ad0000
+        );
     color: white;
-    border-radius: 22px;
-    padding: 24px;
-    margin-bottom: 25px;
-    box-shadow: 0 10px 30px rgba(214,0,0,0.20);
+    border-radius: 25px;
+    padding: 27px;
+    margin-bottom: 28px;
+    box-shadow:
+        0 15px 40px rgba(214,0,0,0.22);
+}
+
+.progress-card::after {
+    content: "🇩🇪";
+    position: absolute;
+    left: 25px;
+    bottom: -15px;
+    font-size: 95px;
+    opacity: 0.07;
 }
 
 .progress-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .progress-header h3 {
     margin: 0;
+    font-size: 20px;
 }
 
 .progress-percent {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 30px;
+    font-weight: 900;
 }
 
 .progress-bar {
     width: 100%;
-    height: 12px;
-    background: rgba(255,255,255,0.25);
-    border-radius: 20px;
+    height: 13px;
+    background: rgba(255,255,255,0.22);
+    border-radius: 30px;
     overflow: hidden;
 }
 
 .progress-fill {
-    width: 35%;
+    width: 0%;
     height: 100%;
-    background: #f0c400;
-    border-radius: 20px;
+    background: linear-gradient(
+        90deg,
+        #f0c400,
+        #ffe66b
+    );
+    border-radius: 30px;
+    transition: width 0.7s ease;
 }
 
 .progress-text {
-    margin: 12px 0 0;
+    margin: 13px 0 0;
     font-size: 14px;
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 
 /* =========================
-   LEVEL BUTTONS
+   LEVEL
 ========================= */
 
 .level-title {
     text-align: center;
-    margin-bottom: 12px;
+    margin: 8px 0 13px;
     color: #555;
 }
 
 .level-buttons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin: 0 auto 20px;
-    max-width: 600px;
+    gap: 14px;
+    max-width: 580px;
+    margin: auto;
 }
 
 .level-button {
-    border: 2px solid #f0c400;
-    padding: 18px;
-    border-radius: 15px;
+    border: 2px solid #e4bd00;
+    padding: 17px;
+    border-radius: 17px;
     background: white;
-    box-shadow: 0 7px 20px rgba(0,0,0,0.10);
-    font-size: 20px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+    font-size: 19px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 .level-button:hover {
@@ -190,83 +263,152 @@ h1 {
 }
 
 .level-button.active {
-    background: #d60000;
+    background: var(--red);
     color: white;
-    border-color: #d60000;
+    border-color: var(--red);
+    box-shadow: 0 8px 25px rgba(214,0,0,0.20);
 }
-
-
-/* =========================
-   SELECTED LEVEL
-========================= */
 
 .selected-level {
     text-align: center;
-    margin-bottom: 25px;
+    margin: 22px 0 25px;
 }
 
 .selected-level h2 {
-    color: #d60000;
+    color: var(--red);
     margin: 0;
+    font-size: 21px;
 }
 
 
 /* =========================
-   MAIN BUTTONS
+   SECTION NAVIGATION
 ========================= */
 
 .main-buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
+    gap: 14px;
     margin-bottom: 25px;
 }
 
 .main-button {
-    border: none;
-    padding: 20px 10px;
-    border-radius: 18px;
-    background: white;
-    box-shadow: 0 7px 20px rgba(0,0,0,0.10);
-    font-size: 18px;
-    font-weight: bold;
+    position: relative;
+    border: 1px solid #e5e5e5;
+    padding: 19px 10px;
+    border-radius: 19px;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+    font-size: 17px;
+    font-weight: 800;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 .main-button:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.14);
+    box-shadow: 0 13px 30px rgba(0,0,0,0.11);
 }
 
 .main-button.active {
-    background: #d60000;
+    background: linear-gradient(
+        135deg,
+        #d60000,
+        #b50000
+    );
     color: white;
+    border-color: #d60000;
+    box-shadow: 0 10px 27px rgba(214,0,0,0.22);
 }
 
 
 /* =========================
-   CONTENT CARD
+   CONTENT
 ========================= */
 
 .content-card {
-    background: white;
+    background: rgba(255,255,255,0.97);
     padding: 30px;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.10);
-    transition: 0.3s;
+    border-radius: 27px;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.04);
 }
 
 .content-card h2 {
     text-align: center;
-    color: #d60000;
-    margin-top: 0;
+    color: var(--red);
+    margin: 0 0 8px;
+    font-size: 27px;
 }
 
-.content-card p {
+.content-card > div > p {
     text-align: center;
-    color: #666;
+    color: var(--gray);
     line-height: 1.8;
+}
+
+
+/* =========================
+   SECTION SUMMARY
+========================= */
+
+.section-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.summary-card {
+    background: #fafafa;
+    border: 1px solid #eeeeee;
+    border-radius: 18px;
+    padding: 18px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+}
+
+.summary-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.summary-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.summary-number {
+    color: var(--red);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.small-progress {
+    width: 100%;
+    height: 7px;
+    background: #e8e8e8;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 11px;
+}
+
+.small-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        #d60000,
+        #f0c400
+    );
+    border-radius: 20px;
+    transition: width 0.6s ease;
 }
 
 
@@ -277,52 +419,122 @@ h1 {
 .teil-buttons {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 17px;
     margin-top: 25px;
 }
 
 .teil-button {
-    padding: 22px;
-    border-radius: 15px;
-    border: 2px solid #f0c400;
-    background: #fff;
-    font-size: 18px;
+    position: relative;
+    overflow: hidden;
+    padding: 23px 15px;
+    border-radius: 19px;
+    border: 2px solid #edc600;
+    background: white;
+    font-size: 17px;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.teil-button::after {
+    content: "→";
+    position: absolute;
+    left: 15px;
+    opacity: 0;
     transition: 0.3s;
+    color: var(--red);
 }
 
 .teil-button:hover {
-    background: #fff8c7;
-    transform: translateY(-3px);
+    background: #fffbea;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.09);
+}
+
+.teil-button:hover::after {
+    opacity: 1;
+}
+
+.teil-count {
+    display: block;
+    color: #777;
+    font-size: 13px;
+    margin-top: 7px;
+    font-weight: normal;
 }
 
 
 /* =========================
-   INFO BOX
+   INFO
 ========================= */
 
 .info-box {
-    margin-top: 30px;
-    padding: 20px;
-    background: #f8f8f8;
-    border-radius: 15px;
+    margin-top: 27px;
+    padding: 19px;
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf1,
+            #fff8cf
+        );
+    border: 1px solid #f0dc6b;
+    border-radius: 17px;
     text-align: center;
-    color: #555;
+    color: #6d5a00;
+    line-height: 1.7;
 }
 
 
 /* =========================
-   OTHER CONTENT
+   SCHREIBEN
 ========================= */
 
-.other-content {
+.single-section-card {
+    margin-top: 25px;
+    padding: 25px;
+    border-radius: 20px;
+    background: #fafafa;
+    border: 1px solid #eeeeee;
     text-align: center;
-    padding: 40px 10px;
 }
 
-.other-content h2 {
-    color: #d60000;
+.single-section-card .big-icon {
+    font-size: 45px;
+    margin-bottom: 8px;
+}
+
+.single-section-card h3 {
+    margin: 8px 0;
+    color: var(--red);
+}
+
+.single-section-card p {
+    color: #666;
+    line-height: 1.8;
+}
+
+
+/* =========================
+   SPRECHEN
+========================= */
+
+.sprechen-card {
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.sprechen-icon {
+    font-size: 65px;
+    margin-bottom: 10px;
+}
+
+.sprechen-card h2 {
+    margin-bottom: 10px;
+}
+
+.sprechen-card p {
+    max-width: 650px;
+    margin: auto;
 }
 
 
@@ -332,14 +544,14 @@ h1 {
 
 .logout {
     display: block;
-    width: 180px;
+    width: 190px;
     margin: 30px auto 0;
-    padding: 13px;
+    padding: 14px;
     border: none;
-    border-radius: 12px;
-    background: #111;
+    border-radius: 14px;
+    background: #161616;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
@@ -347,150 +559,29 @@ h1 {
 
 .logout:hover {
     background: #333;
-    transform: translateY(-2px);
-}
-
-
-/* =========================
-   POPUP
-========================= */
-
-.thema-choice-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 20px;
-    backdrop-filter: blur(5px);
-}
-
-.thema-choice-overlay.show {
-    display: flex;
-    animation: overlayShow 0.3s ease;
-}
-
-.thema-choice-box {
-    width: 100%;
-    max-width: 500px;
-    background: white;
-    border-radius: 25px;
-    padding: 30px;
-    border: 3px solid #f0c400;
-    box-shadow: 0 15px 45px rgba(0,0,0,0.25);
-    text-align: center;
-    animation: choiceBoxShow 0.4s ease;
-}
-
-.thema-choice-box h2 {
-    margin-top: 0;
-    color: #d60000;
-    font-size: 26px;
-}
-
-.thema-choice-box p {
-    color: #666;
-    margin-bottom: 25px;
-}
-
-.choice-buttons {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-}
-
-.choice-button {
-    width: 100%;
-    padding: 18px;
-    border-radius: 15px;
-    background: white;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.25s ease;
-}
-
-.choice-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-.choice-assassi {
-    border: 2px solid #d60000;
-    color: #d60000;
-}
-
-.choice-assassi:hover {
-    background: #fff1f1;
-}
-
-.choice-mo3adal {
-    border: 2px solid #f0c400;
-    color: #9a7900;
-}
-
-.choice-mo3adal:hover {
-    background: #fff8c7;
-}
-
-.close-choice {
-    margin-top: 18px;
-    border: none;
-    background: #eee;
-    color: #555;
-    padding: 11px 25px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 
 /* =========================
-   ANIMATIONS
+   ANIMATION
 ========================= */
 
 .section-effect {
-    animation: sectionEffect 0.55s ease;
+    animation: sectionEffect 0.45s ease;
 }
 
 @keyframes sectionEffect {
 
     0% {
         opacity: 0;
-        transform: translateY(18px) scale(0.98);
+        transform: translateY(15px);
     }
 
     100% {
         opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-}
-
-@keyframes overlayShow {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
-}
-
-@keyframes choiceBoxShow {
-
-    from {
-        opacity: 0;
-        transform: translateY(25px) scale(0.94);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translateY(0);
     }
 
 }
@@ -500,20 +591,37 @@ h1 {
    MOBILE
 ========================= */
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
+
+    .main-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .teil-buttons {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
 
     .container {
-        width: 95%;
-        padding: 20px 10px 40px;
+        width: 96%;
+        padding: 18px 7px 40px;
     }
 
     h1 {
-        font-size: 25px;
+        font-size: 26px;
     }
 
     .logo {
-        width: 75px;
-        height: 75px;
+        width: 78px;
+        height: 78px;
     }
 
     .profile-top {
@@ -525,21 +633,21 @@ h1 {
         width: 100%;
     }
 
-    .main-buttons {
-        grid-template-columns: repeat(2, 1fr);
+    .progress-card {
+        padding: 21px;
     }
 
-    .teil-buttons {
-        grid-template-columns: 1fr;
+    .progress-percent {
+        font-size: 25px;
     }
 
     .content-card {
         padding: 22px 15px;
     }
 
-    .level-button {
-        padding: 15px 8px;
-        font-size: 18px;
+    .main-button {
+        font-size: 15px;
+        padding: 17px 7px;
     }
 
 }
@@ -554,10 +662,6 @@ h1 {
 
 <div class="container">
 
-
-<!-- =========================
-     HEADER
-========================= -->
 
 <div class="header">
 
@@ -575,15 +679,11 @@ h1 {
         class="welcome"
         id="welcomeText"
     >
-        مرحباً بك! اختار المستوى اللي بغيتي تتعلم.
+        مرحباً بك! واجد باش تبدا التعلم؟
     </div>
 
 </div>
 
-
-<!-- =========================
-     PROFILE
-========================= -->
 
 <div class="profile-card">
 
@@ -610,45 +710,48 @@ h1 {
 </div>
 
 
-<!-- =========================
-     PROGRESS
-========================= -->
-
 <div class="progress-card">
 
     <div class="progress-header">
 
         <h3>
-            📊 التقدم ديالك
+            📊 Gesamtfortschritt
         </h3>
 
-        <div class="progress-percent">
-            35%
+        <div
+            class="progress-percent"
+            id="progressPercent"
+        >
+            0%
         </div>
 
     </div>
 
     <div class="progress-bar">
 
-        <div class="progress-fill"></div>
+        <div
+            class="progress-fill"
+            id="progressFill"
+        ></div>
 
     </div>
 
-    <p class="progress-text">
-        كمّل التدريب ديالك باش تطور المستوى ديالك 💪🇩🇪
+    <p
+        class="progress-text"
+        id="progressText"
+    >
+        بدا التدريب ديالك 💪🇩🇪
     </p>
 
 </div>
 
 
-<!-- =========================
-     LEVEL
-========================= -->
-
 <div class="level-title">
+
     <strong>
         اختار المستوى ديالك
     </strong>
+
 </div>
 
 
@@ -673,10 +776,6 @@ h1 {
 </div>
 
 
-<!-- =========================
-     SELECTED LEVEL
-========================= -->
-
 <div class="selected-level">
 
     <h2 id="selectedLevelText">
@@ -692,13 +791,16 @@ h1 {
 
 <div class="main-buttons">
 
+    <!-- Lesen → صفحة Lesen Teil 1 -->
+
     <button
         id="lesenButton"
         class="main-button active"
-        onclick="showSection('lesen', this)"
+        onclick="window.location.href='lesen-teil1.html'"
     >
         📖 Lesen
     </button>
+
 
     <button
         id="hörenButton"
@@ -708,6 +810,7 @@ h1 {
         🎧 Hören
     </button>
 
+
     <button
         id="schreibenButton"
         class="main-button"
@@ -715,6 +818,7 @@ h1 {
     >
         ✍️ Schreiben
     </button>
+
 
     <button
         id="sprechenButton"
@@ -737,19 +841,100 @@ h1 {
 >
 
 
-<!-- =========================
-     LESEN
-========================= -->
-
 <div id="lesen">
 
     <h2>
-        📖 Lesen
+        📖 Lesen Dashboard
     </h2>
 
     <p id="lesenText">
         اختار Teil باش تبدأ تدريب Lesen ديال TELC B2.
     </p>
+
+
+    <div class="section-summary">
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                📄
+            </div>
+
+            <div class="summary-title">
+                Teil 1
+            </div>
+
+            <div
+                class="summary-number"
+                id="lesenTeil1Number"
+            >
+                0 / 45
+            </div>
+
+            <div class="small-progress">
+                <div
+                    class="small-progress-fill"
+                    id="lesenTeil1Progress"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                📚
+            </div>
+
+            <div class="summary-title">
+                Teil 2
+            </div>
+
+            <div
+                class="summary-number"
+                id="lesenTeil2Number"
+            >
+                0 / 28
+            </div>
+
+            <div class="small-progress">
+                <div
+                    class="small-progress-fill"
+                    id="lesenTeil2Progress"
+                ></div>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                📖
+            </div>
+
+            <div class="summary-title">
+                Teil 3
+            </div>
+
+            <div
+                class="summary-number"
+                id="lesenTeil3Number"
+            >
+                0 / 33
+            </div>
+
+            <div class="small-progress">
+                <div
+                    class="small-progress-fill"
+                    id="lesenTeil3Progress"
+                ></div>
+            </div>
+
+        </div>
+
+    </div>
 
 
     <div class="teil-buttons">
@@ -759,20 +944,37 @@ h1 {
             onclick="openTeil(1)"
         >
             📄 Lesen – Teil 1
+
+            <span class="teil-count">
+                45 Themen
+            </span>
+
         </button>
+
 
         <button
             class="teil-button"
             onclick="openTeil(2)"
         >
-            📄 Lesen – Teil 2
+            📚 Lesen – Teil 2
+
+            <span class="teil-count">
+                28 Themen
+            </span>
+
         </button>
+
 
         <button
             class="teil-button"
             onclick="openTeil(3)"
         >
-            📄 Lesen – Teil 3
+            📖 Lesen – Teil 3
+
+            <span class="teil-count">
+                33 Themen
+            </span>
+
         </button>
 
     </div>
@@ -780,16 +982,12 @@ h1 {
 
     <div class="info-box">
 
-        🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
+        🔥 اختار Teil باش تشوف Themen ديالو وتبدأ التدريب.
 
     </div>
 
 </div>
 
-
-<!-- =========================
-     HÖREN
-========================= -->
 
 <div
     id="hören"
@@ -797,12 +995,103 @@ h1 {
 >
 
     <h2>
-        🎧 Hören
+        🎧 Hören Dashboard
     </h2>
 
     <p id="hörenText">
         اختار Teil باش تبدأ تدريب Hören ديال TELC B2.
     </p>
+
+
+    <div class="section-summary">
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                🎧
+            </div>
+
+            <div class="summary-title">
+                Teil 1
+            </div>
+
+            <div
+                class="summary-number"
+                id="hoerenTeil1Number"
+            >
+                0 / 62
+            </div>
+
+            <div class="small-progress">
+
+                <div
+                    class="small-progress-fill"
+                    id="hoerenTeil1Progress"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                🔊
+            </div>
+
+            <div class="summary-title">
+                Teil 2
+            </div>
+
+            <div
+                class="summary-number"
+                id="hoerenTeil2Number"
+            >
+                0 / 70
+            </div>
+
+            <div class="small-progress">
+
+                <div
+                    class="small-progress-fill"
+                    id="hoerenTeil2Progress"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                🎵
+            </div>
+
+            <div class="summary-title">
+                Teil 3
+            </div>
+
+            <div
+                class="summary-number"
+                id="hoerenTeil3Number"
+            >
+                0 / 56
+            </div>
+
+            <div class="small-progress">
+
+                <div
+                    class="small-progress-fill"
+                    id="hoerenTeil3Progress"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
     <div class="teil-buttons">
@@ -812,20 +1101,37 @@ h1 {
             onclick="openHorenTeil(1)"
         >
             🎧 Hören – Teil 1
+
+            <span class="teil-count">
+                62 Themen
+            </span>
+
         </button>
+
 
         <button
             class="teil-button"
             onclick="openHorenTeil(2)"
         >
-            🎧 Hören – Teil 2
+            🔊 Hören – Teil 2
+
+            <span class="teil-count">
+                70 Themen
+            </span>
+
         </button>
+
 
         <button
             class="teil-button"
             onclick="openHorenTeil(3)"
         >
-            🎧 Hören – Teil 3
+            🎵 Hören – Teil 3
+
+            <span class="teil-count">
+                56 Themen
+            </span>
+
         </button>
 
     </div>
@@ -833,55 +1139,118 @@ h1 {
 
     <div class="info-box">
 
-        🔥 اختار واحد من الأجزاء الثلاثة باش تبدأ التدريب.
+        🎧 اختار Teil باش تدخل للتداريب ديال Hören.
 
     </div>
 
 </div>
 
-
-<!-- =========================
-     SCHREIBEN
-========================= -->
 
 <div
     id="schreiben"
     style="display:none;"
 >
 
-    <div class="other-content">
+    <h2>
+        ✍️ Schreiben Dashboard
+    </h2>
 
-        <h2>
-            ✍️ Schreiben
-        </h2>
+    <p id="schreibenText">
+        هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC B2.
+    </p>
 
-        <p id="schreibenText">
-            هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC B2.
+
+    <div class="section-summary">
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                ✍️
+            </div>
+
+            <div class="summary-title">
+                Schreiben
+            </div>
+
+            <div
+                class="summary-number"
+                id="schreibenNumber"
+            >
+                0 / 41
+            </div>
+
+            <div class="small-progress">
+
+                <div
+                    class="small-progress-fill"
+                    id="schreibenProgress"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="single-section-card">
+
+        <div class="big-icon">
+            ✍️
+        </div>
+
+        <h3>
+            41 Themen
+        </h3>
+
+        <p>
+            تدرب على جميع مواضيع Schreiben الخاصة بـ TELC B2
+            وحاول تكمل أكبر عدد ممكن.
         </p>
+
+        <button
+            class="teil-button"
+            onclick="openSchreiben()"
+        >
+            ✍️ Alle Themen öffnen
+        </button>
+
+    </div>
+
+
+    <div class="info-box">
+
+        📝 كل موضوع كيتحسب غير منين تكمل التمرين بالطريقة الصحيحة.
 
     </div>
 
 </div>
 
-
-<!-- =========================
-     SPRECHEN
-========================= -->
 
 <div
     id="sprechen"
     style="display:none;"
 >
 
-    <div class="other-content">
+    <div class="sprechen-card">
+
+        <div class="sprechen-icon">
+            🗣️
+        </div>
 
         <h2>
-            🗣️ Sprechen
+            Sprechen
         </h2>
 
         <p id="sprechenText">
             هنا غادي تلقى تمارين Sprechen ديال TELC B2.
         </p>
+
+        <div class="info-box">
+
+            🎤 تدرب على Sprechen وطور طريقة التواصل ديالك بالألمانية 🇩🇪
+
+        </div>
 
     </div>
 
@@ -890,10 +1259,6 @@ h1 {
 
 </div>
 
-
-<!-- =========================
-     LOGOUT
-========================= -->
 
 <button
     class="logout"
@@ -929,7 +1294,6 @@ h1 {
         اختار النسخة اللي بغيتي تبدأ بها:
     </p>
 
-
     <div class="choice-buttons">
 
         <button
@@ -941,7 +1305,6 @@ h1 {
             <small>Assassi</small>
         </button>
 
-
         <button
             class="choice-button choice-mo3adal"
             onclick="openMo3adal()"
@@ -952,7 +1315,6 @@ h1 {
         </button>
 
     </div>
-
 
     <button
         class="close-choice"
@@ -991,14 +1353,11 @@ from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import {
     getFirestore,
     doc,
+    getDoc,
     onSnapshot
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-
-/* =========================
-   FIREBASE CONFIG
-========================= */
 
 const firebaseConfig = {
 
@@ -1036,10 +1395,6 @@ const db =
     getFirestore(app);
 
 
-/* =========================
-   PERSISTENCE
-========================= */
-
 setPersistence(
     auth,
     browserLocalPersistence
@@ -1054,20 +1409,381 @@ setPersistence(
 });
 
 
-/* =========================
-   CURRENT USER
-========================= */
-
 let currentUser = null;
 
 let authReady = false;
 
 let stopSessionListener = null;
 
+let currentLevel = "B2";
 
-/* =========================
-   SESSION MONITOR
-========================= */
+
+const totals = {
+
+    lesen: {
+        teil1: 45,
+        teil2: 28,
+        teil3: 33
+    },
+
+    hoeren: {
+        teil1: 62,
+        teil2: 70,
+        teil3: 56
+    },
+
+    schreiben: {
+        total: 41
+    }
+
+};
+
+
+function updateAllProgress(data) {
+
+    const progress =
+        data.progress || {};
+
+    const lesen =
+        progress.lesen || {};
+
+    const hoeren =
+        progress.hoeren || {};
+
+    const schreiben =
+        progress.schreiben || {};
+
+    const lesenTeil1 =
+        countCompleted(lesen.teil1);
+
+    const lesenTeil2 =
+        countCompleted(lesen.teil2);
+
+    const lesenTeil3 =
+        countCompleted(lesen.teil3);
+
+    const hoerenTeil1 =
+        countCompleted(hoeren.teil1);
+
+    const hoerenTeil2 =
+        countCompleted(hoeren.teil2);
+
+    const hoerenTeil3 =
+        countCompleted(hoeren.teil3);
+
+    const schreibenCount =
+        countCompleted(schreiben);
+
+
+    setSmallProgress(
+        "lesenTeil1",
+        lesenTeil1,
+        totals.lesen.teil1
+    );
+
+    setSmallProgress(
+        "lesenTeil2",
+        lesenTeil2,
+        totals.lesen.teil2
+    );
+
+    setSmallProgress(
+        "lesenTeil3",
+        lesenTeil3,
+        totals.lesen.teil3
+    );
+
+
+    setSmallProgress(
+        "hoerenTeil1",
+        hoerenTeil1,
+        totals.hoeren.teil1
+    );
+
+    setSmallProgress(
+        "hoerenTeil2",
+        hoerenTeil2,
+        totals.hoeren.teil2
+    );
+
+    setSmallProgress(
+        "hoerenTeil3",
+        hoerenTeil3,
+        totals.hoeren.teil3
+    );
+
+
+    setSmallProgress(
+        "schreiben",
+        schreibenCount,
+        totals.schreiben.total
+    );
+
+
+    const lesenCompleted =
+        lesenTeil1 +
+        lesenTeil2 +
+        lesenTeil3;
+
+    const lesenTotal =
+        totals.lesen.teil1 +
+        totals.lesen.teil2 +
+        totals.lesen.teil3;
+
+    const hoerenCompleted =
+        hoerenTeil1 +
+        hoerenTeil2 +
+        hoerenTeil3;
+
+    const hoerenTotal =
+        totals.hoeren.teil1 +
+        totals.hoeren.teil2 +
+        totals.hoeren.teil3;
+
+    const schreibenTotal =
+        totals.schreiben.total;
+
+    const totalCompleted =
+        lesenCompleted +
+        hoerenCompleted +
+        schreibenCount;
+
+    const totalThemes =
+        lesenTotal +
+        hoerenTotal +
+        schreibenTotal;
+
+    const percent =
+        totalThemes === 0
+            ? 0
+            : (
+                totalCompleted /
+                totalThemes
+            ) * 100;
+
+    setMainProgress(
+        percent,
+        totalCompleted,
+        totalThemes
+    );
+
+}
+
+
+function countCompleted(obj) {
+
+    if (!obj || typeof obj !== "object") {
+
+        return 0;
+
+    }
+
+    return Object.values(obj)
+        .filter(function(value) {
+
+            return value === true;
+
+        })
+        .length;
+
+}
+
+
+function setSmallProgress(
+    prefix,
+    completed,
+    total
+) {
+
+    const number =
+        document.getElementById(
+            prefix + "Number"
+        );
+
+    const progress =
+        document.getElementById(
+            prefix + "Progress"
+        );
+
+    if (!number || !progress) {
+
+        return;
+
+    }
+
+    const safeCompleted =
+        Math.min(
+            completed,
+            total
+        );
+
+    const percent =
+        total === 0
+            ? 0
+            : (
+                safeCompleted /
+                total
+            ) * 100;
+
+    number.textContent =
+        safeCompleted +
+        " / " +
+        total;
+
+    progress.style.width =
+        Math.min(
+            percent,
+            100
+        ) + "%";
+
+}
+
+
+function setMainProgress(
+    percent,
+    completed,
+    total
+) {
+
+    const progressPercent =
+        document.getElementById(
+            "progressPercent"
+        );
+
+    const progressFill =
+        document.getElementById(
+            "progressFill"
+        );
+
+    const progressText =
+        document.getElementById(
+            "progressText"
+        );
+
+    if (
+        !progressPercent ||
+        !progressFill ||
+        !progressText
+    ) {
+
+        return;
+
+    }
+
+    let displayPercent;
+
+    if (
+        Number.isInteger(percent)
+    ) {
+
+        displayPercent =
+            percent.toString();
+
+    }
+
+    else {
+
+        displayPercent =
+            percent.toFixed(1);
+
+    }
+
+    progressPercent.textContent =
+        displayPercent + "%";
+
+    progressFill.style.width =
+        Math.min(
+            percent,
+            100
+        ) + "%";
+
+    if (completed === 0) {
+
+        progressText.textContent =
+            "0 / " +
+            total +
+            " Themen abgeschlossen — بدا التدريب ديالك 💪🇩🇪";
+
+    }
+
+    else if (completed >= total) {
+
+        progressText.textContent =
+            total +
+            " / " +
+            total +
+            " Themen abgeschlossen — مبروك! 🎉🏆🇩🇪";
+
+    }
+
+    else {
+
+        progressText.textContent =
+            completed +
+            " / " +
+            total +
+            " Themen abgeschlossen — Weiter so! 💪🇩🇪";
+
+    }
+
+}
+
+
+async function updateProgress(user) {
+
+    if (!user) {
+
+        setMainProgress(
+            0,
+            0,
+            335
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                user.uid
+            );
+
+        const snapshot =
+            await getDoc(userRef);
+
+        if (!snapshot.exists()) {
+
+            setMainProgress(
+                0,
+                0,
+                335
+            );
+
+            return;
+
+        }
+
+        updateAllProgress(
+            snapshot.data()
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Progress loading error:",
+            error
+        );
+
+    }
+
+}
+
 
 function startSessionListener(user) {
 
@@ -1079,23 +1795,16 @@ function startSessionListener(user) {
 
     }
 
-
     const mySessionId =
         localStorage.getItem(
             "deutschEinfachSessionId"
         );
 
-
     if (!mySessionId) {
-
-        console.warn(
-            "No local session ID found."
-        );
 
         return;
 
     }
-
 
     const userRef =
         doc(
@@ -1104,9 +1813,9 @@ function startSessionListener(user) {
             user.uid
         );
 
-
     stopSessionListener =
         onSnapshot(
+
             userRef,
 
             async function(snapshot) {
@@ -1117,35 +1826,20 @@ function startSessionListener(user) {
 
                 }
 
-
                 const data =
                     snapshot.data();
 
+                updateAllProgress(
+                    data
+                );
 
                 const currentSessionId =
                     data.sessionId;
-
-
-                console.log(
-                    "My session:",
-                    mySessionId
-                );
-
-                console.log(
-                    "Current session:",
-                    currentSessionId
-                );
-
 
                 if (
                     currentSessionId &&
                     currentSessionId !== mySessionId
                 ) {
-
-                    console.log(
-                        "NEW DEVICE LOGIN DETECTED ❌"
-                    );
-
 
                     if (stopSessionListener) {
 
@@ -1155,15 +1849,15 @@ function startSessionListener(user) {
 
                     }
 
-
                     localStorage.removeItem(
                         "deutschEinfachSessionId"
                     );
 
-
                     try {
 
-                        await signOut(auth);
+                        await signOut(
+                            auth
+                        );
 
                     }
 
@@ -1176,12 +1870,10 @@ function startSessionListener(user) {
 
                     }
 
-
                     alert(
                         "🔐 تم تسجيل الدخول من جهاز آخر.\n\n" +
                         "تم تسجيل خروج هذا الجهاز تلقائياً."
                     );
-
 
                     window.location.replace(
                         "login.html"
@@ -1199,42 +1891,38 @@ function startSessionListener(user) {
                 );
 
             }
+
         );
 
 }
 
 
-/* =========================
-   AUTH STATE
-========================= */
-
 onAuthStateChanged(
+
     auth,
 
-    function(user) {
+    async function(user) {
 
-        currentUser = user;
+        currentUser =
+            user;
 
-        authReady = true;
-
+        authReady =
+            true;
 
         const welcomeText =
             document.getElementById(
                 "welcomeText"
             );
 
-
         const profileName =
             document.getElementById(
                 "profileName"
             );
 
-
         const profileEmail =
             document.getElementById(
                 "profileEmail"
             );
-
 
         if (user) {
 
@@ -1243,36 +1931,36 @@ onAuthStateChanged(
                 user.email ||
                 "";
 
-
             welcomeText.textContent =
                 "مرحباً " +
                 name +
                 " 👋";
 
-
             profileName.textContent =
                 "👤 " +
                 name;
-
 
             profileEmail.textContent =
                 user.email ||
                 "الحساب ديالك جاهز للتعلم 🇩🇪";
 
+            await updateProgress(
+                user
+            );
 
-            startSessionListener(user);
+            startSessionListener(
+                user
+            );
 
         }
 
         else {
 
             welcomeText.textContent =
-                "مرحباً بك! اختار المستوى اللي بغيتي تتعلم.";
-
+                "مرحباً بك! واجد باش تبدا التعلم؟";
 
             profileName.textContent =
                 "👤 مرحباً بك";
-
 
             profileEmail.textContent =
                 "الحساب ديالك جاهز للتعلم 🇩🇪";
@@ -1284,28 +1972,15 @@ onAuthStateChanged(
 );
 
 
-/* =========================
-   LEVEL
-========================= */
-
-let currentLevel = "B2";
-
-
-/* =========================
-   URL
-========================= */
-
 const params =
     new URLSearchParams(
         window.location.search
     );
 
-
 const sectionFromURL =
     params.get(
         "section"
     );
-
 
 const sectionMap = {
 
@@ -1320,10 +1995,6 @@ const sectionMap = {
 };
 
 
-/* =========================
-   SELECT LEVEL
-========================= */
-
 window.selectLevel =
     function(
         level,
@@ -1332,7 +2003,6 @@ window.selectLevel =
 
         currentLevel =
             level;
-
 
         document
             .querySelectorAll(
@@ -1348,11 +2018,9 @@ window.selectLevel =
                 }
             );
 
-
         button.classList.add(
             "active"
         );
-
 
         document.getElementById(
             "selectedLevelText"
@@ -1361,14 +2029,12 @@ window.selectLevel =
             level +
             " 🇩🇪";
 
-
         document.getElementById(
             "lesenText"
         ).textContent =
             "اختار Teil باش تبدأ تدريب Lesen ديال TELC " +
             level +
             ".";
-
 
         document.getElementById(
             "hörenText"
@@ -1377,14 +2043,12 @@ window.selectLevel =
             level +
             ".";
 
-
         document.getElementById(
             "schreibenText"
         ).textContent =
             "هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC " +
             level +
             ".";
-
 
         document.getElementById(
             "sprechenText"
@@ -1393,20 +2057,8 @@ window.selectLevel =
             level +
             ".";
 
-
-        showSection(
-            "lesen",
-            document.getElementById(
-                "lesenButton"
-            )
-        );
-
     };
 
-
-/* =========================
-   SHOW SECTION
-========================= */
 
 window.showSection =
     function(
@@ -1414,31 +2066,34 @@ window.showSection =
         button
     ) {
 
-        document.getElementById(
-            "lesen"
-        ).style.display = "none";
-
-
-        document.getElementById(
-            "hören"
-        ).style.display = "none";
-
-
-        document.getElementById(
-            "schreiben"
-        ).style.display = "none";
-
-
-        document.getElementById(
+        [
+            "lesen",
+            "hören",
+            "schreiben",
             "sprechen"
-        ).style.display = "none";
+        ]
+        .forEach(
+            function(id) {
 
+                const element =
+                    document.getElementById(
+                        id
+                    );
+
+                if (element) {
+
+                    element.style.display =
+                        "none";
+
+                }
+
+            }
+        );
 
         const selectedSection =
             document.getElementById(
                 section
             );
-
 
         if (!selectedSection) {
 
@@ -1446,10 +2101,8 @@ window.showSection =
 
         }
 
-
         selectedSection.style.display =
             "block";
-
 
         document
             .querySelectorAll(
@@ -1465,7 +2118,6 @@ window.showSection =
                 }
             );
 
-
         if (button) {
 
             button.classList.add(
@@ -1474,20 +2126,16 @@ window.showSection =
 
         }
 
-
         const content =
             document.getElementById(
                 "content"
             );
 
-
         content.classList.remove(
             "section-effect"
         );
 
-
         void content.offsetWidth;
-
 
         content.classList.add(
             "section-effect"
@@ -1496,10 +2144,6 @@ window.showSection =
     };
 
 
-/* =========================
-   WAIT FOR AUTH
-========================= */
-
 async function waitForAuth() {
 
     if (authReady) {
@@ -1507,7 +2151,6 @@ async function waitForAuth() {
         return currentUser;
 
     }
-
 
     return new Promise(
         function(resolve) {
@@ -1538,16 +2181,11 @@ async function waitForAuth() {
 }
 
 
-/* =========================
-   LESEN
-========================= */
-
 window.openTeil =
     async function(number) {
 
         const user =
             await waitForAuth();
-
 
         if (!user) {
 
@@ -1555,70 +2193,22 @@ window.openTeil =
                 "🔒 خاصك تسجل فالموقع باش تشوف Themen."
             );
 
-
             window.location.replace(
                 "signup.html"
             );
 
-
             return;
 
         }
-
 
         if (number === 1) {
 
-            document.getElementById(
-                "lesenText"
-            ).innerHTML =
-                "اختار Thema باش تبدأ التدريب ديال Lesen Teil 1.";
-
-
-            document.querySelector(
-                "#lesen .teil-buttons"
-            ).innerHTML = `
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(1)"
-                >
-                    📖 Sport ist gesund
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(2)"
-                >
-                    📖 Thema 2
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(3)"
-                >
-                    📖 Thema 3
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(4)"
-                >
-                    📖 Thema 4
-                </button>
-
-                <button
-                    class="teil-button"
-                    onclick="openThema(5)"
-                >
-                    📖 Thema 5
-                </button>
-
-            `;
+            window.location.href =
+                "lesen-teil1.html";
 
             return;
 
         }
-
 
         alert(
             "📚 Lesen – Teil " +
@@ -1629,10 +2219,6 @@ window.openTeil =
 
     };
 
-
-/* =========================
-   THEMA
-========================= */
 
 window.openThema =
     function(number) {
@@ -1649,17 +2235,12 @@ window.openThema =
 
         }
 
-
         alert(
             "🔒 هاد Thema مازال ما تضافش."
         );
 
     };
 
-
-/* =========================
-   ASSASSI
-========================= */
 
 window.openAssassi =
     function() {
@@ -1670,10 +2251,6 @@ window.openAssassi =
     };
 
 
-/* =========================
-   MO3ADAL
-========================= */
-
 window.openMo3adal =
     function() {
 
@@ -1682,10 +2259,6 @@ window.openMo3adal =
 
     };
 
-
-/* =========================
-   CLOSE POPUP
-========================= */
 
 window.closeThemaChoice =
     function(event) {
@@ -1699,7 +2272,6 @@ window.closeThemaChoice =
 
         }
 
-
         document.getElementById(
             "themaChoice"
         ).classList.remove(
@@ -1709,56 +2281,67 @@ window.closeThemaChoice =
     };
 
 
-/* =========================
-   HÖREN
-========================= */
-
 window.openHorenTeil =
     async function(number) {
 
         const user =
             await waitForAuth();
 
-
         if (!user) {
 
             alert(
-                "🔒 خاصك تسجل فالموقع باش تشوف Thema."
+                "🔒 خاصك تسجل فالموقع باش تشوف Themen."
             );
-
 
             window.location.replace(
                 "signup.html"
             );
 
-
             return;
 
         }
 
-
         alert(
-            "✅ مرحباً " +
-            (
-                user.displayName ||
-                user.email ||
-                ""
-            ) +
-            "\n\n" +
+            "🎧 " +
             currentLevel +
             " – Hören – Teil " +
             number +
             "\n\n" +
-            "الحساب ديالك مسجل الدخول ✅\n" +
-            "المحتوى الحقيقي ديال Thema غادي نضيفوه هنا 🔥"
+            "المحتوى الحقيقي ديال Themen غادي نضيفوه هنا 🔥"
         );
 
     };
 
 
-/* =========================
-   URL SECTION
-========================= */
+window.openSchreiben =
+    async function() {
+
+        const user =
+            await waitForAuth();
+
+        if (!user) {
+
+            alert(
+                "🔒 خاصك تسجل فالموقع."
+            );
+
+            window.location.replace(
+                "signup.html"
+            );
+
+            return;
+
+        }
+
+        alert(
+            "✍️ Schreiben – " +
+            currentLevel +
+            "\n\n" +
+            "41 Themen غادي يكونو هنا 🔥"
+        );
+
+    };
+
 
 window.addEventListener(
     "DOMContentLoaded",
@@ -1776,16 +2359,21 @@ window.addEventListener(
                     sectionFromURL
                 ];
 
-
             let buttonId;
-
 
             if (
                 sectionFromURL === "lesen"
             ) {
 
-                buttonId =
-                    "lesenButton";
+                /*
+                   إذا دخلنا ?section=lesen
+                   نمشيو مباشرة لـ Lesen Teil 1
+                */
+
+                window.location.href =
+                    "lesen-teil1.html";
+
+                return;
 
             }
 
@@ -1807,15 +2395,12 @@ window.addEventListener(
 
             }
 
-            else if (
-                sectionFromURL === "sprechen"
-            ) {
+            else {
 
                 buttonId =
                     "sprechenButton";
 
             }
-
 
             showSection(
                 section,
@@ -1827,6 +2412,12 @@ window.addEventListener(
         }
 
         else {
+
+            /*
+               Dashboard كيبقى مفتوح عادي.
+               Lesen button هو اللي كيمشي
+               لصفحة lesen-teil1.html
+            */
 
             showSection(
                 "lesen",
@@ -1841,10 +2432,6 @@ window.addEventListener(
 );
 
 
-/* =========================
-   LOGOUT
-========================= */
-
 window.logout =
     async function() {
 
@@ -1858,16 +2445,13 @@ window.logout =
 
             }
 
-
             localStorage.removeItem(
                 "deutschEinfachSessionId"
             );
 
-
             await signOut(
                 auth
             );
-
 
             window.location.replace(
                 "login.html"
@@ -1882,7 +2466,6 @@ window.logout =
                 error
             );
 
-
             alert(
                 "وقع مشكل ف تسجيل الخروج."
             );
@@ -1892,6 +2475,127 @@ window.logout =
     };
 
 </script>
+
+
+<style>
+
+.thema-choice-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.58);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+    backdrop-filter: blur(6px);
+}
+
+.thema-choice-overlay.show {
+    display: flex;
+    animation: popupOverlay 0.25s ease;
+}
+
+.thema-choice-box {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 26px;
+    padding: 30px;
+    border: 3px solid #f0c400;
+    box-shadow: 0 20px 55px rgba(0,0,0,0.28);
+    text-align: center;
+    animation: popupBox 0.35s ease;
+}
+
+.thema-choice-box h2 {
+    margin-top: 0;
+    color: #d60000;
+}
+
+.thema-choice-box p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.choice-buttons {
+    display: grid;
+    gap: 14px;
+}
+
+.choice-button {
+    width: 100%;
+    padding: 18px;
+    border-radius: 16px;
+    background: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.choice-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 9px 22px rgba(0,0,0,0.12);
+}
+
+.choice-assassi {
+    border: 2px solid #d60000;
+    color: #d60000;
+}
+
+.choice-assassi:hover {
+    background: #fff1f1;
+}
+
+.choice-mo3adal {
+    border: 2px solid #f0c400;
+    color: #927400;
+}
+
+.choice-mo3adal:hover {
+    background: #fff9d9;
+}
+
+.close-choice {
+    margin-top: 18px;
+    border: none;
+    background: #eee;
+    color: #555;
+    padding: 11px 25px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes popupOverlay {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+@keyframes popupBox {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+</style>
+
 
 </body>
 
