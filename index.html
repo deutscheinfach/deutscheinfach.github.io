@@ -4,402 +4,1487 @@
 
 <head>
 
-```
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Deutsch Einfach – TELC B1 & B2 Exam Preparation</title>
+    <title>Deutsch Einfach – TELC B1 & B2 Exam Preparation</title>
 
-<meta name="description" content="Deutsch lernen und sich auf TELC B1 und B2 vorbereiten.">
+    <meta
+        name="description"
+        content="Deutsch lernen und sich auf TELC B1 und B2 vorbereiten."
+    >
 
-<style>
+    <style>
 
-    * {
-        box-sizing: border-box;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #f8f8f8, #ffffff);
-        color: #222;
-    }
+        :root {
+            --red: #d60000;
+            --red-dark: #a80000;
+            --yellow: #f2c500;
+            --black: #111111;
+            --white: #ffffff;
+            --text: #252525;
+            --muted: #666666;
+            --border: rgba(0,0,0,0.08);
+            --shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
 
-    .container {
-        width: 90%;
-        max-width: 1100px;
-        margin: auto;
-        padding: 30px 20px;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* =========================
-       الأزرار العلوية
-    ========================== */
+        body {
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 10%, rgba(214,0,0,0.06), transparent 25%),
+                radial-gradient(circle at 90% 20%, rgba(242,197,0,0.10), transparent 25%),
+                linear-gradient(135deg, #fafafa, #ffffff);
+            overflow-x: hidden;
+        }
 
-    .top-buttons {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 15px;
-        margin-bottom: 35px;
-        width: 100%;
-        direction: ltr;
-    }
+        /* =========================================
+           BACKGROUND DECORATION
+        ========================================= */
 
-    /* =========================
-       أزرار TELC فاليسار
-    ========================== */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: rgba(214,0,0,0.04);
+            top: -120px;
+            left: -120px;
+            z-index: -1;
+            filter: blur(10px);
+        }
 
-    .exam-menu {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        direction: ltr;
-        flex-wrap: nowrap;
-    }
-
-    .exam-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 13px 22px;
-        background: white;
-        color: #d60000;
-        border: 2px solid #d60000;
-        border-radius: 12px;
-        text-decoration: none;
-        font-size: 17px;
-        font-weight: bold;
-        transition: 0.3s;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        white-space: nowrap;
-    }
-
-    .exam-button:hover {
-        background: #d60000;
-        color: white;
-        transform: translateY(-3px);
-    }
-
-    /* =========================
-       أزرار اليمين
-    ========================== */
-
-    .account-buttons {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        direction: rtl;
-        flex-shrink: 0;
-    }
-
-    .top-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 13px 20px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: bold;
-        transition: 0.3s;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
-        white-space: nowrap;
-    }
-
-    /* =========================
-       تسجيل الدخول
-    ========================== */
-
-    .register-button {
-        background: #d60000;
-        color: white;
-    }
-
-    .register-button:hover {
-        background: #a80000;
-        transform: translateY(-3px);
-    }
-
-    /* =========================
-       إنشاء حساب
-    ========================== */
-
-    .signup-button {
-        background: #111;
-        color: white;
-    }
-
-    .signup-button:hover {
-        background: #333;
-        transform: translateY(-3px);
-    }
-
-    /* =========================
-       WhatsApp
-    ========================== */
-
-    .whatsapp-button {
-        background: #25D366;
-        color: white;
-    }
-
-    .whatsapp-button:hover {
-        background: #1ebe5d;
-        transform: translateY(-3px);
-    }
-
-    /* =========================
-       العروض
-    ========================== */
-
-    .payment-button {
-        background: #f2c500;
-        color: #111;
-    }
-
-    .payment-button:hover {
-        background: #d9b000;
-        transform: translateY(-3px);
-    }
-
-    /* =========================
-       العنوان
-    ========================== */
-
-    h1 {
-        text-align: center;
-        color: #111;
-        font-size: 38px;
-        margin-bottom: 35px;
-        direction: ltr;
-    }
-
-    .highlight {
-        color: #d90000;
-    }
-
-    /* =========================
-       القسم الرئيسي
-    ========================== */
-
-    .intro {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 35px;
-        padding: 30px;
-        background-color: white;
-        border-radius: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    }
-
-    /* =========================
-       الصورة
-    ========================== */
-
-    .logo {
-        width: 220px;
-        height: 220px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 6px solid #f2c500;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-        flex-shrink: 0;
-    }
-
-    /* =========================
-       النص
-    ========================== */
-
-    .text-content {
-        flex: 1;
-        direction: rtl;
-        text-align: right;
-    }
-
-    .arabic {
-        direction: rtl;
-        text-align: right;
-        unicode-bidi: plaintext;
-    }
-
-    .german {
-        direction: ltr;
-        unicode-bidi: embed;
-        display: inline-block;
-    }
-
-    h2 {
-        font-size: 32px;
-        margin-top: 0;
-        margin-bottom: 20px;
-        color: #111;
-        line-height: 1.6;
-        direction: rtl;
-        text-align: right;
-    }
-
-    h2 span {
-        color: #d60000;
-    }
-
-    p {
-        font-size: 19px;
-        line-height: 2;
-        color: #444;
-        margin: 0;
-    }
-
-    /* =========================
-       البطاقات
-    ========================== */
-
-    .features {
-        margin-top: 35px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-    }
-
-    .card {
-        background-color: white;
-        padding: 25px;
-        border-radius: 20px;
-        text-align: center;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
-        transition: 0.3s;
-    }
-
-    .card:hover {
-        transform: translateY(-5px);
-    }
-
-    .card h3 {
-        margin-top: 0;
-        color: #d60000;
-        direction: ltr;
-    }
-
-    .card p {
-        font-size: 16px;
-        line-height: 1.7;
-        direction: rtl;
-        text-align: center;
-    }
-
-    /* =========================
-       الهاتف
-    ========================== */
-
-    @media (max-width: 768px) {
+        body::after {
+            content: "";
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(242,197,0,0.05);
+            bottom: -100px;
+            right: -100px;
+            z-index: -1;
+            filter: blur(10px);
+        }
 
         .container {
-            width: 95%;
-            padding: 20px 10px;
+            width: min(1180px, 92%);
+            margin: auto;
         }
 
-        .top-buttons {
-            flex-direction: column;
-            align-items: stretch;
+        /* =========================================
+           NAVBAR
+        ========================================= */
+
+        .navbar {
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+            margin-top: 15px;
+            padding: 12px 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255,255,255,0.7);
+            border-radius: 22px;
+
+            box-shadow:
+                0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
             gap: 10px;
+            direction: ltr;
+            text-decoration: none;
+            color: var(--black);
+            font-weight: 900;
+            font-size: 20px;
+            white-space: nowrap;
         }
 
-        /* TELC */
+        .brand img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 2px solid var(--yellow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+        }
 
-        .exam-menu {
-            order: 1;
-            width: 100%;
-            justify-content: flex-start;
-            flex-wrap: wrap;
+        .brand span {
+            color: var(--red);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
             gap: 7px;
-        }
-
-        /* الأزرار الأخرى */
-
-        .account-buttons {
-            order: 2;
-            width: 100%;
-            justify-content: flex-end;
+            direction: ltr;
             flex-wrap: wrap;
-            gap: 7px;
+            justify-content: center;
         }
 
-        .top-button {
-            font-size: 13px;
-            padding: 10px 12px;
-        }
-
-        .exam-button {
-            padding: 10px 13px;
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
             font-size: 14px;
+            padding: 10px 13px;
+            border-radius: 12px;
+            transition: 0.25s ease;
         }
 
-        h1 {
-            font-size: 28px;
-            line-height: 1.5;
+        .nav-links a:hover {
+            background: #fff1f1;
+            color: var(--red);
         }
 
-        .intro {
-            flex-direction: column;
-            text-align: center;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            direction: rtl;
+        }
+
+        .nav-action {
+            text-decoration: none;
+            padding: 11px 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .login {
+            background: var(--red);
+            color: white;
+        }
+
+        .login:hover {
+            background: var(--red-dark);
+            transform: translateY(-2px);
+        }
+
+        .signup {
+            background: var(--black);
+            color: white;
+        }
+
+        .signup:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero {
+            position: relative;
+            margin-top: 55px;
+            padding: 70px 45px;
+
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 50px;
+
+            border-radius: 35px;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.96),
+                    rgba(255,250,245,0.96)
+                );
+
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            background: rgba(214,0,0,0.07);
+            border-radius: 50%;
+            top: -130px;
+            right: -100px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            background: rgba(242,197,0,0.08);
+            border-radius: 50%;
+            bottom: -120px;
+            left: -80px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .small-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 9px 15px;
+            margin-bottom: 20px;
+
+            background: #fff1f1;
+            color: var(--red);
+
+            border: 1px solid rgba(214,0,0,0.12);
+            border-radius: 999px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .small-badge::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 0 5px rgba(214,0,0,0.10);
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 5vw, 58px);
+            line-height: 1.15;
+            color: var(--black);
+            margin-bottom: 22px;
+            direction: ltr;
+            text-align: right;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .red {
+            color: var(--red);
+        }
+
+        .hero-text {
+            font-size: 18px;
+            line-height: 2;
+            color: #555;
+            max-width: 650px;
+            margin-bottom: 28px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            padding: 14px 22px;
+            border-radius: 14px;
+
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+
+            transition: 0.3s ease;
+        }
+
+        .hero-primary {
+            background: var(--red);
+            color: white;
+            box-shadow: 0 10px 25px rgba(214,0,0,0.22);
+        }
+
+        .hero-primary:hover {
+            background: var(--red-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(214,0,0,0.28);
+        }
+
+        .hero-secondary {
+            background: white;
+            color: var(--black);
+            border: 1px solid #ddd;
+        }
+
+        .hero-secondary:hover {
+            border-color: var(--red);
+            color: var(--red);
+            transform: translateY(-3px);
+        }
+
+        /* =========================================
+           HERO LOGO
+        ========================================= */
+
+        .hero-logo-area {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-ring {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 2px dashed rgba(214,0,0,0.25);
+            animation: rotate 20s linear infinite;
+        }
+
+        .logo-ring::before,
+        .logo-ring::after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+
+        .logo-ring::before {
+            top: 25px;
+            left: 35px;
+            background: var(--red);
+        }
+
+        .logo-ring::after {
+            bottom: 25px;
+            right: 35px;
+            background: var(--yellow);
         }
 
         .logo {
-            width: 170px;
-            height: 170px;
+            position: relative;
+            z-index: 3;
+
+            width: 220px;
+            height: 220px;
+
+            object-fit: cover;
+            border-radius: 50%;
+
+            border: 7px solid var(--yellow);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.18),
+                0 0 0 12px rgba(255,255,255,0.85);
+
+            animation: floating 4s ease-in-out infinite;
         }
 
-        .text-content {
+        @keyframes floating {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+        }
+
+        @keyframes rotate {
+
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        /* =========================================
+           STATS
+        ========================================= */
+
+        .stats {
+            margin-top: 25px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.85);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
             text-align: center;
-            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
 
-        h2 {
+        .stat strong {
+            display: block;
             font-size: 25px;
-            text-align: center;
+            color: var(--red);
+            margin-bottom: 5px;
         }
 
-        p {
-            font-size: 17px;
+        .stat span {
+            color: #666;
+            font-size: 13px;
+            font-weight: bold;
         }
 
-        .arabic {
+        /* =========================================
+           SECTION TITLE
+        ========================================= */
+
+        .section-title {
             text-align: center;
+            margin-top: 70px;
+            margin-bottom: 30px;
         }
+
+        .section-title .mini {
+            display: inline-block;
+            color: var(--red);
+            background: #fff1f1;
+            padding: 7px 13px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #777;
+            font-size: 16px;
+        }
+
+        /* =========================================
+           FEATURES
+        ========================================= */
 
         .features {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
         }
 
-    }
+        .card {
+            position: relative;
+            overflow: hidden;
 
-</style>
-```
+            background: rgba(255,255,255,0.92);
+            border: 1px solid rgba(0,0,0,0.06);
+
+            padding: 30px 25px;
+            border-radius: 25px;
+
+            text-align: center;
+
+            box-shadow: 0 12px 35px rgba(0,0,0,0.06);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(214,0,0,0.05);
+            top: -60px;
+            right: -60px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.10);
+            border-color: rgba(214,0,0,0.15);
+        }
+
+        .card:hover::before {
+            transform: scale(1.4);
+        }
+
+        .card-icon {
+            width: 62px;
+            height: 62px;
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+            background: #fff1f1;
+
+            font-size: 30px;
+        }
+
+        .card h3 {
+            color: var(--black);
+            font-size: 22px;
+            margin-bottom: 12px;
+            direction: ltr;
+        }
+
+        .card p {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #666;
+            direction: rtl;
+            text-align: center;
+        }
+
+        .card-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: var(--red);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* =========================================
+           ABOUT / PROMISE
+        ========================================= */
+
+        .promise {
+            margin-top: 25px;
+            padding: 35px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+
+            background: linear-gradient(
+                135deg,
+                #111,
+                #202020
+            );
+
+            border-radius: 28px;
+            color: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .promise-content {
+            direction: rtl;
+            text-align: right;
+        }
+
+        .promise h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .promise h2 span {
+            color: var(--yellow);
+        }
+
+        .promise p {
+            color: #ddd;
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        .promise-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .promise-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 14px;
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.08);
+
+            direction: rtl;
+            color: #eee;
+            font-size: 14px;
+        }
+
+        .promise-item .check {
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+            background: var(--red);
+        }
+
+        /* =========================================
+           CTA
+        ========================================= */
+
+        .cta {
+            margin-top: 35px;
+            padding: 45px 30px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(214,0,0,0.96),
+                    rgba(170,0,0,0.96)
+                );
+
+            border-radius: 30px;
+            color: white;
+
+            box-shadow: 0 20px 50px rgba(214,0,0,0.20);
+        }
+
+        .cta h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.88);
+            margin-bottom: 23px;
+            font-size: 16px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 14px 25px;
+            border-radius: 14px;
+
+            background: white;
+            color: var(--red);
+
+            text-decoration: none;
+            font-weight: 900;
+
+            transition: 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+        }
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            margin-top: 45px;
+            padding: 30px 0;
+
+            border-top: 1px solid rgba(0,0,0,0.08);
+
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-size: 20px;
+            font-weight: 900;
+            direction: ltr;
+            margin-bottom: 8px;
+        }
+
+        .footer-brand span {
+            color: var(--red);
+        }
+
+        footer p {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.8;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin: 15px 0;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #666;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .footer-links a:hover {
+            color: var(--red);
+        }
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .brand {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 45px 25px;
+                text-align: center;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero h1 {
+                text-align: center;
+            }
+
+            .hero-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-logo-area {
+                order: -1;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .promise {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .container {
+                width: 94%;
+            }
+
+            .navbar {
+                top: 8px;
+                margin-top: 8px;
+                border-radius: 18px;
+                padding: 10px;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .brand img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .nav-links {
+                width: 100%;
+                gap: 3px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+                padding: 8px 7px;
+            }
+
+            .nav-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-action {
+                flex: 1;
+                text-align: center;
+                font-size: 12px;
+                padding: 10px 8px;
+            }
+
+            .hero {
+                margin-top: 30px;
+                padding: 35px 18px;
+                border-radius: 25px;
+            }
+
+            .logo-wrapper {
+                width: 230px;
+                height: 230px;
+            }
+
+            .logo-ring {
+                width: 230px;
+                height: 230px;
+            }
+
+            .logo {
+                width: 170px;
+                height: 170px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+                letter-spacing: -0.5px;
+            }
+
+            .hero-text {
+                font-size: 16px;
+                line-height: 1.9;
+            }
+
+            .hero-button {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                margin-top: 50px;
+            }
+
+            .section-title h2 {
+                font-size: 27px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .promise {
+                padding: 25px 18px;
+                border-radius: 23px;
+            }
+
+            .promise h2 {
+                font-size: 24px;
+            }
+
+            .cta {
+                padding: 35px 20px;
+                border-radius: 24px;
+            }
+
+            .cta h2 {
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-```
+
 <div class="container">
 
-    <!-- =========================
-         جميع الأزرار العلوية
-    ========================== -->
 
-    <div class="top-buttons">
+    <!-- =========================================
+         NAVBAR
+    ========================================== -->
+
+    <nav class="navbar">
 
 
-        <!-- =========================
-             4 أزرار TELC
-        ========================== -->
+        <a href="index.html" class="brand">
 
-        <div class="exam-menu">
+            <img
+                src="icon1.png"
+                alt="Deutsch Einfach Logo"
+            >
+
+            Deutsch <span>Einfach</span> 🇩🇪
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="dashboard.html?section=lesen">
+                📖 Lesen
+            </a>
+
+            <a href="dashboard.html?section=hoeren">
+                🎧 Hören
+            </a>
+
+            <a href="dashboard.html?section=schreiben">
+                ✍️ Schreiben
+            </a>
+
+            <a href="dashboard.html?section=sprechen">
+                🗣️ Sprechen
+            </a>
+
+        </div>
+
+
+        <div class="nav-actions">
+
+            <a
+                href="signup.html"
+                class="nav-action signup"
+            >
+                إنشاء حساب
+            </a>
+
+            <a
+                href="login.html"
+                class="nav-action login"
+            >
+                تسجيل الدخول
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <section class="hero">
+
+
+        <div class="hero-content">
+
+
+            <div class="small-badge">
+                🇩🇪 TELC B1 & B2 Vorbereitung
+            </div>
+
+
+            <h1>
+
+                Deutsch Einfach –
+
+                <span class="red">
+                    TELC B1 & B2
+                </span>
+
+                Exam Preparation
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                أول منصة كتجمع ليك التحضير ديال
+
+                <span class="german">
+                    TELC B1 & B2
+                </span>
+
+                بطريقة منظمة وسهلة، بلا ما تبقى تضيع الوقت
+                فـ PDFs ناقصين ولا فيهم أخطاء.
+
+                تدرب، راجع، وحسن المستوى ديالك فبلاصة وحدة.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+
+                <a
+                    href="signup.html"
+                    class="hero-button hero-primary"
+                >
+                    🚀 بدا التعلم دابا
+                </a>
+
+
+                <a
+                    href="dashboard.html?section=lesen"
+                    class="hero-button hero-secondary"
+                >
+                    📖 شوف المواضيع
+                </a>
+
+
+                <a
+                    href="payment.html"
+                    class="hero-button hero-secondary"
+                >
+                    🎁 العروض
+                </a>
+
+
+            </div>
+
+
+            <div class="stats">
+
+
+                <div class="stat">
+
+                    <strong>
+                        B1
+                    </strong>
+
+                    <span>
+                        TELC Vorbereitung
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>
+                        B2
+                    </strong>
+
+                    <span>
+                        TELC Vorbereitung
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>
+                        24/7
+                    </strong>
+
+                    <span>
+                        Lernen & Üben
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- LOGO -->
+
+        <div class="hero-logo-area">
+
+            <div class="logo-wrapper">
+
+                <div class="logo-ring"></div>
+
+                <img
+                    src="icon1.png"
+                    alt="Deutsch Einfach"
+                    class="logo"
+                >
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================================
+         SECTION TITLE
+    ========================================== -->
+
+    <div class="section-title">
+
+        <span class="mini">
+            🎯 Deine Prüfungsvorbereitung
+        </span>
+
+        <h2>
+            Alles, was du für TELC brauchst
+        </h2>
+
+        <p>
+            Lernen, üben und dich Schritt für Schritt auf die Prüfung vorbereiten.
+        </p>
+
+    </div>
+
+
+
+    <!-- =========================================
+         FEATURES
+    ========================================== -->
+
+    <section class="features">
+
+
+        <!-- LESEN -->
+
+        <div class="card">
+
+
+            <div class="card-icon">
+                📖
+            </div>
+
+
+            <h3>
+                Lesen
+            </h3>
+
+
+            <p>
+
+                مواضيع
+
+                <span class="german">
+                    TELC B1
+                </span>
+
+                و
+
+                <span class="german">
+                    B2
+                </span>
+
+                مجموعين ومنظمين بطريقة سهلة، باش تقدر تتدرب
+                بلا ما تضيع الوقت فالبحث.
+
+            </p>
+
 
             <a
                 href="dashboard.html?section=lesen"
-                class="exam-button"
+                class="card-link"
+            >
+                Mehr erfahren ←
+            </a>
+
+
+        </div>
+
+
+
+        <!-- HÖREN -->
+
+        <div class="card">
+
+
+            <div class="card-icon">
+                🎧
+            </div>
+
+
+            <h3>
+                Hören
+            </h3>
+
+
+            <p>
+
+                Audio بحال الامتحان الحقيقي، باش تدرب ودنك
+                وتولي قادر تفهم
+
+                <span class="german">
+                    Hören
+                </span>
+
+                مزيان.
+
+            </p>
+
+
+            <a
+                href="dashboard.html?section=hoeren"
+                class="card-link"
+            >
+                Mehr erfahren ←
+            </a>
+
+
+        </div>
+
+
+
+        <!-- SCHREIBEN -->
+
+        <div class="card">
+
+
+            <div class="card-icon">
+                ✍️
+            </div>
+
+
+            <h3>
+                Schreiben
+            </h3>
+
+
+            <p>
+
+                كتب
+
+                <span class="german">
+                    Antwort
+                </span>
+
+                ديالك وتعلم كيفاش تحسن الكتابة ديالك
+                وتوجد راسك للامتحان.
+
+            </p>
+
+
+            <a
+                href="dashboard.html?section=schreiben"
+                class="card-link"
+            >
+                Mehr erfahren ←
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================================
+         PROMISE SECTION
+    ========================================== -->
+
+    <section class="promise">
+
+
+        <div class="promise-content">
+
+
+            <h2>
+
+                علاش
+
+                <span>
+                    Deutsch Einfach
+                </span>
+
+                ؟
+
+            </h2>
+
+
+            <p>
+
+                الهدف ديالنا هو نخليو التحضير لـ
+
+                <span class="german">
+                    TELC
+                </span>
+
+                أسهل، أوضح وأكثر تنظيماً.
+
+                كلشي مجموع فبلاصة وحدة باش التركيز ديالك يبقى
+                على التعلم والتدريب.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="promise-list">
+
+
+            <div class="promise-item">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                مواضيع منظمة وسهلة الوصول
+
+            </div>
+
+
+            <div class="promise-item">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                تدريب على Lesen و Hören و Schreiben
+
+            </div>
+
+
+            <div class="promise-item">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                تحديثات وإضافة مواضيع جديدة
+
+            </div>
+
+
+            <div class="promise-item">
+
+                <span class="check">
+                    ✓
+                </span>
+
+                واجهة بسيطة وسريعة على الهاتف والكمبيوتر
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================================
+         CTA
+    ========================================== -->
+
+    <section class="cta">
+
+
+        <h2>
+            مستعد تبدا التحضير؟ 🚀
+        </h2>
+
+
+        <p>
+
+            دخل للموقع، اختار القسم ديالك وبدا التدريب.
+
+        </p>
+
+
+        <a
+            href="signup.html"
+            class="cta-button"
+        >
+            إنشاء حساب مجاني →
+        </a>
+
+
+    </section>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer>
+
+
+        <div class="footer-brand">
+
+            Deutsch
+            <span>
+                Einfach
+            </span>
+            🇩🇪
+
+        </div>
+
+
+        <div class="footer-links">
+
+
+            <a
+                href="dashboard.html?section=lesen"
             >
                 Lesen
             </a>
@@ -407,7 +1492,6 @@
 
             <a
                 href="dashboard.html?section=hoeren"
-                class="exam-button"
             >
                 Hören
             </a>
@@ -415,7 +1499,6 @@
 
             <a
                 href="dashboard.html?section=schreiben"
-                class="exam-button"
             >
                 Schreiben
             </a>
@@ -423,202 +1506,41 @@
 
             <a
                 href="dashboard.html?section=sprechen"
-                class="exam-button"
             >
                 Sprechen
             </a>
 
-        </div>
-
-
-        <!-- =========================
-             الأزرار فاليمين
-        ========================== -->
-
-        <div class="account-buttons">
-
-            <!-- العروض -->
 
             <a
                 href="payment.html"
-                class="top-button payment-button"
             >
                 🎁 العروض
             </a>
 
 
-            <!-- WhatsApp -->
-
             <a
                 href="https://chat.whatsapp.com/FTQfYeyZyCt8DMs5JuSxW0?mode=gi_t"
                 target="_blank"
-                class="top-button whatsapp-button"
             >
-                WhatsApp – المجموعة
+                WhatsApp
             </a>
 
 
-            <!-- إنشاء حساب -->
-
-            <a
-                href="signup.html"
-                class="top-button signup-button"
-            >
-                إنشاء حساب
-            </a>
-
-
-            <!-- تسجيل الدخول -->
-
-            <a
-                href="login.html"
-                class="top-button register-button"
-            >
-                تسجيل الدخول
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         العنوان
-    ========================== -->
-
-    <h1>
-
-        Deutsch Einfach –
-
-        <span class="highlight">
-            TELC B1 & B2
-        </span>
-
-        Exam Preparation
-
-    </h1>
-
-
-    <!-- =========================
-         المقدمة
-    ========================== -->
-
-    <section class="intro">
-
-        <img
-            src="icon1.png"
-            alt="Logo"
-            class="logo"
-        >
-
-
-        <div class="text-content">
-
-            <h2 class="arabic">
-
-                أول منصة
-
-                <span class="german">
-                    TELC B1 & B2
-                </span>
-
-                <br>
-
-                خالية من أخطاء الـ PDFs!
-
-            </h2>
-
-
-            <p class="arabic">
-
-                هنا غادي تلقى كل المواضيع الجديدة، ومواضيع تركيا اللي ولات
-                كتظهر مؤخراً.
-
-                كل ما يخص
-
-                <span class="german">
-                    Lesen
-                </span>
-
-                غادي تلقاه مجموع ومنظم فبلاصة وحدة، باش ما تضيعش الوقت
-                فالتقلاب على الـ PDF والأخطاء اللي فيهم.
-
-                إضافة لهادشي، قسم
-
-                <span class="german">
-                    Hören
-                </span>
-
-                متوفر بالأوديوهات بحال الامتحان،
-
-                و
-
-                <span class="german">
-                    Schreiben
-                </span>
-
-                كيتصحح بالذكاء الاصطناعي.
-
-                وأي جديد كينزل فالموقع كتوصلك بيه إشعار مباشرة.
-
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         البطاقات
-    ========================== -->
-
-    <section class="features">
-
-
-        <div class="card">
-
-            <h3>
-                Lesen
-            </h3>
-
-            <p>
-                مواضيع TELC B1 و B2 مجموعين ومنظمين بطريقة سهلة.
-            </p>
-
         </div>
 
 
-        <div class="card">
-
-            <h3>
-                Hören
-            </h3>
-
-            <p>
-                Audio بحال الامتحان الحقيقي باش تدرب راسك مزيان.
-            </p>
-
-        </div>
+        <p>
+            © 2026 Deutsch Einfach – TELC B1 & B2 Exam Preparation
+        </p>
 
 
-        <div class="card">
+    </footer>
 
-            <h3>
-                Schreiben
-            </h3>
-
-            <p>
-                كتب Antwort ديالك وخليه يتصحح بالذكاء الاصطناعي.
-            </p>
-
-        </div>
-
-
-    </section>
 
 </div>
-```
+
 
 </body>
 
 </html>
+
