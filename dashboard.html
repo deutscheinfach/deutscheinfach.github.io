@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="de" dir="rtl">
 
 <head>
@@ -29,10 +28,24 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+
     background:
-        radial-gradient(circle at top right, #fff5c4 0%, transparent 28%),
-        radial-gradient(circle at bottom left, #ffe8e8 0%, transparent 30%),
-        linear-gradient(135deg, #f5f6f8, #ffffff);
+        radial-gradient(
+            circle at top right,
+            #fff5c4 0%,
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at bottom left,
+            #ffe8e8 0%,
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #f5f6f8,
+            #ffffff
+        );
+
     color: var(--dark);
     min-height: 100vh;
 }
@@ -55,11 +68,10 @@ button {
 
 
 /* =========================
-   TOP HEADER
+   HEADER
 ========================= */
 
 .header {
-    position: relative;
     text-align: center;
     padding: 15px 0 25px;
 }
@@ -67,27 +79,39 @@ button {
 .logo {
     width: 92px;
     height: 92px;
+
     object-fit: cover;
+
     border-radius: 50%;
+
     border: 4px solid var(--yellow);
+
     background: white;
+
     box-shadow:
         0 10px 30px rgba(0,0,0,0.14),
         0 0 0 7px rgba(240,196,0,0.08);
+
     margin-bottom: 8px;
 }
 
 h1 {
     margin: 5px 0;
+
     color: var(--red);
+
     font-size: 32px;
+
     font-weight: 900;
+
     letter-spacing: -0.5px;
 }
 
 .welcome {
     color: var(--gray);
+
     font-size: 15px;
+
     margin-top: 8px;
 }
 
@@ -98,132 +122,201 @@ h1 {
 
 .profile-card {
     position: relative;
+
     overflow: hidden;
+
     background: rgba(255,255,255,0.95);
+
     border-radius: 24px;
+
     padding: 22px 25px;
+
     margin: 12px 0 22px;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.08);
+
     border: 1px solid rgba(0,0,0,0.05);
 }
 
 .profile-card::before {
+
     content: "";
+
     position: absolute;
+
     top: 0;
     right: 0;
+
     width: 7px;
     height: 100%;
-    background: linear-gradient(
-        #d60000,
-        #f0c400
-    );
+
+    background:
+        linear-gradient(
+            #d60000,
+            #f0c400
+        );
 }
 
 .profile-top {
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
+
     gap: 20px;
 }
 
 .profile-info h3 {
+
     margin: 0 0 7px;
+
     color: var(--red);
+
     font-size: 20px;
 }
 
 .profile-info p {
+
     margin: 0;
+
     color: var(--gray);
+
     font-size: 14px;
 }
 
 .profile-badge {
-    background: linear-gradient(
-        135deg,
-        #fff9d7,
-        #fff3a4
-    );
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff9d7,
+            #fff3a4
+        );
+
     border: 1px solid #e5c000;
+
     padding: 12px 18px;
+
     border-radius: 15px;
+
     font-weight: bold;
+
     color: #806700;
+
     white-space: nowrap;
 }
 
 
 /* =========================
-   MAIN PROGRESS
+   PROGRESS
 ========================= */
 
 .progress-card {
+
     position: relative;
+
     overflow: hidden;
+
     background:
         linear-gradient(
             135deg,
             #d60000,
             #ad0000
         );
+
     color: white;
+
     border-radius: 25px;
+
     padding: 27px;
+
     margin-bottom: 28px;
+
     box-shadow:
         0 15px 40px rgba(214,0,0,0.22);
 }
 
 .progress-card::after {
+
     content: "🇩🇪";
+
     position: absolute;
+
     left: 25px;
+
     bottom: -15px;
+
     font-size: 95px;
+
     opacity: 0.07;
 }
 
 .progress-header {
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
+
     margin-bottom: 16px;
 }
 
 .progress-header h3 {
+
     margin: 0;
+
     font-size: 20px;
 }
 
 .progress-percent {
+
     font-size: 30px;
+
     font-weight: 900;
 }
 
 .progress-bar {
+
     width: 100%;
+
     height: 13px;
-    background: rgba(255,255,255,0.22);
+
+    background:
+        rgba(255,255,255,0.22);
+
     border-radius: 30px;
+
     overflow: hidden;
 }
 
 .progress-fill {
+
     width: 0%;
+
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        #f0c400,
-        #ffe66b
-    );
+
+    background:
+        linear-gradient(
+            90deg,
+            #f0c400,
+            #ffe66b
+        );
+
     border-radius: 30px;
+
     transition: width 0.7s ease;
 }
 
 .progress-text {
+
     margin: 13px 0 0;
+
     font-size: 14px;
+
     opacity: 0.95;
 }
 
@@ -233,92 +326,103 @@ h1 {
 ========================= */
 
 .level-title {
+
     text-align: center;
+
     margin: 8px 0 13px;
+
     color: #555;
 }
 
 .level-buttons {
+
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
     gap: 14px;
+
     max-width: 580px;
+
     margin: auto;
 }
 
 .level-button {
+
     border: 2px solid #e4bd00;
-    padding: 17px;
+
+    padding: 18px;
+
     border-radius: 17px;
+
     background: white;
-    box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,0.07);
+
     font-size: 19px;
+
     font-weight: bold;
+
     cursor: pointer;
+
     transition: 0.3s ease;
 }
 
 .level-button:hover {
-    transform: translateY(-3px);
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,0.11);
 }
 
-.level-button.active {
+.level-button.b1:hover {
+
+    border-color: #d60000;
+
+    background: #fff5f5;
+}
+
+.level-button.b2 {
+
     background: var(--red);
+
     color: white;
+
     border-color: var(--red);
-    box-shadow: 0 8px 25px rgba(214,0,0,0.20);
+
+    box-shadow:
+        0 8px 25px
+        rgba(214,0,0,0.20);
 }
 
-.selected-level {
-    text-align: center;
-    margin: 22px 0 25px;
-}
+.level-button.b2:hover {
 
-.selected-level h2 {
-    color: var(--red);
-    margin: 0;
-    font-size: 21px;
+    background: var(--red-dark);
 }
 
 
 /* =========================
-   SECTION NAVIGATION
+   SELECTED LEVEL
 ========================= */
 
-.main-buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    margin-bottom: 25px;
+.selected-level {
+
+    text-align: center;
+
+    margin: 22px 0 25px;
 }
 
-.main-button {
-    position: relative;
-    border: 1px solid #e5e5e5;
-    padding: 19px 10px;
-    border-radius: 19px;
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.07);
-    font-size: 17px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
+.selected-level h2 {
 
-.main-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 13px 30px rgba(0,0,0,0.11);
-}
+    color: var(--red);
 
-.main-button.active {
-    background: linear-gradient(
-        135deg,
-        #d60000,
-        #b50000
-    );
-    color: white;
-    border-color: #d60000;
-    box-shadow: 0 10px 27px rgba(214,0,0,0.22);
+    margin: 0;
+
+    font-size: 21px;
 }
 
 
@@ -327,214 +431,212 @@ h1 {
 ========================= */
 
 .content-card {
-    background: rgba(255,255,255,0.97);
+
+    background:
+        rgba(255,255,255,0.97);
+
     padding: 30px;
+
     border-radius: 27px;
-    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
-    border: 1px solid rgba(0,0,0,0.04);
+
+    box-shadow:
+        0 14px 40px rgba(0,0,0,0.08);
+
+    border:
+        1px solid rgba(0,0,0,0.04);
 }
 
 .content-card h2 {
+
     text-align: center;
+
     color: var(--red);
-    margin: 0 0 8px;
+
+    margin:
+        0 0 8px;
+
     font-size: 27px;
 }
 
-.content-card > div > p {
+.content-description {
+
     text-align: center;
+
     color: var(--gray);
+
     line-height: 1.8;
+
+    margin-bottom: 25px;
 }
 
 
 /* =========================
-   SECTION SUMMARY
+   LEVEL CARDS
 ========================= */
 
-.section-summary {
+.level-info-grid {
+
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin: 25px 0;
-}
 
-.summary-card {
-    background: #fafafa;
-    border: 1px solid #eeeeee;
-    border-radius: 18px;
-    padding: 18px;
-    text-align: center;
-    transition: 0.3s;
-}
+    grid-template-columns:
+        repeat(2, 1fr);
 
-.summary-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.07);
-}
+    gap: 20px;
 
-.summary-icon {
-    font-size: 28px;
-    margin-bottom: 8px;
-}
-
-.summary-title {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 6px;
-}
-
-.summary-number {
-    color: var(--red);
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.small-progress {
-    width: 100%;
-    height: 7px;
-    background: #e8e8e8;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-top: 11px;
-}
-
-.small-progress-fill {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        #d60000,
-        #f0c400
-    );
-    border-radius: 20px;
-    transition: width 0.6s ease;
-}
-
-
-/* =========================
-   TEIL BUTTONS
-========================= */
-
-.teil-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 17px;
     margin-top: 25px;
 }
 
-.teil-button {
+.level-info-card {
+
     position: relative;
+
     overflow: hidden;
-    padding: 23px 15px;
-    border-radius: 19px;
-    border: 2px solid #edc600;
+
+    padding: 28px 22px;
+
+    border-radius: 22px;
+
     background: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
+
+    border: 2px solid #eeeeee;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.07);
+
     transition: 0.3s ease;
 }
 
-.teil-button::after {
-    content: "→";
-    position: absolute;
-    left: 15px;
-    opacity: 0;
-    transition: 0.3s;
+.level-info-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 14px 32px rgba(0,0,0,0.11);
+}
+
+.level-info-card.b1-card {
+
+    border-color:
+        #f0c400;
+}
+
+.level-info-card.b2-card {
+
+    border-color:
+        #d60000;
+}
+
+.level-info-icon {
+
+    font-size: 50px;
+
+    margin-bottom: 10px;
+}
+
+.level-info-card h3 {
+
+    margin:
+        8px 0;
+
+    font-size: 22px;
+
     color: var(--red);
 }
 
-.teil-button:hover {
-    background: #fffbea;
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.09);
+.level-info-card p {
+
+    color: #666;
+
+    line-height: 1.8;
+
+    font-size: 14px;
 }
 
-.teil-button:hover::after {
-    opacity: 1;
+.open-level {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
 }
 
-.teil-count {
-    display: block;
-    color: #777;
-    font-size: 13px;
-    margin-top: 7px;
-    font-weight: normal;
+.open-level.b1-open {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0c400,
+            #d8ae00
+        );
+
+    color: #3d3200;
+}
+
+.open-level.b2-open {
+
+    background:
+        linear-gradient(
+            135deg,
+            #d60000,
+            #ad0000
+        );
+
+    color: white;
+}
+
+.open-level:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.14);
 }
 
 
 /* =========================
-   INFO
+   INFO BOX
 ========================= */
 
 .info-box {
+
     margin-top: 27px;
+
     padding: 19px;
+
     background:
         linear-gradient(
             135deg,
             #fffdf1,
             #fff8cf
         );
-    border: 1px solid #f0dc6b;
+
+    border:
+        1px solid #f0dc6b;
+
     border-radius: 17px;
+
     text-align: center;
+
     color: #6d5a00;
+
     line-height: 1.7;
-}
-
-
-/* =========================
-   SCHREIBEN
-========================= */
-
-.single-section-card {
-    margin-top: 25px;
-    padding: 25px;
-    border-radius: 20px;
-    background: #fafafa;
-    border: 1px solid #eeeeee;
-    text-align: center;
-}
-
-.single-section-card .big-icon {
-    font-size: 45px;
-    margin-bottom: 8px;
-}
-
-.single-section-card h3 {
-    margin: 8px 0;
-    color: var(--red);
-}
-
-.single-section-card p {
-    color: #666;
-    line-height: 1.8;
-}
-
-
-/* =========================
-   SPRECHEN
-========================= */
-
-.sprechen-card {
-    text-align: center;
-    padding: 35px 20px;
-}
-
-.sprechen-icon {
-    font-size: 65px;
-    margin-bottom: 10px;
-}
-
-.sprechen-card h2 {
-    margin-bottom: 10px;
-}
-
-.sprechen-card p {
-    max-width: 650px;
-    margin: auto;
 }
 
 
@@ -543,24 +645,42 @@ h1 {
 ========================= */
 
 .logout {
+
     display: block;
+
     width: 190px;
-    margin: 30px auto 0;
+
+    margin:
+        30px auto 0;
+
     padding: 14px;
+
     border: none;
+
     border-radius: 14px;
+
     background: #161616;
+
     color: white;
+
     font-size: 15px;
+
     font-weight: bold;
+
     cursor: pointer;
+
     transition: 0.3s;
 }
 
 .logout:hover {
+
     background: #333;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.15);
 }
 
 
@@ -569,21 +689,28 @@ h1 {
 ========================= */
 
 .section-effect {
-    animation: sectionEffect 0.45s ease;
+
+    animation:
+        sectionEffect 0.45s ease;
 }
 
 @keyframes sectionEffect {
 
     0% {
+
         opacity: 0;
-        transform: translateY(15px);
+
+        transform:
+            translateY(15px);
     }
 
     100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
 
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
 }
 
 
@@ -593,61 +720,69 @@ h1 {
 
 @media (max-width: 800px) {
 
-    .main-buttons {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .level-info-grid {
 
-    .section-summary {
         grid-template-columns: 1fr;
     }
-
-    .teil-buttons {
-        grid-template-columns: 1fr;
-    }
-
 }
 
 
 @media (max-width: 600px) {
 
     .container {
+
         width: 96%;
-        padding: 18px 7px 40px;
+
+        padding:
+            18px 7px 40px;
     }
 
     h1 {
+
         font-size: 26px;
     }
 
     .logo {
+
         width: 78px;
+
         height: 78px;
     }
 
     .profile-top {
+
         flex-direction: column;
+
         text-align: center;
     }
 
     .profile-badge {
+
         width: 100%;
     }
 
     .progress-card {
+
         padding: 21px;
     }
 
     .progress-percent {
+
         font-size: 25px;
     }
 
     .content-card {
-        padding: 22px 15px;
+
+        padding:
+            22px 15px;
     }
 
-    .main-button {
-        font-size: 15px;
-        padding: 17px 7px;
+    .level-button {
+
+        font-size: 16px;
+
+        padding:
+            16px 8px;
     }
 
 }
@@ -662,6 +797,10 @@ h1 {
 
 <div class="container">
 
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <div class="header">
 
@@ -685,6 +824,10 @@ h1 {
 </div>
 
 
+<!-- =========================
+     PROFILE
+========================= -->
+
 <div class="profile-card">
 
     <div class="profile-top">
@@ -702,13 +845,19 @@ h1 {
         </div>
 
         <div class="profile-badge">
+
             🎓 TELC B1 & B2
+
         </div>
 
     </div>
 
 </div>
 
+
+<!-- =========================
+     PROGRESS
+========================= -->
 
 <div class="progress-card">
 
@@ -746,6 +895,10 @@ h1 {
 </div>
 
 
+<!-- =========================
+     LEVEL SELECT
+========================= -->
+
 <div class="level-title">
 
     <strong>
@@ -758,19 +911,22 @@ h1 {
 <div class="level-buttons">
 
     <button
-        id="b1Button"
-        class="level-button"
-        onclick="selectLevel('B1', this)"
+        class="level-button b1"
+        onclick="openB1()"
     >
+
         🇩🇪 B1
+
     </button>
 
+
     <button
-        id="b2Button"
-        class="level-button active"
-        onclick="selectLevel('B2', this)"
+        class="level-button b2"
+        onclick="openB2()"
     >
+
         🇩🇪 B2
+
     </button>
 
 </div>
@@ -779,551 +935,168 @@ h1 {
 <div class="selected-level">
 
     <h2 id="selectedLevelText">
-        المستوى المختار: B2 🇩🇪
+
+        اختار B1 أو B2 باش تبدا 🇩🇪
+
     </h2>
 
 </div>
 
 
 <!-- =========================
-     MAIN SECTIONS
+     MAIN CONTENT
 ========================= -->
 
-<div class="main-buttons">
-
-    <!-- Lesen → صفحة Lesen Teil 1 -->
-
-    <button
-        id="lesenButton"
-        class="main-button active"
-        onclick="window.location.href='lesen-teil1.html'"
-    >
-        📖 Lesen
-    </button>
+<div class="content-card section-effect">
 
 
-    <button
-        id="hörenButton"
-        class="main-button"
-        onclick="showSection('hören', this)"
-    >
-        🎧 Hören
-    </button>
+    <h2>
+        🎓 Deutsch Prüfung
+    </h2>
 
 
-    <button
-        id="schreibenButton"
-        class="main-button"
-        onclick="showSection('schreiben', this)"
-    >
-        ✍️ Schreiben
-    </button>
+    <p class="content-description">
+
+        اختار المستوى ديالك باش تدخل للتداريب الخاصة به.
+        <br>
+
+        كل مستوى عندو المحتوى ديالو بشكل مستقل 🇩🇪
+
+    </p>
 
 
-    <button
-        id="sprechenButton"
-        class="main-button"
-        onclick="showSection('sprechen', this)"
-    >
-        🗣️ Sprechen
-    </button>
+    <div class="level-info-grid">
+
+
+        <!-- =====================
+             B1
+        ====================== -->
+
+        <div class="level-info-card b1-card">
+
+            <div class="level-info-icon">
+                🟡🇩🇪
+            </div>
+
+            <h3>
+                TELC B1
+            </h3>
+
+            <p>
+
+                تدرب على:
+
+                <br>
+
+                📖 Lesen
+
+                <br>
+
+                🎧 Hören
+
+                <br>
+
+                ✍️ Schreiben
+
+                <br>
+
+                🗣️ Sprechen
+
+            </p>
+
+
+            <button
+                class="open-level b1-open"
+                onclick="openB1()"
+            >
+
+                🇩🇪 B1 öffnen
+
+            </button>
+
+        </div>
+
+
+        <!-- =====================
+             B2
+        ====================== -->
+
+        <div class="level-info-card b2-card">
+
+            <div class="level-info-icon">
+                🔴🇩🇪
+            </div>
+
+            <h3>
+                TELC B2
+            </h3>
+
+            <p>
+
+                تدرب على:
+
+                <br>
+
+                📖 Lesen
+
+                <br>
+
+                🎧 Hören
+
+                <br>
+
+                ✍️ Schreiben
+
+                <br>
+
+                🗣️ Sprechen
+
+            </p>
+
+
+            <button
+                class="open-level b2-open"
+                onclick="openB2()"
+            >
+
+                🇩🇪 B2 öffnen
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="info-box">
+
+        🔥 اختار المستوى المناسب ليك،
+        وغادي تدخل مباشرة للمحتوى ديال داك المستوى.
+
+        <br>
+
+        B1 و B2 منفصلين باش يكون الموقع منظم وسهل الاستعمال. 🇩🇪
+
+    </div>
+
 
 </div>
 
 
 <!-- =========================
-     CONTENT
+     LOGOUT
 ========================= -->
-
-<div
-    class="content-card"
-    id="content"
->
-
-
-<div id="lesen">
-
-    <h2>
-        📖 Lesen Dashboard
-    </h2>
-
-    <p id="lesenText">
-        اختار Teil باش تبدأ تدريب Lesen ديال TELC B2.
-    </p>
-
-
-    <div class="section-summary">
-
-        <div class="summary-card">
-
-            <div class="summary-icon">
-                📄
-            </div>
-
-            <div class="summary-title">
-                Teil 1
-            </div>
-
-            <div
-                class="summary-number"
-                id="lesenTeil1Number"
-            >
-                0 / 45
-            </div>
-
-            <div class="small-progress">
-                <div
-                    class="small-progress-fill"
-                    id="lesenTeil1Progress"
-                ></div>
-            </div>
-
-        </div>
-
-
-        <div class="summary-card">
-
-            <div class="summary-icon">
-                📚
-            </div>
-
-            <div class="summary-title">
-                Teil 2
-            </div>
-
-            <div
-                class="summary-number"
-                id="lesenTeil2Number"
-            >
-                0 / 28
-            </div>
-
-            <div class="small-progress">
-                <div
-                    class="small-progress-fill"
-                    id="lesenTeil2Progress"
-                ></div>
-            </div>
-
-        </div>
-
-
-        <div class="summary-card">
-
-            <div class="summary-icon">
-                📖
-            </div>
-
-            <div class="summary-title">
-                Teil 3
-            </div>
-
-            <div
-                class="summary-number"
-                id="lesenTeil3Number"
-            >
-                0 / 33
-            </div>
-
-            <div class="small-progress">
-                <div
-                    class="small-progress-fill"
-                    id="lesenTeil3Progress"
-                ></div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="teil-buttons">
-
-        <button
-            class="teil-button"
-            onclick="openTeil(1)"
-        >
-            📄 Lesen – Teil 1
-
-            <span class="teil-count">
-                45 Themen
-            </span>
-
-        </button>
-
-
-        <button
-            class="teil-button"
-            onclick="openTeil(2)"
-        >
-            📚 Lesen – Teil 2
-
-            <span class="teil-count">
-                28 Themen
-            </span>
-
-        </button>
-
-
-        <button
-            class="teil-button"
-            onclick="openTeil(3)"
-        >
-            📖 Lesen – Teil 3
-
-            <span class="teil-count">
-                33 Themen
-            </span>
-
-        </button>
-
-    </div>
-
-
-    <div class="info-box">
-
-        🔥 اختار Teil باش تشوف Themen ديالو وتبدأ التدريب.
-
-    </div>
-
-</div>
-
-
-<div
-    id="hören"
-    style="display:none;"
->
-
-    <h2>
-        🎧 Hören Dashboard
-    </h2>
-
-    <p id="hörenText">
-        اختار Teil باش تبدأ تدريب Hören ديال TELC B2.
-    </p>
-
-
-    <div class="section-summary">
-
-        <div class="summary-card">
-
-            <div class="summary-icon">
-                🎧
-            </div>
-
-            <div class="summary-title">
-                Teil 1
-            </div>
-
-            <div
-                class="summary-number"
-                id="hoerenTeil1Number"
-            >
-                0 / 62
-            </div>
-
-            <div class="small-progress">
-
-                <div
-                    class="small-progress-fill"
-                    id="hoerenTeil1Progress"
-                ></div>
-
-            </div>
-
-        </div>
-
-
-        <div class="summary-card">
-
-            <div class="summary-icon">
-                🔊
-            </div>
-
-            <div class="summary-title">
-                Teil 2
-            </div>
-
-            <div
-                class="summary-number"
-                id="hoerenTeil2Number"
-            >
-                0 / 70
-            </div>
-
-            <div class="small-progress">
-
-                <div
-                    class="small-progress-fill"
-                    id="hoerenTeil2Progress"
-                ></div>
-
-            </div>
-
-        </div>
-
-
-        <div class="summary-card">
-
-            <div class="summary-icon">
-                🎵
-            </div>
-
-            <div class="summary-title">
-                Teil 3
-            </div>
-
-            <div
-                class="summary-number"
-                id="hoerenTeil3Number"
-            >
-                0 / 56
-            </div>
-
-            <div class="small-progress">
-
-                <div
-                    class="small-progress-fill"
-                    id="hoerenTeil3Progress"
-                ></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="teil-buttons">
-
-        <button
-            class="teil-button"
-            onclick="openHorenTeil(1)"
-        >
-            🎧 Hören – Teil 1
-
-            <span class="teil-count">
-                62 Themen
-            </span>
-
-        </button>
-
-
-        <button
-            class="teil-button"
-            onclick="openHorenTeil(2)"
-        >
-            🔊 Hören – Teil 2
-
-            <span class="teil-count">
-                70 Themen
-            </span>
-
-        </button>
-
-
-        <button
-            class="teil-button"
-            onclick="openHorenTeil(3)"
-        >
-            🎵 Hören – Teil 3
-
-            <span class="teil-count">
-                56 Themen
-            </span>
-
-        </button>
-
-    </div>
-
-
-    <div class="info-box">
-
-        🎧 اختار Teil باش تدخل للتداريب ديال Hören.
-
-    </div>
-
-</div>
-
-
-<div
-    id="schreiben"
-    style="display:none;"
->
-
-    <h2>
-        ✍️ Schreiben Dashboard
-    </h2>
-
-    <p id="schreibenText">
-        هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC B2.
-    </p>
-
-
-    <div class="section-summary">
-
-        <div class="summary-card">
-
-            <div class="summary-icon">
-                ✍️
-            </div>
-
-            <div class="summary-title">
-                Schreiben
-            </div>
-
-            <div
-                class="summary-number"
-                id="schreibenNumber"
-            >
-                0 / 41
-            </div>
-
-            <div class="small-progress">
-
-                <div
-                    class="small-progress-fill"
-                    id="schreibenProgress"
-                ></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="single-section-card">
-
-        <div class="big-icon">
-            ✍️
-        </div>
-
-        <h3>
-            41 Themen
-        </h3>
-
-        <p>
-            تدرب على جميع مواضيع Schreiben الخاصة بـ TELC B2
-            وحاول تكمل أكبر عدد ممكن.
-        </p>
-
-        <button
-            class="teil-button"
-            onclick="openSchreiben()"
-        >
-            ✍️ Alle Themen öffnen
-        </button>
-
-    </div>
-
-
-    <div class="info-box">
-
-        📝 كل موضوع كيتحسب غير منين تكمل التمرين بالطريقة الصحيحة.
-
-    </div>
-
-</div>
-
-
-<div
-    id="sprechen"
-    style="display:none;"
->
-
-    <div class="sprechen-card">
-
-        <div class="sprechen-icon">
-            🗣️
-        </div>
-
-        <h2>
-            Sprechen
-        </h2>
-
-        <p id="sprechenText">
-            هنا غادي تلقى تمارين Sprechen ديال TELC B2.
-        </p>
-
-        <div class="info-box">
-
-            🎤 تدرب على Sprechen وطور طريقة التواصل ديالك بالألمانية 🇩🇪
-
-        </div>
-
-    </div>
-
-</div>
-
-
-</div>
-
 
 <button
     class="logout"
     onclick="logout()"
 >
+
     تسجيل الخروج
+
 </button>
 
-
-</div>
-
-
-<!-- =========================
-     THEMA POPUP
-========================= -->
-
-<div
-    class="thema-choice-overlay"
-    id="themaChoice"
-    onclick="closeThemaChoice(event)"
->
-
-<div
-    class="thema-choice-box"
-    onclick="event.stopPropagation()"
->
-
-    <h2>
-        📖 Sport ist gesund
-    </h2>
-
-    <p>
-        اختار النسخة اللي بغيتي تبدأ بها:
-    </p>
-
-    <div class="choice-buttons">
-
-        <button
-            class="choice-button choice-assassi"
-            onclick="openAssassi()"
-        >
-            🔴 Sport ist gesund
-            <br>
-            <small>Assassi</small>
-        </button>
-
-        <button
-            class="choice-button choice-mo3adal"
-            onclick="openMo3adal()"
-        >
-            🟡 Sport ist gesund
-            <br>
-            <small>Mo3adal</small>
-        </button>
-
-    </div>
-
-    <button
-        class="close-choice"
-        onclick="closeThemaChoice()"
-    >
-        ✖️ Schließen
-    </button>
-
-</div>
 
 </div>
 
@@ -1334,30 +1107,54 @@ h1 {
 
 <script type="module">
 
+
 import {
+
     initializeApp
+
 }
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
 import {
+
     getAuth,
+
     signOut,
+
     onAuthStateChanged,
+
     setPersistence,
+
     browserLocalPersistence
+
 }
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
 
 import {
-    getFirestore,
-    doc,
-    getDoc,
-    onSnapshot
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+    getFirestore,
+
+    doc,
+
+    getDoc,
+
+    onSnapshot
+
+}
+
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
 
 const firebaseConfig = {
 
@@ -1385,29 +1182,47 @@ const firebaseConfig = {
 };
 
 
+/* =========================
+   INITIALIZE FIREBASE
+========================= */
+
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
+
 
 const auth =
     getAuth(app);
+
 
 const db =
     getFirestore(app);
 
 
+/* =========================
+   PERSISTENCE
+========================= */
+
 setPersistence(
     auth,
     browserLocalPersistence
 )
-.catch(function(error) {
+.catch(
+    function(error) {
 
-    console.error(
-        "Persistence error:",
-        error
-    );
+        console.error(
+            "Persistence error:",
+            error
+        );
 
-});
+    }
+);
 
+
+/* =========================
+   VARIABLES
+========================= */
 
 let currentUser = null;
 
@@ -1415,109 +1230,141 @@ let authReady = false;
 
 let stopSessionListener = null;
 
-let currentLevel = "B2";
 
+/* =========================
+   TOTALS
+========================= */
+
+/*
+   حالياً هادو هما Themes
+   الموجودة فـ B2.
+*/
 
 const totals = {
 
     lesen: {
+
         teil1: 45,
+
         teil2: 28,
+
         teil3: 33
+
     },
 
     hoeren: {
+
         teil1: 62,
+
         teil2: 70,
+
         teil3: 56
+
     },
 
     schreiben: {
+
         total: 41
+
     }
 
 };
 
 
+/* =========================
+   COUNT COMPLETED
+========================= */
+
+function countCompleted(obj) {
+
+    if (
+        !obj ||
+        typeof obj !== "object"
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Object.values(obj)
+
+        .filter(
+            function(value) {
+
+                return value === true;
+
+            }
+        )
+
+        .length;
+
+}
+
+
+/* =========================
+   MAIN PROGRESS
+========================= */
+
 function updateAllProgress(data) {
+
 
     const progress =
         data.progress || {};
 
+
     const lesen =
         progress.lesen || {};
+
 
     const hoeren =
         progress.hoeren || {};
 
+
     const schreiben =
         progress.schreiben || {};
 
+
     const lesenTeil1 =
-        countCompleted(lesen.teil1);
+        countCompleted(
+            lesen.teil1
+        );
+
 
     const lesenTeil2 =
-        countCompleted(lesen.teil2);
+        countCompleted(
+            lesen.teil2
+        );
+
 
     const lesenTeil3 =
-        countCompleted(lesen.teil3);
+        countCompleted(
+            lesen.teil3
+        );
+
 
     const hoerenTeil1 =
-        countCompleted(hoeren.teil1);
+        countCompleted(
+            hoeren.teil1
+        );
+
 
     const hoerenTeil2 =
-        countCompleted(hoeren.teil2);
+        countCompleted(
+            hoeren.teil2
+        );
+
 
     const hoerenTeil3 =
-        countCompleted(hoeren.teil3);
+        countCompleted(
+            hoeren.teil3
+        );
+
 
     const schreibenCount =
-        countCompleted(schreiben);
-
-
-    setSmallProgress(
-        "lesenTeil1",
-        lesenTeil1,
-        totals.lesen.teil1
-    );
-
-    setSmallProgress(
-        "lesenTeil2",
-        lesenTeil2,
-        totals.lesen.teil2
-    );
-
-    setSmallProgress(
-        "lesenTeil3",
-        lesenTeil3,
-        totals.lesen.teil3
-    );
-
-
-    setSmallProgress(
-        "hoerenTeil1",
-        hoerenTeil1,
-        totals.hoeren.teil1
-    );
-
-    setSmallProgress(
-        "hoerenTeil2",
-        hoerenTeil2,
-        totals.hoeren.teil2
-    );
-
-    setSmallProgress(
-        "hoerenTeil3",
-        hoerenTeil3,
-        totals.hoeren.teil3
-    );
-
-
-    setSmallProgress(
-        "schreiben",
-        schreibenCount,
-        totals.schreiben.total
-    );
+        countCompleted(
+            schreiben
+        );
 
 
     const lesenCompleted =
@@ -1525,33 +1372,40 @@ function updateAllProgress(data) {
         lesenTeil2 +
         lesenTeil3;
 
+
     const lesenTotal =
         totals.lesen.teil1 +
         totals.lesen.teil2 +
         totals.lesen.teil3;
+
 
     const hoerenCompleted =
         hoerenTeil1 +
         hoerenTeil2 +
         hoerenTeil3;
 
+
     const hoerenTotal =
         totals.hoeren.teil1 +
         totals.hoeren.teil2 +
         totals.hoeren.teil3;
 
+
     const schreibenTotal =
         totals.schreiben.total;
+
 
     const totalCompleted =
         lesenCompleted +
         hoerenCompleted +
         schreibenCount;
 
+
     const totalThemes =
         lesenTotal +
         hoerenTotal +
         schreibenTotal;
+
 
     const percent =
         totalThemes === 0
@@ -1560,6 +1414,7 @@ function updateAllProgress(data) {
                 totalCompleted /
                 totalThemes
             ) * 100;
+
 
     setMainProgress(
         percent,
@@ -1570,74 +1425,9 @@ function updateAllProgress(data) {
 }
 
 
-function countCompleted(obj) {
-
-    if (!obj || typeof obj !== "object") {
-
-        return 0;
-
-    }
-
-    return Object.values(obj)
-        .filter(function(value) {
-
-            return value === true;
-
-        })
-        .length;
-
-}
-
-
-function setSmallProgress(
-    prefix,
-    completed,
-    total
-) {
-
-    const number =
-        document.getElementById(
-            prefix + "Number"
-        );
-
-    const progress =
-        document.getElementById(
-            prefix + "Progress"
-        );
-
-    if (!number || !progress) {
-
-        return;
-
-    }
-
-    const safeCompleted =
-        Math.min(
-            completed,
-            total
-        );
-
-    const percent =
-        total === 0
-            ? 0
-            : (
-                safeCompleted /
-                total
-            ) * 100;
-
-    number.textContent =
-        safeCompleted +
-        " / " +
-        total;
-
-    progress.style.width =
-        Math.min(
-            percent,
-            100
-        ) + "%";
-
-}
-
+/* =========================
+   SET MAIN PROGRESS
+========================= */
 
 function setMainProgress(
     percent,
@@ -1645,20 +1435,24 @@ function setMainProgress(
     total
 ) {
 
+
     const progressPercent =
         document.getElementById(
             "progressPercent"
         );
+
 
     const progressFill =
         document.getElementById(
             "progressFill"
         );
 
+
     const progressText =
         document.getElementById(
             "progressText"
         );
+
 
     if (
         !progressPercent ||
@@ -1670,7 +1464,9 @@ function setMainProgress(
 
     }
 
+
     let displayPercent;
+
 
     if (
         Number.isInteger(percent)
@@ -1688,8 +1484,10 @@ function setMainProgress(
 
     }
 
+
     progressPercent.textContent =
         displayPercent + "%";
+
 
     progressFill.style.width =
         Math.min(
@@ -1697,7 +1495,10 @@ function setMainProgress(
             100
         ) + "%";
 
-    if (completed === 0) {
+
+    if (
+        completed === 0
+    ) {
 
         progressText.textContent =
             "0 / " +
@@ -1706,7 +1507,9 @@ function setMainProgress(
 
     }
 
-    else if (completed >= total) {
+    else if (
+        completed >= total
+    ) {
 
         progressText.textContent =
             total +
@@ -1729,7 +1532,12 @@ function setMainProgress(
 }
 
 
+/* =========================
+   LOAD PROGRESS
+========================= */
+
 async function updateProgress(user) {
+
 
     if (!user) {
 
@@ -1743,6 +1551,7 @@ async function updateProgress(user) {
 
     }
 
+
     try {
 
         const userRef =
@@ -1752,10 +1561,16 @@ async function updateProgress(user) {
                 user.uid
             );
 
-        const snapshot =
-            await getDoc(userRef);
 
-        if (!snapshot.exists()) {
+        const snapshot =
+            await getDoc(
+                userRef
+            );
+
+
+        if (
+            !snapshot.exists()
+        ) {
 
             setMainProgress(
                 0,
@@ -1766,6 +1581,7 @@ async function updateProgress(user) {
             return;
 
         }
+
 
         updateAllProgress(
             snapshot.data()
@@ -1785,9 +1601,16 @@ async function updateProgress(user) {
 }
 
 
+/* =========================
+   SESSION LISTENER
+========================= */
+
 function startSessionListener(user) {
 
-    if (stopSessionListener) {
+
+    if (
+        stopSessionListener
+    ) {
 
         stopSessionListener();
 
@@ -1795,16 +1618,19 @@ function startSessionListener(user) {
 
     }
 
+
     const mySessionId =
         localStorage.getItem(
             "deutschEinfachSessionId"
         );
+
 
     if (!mySessionId) {
 
         return;
 
     }
+
 
     const userRef =
         doc(
@@ -1813,6 +1639,7 @@ function startSessionListener(user) {
             user.uid
         );
 
+
     stopSessionListener =
         onSnapshot(
 
@@ -1820,28 +1647,38 @@ function startSessionListener(user) {
 
             async function(snapshot) {
 
-                if (!snapshot.exists()) {
+
+                if (
+                    !snapshot.exists()
+                ) {
 
                     return;
 
                 }
 
+
                 const data =
                     snapshot.data();
+
 
                 updateAllProgress(
                     data
                 );
 
+
                 const currentSessionId =
                     data.sessionId;
+
 
                 if (
                     currentSessionId &&
                     currentSessionId !== mySessionId
                 ) {
 
-                    if (stopSessionListener) {
+
+                    if (
+                        stopSessionListener
+                    ) {
 
                         stopSessionListener();
 
@@ -1849,9 +1686,11 @@ function startSessionListener(user) {
 
                     }
 
+
                     localStorage.removeItem(
                         "deutschEinfachSessionId"
                     );
+
 
                     try {
 
@@ -1870,10 +1709,12 @@ function startSessionListener(user) {
 
                     }
 
+
                     alert(
                         "🔐 تم تسجيل الدخول من جهاز آخر.\n\n" +
                         "تم تسجيل خروج هذا الجهاز تلقائياً."
                     );
+
 
                     window.location.replace(
                         "login.html"
@@ -1897,56 +1738,72 @@ function startSessionListener(user) {
 }
 
 
+/* =========================
+   AUTH STATE
+========================= */
+
 onAuthStateChanged(
 
     auth,
 
     async function(user) {
 
+
         currentUser =
             user;
 
+
         authReady =
             true;
+
 
         const welcomeText =
             document.getElementById(
                 "welcomeText"
             );
 
+
         const profileName =
             document.getElementById(
                 "profileName"
             );
+
 
         const profileEmail =
             document.getElementById(
                 "profileEmail"
             );
 
+
         if (user) {
+
 
             const name =
                 user.displayName ||
                 user.email ||
                 "";
 
+
             welcomeText.textContent =
                 "مرحباً " +
                 name +
                 " 👋";
 
+
             profileName.textContent =
                 "👤 " +
                 name;
+
 
             profileEmail.textContent =
                 user.email ||
                 "الحساب ديالك جاهز للتعلم 🇩🇪";
 
+
             await updateProgress(
                 user
             );
+
 
             startSessionListener(
                 user
@@ -1956,14 +1813,24 @@ onAuthStateChanged(
 
         else {
 
+
             welcomeText.textContent =
                 "مرحباً بك! واجد باش تبدا التعلم؟";
+
 
             profileName.textContent =
                 "👤 مرحباً بك";
 
+
             profileEmail.textContent =
                 "الحساب ديالك جاهز للتعلم 🇩🇪";
+
+
+            setMainProgress(
+                0,
+                0,
+                335
+            );
 
         }
 
@@ -1972,198 +1839,40 @@ onAuthStateChanged(
 );
 
 
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-const sectionFromURL =
-    params.get(
-        "section"
-    );
-
-const sectionMap = {
-
-    lesen: "lesen",
-
-    hoeren: "hören",
-
-    schreiben: "schreiben",
-
-    sprechen: "sprechen"
-
-};
-
-
-window.selectLevel =
-    function(
-        level,
-        button
-    ) {
-
-        currentLevel =
-            level;
-
-        document
-            .querySelectorAll(
-                ".level-button"
-            )
-            .forEach(
-                function(btn) {
-
-                    btn.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-        button.classList.add(
-            "active"
-        );
-
-        document.getElementById(
-            "selectedLevelText"
-        ).textContent =
-            "المستوى المختار: " +
-            level +
-            " 🇩🇪";
-
-        document.getElementById(
-            "lesenText"
-        ).textContent =
-            "اختار Teil باش تبدأ تدريب Lesen ديال TELC " +
-            level +
-            ".";
-
-        document.getElementById(
-            "hörenText"
-        ).textContent =
-            "اختار Teil باش تبدأ تدريب Hören ديال TELC " +
-            level +
-            ".";
-
-        document.getElementById(
-            "schreibenText"
-        ).textContent =
-            "هنا غادي تلقى نماذج وتمارين Schreiben ديال TELC " +
-            level +
-            ".";
-
-        document.getElementById(
-            "sprechenText"
-        ).textContent =
-            "هنا غادي تلقى تمارين Sprechen ديال TELC " +
-            level +
-            ".";
-
-    };
-
-
-window.showSection =
-    function(
-        section,
-        button
-    ) {
-
-        [
-            "lesen",
-            "hören",
-            "schreiben",
-            "sprechen"
-        ]
-        .forEach(
-            function(id) {
-
-                const element =
-                    document.getElementById(
-                        id
-                    );
-
-                if (element) {
-
-                    element.style.display =
-                        "none";
-
-                }
-
-            }
-        );
-
-        const selectedSection =
-            document.getElementById(
-                section
-            );
-
-        if (!selectedSection) {
-
-            return;
-
-        }
-
-        selectedSection.style.display =
-            "block";
-
-        document
-            .querySelectorAll(
-                ".main-button"
-            )
-            .forEach(
-                function(btn) {
-
-                    btn.classList.remove(
-                        "active"
-                    );
-
-                }
-            );
-
-        if (button) {
-
-            button.classList.add(
-                "active"
-            );
-
-        }
-
-        const content =
-            document.getElementById(
-                "content"
-            );
-
-        content.classList.remove(
-            "section-effect"
-        );
-
-        void content.offsetWidth;
-
-        content.classList.add(
-            "section-effect"
-        );
-
-    };
-
+/* =========================
+   WAIT FOR AUTH
+========================= */
 
 async function waitForAuth() {
 
-    if (authReady) {
+
+    if (
+        authReady
+    ) {
 
         return currentUser;
 
     }
 
+
     return new Promise(
         function(resolve) {
 
+
             const check =
                 setInterval(
+
                     function() {
 
-                        if (authReady) {
+
+                        if (
+                            authReady
+                        ) {
 
                             clearInterval(
                                 check
                             );
+
 
                             resolve(
                                 currentUser
@@ -2172,7 +1881,9 @@ async function waitForAuth() {
                         }
 
                     },
+
                     50
+
                 );
 
         }
@@ -2181,263 +1892,102 @@ async function waitForAuth() {
 }
 
 
-window.openTeil =
-    async function(number) {
+/* =========================
+   OPEN B1
+========================= */
 
-        const user =
-            await waitForAuth();
-
-        if (!user) {
-
-            alert(
-                "🔒 خاصك تسجل فالموقع باش تشوف Themen."
-            );
-
-            window.location.replace(
-                "signup.html"
-            );
-
-            return;
-
-        }
-
-        if (number === 1) {
-
-            window.location.href =
-                "lesen-teil1.html";
-
-            return;
-
-        }
-
-        alert(
-            "📚 Lesen – Teil " +
-            number +
-            "\n\n" +
-            "المحتوى غادي نضيفوه هنا قريباً 🔥"
-        );
-
-    };
-
-
-window.openThema =
-    function(number) {
-
-        if (number === 1) {
-
-            document.getElementById(
-                "themaChoice"
-            ).classList.add(
-                "show"
-            );
-
-            return;
-
-        }
-
-        alert(
-            "🔒 هاد Thema مازال ما تضافش."
-        );
-
-    };
-
-
-window.openAssassi =
-    function() {
-
-        window.location.href =
-            "thema1.html";
-
-    };
-
-
-window.openMo3adal =
-    function() {
-
-        window.location.href =
-            "thema1-mo3adal.html";
-
-    };
-
-
-window.closeThemaChoice =
-    function(event) {
-
-        if (
-            event &&
-            event.target !== event.currentTarget
-        ) {
-
-            return;
-
-        }
-
-        document.getElementById(
-            "themaChoice"
-        ).classList.remove(
-            "show"
-        );
-
-    };
-
-
-window.openHorenTeil =
-    async function(number) {
-
-        const user =
-            await waitForAuth();
-
-        if (!user) {
-
-            alert(
-                "🔒 خاصك تسجل فالموقع باش تشوف Themen."
-            );
-
-            window.location.replace(
-                "signup.html"
-            );
-
-            return;
-
-        }
-
-        alert(
-            "🎧 " +
-            currentLevel +
-            " – Hören – Teil " +
-            number +
-            "\n\n" +
-            "المحتوى الحقيقي ديال Themen غادي نضيفوه هنا 🔥"
-        );
-
-    };
-
-
-window.openSchreiben =
+window.openB1 =
     async function() {
 
+
         const user =
             await waitForAuth();
+
 
         if (!user) {
 
             alert(
-                "🔒 خاصك تسجل فالموقع."
+                "🔒 خاصك تسجل فالموقع باش تدخل للمستوى B1."
             );
 
+
             window.location.replace(
-                "signup.html"
+                "login.html"
             );
+
 
             return;
 
         }
 
-        alert(
-            "✍️ Schreiben – " +
-            currentLevel +
-            "\n\n" +
-            "41 Themen غادي يكونو هنا 🔥"
+
+        localStorage.setItem(
+            "deutschEinfachLevel",
+            "B1"
         );
+
+
+        window.location.href =
+            "b1.html";
 
     };
 
 
-window.addEventListener(
-    "DOMContentLoaded",
-    function() {
+/* =========================
+   OPEN B2
+========================= */
 
-        if (
-            sectionFromURL &&
-            sectionMap[
-                sectionFromURL
-            ]
-        ) {
+window.openB2 =
+    async function() {
 
-            const section =
-                sectionMap[
-                    sectionFromURL
-                ];
 
-            let buttonId;
+        const user =
+            await waitForAuth();
 
-            if (
-                sectionFromURL === "lesen"
-            ) {
 
-                /*
-                   إذا دخلنا ?section=lesen
-                   نمشيو مباشرة لـ Lesen Teil 1
-                */
+        if (!user) {
 
-                window.location.href =
-                    "lesen-teil1.html";
-
-                return;
-
-            }
-
-            else if (
-                sectionFromURL === "hoeren"
-            ) {
-
-                buttonId =
-                    "hörenButton";
-
-            }
-
-            else if (
-                sectionFromURL === "schreiben"
-            ) {
-
-                buttonId =
-                    "schreibenButton";
-
-            }
-
-            else {
-
-                buttonId =
-                    "sprechenButton";
-
-            }
-
-            showSection(
-                section,
-                document.getElementById(
-                    buttonId
-                )
+            alert(
+                "🔒 خاصك تسجل فالموقع باش تدخل للمستوى B2."
             );
+
+
+            window.location.replace(
+                "login.html"
+            );
+
+
+            return;
 
         }
 
-        else {
 
-            /*
-               Dashboard كيبقى مفتوح عادي.
-               Lesen button هو اللي كيمشي
-               لصفحة lesen-teil1.html
-            */
+        localStorage.setItem(
+            "deutschEinfachLevel",
+            "B2"
+        );
 
-            showSection(
-                "lesen",
-                document.getElementById(
-                    "lesenButton"
-                )
-            );
 
-        }
+        window.location.href =
+            "b2.html";
 
-    }
-);
+    };
 
+
+/* =========================
+   LOGOUT
+========================= */
 
 window.logout =
     async function() {
 
+
         try {
 
-            if (stopSessionListener) {
+
+            if (
+                stopSessionListener
+            ) {
 
                 stopSessionListener();
 
@@ -2445,13 +1995,21 @@ window.logout =
 
             }
 
+
             localStorage.removeItem(
                 "deutschEinfachSessionId"
             );
 
+
+            localStorage.removeItem(
+                "deutschEinfachLevel"
+            );
+
+
             await signOut(
                 auth
             );
+
 
             window.location.replace(
                 "login.html"
@@ -2461,10 +2019,12 @@ window.logout =
 
         catch (error) {
 
+
             console.error(
                 "Logout error:",
                 error
             );
+
 
             alert(
                 "وقع مشكل ف تسجيل الخروج."
@@ -2474,128 +2034,8 @@ window.logout =
 
     };
 
+
 </script>
-
-
-<style>
-
-.thema-choice-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.58);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 20px;
-    backdrop-filter: blur(6px);
-}
-
-.thema-choice-overlay.show {
-    display: flex;
-    animation: popupOverlay 0.25s ease;
-}
-
-.thema-choice-box {
-    width: 100%;
-    max-width: 500px;
-    background: white;
-    border-radius: 26px;
-    padding: 30px;
-    border: 3px solid #f0c400;
-    box-shadow: 0 20px 55px rgba(0,0,0,0.28);
-    text-align: center;
-    animation: popupBox 0.35s ease;
-}
-
-.thema-choice-box h2 {
-    margin-top: 0;
-    color: #d60000;
-}
-
-.thema-choice-box p {
-    color: #666;
-    margin-bottom: 25px;
-}
-
-.choice-buttons {
-    display: grid;
-    gap: 14px;
-}
-
-.choice-button {
-    width: 100%;
-    padding: 18px;
-    border-radius: 16px;
-    background: white;
-    font-size: 17px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.choice-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 9px 22px rgba(0,0,0,0.12);
-}
-
-.choice-assassi {
-    border: 2px solid #d60000;
-    color: #d60000;
-}
-
-.choice-assassi:hover {
-    background: #fff1f1;
-}
-
-.choice-mo3adal {
-    border: 2px solid #f0c400;
-    color: #927400;
-}
-
-.choice-mo3adal:hover {
-    background: #fff9d9;
-}
-
-.close-choice {
-    margin-top: 18px;
-    border: none;
-    background: #eee;
-    color: #555;
-    padding: 11px 25px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-@keyframes popupOverlay {
-
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-
-}
-
-@keyframes popupBox {
-
-    from {
-        opacity: 0;
-        transform: translateY(25px) scale(0.94);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-
-}
-
-</style>
-
 
 </body>
 
