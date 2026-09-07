@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deutsch Einfach – B1</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f8f8f8, #e8eef5);
+            min-height: 100vh;
+            color: #222;
+        }
+
+        header {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin-bottom: 8px;
+        }
+
+        header h1 {
+            margin: 5px 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .level {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 20px;
+            border-radius: 25px;
+            background: #e8f0ff;
+            color: #2457a6;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .back {
+            display: inline-block;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .back:hover {
+            transform: translateY(-2px);
+        }
+
+        .welcome {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .welcome h2 {
+            margin-top: 0;
+            font-size: 25px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.25s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            margin: 8px 0;
+            font-size: 23px;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 18px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 11px 25px;
+            border-radius: 12px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            opacity: 0.85;
+        }
+
+        .coming {
+            background: #eee;
+            color: #777;
+            cursor: not-allowed;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        @media (max-width: 700px) {
+            .sections {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 23px;
+            }
+
+            .container {
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <!-- إذا عندك icon1.png خليه هنا -->
+    <img src="icon1.png" class="logo" alt="Deutsch Einfach">
+
+    <h1>Deutsch Einfach 🇩🇪</h1>
+
+    <p>Deutsch lernen. Prüfung bestehen.</p>
+
+    <div class="level">
+        B1 – Deutschprüfung
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <a href="dashboard.html" class="back">
+        ← Zurück
+    </a>
+
+
+    <div class="welcome">
+
+        <h2>🇩🇪 Willkommen bei B1</h2>
+
+        <p>
+            Bereite dich Schritt für Schritt auf deine B1-Prüfung vor.
+        </p>
+
+    </div>
+
+
+    <div class="sections">
+
+        <!-- LESEN -->
+        <div class="card" onclick="openLesen()">
+
+            <div class="icon">📖</div>
+
+            <h3>Lesen</h3>
+
+            <p>
+                Leseverstehen B1 üben und verbessern.
+            </p>
+
+            <span class="button">
+                Öffnen
+            </span>
+
+        </div>
+
+
+        <!-- HÖREN -->
+        <div class="card" onclick="openHoeren()">
+
+            <div class="icon">🎧</div>
+
+            <h3>Hören</h3>
+
+            <p>
+                Hörverstehen B1 trainieren.
+            </p>
+
+            <span class="button">
+                Öffnen
+            </span>
+
+        </div>
+
+
+        <!-- SCHREIBEN -->
+        <div class="card" onclick="openSchreiben()">
+
+            <div class="icon">✍️</div>
+
+            <h3>Schreiben</h3>
+
+            <p>
+                Schreiben für die B1-Prüfung üben.
+            </p>
+
+            <span class="button">
+                Öffnen
+            </span>
+
+        </div>
+
+
+        <!-- SPRECHEN -->
+        <div class="card" onclick="openSprechen()">
+
+            <div class="icon">🗣️</div>
+
+            <h3>Sprechen</h3>
+
+            <p>
+                Mündliche Prüfung B1 trainieren.
+            </p>
+
+            <span class="button">
+                Öffnen
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    © 2026 Deutsch Einfach 🇩🇪
+</footer>
+
+
+<script>
+
+    function openLesen() {
+        window.location.href = "b1-lesen.html";
+    }
+
+    function openHoeren() {
+        window.location.href = "b1-hoeren.html";
+    }
+
+    function openSchreiben() {
+        window.location.href = "b1-schreiben.html";
+    }
+
+    function openSprechen() {
+        window.location.href = "b1-sprechen.html";
+    }
+
+</script>
+
+</body>
+</html>
+
