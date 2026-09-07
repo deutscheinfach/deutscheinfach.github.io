@@ -1,572 +1,1234 @@
 <!DOCTYPE html>
-
 <html lang="de" dir="rtl">
 
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>تسجيل الدخول – Deutsch Einfach</title>
 
 <style>
 
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #f8f8f8, #ffffff);
-        color: #222;
-    }
+body {
 
-    .container {
-        width: 90%;
-        max-width: 500px;
-        margin: auto;
-        padding: 40px 20px;
-    }
+    margin: 0;
 
-    .back-button {
-        display: inline-block;
-        margin-bottom: 25px;
-        padding: 11px 18px;
-        background: #111;
-        color: white;
-        text-decoration: none;
-        border-radius: 10px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
+    font-family:
+        Arial,
+        sans-serif;
 
-    .back-button:hover {
-        background: #333;
-        transform: translateY(-2px);
-    }
+    min-height: 100vh;
 
-    .card {
-        background: white;
-        padding: 35px;
-        border-radius: 25px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8f8f8,
+            #fff8d8
+        );
+
+    padding: 20px;
+}
+
+.login-container {
+
+    width: 100%;
+
+    max-width: 450px;
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 35px 30px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,0.12);
+
+    border-top:
+        6px solid #d60000;
+}
+
+.logo-container {
+
+    text-align: center;
+
+    margin-bottom: 20px;
+}
+
+.logo {
+
+    width: 90px;
+
+    height: 90px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border:
+        4px solid #f0c400;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.12);
+}
+
+h1 {
+
+    text-align: center;
+
+    color: #d60000;
+
+    margin:
+        12px 0 5px;
+
+    font-size: 29px;
+
+    font-weight: 900;
+}
+
+.subtitle {
+
+    text-align: center;
+
+    color: #777;
+
+    margin-bottom: 28px;
+
+    font-size: 14px;
+}
+
+.form-group {
+
+    margin-bottom: 18px;
+}
+
+label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #333;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+input {
+
+    width: 100%;
+
+    padding: 14px 15px;
+
+    border:
+        2px solid #e5e5e5;
+
+    border-radius: 13px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition: 0.25s;
+
+    direction: ltr;
+
+    text-align: left;
+}
+
+input:focus {
+
+    border-color: #d60000;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(214,0,0,0.08);
+}
+
+.login-button {
+
+    width: 100%;
+
+    border: none;
+
+    padding: 15px;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d60000,
+            #aa0000
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    margin-top: 5px;
+}
+
+.login-button:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(214,0,0,0.22);
+}
+
+.login-button:disabled {
+
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.links {
+
+    text-align: center;
+
+    margin-top: 22px;
+
+    line-height: 2;
+}
+
+.links a {
+
+    color: #d60000;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+.links a:hover {
+
+    text-decoration: underline;
+}
+
+.error {
+
+    display: none;
+
+    background:
+        #fff0f0;
+
+    color:
+        #b00000;
+
+    border:
+        1px solid #ffcccc;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.success {
+
+    display: none;
+
+    background:
+        #effff1;
+
+    color:
+        #167526;
+
+    border:
+        1px solid #bce8c4;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    margin-bottom: 18px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+.loading {
+
+    display: none;
+
+    text-align: center;
+
+    color: #777;
+
+    margin-top: 12px;
+
+    font-size: 13px;
+}
+
+.back-home {
+
+    display: block;
+
+    text-align: center;
+
+    margin-top: 22px;
+
+    color: #555;
+
+    text-decoration: none;
+
+    font-size: 14px;
+}
+
+.back-home:hover {
+
+    color: #d60000;
+}
+
+@media (max-width: 500px) {
+
+    .login-container {
+
+        padding:
+            30px 20px;
     }
 
     h1 {
-        text-align: center;
-        color: #d60000;
-        margin-top: 0;
-        margin-bottom: 10px;
+
+        font-size: 25px;
     }
 
-    .subtitle {
-        text-align: center;
-        color: #666;
-        margin-bottom: 30px;
-        font-size: 16px;
-        line-height: 1.7;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: #333;
-    }
-
-    input {
-        width: 100%;
-        padding: 14px;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        font-size: 16px;
-        outline: none;
-    }
-
-    input:focus {
-        border-color: #d60000;
-    }
-
-    .forgot-password {
-        display: block;
-        text-align: left;
-        color: #d60000;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: -10px;
-        margin-bottom: 20px;
-    }
-
-    .forgot-password:hover {
-        text-decoration: underline;
-    }
-
-    .login-submit {
-        width: 100%;
-        padding: 15px;
-        border: none;
-        border-radius: 12px;
-        background: #d60000;
-        color: white;
-        font-size: 17px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .login-submit:hover {
-        background: #a80000;
-        transform: translateY(-2px);
-    }
-
-    .login-submit:disabled {
-        background: #999;
-        cursor: not-allowed;
-        transform: none;
-    }
-
-    .signup-text {
-        text-align: center;
-        margin-top: 25px;
-        color: #555;
-    }
-
-    .signup-text a {
-        color: #d60000;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .signup-text a:hover {
-        text-decoration: underline;
-    }
+}
 
 </style>
 
 </head>
 
+
 <body>
 
-<div class="container">
 
-    <a href="index.html" class="back-button">
-        ← الرجوع للموقع
-    </a>
+<div class="login-container">
 
-    <div class="card">
 
-        <h1>
-            تسجيل الدخول
-        </h1>
+    <div class="logo-container">
 
-        <p class="subtitle">
-            مرحباً بك من جديد في Deutsch Einfach
-            <br>
-            سجل الدخول باش تكمل التحضير لـ TELC B1 & B2
-        </p>
+        <img
+            src="icon1.png"
+            alt="Deutsch Einfach"
+            class="logo"
+        >
 
-        <form id="login-form">
+    </div>
+
+
+    <h1>
+        Deutsch Einfach 🇩🇪
+    </h1>
+
+
+    <div class="subtitle">
+
+        تسجيل الدخول إلى حسابك
+
+    </div>
+
+
+    <div
+        class="error"
+        id="errorMessage"
+    ></div>
+
+
+    <div
+        class="success"
+        id="successMessage"
+    ></div>
+
+
+    <form id="loginForm">
+
+
+        <div class="form-group">
 
             <label for="email">
-                البريد الإلكتروني
+                📧 البريد الإلكتروني
             </label>
 
             <input
                 type="email"
                 id="email"
-                name="email"
-                placeholder="example@gmail.com"
+                placeholder="example@email.com"
+                autocomplete="email"
                 required
             >
 
+        </div>
+
+
+        <div class="form-group">
+
             <label for="password">
-                كلمة المرور
+                🔒 كلمة المرور
             </label>
 
             <input
                 type="password"
                 id="password"
-                name="password"
-                placeholder="دخل كلمة المرور"
+                placeholder="كلمة المرور"
+                autocomplete="current-password"
                 required
             >
 
-            <a href="forgot-password.html" class="forgot-password">
-                نسيت كلمة المرور؟
-            </a>
+        </div>
 
-            <button
-                type="submit"
-                class="login-submit"
-                id="login-button"
-            >
-                تسجيل الدخول
-            </button>
 
-        </form>
+        <button
+            type="submit"
+            class="login-button"
+            id="loginButton"
+        >
+            تسجيل الدخول
+        </button>
 
-        <p class="signup-text">
 
+        <div
+            class="loading"
+            id="loading"
+        >
+            ⏳ جاري تسجيل الدخول...
+        </div>
+
+
+    </form>
+
+
+    <div class="links">
+
+        <div>
             ما عندكش حساب؟
-
-            <a href="signup.html">
+            <a
+                href="signup.html"
+                id="signupLink"
+            >
                 إنشاء حساب
             </a>
+        </div>
 
-        </p>
+        <div>
+            <a href="forgot-password.html">
+                نسيت كلمة المرور؟
+            </a>
+        </div>
 
     </div>
+
+
+    <a
+        href="index.html"
+        class="back-home"
+    >
+        ← العودة إلى الصفحة الرئيسية
+    </a>
+
 
 </div>
 
 
-<!-- =========================
-     FIREBASE
-========================= -->
-
 <script type="module">
 
-    import {
-        initializeApp
+
+/* =========================================
+   FIREBASE
+========================================= */
+
+import {
+    initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+
+    getAuth,
+
+    signInWithEmailAndPassword,
+
+    setPersistence,
+
+    browserLocalPersistence
+
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+import {
+
+    getFirestore,
+
+    doc,
+
+    getDoc,
+
+    setDoc
+
+}
+from
+"https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+    authDomain:
+        "deutsch-einfach-4c81f.firebaseapp.com",
+
+    projectId:
+        "deutsch-einfach-4c81f",
+
+    storageBucket:
+        "deutsch-einfach-4c81f.firebasestorage.app",
+
+    messagingSenderId:
+        "152448766933",
+
+    appId:
+        "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+    measurementId:
+        "G-9QV234Z0KZ"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+/* =========================================
+   DEVICE ID
+========================================= */
+
+let deviceId =
+    localStorage.getItem(
+        "deutschEinfachDeviceId"
+    );
+
+
+if (!deviceId) {
+
+    deviceId =
+        crypto.randomUUID();
+
+    localStorage.setItem(
+        "deutschEinfachDeviceId",
+        deviceId
+    );
+
+}
+
+
+/* =========================================
+   ALLOWED PAGES
+========================================= */
+
+const allowedPages = [
+
+    "index.html",
+
+    "dashboard.html",
+
+    "chat.html",
+
+    "b1.html",
+
+    "b1-lesen.html",
+
+    "b1-lesen-teil1.html",
+
+    "b1-hoeren.html",
+
+    "b1-schreiben.html",
+
+    "b1-sprechen.html",
+
+    "b2.html"
+
+];
+
+
+/* =========================================
+   CHECK ALLOWED RETURN PAGE
+========================================= */
+
+function isAllowedReturnPage(value) {
+
+    if (!value) {
+
+        return false;
+
     }
-    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
-    import {
-        getAuth,
-        signInWithEmailAndPassword,
-        setPersistence,
-        browserLocalPersistence
-    }
-    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+    try {
+
+        const url =
+            new URL(
+                value,
+                window.location.origin
+            );
 
 
-    import {
-        getFirestore,
-        doc,
-        getDoc,
-        setDoc
-    }
-    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+        /*
+         * SECURITY:
+         * ممنوع نرجعو لموقع خارجي
+         */
+
+        if (
+            url.origin !==
+            window.location.origin
+        ) {
+
+            return false;
+
+        }
 
 
-    /* =========================
-       FIREBASE CONFIG
-    ========================= */
-
-    const firebaseConfig = {
-
-        apiKey:
-            "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-
-        authDomain:
-            "deutsch-einfach-4c81f.firebaseapp.com",
-
-        projectId:
-            "deutsch-einfach-4c81f",
-
-        storageBucket:
-            "deutsch-einfach-4c81f.firebasestorage.app",
-
-        messagingSenderId:
-            "152448766933",
-
-        appId:
-            "1:152448766933:web:f7824c4db8ab3caccbe35c",
-
-        measurementId:
-            "G-9QV234Z0KZ"
-
-    };
+        const page =
+            url.pathname
+                .split("/")
+                .pop();
 
 
-    /* =========================
-       INITIALIZE FIREBASE
-    ========================= */
-
-    const app =
-        initializeApp(firebaseConfig);
-
-    const auth =
-        getAuth(app);
-
-    const db =
-        getFirestore(app);
-
-
-    /* =========================
-       DEVICE ID
-    ========================= */
-
-    let deviceId =
-        localStorage.getItem(
-            "deutschEinfachDeviceId"
+        return allowedPages.includes(
+            page
         );
 
+    }
 
-    if (!deviceId) {
+    catch (error) {
 
-        deviceId =
-            crypto.randomUUID();
+        return false;
 
-        localStorage.setItem(
-            "deutschEinfachDeviceId",
-            deviceId
-        );
+    }
+
+}
+
+
+/* =========================================
+   NORMALIZE RETURN PAGE
+========================================= */
+
+function normalizeReturnTo(value) {
+
+    if (!value) {
+
+        return "index.html";
 
     }
 
 
-    /* =========================
-       LOGIN FORM
-    ========================= */
+    try {
 
-    const form =
-        document.getElementById(
-            "login-form"
+        const url =
+            new URL(
+                value,
+                window.location.origin
+            );
+
+
+        if (
+            !isAllowedReturnPage(value)
+        ) {
+
+            return "index.html";
+
+        }
+
+
+        const page =
+            url.pathname
+                .split("/")
+                .pop();
+
+
+        /*
+         * مهم بزاف:
+         *
+         * dashboard.html?section=lesen
+         *
+         * غادي تبقى كاملة
+         */
+
+        return (
+
+            page +
+
+            url.search +
+
+            url.hash
+
         );
 
-    const button =
-        document.getElementById(
-            "login-button"
+    }
+
+    catch (error) {
+
+        return "index.html";
+
+    }
+
+}
+
+
+/* =========================================
+   FIND WHERE USER CAME FROM
+========================================= */
+
+let returnTo =
+    sessionStorage.getItem(
+        "deutschEinfachReturnTo"
+    );
+
+
+/*
+ * 1️⃣ sessionStorage
+ */
+
+if (!returnTo) {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
         );
 
+    returnTo =
+        params.get("returnTo");
 
-    form.addEventListener(
-        "submit",
-        async function(event) {
-
-            event.preventDefault();
+}
 
 
-            const email =
-                document
-                    .getElementById("email")
-                    .value
-                    .trim();
+/*
+ * 2️⃣ document.referrer
+ */
 
-            const password =
-                document
-                    .getElementById("password")
-                    .value;
+if (!returnTo) {
 
+    try {
 
-            try {
-
-                button.disabled = true;
-
-                button.textContent =
-                    "جاري تسجيل الدخول...";
+        const referrer =
+            document.referrer;
 
 
-                /* =========================
-                   PERSISTENCE
-                ========================= */
+        if (referrer) {
 
-                await setPersistence(
-                    auth,
-                    browserLocalPersistence
+            const refUrl =
+                new URL(
+                    referrer,
+                    window.location.origin
                 );
 
 
-                /* =========================
-                   LOGIN
-                ========================= */
+            /*
+             * نخليو غير نفس الموقع
+             */
 
-                const userCredential =
-                    await signInWithEmailAndPassword(
-                        auth,
-                        email,
-                        password
-                    );
+            if (
+                refUrl.origin ===
+                window.location.origin
+            ) {
 
-
-                const user =
-                    userCredential.user;
-
-
-                /* =========================
-                   CREATE NEW SESSION
-                ========================= */
-
-                const sessionId =
-                    crypto.randomUUID();
-
-
-                console.log(
-                    "🔥 New session:",
-                    sessionId
-                );
-
-
-                /* =========================
-                   USER DOCUMENT
-                ========================= */
-
-                const userRef =
-                    doc(
-                        db,
-                        "users",
-                        user.uid
-                    );
-
-
-                /* =========================
-                   GET OLD DATA
-                ========================= */
-
-                const oldUserDoc =
-                    await getDoc(
-                        userRef
-                    );
-
-
-                let oldData = {};
-
-                if (oldUserDoc.exists()) {
-
-                    oldData =
-                        oldUserDoc.data();
-
-                }
-
-
-                /* =========================
-                   SAVE NEW SESSION
-                ========================= */
-
-                await setDoc(
-                    userRef,
-                    {
-
-                        ...oldData,
-
-                        email:
-                            user.email ||
-                            email,
-
-                        name:
-                            user.displayName ||
-                            oldData.name ||
-                            "",
-
-                        sessionId:
-                            sessionId,
-
-                        deviceId:
-                            deviceId,
-
-                        sessionUpdatedAt:
-                            new Date()
-
-                    },
-                    {
-                        merge: true
-                    }
-                );
-
-
-                console.log(
-                    "✅ New session saved in Firestore"
-                );
-
-
-                /* =========================
-                   SAVE SESSION LOCALLY
-                ========================= */
-
-                localStorage.setItem(
-                    "deutschEinfachSessionId",
-                    sessionId
-                );
-
-
-                console.log(
-                    "✅ Local session saved:",
-                    localStorage.getItem(
-                        "deutschEinfachSessionId"
-                    )
-                );
-
-
-                /* =========================
-                   SUCCESS
-                ========================= */
-
-                alert(
-                    "تم تسجيل الدخول بنجاح ✅"
-                );
-
-
-                window.location.replace(
-                    "dashboard.html"
-                );
-
-            }
-
-
-            catch (error) {
-
-                console.error(
-                    "❌ Login error:",
-                    error
-                );
+                const previousPage =
+                    refUrl.pathname
+                        .split("/")
+                        .pop();
 
 
                 if (
-                    error.code ===
-                        "auth/invalid-credential" ||
-
-                    error.code ===
-                        "auth/wrong-password" ||
-
-                    error.code ===
-                        "auth/user-not-found"
+                    allowedPages.includes(
+                        previousPage
+                    )
                 ) {
 
-                    alert(
-                        "الإيميل أو كلمة المرور غير صحيحة ❌"
-                    );
+                    returnTo =
+
+                        previousPage +
+
+                        refUrl.search +
+
+                        refUrl.hash;
 
                 }
-
-                else if (
-                    error.code ===
-                    "auth/invalid-email"
-                ) {
-
-                    alert(
-                        "الإيميل غير صحيح ❌"
-                    );
-
-                }
-
-                else {
-
-                    alert(
-                        "وقع مشكل أثناء تسجيل الدخول ❌\n\n" +
-                        "حاول مرة أخرى."
-                    );
-
-                }
-
-
-                button.disabled = false;
-
-                button.textContent =
-                    "تسجيل الدخول";
 
             }
 
         }
+
+    }
+
+    catch (error) {
+
+        console.log(
+            "Could not detect previous page."
+        );
+
+    }
+
+}
+
+
+/*
+ * 3️⃣ Normalize
+ */
+
+returnTo =
+    normalizeReturnTo(
+        returnTo
     );
+
+
+console.log(
+    "Return page:",
+    returnTo
+);
+
+
+/* =========================================
+   SIGNUP LINK
+========================================= */
+
+const signupLink =
+    document.getElementById(
+        "signupLink"
+    );
+
+
+signupLink.href =
+    "signup.html?returnTo=" +
+    encodeURIComponent(
+        returnTo
+    );
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+const loginForm =
+    document.getElementById(
+        "loginForm"
+    );
+
+
+const loginButton =
+    document.getElementById(
+        "loginButton"
+    );
+
+
+const loading =
+    document.getElementById(
+        "loading"
+    );
+
+
+const errorMessage =
+    document.getElementById(
+        "errorMessage"
+    );
+
+
+const successMessage =
+    document.getElementById(
+        "successMessage"
+    );
+
+
+/* =========================================
+   SHOW ERROR
+========================================= */
+
+function showError(message) {
+
+    errorMessage.textContent =
+        message;
+
+    errorMessage.style.display =
+        "block";
+
+    successMessage.style.display =
+        "none";
+
+}
+
+
+/* =========================================
+   SHOW SUCCESS
+========================================= */
+
+function showSuccess(message) {
+
+    successMessage.textContent =
+        message;
+
+    successMessage.style.display =
+        "block";
+
+    errorMessage.style.display =
+        "none";
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+loginForm.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        errorMessage.style.display =
+            "none";
+
+        successMessage.style.display =
+            "none";
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+        const password =
+            document
+                .getElementById("password")
+                .value;
+
+
+        if (!email || !password) {
+
+            showError(
+                "⚠️ عافاك دخل البريد الإلكتروني وكلمة المرور."
+            );
+
+            return;
+
+        }
+
+
+        loginButton.disabled =
+            true;
+
+        loading.style.display =
+            "block";
+
+
+        try {
+
+
+            /* =========================
+               FIREBASE PERSISTENCE
+            ========================= */
+
+            await setPersistence(
+                auth,
+                browserLocalPersistence
+            );
+
+
+            /* =========================
+               SIGN IN
+            ========================= */
+
+            const userCredential =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+            const user =
+                userCredential.user;
+
+
+            /* =========================
+               SESSION ID
+            ========================= */
+
+            const sessionId =
+                crypto.randomUUID();
+
+
+            /* =========================
+               GET USER DATA
+            ========================= */
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                );
+
+
+            const userSnap =
+                await getDoc(
+                    userRef
+                );
+
+
+            let userName =
+                user.displayName ||
+                email
+                    .split("@")[0];
+
+
+            if (
+                userSnap.exists()
+            ) {
+
+                const data =
+                    userSnap.data();
+
+
+                if (data.name) {
+
+                    userName =
+                        data.name;
+
+                }
+
+            }
+
+
+            /* =========================
+               SAVE USER SESSION
+            ========================= */
+
+            await setDoc(
+
+                userRef,
+
+                {
+
+                    email:
+                        user.email,
+
+                    name:
+                        userName,
+
+                    sessionId:
+                        sessionId,
+
+                    deviceId:
+                        deviceId,
+
+                    sessionUpdatedAt:
+                        new Date()
+
+                },
+
+                {
+                    merge: true
+                }
+
+            );
+
+
+            /* =========================
+               SAVE LOCAL SESSION
+            ========================= */
+
+            localStorage.setItem(
+
+                "deutschEinfachSessionId",
+
+                sessionId
+
+            );
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+            showSuccess(
+                "✅ تم تسجيل الدخول بنجاح!"
+            );
+
+
+            /*
+             * مهم:
+             * ما نحيدوش returnTo
+             * قبل redirect إلا من بعد
+             */
+
+            sessionStorage.removeItem(
+                "deutschEinfachReturnTo"
+            );
+
+
+            /*
+             * ننتاظرو شوية باش
+             * يبان success
+             */
+
+            setTimeout(
+
+                function() {
+
+                    window.location.replace(
+                        returnTo
+                    );
+
+                },
+
+                500
+
+            );
+
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            let message =
+                "❌ وقع مشكل ف تسجيل الدخول.";
+
+
+            if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
+
+                message =
+                    "❌ البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                message =
+                    "❌ هاد الحساب ما كاينش.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
+
+                message =
+                    "❌ كلمة المرور غير صحيحة.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/invalid-email"
+            ) {
+
+                message =
+                    "❌ البريد الإلكتروني غير صحيح.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/too-many-requests"
+            ) {
+
+                message =
+                    "⚠️ كاينين محاولات كثيرة. حاول من بعد.";
+
+            }
+
+
+            showError(
+                message
+            );
+
+
+            loginButton.disabled =
+                false;
+
+            loading.style.display =
+                "none";
+
+        }
+
+    }
+);
 
 </script>
 
 </body>
 
 </html>
-
