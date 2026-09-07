@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deutsch Einfach – B1 Lesen Teil 1</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff7e6,
+                    #ffe9c9
+                );
+
+            min-height: 100vh;
+
+            color: #333;
+        }
+
+        /* ============================= */
+        /* NAVIGATION */
+        /* ============================= */
+
+        .top-navigation {
+
+            width: 95%;
+            max-width: 1200px;
+
+            margin: 20px auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+
+            border: none;
+
+            padding: 11px 17px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+            box-shadow:
+                0 5px 12px rgba(0,0,0,0.08);
+        }
+
+        .nav-btn:hover {
+
+            transform: translateY(-2px);
+        }
+
+        .nav-back {
+
+            background: #333;
+
+            color: white;
+        }
+
+        .page-progress {
+
+            background: white;
+
+            border: 2px solid #ffd166;
+
+            border-radius: 15px;
+
+            padding: 10px 20px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            color: #555;
+
+            line-height: 1.5;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.07);
+        }
+
+        /* ============================= */
+        /* HEADER */
+        /* ============================= */
+
+        header {
+
+            background: white;
+
+            text-align: center;
+
+            padding: 25px 15px;
+
+            border-top: 4px solid #ffd166;
+
+            border-bottom: 4px solid #ffd166;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+
+            width: 70px;
+
+            height: 70px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 3px solid #ffd166;
+
+            vertical-align: middle;
+
+            margin-right: 10px;
+        }
+
+        header h1 {
+
+            display: inline-block;
+
+            vertical-align: middle;
+
+            color: #d62828;
+
+            font-size: 30px;
+        }
+
+        header p {
+
+            margin-top: 12px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #555;
+        }
+
+        .badge {
+
+            display: inline-block;
+
+            margin-top: 12px;
+
+            padding: 8px 15px;
+
+            border-radius: 20px;
+
+            background: #fff3cd;
+
+            border: 2px solid #ffd166;
+
+            color: #8a5a00;
+
+            font-weight: bold;
+        }
+
+        /* ============================= */
+        /* MAIN */
+        /* ============================= */
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1200px;
+
+            margin: 30px auto;
+        }
+
+        .intro {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            border-left: 6px solid #d62828;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .intro h2 {
+
+            color: #d62828;
+
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+
+            color: #555;
+
+            line-height: 1.7;
+        }
+
+        /* ============================= */
+        /* EXERCISE */
+        /* ============================= */
+
+        .exercise {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .exercise-title {
+
+            color: #d62828;
+
+            font-size: 24px;
+
+            margin-bottom: 10px;
+        }
+
+        .instruction {
+
+            color: #666;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+        /* ============================= */
+        /* TEXT CARDS */
+        /* ============================= */
+
+        .texts {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .text-card {
+
+            background: #fffdf8;
+
+            border: 2px solid #ffd166;
+
+            border-radius: 16px;
+
+            padding: 20px;
+
+            transition: 0.2s ease;
+        }
+
+        .text-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 18px rgba(0,0,0,0.08);
+        }
+
+        .text-number {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #2a9d8f;
+
+            color: white;
+
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+        .text-card h3 {
+
+            margin-bottom: 10px;
+
+            color: #333;
+        }
+
+        .text-card p {
+
+            color: #555;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+        }
+
+        /* ============================= */
+        /* QUESTIONS */
+        /* ============================= */
+
+        .questions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .question {
+
+            background: #f8f8f8;
+
+            border: 2px solid #ddd;
+
+            border-radius: 15px;
+
+            padding: 18px;
+        }
+
+        .question h3 {
+
+            color: #333;
+
+            margin-bottom: 12px;
+
+            font-size: 17px;
+        }
+
+        .answers {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+        .answers label {
+
+            background: white;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            padding: 10px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .answers label:hover {
+
+            border-color: #2a9d8f;
+
+            background: #effff9;
+        }
+
+        .answers input {
+
+            margin-right: 8px;
+
+            cursor: pointer;
+        }
+
+        /* ============================= */
+        /* CHECK BUTTON */
+        /* ============================= */
+
+        .check-btn {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #2a9d8f;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .check-btn:hover {
+
+            background: #238579;
+
+            transform: translateY(-2px);
+        }
+
+        /* ============================= */
+        /* RESULT */
+        /* ============================= */
+
+        #result {
+
+            display: none;
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background: #fff3cd;
+
+            border: 2px solid #ffd166;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+        /* ============================= */
+        /* FOOTER */
+        /* ============================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 30px 15px;
+
+            color: #777;
+        }
+
+        /* ============================= */
+        /* RESPONSIVE */
+        /* ============================= */
+
+        @media (max-width: 800px) {
+
+            .texts,
+            .questions {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .top-navigation {
+
+                justify-content: center;
+            }
+
+            .page-progress {
+
+                order: -1;
+
+                width: 100%;
+            }
+
+            header h1 {
+
+                font-size: 23px;
+            }
+
+            header p {
+
+                font-size: 17px;
+            }
+
+            .exercise {
+
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================= -->
+<!-- NAVIGATION -->
+<!-- ============================= -->
+
+<div class="top-navigation">
+
+    <button
+        class="nav-btn nav-back"
+        onclick="goBack()"
+    >
+        ← Zurück
+    </button>
+
+
+    <div class="page-progress">
+
+        📖 B1 Lesen Teil 1
+
+        <br>
+
+        1 Thema
+
+    </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- HEADER -->
+<!-- ============================= -->
+
+<header>
+
+    <img
+        src="icon1.png"
+        class="logo"
+        alt="Deutsch Einfach Logo"
+    >
+
+    <h1>
+        Deutsch Einfach 🇩🇪
+    </h1>
+
+    <p>
+        Leseverstehen – B1 Teil 1
+    </p>
+
+    <div class="badge">
+
+        🟢 B1 – Lesen Teil 1
+
+    </div>
+
+</header>
+
+
+<!-- ============================= -->
+<!-- MAIN -->
+<!-- ============================= -->
+
+<div class="container">
+
+
+    <div class="intro">
+
+        <h2>
+            📖 B1 Lesen – Teil 1
+        </h2>
+
+        <p>
+
+            Hier trainierst du dein
+            <strong>Leseverstehen auf B1-Niveau</strong>.
+
+            Lies die Texte aufmerksam und
+            beantworte anschließend die Fragen.
+
+        </p>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- EXERCISE -->
+    <!-- ============================= -->
+
+    <div class="exercise">
+
+        <h2 class="exercise-title">
+            Thema 1 – Alltag und Freizeit
+        </h2>
+
+        <p class="instruction">
+
+            Lies die Texte 1–5 und wähle für jede Frage
+            die passende Antwort.
+
+        </p>
+
+
+        <!-- ============================= -->
+        <!-- TEXTS -->
+        <!-- ============================= -->
+
+        <div class="texts">
+
+
+            <div class="text-card">
+
+                <div class="text-number">
+                    1
+                </div>
+
+                <h3>
+                    Ein neuer Sportkurs
+                </h3>
+
+                <p>
+
+                    Maria möchte in ihrer Freizeit mehr
+                    Sport machen. Deshalb hat sie sich
+                    für einen Schwimmkurs angemeldet.
+                    Der Kurs findet jeden Dienstag und
+                    Donnerstag um 18 Uhr statt.
+                    Maria freut sich besonders darauf,
+                    neue Leute kennenzulernen.
+
+                </p>
+
+            </div>
+
+
+            <div class="text-card">
+
+                <div class="text-number">
+                    2
+                </div>
+
+                <h3>
+                    Mit dem Fahrrad zur Arbeit
+                </h3>
+
+                <p>
+
+                    Peter fährt jeden Morgen mit dem
+                    Fahrrad zur Arbeit. Die Strecke dauert
+                    ungefähr 25 Minuten. Früher ist er mit
+                    dem Auto gefahren, aber jetzt möchte er
+                    Geld sparen und gleichzeitig etwas für
+                    seine Gesundheit tun.
+
+                </p>
+
+            </div>
+
+
+            <div class="text-card">
+
+                <div class="text-number">
+                    3
+                </div>
+
+                <h3>
+                    Ein ruhiger Sonntag
+                </h3>
+
+                <p>
+
+                    Am Sonntag bleibt Anna gerne zu Hause.
+                    Sie steht spät auf, frühstückt in Ruhe
+                    und liest danach ein Buch.
+                    Am Nachmittag besucht sie manchmal
+                    ihre Eltern. Abends bereitet sie
+                    das Essen für die nächste Woche vor.
+
+                </p>
+
+            </div>
+
+
+            <div class="text-card">
+
+                <div class="text-number">
+                    4
+                </div>
+
+                <h3>
+                    Ein Wochenende am Meer
+                </h3>
+
+                <p>
+
+                    Lukas und seine Freunde fahren am
+                    Wochenende ans Meer. Sie möchten dort
+                    zwei Tage bleiben. Sie haben ein kleines
+                    Hotel reserviert. Tagsüber wollen sie
+                    spazieren gehen und abends gemeinsam
+                    in einem Restaurant essen.
+
+                </p>
+
+            </div>
+
+
+            <div class="text-card">
+
+                <div class="text-number">
+                    5
+                </div>
+
+                <h3>
+                    Zeit für die Familie
+                </h3>
+
+                <p>
+
+                    Familie Schneider versucht, jeden
+                    Abend gemeinsam zu essen.
+                    Während des Abendessens sprechen die
+                    Eltern mit ihren Kindern über den Tag.
+                    Die Familie findet diese gemeinsame
+                    Zeit sehr wichtig.
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- QUESTIONS -->
+        <!-- ============================= -->
+
+        <div class="questions">
+
+
+            <!-- QUESTION 1 -->
+
+            <div class="question">
+
+                <h3>
+                    1. Wann findet Marias Sportkurs statt?
+                </h3>
+
+                <div class="answers">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q1"
+                            value="a"
+                        >
+                        Montag und Mittwoch
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q1"
+                            value="b"
+                        >
+                        Dienstag und Donnerstag
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q1"
+                            value="c"
+                        >
+                        Samstag und Sonntag
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 2 -->
+
+            <div class="question">
+
+                <h3>
+                    2. Warum fährt Peter mit dem Fahrrad?
+                </h3>
+
+                <div class="answers">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q2"
+                            value="a"
+                        >
+                        Er möchte Geld sparen und gesund bleiben.
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q2"
+                            value="b"
+                        >
+                        Er hat kein Auto.
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q2"
+                            value="c"
+                        >
+                        Die Strecke ist sehr lang.
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 3 -->
+
+            <div class="question">
+
+                <h3>
+                    3. Was macht Anna am Sonntagmorgen?
+                </h3>
+
+                <div class="answers">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q3"
+                            value="a"
+                        >
+                        Sie geht schwimmen.
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q3"
+                            value="b"
+                        >
+                        Sie arbeitet.
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q3"
+                            value="c"
+                        >
+                        Sie frühstückt in Ruhe und liest.
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 4 -->
+
+            <div class="question">
+
+                <h3>
+                    4. Wohin fahren Lukas und seine Freunde?
+                </h3>
+
+                <div class="answers">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q4"
+                            value="a"
+                        >
+                        In die Berge
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q4"
+                            value="b"
+                        >
+                        Ans Meer
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q4"
+                            value="c"
+                        >
+                        In eine Großstadt
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION 5 -->
+
+            <div class="question">
+
+                <h3>
+                    5. Was ist für Familie Schneider wichtig?
+                </h3>
+
+                <div class="answers">
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q5"
+                            value="a"
+                        >
+                        Gemeinsam Zeit zu verbringen.
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q5"
+                            value="b"
+                        >
+                        Jeden Abend auszugehen.
+                    </label>
+
+                    <label>
+                        <input
+                            type="radio"
+                            name="q5"
+                            value="c"
+                        >
+                        Am Wochenende zu arbeiten.
+                    </label>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- CHECK -->
+        <!-- ============================= -->
+
+        <button
+            class="check-btn"
+            onclick="checkAnswers()"
+        >
+            ✅ Antworten überprüfen
+        </button>
+
+
+        <div id="result"></div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- FOOTER -->
+<!-- ============================= -->
+
+<footer>
+
+    Deutsch Einfach 🇩🇪 –
+    B1 Prüfungsvorbereitung
+
+</footer>
+
+
+<script>
+
+    /* ============================= */
+    /* CHECK ANSWERS */
+    /* ============================= */
+
+    function checkAnswers() {
+
+        const correctAnswers = {
+
+            q1: "b",
+            q2: "a",
+            q3: "c",
+            q4: "b",
+            q5: "a"
+
+        };
+
+
+        let score = 0;
+
+        let unanswered = 0;
+
+
+        for (const question in correctAnswers) {
+
+            const selected =
+                document.querySelector(
+                    `input[name="${question}"]:checked`
+                );
+
+
+            if (!selected) {
+
+                unanswered++;
+
+                continue;
+
+            }
+
+
+            if (
+                selected.value ===
+                correctAnswers[question]
+            ) {
+
+                score++;
+
+            }
+
+        }
+
+
+        const result =
+            document.getElementById("result");
+
+
+        result.style.display = "block";
+
+
+        if (unanswered > 0) {
+
+            result.innerHTML =
+
+                `⚠️ Bitte beantworte alle Fragen.<br><br>
+                 Du hast ${unanswered} Frage(n) nicht beantwortet.`;
+
+            return;
+
+        }
+
+
+        if (score === 5) {
+
+            result.innerHTML =
+
+                `🎉 Sehr gut!<br><br>
+                 Du hast 5 von 5 Punkten erreicht!<br>
+                 ✅ Thema erfolgreich abgeschlossen.`;
+
+        }
+
+        else {
+
+            result.innerHTML =
+
+                `📊 Ergebnis: ${score} von 5 Punkten.<br><br>
+                 ❌ Einige Antworten sind falsch.<br>
+                 Versuche es noch einmal.`;
+
+        }
+
+    }
+
+
+    /* ============================= */
+    /* BACK */
+    /* ============================= */
+
+    function goBack() {
+
+        window.location.href =
+            "b1-lesen.html";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
+
