@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Deutsch Einfach – B1 Lesen</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff7e6,
+                    #ffe9c9
+                );
+
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* ============================= */
+        /* NAVIGATION */
+        /* ============================= */
+
+        .top-navigation {
+
+            width: 95%;
+            max-width: 1200px;
+
+            margin: 20px auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+
+            border: none;
+
+            padding: 11px 17px;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+
+            box-shadow:
+                0 5px 12px rgba(0,0,0,0.08);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .nav-back {
+
+            background: #333;
+            color: white;
+        }
+
+        .page-progress {
+
+            background: white;
+
+            border: 2px solid #ffd166;
+
+            border-radius: 15px;
+
+            padding: 10px 20px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            color: #555;
+
+            line-height: 1.5;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.07);
+        }
+
+        /* ============================= */
+        /* HEADER */
+        /* ============================= */
+
+        header {
+
+            background: white;
+
+            text-align: center;
+
+            padding: 25px 15px;
+
+            border-top: 4px solid #ffd166;
+            border-bottom: 4px solid #ffd166;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+
+            width: 70px;
+            height: 70px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 3px solid #ffd166;
+
+            vertical-align: middle;
+
+            margin-right: 10px;
+        }
+
+        header h1 {
+
+            display: inline-block;
+
+            vertical-align: middle;
+
+            color: #d62828;
+
+            font-size: 30px;
+        }
+
+        header p {
+
+            margin-top: 12px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #555;
+        }
+
+        .badge {
+
+            display: inline-block;
+
+            margin-top: 12px;
+
+            padding: 8px 15px;
+
+            border-radius: 20px;
+
+            background: #fff3cd;
+
+            border: 2px solid #ffd166;
+
+            color: #8a5a00;
+
+            font-weight: bold;
+        }
+
+        /* ============================= */
+        /* MAIN */
+        /* ============================= */
+
+        .container {
+
+            width: 95%;
+
+            max-width: 1200px;
+
+            margin: 30px auto;
+        }
+
+        .intro {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            border-left: 6px solid #d62828;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .intro h2 {
+
+            color: #d62828;
+
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+
+            color: #555;
+
+            line-height: 1.7;
+        }
+
+        /* ============================= */
+        /* TEILE GRID */
+        /* ============================= */
+
+        .teile {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .teil-card {
+
+            background: white;
+
+            border: 3px solid #ffd166;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            min-height: 260px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.07);
+
+            transition: 0.25s ease;
+        }
+
+        .teil-card:hover {
+
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 12px 25px rgba(0,0,0,0.12);
+        }
+
+        /* ============================= */
+        /* OPEN */
+        /* ============================= */
+
+        .teil-card.open {
+
+            border-color: #2a9d8f;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #effff9
+                );
+        }
+
+        /* ============================= */
+        /* LOCKED */
+        /* ============================= */
+
+        .teil-card.locked {
+
+            opacity: 0.72;
+
+            background: #f5f5f5;
+
+            border-color: #cccccc;
+
+            cursor: not-allowed;
+        }
+
+        .teil-card.locked:hover {
+
+            transform: none;
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.07);
+        }
+
+        /* ============================= */
+        /* ICON */
+        /* ============================= */
+
+        .teil-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 15px;
+        }
+
+        /* ============================= */
+        /* NUMBER */
+        /* ============================= */
+
+        .teil-number {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 50%;
+
+            background: #d62828;
+
+            color: white;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+        .teil-card.open .teil-number {
+
+            background: #2a9d8f;
+        }
+
+        .teil-card.locked .teil-number {
+
+            background: #999;
+        }
+
+        /* ============================= */
+        /* TITLE */
+        /* ============================= */
+
+        .teil-title {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #333;
+
+            margin-bottom: 10px;
+        }
+
+        .teil-description {
+
+            color: #777;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+            margin-bottom: 20px;
+        }
+
+        /* ============================= */
+        /* BUTTON */
+        /* ============================= */
+
+        .teil-button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: #2a9d8f;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .teil-button:hover {
+
+            background: #238579;
+
+            transform: translateY(-2px);
+        }
+
+        .locked-button {
+
+            background: #999;
+
+            cursor: not-allowed;
+        }
+
+        .locked-button:hover {
+
+            background: #999;
+
+            transform: none;
+        }
+
+        /* ============================= */
+        /* FOOTER */
+        /* ============================= */
+
+        footer {
+
+            text-align: center;
+
+            padding: 30px 15px;
+
+            color: #777;
+        }
+
+        /* ============================= */
+        /* RESPONSIVE */
+        /* ============================= */
+
+        @media (max-width: 950px) {
+
+            .teile {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+
+            .teile {
+
+                grid-template-columns: 1fr;
+            }
+
+            .top-navigation {
+
+                justify-content: center;
+            }
+
+            .page-progress {
+
+                order: -1;
+
+                width: 100%;
+            }
+
+            header h1 {
+
+                font-size: 23px;
+            }
+
+            header p {
+
+                font-size: 17px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ============================= -->
+<!-- NAVIGATION -->
+<!-- ============================= -->
+
+<div class="top-navigation">
+
+    <button
+        class="nav-btn nav-back"
+        onclick="goBack()"
+    >
+        ← Zurück
+    </button>
+
+
+    <div class="page-progress">
+
+        📖 B1 Lesen
+
+        <br>
+
+        3 Teile
+
+    </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- HEADER -->
+<!-- ============================= -->
+
+<header>
+
+    <img
+        src="icon1.png"
+        class="logo"
+        alt="Deutsch Einfach Logo"
+    >
+
+    <h1>
+        Deutsch Einfach 🇩🇪
+    </h1>
+
+    <p>
+        Leseverstehen – B1
+    </p>
+
+    <div class="badge">
+
+        🟢 B1 – Lesen
+
+    </div>
+
+</header>
+
+
+<!-- ============================= -->
+<!-- MAIN -->
+<!-- ============================= -->
+
+<div class="container">
+
+
+    <div class="intro">
+
+        <h2>
+            📖 Lesen B1
+        </h2>
+
+        <p>
+
+            Willkommen bei
+            <strong>Deutsch Einfach</strong>.
+
+            Hier kannst du die drei Teile des
+            <strong>B1 Leseverstehens</strong>
+            Schritt für Schritt trainieren.
+
+            Beginne mit Teil 1.
+
+        </p>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- TEIL 1 -->
+    <!-- ============================= -->
+
+    <div class="teile">
+
+
+        <div class="teil-card open">
+
+            <div>
+
+                <div class="teil-icon">
+                    📖
+                </div>
+
+                <div class="teil-number">
+                    1
+                </div>
+
+                <div class="teil-title">
+                    Lesen Teil 1
+                </div>
+
+                <div class="teil-description">
+
+                    Texte lesen und die passenden
+                    Antworten finden.
+
+                    Trainiere dein Leseverstehen
+                    Schritt für Schritt.
+
+                </div>
+
+            </div>
+
+            <button
+                class="teil-button"
+                onclick="openTeil1()"
+            >
+                ▶ Teil 1 starten
+            </button>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- TEIL 2 -->
+        <!-- ============================= -->
+
+        <div class="teil-card locked">
+
+            <div>
+
+                <div class="teil-icon">
+                    📚
+                </div>
+
+                <div class="teil-number">
+                    2
+                </div>
+
+                <div class="teil-title">
+                    Lesen Teil 2
+                </div>
+
+                <div class="teil-description">
+
+                    B1 Leseverstehen Teil 2.
+
+                    Dieses Training wird
+                    bald verfügbar sein.
+
+                </div>
+
+            </div>
+
+            <button
+                class="teil-button locked-button"
+                onclick="lockedTeil()"
+            >
+                🔒 Demnächst verfügbar
+            </button>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- TEIL 3 -->
+        <!-- ============================= -->
+
+        <div class="teil-card locked">
+
+            <div>
+
+                <div class="teil-icon">
+                    📝
+                </div>
+
+                <div class="teil-number">
+                    3
+                </div>
+
+                <div class="teil-title">
+                    Lesen Teil 3
+                </div>
+
+                <div class="teil-description">
+
+                    B1 Leseverstehen Teil 3.
+
+                    Dieses Training wird
+                    bald verfügbar sein.
+
+                </div>
+
+            </div>
+
+            <button
+                class="teil-button locked-button"
+                onclick="lockedTeil()"
+            >
+                🔒 Demnächst verfügbar
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- FOOTER -->
+<!-- ============================= -->
+
+<footer>
+
+    Deutsch Einfach 🇩🇪 –
+    B1 Prüfungsvorbereitung
+
+</footer>
+
+
+<script>
+
+    /* ============================= */
+    /* TEIL 1 */
+    /* ============================= */
+
+    function openTeil1() {
+
+        /*
+         * دابا غادي نستعملو
+         * ملف مستقل خاص بـ B1
+         */
+
+        window.location.href =
+            "b1-lesen-teil1.html";
+
+    }
+
+
+    /* ============================= */
+    /* LOCKED */
+    /* ============================= */
+
+    function lockedTeil() {
+
+        alert(
+            "🔒 Dieser Teil ist noch nicht verfügbar.\n\n" +
+            "Demnächst bei Deutsch Einfach! 🇩🇪"
+        );
+
+    }
+
+
+    /* ============================= */
+    /* BACK */
+    /* ============================= */
+
+    function goBack() {
+
+        window.location.href =
+            "b1.html";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
+
