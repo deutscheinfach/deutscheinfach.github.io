@@ -1,0 +1,5066 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community – Deutsch Einfach</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
+button,input,textarea{font-family:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.7}
+.app{display:flex;height:100vh;overflow:hidden}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+width:330px;
+background:#111;
+color:white;
+display:flex;
+flex-direction:column;
+border-right:1px solid #333
+}
+
+.logo-area{
+padding:18px;
+display:flex;
+align-items:center;
+gap:12px;
+border-bottom:1px solid #333
+}
+
+.logo{
+width:48px;
+height:48px;
+border-radius:50%;
+object-fit:cover
+}
+
+.logo-text{
+font-size:20px;
+font-weight:bold
+}
+
+.search-box{
+padding:14px;
+position:relative
+}
+
+.search-box input{
+width:100%;
+padding:12px 14px;
+border-radius:10px;
+border:none;
+outline:none;
+background:#222;
+color:white
+}
+
+.search-box input::placeholder{
+color:#aaa
+}
+
+.nav{
+padding:0 12px
+}
+
+.nav button{
+width:100%;
+border:none;
+background:transparent;
+color:white;
+text-align:left;
+padding:13px 14px;
+border-radius:9px;
+margin-bottom:4px;
+font-size:15px
+}
+
+.nav button:hover{
+background:#222
+}
+
+.nav button.active{
+background:#d60000
+}
+
+.badge{
+float:right;
+background:#ffd500;
+color:#111;
+min-width:22px;
+height:22px;
+border-radius:50%;
+text-align:center;
+line-height:22px;
+font-size:12px;
+font-weight:bold
+}
+
+.section-title{
+padding:15px 16px 8px;
+color:#888;
+font-size:12px;
+text-transform:uppercase
+}
+
+.friend-list,
+.group-list{
+overflow-y:auto;
+padding:0 10px
+}
+
+.person,
+.group-item{
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px;
+border-radius:9px;
+cursor:pointer
+}
+
+.person:hover,
+.group-item:hover{
+background:#222
+}
+
+.avatar{
+width:40px;
+height:40px;
+border-radius:50%;
+background:#d60000;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-weight:bold;
+overflow:hidden;
+flex-shrink:0
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover
+}
+
+.person-info{
+min-width:0
+}
+
+.person-name{
+font-weight:bold;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis
+}
+
+.person-email{
+color:#888;
+font-size:12px
+}
+
+.create-group{
+margin:12px;
+padding:12px;
+background:#ffd500;
+color:#111;
+border:none;
+border-radius:9px;
+font-weight:bold
+}
+
+
+/* ================= MAIN ================= */
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+min-width:0
+}
+
+.chat-header{
+height:72px;
+background:white;
+border-bottom:1px solid #ddd;
+display:flex;
+align-items:center;
+padding:0 20px;
+gap:12px
+}
+
+.mobile-menu{
+display:none;
+border:none;
+background:#111;
+color:white;
+width:40px;
+height:40px;
+border-radius:8px
+}
+
+.header-avatar{
+width:44px;
+height:44px;
+border-radius:50%;
+background:#d60000;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-weight:bold;
+overflow:hidden;
+flex-shrink:0
+}
+
+.header-avatar img{
+width:100%;
+height:100%;
+object-fit:cover
+}
+
+.header-info{
+flex:1;
+min-width:0
+}
+
+.header-name{
+font-size:17px;
+font-weight:bold
+}
+
+.header-sub{
+font-size:12px;
+color:#777
+}
+
+.header-btn{
+border:none;
+background:#111;
+color:white;
+padding:9px 13px;
+border-radius:8px
+}
+
+.group-profile-clickable{
+cursor:pointer
+}
+
+
+/* ================= MESSAGES ================= */
+
+.messages{
+flex:1;
+overflow-y:auto;
+padding:22px
+}
+
+.message{
+display:flex;
+gap:10px;
+margin-bottom:12px;
+max-width:800px;
+align-items:flex-end
+}
+
+.message-content{
+background:white;
+border-radius:12px 12px 12px 4px;
+padding:10px 13px;
+box-shadow:0 1px 3px rgba(0,0,0,.08);
+max-width:min(600px,75%)
+}
+
+.message.mine{
+margin-left:auto;
+flex-direction:row-reverse
+}
+
+.message.mine .message-content{
+background:#25D366;
+color:white;
+border-radius:12px 12px 4px 12px
+}
+
+.message-avatar{
+width:38px;
+height:38px;
+border-radius:50%;
+background:#d60000;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-shrink:0;
+cursor:pointer;
+overflow:hidden
+}
+
+.message-avatar img{
+width:100%;
+height:100%;
+object-fit:cover
+}
+
+.message-name{
+font-size:12px;
+color:#d60000;
+font-weight:bold;
+cursor:pointer;
+margin-bottom:4px
+}
+
+.message.mine .message-name{
+color:#075e54
+}
+
+.message-text{
+white-space:pre-wrap;
+word-break:break-word
+}
+
+.message-time{
+color:#999;
+font-size:10px;
+margin-top:5px
+}
+
+.message.mine .message-time{
+color:rgba(255,255,255,.75)
+}
+
+
+/* ================= INPUT ================= */
+
+.input-area{
+background:white;
+border-top:1px solid #ddd;
+padding:14px;
+display:flex;
+gap:10px
+}
+
+.input-area textarea{
+flex:1;
+resize:none;
+height:46px;
+border:1px solid #ccc;
+border-radius:10px;
+padding:12px;
+outline:none
+}
+
+.send-btn{
+width:90px;
+border:none;
+border-radius:10px;
+background:#d60000;
+color:white;
+font-weight:bold
+}
+
+
+/* ================= MODAL ================= */
+
+.modal-bg{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:1000;
+padding:20px
+}
+
+.modal-bg.show{
+display:flex
+}
+
+.modal{
+width:100%;
+max-width:500px;
+max-height:90vh;
+overflow-y:auto;
+background:white;
+border-radius:15px;
+padding:22px
+}
+
+.modal h2{
+margin-top:0
+}
+
+.modal input{
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:9px;
+margin-bottom:10px
+}
+
+.modal-btn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:9px;
+margin-top:8px;
+background:#d60000;
+color:white;
+font-weight:bold
+}
+
+.modal-btn.secondary{
+background:#222
+}
+
+.modal-btn.yellow{
+background:#ffd500;
+color:#111
+}
+
+.close-btn{
+float:right;
+border:none;
+background:#eee;
+width:32px;
+height:32px;
+border-radius:50%
+}
+
+.profile-center{
+text-align:center
+}
+
+.profile-avatar{
+width:90px;
+height:90px;
+border-radius:50%;
+margin:0 auto 15px;
+background:#d60000;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:32px;
+font-weight:bold;
+overflow:hidden
+}
+
+.profile-avatar img{
+width:100%;
+height:100%;
+object-fit:cover
+}
+
+.profile-email-hidden{
+display:none!important
+}
+
+.search-results{
+position:absolute;
+top:70px;
+left:14px;
+right:14px;
+background:white;
+color:#111;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,.25);
+overflow:hidden;
+z-index:20
+}
+
+.search-result{
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px;
+cursor:pointer
+}
+
+.request-card{
+border:1px solid #ddd;
+border-radius:10px;
+padding:13px;
+margin-bottom:10px
+}
+
+.request-buttons{
+display:flex;
+gap:8px;
+margin-top:10px
+}
+
+.request-buttons button{
+flex:1;
+padding:9px;
+border:none;
+border-radius:8px;
+font-weight:bold
+}
+
+.accept{
+background:#19a463;
+color:white
+}
+
+.reject{
+background:#eee;
+color:#111
+}
+
+.danger{
+background:#d60000!important;
+color:white!important
+}
+
+.member{
+display:flex;
+align-items:center;
+gap:10px;
+padding:10px 0;
+border-bottom:1px solid #eee
+}
+
+.member-remove{
+border:none;
+background:#d60000;
+color:white;
+padding:7px 9px;
+border-radius:7px;
+font-size:12px;
+font-weight:bold
+}
+
+.closed-banner{
+background:#eee;
+color:#555;
+padding:10px;
+border-radius:9px;
+margin:15px 0
+}
+
+.friend-limit-box{
+background:#f5f5f5;
+border-radius:10px;
+padding:10px;
+margin-bottom:12px;
+font-size:13px;
+color:#555
+}
+
+.friend-limit-box strong{
+color:#d60000
+}
+
+.empty{
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:#777
+}
+
+.empty h2{
+color:#222
+}
+
+.toast{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#111;
+color:white;
+padding:13px 18px;
+border-radius:10px;
+z-index:5000;
+display:none
+}
+
+.toast.show{
+display:block
+}
+
+
+/* ================= MOBILE ================= */
+
+@media(max-width:750px){
+
+.sidebar{
+position:fixed;
+left:-340px;
+top:0;
+bottom:0;
+z-index:2000;
+transition:.25s
+}
+
+.sidebar.open{
+left:0
+}
+
+.mobile-menu{
+display:block
+}
+
+.chat-header{
+padding:0 10px
+}
+
+.messages{
+padding:14px
+}
+
+.message-content{
+max-width:75%
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+<div class="logo-area">
+
+<img
+src="icon1.png"
+class="logo"
+onerror="this.style.display='none'"
+>
+
+<div class="logo-text">
+Deutsch Einfach 🇩🇪
+</div>
+
+</div>
+
+
+<div class="search-box">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Person suchen..."
+autocomplete="off"
+>
+
+<div
+id="searchResults"
+class="search-results"
+style="display:none">
+</div>
+
+</div>
+
+
+<div class="nav">
+
+<button onclick="location.href='index.html'">
+← Retour
+</button>
+
+<button
+id="communityBtn"
+class="active"
+onclick="openCommunity()">
+💬 Community
+</button>
+
+<button onclick="openFriends()">
+👥 Freunde
+</button>
+
+<button onclick="openRequests()">
+🔔 Anfragen
+<span
+id="requestBadge"
+class="badge"
+style="display:none">
+0
+</span>
+</button>
+
+</div>
+
+
+<div class="section-title">
+Freunde
+</div>
+
+<div
+class="friend-list"
+id="friendList">
+</div>
+
+
+<div class="section-title">
+Gruppen
+</div>
+
+<div
+class="group-list"
+id="groupList">
+</div>
+
+
+<button
+class="create-group"
+onclick="openCreateGroup()">
+＋ Gruppe erstellen
+</button>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+<header class="chat-header">
+
+<button
+class="mobile-menu"
+onclick="toggleSidebar()">
+☰
+</button>
+
+
+<div
+class="header-avatar"
+id="headerAvatar">
+D
+</div>
+
+
+<div class="header-info">
+
+<div
+class="header-name"
+id="headerName">
+Community
+</div>
+
+<div
+class="header-sub"
+id="headerSub">
+Deutsch Einfach Community
+</div>
+
+</div>
+
+
+<button
+id="headerAction"
+class="header-btn"
+style="display:none"
+onclick="openGroupSettings()">
+⚙️
+</button>
+
+</header>
+
+
+<div
+class="messages"
+id="messages">
+
+<div class="empty">
+
+<div>
+
+<h2>
+Willkommen bei Deutsch Einfach 🇩🇪
+</h2>
+
+<p>
+Schreib mit anderen Deutschlernenden.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="input-area">
+
+<textarea
+id="messageInput"
+maxlength="500"
+placeholder="Nachricht schreiben...">
+</textarea>
+
+<button
+class="send-btn"
+onclick="sendMessage()">
+Senden
+</button>
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- ================= PROFILE ================= -->
+
+<div
+class="modal-bg"
+id="profileModal">
+
+<div class="modal">
+
+<button
+class="close-btn"
+onclick="closeModal('profileModal')">
+×
+</button>
+
+<div class="profile-center">
+
+<div
+class="profile-avatar"
+id="profileAvatar">
+U
+</div>
+
+<h2 id="profileName">
+User
+</h2>
+
+<p
+id="profileEmail"
+class="profile-email-hidden">
+</p>
+
+<div id="profileActions">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= REQUESTS ================= -->
+
+<div
+class="modal-bg"
+id="requestsModal">
+
+<div class="modal">
+
+<button
+class="close-btn"
+onclick="closeModal('requestsModal')">
+×
+</button>
+
+<h2>
+🔔 Anfragen
+</h2>
+
+<div id="requestsContent">
+Chargement...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= CREATE GROUP ================= -->
+
+<div
+class="modal-bg"
+id="createGroupModal">
+
+<div class="modal">
+
+<button
+class="close-btn"
+onclick="closeModal('createGroupModal')">
+×
+</button>
+
+<h2>
+＋ Gruppe erstellen
+</h2>
+
+<input
+id="groupNameInput"
+maxlength="50"
+placeholder="Gruppenname"
+>
+
+<button
+class="modal-btn"
+onclick="createGroup()">
+Gruppe erstellen
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= GROUP SETTINGS ================= -->
+
+<div
+class="modal-bg"
+id="groupSettingsModal">
+
+<div class="modal">
+
+<button
+class="close-btn"
+onclick="closeModal('groupSettingsModal')">
+×
+</button>
+
+<h2 id="settingsGroupName">
+👥 Gruppe
+</h2>
+
+<div id="groupClosedArea">
+</div>
+
+
+<button
+id="inviteFriendsBtn"
+class="modal-btn yellow"
+onclick="openGroupInvite()">
+＋ Freunde einladen
+</button>
+
+
+<h3>
+👥 Mitglieder
+</h3>
+
+<div id="groupMembers">
+</div>
+
+<div id="groupOwnerActions">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= GROUP INVITE ================= -->
+
+<div
+class="modal-bg"
+id="groupInviteModal">
+
+<div class="modal">
+
+<button
+class="close-btn"
+onclick="closeModal('groupInviteModal')">
+×
+</button>
+
+<h2>
+Freunde einladen
+</h2>
+
+<div id="groupInviteList">
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="toast"
+class="toast">
+</div>
+
+
+<script type="module">
+
+/* =====================================================
+   FIREBASE IMPORTS
+   ===================================================== */
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+import {
+getFirestore,
+doc,
+getDoc,
+getDocs,
+setDoc,
+updateDoc,
+deleteDoc,
+addDoc,
+collection,
+query,
+where,
+orderBy,
+onSnapshot,
+serverTimestamp,
+runTransaction
+}
+from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+   ===================================================== */
+
+const firebaseConfig={
+
+apiKey:"AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+authDomain:
+"deutsch-einfach-4c81f.firebaseapp.com",
+
+projectId:
+"deutsch-einfach-4c81f",
+
+storageBucket:
+"deutsch-einfach-4c81f.firebasestorage.app",
+
+messagingSenderId:
+"152448766933",
+
+appId:
+"1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+measurementId:
+"G-9QV234Z0KZ"
+
+};
+
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+
+/* =====================================================
+   LIMITS
+   ===================================================== */
+
+const MAX_FRIENDS=100;
+
+/* Group maximum = 8 */
+
+const MAX_GROUP_MEMBERS=8;
+
+
+/* =====================================================
+   STATE
+   ===================================================== */
+
+let currentUser=null;
+let currentUserData=null;
+
+let currentMode="community";
+
+let currentPrivateChatId=null;
+let currentPrivateUserId=null;
+
+let currentGroupId=null;
+let currentGroupData=null;
+
+let currentProfileId=null;
+
+let unsubscribeMessages=null;
+let unsubscribeFriends=null;
+let unsubscribeGroups=null;
+
+let friendsCache=[];
+let groupsCache=[];
+
+
+/* =====================================================
+   HELPERS
+   ===================================================== */
+
+function escapeHtml(v){
+
+if(v===undefined||v===null)
+return "";
+
+return String(v)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+function getUserName(d){
+
+return d?.displayName
+||d?.name
+||d?.username
+||"User";
+
+}
+
+
+function getInitial(d){
+
+return getUserName(d)
+.charAt(0)
+.toUpperCase();
+
+}
+
+
+function showToast(text){
+
+const t=document.getElementById("toast");
+
+t.textContent=text;
+
+t.classList.remove("show");
+
+void t.offsetWidth;
+
+t.classList.add("show");
+
+setTimeout(
+()=>t.classList.remove("show"),
+3000
+);
+
+}
+
+
+function openModal(id){
+
+document
+.getElementById(id)
+.classList.add("show");
+
+}
+
+
+function closeModal(id){
+
+document
+.getElementById(id)
+.classList.remove("show");
+
+}
+
+window.closeModal=closeModal;
+
+
+function formatTime(timestamp){
+
+if(!timestamp)
+return "";
+
+try{
+
+return timestamp
+.toDate()
+.toLocaleTimeString(
+"de-DE",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+}catch{
+
+return "";
+
+}
+
+}
+
+
+/* =====================================================
+   AUTH
+   ===================================================== */
+
+onAuthStateChanged(
+auth,
+async user=>{
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+currentUser=user;
+
+await loadCurrentUser();
+
+startFriendsListener();
+
+startGroupsListener();
+
+startRequestsListener();
+
+openCommunity();
+
+}
+);
+
+
+async function loadCurrentUser(){
+
+const ref=
+doc(
+db,
+"users",
+currentUser.uid
+);
+
+const snap=
+await getDoc(ref);
+
+
+if(snap.exists()){
+
+currentUserData=snap.data();
+
+}else{
+
+currentUserData={
+
+displayName:
+currentUser.displayName
+||
+currentUser.email?.split("@")[0]
+||
+"User",
+
+createdAt:
+serverTimestamp()
+
+};
+
+await setDoc(
+ref,
+currentUserData
+);
+
+}
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+window.toggleSidebar=()=>{
+
+document
+.getElementById("sidebar")
+.classList.toggle("open");
+
+};
+
+
+function closeMobileSidebar(){
+
+document
+.getElementById("sidebar")
+.classList.remove("open");
+
+}
+
+
+/* =====================================================
+   COMMUNITY
+   ===================================================== */
+
+window.openCommunity=()=>{
+
+currentMode="community";
+
+currentPrivateChatId=null;
+currentPrivateUserId=null;
+
+currentGroupId=null;
+currentGroupData=null;
+
+
+document
+.getElementById("headerName")
+.textContent="Community";
+
+
+document
+.getElementById("headerSub")
+.textContent=
+"Deutsch Einfach Community";
+
+
+document
+.getElementById("headerAvatar")
+.innerHTML="💬";
+
+
+document
+.getElementById("headerAction")
+.style.display="none";
+
+
+listenMessages(
+
+query(
+
+collection(
+db,
+"chatMessages"
+),
+
+orderBy(
+"createdAt",
+"asc"
+)
+
+)
+
+);
+
+
+closeMobileSidebar();
+
+};
+
+
+/* =====================================================
+   MESSAGE LISTENER
+   ===================================================== */
+
+function listenMessages(q){
+
+if(unsubscribeMessages)
+unsubscribeMessages();
+
+
+unsubscribeMessages=
+onSnapshot(
+
+q,
+
+snapshot=>{
+
+const messages=[];
+
+snapshot.forEach(d=>{
+
+messages.push({
+id:d.id,
+...d.data()
+});
+
+});
+
+renderMessages(messages);
+
+},
+
+error=>{
+
+console.error(error);
+
+showToast(
+"Nachrichten konnten nicht geladen werden."
+);
+
+}
+
+);
+
+}
+
+
+/* =====================================================
+   RENDER MESSAGES
+   ===================================================== */
+
+async function renderMessages(messages){
+
+const container=
+document.getElementById("messages");
+
+
+if(!messages.length){
+
+container.innerHTML=`
+
+<div class="empty">
+
+<div>
+
+<h2>
+Noch keine Nachrichten
+</h2>
+
+<p>
+Schreib die erste Nachricht 👋
+</p>
+
+</div>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+const html=[];
+
+
+for(const message of messages){
+
+let user={};
+
+
+try{
+
+const snap=
+await getDoc(
+doc(
+db,
+"users",
+message.userId
+)
+);
+
+if(snap.exists())
+user=snap.data();
+
+}catch{}
+
+
+const name=
+message.userName
+||
+getUserName(user);
+
+
+const avatar=
+user.photoURL||"";
+
+
+const initial=
+getInitial(user);
+
+
+const mine=
+message.userId===currentUser.uid;
+
+
+html.push(`
+
+<div class="message ${mine?"mine":""}">
+
+<div
+class="message-avatar"
+onclick="openUserProfile('${escapeHtml(message.userId)}')">
+
+${
+avatar
+?
+`<img src="${escapeHtml(avatar)}">`
+:
+escapeHtml(initial)
+}
+
+</div>
+
+
+<div class="message-content">
+
+<div
+class="message-name"
+onclick="openUserProfile('${escapeHtml(message.userId)}')">
+
+${escapeHtml(name)}
+
+</div>
+
+
+<div class="message-text">
+
+${escapeHtml(message.text)}
+
+</div>
+
+
+<div class="message-time">
+
+${formatTime(message.createdAt)}
+
+</div>
+
+</div>
+
+</div>
+
+`);
+
+}
+
+
+container.innerHTML=
+html.join("");
+
+container.scrollTop=
+container.scrollHeight;
+
+}
+
+
+/* =====================================================
+   SEND MESSAGE
+   ===================================================== */
+
+window.sendMessage=async()=>{
+
+const input=
+document.getElementById("messageInput");
+
+const text=
+input.value.trim();
+
+
+if(!text)
+return;
+
+
+if(text.length>500){
+
+showToast(
+"Maximal 500 Zeichen."
+);
+
+return;
+
+}
+
+
+try{
+
+const data={
+
+userId:
+currentUser.uid,
+
+userName:
+getUserName(currentUserData),
+
+text,
+
+createdAt:
+serverTimestamp()
+
+};
+
+
+/* ================= COMMUNITY ================= */
+
+if(currentMode==="community"){
+
+await addDoc(
+collection(
+db,
+"chatMessages"
+),
+data
+);
+
+}
+
+
+/* ================= PRIVATE ================= */
+
+else if(currentMode==="private"){
+
+if(
+!currentPrivateChatId
+||
+!currentPrivateUserId
+){
+
+showToast(
+"Privater Chat ist nicht verfügbar."
+);
+
+return;
+
+}
+
+
+if(
+!friendsCache.some(
+f=>f.uid===currentPrivateUserId
+)
+){
+
+showToast(
+"Nur Freunde können miteinander chatten."
+);
+
+return;
+
+}
+
+
+/*
+   IMPORTANT:
+   Direct setDoc with merge.
+   No getDoc before creation.
+*/
+
+await setDoc(
+
+doc(
+db,
+"privateChats",
+currentPrivateChatId
+),
+
+{
+participants:[
+currentUser.uid,
+currentPrivateUserId
+].sort(),
+
+updatedAt:
+serverTimestamp()
+
+},
+
+{
+merge:true
+}
+
+);
+
+
+await addDoc(
+
+collection(
+db,
+"privateChats",
+currentPrivateChatId,
+"messages"
+),
+
+data
+
+);
+
+}
+
+
+/* ================= GROUP ================= */
+
+else if(currentMode==="group"){
+
+if(
+!currentGroupData
+||
+!currentGroupData.members?.includes(
+currentUser.uid
+)
+){
+
+showToast(
+"Du bist kein Mitglied dieser Gruppe."
+);
+
+return;
+
+}
+
+
+if(currentGroupData.closed){
+
+showToast(
+"Diese Gruppe ist geschlossen."
+);
+
+return;
+
+}
+
+
+await addDoc(
+
+collection(
+db,
+"groups",
+currentGroupId,
+"messages"
+),
+
+data
+
+);
+
+}
+
+
+input.value="";
+
+
+}catch(error){
+
+console.error(
+"SEND MESSAGE ERROR:",
+error
+);
+
+showToast(
+"Nachricht konnte nicht gesendet werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   FRIEND COUNT
+   ===================================================== */
+
+async function getFriendCount(uid){
+
+try{
+
+const snap=
+await getDocs(
+
+query(
+
+collection(
+db,
+"friendships"
+),
+
+where(
+"users",
+"array-contains",
+uid
+)
+
+)
+
+);
+
+return snap.size;
+
+}catch{
+
+return 0;
+
+}
+
+}
+
+
+/* =====================================================
+   FRIEND LISTENER
+   ===================================================== */
+
+function startFriendsListener(){
+
+const q=
+query(
+
+collection(
+db,
+"friendships"
+),
+
+where(
+"users",
+"array-contains",
+currentUser.uid
+)
+
+);
+
+
+if(unsubscribeFriends)
+unsubscribeFriends();
+
+
+unsubscribeFriends=
+onSnapshot(
+
+q,
+
+async snapshot=>{
+
+friendsCache=[];
+
+
+for(const item of snapshot.docs){
+
+const data=
+item.data();
+
+
+const uid=
+data.users.find(
+x=>x!==currentUser.uid
+);
+
+
+if(!uid)
+continue;
+
+
+const snap=
+await getDoc(
+doc(
+db,
+"users",
+uid
+)
+);
+
+
+if(snap.exists()){
+
+friendsCache.push({
+
+uid,
+
+friendshipId:
+item.id,
+
+...snap.data()
+
+});
+
+}
+
+}
+
+
+renderFriends();
+
+}
+
+);
+
+}
+
+
+/* =====================================================
+   RENDER FRIENDS
+   ===================================================== */
+
+function renderFriends(){
+
+const list=
+document.getElementById("friendList");
+
+
+if(!friendsCache.length){
+
+list.innerHTML=`
+
+<div
+style="padding:10px;color:#777;font-size:13px">
+
+Noch keine Freunde
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+list.innerHTML=
+friendsCache
+.map(friend=>`
+
+<div
+class="person"
+onclick="openPrivateChat('${escapeHtml(friend.uid)}')">
+
+<div class="avatar">
+
+${
+friend.photoURL
+?
+`<img src="${escapeHtml(friend.photoURL)}">`
+:
+escapeHtml(getInitial(friend))
+}
+
+</div>
+
+
+<div class="person-info">
+
+<div class="person-name">
+
+${escapeHtml(
+getUserName(friend)
+)}
+
+</div>
+
+</div>
+
+</div>
+
+`)
+.join("");
+
+}
+
+
+/* =====================================================
+   PRIVATE CHAT
+   ===================================================== */
+
+window.openPrivateChat=async uid=>{
+
+if(
+!currentUser
+||
+!uid
+||
+uid===currentUser.uid
+){
+
+showToast(
+"Ungültiger Benutzer."
+);
+
+return;
+
+}
+
+
+if(
+!friendsCache.some(
+f=>f.uid===uid
+)
+){
+
+showToast(
+"Nur Freunde können miteinander chatten."
+);
+
+return;
+
+}
+
+
+try{
+
+const ids=[
+currentUser.uid,
+uid
+].sort();
+
+
+const chatId=
+ids.join("_");
+
+
+const otherSnap=
+await getDoc(
+doc(
+db,
+"users",
+uid
+)
+);
+
+
+if(!otherSnap.exists()){
+
+showToast(
+"Benutzer nicht gefunden."
+);
+
+return;
+
+}
+
+
+const other=
+otherSnap.data();
+
+
+/*
+   IMPORTANT:
+   Create/update directly.
+   This fixes the previous permission problem.
+*/
+
+await setDoc(
+
+doc(
+db,
+"privateChats",
+chatId
+),
+
+{
+participants:ids,
+
+updatedAt:
+serverTimestamp()
+
+},
+
+{
+merge:true
+}
+
+);
+
+
+currentMode="private";
+
+currentPrivateChatId=
+chatId;
+
+currentPrivateUserId=
+uid;
+
+
+currentGroupId=null;
+
+currentGroupData=null;
+
+
+document
+.getElementById("headerName")
+.textContent=
+getUserName(other);
+
+
+document
+.getElementById("headerSub")
+.textContent=
+"🔒 Privater Chat";
+
+
+const avatar=
+document.getElementById(
+"headerAvatar"
+);
+
+
+avatar.innerHTML=
+other.photoURL
+?
+`<img src="${escapeHtml(other.photoURL)}">`
+:
+getInitial(other);
+
+
+document
+.getElementById("headerAction")
+.style.display="none";
+
+
+listenMessages(
+
+query(
+
+collection(
+db,
+"privateChats",
+chatId,
+"messages"
+),
+
+orderBy(
+"createdAt",
+"asc"
+)
+
+)
+
+);
+
+
+closeModal(
+"profileModal"
+);
+
+closeMobileSidebar();
+
+
+}catch(error){
+
+console.error(
+"PRIVATE CHAT ERROR:",
+error
+);
+
+showToast(
+"❌ Privater Chat konnte nicht geöffnet werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   CREATE GROUP
+   ===================================================== */
+
+window.openCreateGroup=()=>{
+
+document
+.getElementById("groupNameInput")
+.value="";
+
+openModal(
+"createGroupModal"
+);
+
+};
+
+
+window.createGroup=async()=>{
+
+const input=
+document.getElementById(
+"groupNameInput"
+);
+
+const name=
+input.value.trim();
+
+
+if(!name){
+
+showToast(
+"Gib einen Gruppennamen ein."
+);
+
+return;
+
+}
+
+
+try{
+
+const ref=
+await addDoc(
+
+collection(
+db,
+"groups"
+),
+
+{
+
+name,
+
+ownerId:
+currentUser.uid,
+
+members:[
+currentUser.uid
+],
+
+memberCount:1,
+
+closed:false,
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+closeModal(
+"createGroupModal"
+);
+
+
+showToast(
+"🎉 Gruppe erstellt!"
+);
+
+
+setTimeout(
+()=>openGroup(ref.id),
+300
+);
+
+
+}catch(error){
+
+console.error(
+"CREATE GROUP ERROR:",
+error
+);
+
+showToast(
+"❌ Gruppe konnte nicht erstellt werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   GROUP LISTENER
+   ===================================================== */
+
+function startGroupsListener(){
+
+const q=
+query(
+
+collection(
+db,
+"groups"
+),
+
+where(
+"members",
+"array-contains",
+currentUser.uid
+)
+
+);
+
+
+if(unsubscribeGroups)
+unsubscribeGroups();
+
+
+unsubscribeGroups=
+onSnapshot(
+
+q,
+
+snapshot=>{
+
+groupsCache=[];
+
+
+snapshot.forEach(d=>{
+
+groupsCache.push({
+id:d.id,
+...d.data()
+});
+
+});
+
+
+renderGroups();
+
+}
+
+);
+
+}
+
+
+/* =====================================================
+   RENDER GROUPS
+   ===================================================== */
+
+function renderGroups(){
+
+const list=
+document.getElementById(
+"groupList"
+);
+
+
+if(!groupsCache.length){
+
+list.innerHTML=`
+
+<div
+style="padding:10px;color:#777;font-size:13px">
+
+Noch keine Gruppen
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+list.innerHTML=
+groupsCache
+.map(group=>`
+
+<div
+class="group-item"
+onclick="openGroup('${escapeHtml(group.id)}')">
+
+<div class="avatar">
+👥
+</div>
+
+
+<div class="person-info">
+
+<div class="person-name">
+
+${escapeHtml(
+group.name||"Gruppe"
+)}
+
+</div>
+
+
+<div class="person-email">
+
+${group.members?.length||0}/${MAX_GROUP_MEMBERS}
+Mitglieder
+
+</div>
+
+</div>
+
+</div>
+
+`)
+.join("");
+
+}
+
+
+/* =====================================================
+   OPEN GROUP
+   ===================================================== */
+
+window.openGroup=async groupId=>{
+
+try{
+
+const snap=
+await getDoc(
+doc(
+db,
+"groups",
+groupId
+)
+);
+
+
+if(!snap.exists()){
+
+showToast(
+"Gruppe nicht gefunden."
+);
+
+return;
+
+}
+
+
+const group=
+snap.data();
+
+
+if(
+!group.members?.includes(
+currentUser.uid
+)
+){
+
+showToast(
+"Du bist kein Mitglied dieser Gruppe."
+);
+
+return;
+
+}
+
+
+currentMode="group";
+
+currentGroupId=
+groupId;
+
+currentPrivateChatId=null;
+currentPrivateUserId=null;
+
+
+currentGroupData={
+id:groupId,
+...group
+};
+
+
+document
+.getElementById("headerName")
+.textContent=
+group.name||"Gruppe";
+
+
+document
+.getElementById("headerSub")
+.textContent=
+group.closed
+?
+"🔒 Geschlossen"
+:
+`${group.members.length}/${MAX_GROUP_MEMBERS} Mitglieder`;
+
+
+document
+.getElementById("headerAvatar")
+.innerHTML="👥";
+
+
+document
+.getElementById("headerAction")
+.style.display="block";
+
+
+listenMessages(
+
+query(
+
+collection(
+db,
+"groups",
+groupId,
+"messages"
+),
+
+orderBy(
+"createdAt",
+"asc"
+)
+
+)
+
+);
+
+
+closeMobileSidebar();
+
+
+}catch(error){
+
+console.error(
+"OPEN GROUP ERROR:",
+error
+);
+
+showToast(
+"Gruppe konnte nicht geöffnet werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   GROUP SETTINGS
+   ===================================================== */
+
+window.openGroupSettings=async()=>{
+
+if(!currentGroupId)
+return;
+
+
+try{
+
+const snap=
+await getDoc(
+
+doc(
+db,
+"groups",
+currentGroupId
+)
+
+);
+
+
+if(!snap.exists())
+return;
+
+
+const group=
+snap.data();
+
+
+if(
+!group.members?.includes(
+currentUser.uid
+)
+){
+
+showToast(
+"Du bist kein Mitglied dieser Gruppe."
+);
+
+return;
+
+}
+
+
+currentGroupData={
+id:currentGroupId,
+...group
+};
+
+
+document
+.getElementById(
+"settingsGroupName"
+)
+.textContent=
+"👥 "+(
+group.name||"Gruppe"
+);
+
+
+const invite=
+document.getElementById(
+"inviteFriendsBtn"
+);
+
+
+const closed=
+document.getElementById(
+"groupClosedArea"
+);
+
+
+if(group.closed){
+
+closed.innerHTML=`
+
+<div class="closed-banner">
+
+🔒 Diese Gruppe wurde geschlossen.
+
+</div>
+
+`;
+
+invite.style.display="none";
+
+}else{
+
+closed.innerHTML="";
+
+invite.style.display=
+group.members.length>=MAX_GROUP_MEMBERS
+?
+"none"
+:
+"block";
+
+}
+
+
+/* ================= MEMBERS ================= */
+
+let html="";
+
+
+for(const uid of group.members){
+
+let user={};
+
+
+try{
+
+const u=
+await getDoc(
+doc(
+db,
+"users",
+uid
+)
+);
+
+if(u.exists())
+user=u.data();
+
+}catch{}
+
+
+const owner=
+uid===group.ownerId;
+
+
+const me=
+uid===currentUser.uid;
+
+
+const canRemove=
+currentUser.uid===group.ownerId
+&&
+!owner
+&&
+!me
+&&
+!group.closed;
+
+
+html+=`
+
+<div class="member">
+
+<div class="avatar">
+
+${
+user.photoURL
+?
+`<img src="${escapeHtml(user.photoURL)}">`
+:
+escapeHtml(getInitial(user))
+}
+
+</div>
+
+
+<div style="flex:1">
+
+<strong>
+
+${escapeHtml(
+getUserName(user)
+)}
+
+</strong>
+
+
+${
+me
+?
+`
+<div
+style="font-size:12px;color:#777">
+Du
+</div>
+`
+:
+""
+}
+
+</div>
+
+
+${
+owner
+?
+"<strong>👑 Owner</strong>"
+:
+""
+}
+
+
+${
+canRemove
+?
+`
+<button
+class="member-remove"
+onclick="removeGroupMember('${escapeHtml(uid)}')">
+
+🚫 Entfernen
+
+</button>
+`
+:
+""
+}
+
+</div>
+
+`;
+
+}
+
+
+document
+.getElementById(
+"groupMembers"
+)
+.innerHTML=html;
+
+
+/* ================= OWNER ACTIONS ================= */
+
+document
+.getElementById(
+"groupOwnerActions"
+)
+.innerHTML=`
+
+${
+currentUser.uid===group.ownerId
+?
+`
+<button
+class="modal-btn danger"
+onclick="closeGroupForever()">
+
+🔒 Gruppe schließen
+
+</button>
+`
+:
+`
+<button
+class="modal-btn danger"
+onclick="leaveGroup()">
+
+🚪 Gruppe verlassen
+
+</button>
+`
+}
+
+`;
+
+
+/*
+   IMPORTANT:
+   Owner does NOT get a "Leave" button.
+   Only normal members can leave.
+*/
+
+openModal(
+"groupSettingsModal"
+);
+
+
+}catch(error){
+
+console.error(
+"GROUP SETTINGS ERROR:",
+error
+);
+
+showToast(
+"Gruppenprofil konnte nicht geladen werden."
+);
+
+}
+
+};
+
+
+
+/* =====================================================
+   REMOVE GROUP MEMBER
+   ONLY OWNER CAN REMOVE MEMBERS
+   OWNER CANNOT REMOVE HIMSELF
+   ===================================================== */
+
+window.removeGroupMember = async function(uid) {
+
+  if (!currentGroupId || !currentUser) {
+    return;
+  }
+
+  /* OWNER CANNOT REMOVE HIMSELF */
+  if (uid === currentUser.uid) {
+
+    showToast(
+      "👑 Der Owner kann sich nicht selbst entfernen."
+    );
+
+    return;
+  }
+
+  try {
+
+    const ref = doc(
+      db,
+      "groups",
+      currentGroupId
+    );
+
+    await runTransaction(
+      db,
+      async function(transaction) {
+
+        const snap = await transaction.get(ref);
+
+        if (!snap.exists()) {
+          throw new Error("notfound");
+        }
+
+        const group = snap.data();
+
+        /* ONLY OWNER */
+        if (group.ownerId !== currentUser.uid) {
+          throw new Error("owner");
+        }
+
+        /* CLOSED GROUP */
+        if (group.closed) {
+          throw new Error("closed");
+        }
+
+        /* OWNER CANNOT BE REMOVED */
+        if (uid === group.ownerId) {
+          throw new Error("ownerremove");
+        }
+
+        /* USER MUST BE MEMBER */
+        if (!group.members || !group.members.includes(uid)) {
+          throw new Error("nomember");
+        }
+
+        const members = group.members.filter(
+          function(memberUid) {
+            return memberUid !== uid;
+          }
+        );
+
+        transaction.update(
+          ref,
+          {
+            members: members,
+            memberCount: members.length
+          }
+        );
+
+      }
+    );
+
+    showToast(
+      "✅ Mitglied wurde entfernt."
+    );
+
+    await openGroupSettings();
+
+  } catch (error) {
+
+    console.error(
+      "REMOVE MEMBER ERROR:",
+      error
+    );
+
+    if (error.message === "owner") {
+
+      showToast(
+        "❌ Nur der Owner kann Mitglieder entfernen."
+      );
+
+    } else if (error.message === "ownerremove") {
+
+      showToast(
+        "❌ Der Owner kann nicht entfernt werden."
+      );
+
+    } else if (error.message === "closed") {
+
+      showToast(
+        "🔒 Die Gruppe ist geschlossen."
+      );
+
+    } else if (error.message === "nomember") {
+
+      showToast(
+        "❌ Dieser Benutzer ist kein Mitglied der Gruppe."
+      );
+
+    } else {
+
+      showToast(
+        "❌ Mitglied konnte nicht entfernt werden."
+      );
+
+    }
+
+  }
+
+};
+
+
+/* =====================================================
+   LEAVE GROUP
+   NORMAL MEMBER CAN LEAVE
+   OWNER CANNOT LEAVE
+   ===================================================== */
+
+window.leaveGroup = async function() {
+
+  if (!currentGroupId || !currentUser) {
+    return;
+  }
+
+  /* OWNER CANNOT LEAVE */
+  if (
+    currentGroupData &&
+    currentGroupData.ownerId === currentUser.uid
+  ) {
+
+    showToast(
+      "👑 Der Owner kann die Gruppe nicht verlassen. Schließe die Gruppe stattdessen."
+    );
+
+    return;
+  }
+
+  const ok = confirm(
+    "Willst du diese Gruppe wirklich verlassen?"
+  );
+
+  if (!ok) {
+    return;
+  }
+
+  try {
+
+    const ref = doc(
+      db,
+      "groups",
+      currentGroupId
+    );
+
+    await runTransaction(
+      db,
+      async function(transaction) {
+
+        const snap = await transaction.get(ref);
+
+        if (!snap.exists()) {
+          throw new Error("notfound");
+        }
+
+        const group = snap.data();
+
+        /* GROUP CLOSED */
+        if (group.closed) {
+          throw new Error("closed");
+        }
+
+        /* USER MUST BE MEMBER */
+        if (
+          !group.members ||
+          !group.members.includes(currentUser.uid)
+        ) {
+          throw new Error("notmember");
+        }
+
+        /* OWNER PROTECTION */
+        if (group.ownerId === currentUser.uid) {
+          throw new Error("owner_cannot_leave");
+        }
+
+        /* REMOVE CURRENT USER */
+        const newMembers = group.members.filter(
+          function(memberUid) {
+            return memberUid !== currentUser.uid;
+          }
+        );
+
+        if (newMembers.length < 1) {
+          throw new Error("invalid_group");
+        }
+
+        transaction.update(
+          ref,
+          {
+            members: newMembers,
+            memberCount: newMembers.length
+          }
+        );
+
+      }
+    );
+
+    closeModal(
+      "groupSettingsModal"
+    );
+
+    currentGroupId = null;
+    currentGroupData = null;
+
+    showToast(
+      "🚪 Du hast die Gruppe verlassen."
+    );
+
+    openCommunity();
+
+  } catch (error) {
+
+    console.error(
+      "LEAVE GROUP ERROR:",
+      error
+    );
+
+    if (error.message === "owner_cannot_leave") {
+
+      showToast(
+        "👑 Der Owner kann die Gruppe nicht verlassen. Du kannst die Gruppe schließen."
+      );
+
+    } else if (error.message === "closed") {
+
+      showToast(
+        "🔒 Die Gruppe ist geschlossen."
+      );
+
+    } else if (error.message === "notmember") {
+
+      showToast(
+        "❌ Du bist kein Mitglied dieser Gruppe."
+      );
+
+    } else {
+
+      showToast(
+        "❌ Gruppe konnte nicht verlassen werden."
+      );
+
+    }
+
+  }
+
+};
+
+
+/* =====================================================
+   CLOSE GROUP
+   ONLY OWNER
+   ===================================================== */
+
+window.closeGroupForever = async function() {
+
+  if (!currentGroupId || !currentUser) {
+    return;
+  }
+
+  if (
+    !currentGroupData ||
+    currentGroupData.ownerId !== currentUser.uid
+  ) {
+
+    showToast(
+      "❌ Nur der Owner kann die Gruppe schließen."
+    );
+
+    return;
+  }
+
+  const ok = confirm(
+    "Möchtest du diese Gruppe wirklich schließen?"
+  );
+
+  if (!ok) {
+    return;
+  }
+
+  try {
+
+    await updateDoc(
+      doc(
+        db,
+        "groups",
+        currentGroupId
+      ),
+      {
+        closed: true
+      }
+    );
+
+    currentGroupData.closed = true;
+
+    const headerSub =
+      document.getElementById("headerSub");
+
+    if (headerSub) {
+      headerSub.textContent = "🔒 Geschlossen";
+    }
+
+    closeModal(
+      "groupSettingsModal"
+    );
+
+    showToast(
+      "🔒 Gruppe geschlossen."
+    );
+
+  } catch (error) {
+
+    console.error(
+      "CLOSE GROUP ERROR:",
+      error
+    );
+
+    showToast(
+      "❌ Gruppe konnte nicht geschlossen werden."
+    );
+
+  }
+
+};
+
+
+/* =====================================================
+   GROUP INVITE
+   MAX 8 MEMBERS
+   ===================================================== */
+
+window.openGroupInvite = function() {
+
+  if (!currentGroupData) {
+    return;
+  }
+
+  /* MAX 8 MEMBERS */
+  if (
+    !currentGroupData.members ||
+    currentGroupData.members.length >= MAX_GROUP_MEMBERS
+  ) {
+
+    showToast(
+      "🚫 Gruppe ist voll (max. 8 Mitglieder)."
+    );
+
+    return;
+  }
+
+  /* CLOSED GROUP */
+  if (currentGroupData.closed) {
+
+    showToast(
+      "🔒 Die Gruppe ist geschlossen."
+    );
+
+    return;
+  }
+
+  /* ONLY FRIENDS WHO ARE NOT ALREADY MEMBERS */
+  const available = friendsCache.filter(
+    function(friend) {
+
+      return (
+        !currentGroupData.members.includes(
+          friend.uid
+        )
+      );
+
+    }
+  );
+
+  const list =
+    document.getElementById(
+      "groupInviteList"
+    );
+
+  if (!list) {
+    return;
+  }
+
+  if (!available.length) {
+
+    list.innerHTML = `
+      <p style="color:#777">
+        Keine Freunde zum Einladen verfügbar.
+      </p>
+    `;
+
+  } else {
+
+    list.innerHTML = available
+      .map(
+        function(friend) {
+
+          return `
+            <div
+              class="person"
+              style="background:#f5f5f5;margin-bottom:8px"
+            >
+
+              <div class="avatar">
+
+                ${
+                  friend.photoURL
+                    ? `<img src="${escapeHtml(friend.photoURL)}">`
+                    : escapeHtml(getInitial(friend))
+                }
+
+              </div>
+
+              <div
+                class="person-info"
+                style="flex:1"
+              >
+
+                <div class="person-name">
+                  ${escapeHtml(getUserName(friend))}
+                </div>
+
+              </div>
+
+              <button
+                class="modal-btn yellow"
+                style="width:auto;margin:0"
+                onclick="sendGroupInvite('${escapeHtml(friend.uid)}')"
+              >
+                Einladen
+              </button>
+
+            </div>
+          `;
+
+        }
+      )
+      .join("");
+
+  }
+
+  openModal(
+    "groupInviteModal"
+  );
+
+};
+
+
+/* =====================================================
+   SEND GROUP INVITE
+   ===================================================== */
+
+window.sendGroupInvite=async uid=>{
+
+try{
+
+const snap=
+await getDoc(
+
+doc(
+db,
+"groups",
+currentGroupId
+)
+
+);
+
+
+if(!snap.exists())
+return;
+
+
+const group=
+snap.data();
+
+
+if(
+!group.members.includes(
+currentUser.uid
+)
+){
+
+showToast(
+"Du bist kein Mitglied."
+);
+
+return;
+
+}
+
+
+if(group.closed){
+
+showToast(
+"Gruppe geschlossen."
+);
+
+return;
+
+}
+
+
+if(
+group.members.length>=
+MAX_GROUP_MEMBERS
+){
+
+showToast(
+"🚫 Gruppe ist voll (max. 8 Mitglieder)."
+);
+
+return;
+
+}
+
+
+if(
+group.members.includes(uid)
+){
+
+showToast(
+"User ist bereits Mitglied."
+);
+
+return;
+
+}
+
+
+if(
+!friendsCache.some(
+f=>f.uid===uid
+)
+){
+
+showToast(
+"Du kannst nur Freunde einladen."
+);
+
+return;
+
+}
+
+
+const inviteId=
+currentGroupId+"_"+uid;
+
+
+const ref=
+doc(
+db,
+"groupInvites",
+inviteId
+);
+
+
+const old=
+await getDoc(ref);
+
+
+if(
+old.exists()
+&&
+old.data().status==="pending"
+){
+
+showToast(
+"📨 Einladung wurde bereits gesendet."
+);
+
+return;
+
+}
+
+
+await setDoc(
+
+ref,
+
+{
+groupId:
+currentGroupId,
+
+groupName:
+group.name||"Gruppe",
+
+fromUid:
+currentUser.uid,
+
+toUid:uid,
+
+status:"pending",
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+showToast(
+"🎉 Gruppeneinladung gesendet!"
+);
+
+
+}catch(error){
+
+console.error(
+"SEND GROUP INVITE ERROR:",
+error
+);
+
+showToast(
+"❌ Einladung konnte nicht gesendet werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   ACCEPT GROUP INVITE
+   ===================================================== */
+
+window.acceptGroupInvite=async inviteId=>{
+
+try{
+
+const inviteRef=
+doc(
+db,
+"groupInvites",
+inviteId
+);
+
+
+const inviteSnap=
+await getDoc(
+inviteRef
+);
+
+
+if(!inviteSnap.exists()){
+
+showToast(
+"Einladung nicht gefunden."
+);
+
+return;
+
+}
+
+
+const invite=
+inviteSnap.data();
+
+
+if(
+invite.toUid!==currentUser.uid
+||
+invite.status!=="pending"
+){
+
+showToast(
+"Ungültige Einladung."
+);
+
+return;
+
+}
+
+
+const groupRef=
+doc(
+db,
+"groups",
+invite.groupId
+);
+
+
+await runTransaction(
+db,
+async transaction=>{
+
+const groupSnap=
+await transaction.get(
+groupRef
+);
+
+
+if(!groupSnap.exists())
+throw new Error("notfound");
+
+
+const group=
+groupSnap.data();
+
+
+if(group.closed)
+throw new Error("closed");
+
+
+if(
+group.members.includes(
+currentUser.uid
+)
+){
+
+transaction.update(
+inviteRef,
+{
+status:"accepted",
+respondedAt:
+serverTimestamp()
+}
+);
+
+return;
+
+}
+
+
+if(
+group.members.length>=
+MAX_GROUP_MEMBERS
+)
+throw new Error("full");
+
+
+const members=[
+...group.members,
+currentUser.uid
+];
+
+
+transaction.update(
+
+groupRef,
+
+{
+members,
+
+memberCount:
+members.length
+}
+
+);
+
+
+transaction.update(
+
+inviteRef,
+
+{
+status:"accepted",
+respondedAt:
+serverTimestamp()
+}
+
+);
+
+}
+
+);
+
+
+closeModal(
+"requestsModal"
+);
+
+
+showToast(
+"🎉 Du bist der Gruppe beigetreten!"
+);
+
+
+setTimeout(
+()=>openGroup(invite.groupId),
+300
+);
+
+
+}catch(error){
+
+console.error(
+"ACCEPT GROUP ERROR:",
+error
+);
+
+
+if(error.message==="full"){
+
+showToast(
+"🚫 Die Gruppe ist bereits voll (8 Mitglieder)."
+);
+
+}else{
+
+showToast(
+"❌ Gruppe konnte nicht beigetreten werden."
+);
+
+}
+
+}
+
+};
+
+
+/* =====================================================
+   REQUESTS LISTENER
+   ===================================================== */
+
+function startRequestsListener(){
+
+const fq=
+query(
+
+collection(
+db,
+"friendRequests"
+),
+
+where(
+"toUid",
+"==",
+currentUser.uid
+),
+
+where(
+"status",
+"==",
+"pending"
+)
+
+);
+
+
+const gq=
+query(
+
+collection(
+db,
+"groupInvites"
+),
+
+where(
+"toUid",
+"==",
+currentUser.uid
+),
+
+where(
+"status",
+"==",
+"pending"
+)
+
+);
+
+
+let f=0;
+let g=0;
+
+
+onSnapshot(
+fq,
+s=>{
+
+f=s.size;
+
+updateRequestBadge(
+f+g
+);
+
+}
+);
+
+
+onSnapshot(
+gq,
+s=>{
+
+g=s.size;
+
+updateRequestBadge(
+f+g
+);
+
+}
+);
+
+}
+
+
+function updateRequestBadge(n){
+
+const b=
+document.getElementById(
+"requestBadge"
+);
+
+
+if(n){
+
+b.style.display=
+"inline-block";
+
+b.textContent=n;
+
+}else{
+
+b.style.display=
+"none";
+
+}
+
+}
+
+
+/* =====================================================
+   SEND FRIEND REQUEST
+   ===================================================== */
+
+window.sendFriendRequest=async uid=>{
+
+if(
+!uid
+||
+uid===currentUser.uid
+)
+return;
+
+
+try{
+
+const count=
+await getFriendCount(
+currentUser.uid
+);
+
+
+if(count>=MAX_FRIENDS){
+
+showToast(
+"🚫 Du hast bereits 100 Freunde."
+);
+
+return;
+
+}
+
+
+const target=
+await getFriendCount(uid);
+
+
+if(target>=MAX_FRIENDS){
+
+showToast(
+"🚫 Dieser Benutzer hat bereits 100 Freunde."
+);
+
+return;
+
+}
+
+
+const id=
+[
+currentUser.uid,
+uid
+]
+.sort()
+.join("_");
+
+
+const friendship=
+await getDoc(
+
+doc(
+db,
+"friendships",
+id
+)
+
+);
+
+
+if(friendship.exists()){
+
+showToast(
+"Ihr seid bereits Freunde."
+);
+
+return;
+
+}
+
+
+const requestId=
+currentUser.uid+"_"+uid;
+
+
+const ref=
+doc(
+db,
+"friendRequests",
+requestId
+);
+
+
+const old=
+await getDoc(ref);
+
+
+if(
+old.exists()
+&&
+old.data().status==="pending"
+){
+
+showToast(
+"📨 Anfrage wurde bereits gesendet."
+);
+
+return;
+
+}
+
+
+await setDoc(
+
+ref,
+
+{
+fromUid:
+currentUser.uid,
+
+toUid:uid,
+
+status:"pending",
+
+createdAt:
+serverTimestamp()
+
+}
+
+);
+
+
+showToast(
+"🎉 Freundschaftsanfrage gesendet!"
+);
+
+
+closeModal(
+"profileModal"
+);
+
+
+}catch(error){
+
+console.error(
+"SEND FRIEND REQUEST ERROR:",
+error
+);
+
+showToast(
+"❌ Anfrage konnte nicht gesendet werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   REMOVE FRIEND
+   ===================================================== */
+
+window.removeFriend=async uid=>{
+
+const id=
+[
+currentUser.uid,
+uid
+]
+.sort()
+.join("_");
+
+
+if(
+!confirm(
+"Möchtest du diesen Freund wirklich entfernen?"
+)
+)
+return;
+
+
+try{
+
+await deleteDoc(
+
+doc(
+db,
+"friendships",
+id
+)
+
+);
+
+
+showToast(
+"🗑️ Freund entfernt."
+);
+
+
+closeModal(
+"profileModal"
+);
+
+
+}catch(error){
+
+console.error(
+"REMOVE FRIEND ERROR:",
+error
+);
+
+showToast(
+"❌ Freund konnte nicht entfernt werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   PROFILE
+   ===================================================== */
+
+window.openUserProfile=async uid=>{
+
+if(!uid)
+return;
+
+
+currentProfileId=uid;
+
+
+try{
+
+const snap=
+await getDoc(
+
+doc(
+db,
+"users",
+uid
+)
+
+);
+
+
+if(!snap.exists()){
+
+showToast(
+"Utilisateur introuvable."
+);
+
+return;
+
+}
+
+
+const user=
+snap.data();
+
+
+const avatar=
+document.getElementById(
+"profileAvatar"
+);
+
+
+avatar.innerHTML=
+user.photoURL
+?
+`<img src="${escapeHtml(user.photoURL)}">`
+:
+getInitial(user);
+
+
+document
+.getElementById("profileName")
+.textContent=
+getUserName(user);
+
+
+document
+.getElementById("profileEmail")
+.textContent="";
+
+
+const actions=
+document.getElementById(
+"profileActions"
+);
+
+
+if(uid===currentUser.uid){
+
+actions.innerHTML="";
+
+openModal(
+"profileModal"
+);
+
+return;
+
+}
+
+
+const friend=
+friendsCache.some(
+f=>f.uid===uid
+);
+
+
+if(friend){
+
+actions.innerHTML=`
+
+<button
+class="modal-btn"
+onclick="openPrivateChat('${escapeHtml(uid)}')">
+
+💬 Nachricht
+
+</button>
+
+
+<button
+class="modal-btn danger"
+onclick="removeFriend('${escapeHtml(uid)}')">
+
+🗑️ Freund entfernen
+
+</button>
+
+`;
+
+}else{
+
+const requestId=
+currentUser.uid+"_"+uid;
+
+
+const req=
+await getDoc(
+
+doc(
+db,
+"friendRequests",
+requestId
+)
+
+);
+
+
+if(
+req.exists()
+&&
+req.data().status==="pending"
+){
+
+actions.innerHTML=`
+
+<button
+class="modal-btn secondary"
+disabled>
+
+✓ Anfrage gesendet
+
+</button>
+
+`;
+
+}else if(
+friendsCache.length>=MAX_FRIENDS
+){
+
+actions.innerHTML=`
+
+<button
+class="modal-btn secondary"
+disabled>
+
+🚫 100 Freunde erreicht
+
+</button>
+
+`;
+
+}else{
+
+actions.innerHTML=`
+
+<button
+class="modal-btn"
+onclick="sendFriendRequest('${escapeHtml(uid)}')">
+
+＋ Add Friend
+
+</button>
+
+`;
+
+}
+
+}
+
+
+openModal(
+"profileModal"
+);
+
+
+}catch(error){
+
+console.error(
+"PROFILE ERROR:",
+error
+);
+
+showToast(
+"Profil konnte nicht geladen werden."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   REQUESTS PAGE
+   ===================================================== */
+
+window.openRequests=async()=>{
+
+const box=
+document.getElementById(
+"requestsContent"
+);
+
+
+box.innerHTML=
+"<p>Chargement...</p>";
+
+
+openModal(
+"requestsModal"
+);
+
+
+try{
+
+const fq=
+query(
+
+collection(
+db,
+"friendRequests"
+),
+
+where(
+"toUid",
+"==",
+currentUser.uid
+),
+
+where(
+"status",
+"==",
+"pending"
+)
+
+);
+
+
+const gq=
+query(
+
+collection(
+db,
+"groupInvites"
+),
+
+where(
+"toUid",
+"==",
+currentUser.uid
+),
+
+where(
+"status",
+"==",
+"pending"
+)
+
+);
+
+
+const [
+fs,
+gs
+]=await Promise.all([
+
+getDocs(fq),
+
+getDocs(gq)
+
+]);
+
+
+let html="";
+
+
+/* ================= FRIEND REQUESTS ================= */
+
+for(
+const d of fs.docs
+){
+
+const r=d.data();
+
+
+const u=
+await getDoc(
+
+doc(
+db,
+"users",
+r.fromUid
+)
+
+);
+
+
+const user=
+u.exists()
+?
+u.data()
+:
+{};
+
+
+html+=`
+
+<div class="request-card">
+
+<strong>
+
+👤 ${escapeHtml(
+getUserName(user)
+)}
+
+</strong>
+
+
+<p>
+möchte dein Freund werden.
+</p>
+
+
+<div class="request-buttons">
+
+<button
+class="accept"
+onclick="acceptFriendRequest(
+'${escapeHtml(d.id)}',
+'${escapeHtml(r.fromUid)}'
+)">
+
+✓ Annehmen
+
+</button>
+
+
+<button
+class="reject"
+onclick="rejectFriendRequest(
+'${escapeHtml(d.id)}'
+)">
+
+✕ Ablehnen
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* ================= GROUP INVITES ================= */
+
+for(
+const d of gs.docs
+){
+
+const r=d.data();
+
+
+const u=
+await getDoc(
+
+doc(
+db,
+"users",
+r.fromUid
+)
+
+);
+
+
+const user=
+u.exists()
+?
+u.data()
+:
+{};
+
+
+html+=`
+
+<div class="request-card">
+
+<strong>
+
+👥 ${escapeHtml(
+r.groupName||"Gruppe"
+)}
+
+</strong>
+
+
+<p>
+
+Einladung von
+${escapeHtml(
+getUserName(user)
+)}
+
+</p>
+
+
+<div class="request-buttons">
+
+<button
+class="accept"
+onclick="acceptGroupInvite(
+'${escapeHtml(d.id)}'
+)">
+
+✓ Beitreten
+
+</button>
+
+
+<button
+class="reject"
+onclick="rejectGroupInvite(
+'${escapeHtml(d.id)}'
+)">
+
+✕ Ablehnen
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+if(!html){
+
+html=`
+
+<div
+style="text-align:center;padding:30px;color:#777">
+
+<h3>
+Keine Anfragen
+</h3>
+
+<p>
+Du hast momentan keine neuen Anfragen.
+</p>
+
+</div>
+
+`;
+
+}
+
+
+box.innerHTML=html;
+
+
+}catch(error){
+
+console.error(
+"REQUESTS ERROR:",
+error
+);
+
+box.innerHTML=
+"<p style='color:red'>Fehler beim Laden.</p>";
+
+}
+
+};
+
+
+/* =====================================================
+   ACCEPT FRIEND REQUEST
+   ===================================================== */
+
+window.acceptFriendRequest = async function(requestId, fromUid) {
+
+  try {
+
+    const requestRef = doc(
+      db,
+      "friendRequests",
+      requestId
+    );
+
+    const friendshipId = [
+      currentUser.uid,
+      fromUid
+    ]
+      .sort()
+      .join("_");
+
+    const friendshipRef = doc(
+      db,
+      "friendships",
+      friendshipId
+    );
+
+    /* CHECK MY FRIEND LIMIT */
+    const myCount = await getFriendCount(
+      currentUser.uid
+    );
+
+    /* CHECK OTHER USER FRIEND LIMIT */
+    const theirCount = await getFriendCount(
+      fromUid
+    );
+
+    if (myCount >= MAX_FRIENDS) {
+
+      showToast(
+        "🚫 Du hast bereits 100 Freunde."
+      );
+
+      return;
+    }
+
+    if (theirCount >= MAX_FRIENDS) {
+
+      showToast(
+        "🚫 Dieser User hat bereits 100 Freunde."
+      );
+
+      return;
+    }
+
+    await runTransaction(
+      db,
+      async function(transaction) {
+
+        const req = await transaction.get(
+          requestRef
+        );
+
+        const friendship = await transaction.get(
+          friendshipRef
+        );
+
+        /* REQUEST DOES NOT EXIST */
+        if (!req.exists()) {
+          throw new Error("request");
+        }
+
+        /* ALREADY FRIENDS */
+        if (friendship.exists()) {
+          throw new Error("already");
+        }
+
+        const data = req.data();
+
+        /* CHECK REQUEST */
+        if (
+          data.toUid !== currentUser.uid ||
+          data.status !== "pending"
+        ) {
+          throw new Error("invalid");
+        }
+
+        /* CREATE FRIENDSHIP */
+        transaction.set(
+          friendshipRef,
+          {
+            users: [
+              currentUser.uid,
+              fromUid
+            ].sort(),
+
+            createdAt: serverTimestamp()
+          }
+        );
+
+        /* ACCEPT REQUEST */
+        transaction.update(
+          requestRef,
+          {
+            status: "accepted",
+            respondedAt: serverTimestamp()
+          }
+        );
+
+      }
+    );
+
+    showToast(
+      "🎉 Freundschaft angenommen!"
+    );
+
+    await openRequests();
+
+  } catch (error) {
+
+    console.error(
+      "ACCEPT FRIEND ERROR:",
+      error
+    );
+
+    if (error.message === "already") {
+
+      showToast(
+        "Ihr seid bereits Freunde."
+      );
+
+    } else if (error.message === "request") {
+
+      showToast(
+        "❌ Freundschaftsanfrage wurde nicht gefunden."
+      );
+
+    } else if (error.message === "invalid") {
+
+      showToast(
+        "❌ Diese Anfrage ist nicht mehr gültig."
+      );
+
+    } else {
+
+      showToast(
+        "❌ Freundschaft konnte nicht angenommen werden."
+      );
+
+    }
+
+  }
+
+};
+
+/* =====================================================
+   REJECT FRIEND
+   ===================================================== */
+
+window.rejectFriendRequest=
+async id=>{
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"friendRequests",
+id
+),
+
+{
+status:"rejected",
+
+respondedAt:
+serverTimestamp()
+}
+
+);
+
+
+await openRequests();
+
+
+}catch(error){
+
+console.error(
+"REJECT FRIEND ERROR:",
+error
+);
+
+showToast(
+"Fehler."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   REJECT GROUP INVITE
+   ===================================================== */
+
+window.rejectGroupInvite=
+async id=>{
+
+try{
+
+await updateDoc(
+
+doc(
+db,
+"groupInvites",
+id
+),
+
+{
+status:"rejected",
+
+respondedAt:
+serverTimestamp()
+}
+
+);
+
+
+await openRequests();
+
+
+}catch(error){
+
+console.error(
+"REJECT GROUP ERROR:",
+error
+);
+
+showToast(
+"Fehler."
+);
+
+}
+
+};
+
+
+/* =====================================================
+   FRIENDS PAGE
+   ===================================================== */
+
+window.openFriends=()=>{
+
+currentMode="friends";
+
+currentPrivateChatId=null;
+currentPrivateUserId=null;
+
+currentGroupId=null;
+currentGroupData=null;
+
+
+document
+.getElementById("headerName")
+.textContent="Freunde";
+
+
+document
+.getElementById("headerSub")
+.textContent=
+`${friendsCache.length}/${MAX_FRIENDS} Freunde`;
+
+
+document
+.getElementById("headerAvatar")
+.innerHTML="👥";
+
+
+document
+.getElementById("headerAction")
+.style.display="none";
+
+
+const box=
+document.getElementById(
+"messages"
+);
+
+
+if(!friendsCache.length){
+
+box.innerHTML=`
+
+<div class="empty">
+
+<div>
+
+<h2>
+Noch keine Freunde 👥
+</h2>
+
+<p>
+Suche nach Personen und sende eine Anfrage.
+</p>
+
+</div>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+box.innerHTML=`
+
+<div
+style="width:100%;max-width:800px;margin:auto">
+
+<div class="friend-limit-box">
+
+👥 Du hast
+
+<strong>
+${friendsCache.length}/${MAX_FRIENDS}
+</strong>
+
+Freunde.
+
+</div>
+
+
+${friendsCache.map(f=>`
+
+<div
+class="person"
+style="background:white;margin-bottom:10px;padding:15px"
+onclick="openUserProfile('${escapeHtml(f.uid)}')">
+
+<div class="avatar">
+
+${
+f.photoURL
+?
+`<img src="${escapeHtml(f.photoURL)}">`
+:
+escapeHtml(getInitial(f))
+}
+
+</div>
+
+
+<div class="person-info">
+
+<div class="person-name">
+
+${escapeHtml(
+getUserName(f)
+)}
+
+</div>
+
+</div>
+
+</div>
+
+`).join("")}
+
+</div>
+
+`;
+
+
+closeMobileSidebar();
+
+};
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+const searchInput=
+document.getElementById(
+"searchInput"
+);
+
+
+const searchResults=
+document.getElementById(
+"searchResults"
+);
+
+
+searchInput.addEventListener(
+"input",
+async()=>{
+
+const term=
+searchInput.value
+.trim()
+.toLowerCase();
+
+
+if(term.length<2){
+
+searchResults.style.display=
+"none";
+
+return;
+
+}
+
+
+try{
+
+const snap=
+await getDocs(
+collection(
+db,
+"users"
+)
+);
+
+
+const results=[];
+
+
+snap.forEach(d=>{
+
+if(
+d.id===currentUser.uid
+)
+return;
+
+
+const user={
+uid:d.id,
+...d.data()
+};
+
+
+if(
+getUserName(user)
+.toLowerCase()
+.includes(term)
+){
+
+results.push(user);
+
+}
+
+});
+
+
+const list=
+results.slice(0,10);
+
+
+searchResults.innerHTML=
+list.length
+?
+
+list
+.map(u=>`
+
+<div
+class="search-result"
+onclick="selectSearchUser('${escapeHtml(u.uid)}')">
+
+<div class="avatar">
+
+${
+u.photoURL
+?
+`<img src="${escapeHtml(u.photoURL)}">`
+:
+escapeHtml(getInitial(u))
+}
+
+</div>
+
+
+<strong>
+
+${escapeHtml(
+getUserName(u)
+)}
+
+</strong>
+
+</div>
+
+`)
+.join("")
+
+:
+
+`
+
+<div
+style="padding:15px;color:#777">
+
+Kein Benutzer gefunden.
+
+</div>
+
+`;
+
+
+searchResults.style.display=
+"block";
+
+
+}catch(error){
+
+console.error(
+"SEARCH ERROR:",
+error
+);
+
+}
+
+});
+
+
+/* =====================================================
+   SELECT SEARCH USER
+   ===================================================== */
+
+window.selectSearchUser=uid=>{
+
+searchInput.value="";
+
+searchResults.style.display=
+"none";
+
+openUserProfile(uid);
+
+};
+
+
+/* =====================================================
+   CLOSE SEARCH RESULTS
+   ===================================================== */
+
+document.addEventListener(
+"click",
+e=>{
+
+if(
+!searchResults.contains(e.target)
+&&
+e.target!==searchInput
+){
+
+searchResults.style.display=
+"none";
+
+}
+
+});
+
+
+/* =====================================================
+   ENTER = SEND
+   ===================================================== */
+
+document
+.getElementById("messageInput")
+.addEventListener(
+"keydown",
+e=>{
+
+if(
+e.key==="Enter"
+&&
+!e.shiftKey
+){
+
+e.preventDefault();
+
+sendMessage();
+
+}
+
+});
+
+
+</script>
+
+</body>
+</html>
