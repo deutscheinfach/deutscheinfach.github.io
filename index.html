@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="de" dir="rtl">
 
 <head>
@@ -49,10 +48,6 @@
             overflow-x: hidden;
         }
 
-        /* =========================================
-           BACKGROUND DECORATION
-        ========================================= */
-
         body::before {
             content: "";
             position: fixed;
@@ -83,6 +78,7 @@
             width: min(1180px, 92%);
             margin: auto;
         }
+
 
         /* =========================================
            NAVBAR
@@ -175,6 +171,9 @@
             font-size: 14px;
             transition: 0.25s ease;
             white-space: nowrap;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
         }
 
         .login {
@@ -196,6 +195,57 @@
             background: #333;
             transform: translateY(-2px);
         }
+
+
+        /* =========================================
+           USER AREA
+        ========================================= */
+
+        .user-area {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            direction: rtl;
+        }
+
+        .user-area.show {
+            display: flex;
+        }
+
+        .user-name {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            background: #fff8f8;
+            border: 1px solid rgba(214,0,0,0.12);
+
+            padding: 10px 13px;
+            border-radius: 12px;
+
+            color: #222;
+            font-weight: bold;
+            font-size: 13px;
+
+            max-width: 160px;
+        }
+
+        .user-name-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .settings-button {
+            background: #111;
+            color: white;
+        }
+
+        .settings-button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
 
         /* =========================================
            HERO
@@ -351,6 +401,7 @@
             transform: translateY(-3px);
         }
 
+
         /* =========================================
            HERO LOGO
         ========================================= */
@@ -445,6 +496,7 @@
 
         }
 
+
         /* =========================================
            STATS
         ========================================= */
@@ -479,6 +531,7 @@
             font-weight: bold;
         }
 
+
         /* =========================================
            SECTION TITLE
         ========================================= */
@@ -510,6 +563,7 @@
             color: #777;
             font-size: 16px;
         }
+
 
         /* =========================================
            FEATURES
@@ -602,8 +656,62 @@
             font-weight: bold;
         }
 
+
         /* =========================================
-           ABOUT / PROMISE
+           COMMUNITY CHAT
+        ========================================= */
+
+        .community-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #fff8f8
+                );
+
+            border: 2px solid rgba(214,0,0,0.12);
+        }
+
+        .community-card .card-icon {
+            background: linear-gradient(
+                135deg,
+                #fff1f1,
+                #fff8d8
+            );
+        }
+
+        .community-card h3 {
+            color: var(--red);
+        }
+
+        .community-online {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            margin-top: 12px;
+            padding: 6px 10px;
+
+            border-radius: 999px;
+
+            background: #f0fff5;
+            color: #16833d;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .community-online::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #20b45a;
+        }
+
+
+        /* =========================================
+           PROMISE
         ========================================= */
 
         .promise {
@@ -680,6 +788,7 @@
             background: var(--red);
         }
 
+
         /* =========================================
            CTA
         ========================================= */
@@ -736,6 +845,140 @@
             box-shadow: 0 12px 25px rgba(0,0,0,0.18);
         }
 
+
+        /* =========================================
+           SETTINGS MODAL
+        ========================================= */
+
+        .modal-overlay {
+            display: none;
+
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(5px);
+
+            z-index: 5000;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .settings-modal {
+            width: min(450px, 100%);
+
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+
+            box-shadow: 0 25px 80px rgba(0,0,0,0.25);
+
+            direction: rtl;
+        }
+
+        .settings-modal h2 {
+            color: var(--red);
+            margin-bottom: 8px;
+        }
+
+        .settings-modal p {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 22px;
+            line-height: 1.7;
+        }
+
+        .settings-modal label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .settings-modal input {
+            width: 100%;
+            padding: 14px;
+
+            border: 1px solid #ddd;
+            border-radius: 12px;
+
+            font-size: 16px;
+            outline: none;
+            margin-bottom: 18px;
+        }
+
+        .settings-modal input:focus {
+            border-color: var(--red);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-button {
+            flex: 1;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+
+            font-weight: bold;
+            font-size: 15px;
+
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .save-button {
+            background: var(--red);
+            color: white;
+        }
+
+        .save-button:hover {
+            background: var(--red-dark);
+        }
+
+        .cancel-button {
+            background: #eee;
+            color: #333;
+        }
+
+        .cancel-button:hover {
+            background: #ddd;
+        }
+
+        .settings-logout-button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 13px;
+
+            border: 1px solid rgba(214,0,0,0.15);
+            border-radius: 12px;
+
+            background: #fff1f1;
+            color: var(--red);
+
+            font-weight: bold;
+            font-size: 15px;
+
+            cursor: pointer;
+            font-family: inherit;
+
+            transition: 0.25s ease;
+        }
+
+        .settings-logout-button:hover {
+            background: var(--red);
+            color: white;
+        }
+
+
         /* =========================================
            FOOTER
         ========================================= */
@@ -784,6 +1027,7 @@
         .footer-links a:hover {
             color: var(--red);
         }
+
 
         /* =========================================
            MOBILE
@@ -882,6 +1126,16 @@
                 padding: 10px 8px;
             }
 
+            .user-area {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .user-name {
+                max-width: 130px;
+            }
+
             .hero {
                 margin-top: 30px;
                 padding: 35px 18px;
@@ -952,6 +1206,10 @@
                 font-size: 25px;
             }
 
+            .settings-modal {
+                padding: 23px;
+            }
+
         }
 
     </style>
@@ -1002,10 +1260,19 @@
                 🗣️ Sprechen
             </a>
 
+            <a href="chat.html">
+                💬 Community
+            </a>
+
         </div>
 
 
-        <div class="nav-actions">
+        <!-- NOT LOGGED IN -->
+
+        <div
+            class="nav-actions"
+            id="guest-actions"
+        >
 
             <a
                 href="signup.html"
@@ -1015,7 +1282,7 @@
             </a>
 
             <a
-                href="login.html"
+                href="login.html?returnTo=index.html"
                 class="nav-action login"
             >
                 تسجيل الدخول
@@ -1023,8 +1290,40 @@
 
         </div>
 
-    </nav>
 
+        <!-- LOGGED IN -->
+
+        <div
+            class="nav-actions user-area"
+            id="user-actions"
+        >
+
+            <div class="user-name">
+
+                👤
+
+                <span
+                    class="user-name-text"
+                    id="navbar-user-name"
+                >
+                    المستخدم
+                </span>
+
+            </div>
+
+
+            <button
+                class="nav-action settings-button"
+                id="settings-button"
+                type="button"
+            >
+                ⚙️
+            </button>
+
+        </div>
+
+
+    </nav>
 
 
     <!-- =========================================
@@ -1149,9 +1448,6 @@
         </div>
 
 
-
-        <!-- LOGO -->
-
         <div class="hero-logo-area">
 
             <div class="logo-wrapper">
@@ -1170,7 +1466,6 @@
 
 
     </section>
-
 
 
     <!-- =========================================
@@ -1194,7 +1489,6 @@
     </div>
 
 
-
     <!-- =========================================
          FEATURES
     ========================================== -->
@@ -1202,20 +1496,15 @@
     <section class="features">
 
 
-        <!-- LESEN -->
-
         <div class="card">
-
 
             <div class="card-icon">
                 📖
             </div>
 
-
             <h3>
                 Lesen
             </h3>
-
 
             <p>
 
@@ -1236,7 +1525,6 @@
 
             </p>
 
-
             <a
                 href="dashboard.html?section=lesen"
                 class="card-link"
@@ -1244,25 +1532,18 @@
                 Mehr erfahren ←
             </a>
 
-
         </div>
 
 
-
-        <!-- HÖREN -->
-
         <div class="card">
-
 
             <div class="card-icon">
                 🎧
             </div>
 
-
             <h3>
                 Hören
             </h3>
-
 
             <p>
 
@@ -1277,7 +1558,6 @@
 
             </p>
 
-
             <a
                 href="dashboard.html?section=hoeren"
                 class="card-link"
@@ -1285,25 +1565,18 @@
                 Mehr erfahren ←
             </a>
 
-
         </div>
 
 
-
-        <!-- SCHREIBEN -->
-
         <div class="card">
-
 
             <div class="card-icon">
                 ✍️
             </div>
 
-
             <h3>
                 Schreiben
             </h3>
-
 
             <p>
 
@@ -1318,7 +1591,6 @@
 
             </p>
 
-
             <a
                 href="dashboard.html?section=schreiben"
                 class="card-link"
@@ -1326,6 +1598,41 @@
                 Mehr erfahren ←
             </a>
 
+        </div>
+
+
+        <div class="card community-card">
+
+            <div class="card-icon">
+                💬
+            </div>
+
+            <h3>
+                Community Chat
+            </h3>
+
+            <p>
+
+                تواصل مع متعلمين آخرين، طرح الأسئلة،
+                تعاون مع الآخرين وحسن اللغة الألمانية ديالك
+                داخل مجتمع
+
+                <span class="german">
+                    Deutsch Einfach
+                </span>.
+
+            </p>
+
+            <div class="community-online">
+                Community online
+            </div>
+
+            <a
+                href="chat.html"
+                class="card-link"
+            >
+                Community beitreten ←
+            </a>
 
         </div>
 
@@ -1333,16 +1640,14 @@
     </section>
 
 
-
     <!-- =========================================
-         PROMISE SECTION
+         PROMISE
     ========================================== -->
 
     <section class="promise">
 
 
         <div class="promise-content">
-
 
             <h2>
 
@@ -1372,9 +1677,7 @@
 
             </p>
 
-
         </div>
-
 
 
         <div class="promise-list">
@@ -1430,25 +1733,19 @@
     </section>
 
 
-
     <!-- =========================================
          CTA
     ========================================== -->
 
     <section class="cta">
 
-
         <h2>
             مستعد تبدا التحضير؟ 🚀
         </h2>
 
-
         <p>
-
             دخل للموقع، اختار القسم ديالك وبدا التدريب.
-
         </p>
-
 
         <a
             href="signup.html"
@@ -1457,9 +1754,7 @@
             إنشاء حساب مجاني →
         </a>
 
-
     </section>
-
 
 
     <!-- =========================================
@@ -1468,13 +1763,14 @@
 
     <footer>
 
-
         <div class="footer-brand">
 
             Deutsch
+
             <span>
                 Einfach
             </span>
+
             🇩🇪
 
         </div>
@@ -1482,49 +1778,37 @@
 
         <div class="footer-links">
 
-
-            <a
-                href="dashboard.html?section=lesen"
-            >
+            <a href="dashboard.html?section=lesen">
                 Lesen
             </a>
 
-
-            <a
-                href="dashboard.html?section=hoeren"
-            >
+            <a href="dashboard.html?section=hoeren">
                 Hören
             </a>
 
-
-            <a
-                href="dashboard.html?section=schreiben"
-            >
+            <a href="dashboard.html?section=schreiben">
                 Schreiben
             </a>
 
-
-            <a
-                href="dashboard.html?section=sprechen"
-            >
+            <a href="dashboard.html?section=sprechen">
                 Sprechen
             </a>
 
-
-            <a
-                href="payment.html"
-            >
-                🎁 العروض
+            <a href="chat.html">
+                💬 Community
             </a>
 
+            <a href="payment.html">
+                🎁 العروض
+            </a>
 
             <a
                 href="https://chat.whatsapp.com/FTQfYeyZyCt8DMs5JuSxW0?mode=gi_t"
                 target="_blank"
+                rel="noopener noreferrer"
             >
                 WhatsApp
             </a>
-
 
         </div>
 
@@ -1533,14 +1817,568 @@
             © 2026 Deutsch Einfach – TELC B1 & B2 Exam Preparation
         </p>
 
-
     </footer>
 
 
 </div>
 
 
+<!-- =========================================
+     SETTINGS MODAL
+========================================= -->
+
+<div
+    class="modal-overlay"
+    id="settings-modal"
+>
+
+    <div class="settings-modal">
+
+
+        <h2>
+            ⚙️ Paramètres
+        </h2>
+
+
+        <p>
+            هنا تقدر تبدل الاسم اللي كيبان فالموقع.
+        </p>
+
+
+        <label for="new-name">
+            الاسم
+        </label>
+
+
+        <input
+            type="text"
+            id="new-name"
+            placeholder="دخل الاسم الجديد"
+            maxlength="50"
+        >
+
+
+        <div class="modal-buttons">
+
+
+            <button
+                class="modal-button save-button"
+                id="save-name-button"
+                type="button"
+            >
+                حفظ التغيير
+            </button>
+
+
+            <button
+                class="modal-button cancel-button"
+                id="cancel-settings-button"
+                type="button"
+            >
+                إلغاء
+            </button>
+
+
+        </div>
+
+
+        <button
+            class="settings-logout-button"
+            id="settings-logout-button"
+            type="button"
+        >
+            Déconnexion
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     FIREBASE
+========================================= -->
+
+<script type="module">
+
+
+    import {
+        initializeApp
+    }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+    import {
+        getAuth,
+        onAuthStateChanged,
+        signOut
+    }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    import {
+        getFirestore,
+        doc,
+        getDoc,
+        updateDoc
+    }
+    from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    /* =========================================
+       FIREBASE CONFIG
+    ========================================= */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+
+        authDomain:
+            "deutsch-einfach-4c81f.firebaseapp.com",
+
+        projectId:
+            "deutsch-einfach-4c81f",
+
+        storageBucket:
+            "deutsch-einfach-4c81f.firebasestorage.app",
+
+        messagingSenderId:
+            "152448766933",
+
+        appId:
+            "1:152448766933:web:f7824c4db8ab3caccbe35c",
+
+        measurementId:
+            "G-9QV234Z0KZ"
+
+    };
+
+
+    /* =========================================
+       INITIALIZE FIREBASE
+    ========================================= */
+
+    const app =
+        initializeApp(firebaseConfig);
+
+    const auth =
+        getAuth(app);
+
+    const db =
+        getFirestore(app);
+
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const guestActions =
+        document.getElementById(
+            "guest-actions"
+        );
+
+
+    const userActions =
+        document.getElementById(
+            "user-actions"
+        );
+
+
+    const navbarUserName =
+        document.getElementById(
+            "navbar-user-name"
+        );
+
+
+    const settingsButton =
+        document.getElementById(
+            "settings-button"
+        );
+
+
+    const logoutButton =
+        document.getElementById(
+            "settings-logout-button"
+        );
+
+
+    const settingsModal =
+        document.getElementById(
+            "settings-modal"
+        );
+
+
+    const newNameInput =
+        document.getElementById(
+            "new-name"
+        );
+
+
+    const saveNameButton =
+        document.getElementById(
+            "save-name-button"
+        );
+
+
+    const cancelSettingsButton =
+        document.getElementById(
+            "cancel-settings-button"
+        );
+
+
+    /* =========================================
+       AUTH STATE
+    ========================================= */
+
+    onAuthStateChanged(
+        auth,
+        async function(user) {
+
+            if (user) {
+
+                console.log(
+                    "User logged in:",
+                    user.email
+                );
+
+
+                guestActions.style.display =
+                    "none";
+
+
+                userActions.classList.add(
+                    "show"
+                );
+
+
+                let name =
+                    user.displayName ||
+                    "";
+
+
+                try {
+
+                    const userRef =
+                        doc(
+                            db,
+                            "users",
+                            user.uid
+                        );
+
+
+                    const userDoc =
+                        await getDoc(
+                            userRef
+                        );
+
+
+                    if (
+                        userDoc.exists()
+                    ) {
+
+                        const data =
+                            userDoc.data();
+
+
+                        if (
+                            data.name &&
+                            data.name.trim()
+                        ) {
+
+                            name =
+                                data.name.trim();
+
+                        }
+
+                    }
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Error loading user:",
+                        error
+                    );
+
+                }
+
+
+                if (!name) {
+
+                    name =
+                        "المستخدم";
+
+                }
+
+
+                navbarUserName.textContent =
+                    name;
+
+
+                newNameInput.value =
+                    name;
+
+            }
+
+            else {
+
+                console.log(
+                    "User not logged in"
+                );
+
+
+                guestActions.style.display =
+                    "flex";
+
+
+                userActions.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       OPEN SETTINGS
+    ========================================= */
+
+    settingsButton.addEventListener(
+        "click",
+        function() {
+
+            settingsModal.classList.add(
+                "show"
+            );
+
+            newNameInput.focus();
+
+        }
+    );
+
+
+    /* =========================================
+       CLOSE SETTINGS
+    ========================================= */
+
+    cancelSettingsButton.addEventListener(
+        "click",
+        function() {
+
+            settingsModal.classList.remove(
+                "show"
+            );
+
+        }
+    );
+
+
+    settingsModal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                settingsModal
+            ) {
+
+                settingsModal.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       SAVE NAME
+    ========================================= */
+
+    saveNameButton.addEventListener(
+        "click",
+        async function() {
+
+            const user =
+                auth.currentUser;
+
+
+            if (!user) {
+
+                alert(
+                    "خاصك تكون مسجل الدخول ❌"
+                );
+
+                return;
+
+            }
+
+
+            const newName =
+                newNameInput.value.trim();
+
+
+            if (!newName) {
+
+                alert(
+                    "دخل الاسم ديالك أولاً ❌"
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                saveNameButton.disabled =
+                    true;
+
+
+                saveNameButton.textContent =
+                    "جاري الحفظ...";
+
+
+                const userRef =
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    );
+
+
+                await updateDoc(
+                    userRef,
+                    {
+                        name: newName
+                    }
+                );
+
+
+                navbarUserName.textContent =
+                    newName;
+
+
+                settingsModal.classList.remove(
+                    "show"
+                );
+
+
+                alert(
+                    "تم تغيير الاسم بنجاح ✅"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error updating name:",
+                    error
+                );
+
+
+                alert(
+                    "وقع مشكل أثناء تغيير الاسم ❌"
+                );
+
+            }
+
+
+            finally {
+
+                saveNameButton.disabled =
+                    false;
+
+
+                saveNameButton.textContent =
+                    "حفظ التغيير";
+
+            }
+
+        }
+    );
+
+
+    /* =========================================
+       LOGOUT
+    ========================================= */
+
+    logoutButton.addEventListener(
+        "click",
+        async function() {
+
+            const confirmLogout =
+                confirm(
+                    "واش متأكد بغيتي تدير Déconnexion؟"
+                );
+
+
+            if (!confirmLogout) {
+
+                return;
+
+            }
+
+
+            try {
+
+                /*
+                 * نحيدو session المحلية
+                 */
+
+                localStorage.removeItem(
+                    "deutschEinfachSessionId"
+                );
+
+
+                localStorage.removeItem(
+                    "deutschEinfachLevel"
+                );
+
+
+                await signOut(
+                    auth
+                );
+
+
+                alert(
+                    "تم تسجيل الخروج بنجاح ✅"
+                );
+
+
+                window.location.replace(
+                    "index.html"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+
+                alert(
+                    "وقع مشكل أثناء تسجيل الخروج ❌"
+                );
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
 </body>
-
 </html>
-
