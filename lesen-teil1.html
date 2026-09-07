@@ -1,15 +1,12 @@
-```html
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
 
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Deutsch Einfach – Lesen Teil 1</title>
-
 
     <style>
 
@@ -18,7 +15,6 @@
             margin: 0;
             padding: 0;
         }
-
 
         body {
             font-family: Arial, sans-serif;
@@ -31,7 +27,6 @@
                 );
 
             min-height: 100vh;
-
             color: #333;
         }
 
@@ -43,30 +38,23 @@
         .top-navigation {
 
             width: 95%;
-
             max-width: 1200px;
 
             margin: 20px auto;
 
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
 
             gap: 15px;
-
             flex-wrap: wrap;
         }
 
 
-        .nav-left,
-        .nav-right {
+        .nav-left {
 
             display: flex;
-
             align-items: center;
-
             gap: 8px;
         }
 
@@ -80,7 +68,6 @@
             border-radius: 12px;
 
             font-size: 15px;
-
             font-weight: bold;
 
             cursor: pointer;
@@ -101,25 +88,6 @@
         .nav-back {
 
             background: #333;
-
-            color: white;
-        }
-
-
-        .nav-home {
-
-            background: white;
-
-            color: #d62828;
-
-            border: 2px solid #ffd166;
-        }
-
-
-        .nav-offer {
-
-            background: #d62828;
-
             color: white;
         }
 
@@ -160,7 +128,6 @@
             padding: 25px 15px;
 
             border-top: 4px solid #ffd166;
-
             border-bottom: 4px solid #ffd166;
 
             box-shadow:
@@ -171,7 +138,6 @@
         .logo {
 
             width: 70px;
-
             height: 70px;
 
             object-fit: cover;
@@ -383,11 +349,9 @@
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             width: 48px;
-
             height: 48px;
 
             border-radius: 50%;
@@ -499,155 +463,6 @@
 
 
         /* ========================================= */
-        /* MODAL */
-        /* ========================================= */
-
-        .offer-modal {
-
-            display: none;
-
-            position: fixed;
-
-            inset: 0;
-
-            background:
-                rgba(0,0,0,0.55);
-
-            z-index: 9999;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 20px;
-        }
-
-
-        .offer-modal.show {
-
-            display: flex;
-        }
-
-
-        .offer-box {
-
-            position: relative;
-
-            width: 100%;
-
-            max-width: 500px;
-
-            background: white;
-
-            border-radius: 22px;
-
-            padding: 30px;
-
-            text-align: center;
-
-            box-shadow:
-                0 20px 60px rgba(0,0,0,0.25);
-
-            animation:
-                offerShow 0.3s ease;
-        }
-
-
-        .offer-icon {
-
-            font-size: 50px;
-
-            margin-bottom: 10px;
-        }
-
-
-        .offer-box h2 {
-
-            color: #d62828;
-
-            margin-bottom: 12px;
-        }
-
-
-        .offer-box p {
-
-            color: #555;
-
-            line-height: 1.7;
-
-            margin-bottom: 20px;
-        }
-
-
-        .offer-item {
-
-            background: #fffaf0;
-
-            border: 2px solid #ffd166;
-
-            border-radius: 12px;
-
-            padding: 13px;
-
-            margin: 10px 0;
-
-            font-weight: bold;
-        }
-
-
-        .offer-close {
-
-            position: absolute;
-
-            top: 12px;
-
-            right: 12px;
-
-            width: 35px;
-
-            height: 35px;
-
-            border: none;
-
-            border-radius: 50%;
-
-            background: #eeeeee;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            font-size: 17px;
-        }
-
-
-        .offer-close:hover {
-
-            background: #d62828;
-
-            color: white;
-        }
-
-
-        @keyframes offerShow {
-
-            from {
-
-                opacity: 0;
-
-                transform: scale(0.9);
-            }
-
-            to {
-
-                opacity: 1;
-
-                transform: scale(1);
-            }
-        }
-
-
-        /* ========================================= */
         /* FOOTER */
         /* ========================================= */
 
@@ -697,16 +512,11 @@
             }
 
 
-            .nav-left,
-            .nav-right {
+            .nav-left {
 
-                flex: 1;
-            }
+                width: 100%;
 
-
-            .nav-right {
-
-                justify-content: flex-end;
+                justify-content: flex-start;
             }
 
 
@@ -755,14 +565,6 @@
             ← Zurück
         </button>
 
-
-        <button
-            class="nav-btn nav-home"
-            onclick="goHome()"
-        >
-            🏠 Home
-        </button>
-
     </div>
 
 
@@ -776,17 +578,6 @@
 
     </div>
 
-
-    <div class="nav-right">
-
-        <button
-            class="nav-btn nav-offer"
-            onclick="showOffer()"
-        >
-            💼 Angebot
-        </button>
-
-    </div>
 
 </div>
 
@@ -2365,75 +2156,6 @@
 
 
 <!-- ========================================= -->
-<!-- OFFER MODAL -->
-<!-- ========================================= -->
-
-<div
-    id="offerModal"
-    class="offer-modal"
->
-
-
-    <div class="offer-box">
-
-
-        <button
-            class="offer-close"
-            onclick="closeOffer()"
-        >
-            ✕
-        </button>
-
-
-        <div class="offer-icon">
-            💼
-        </div>
-
-
-        <h2>
-            Unsere Angebote
-        </h2>
-
-
-        <p>
-
-            Entdecke unsere Angebote von
-            <strong>Deutsch Einfach</strong>
-            und bereite dich optimal auf
-            die TELC B1 & B2 Prüfung vor.
-
-        </p>
-
-
-        <div class="offer-item">
-            🇩🇪 Deutsch B1
-        </div>
-
-
-        <div class="offer-item">
-            🇩🇪 Deutsch B2
-        </div>
-
-
-        <div class="offer-item">
-            📚 TELC Prüfungsvorbereitung
-        </div>
-
-
-        <button
-            class="nav-btn nav-back"
-            onclick="closeOffer()"
-        >
-            Schließen
-        </button>
-
-
-    </div>
-
-</div>
-
-
-<!-- ========================================= -->
 <!-- FOOTER -->
 <!-- ========================================= -->
 
@@ -2475,18 +2197,6 @@
 
 
     /* ========================================= */
-    /* HOME */
-    /* ========================================= */
-
-    function goHome() {
-
-        window.location.href =
-            "dashboard.html";
-
-    }
-
-
-    /* ========================================= */
     /* BACK */
     /* ========================================= */
 
@@ -2498,54 +2208,10 @@
     }
 
 
-    /* ========================================= */
-    /* OFFER */
-    /* ========================================= */
-
-    function showOffer() {
-
-        document
-            .getElementById("offerModal")
-            .classList.add("show");
-
-    }
-
-
-    function closeOffer() {
-
-        document
-            .getElementById("offerModal")
-            .classList.remove("show");
-
-    }
-
-
-    /* ========================================= */
-    /* CLOSE MODAL BY CLICKING OUTSIDE */
-    /* ========================================= */
-
-    document
-        .getElementById("offerModal")
-        .addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    event.target === this
-                ) {
-
-                    closeOffer();
-
-                }
-
-            }
-        );
-
-
 </script>
 
 
 </body>
 
 </html>
-```
+
