@@ -1,635 +1,1184 @@
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Community – Deutsch Einfach</title>
 
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f5f5f5;color:#222}
-button,input,textarea{font-family:inherit}
-button{cursor:pointer}
-button:disabled{cursor:not-allowed;opacity:.7}
-.app{display:flex;height:100vh;overflow:hidden}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-/* ================= SIDEBAR ================= */
+<style>
+
+:root{
+
+    --sidebar:#141414;
+    --sidebar-hover:#232323;
+    --accent:#d60000;
+    --accent-dark:#a80000;
+    --gold:#ffd500;
+    --bg:#f4f4f5;
+    --surface:#ffffff;
+    --border:#e7e7ea;
+    --text:#17181a;
+    --text-muted:#7c7c82;
+    --bubble-mine:#1f2023;
+
+}
+
+*{
+    box-sizing:border-box
+}
+
+html,
+body{
+    margin:0;
+    width:100%;
+    height:100%;
+}
+
+body{
+    font-family:"Inter",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+}
+
+svg.icon{
+    width:18px;
+    height:18px;
+    stroke:currentColor;
+    fill:none;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    flex-shrink:0;
+    display:block;
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:disabled{
+    cursor:not-allowed;
+    opacity:.7;
+}
+
+/* =====================================================
+   APP
+   ===================================================== */
+
+.app{
+    display:flex;
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
 
 .sidebar{
-width:330px;
-background:#111;
-color:white;
-display:flex;
-flex-direction:column;
-border-right:1px solid #333
+    width:330px;
+    min-width:330px;
+    background:var(--sidebar);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    border-right:1px solid #333;
+    position:relative;
+    z-index:100;
 }
 
 .logo-area{
-padding:18px;
-display:flex;
-align-items:center;
-gap:12px;
-border-bottom:1px solid #333
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border-bottom:1px solid #333;
+    flex-shrink:0;
 }
 
 .logo{
-width:48px;
-height:48px;
-border-radius:50%;
-object-fit:cover
+    width:44px;
+    height:44px;
+    border-radius:14px;
+    object-fit:cover;
+    background:var(--accent);
 }
 
 .logo-text{
-font-size:20px;
-font-weight:bold
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:-.2px;
+}
+
+.logo-sub{
+    font-size:11px;
+    color:#8a8a8f;
+    margin-top:1px;
 }
 
 .search-box{
-padding:14px;
-position:relative
+    padding:14px;
+    position:relative;
+    flex-shrink:0;
 }
 
 .search-box input{
-width:100%;
-padding:12px 14px;
-border-radius:10px;
-border:none;
-outline:none;
-background:#222;
-color:white
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1px solid transparent;
+    outline:none;
+    background:#222;
+    color:white;
+    transition:
+        border .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.search-box input:focus{
+    border-color:#d60000;
+    background:#1d1d1d;
+    box-shadow:0 0 0 3px rgba(214,0,0,.12);
 }
 
 .search-box input::placeholder{
-color:#aaa
+    color:#aaa;
 }
 
+/* =====================================================
+   NAV
+   ===================================================== */
+
 .nav{
-padding:0 12px
+    padding:0 12px;
+    flex-shrink:0;
 }
 
 .nav button{
-width:100%;
-border:none;
-background:transparent;
-color:white;
-text-align:left;
-padding:13px 14px;
-border-radius:9px;
-margin-bottom:4px;
-font-size:15px
+    width:100%;
+    border:none;
+    background:transparent;
+    color:#d8d8db;
+    text-align:left;
+    padding:11px 14px;
+    border-radius:10px;
+    margin-bottom:3px;
+    font-size:14.5px;
+    font-weight:500;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    transition:
+        transform .15s ease,
+        background .2s ease,
+        box-shadow .2s ease,
+        color .2s ease;
+}
+
+.nav button svg.icon{
+    width:19px;
+    height:19px;
+    opacity:.85;
+}
+
+.nav button .nav-label{
+    flex:1;
 }
 
 .nav button:hover{
-background:#222
+    background:var(--sidebar-hover);
+    color:white;
 }
 
 .nav button.active{
-background:#d60000
+    background:var(--accent);
+    color:white;
+    box-shadow:
+        0 5px 15px rgba(214,0,0,.28);
+}
+
+.nav button.active svg.icon{
+    opacity:1;
+}
+
+.nav button:active{
+    transform:scale(.94);
+}
+
+.nav button::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:rgba(255,255,255,.35);
+    transform:translate(-50%,-50%) scale(0);
+    opacity:0;
+    pointer-events:none;
+}
+
+.nav button.ripple::after{
+    animation:navRipple .5s ease-out;
+}
+
+@keyframes navRipple{
+
+    0%{
+        transform:translate(-50%,-50%) scale(1);
+        opacity:.8;
+    }
+
+    100%{
+        transform:translate(-50%,-50%) scale(35);
+        opacity:0;
+    }
+
 }
 
 .badge{
-float:right;
-background:#ffd500;
-color:#111;
-min-width:22px;
-height:22px;
-border-radius:50%;
-text-align:center;
-line-height:22px;
-font-size:12px;
-font-weight:bold
+    float:right;
+    background:#ffd500;
+    color:#111;
+    min-width:22px;
+    height:22px;
+    padding:0 6px;
+    border-radius:50px;
+    text-align:center;
+    line-height:22px;
+    font-size:12px;
+    font-weight:bold;
+    box-shadow:0 2px 8px rgba(255,213,0,.25);
+    animation:badgePop .25s ease;
 }
+
+@keyframes badgePop{
+
+    from{
+        transform:scale(.5);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+/* =====================================================
+   SECTIONS
+   ===================================================== */
 
 .section-title{
-padding:15px 16px 8px;
-color:#888;
-font-size:12px;
-text-transform:uppercase
+    padding:15px 16px 8px;
+    color:#888;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    flex-shrink:0;
 }
 
-.friend-list,
-.group-list{
-overflow-y:auto;
-padding:0 10px
+.friend-list{
+    overflow-y:auto;
+    padding:0 10px;
+    max-height:230px;
 }
+
+.group-list{
+    overflow-y:auto;
+    padding:0 10px;
+    flex:1;
+    min-height:80px;
+}
+
+/* =====================================================
+   PERSON / GROUP
+   ===================================================== */
 
 .person,
 .group-item{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px;
-border-radius:9px;
-cursor:pointer
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px;
+    border-radius:9px;
+    cursor:pointer;
+    transition:
+        transform .15s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+    margin-bottom:2px;
+}
+
+.person:active,
+.group-item:active{
+    transform:scale(.96);
+}
+
+.person.active,
+.group-item.active{
+    background:#d60000 !important;
+    color:white;
+    box-shadow:0 4px 12px rgba(214,0,0,.2);
+}
+
+.person.active .person-email,
+.group-item.active .person-email{
+    color:#eee;
 }
 
 .person:hover,
 .group-item:hover{
-background:#222
+    background:#222;
+}
+
+.person.active:hover,
+.group-item.active:hover{
+    background:#d60000 !important;
 }
 
 .avatar{
-width:40px;
-height:40px;
-border-radius:50%;
-background:#d60000;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-weight:bold;
-overflow:hidden;
-flex-shrink:0
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#d60000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:bold;
+    overflow:hidden;
+    flex-shrink:0;
 }
 
 .avatar img{
-width:100%;
-height:100%;
-object-fit:cover
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 .person-info{
-min-width:0
+    min-width:0;
+    flex:1;
 }
 
 .person-name{
-font-weight:bold;
-white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis
+    font-weight:bold;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .person-email{
-color:#888;
-font-size:12px
+    color:#888;
+    font-size:12px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-top:2px;
+}
+
+.conversation-preview{
+    color:#888;
+    font-size:11px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-top:3px;
+}
+
+.person.active .conversation-preview{
+    color:#eee;
+}
+
+.conversation-time{
+    color:#777;
+    font-size:10px;
+    flex-shrink:0;
+    align-self:flex-start;
+    margin-top:4px;
+}
+
+.person.active .conversation-time{
+    color:#fff;
 }
 
 .create-group{
-margin:12px;
-padding:12px;
-background:#ffd500;
-color:#111;
-border:none;
-border-radius:9px;
-font-weight:bold
+    margin:12px;
+    padding:12px;
+    background:var(--gold);
+    color:#111;
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease;
+    flex-shrink:0;
 }
 
+.create-group:hover{
+    box-shadow:0 5px 15px rgba(255,213,0,.18);
+    transform:translateY(-1px);
+}
 
-/* ================= MAIN ================= */
+.create-group:active{
+    transform:scale(.96);
+}
+
+/* =====================================================
+   MAIN
+   ===================================================== */
 
 .main{
-flex:1;
-display:flex;
-flex-direction:column;
-min-width:0
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+    background:#f5f5f5;
 }
 
 .chat-header{
-height:72px;
-background:white;
-border-bottom:1px solid #ddd;
-display:flex;
-align-items:center;
-padding:0 20px;
-gap:12px
+    height:72px;
+    min-height:72px;
+    background:white;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    gap:12px;
+    box-shadow:0 1px 5px rgba(0,0,0,.03);
+    z-index:5;
 }
 
 .mobile-menu{
-display:none;
-border:none;
-background:#111;
-color:white;
-width:40px;
-height:40px;
-border-radius:8px
+    display:none;
+    border:none;
+    background:#111;
+    color:white;
+    width:40px;
+    height:40px;
+    border-radius:8px;
 }
 
 .header-avatar{
-width:44px;
-height:44px;
-border-radius:50%;
-background:#d60000;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-font-weight:bold;
-overflow:hidden;
-flex-shrink:0
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:#d60000;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+    overflow:hidden;
+    flex-shrink:0;
 }
 
 .header-avatar img{
-width:100%;
-height:100%;
-object-fit:cover
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 .header-info{
-flex:1;
-min-width:0
+    flex:1;
+    min-width:0;
 }
 
 .header-name{
-font-size:17px;
-font-weight:bold
+    font-size:17px;
+    font-weight:bold;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .header-sub{
-font-size:12px;
-color:#777
+    font-size:12px;
+    color:#777;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
 }
 
 .header-btn{
-border:none;
-background:#111;
-color:white;
-padding:9px 13px;
-border-radius:8px
+    border:none;
+    background:#111;
+    color:white;
+    padding:9px 13px;
+    border-radius:8px;
+    transition:
+        transform .15s ease,
+        background .2s ease;
 }
 
-.group-profile-clickable{
-cursor:pointer
+.header-btn:hover{
+    background:#222;
 }
 
+.header-btn:active{
+    transform:scale(.94);
+}
 
-/* ================= MESSAGES ================= */
+/* =====================================================
+   MESSAGES
+   ===================================================== */
 
 .messages{
-flex:1;
-overflow-y:auto;
-padding:22px
+    flex:1;
+    overflow-y:auto;
+    padding:22px;
+    scroll-behavior:smooth;
+}
+
+.messages.nav-page-effect{
+    animation:pageSmooth .35s ease;
+}
+
+@keyframes pageSmooth{
+
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
 }
 
 .message{
-display:flex;
-gap:10px;
-margin-bottom:12px;
-max-width:800px;
-align-items:flex-end
+    display:flex;
+    gap:10px;
+    margin-bottom:12px;
+    max-width:800px;
+    align-items:flex-end;
+    animation:messageIn .2s ease;
+}
+
+@keyframes messageIn{
+
+    from{
+        opacity:0;
+        transform:translateY(5px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
 }
 
 .message-content{
-background:white;
-border-radius:12px 12px 12px 4px;
-padding:10px 13px;
-box-shadow:0 1px 3px rgba(0,0,0,.08);
-max-width:min(600px,75%)
+    background:white;
+    border-radius:12px 12px 12px 4px;
+    padding:10px 13px;
+    box-shadow:0 1px 3px rgba(0,0,0,.08);
+    max-width:min(600px,75%);
 }
 
 .message.mine{
-margin-left:auto;
-flex-direction:row-reverse
+    margin-left:auto;
+    flex-direction:row-reverse;
 }
 
 .message.mine .message-content{
-background:#25D366;
-color:white;
-border-radius:12px 12px 4px 12px
+    background:var(--bubble-mine);
+    color:white;
+    border-radius:12px 12px 4px 12px;
 }
 
 .message-avatar{
-width:38px;
-height:38px;
-border-radius:50%;
-background:#d60000;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-shrink:0;
-cursor:pointer;
-overflow:hidden
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#d60000;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    cursor:pointer;
+    overflow:hidden;
+    transition:transform .15s ease;
+}
+
+.message-avatar:hover{
+    transform:scale(1.05);
 }
 
 .message-avatar img{
-width:100%;
-height:100%;
-object-fit:cover
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 .message-name{
-font-size:12px;
-color:#d60000;
-font-weight:bold;
-cursor:pointer;
-margin-bottom:4px
+    font-size:12px;
+    color:var(--accent);
+    font-weight:700;
+    cursor:pointer;
+    margin-bottom:4px;
 }
 
 .message.mine .message-name{
-color:#075e54
+    display:none;
 }
 
 .message-text{
-white-space:pre-wrap;
-word-break:break-word
+    white-space:pre-wrap;
+    word-break:break-word;
+    line-height:1.45;
+    font-size:14.5px;
 }
 
 .message-time{
-color:#999;
-font-size:10px;
-margin-top:5px
+    color:#999;
+    font-size:10.5px;
+    margin-top:5px;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    justify-content:flex-end;
 }
 
 .message.mine .message-time{
-color:rgba(255,255,255,.75)
+    color:rgba(255,255,255,.7);
 }
 
-
-/* ================= INPUT ================= */
-
-.input-area{
-background:white;
-border-top:1px solid #ddd;
-padding:14px;
-display:flex;
-gap:10px
+.message-time svg.icon{
+    width:13px;
+    height:13px;
+    stroke-width:2.4;
 }
 
-.input-area textarea{
-flex:1;
-resize:none;
-height:46px;
-border:1px solid #ccc;
-border-radius:10px;
-padding:12px;
-outline:none
-}
-
-.send-btn{
-width:90px;
-border:none;
-border-radius:10px;
-background:#d60000;
-color:white;
-font-weight:bold
-}
-
-
-/* ================= MODAL ================= */
-
-.modal-bg{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.65);
-display:none;
-align-items:center;
-justify-content:center;
-z-index:1000;
-padding:20px
-}
-
-.modal-bg.show{
-display:flex
-}
-
-.modal{
-width:100%;
-max-width:500px;
-max-height:90vh;
-overflow-y:auto;
-background:white;
-border-radius:15px;
-padding:22px
-}
-
-.modal h2{
-margin-top:0
-}
-
-.modal input{
-width:100%;
-padding:12px;
-border:1px solid #ccc;
-border-radius:9px;
-margin-bottom:10px
-}
-
-.modal-btn{
-width:100%;
-padding:12px;
-border:none;
-border-radius:9px;
-margin-top:8px;
-background:#d60000;
-color:white;
-font-weight:bold
-}
-
-.modal-btn.secondary{
-background:#222
-}
-
-.modal-btn.yellow{
-background:#ffd500;
-color:#111
-}
-
-.close-btn{
-float:right;
-border:none;
-background:#eee;
-width:32px;
-height:32px;
-border-radius:50%
-}
-
-.profile-center{
-text-align:center
-}
-
-.profile-avatar{
-width:90px;
-height:90px;
-border-radius:50%;
-margin:0 auto 15px;
-background:#d60000;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:32px;
-font-weight:bold;
-overflow:hidden
-}
-
-.profile-avatar img{
-width:100%;
-height:100%;
-object-fit:cover
-}
-
-.profile-email-hidden{
-display:none!important
-}
-
-.search-results{
-position:absolute;
-top:70px;
-left:14px;
-right:14px;
-background:white;
-color:#111;
-border-radius:10px;
-box-shadow:0 5px 20px rgba(0,0,0,.25);
-overflow:hidden;
-z-index:20
-}
-
-.search-result{
-display:flex;
-align-items:center;
-gap:10px;
-padding:12px;
-cursor:pointer
-}
-
-.request-card{
-border:1px solid #ddd;
-border-radius:10px;
-padding:13px;
-margin-bottom:10px
-}
-
-.request-buttons{
-display:flex;
-gap:8px;
-margin-top:10px
-}
-
-.request-buttons button{
-flex:1;
-padding:9px;
-border:none;
-border-radius:8px;
-font-weight:bold
-}
-
-.accept{
-background:#19a463;
-color:white
-}
-
-.reject{
-background:#eee;
-color:#111
-}
-
-.danger{
-background:#d60000!important;
-color:white!important
-}
-
-.member{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px 0;
-border-bottom:1px solid #eee
-}
-
-.member-remove{
-border:none;
-background:#d60000;
-color:white;
-padding:7px 9px;
-border-radius:7px;
-font-size:12px;
-font-weight:bold
-}
-
-.closed-banner{
-background:#eee;
-color:#555;
-padding:10px;
-border-radius:9px;
-margin:15px 0
-}
-
-.friend-limit-box{
-background:#f5f5f5;
-border-radius:10px;
-padding:10px;
-margin-bottom:12px;
-font-size:13px;
-color:#555
-}
-
-.friend-limit-box strong{
-color:#d60000
-}
+/* =====================================================
+   EMPTY
+   ===================================================== */
 
 .empty{
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-color:#777
+    height:100%;
+    min-height:250px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#777;
 }
 
 .empty h2{
-color:#222
+    color:#222;
+    margin-bottom:8px;
 }
 
+.empty p{
+    margin-top:0;
+}
+
+/* =====================================================
+   INPUT
+   ===================================================== */
+
+.input-area{
+    background:white;
+    border-top:1px solid #ddd;
+    padding:14px;
+    display:flex;
+    gap:10px;
+    box-shadow:0 -2px 8px rgba(0,0,0,.03);
+}
+
+.input-area textarea{
+    flex:1;
+    resize:none;
+    height:46px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+    transition:
+        border .2s ease,
+        box-shadow .2s ease;
+}
+
+.input-area textarea:focus{
+    border-color:#d60000;
+    box-shadow:0 0 0 3px rgba(214,0,0,.08);
+}
+
+.send-btn{
+    width:96px;
+    border:none;
+    border-radius:10px;
+    background:var(--accent);
+    color:white;
+    font-weight:700;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    transition:
+        transform .15s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+.send-btn:hover{
+    background:#b90000;
+    box-shadow:0 5px 15px rgba(214,0,0,.2);
+}
+
+.send-btn:active{
+    transform:scale(.94);
+}
+
+/* =====================================================
+   MODALS
+   ===================================================== */
+
+.modal-bg{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    padding:20px;
+    backdrop-filter:blur(3px);
+}
+
+.modal-bg.show{
+    display:flex;
+    animation:modalBgIn .2s ease;
+}
+
+@keyframes modalBgIn{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+.modal{
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:15px;
+    padding:22px;
+    animation:modalIn .25s ease;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+@keyframes modalIn{
+
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+
+}
+
+.modal h2{
+    margin-top:0;
+}
+
+.modal input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:9px;
+    margin-bottom:10px;
+    outline:none;
+}
+
+.modal input:focus{
+    border-color:#d60000;
+}
+
+.modal-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:9px;
+    margin-top:8px;
+    background:#d60000;
+    color:white;
+    font-weight:bold;
+    transition:transform .15s ease,box-shadow .2s ease;
+}
+
+.modal-btn:hover{
+    box-shadow:0 5px 15px rgba(214,0,0,.16);
+}
+
+.modal-btn:active{
+    transform:scale(.97);
+}
+
+.modal-btn.secondary{
+    background:#222;
+}
+
+.modal-btn.yellow{
+    background:#ffd500;
+    color:#111;
+}
+
+.close-btn{
+    float:right;
+    border:none;
+    background:#eee;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    transition:transform .15s ease,background .2s ease;
+}
+
+.close-btn:hover{
+    background:#ddd;
+    transform:rotate(90deg);
+}
+
+.profile-center{
+    text-align:center;
+}
+
+.profile-avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    margin:0 auto 15px;
+    background:#d60000;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:32px;
+    font-weight:bold;
+    overflow:hidden;
+}
+
+.profile-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.profile-email-hidden{
+    display:none!important;
+}
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+.search-results{
+    position:absolute;
+    top:70px;
+    left:14px;
+    right:14px;
+    background:white;
+    color:#111;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,.25);
+    overflow:hidden;
+    z-index:20;
+    max-height:400px;
+    overflow-y:auto;
+}
+
+.search-result{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    cursor:pointer;
+    transition:background .15s ease;
+}
+
+.search-result:hover{
+    background:#f3f3f3;
+}
+
+/* =====================================================
+   REQUESTS
+   ===================================================== */
+
+.request-card{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:13px;
+    margin-bottom:10px;
+    transition:
+        box-shadow .2s ease,
+        transform .15s ease;
+}
+
+.request-card:hover{
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    transform:translateY(-1px);
+}
+
+.request-buttons{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.request-buttons button{
+    flex:1;
+    padding:9px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.accept{
+    background:#19a463;
+    color:white;
+}
+
+.reject{
+    background:#eee;
+    color:#111;
+}
+
+.danger{
+    background:#d60000!important;
+    color:white!important;
+}
+
+/* =====================================================
+   GROUP
+   ===================================================== */
+
+.member{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.member-remove{
+    border:none;
+    background:#d60000;
+    color:white;
+    padding:7px 9px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.closed-banner{
+    background:#eee;
+    color:#555;
+    padding:10px;
+    border-radius:9px;
+    margin:15px 0;
+}
+
+.friend-limit-box{
+    background:#f5f5f5;
+    border-radius:10px;
+    padding:10px;
+    margin-bottom:12px;
+    font-size:13px;
+    color:#555;
+}
+
+.friend-limit-box strong{
+    color:#d60000;
+}
+
+/* =====================================================
+   TOAST
+   ===================================================== */
+
 .toast{
-position:fixed;
-right:20px;
-bottom:20px;
-background:#111;
-color:white;
-padding:13px 18px;
-border-radius:10px;
-z-index:5000;
-display:none
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#111;
+    color:white;
+    padding:13px 18px;
+    border-radius:10px;
+    z-index:5000;
+    display:none;
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+    animation:toastIn .25s ease;
 }
 
 .toast.show{
-display:block
+    display:block;
 }
 
+@keyframes toastIn{
 
-/* ================= MOBILE ================= */
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* =====================================================
+   SCROLLBAR
+   ===================================================== */
+
+.friend-list::-webkit-scrollbar,
+.group-list::-webkit-scrollbar,
+.messages::-webkit-scrollbar,
+.modal::-webkit-scrollbar,
+.search-results::-webkit-scrollbar{
+    width:6px;
+}
+
+.friend-list::-webkit-scrollbar-thumb,
+.group-list::-webkit-scrollbar-thumb,
+.messages::-webkit-scrollbar-thumb,
+.modal::-webkit-scrollbar-thumb,
+.search-results::-webkit-scrollbar-thumb{
+    background:#777;
+    border-radius:10px;
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
 
 @media(max-width:750px){
 
-.sidebar{
-position:fixed;
-left:-340px;
-top:0;
-bottom:0;
-z-index:2000;
-transition:.25s
+    .sidebar{
+        position:fixed;
+        left:-340px;
+        top:0;
+        bottom:0;
+        z-index:2000;
+        transition:left .25s ease;
+        box-shadow:10px 0 30px rgba(0,0,0,.25);
+    }
+
+    .sidebar.open{
+        left:0;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .chat-header{
+        padding:0 10px;
+    }
+
+    .messages{
+        padding:14px;
+    }
+
+    .message-content{
+        max-width:75%;
+    }
+
+    .input-area{
+        padding:10px;
+    }
+
+    .send-btn{
+        width:70px;
+    }
+
+    .modal-bg{
+        padding:10px;
+    }
+
+    .modal{
+        max-height:94vh;
+        padding:18px;
+    }
+
 }
 
-.sidebar.open{
-left:0
+@media(max-width:420px){
+
+    .logo-text{
+        font-size:17px;
+    }
+
+    .header-name{
+        font-size:15px;
+    }
+
+    .header-sub{
+        font-size:11px;
+    }
+
+    .message-avatar{
+        width:32px;
+        height:32px;
+    }
+
+    .message-content{
+        max-width:82%;
+    }
+
 }
 
-.mobile-menu{
-display:block
-}
-
-.chat-header{
-padding:0 10px
-}
-
-.messages{
-padding:14px
-}
-
-.message-content{
-max-width:75%
-}
-
-}
 </style>
+
 </head>
 
 <body>
 
 <div class="app">
-
-<!-- ================= SIDEBAR ================= -->
 
 <aside class="sidebar" id="sidebar">
 
@@ -641,12 +1190,19 @@ class="logo"
 onerror="this.style.display='none'"
 >
 
+<div>
+
 <div class="logo-text">
 Deutsch Einfach 🇩🇪
 </div>
 
+<div class="logo-sub">
+Community
 </div>
 
+</div>
+
+</div>
 
 <div class="search-box">
 
@@ -665,46 +1221,55 @@ style="display:none">
 
 </div>
 
-
 <div class="nav">
 
 <button onclick="location.href='index.html'">
-← Retour
+<svg class="icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+<span class="nav-label">Zurück</span>
 </button>
 
 <button
 id="communityBtn"
 class="active"
 onclick="openCommunity()">
-💬 Community
+<svg class="icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+<span class="nav-label">Community</span>
 </button>
 
-<button onclick="openFriends()">
-👥 Freunde
+<button
+id="friendsBtn"
+onclick="openFriends()">
+<svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+<span class="nav-label">Freunde</span>
 </button>
 
-<button onclick="openRequests()">
-🔔 Anfragen
+<button
+id="requestsBtn"
+onclick="openRequests()">
+
+<svg class="icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+
+<span class="nav-label">Anfragen</span>
+
 <span
 id="requestBadge"
 class="badge"
 style="display:none">
 0
 </span>
+
 </button>
 
 </div>
 
-
 <div class="section-title">
-Freunde
+Chats
 </div>
 
 <div
 class="friend-list"
 id="friendList">
 </div>
-
 
 <div class="section-title">
 Gruppen
@@ -715,17 +1280,14 @@ class="group-list"
 id="groupList">
 </div>
 
-
 <button
 class="create-group"
 onclick="openCreateGroup()">
-＋ Gruppe erstellen
+<svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;stroke-width:2.6"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+Gruppe erstellen
 </button>
 
 </aside>
-
-
-<!-- ================= MAIN ================= -->
 
 <main class="main">
 
@@ -734,16 +1296,14 @@ onclick="openCreateGroup()">
 <button
 class="mobile-menu"
 onclick="toggleSidebar()">
-☰
+<svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
 </button>
-
 
 <div
 class="header-avatar"
 id="headerAvatar">
-D
+<svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
 </div>
-
 
 <div class="header-info">
 
@@ -761,17 +1321,15 @@ Deutsch Einfach Community
 
 </div>
 
-
 <button
 id="headerAction"
 class="header-btn"
 style="display:none"
 onclick="openGroupSettings()">
-⚙️
+<svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
 </button>
 
 </header>
-
 
 <div
 class="messages"
@@ -795,19 +1353,23 @@ Schreib mit anderen Deutschlernenden.
 
 </div>
 
-
 <div class="input-area">
 
 <textarea
 id="messageInput"
 maxlength="500"
-placeholder="Nachricht schreiben...">
-</textarea>
+placeholder="Nachricht schreiben..."
+></textarea>
 
 <button
+id="sendBtn"
+class="send-btn"
+<button
+id="sendBtn"
 class="send-btn"
 onclick="sendMessage()">
-Senden
+<span id="sendBtnLabel">Senden</span>
+<svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;stroke-width:2.4"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
 </button>
 
 </div>
@@ -816,8 +1378,7 @@ Senden
 
 </div>
 
-
-<!-- ================= PROFILE ================= -->
+<!-- PROFILE -->
 
 <div
 class="modal-bg"
@@ -828,7 +1389,7 @@ id="profileModal">
 <button
 class="close-btn"
 onclick="closeModal('profileModal')">
-×
+<svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </button>
 
 <div class="profile-center">
@@ -857,8 +1418,7 @@ class="profile-email-hidden">
 
 </div>
 
-
-<!-- ================= REQUESTS ================= -->
+<!-- REQUESTS -->
 
 <div
 class="modal-bg"
@@ -869,11 +1429,11 @@ id="requestsModal">
 <button
 class="close-btn"
 onclick="closeModal('requestsModal')">
-×
+<svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </button>
 
 <h2>
-🔔 Anfragen
+Anfragen
 </h2>
 
 <div id="requestsContent">
@@ -884,8 +1444,7 @@ Chargement...
 
 </div>
 
-
-<!-- ================= CREATE GROUP ================= -->
+<!-- CREATE GROUP -->
 
 <div
 class="modal-bg"
@@ -896,7 +1455,7 @@ id="createGroupModal">
 <button
 class="close-btn"
 onclick="closeModal('createGroupModal')">
-×
+<svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </button>
 
 <h2>
@@ -919,8 +1478,7 @@ Gruppe erstellen
 
 </div>
 
-
-<!-- ================= GROUP SETTINGS ================= -->
+<!-- GROUP SETTINGS -->
 
 <div
 class="modal-bg"
@@ -931,7 +1489,7 @@ id="groupSettingsModal">
 <button
 class="close-btn"
 onclick="closeModal('groupSettingsModal')">
-×
+<svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </button>
 
 <h2 id="settingsGroupName">
@@ -941,14 +1499,12 @@ onclick="closeModal('groupSettingsModal')">
 <div id="groupClosedArea">
 </div>
 
-
 <button
 id="inviteFriendsBtn"
 class="modal-btn yellow"
 onclick="openGroupInvite()">
 ＋ Freunde einladen
 </button>
-
 
 <h3>
 👥 Mitglieder
@@ -964,8 +1520,7 @@ onclick="openGroupInvite()">
 
 </div>
 
-
-<!-- ================= GROUP INVITE ================= -->
+<!-- GROUP INVITE -->
 
 <div
 class="modal-bg"
@@ -976,7 +1531,7 @@ id="groupInviteModal">
 <button
 class="close-btn"
 onclick="closeModal('groupInviteModal')">
-×
+<svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </button>
 
 <h2>
@@ -990,12 +1545,10 @@ Freunde einladen
 
 </div>
 
-
 <div
 id="toast"
 class="toast">
 </div>
-
 
 <script type="module">
 
@@ -1006,13 +1559,11 @@ class="toast">
 import {initializeApp}
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
-
 import {
 getAuth,
 onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
 
 import {
 getFirestore,
@@ -1032,7 +1583,6 @@ serverTimestamp,
 runTransaction
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-
 
 /* =====================================================
    FIREBASE CONFIG
@@ -1062,13 +1612,11 @@ measurementId:
 
 };
 
-
 const app=initializeApp(firebaseConfig);
 
 const auth=getAuth(app);
 
 const db=getFirestore(app);
-
 
 /* =====================================================
    LIMITS
@@ -1076,35 +1624,51 @@ const db=getFirestore(app);
 
 const MAX_FRIENDS=100;
 
-/* Group maximum = 8 */
-
 const MAX_GROUP_MEMBERS=8;
-
 
 /* =====================================================
    STATE
    ===================================================== */
 
 let currentUser=null;
+
 let currentUserData=null;
 
 let currentMode="community";
 
 let currentPrivateChatId=null;
+
 let currentPrivateUserId=null;
 
 let currentGroupId=null;
+
 let currentGroupData=null;
 
 let currentProfileId=null;
 
 let unsubscribeMessages=null;
+
 let unsubscribeFriends=null;
+
 let unsubscribeGroups=null;
 
+let unsubscribeConversations=null;
+
+let unsubscribeFriendRequests=null;
+
+let unsubscribeGroupInvites=null;
+
 let friendsCache=[];
+
+let friendsLoaded=false;
+
 let groupsCache=[];
 
+let conversationsCache=[];
+
+let conversationsDocsCache=[];
+
+let messagesViewId=0;
 
 /* =====================================================
    HELPERS
@@ -1124,7 +1688,6 @@ return String(v)
 
 }
 
-
 function getUserName(d){
 
 return d?.displayName
@@ -1134,7 +1697,6 @@ return d?.displayName
 
 }
 
-
 function getInitial(d){
 
 return getUserName(d)
@@ -1143,10 +1705,53 @@ return getUserName(d)
 
 }
 
+/*
+   Deterministic avatar color per user, so people
+   are visually distinguishable at a glance (like
+   Slack/Discord) instead of every initial-avatar
+   being the same flat red.
+*/
+
+const AVATAR_PALETTE=[
+
+"#d60000",
+"#b02a91",
+"#7a4fd6",
+"#2f6fd6",
+"#0a8f6b",
+"#c77b00",
+"#3a3f47"
+
+];
+
+const GROUP_ICON_SVG=
+'<svg class="icon" viewBox="0 0 24 24" style="width:20px;height:20px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>';
+
+function getAvatarColor(uid){
+
+if(!uid)
+return AVATAR_PALETTE[0];
+
+let hash=0;
+
+for(let i=0;i<uid.length;i++){
+
+hash=
+(hash*31+uid.charCodeAt(i))
+&0xffffffff;
+
+}
+
+return AVATAR_PALETTE[
+Math.abs(hash)%AVATAR_PALETTE.length
+];
+
+}
 
 function showToast(text){
 
-const t=document.getElementById("toast");
+const t=
+document.getElementById("toast");
 
 t.textContent=text;
 
@@ -1156,13 +1761,17 @@ void t.offsetWidth;
 
 t.classList.add("show");
 
+clearTimeout(
+window.__toastTimer
+);
+
+window.__toastTimer=
 setTimeout(
 ()=>t.classList.remove("show"),
 3000
 );
 
 }
-
 
 function openModal(id){
 
@@ -1171,7 +1780,6 @@ document
 .classList.add("show");
 
 }
-
 
 function closeModal(id){
 
@@ -1182,7 +1790,6 @@ document
 }
 
 window.closeModal=closeModal;
-
 
 function formatTime(timestamp){
 
@@ -1209,6 +1816,82 @@ return "";
 
 }
 
+function formatConversationTime(timestamp){
+
+if(!timestamp)
+return "";
+
+try{
+
+const date=timestamp.toDate();
+
+const now=new Date();
+
+const sameDay=
+date.toDateString()===
+now.toDateString();
+
+if(sameDay){
+
+return date.toLocaleTimeString(
+"de-DE",
+{
+hour:"2-digit",
+minute:"2-digit"
+}
+);
+
+}
+
+return date.toLocaleDateString(
+"de-DE",
+{
+day:"2-digit",
+month:"2-digit"
+}
+);
+
+}catch{
+
+return "";
+
+}
+
+}
+
+function getLastMessagePreview(conversation){
+
+const text=
+conversation?.lastMessage;
+
+if(!text)
+return "Privater Chat";
+
+return text.length>35
+?
+text.substring(0,35)+"…"
+:
+text;
+
+}
+
+/* =====================================================
+   STOP MESSAGE LISTENER
+   ===================================================== */
+
+function stopMessagesListener(){
+
+messagesViewId++;
+
+if(unsubscribeMessages){
+
+unsubscribeMessages();
+
+unsubscribeMessages=null;
+
+}
+
+}
 
 /* =====================================================
    AUTH
@@ -1236,11 +1919,12 @@ startGroupsListener();
 
 startRequestsListener();
 
+startConversationsListener();
+
 openCommunity();
 
 }
 );
-
 
 async function loadCurrentUser(){
 
@@ -1253,7 +1937,6 @@ currentUser.uid
 
 const snap=
 await getDoc(ref);
-
 
 if(snap.exists()){
 
@@ -1284,7 +1967,6 @@ currentUserData
 
 }
 
-
 /* =====================================================
    SIDEBAR
    ===================================================== */
@@ -1297,7 +1979,6 @@ document
 
 };
 
-
 function closeMobileSidebar(){
 
 document
@@ -1306,6 +1987,53 @@ document
 
 }
 
+function setActiveNav(buttonId){
+
+document
+.querySelectorAll(".nav button")
+.forEach(button=>{
+
+button.classList.remove("active");
+
+});
+
+if(!buttonId)
+return;
+
+const button=
+document.getElementById(buttonId);
+
+if(button){
+
+button.classList.add("active");
+
+}
+
+}
+
+/* =====================================================
+   ACTIVE ITEM
+   ===================================================== */
+
+function setActiveItem(element){
+
+document
+.querySelectorAll(".person, .group-item")
+.forEach(item=>{
+
+item.classList.remove("active");
+
+});
+
+if(element){
+
+element.classList.add("active");
+
+}
+
+}
+
+window.setActiveItem=setActiveItem;
 
 /* =====================================================
    COMMUNITY
@@ -1316,56 +2044,65 @@ window.openCommunity=()=>{
 currentMode="community";
 
 currentPrivateChatId=null;
+
 currentPrivateUserId=null;
 
 currentGroupId=null;
-currentGroupData=null;
 
+currentGroupData=null;
 
 document
 .getElementById("headerName")
 .textContent="Community";
-
 
 document
 .getElementById("headerSub")
 .textContent=
 "Deutsch Einfach Community";
 
+{
 
-document
-.getElementById("headerAvatar")
-.innerHTML="💬";
+const ha=
+document.getElementById(
+"headerAvatar"
+);
 
+ha.style.background=
+"var(--accent)";
+
+ha.innerHTML=
+'<svg class="icon" viewBox="0 0 24 24" style="width:22px;height:22px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+
+}
 
 document
 .getElementById("headerAction")
 .style.display="none";
 
+document
+.getElementById("messageInput")
+.disabled=false;
 
 listenMessages(
-
 query(
-
 collection(
 db,
 "chatMessages"
 ),
-
 orderBy(
 "createdAt",
 "asc"
 )
-
 )
-
 );
-
 
 closeMobileSidebar();
 
-};
+setActiveNav("communityBtn");
 
+renderConversations(conversationsCache);
+
+};
 
 /* =====================================================
    MESSAGE LISTENER
@@ -1373,15 +2110,14 @@ closeMobileSidebar();
 
 function listenMessages(q){
 
-if(unsubscribeMessages)
-unsubscribeMessages();
+stopMessagesListener();
 
+const thisViewId=
+messagesViewId;
 
 unsubscribeMessages=
 onSnapshot(
-
 q,
-
 snapshot=>{
 
 const messages=[];
@@ -1389,40 +2125,58 @@ const messages=[];
 snapshot.forEach(d=>{
 
 messages.push({
+
 id:d.id,
 ...d.data()
-});
 
 });
 
-renderMessages(messages);
+});
+
+renderMessages(
+messages,
+thisViewId
+);
 
 },
-
 error=>{
 
-console.error(error);
+console.error(
+"MESSAGES LISTENER ERROR:",
+error
+);
+
+if(thisViewId!==messagesViewId)
+return;
 
 showToast(
 "Nachrichten konnten nicht geladen werden."
 );
 
 }
-
 );
 
 }
-
 
 /* =====================================================
    RENDER MESSAGES
    ===================================================== */
 
-async function renderMessages(messages){
+async function renderMessages(
+messages,
+viewId
+){
+
+if(viewId!==messagesViewId)
+return;
 
 const container=
 document.getElementById("messages");
 
+/*
+   IMPORTANT:
+   Empty private/group chat is valid.
+*/
 
 if(!messages.length){
 
@@ -1450,14 +2204,23 @@ return;
 
 }
 
+/*
+   IMPORTANT:
+   Build all messages first.
 
-const html=[];
+   We use Promise.all so one slow user lookup
+   cannot make the chat appear empty.
+*/
 
+const html=
+await Promise.all(
+messages.map(
+async message=>{
 
-for(const message of messages){
+if(viewId!==messagesViewId)
+return "";
 
 let user={};
-
 
 try{
 
@@ -1470,36 +2233,51 @@ message.userId
 )
 );
 
-if(snap.exists())
+if(snap.exists()){
+
 user=snap.data();
 
-}catch{}
+}
 
+}catch(error){
+
+console.error(
+"USER MESSAGE LOAD ERROR:",
+error
+);
+
+}
+
+if(viewId!==messagesViewId)
+return "";
 
 const name=
 message.userName
 ||
 getUserName(user);
 
-
 const avatar=
 user.photoURL||"";
 
-
 const initial=
-getInitial(user);
-
+getInitial(
+message.userName
+?
+{displayName:message.userName}
+:
+user
+);
 
 const mine=
 message.userId===currentUser.uid;
 
+return `
 
-html.push(`
-
-<div class="message ${mine?"mine":""}">
+<div class="message ${mine?"mine":""}" data-message-id="${escapeHtml(message.id)}">
 
 <div
 class="message-avatar"
+style="background:${getAvatarColor(message.userId)}"
 onclick="openUserProfile('${escapeHtml(message.userId)}')">
 
 ${
@@ -1512,7 +2290,6 @@ escapeHtml(initial)
 
 </div>
 
-
 <div class="message-content">
 
 <div
@@ -1523,28 +2300,32 @@ ${escapeHtml(name)}
 
 </div>
 
-
 <div class="message-text">
 
 ${escapeHtml(message.text)}
 
 </div>
 
-
 <div class="message-time">
 
 ${formatTime(message.createdAt)}
 
-</div>
+${mine?'<svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>':""}
 
 </div>
 
 </div>
 
-`);
+</div>
+
+`;
 
 }
+)
+);
 
+if(viewId!==messagesViewId)
+return;
 
 container.innerHTML=
 html.join("");
@@ -1553,7 +2334,6 @@ container.scrollTop=
 container.scrollHeight;
 
 }
-
 
 /* =====================================================
    SEND MESSAGE
@@ -1564,13 +2344,14 @@ window.sendMessage=async()=>{
 const input=
 document.getElementById("messageInput");
 
+const sendBtn=
+document.getElementById("sendBtn");
+
 const text=
 input.value.trim();
 
-
 if(!text)
 return;
-
 
 if(text.length>500){
 
@@ -1582,8 +2363,16 @@ return;
 
 }
 
+if(!currentUser)
+return;
 
 try{
+
+sendBtn.disabled=true;
+
+document
+.getElementById("sendBtnLabel")
+.textContent="...";
 
 const data={
 
@@ -1593,15 +2382,16 @@ currentUser.uid,
 userName:
 getUserName(currentUserData),
 
-text,
+text:text,
 
 createdAt:
 serverTimestamp()
 
 };
 
-
-/* ================= COMMUNITY ================= */
+/* =====================================================
+   COMMUNITY
+   ===================================================== */
 
 if(currentMode==="community"){
 
@@ -1615,8 +2405,9 @@ data
 
 }
 
-
-/* ================= PRIVATE ================= */
+/* =====================================================
+   PRIVATE
+   ===================================================== */
 
 else if(currentMode==="private"){
 
@@ -1634,7 +2425,6 @@ return;
 
 }
 
-
 if(
 !friendsCache.some(
 f=>f.uid===currentPrivateUserId
@@ -1649,56 +2439,79 @@ return;
 
 }
 
-
 /*
-   IMPORTANT:
-   Direct setDoc with merge.
-   No getDoc before creation.
+   STEP 1
+   Write the REAL message.
+
+   The onSnapshot listener attached by
+   listenMessages() is already live on this
+   chat's "messages" subcollection, so it will
+   render this message automatically the moment
+   Firestore acknowledges the write - no manual
+   re-fetch needed (that used to race with the
+   listener and could make the message/chat
+   flicker or disappear from the sidebar).
 */
 
-await setDoc(
-
-doc(
-db,
-"privateChats",
-currentPrivateChatId
-),
-
-{
-participants:[
-currentUser.uid,
-currentPrivateUserId
-].sort(),
-
-updatedAt:
-serverTimestamp()
-
-},
-
-{
-merge:true
-}
-
-);
-
-
 await addDoc(
-
 collection(
 db,
 "privateChats",
 currentPrivateChatId,
 "messages"
 ),
-
 data
+);
 
+/*
+   STEP 2
+   Create/update the parent conversation doc.
+
+   startConversationsListener() keeps a live
+   onSnapshot on "privateChats" (participants
+   array-contains me), so as soon as this write
+   lands it will refresh the sidebar by itself.
+   That's the SINGLE source of truth for the
+   sidebar now - we no longer also do a manual
+   getDocs() pull here, which used to overwrite
+   the listener's fresher data with a stale
+   snapshot and made the chat vanish from
+   "Chats" after leaving it.
+*/
+
+await setDoc(
+doc(
+db,
+"privateChats",
+currentPrivateChatId
+),
+{
+
+participants:[
+currentUser.uid,
+currentPrivateUserId
+].sort(),
+
+updatedAt:
+serverTimestamp(),
+
+lastMessage:
+text,
+
+lastMessageSenderId:
+currentUser.uid
+
+},
+{
+merge:true
+}
 );
 
 }
 
-
-/* ================= GROUP ================= */
+/* =====================================================
+   GROUP
+   ===================================================== */
 
 else if(currentMode==="group"){
 
@@ -1718,7 +2531,6 @@ return;
 
 }
 
-
 if(currentGroupData.closed){
 
 showToast(
@@ -1729,25 +2541,23 @@ return;
 
 }
 
-
 await addDoc(
-
 collection(
 db,
 "groups",
 currentGroupId,
 "messages"
 ),
-
 data
-
 );
 
 }
 
+/*
+   Clear only after successful sending.
+*/
 
 input.value="";
-
 
 }catch(error){
 
@@ -1760,10 +2570,17 @@ showToast(
 "Nachricht konnte nicht gesendet werden."
 );
 
+}finally{
+
+sendBtn.disabled=false;
+
+document
+.getElementById("sendBtnLabel")
+.textContent="Senden";
+
 }
 
 };
-
 
 /* =====================================================
    FRIEND COUNT
@@ -1775,22 +2592,17 @@ try{
 
 const snap=
 await getDocs(
-
 query(
-
 collection(
 db,
 "friendships"
 ),
-
 where(
 "users",
 "array-contains",
 uid
 )
-
 )
-
 );
 
 return snap.size;
@@ -1803,7 +2615,6 @@ return 0;
 
 }
 
-
 /* =====================================================
    FRIEND LISTENER
    ===================================================== */
@@ -1812,50 +2623,41 @@ function startFriendsListener(){
 
 const q=
 query(
-
 collection(
 db,
 "friendships"
 ),
-
 where(
 "users",
 "array-contains",
 currentUser.uid
 )
-
 );
-
 
 if(unsubscribeFriends)
 unsubscribeFriends();
 
-
 unsubscribeFriends=
 onSnapshot(
-
 q,
-
 async snapshot=>{
 
-friendsCache=[];
-
+const newFriends=[];
 
 for(const item of snapshot.docs){
 
 const data=
 item.data();
 
-
 const uid=
 data.users.find(
 x=>x!==currentUser.uid
 );
 
-
 if(!uid)
 continue;
 
+try{
 
 const snap=
 await getDoc(
@@ -1866,10 +2668,9 @@ uid
 )
 );
 
-
 if(snap.exists()){
 
-friendsCache.push({
+newFriends.push({
 
 uid,
 
@@ -1882,36 +2683,397 @@ item.id,
 
 }
 
-}
+}catch(error){
 
-
-renderFriends();
-
-}
-
+console.error(
+"FRIEND USER LOAD ERROR:",
+error
 );
 
 }
 
+}
+
+friendsCache=
+newFriends;
+
+friendsLoaded=true;
+
+/*
+   IMPORTANT:
+   Conversations depend on friendsCache,
+   so recompute them every time the friend
+   list changes (new friend, removed friend).
+*/
+
+rebuildConversations();
+
+if(currentMode==="friends"){
+
+renderFriendsPage();
+
+}
+
+},
+error=>{
+
+console.error(
+"FRIENDS LISTENER ERROR:",
+error
+);
+
+}
+);
+
+}
 
 /* =====================================================
-   RENDER FRIENDS
+   BUILD CONVERSATIONS
    ===================================================== */
 
-function renderFriends(){
+function rebuildConversations(){
+
+if(!currentUser)
+return;
+
+/*
+   IMPORTANT:
+   Wait until friendsCache has loaded at least
+   once. Otherwise, if the "privateChats"
+   snapshot arrives before the friendships
+   snapshot, every conversation gets filtered
+   out below (friend not found yet) and never
+   gets recomputed until the NEXT friendship
+   change - which made freshly-sent private
+   chats seem to disappear from the sidebar.
+*/
+
+if(!friendsLoaded)
+return;
+
+const conversations=[];
+
+for(const chatDoc of conversationsDocsCache){
+
+const data=
+chatDoc.data;
+
+if(
+!data
+||
+!Array.isArray(data.participants)
+||
+data.participants.length!==2
+){
+
+continue;
+
+}
+
+const otherUid=
+data.participants.find(
+uid=>uid!==currentUser.uid
+);
+
+if(!otherUid)
+continue;
+
+/*
+   IMPORTANT:
+   No lastMessage = no conversation.
+*/
+
+if(
+!data.lastMessage
+||
+!String(data.lastMessage).trim()
+){
+
+continue;
+
+}
+
+/*
+   IMPORTANT:
+   The other user MUST still be a friend.
+*/
+
+const friend=
+friendsCache.find(
+f=>f.uid===otherUid
+);
+
+if(!friend)
+continue;
+
+conversations.push({
+
+id:chatDoc.id,
+
+uid:otherUid,
+
+...friend,
+
+lastMessage:
+data.lastMessage||"",
+
+lastMessageSenderId:
+data.lastMessageSenderId||null,
+
+updatedAt:
+data.updatedAt||null
+
+});
+
+}
+
+conversations.sort(
+(a,b)=>{
+
+const aTime=
+a.updatedAt?.toMillis?.()||0;
+
+const bTime=
+b.updatedAt?.toMillis?.()||0;
+
+return bTime-aTime;
+
+}
+);
+
+conversationsCache=
+conversations;
+
+renderConversations(
+conversations
+);
+
+}
+
+/* =====================================================
+   CONVERSATION LISTENER
+   ===================================================== */
+
+function startConversationsListener(){
+
+if(unsubscribeConversations){
+
+unsubscribeConversations();
+
+unsubscribeConversations=null;
+
+}
+
+const q=
+query(
+collection(
+db,
+"privateChats"
+),
+where(
+"participants",
+"array-contains",
+currentUser.uid
+)
+);
+
+/*
+   IMPORTANT:
+   This is now the ONLY place that writes to
+   conversationsDocsCache. sendMessage() and
+   openPrivateChat() no longer also pull the
+   collection manually - having two async
+   sources update the same cache was the race
+   that made conversations flicker/disappear
+   after leaving a chat.
+*/
+
+unsubscribeConversations=
+onSnapshot(
+q,
+snapshot=>{
+
+conversationsDocsCache=
+snapshot.docs.map(
+d=>({
+
+id:d.id,
+
+data:d.data()
+
+})
+);
+
+rebuildConversations();
+
+},
+error=>{
+
+console.error(
+"CONVERSATIONS LISTENER ERROR:",
+error
+);
+
+showToast(
+"Chats konnten nicht geladen werden."
+);
+
+}
+);
+
+}
+
+/* =====================================================
+   RENDER CONVERSATIONS
+   ===================================================== */
+
+function personRowHtml(
+user,
+options
+){
+
+const active=
+currentPrivateUserId===user.uid;
+
+const previewHtml=
+options.hasConversation
+?
+`
+
+<div class="conversation-preview">
+
+${
+user.lastMessageSenderId===currentUser.uid
+?
+"Du: "
+:
+""
+}
+
+${escapeHtml(
+getLastMessagePreview(user)
+)}
+
+</div>
+
+`
+:
+`
+
+<div
+class="conversation-preview"
+style="color:${active?"#eee":"#aaa"};font-style:italic">
+
+Sag Hallo 👋
+
+</div>
+
+`;
+
+return `
+
+<div
+class="person ${active?"active":""}"
+onclick="
+setActiveItem(this);
+openPrivateChat('${escapeHtml(user.uid)}')
+">
+
+<div
+class="avatar"
+style="background:${getAvatarColor(user.uid)}">
+
+${
+user.photoURL
+?
+`<img src="${escapeHtml(user.photoURL)}">`
+:
+escapeHtml(getInitial(user))
+}
+
+</div>
+
+<div class="person-info">
+
+<div class="person-name">
+
+${escapeHtml(
+getUserName(user)
+)}
+
+</div>
+
+${previewHtml}
+
+</div>
+
+<div class="conversation-time">
+
+${
+options.hasConversation
+?
+formatConversationTime(user.updatedAt)
+:
+""
+}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+/*
+   IMPORTANT (merged, WhatsApp-style, list):
+
+   The sidebar shows ONE scrollable list:
+   recent conversations first (most recent on
+   top), then any remaining friends you haven't
+   messaged yet, so every friend is always
+   reachable from the sidebar - not only after a
+   first message exists.
+*/
+
+function renderConversations(
+conversations
+){
 
 const list=
-document.getElementById("friendList");
+document.getElementById(
+"friendList"
+);
 
+const chattedUids=
+new Set(
+conversations.map(c=>c.uid)
+);
 
-if(!friendsCache.length){
+const remainingFriends=
+friendsCache
+.filter(f=>!chattedUids.has(f.uid))
+.sort((a,b)=>
+getUserName(a).localeCompare(
+getUserName(b)
+)
+);
+
+if(!conversations.length&&!remainingFriends.length){
 
 list.innerHTML=`
 
 <div
-style="padding:10px;color:#777;font-size:13px">
+style="
+padding:16px 10px;
+color:#8a8a8f;
+font-size:12.5px;
+text-align:center;
+line-height:1.5;
+">
 
-Noch keine Freunde
+Noch keine Freunde.<br>
+Suche oben nach Personen 🔍
 
 </div>
 
@@ -1921,53 +3083,36 @@ return;
 
 }
 
+const rows=[
+
+...conversations.map(user=>
+personRowHtml(
+user,
+{hasConversation:true}
+)
+),
+
+...remainingFriends.map(user=>
+personRowHtml(
+user,
+{hasConversation:false}
+)
+)
+
+];
 
 list.innerHTML=
-friendsCache
-.map(friend=>`
-
-<div
-class="person"
-onclick="openPrivateChat('${escapeHtml(friend.uid)}')">
-
-<div class="avatar">
-
-${
-friend.photoURL
-?
-`<img src="${escapeHtml(friend.photoURL)}">`
-:
-escapeHtml(getInitial(friend))
-}
-
-</div>
-
-
-<div class="person-info">
-
-<div class="person-name">
-
-${escapeHtml(
-getUserName(friend)
-)}
-
-</div>
-
-</div>
-
-</div>
-
-`)
-.join("");
+rows.join("");
 
 }
-
 
 /* =====================================================
    PRIVATE CHAT
    ===================================================== */
 
 window.openPrivateChat=async uid=>{
+
+setActiveNav("friendsBtn");
 
 if(
 !currentUser
@@ -1985,7 +3130,6 @@ return;
 
 }
 
-
 if(
 !friendsCache.some(
 f=>f.uid===uid
@@ -2000,18 +3144,17 @@ return;
 
 }
 
-
 try{
 
 const ids=[
+
 currentUser.uid,
 uid
-].sort();
 
+].sort();
 
 const chatId=
 ids.join("_");
-
 
 const otherSnap=
 await getDoc(
@@ -2021,7 +3164,6 @@ db,
 uid
 )
 );
-
 
 if(!otherSnap.exists()){
 
@@ -2033,39 +3175,8 @@ return;
 
 }
 
-
 const other=
 otherSnap.data();
-
-
-/*
-   IMPORTANT:
-   Create/update directly.
-   This fixes the previous permission problem.
-*/
-
-await setDoc(
-
-doc(
-db,
-"privateChats",
-chatId
-),
-
-{
-participants:ids,
-
-updatedAt:
-serverTimestamp()
-
-},
-
-{
-merge:true
-}
-
-);
-
 
 currentMode="private";
 
@@ -2075,29 +3186,27 @@ chatId;
 currentPrivateUserId=
 uid;
 
-
 currentGroupId=null;
 
 currentGroupData=null;
-
 
 document
 .getElementById("headerName")
 .textContent=
 getUserName(other);
 
-
 document
 .getElementById("headerSub")
 .textContent=
-"🔒 Privater Chat";
-
+"Privater Chat";
 
 const avatar=
 document.getElementById(
 "headerAvatar"
 );
 
+avatar.style.background=
+getAvatarColor(uid);
 
 avatar.innerHTML=
 other.photoURL
@@ -2106,32 +3215,36 @@ other.photoURL
 :
 getInitial(other);
 
-
 document
 .getElementById("headerAction")
 .style.display="none";
 
+document
+.getElementById("messageInput")
+.disabled=false;
+
+/*
+   IMPORTANT:
+   Opening the chat does NOT create
+   the privateChats document.
+
+   Empty chat is completely valid.
+*/
 
 listenMessages(
-
 query(
-
 collection(
 db,
 "privateChats",
 chatId,
 "messages"
 ),
-
 orderBy(
 "createdAt",
 "asc"
 )
-
 )
-
 );
-
 
 closeModal(
 "profileModal"
@@ -2139,6 +3252,9 @@ closeModal(
 
 closeMobileSidebar();
 
+renderConversations(
+conversationsCache
+);
 
 }catch(error){
 
@@ -2148,13 +3264,12 @@ error
 );
 
 showToast(
-"❌ Privater Chat konnte nicht geöffnet werden."
+"Privater Chat konnte nicht geöffnet werden."
 );
 
 }
 
 };
-
 
 /* =====================================================
    CREATE GROUP
@@ -2172,7 +3287,6 @@ openModal(
 
 };
 
-
 window.createGroup=async()=>{
 
 const input=
@@ -2182,7 +3296,6 @@ document.getElementById(
 
 const name=
 input.value.trim();
-
 
 if(!name){
 
@@ -2194,20 +3307,27 @@ return;
 
 }
 
+if(!currentUser){
+
+showToast(
+"Benutzer nicht gefunden."
+);
+
+return;
+
+}
 
 try{
 
 const ref=
 await addDoc(
-
 collection(
 db,
 "groups"
 ),
-
 {
 
-name,
+name:name,
 
 ownerId:
 currentUser.uid,
@@ -2224,25 +3344,65 @@ createdAt:
 serverTimestamp()
 
 }
-
 );
 
+/*
+   IMPORTANT:
+   Put the group into the local cache immediately.
+*/
+
+const newGroup={
+
+id:ref.id,
+
+name:name,
+
+ownerId:
+currentUser.uid,
+
+members:[
+currentUser.uid
+],
+
+memberCount:1,
+
+closed:false,
+
+createdAt:null
+
+};
+
+const exists=
+groupsCache.some(
+g=>g.id===ref.id
+);
+
+if(!exists){
+
+groupsCache=[
+newGroup,
+...groupsCache
+];
+
+renderGroups();
+
+}
 
 closeModal(
 "createGroupModal"
 );
 
-
 showToast(
-"🎉 Gruppe erstellt!"
+"Gruppe erstellt!"
 );
 
+/*
+   Open immediately.
+*/
 
-setTimeout(
-()=>openGroup(ref.id),
-300
+await openGroup(
+ref.id
 );
-
 
 }catch(error){
 
@@ -2252,13 +3412,12 @@ error
 );
 
 showToast(
-"❌ Gruppe konnte nicht erstellt werden."
+"Gruppe konnte nicht erstellt werden."
 );
 
 }
 
 };
-
 
 /* =====================================================
    GROUP LISTENER
@@ -2266,55 +3425,107 @@ showToast(
 
 function startGroupsListener(){
 
+if(unsubscribeGroups){
+
+unsubscribeGroups();
+
+unsubscribeGroups=null;
+
+}
+
 const q=
 query(
-
 collection(
 db,
 "groups"
 ),
-
 where(
 "members",
 "array-contains",
 currentUser.uid
 )
-
 );
-
-
-if(unsubscribeGroups)
-unsubscribeGroups();
-
 
 unsubscribeGroups=
 onSnapshot(
-
 q,
-
 snapshot=>{
 
-groupsCache=[];
-
+const newGroups=[];
 
 snapshot.forEach(d=>{
 
-groupsCache.push({
+const data=
+d.data();
+
+newGroups.push({
+
 id:d.id,
-...d.data()
-});
+
+...data
 
 });
 
+});
+
+groupsCache=
+newGroups;
 
 renderGroups();
 
+/*
+   If current group exists,
+   update its local data.
+*/
+
+if(currentGroupId){
+
+const current=
+groupsCache.find(
+g=>g.id===currentGroupId
+);
+
+if(current){
+
+currentGroupData=
+current;
+
+const headerSub=
+document.getElementById(
+"headerSub"
+);
+
+if(headerSub){
+
+headerSub.textContent=
+current.closed
+?
+"Geschlossen"
+:
+`${current.members?.length||0}/${MAX_GROUP_MEMBERS} Mitglieder`;
+
 }
 
+}
+
+}
+
+},
+error=>{
+
+console.error(
+"GROUPS LISTENER ERROR:",
+error
+);
+
+showToast(
+"Gruppen konnten nicht geladen werden."
 );
 
 }
+);
 
+}
 
 /* =====================================================
    RENDER GROUPS
@@ -2327,13 +3538,16 @@ document.getElementById(
 "groupList"
 );
 
-
 if(!groupsCache.length){
 
 list.innerHTML=`
 
 <div
-style="padding:10px;color:#777;font-size:13px">
+style="
+padding:10px;
+color:#777;
+font-size:13px;
+">
 
 Noch keine Gruppen
 
@@ -2345,19 +3559,26 @@ return;
 
 }
 
-
 list.innerHTML=
 groupsCache
 .map(group=>`
 
 <div
-class="group-item"
-onclick="openGroup('${escapeHtml(group.id)}')">
+class="group-item ${
+currentGroupId===group.id
+?
+"active"
+:
+""
+}"
+onclick="
+setActiveItem(this);
+openGroup('${escapeHtml(group.id)}')
+">
 
-<div class="avatar">
-👥
+<div class="avatar" style="background:var(--sidebar)">
+${GROUP_ICON_SVG}
 </div>
-
 
 <div class="person-info">
 
@@ -2368,7 +3589,6 @@ group.name||"Gruppe"
 )}
 
 </div>
-
 
 <div class="person-email">
 
@@ -2385,7 +3605,6 @@ Mitglieder
 .join("");
 
 }
-
 
 /* =====================================================
    OPEN GROUP
@@ -2404,7 +3623,6 @@ groupId
 )
 );
 
-
 if(!snap.exists()){
 
 showToast(
@@ -2415,10 +3633,8 @@ return;
 
 }
 
-
 const group=
 snap.data();
-
 
 if(
 !group.members?.includes(
@@ -2434,71 +3650,80 @@ return;
 
 }
 
-
 currentMode="group";
 
 currentGroupId=
 groupId;
 
 currentPrivateChatId=null;
+
 currentPrivateUserId=null;
 
-
 currentGroupData={
-id:groupId,
-...group
-};
 
+id:groupId,
+
+...group
+
+};
 
 document
 .getElementById("headerName")
 .textContent=
 group.name||"Gruppe";
 
-
 document
 .getElementById("headerSub")
 .textContent=
 group.closed
 ?
-"🔒 Geschlossen"
+"Geschlossen"
 :
 `${group.members.length}/${MAX_GROUP_MEMBERS} Mitglieder`;
 
+{
 
-document
-.getElementById("headerAvatar")
-.innerHTML="👥";
+const ha=
+document.getElementById(
+"headerAvatar"
+);
 
+ha.style.background=
+"var(--accent)";
+
+ha.innerHTML=GROUP_ICON_SVG;
+
+}
 
 document
 .getElementById("headerAction")
 .style.display="block";
 
+document
+.getElementById("messageInput")
+.disabled=
+!!group.closed;
 
 listenMessages(
-
 query(
-
 collection(
 db,
 "groups",
 groupId,
 "messages"
 ),
-
 orderBy(
 "createdAt",
 "asc"
 )
-
 )
-
 );
-
 
 closeMobileSidebar();
 
+setActiveNav(null);
+
+renderGroups();
 
 }catch(error){
 
@@ -2515,7 +3740,6 @@ showToast(
 
 };
 
-
 /* =====================================================
    GROUP SETTINGS
    ===================================================== */
@@ -2525,28 +3749,22 @@ window.openGroupSettings=async()=>{
 if(!currentGroupId)
 return;
 
-
 try{
 
 const snap=
 await getDoc(
-
 doc(
 db,
 "groups",
 currentGroupId
 )
-
 );
-
 
 if(!snap.exists())
 return;
 
-
 const group=
 snap.data();
-
 
 if(
 !group.members?.includes(
@@ -2562,12 +3780,13 @@ return;
 
 }
 
-
 currentGroupData={
-id:currentGroupId,
-...group
-};
 
+id:currentGroupId,
+
+...group
+
+};
 
 document
 .getElementById(
@@ -2578,18 +3797,15 @@ document
 group.name||"Gruppe"
 );
 
-
 const invite=
 document.getElementById(
 "inviteFriendsBtn"
 );
 
-
 const closed=
 document.getElementById(
 "groupClosedArea"
 );
-
 
 if(group.closed){
 
@@ -2597,7 +3813,7 @@ closed.innerHTML=`
 
 <div class="closed-banner">
 
-🔒 Diese Gruppe wurde geschlossen.
+Diese Gruppe wurde geschlossen.
 
 </div>
 
@@ -2618,16 +3834,13 @@ group.members.length>=MAX_GROUP_MEMBERS
 
 }
 
-
-/* ================= MEMBERS ================= */
+/* MEMBERS */
 
 let html="";
-
 
 for(const uid of group.members){
 
 let user={};
-
 
 try{
 
@@ -2645,14 +3858,11 @@ user=u.data();
 
 }catch{}
 
-
 const owner=
 uid===group.ownerId;
 
-
 const me=
 uid===currentUser.uid;
-
 
 const canRemove=
 currentUser.uid===group.ownerId
@@ -2663,12 +3873,11 @@ currentUser.uid===group.ownerId
 &&
 !group.closed;
 
-
 html+=`
 
 <div class="member">
 
-<div class="avatar">
+<div class="avatar" style="background:${getAvatarColor(uid)}">
 
 ${
 user.photoURL
@@ -2680,7 +3889,6 @@ escapeHtml(getInitial(user))
 
 </div>
 
-
 <div style="flex:1">
 
 <strong>
@@ -2691,22 +3899,24 @@ getUserName(user)
 
 </strong>
 
-
 ${
 me
 ?
 `
+
 <div
 style="font-size:12px;color:#777">
+
 Du
+
 </div>
+
 `
 :
 ""
 }
 
 </div>
-
 
 ${
 owner
@@ -2716,18 +3926,21 @@ owner
 ""
 }
 
-
 ${
 canRemove
 ?
 `
+
 <button
 class="member-remove"
-onclick="removeGroupMember('${escapeHtml(uid)}')">
+onclick="
+removeGroupMember('${escapeHtml(uid)}')
+">
 
 🚫 Entfernen
 
 </button>
+
 `
 :
 ""
@@ -2739,15 +3952,13 @@ onclick="removeGroupMember('${escapeHtml(uid)}')">
 
 }
 
-
 document
 .getElementById(
 "groupMembers"
 )
 .innerHTML=html;
 
-
-/* ================= OWNER ACTIONS ================= */
+/* OWNER ACTIONS */
 
 document
 .getElementById(
@@ -2757,41 +3968,42 @@ document
 
 ${
 currentUser.uid===group.ownerId
+
 ?
+
 `
+
 <button
 class="modal-btn danger"
 onclick="closeGroupForever()">
 
-🔒 Gruppe schließen
+Gruppe schließen
 
 </button>
+
 `
+
 :
+
 `
+
 <button
 class="modal-btn danger"
 onclick="leaveGroup()">
 
-🚪 Gruppe verlassen
+Gruppe verlassen
 
 </button>
+
 `
+
 }
 
 `;
 
-
-/*
-   IMPORTANT:
-   Owner does NOT get a "Leave" button.
-   Only normal members can leave.
-*/
-
 openModal(
 "groupSettingsModal"
 );
-
 
 }catch(error){
 
@@ -2808,478 +4020,490 @@ showToast(
 
 };
 
-
-
 /* =====================================================
    REMOVE GROUP MEMBER
-   ONLY OWNER CAN REMOVE MEMBERS
-   OWNER CANNOT REMOVE HIMSELF
    ===================================================== */
 
-window.removeGroupMember = async function(uid) {
+window.removeGroupMember=async function(uid){
 
-  if (!currentGroupId || !currentUser) {
-    return;
-  }
+if(!currentGroupId||!currentUser)
+return;
 
-  /* OWNER CANNOT REMOVE HIMSELF */
-  if (uid === currentUser.uid) {
+if(uid===currentUser.uid){
 
-    showToast(
-      "👑 Der Owner kann sich nicht selbst entfernen."
-    );
+showToast(
+"Der Owner kann sich nicht selbst entfernen."
+);
 
-    return;
-  }
+return;
 
-  try {
+}
 
-    const ref = doc(
-      db,
-      "groups",
-      currentGroupId
-    );
+try{
 
-    await runTransaction(
-      db,
-      async function(transaction) {
+const ref=
+doc(
+db,
+"groups",
+currentGroupId
+);
 
-        const snap = await transaction.get(ref);
+await runTransaction(
+db,
+async transaction=>{
 
-        if (!snap.exists()) {
-          throw new Error("notfound");
-        }
+const snap=
+await transaction.get(ref);
 
-        const group = snap.data();
+if(!snap.exists())
+throw new Error("notfound");
 
-        /* ONLY OWNER */
-        if (group.ownerId !== currentUser.uid) {
-          throw new Error("owner");
-        }
+const group=
+snap.data();
 
-        /* CLOSED GROUP */
-        if (group.closed) {
-          throw new Error("closed");
-        }
+if(group.ownerId!==currentUser.uid)
+throw new Error("owner");
 
-        /* OWNER CANNOT BE REMOVED */
-        if (uid === group.ownerId) {
-          throw new Error("ownerremove");
-        }
+if(group.closed)
+throw new Error("closed");
 
-        /* USER MUST BE MEMBER */
-        if (!group.members || !group.members.includes(uid)) {
-          throw new Error("nomember");
-        }
+if(uid===group.ownerId)
+throw new Error("ownerremove");
 
-        const members = group.members.filter(
-          function(memberUid) {
-            return memberUid !== uid;
-          }
-        );
+if(
+!group.members
+||
+!group.members.includes(uid)
+)
+throw new Error("nomember");
 
-        transaction.update(
-          ref,
-          {
-            members: members,
-            memberCount: members.length
-          }
-        );
+const members=
+group.members.filter(
+memberUid=>
+memberUid!==uid
+);
 
-      }
-    );
+transaction.update(
+ref,
+{
 
-    showToast(
-      "✅ Mitglied wurde entfernt."
-    );
+members,
 
-    await openGroupSettings();
+memberCount:
+members.length
 
-  } catch (error) {
+}
+);
 
-    console.error(
-      "REMOVE MEMBER ERROR:",
-      error
-    );
+}
+);
 
-    if (error.message === "owner") {
+showToast(
+"Mitglied wurde entfernt."
+);
 
-      showToast(
-        "❌ Nur der Owner kann Mitglieder entfernen."
-      );
+await openGroupSettings();
 
-    } else if (error.message === "ownerremove") {
+}catch(error){
 
-      showToast(
-        "❌ Der Owner kann nicht entfernt werden."
-      );
+console.error(
+"REMOVE MEMBER ERROR:",
+error
+);
 
-    } else if (error.message === "closed") {
+if(error.message==="owner"){
 
-      showToast(
-        "🔒 Die Gruppe ist geschlossen."
-      );
+showToast(
+"Nur der Owner kann Mitglieder entfernen."
+);
 
-    } else if (error.message === "nomember") {
+}else if(error.message==="ownerremove"){
 
-      showToast(
-        "❌ Dieser Benutzer ist kein Mitglied der Gruppe."
-      );
+showToast(
+"Der Owner kann nicht entfernt werden."
+);
 
-    } else {
+}else if(error.message==="closed"){
 
-      showToast(
-        "❌ Mitglied konnte nicht entfernt werden."
-      );
+showToast(
+"Die Gruppe ist geschlossen."
+);
 
-    }
+}else if(error.message==="nomember"){
 
-  }
+showToast(
+"Dieser Benutzer ist kein Mitglied."
+);
+
+}else{
+
+showToast(
+"Mitglied konnte nicht entfernt werden."
+);
+
+}
+
+}
 
 };
-
 
 /* =====================================================
    LEAVE GROUP
-   NORMAL MEMBER CAN LEAVE
-   OWNER CANNOT LEAVE
    ===================================================== */
 
-window.leaveGroup = async function() {
+window.leaveGroup=async function(){
 
-  if (!currentGroupId || !currentUser) {
-    return;
-  }
+if(!currentGroupId||!currentUser)
+return;
 
-  /* OWNER CANNOT LEAVE */
-  if (
-    currentGroupData &&
-    currentGroupData.ownerId === currentUser.uid
-  ) {
+if(
+currentGroupData
+&&
+currentGroupData.ownerId===currentUser.uid
+){
 
-    showToast(
-      "👑 Der Owner kann die Gruppe nicht verlassen. Schließe die Gruppe stattdessen."
-    );
+showToast(
+"Der Owner kann die Gruppe nicht verlassen."
+);
 
-    return;
-  }
+return;
 
-  const ok = confirm(
-    "Willst du diese Gruppe wirklich verlassen?"
-  );
+}
 
-  if (!ok) {
-    return;
-  }
+const ok=
+confirm(
+"Willst du diese Gruppe wirklich verlassen?"
+);
 
-  try {
+if(!ok)
+return;
 
-    const ref = doc(
-      db,
-      "groups",
-      currentGroupId
-    );
+try{
 
-    await runTransaction(
-      db,
-      async function(transaction) {
+const ref=
+doc(
+db,
+"groups",
+currentGroupId
+);
 
-        const snap = await transaction.get(ref);
+await runTransaction(
+db,
+async transaction=>{
 
-        if (!snap.exists()) {
-          throw new Error("notfound");
-        }
+const snap=
+await transaction.get(ref);
 
-        const group = snap.data();
+if(!snap.exists())
+throw new Error("notfound");
 
-        /* GROUP CLOSED */
-        if (group.closed) {
-          throw new Error("closed");
-        }
+const group=
+snap.data();
 
-        /* USER MUST BE MEMBER */
-        if (
-          !group.members ||
-          !group.members.includes(currentUser.uid)
-        ) {
-          throw new Error("notmember");
-        }
+if(group.closed)
+throw new Error("closed");
 
-        /* OWNER PROTECTION */
-        if (group.ownerId === currentUser.uid) {
-          throw new Error("owner_cannot_leave");
-        }
+if(
+!group.members
+||
+!group.members.includes(
+currentUser.uid
+)
+)
+throw new Error("notmember");
 
-        /* REMOVE CURRENT USER */
-        const newMembers = group.members.filter(
-          function(memberUid) {
-            return memberUid !== currentUser.uid;
-          }
-        );
+if(
+group.ownerId===currentUser.uid
+)
+throw new Error("owner_cannot_leave");
 
-        if (newMembers.length < 1) {
-          throw new Error("invalid_group");
-        }
+const newMembers=
+group.members.filter(
+memberUid=>
+memberUid!==currentUser.uid
+);
 
-        transaction.update(
-          ref,
-          {
-            members: newMembers,
-            memberCount: newMembers.length
-          }
-        );
+if(newMembers.length<1)
+throw new Error("invalid_group");
 
-      }
-    );
+transaction.update(
+ref,
+{
 
-    closeModal(
-      "groupSettingsModal"
-    );
+members:newMembers,
 
-    currentGroupId = null;
-    currentGroupData = null;
+memberCount:
+newMembers.length
 
-    showToast(
-      "🚪 Du hast die Gruppe verlassen."
-    );
+}
+);
 
-    openCommunity();
+}
+);
 
-  } catch (error) {
+closeModal(
+"groupSettingsModal"
+);
 
-    console.error(
-      "LEAVE GROUP ERROR:",
-      error
-    );
+currentGroupId=null;
 
-    if (error.message === "owner_cannot_leave") {
+currentGroupData=null;
 
-      showToast(
-        "👑 Der Owner kann die Gruppe nicht verlassen. Du kannst die Gruppe schließen."
-      );
+showToast(
+"Du hast die Gruppe verlassen."
+);
 
-    } else if (error.message === "closed") {
+openCommunity();
 
-      showToast(
-        "🔒 Die Gruppe ist geschlossen."
-      );
+}catch(error){
 
-    } else if (error.message === "notmember") {
+console.error(
+"LEAVE GROUP ERROR:",
+error
+);
 
-      showToast(
-        "❌ Du bist kein Mitglied dieser Gruppe."
-      );
+if(error.message==="owner_cannot_leave"){
 
-    } else {
+showToast(
+"Der Owner kann die Gruppe nicht verlassen."
+);
 
-      showToast(
-        "❌ Gruppe konnte nicht verlassen werden."
-      );
+}else if(error.message==="closed"){
 
-    }
+showToast(
+"Die Gruppe ist geschlossen."
+);
 
-  }
+}else if(error.message==="notmember"){
+
+showToast(
+"Du bist kein Mitglied der Gruppe."
+);
+
+}else{
+
+showToast(
+"Gruppe konnte nicht verlassen werden."
+);
+
+}
+
+}
 
 };
-
 
 /* =====================================================
    CLOSE GROUP
-   ONLY OWNER
    ===================================================== */
 
-window.closeGroupForever = async function() {
+window.closeGroupForever=async function(){
 
-  if (!currentGroupId || !currentUser) {
-    return;
-  }
+if(!currentGroupId||!currentUser)
+return;
 
-  if (
-    !currentGroupData ||
-    currentGroupData.ownerId !== currentUser.uid
-  ) {
+if(
+!currentGroupData
+||
+currentGroupData.ownerId!==currentUser.uid
+){
 
-    showToast(
-      "❌ Nur der Owner kann die Gruppe schließen."
-    );
+showToast(
+"Nur der Owner kann die Gruppe schließen."
+);
 
-    return;
-  }
+return;
 
-  const ok = confirm(
-    "Möchtest du diese Gruppe wirklich schließen?"
-  );
+}
 
-  if (!ok) {
-    return;
-  }
+const ok=
+confirm(
+"Möchtest du diese Gruppe wirklich schließen?"
+);
 
-  try {
+if(!ok)
+return;
 
-    await updateDoc(
-      doc(
-        db,
-        "groups",
-        currentGroupId
-      ),
-      {
-        closed: true
-      }
-    );
+try{
 
-    currentGroupData.closed = true;
+await updateDoc(
+doc(
+db,
+"groups",
+currentGroupId
+),
+{
 
-    const headerSub =
-      document.getElementById("headerSub");
+closed:true
 
-    if (headerSub) {
-      headerSub.textContent = "🔒 Geschlossen";
-    }
+}
+);
 
-    closeModal(
-      "groupSettingsModal"
-    );
+currentGroupData.closed=true;
 
-    showToast(
-      "🔒 Gruppe geschlossen."
-    );
+const headerSub=
+document.getElementById(
+"headerSub"
+);
 
-  } catch (error) {
+if(headerSub){
 
-    console.error(
-      "CLOSE GROUP ERROR:",
-      error
-    );
+headerSub.textContent=
+"Geschlossen";
 
-    showToast(
-      "❌ Gruppe konnte nicht geschlossen werden."
-    );
+}
 
-  }
+document
+.getElementById("messageInput")
+.disabled=true;
+
+closeModal(
+"groupSettingsModal"
+);
+
+showToast(
+"Gruppe geschlossen."
+);
+
+}catch(error){
+
+console.error(
+"CLOSE GROUP ERROR:",
+error
+);
+
+showToast(
+"Gruppe konnte nicht geschlossen werden."
+);
+
+}
 
 };
-
 
 /* =====================================================
    GROUP INVITE
-   MAX 8 MEMBERS
    ===================================================== */
 
-window.openGroupInvite = function() {
+window.openGroupInvite=function(){
 
-  if (!currentGroupData) {
-    return;
-  }
+if(!currentGroupData)
+return;
 
-  /* MAX 8 MEMBERS */
-  if (
-    !currentGroupData.members ||
-    currentGroupData.members.length >= MAX_GROUP_MEMBERS
-  ) {
+if(
+!currentGroupData.members
+||
+currentGroupData.members.length>=MAX_GROUP_MEMBERS
+){
 
-    showToast(
-      "🚫 Gruppe ist voll (max. 8 Mitglieder)."
-    );
+showToast(
+"Gruppe ist voll (max. 8 Mitglieder)."
+);
 
-    return;
-  }
+return;
 
-  /* CLOSED GROUP */
-  if (currentGroupData.closed) {
+}
 
-    showToast(
-      "🔒 Die Gruppe ist geschlossen."
-    );
+if(currentGroupData.closed){
 
-    return;
-  }
+showToast(
+"Die Gruppe ist geschlossen."
+);
 
-  /* ONLY FRIENDS WHO ARE NOT ALREADY MEMBERS */
-  const available = friendsCache.filter(
-    function(friend) {
+return;
 
-      return (
-        !currentGroupData.members.includes(
-          friend.uid
-        )
-      );
+}
 
-    }
-  );
+const available=
+friendsCache.filter(
+friend=>
+!currentGroupData.members.includes(
+friend.uid
+)
+);
 
-  const list =
-    document.getElementById(
-      "groupInviteList"
-    );
+const list=
+document.getElementById(
+"groupInviteList"
+);
 
-  if (!list) {
-    return;
-  }
+if(!list)
+return;
 
-  if (!available.length) {
+if(!available.length){
 
-    list.innerHTML = `
-      <p style="color:#777">
-        Keine Freunde zum Einladen verfügbar.
-      </p>
-    `;
+list.innerHTML=`
 
-  } else {
+<p style="color:#777">
 
-    list.innerHTML = available
-      .map(
-        function(friend) {
+Keine Freunde zum Einladen verfügbar.
 
-          return `
-            <div
-              class="person"
-              style="background:#f5f5f5;margin-bottom:8px"
-            >
+</p>
 
-              <div class="avatar">
+`;
 
-                ${
-                  friend.photoURL
-                    ? `<img src="${escapeHtml(friend.photoURL)}">`
-                    : escapeHtml(getInitial(friend))
-                }
+}else{
 
-              </div>
+list.innerHTML=
+available
+.map(
+friend=>`
 
-              <div
-                class="person-info"
-                style="flex:1"
-              >
+<div
+class="person"
+style="
+background:#f5f5f5;
+margin-bottom:8px;
+">
 
-                <div class="person-name">
-                  ${escapeHtml(getUserName(friend))}
-                </div>
+<div class="avatar" style="background:${getAvatarColor(friend.uid)}">
 
-              </div>
+${
+friend.photoURL
+?
+`<img src="${escapeHtml(friend.photoURL)}">`
+:
+escapeHtml(getInitial(friend))
+}
 
-              <button
-                class="modal-btn yellow"
-                style="width:auto;margin:0"
-                onclick="sendGroupInvite('${escapeHtml(friend.uid)}')"
-              >
-                Einladen
-              </button>
+</div>
 
-            </div>
-          `;
+<div
+class="person-info"
+style="flex:1">
 
-        }
-      )
-      .join("");
+<div class="person-name">
 
-  }
+${escapeHtml(
+getUserName(friend)
+)}
 
-  openModal(
-    "groupInviteModal"
-  );
+</div>
+
+</div>
+
+<button
+class="modal-btn yellow"
+style="width:auto;margin:0"
+onclick="
+sendGroupInvite('${escapeHtml(friend.uid)}')
+">
+
+Einladen
+
+</button>
+
+</div>
+
+`
+)
+.join("");
+
+}
+
+openModal(
+"groupInviteModal"
+);
 
 };
-
 
 /* =====================================================
    SEND GROUP INVITE
@@ -3291,23 +4515,18 @@ try{
 
 const snap=
 await getDoc(
-
 doc(
 db,
 "groups",
 currentGroupId
 )
-
 );
-
 
 if(!snap.exists())
 return;
 
-
 const group=
 snap.data();
-
 
 if(
 !group.members.includes(
@@ -3323,7 +4542,6 @@ return;
 
 }
 
-
 if(group.closed){
 
 showToast(
@@ -3334,20 +4552,18 @@ return;
 
 }
 
-
 if(
 group.members.length>=
 MAX_GROUP_MEMBERS
 ){
 
 showToast(
-"🚫 Gruppe ist voll (max. 8 Mitglieder)."
+"Gruppe ist voll (max. 8 Mitglieder)."
 );
 
 return;
 
 }
-
 
 if(
 group.members.includes(uid)
@@ -3360,7 +4576,6 @@ showToast(
 return;
 
 }
-
 
 if(
 !friendsCache.some(
@@ -3376,10 +4591,8 @@ return;
 
 }
 
-
 const inviteId=
 currentGroupId+"_"+uid;
-
 
 const ref=
 doc(
@@ -3388,10 +4601,8 @@ db,
 inviteId
 );
 
-
 const old=
 await getDoc(ref);
-
 
 if(
 old.exists()
@@ -3400,19 +4611,17 @@ old.data().status==="pending"
 ){
 
 showToast(
-"📨 Einladung wurde bereits gesendet."
+"Einladung wurde bereits gesendet."
 );
 
 return;
 
 }
 
-
 await setDoc(
-
 ref,
-
 {
+
 groupId:
 currentGroupId,
 
@@ -3430,14 +4639,11 @@ createdAt:
 serverTimestamp()
 
 }
-
 );
-
 
 showToast(
-"🎉 Gruppeneinladung gesendet!"
+"Gruppeneinladung gesendet!"
 );
-
 
 }catch(error){
 
@@ -3447,13 +4653,12 @@ error
 );
 
 showToast(
-"❌ Einladung konnte nicht gesendet werden."
+"Einladung konnte nicht gesendet werden."
 );
 
 }
 
 };
-
 
 /* =====================================================
    ACCEPT GROUP INVITE
@@ -3470,12 +4675,8 @@ db,
 inviteId
 );
 
-
 const inviteSnap=
-await getDoc(
-inviteRef
-);
-
+await getDoc(inviteRef);
 
 if(!inviteSnap.exists()){
 
@@ -3487,10 +4688,8 @@ return;
 
 }
 
-
 const invite=
 inviteSnap.data();
-
 
 if(
 invite.toUid!==currentUser.uid
@@ -3506,7 +4705,6 @@ return;
 
 }
 
-
 const groupRef=
 doc(
 db,
@@ -3514,28 +4712,21 @@ db,
 invite.groupId
 );
 
-
 await runTransaction(
 db,
 async transaction=>{
 
 const groupSnap=
-await transaction.get(
-groupRef
-);
-
+await transaction.get(groupRef);
 
 if(!groupSnap.exists())
 throw new Error("notfound");
 
-
 const group=
 groupSnap.data();
 
-
 if(group.closed)
 throw new Error("closed");
-
 
 if(
 group.members.includes(
@@ -3546,9 +4737,12 @@ currentUser.uid
 transaction.update(
 inviteRef,
 {
+
 status:"accepted",
+
 respondedAt:
 serverTimestamp()
+
 }
 );
 
@@ -3556,66 +4750,55 @@ return;
 
 }
 
-
 if(
-group.members.length>=
-MAX_GROUP_MEMBERS
+group.members.length>=MAX_GROUP_MEMBERS
 )
 throw new Error("full");
-
 
 const members=[
 ...group.members,
 currentUser.uid
 ];
 
-
 transaction.update(
-
 groupRef,
-
 {
+
 members,
 
 memberCount:
 members.length
+
 }
-
 );
-
 
 transaction.update(
-
 inviteRef,
-
 {
+
 status:"accepted",
+
 respondedAt:
 serverTimestamp()
-}
 
+}
 );
 
 }
-
 );
-
 
 closeModal(
 "requestsModal"
 );
 
-
 showToast(
-"🎉 Du bist der Gruppe beigetreten!"
+"Du bist der Gruppe beigetreten!"
 );
-
 
 setTimeout(
 ()=>openGroup(invite.groupId),
 300
 );
-
 
 }catch(error){
 
@@ -3624,17 +4807,16 @@ console.error(
 error
 );
 
-
 if(error.message==="full"){
 
 showToast(
-"🚫 Die Gruppe ist bereits voll (8 Mitglieder)."
+"Die Gruppe ist bereits voll."
 );
 
 }else{
 
 showToast(
-"❌ Gruppe konnte nicht beigetreten werden."
+"Gruppe konnte nicht beigetreten werden."
 );
 
 }
@@ -3642,7 +4824,6 @@ showToast(
 }
 
 };
-
 
 /* =====================================================
    REQUESTS LISTENER
@@ -3652,54 +4833,51 @@ function startRequestsListener(){
 
 const fq=
 query(
-
 collection(
 db,
 "friendRequests"
 ),
-
 where(
 "toUid",
 "==",
 currentUser.uid
 ),
-
 where(
 "status",
 "==",
 "pending"
 )
-
 );
-
 
 const gq=
 query(
-
 collection(
 db,
 "groupInvites"
 ),
-
 where(
 "toUid",
 "==",
 currentUser.uid
 ),
-
 where(
 "status",
 "==",
 "pending"
 )
-
 );
 
-
 let f=0;
+
 let g=0;
 
+if(unsubscribeFriendRequests)
+unsubscribeFriendRequests();
 
+if(unsubscribeGroupInvites)
+unsubscribeGroupInvites();
+
+unsubscribeFriendRequests=
 onSnapshot(
 fq,
 s=>{
@@ -3713,7 +4891,7 @@ f+g
 }
 );
 
-
+unsubscribeGroupInvites=
 onSnapshot(
 gq,
 s=>{
@@ -3729,14 +4907,12 @@ f+g
 
 }
 
-
 function updateRequestBadge(n){
 
 const b=
 document.getElementById(
 "requestBadge"
 );
-
 
 if(n){
 
@@ -3754,7 +4930,6 @@ b.style.display=
 
 }
 
-
 /* =====================================================
    SEND FRIEND REQUEST
    ===================================================== */
@@ -3768,7 +4943,6 @@ uid===currentUser.uid
 )
 return;
 
-
 try{
 
 const count=
@@ -3776,32 +4950,28 @@ await getFriendCount(
 currentUser.uid
 );
 
-
 if(count>=MAX_FRIENDS){
 
 showToast(
-"🚫 Du hast bereits 100 Freunde."
+"Du hast bereits 100 Freunde."
 );
 
 return;
 
 }
-
 
 const target=
 await getFriendCount(uid);
 
-
 if(target>=MAX_FRIENDS){
 
 showToast(
-"🚫 Dieser Benutzer hat bereits 100 Freunde."
+"Dieser Benutzer hat bereits 100 Freunde."
 );
 
 return;
 
 }
-
 
 const id=
 [
@@ -3811,18 +4981,14 @@ uid
 .sort()
 .join("_");
 
-
 const friendship=
 await getDoc(
-
 doc(
 db,
 "friendships",
 id
 )
-
 );
-
 
 if(friendship.exists()){
 
@@ -3834,10 +5000,8 @@ return;
 
 }
 
-
 const requestId=
 currentUser.uid+"_"+uid;
-
 
 const ref=
 doc(
@@ -3846,10 +5010,8 @@ db,
 requestId
 );
 
-
 const old=
 await getDoc(ref);
-
 
 if(
 old.exists()
@@ -3858,19 +5020,17 @@ old.data().status==="pending"
 ){
 
 showToast(
-"📨 Anfrage wurde bereits gesendet."
+"Anfrage wurde bereits gesendet."
 );
 
 return;
 
 }
 
-
 await setDoc(
-
 ref,
-
 {
+
 fromUid:
 currentUser.uid,
 
@@ -3882,19 +5042,15 @@ createdAt:
 serverTimestamp()
 
 }
-
 );
-
 
 showToast(
-"🎉 Freundschaftsanfrage gesendet!"
+"Freundschaftsanfrage gesendet!"
 );
-
 
 closeModal(
 "profileModal"
 );
-
 
 }catch(error){
 
@@ -3904,13 +5060,12 @@ error
 );
 
 showToast(
-"❌ Anfrage konnte nicht gesendet werden."
+"Anfrage konnte nicht gesendet werden."
 );
 
 }
 
 };
-
 
 /* =====================================================
    REMOVE FRIEND
@@ -3926,7 +5081,6 @@ uid
 .sort()
 .join("_");
 
-
 if(
 !confirm(
 "Möchtest du diesen Freund wirklich entfernen?"
@@ -3934,29 +5088,23 @@ if(
 )
 return;
 
-
 try{
 
 await deleteDoc(
-
 doc(
 db,
 "friendships",
 id
 )
-
 );
-
 
 showToast(
-"🗑️ Freund entfernt."
+"Freund entfernt."
 );
-
 
 closeModal(
 "profileModal"
 );
-
 
 }catch(error){
 
@@ -3966,13 +5114,12 @@ error
 );
 
 showToast(
-"❌ Freund konnte nicht entfernt werden."
+"Freund konnte nicht entfernt werden."
 );
 
 }
 
 };
-
 
 /* =====================================================
    PROFILE
@@ -3983,44 +5130,39 @@ window.openUserProfile=async uid=>{
 if(!uid)
 return;
 
-
 currentProfileId=uid;
-
 
 try{
 
 const snap=
 await getDoc(
-
 doc(
 db,
 "users",
 uid
 )
-
 );
-
 
 if(!snap.exists()){
 
 showToast(
-"Utilisateur introuvable."
+"Benutzer nicht gefunden."
 );
 
 return;
 
 }
 
-
 const user=
 snap.data();
-
 
 const avatar=
 document.getElementById(
 "profileAvatar"
 );
 
+avatar.style.background=
+getAvatarColor(uid);
 
 avatar.innerHTML=
 user.photoURL
@@ -4029,23 +5171,19 @@ user.photoURL
 :
 getInitial(user);
 
-
 document
 .getElementById("profileName")
 .textContent=
 getUserName(user);
 
-
 document
 .getElementById("profileEmail")
 .textContent="";
-
 
 const actions=
 document.getElementById(
 "profileActions"
 );
-
 
 if(uid===currentUser.uid){
 
@@ -4059,12 +5197,10 @@ return;
 
 }
 
-
 const friend=
 friendsCache.some(
 f=>f.uid===uid
 );
-
 
 if(friend){
 
@@ -4072,18 +5208,21 @@ actions.innerHTML=`
 
 <button
 class="modal-btn"
-onclick="openPrivateChat('${escapeHtml(uid)}')">
+onclick="
+openPrivateChat('${escapeHtml(uid)}')
+">
 
-💬 Nachricht
+Nachricht
 
 </button>
 
-
 <button
 class="modal-btn danger"
-onclick="removeFriend('${escapeHtml(uid)}')">
+onclick="
+removeFriend('${escapeHtml(uid)}')
+">
 
-🗑️ Freund entfernen
+Freund entfernen
 
 </button>
 
@@ -4094,18 +5233,14 @@ onclick="removeFriend('${escapeHtml(uid)}')">
 const requestId=
 currentUser.uid+"_"+uid;
 
-
 const req=
 await getDoc(
-
 doc(
 db,
 "friendRequests",
 requestId
 )
-
 );
-
 
 if(
 req.exists()
@@ -4119,7 +5254,7 @@ actions.innerHTML=`
 class="modal-btn secondary"
 disabled>
 
-✓ Anfrage gesendet
+Anfrage gesendet
 
 </button>
 
@@ -4135,7 +5270,7 @@ actions.innerHTML=`
 class="modal-btn secondary"
 disabled>
 
-🚫 100 Freunde erreicht
+100 Freunde erreicht
 
 </button>
 
@@ -4147,9 +5282,11 @@ actions.innerHTML=`
 
 <button
 class="modal-btn"
-onclick="sendFriendRequest('${escapeHtml(uid)}')">
+onclick="
+sendFriendRequest('${escapeHtml(uid)}')
+">
 
-＋ Add Friend
+＋ Freund hinzufügen
 
 </button>
 
@@ -4159,11 +5296,9 @@ onclick="sendFriendRequest('${escapeHtml(uid)}')">
 
 }
 
-
 openModal(
 "profileModal"
 );
-
 
 }catch(error){
 
@@ -4180,92 +5315,75 @@ showToast(
 
 };
 
-
 /* =====================================================
    REQUESTS PAGE
    ===================================================== */
 
 window.openRequests=async()=>{
 
+setActiveNav("requestsBtn");
+
 const box=
 document.getElementById(
 "requestsContent"
 );
 
-
 box.innerHTML=
-"<p>Chargement...</p>";
-
+"<p>Wird geladen...</p>";
 
 openModal(
 "requestsModal"
 );
 
-
 try{
 
 const fq=
 query(
-
 collection(
 db,
 "friendRequests"
 ),
-
 where(
 "toUid",
 "==",
 currentUser.uid
 ),
-
 where(
 "status",
 "==",
 "pending"
 )
-
 );
-
 
 const gq=
 query(
-
 collection(
 db,
 "groupInvites"
 ),
-
 where(
 "toUid",
 "==",
 currentUser.uid
 ),
-
 where(
 "status",
 "==",
 "pending"
 )
-
 );
-
 
 const [
 fs,
 gs
 ]=await Promise.all([
-
 getDocs(fq),
-
 getDocs(gq)
-
 ]);
-
 
 let html="";
 
-
-/* ================= FRIEND REQUESTS ================= */
+/* FRIEND REQUESTS */
 
 for(
 const d of fs.docs
@@ -4273,18 +5391,14 @@ const d of fs.docs
 
 const r=d.data();
 
-
 const u=
 await getDoc(
-
 doc(
 db,
 "users",
 r.fromUid
 )
-
 );
-
 
 const user=
 u.exists()
@@ -4293,46 +5407,46 @@ u.data()
 :
 {};
 
-
 html+=`
 
 <div class="request-card">
 
 <strong>
 
-👤 ${escapeHtml(
+${escapeHtml(
 getUserName(user)
 )}
 
 </strong>
 
-
 <p>
 möchte dein Freund werden.
 </p>
-
 
 <div class="request-buttons">
 
 <button
 class="accept"
-onclick="acceptFriendRequest(
+onclick="
+acceptFriendRequest(
 '${escapeHtml(d.id)}',
 '${escapeHtml(r.fromUid)}'
-)">
+)
+">
 
-✓ Annehmen
+Annehmen
 
 </button>
 
-
 <button
 class="reject"
-onclick="rejectFriendRequest(
+onclick="
+rejectFriendRequest(
 '${escapeHtml(d.id)}'
-)">
+)
+">
 
-✕ Ablehnen
+Ablehnen
 
 </button>
 
@@ -4344,8 +5458,7 @@ onclick="rejectFriendRequest(
 
 }
 
-
-/* ================= GROUP INVITES ================= */
+/* GROUP INVITES */
 
 for(
 const d of gs.docs
@@ -4353,18 +5466,14 @@ const d of gs.docs
 
 const r=d.data();
 
-
 const u=
 await getDoc(
-
 doc(
 db,
 "users",
 r.fromUid
 )
-
 );
-
 
 const user=
 u.exists()
@@ -4373,50 +5482,51 @@ u.data()
 :
 {};
 
-
 html+=`
 
 <div class="request-card">
 
 <strong>
 
-👥 ${escapeHtml(
+${escapeHtml(
 r.groupName||"Gruppe"
 )}
 
 </strong>
 
-
 <p>
 
 Einladung von
+
 ${escapeHtml(
 getUserName(user)
 )}
 
 </p>
 
-
 <div class="request-buttons">
 
 <button
 class="accept"
-onclick="acceptGroupInvite(
+onclick="
+acceptGroupInvite(
 '${escapeHtml(d.id)}'
-)">
+)
+">
 
-✓ Beitreten
+Beitreten
 
 </button>
 
-
 <button
 class="reject"
-onclick="rejectGroupInvite(
+onclick="
+rejectGroupInvite(
 '${escapeHtml(d.id)}'
-)">
+)
+">
 
-✕ Ablehnen
+Ablehnen
 
 </button>
 
@@ -4428,13 +5538,16 @@ onclick="rejectGroupInvite(
 
 }
 
-
 if(!html){
 
 html=`
 
 <div
-style="text-align:center;padding:30px;color:#777">
+style="
+text-align:center;
+padding:30px;
+color:#777;
+">
 
 <h3>
 Keine Anfragen
@@ -4450,9 +5563,7 @@ Du hast momentan keine neuen Anfragen.
 
 }
 
-
 box.innerHTML=html;
-
 
 }catch(error){
 
@@ -4468,159 +5579,178 @@ box.innerHTML=
 
 };
 
-
 /* =====================================================
    ACCEPT FRIEND REQUEST
    ===================================================== */
 
-window.acceptFriendRequest = async function(requestId, fromUid) {
+window.acceptFriendRequest=
+async function(
+requestId,
+fromUid
+){
 
-  try {
+try{
 
-    const requestRef = doc(
-      db,
-      "friendRequests",
-      requestId
-    );
+const requestRef=
+doc(
+db,
+"friendRequests",
+requestId
+);
 
-    const friendshipId = [
-      currentUser.uid,
-      fromUid
-    ]
-      .sort()
-      .join("_");
+const friendshipId=[
+currentUser.uid,
+fromUid
+]
+.sort()
+.join("_");
 
-    const friendshipRef = doc(
-      db,
-      "friendships",
-      friendshipId
-    );
+const friendshipRef=
+doc(
+db,
+"friendships",
+friendshipId
+);
 
-    /* CHECK MY FRIEND LIMIT */
-    const myCount = await getFriendCount(
-      currentUser.uid
-    );
+const myCount=
+await getFriendCount(
+currentUser.uid
+);
 
-    /* CHECK OTHER USER FRIEND LIMIT */
-    const theirCount = await getFriendCount(
-      fromUid
-    );
+const theirCount=
+await getFriendCount(
+fromUid
+);
 
-    if (myCount >= MAX_FRIENDS) {
+if(myCount>=MAX_FRIENDS){
 
-      showToast(
-        "🚫 Du hast bereits 100 Freunde."
-      );
+showToast(
+"Du hast bereits 100 Freunde."
+);
 
-      return;
-    }
+return;
 
-    if (theirCount >= MAX_FRIENDS) {
+}
 
-      showToast(
-        "🚫 Dieser User hat bereits 100 Freunde."
-      );
+if(theirCount>=MAX_FRIENDS){
 
-      return;
-    }
+showToast(
+"Dieser User hat bereits 100 Freunde."
+);
 
-    await runTransaction(
-      db,
-      async function(transaction) {
+return;
 
-        const req = await transaction.get(
-          requestRef
-        );
+}
 
-        const friendship = await transaction.get(
-          friendshipRef
-        );
+await runTransaction(
+db,
+async transaction=>{
 
-        /* REQUEST DOES NOT EXIST */
-        if (!req.exists()) {
-          throw new Error("request");
-        }
+const req=
+await transaction.get(
+requestRef
+);
 
-        /* ALREADY FRIENDS */
-        if (friendship.exists()) {
-          throw new Error("already");
-        }
+const friendship=
+await transaction.get(
+friendshipRef
+);
 
-        const data = req.data();
+if(!req.exists()){
 
-        /* CHECK REQUEST */
-        if (
-          data.toUid !== currentUser.uid ||
-          data.status !== "pending"
-        ) {
-          throw new Error("invalid");
-        }
+throw new Error("request");
 
-        /* CREATE FRIENDSHIP */
-        transaction.set(
-          friendshipRef,
-          {
-            users: [
-              currentUser.uid,
-              fromUid
-            ].sort(),
+}
 
-            createdAt: serverTimestamp()
-          }
-        );
+if(friendship.exists()){
 
-        /* ACCEPT REQUEST */
-        transaction.update(
-          requestRef,
-          {
-            status: "accepted",
-            respondedAt: serverTimestamp()
-          }
-        );
+throw new Error("already");
 
-      }
-    );
+}
 
-    showToast(
-      "🎉 Freundschaft angenommen!"
-    );
+const data=
+req.data();
 
-    await openRequests();
+if(
+data.toUid!==currentUser.uid
+||
+data.status!=="pending"
+){
 
-  } catch (error) {
+throw new Error("invalid");
 
-    console.error(
-      "ACCEPT FRIEND ERROR:",
-      error
-    );
+}
 
-    if (error.message === "already") {
+transaction.set(
+friendshipRef,
+{
 
-      showToast(
-        "Ihr seid bereits Freunde."
-      );
+users:[
+currentUser.uid,
+fromUid
+].sort(),
 
-    } else if (error.message === "request") {
+createdAt:
+serverTimestamp()
 
-      showToast(
-        "❌ Freundschaftsanfrage wurde nicht gefunden."
-      );
+}
+);
 
-    } else if (error.message === "invalid") {
+transaction.update(
+requestRef,
+{
 
-      showToast(
-        "❌ Diese Anfrage ist nicht mehr gültig."
-      );
+status:"accepted",
 
-    } else {
+respondedAt:
+serverTimestamp()
 
-      showToast(
-        "❌ Freundschaft konnte nicht angenommen werden."
-      );
+}
+);
 
-    }
+}
+);
 
-  }
+showToast(
+"Freundschaft angenommen!"
+);
+
+await openRequests();
+
+}catch(error){
+
+console.error(
+"ACCEPT FRIEND ERROR:",
+error
+);
+
+if(error.message==="already"){
+
+showToast(
+"Ihr seid bereits Freunde."
+);
+
+}else if(error.message==="request"){
+
+showToast(
+"Freundschaftsanfrage wurde nicht gefunden."
+);
+
+}else if(error.message==="invalid"){
+
+showToast(
+"Diese Anfrage ist nicht mehr gültig."
+);
+
+}else{
+
+showToast(
+"Freundschaft konnte nicht angenommen werden."
+);
+
+}
+
+}
 
 };
 
@@ -4634,25 +5764,22 @@ async id=>{
 try{
 
 await updateDoc(
-
 doc(
 db,
 "friendRequests",
 id
 ),
-
 {
+
 status:"rejected",
 
 respondedAt:
 serverTimestamp()
-}
 
+}
 );
 
-
 await openRequests();
-
 
 }catch(error){
 
@@ -4669,7 +5796,6 @@ showToast(
 
 };
 
-
 /* =====================================================
    REJECT GROUP INVITE
    ===================================================== */
@@ -4680,25 +5806,22 @@ async id=>{
 try{
 
 await updateDoc(
-
 doc(
 db,
 "groupInvites",
 id
 ),
-
 {
+
 status:"rejected",
 
 respondedAt:
 serverTimestamp()
-}
 
+}
 );
 
-
 await openRequests();
-
 
 }catch(error){
 
@@ -4715,48 +5838,75 @@ showToast(
 
 };
 
-
 /* =====================================================
    FRIENDS PAGE
    ===================================================== */
 
 window.openFriends=()=>{
 
+setActiveNav("friendsBtn");
+
 currentMode="friends";
 
 currentPrivateChatId=null;
+
 currentPrivateUserId=null;
 
 currentGroupId=null;
+
 currentGroupData=null;
 
+stopMessagesListener();
 
 document
 .getElementById("headerName")
 .textContent="Freunde";
-
 
 document
 .getElementById("headerSub")
 .textContent=
 `${friendsCache.length}/${MAX_FRIENDS} Freunde`;
 
+{
 
-document
-.getElementById("headerAvatar")
-.innerHTML="👥";
+const ha=
+document.getElementById(
+"headerAvatar"
+);
 
+ha.style.background=
+"var(--accent)";
+
+ha.innerHTML=GROUP_ICON_SVG;
+
+}
 
 document
 .getElementById("headerAction")
 .style.display="none";
 
+document
+.getElementById("messageInput")
+.disabled=true;
+
+renderFriendsPage();
+
+closeMobileSidebar();
+
+renderConversations(conversationsCache);
+
+};
+
+/* =====================================================
+   RENDER FRIENDS PAGE
+   ===================================================== */
+
+function renderFriendsPage(){
 
 const box=
 document.getElementById(
 "messages"
 );
-
 
 if(!friendsCache.length){
 
@@ -4767,7 +5917,7 @@ box.innerHTML=`
 <div>
 
 <h2>
-Noch keine Freunde 👥
+Noch keine Freunde
 </h2>
 
 <p>
@@ -4784,33 +5934,49 @@ return;
 
 }
 
-
 box.innerHTML=`
 
 <div
-style="width:100%;max-width:800px;margin:auto">
+style="
+width:100%;
+max-width:800px;
+margin:auto;
+">
 
 <div class="friend-limit-box">
 
-👥 Du hast
+Du hast
 
 <strong>
+
 ${friendsCache.length}/${MAX_FRIENDS}
+
 </strong>
 
 Freunde.
 
 </div>
 
-
 ${friendsCache.map(f=>`
 
 <div
 class="person"
-style="background:white;margin-bottom:10px;padding:15px"
-onclick="openUserProfile('${escapeHtml(f.uid)}')">
+style="
+background:white;
+margin-bottom:10px;
+padding:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.05);
+display:flex;
+justify-content:space-between;
+">
 
-<div class="avatar">
+<div
+style="display:flex;align-items:center;gap:10px;flex:1;cursor:pointer;min-width:0"
+onclick="
+openUserProfile('${escapeHtml(f.uid)}')
+">
+
+<div class="avatar" style="background:${getAvatarColor(f.uid)}">
 
 ${
 f.photoURL
@@ -4822,7 +5988,6 @@ escapeHtml(getInitial(f))
 
 </div>
 
-
 <div class="person-info">
 
 <div class="person-name">
@@ -4833,7 +5998,29 @@ getUserName(f)
 
 </div>
 
+<div
+class="person-email"
+style="color:#777">
+
+Freund
+
 </div>
+
+</div>
+
+</div>
+
+<button
+class="modal-btn"
+style="width:auto;margin:0;padding:9px 14px;flex-shrink:0"
+onclick="
+event.stopPropagation();
+openPrivateChat('${escapeHtml(f.uid)}')
+">
+
+💬 Chat
+
+</button>
 
 </div>
 
@@ -4843,11 +6030,7 @@ getUserName(f)
 
 `;
 
-
-closeMobileSidebar();
-
-};
-
+}
 
 /* =====================================================
    SEARCH
@@ -4858,22 +6041,24 @@ document.getElementById(
 "searchInput"
 );
 
-
 const searchResults=
 document.getElementById(
 "searchResults"
 );
 
+let searchRequestId=0;
 
 searchInput.addEventListener(
 "input",
 async()=>{
 
+const requestId=
+++searchRequestId;
+
 const term=
 searchInput.value
 .trim()
 .toLowerCase();
-
 
 if(term.length<2){
 
@@ -4883,7 +6068,6 @@ searchResults.style.display=
 return;
 
 }
-
 
 try{
 
@@ -4895,9 +6079,10 @@ db,
 )
 );
 
+if(requestId!==searchRequestId)
+return;
 
 const results=[];
-
 
 snap.forEach(d=>{
 
@@ -4906,18 +6091,18 @@ d.id===currentUser.uid
 )
 return;
 
-
 const user={
+
 uid:d.id,
 ...d.data()
+
 };
 
-
-if(
+const name=
 getUserName(user)
-.toLowerCase()
-.includes(term)
-){
+.toLowerCase();
+
+if(name.includes(term)){
 
 results.push(user);
 
@@ -4925,10 +6110,8 @@ results.push(user);
 
 });
 
-
 const list=
 results.slice(0,10);
-
 
 searchResults.innerHTML=
 list.length
@@ -4939,9 +6122,11 @@ list
 
 <div
 class="search-result"
-onclick="selectSearchUser('${escapeHtml(u.uid)}')">
+onclick="
+selectSearchUser('${escapeHtml(u.uid)}')
+">
 
-<div class="avatar">
+<div class="avatar" style="background:${getAvatarColor(u.uid)}">
 
 ${
 u.photoURL
@@ -4952,7 +6137,6 @@ escapeHtml(getInitial(u))
 }
 
 </div>
-
 
 <strong>
 
@@ -4972,7 +6156,10 @@ getUserName(u)
 `
 
 <div
-style="padding:15px;color:#777">
+style="
+padding:15px;
+color:#777;
+">
 
 Kein Benutzer gefunden.
 
@@ -4980,10 +6167,8 @@ Kein Benutzer gefunden.
 
 `;
 
-
 searchResults.style.display=
 "block";
-
 
 }catch(error){
 
@@ -4995,7 +6180,6 @@ error
 }
 
 });
-
 
 /* =====================================================
    SELECT SEARCH USER
@@ -5011,7 +6195,6 @@ searchResults.style.display=
 openUserProfile(uid);
 
 };
-
 
 /* =====================================================
    CLOSE SEARCH RESULTS
@@ -5033,7 +6216,6 @@ searchResults.style.display=
 }
 
 });
-
 
 /* =====================================================
    ENTER = SEND
@@ -5059,8 +6241,106 @@ sendMessage();
 
 });
 
+/* =====================================================
+   NAV CLICK EFFECT
+   ===================================================== */
+
+document
+.querySelectorAll(".nav button")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+function(){
+
+this.classList.remove(
+"ripple"
+);
+
+void this.offsetWidth;
+
+this.classList.add(
+"ripple"
+);
+
+const messages=
+document.getElementById(
+"messages"
+);
+
+if(messages){
+
+messages.classList.remove(
+"nav-page-effect"
+);
+
+void messages.offsetWidth;
+
+messages.classList.add(
+"nav-page-effect"
+);
+
+}
+
+}
+);
+
+});
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE
+   ===================================================== */
+
+document
+.querySelectorAll(".modal-bg")
+.forEach(bg=>{
+
+bg.addEventListener(
+"click",
+e=>{
+
+if(e.target===bg){
+
+bg.classList.remove(
+"show"
+);
+
+}
+
+}
+);
+
+});
+
+/* =====================================================
+   ESCAPE KEY
+   ===================================================== */
+
+document.addEventListener(
+"keydown",
+e=>{
+
+if(e.key!=="Escape")
+return;
+
+document
+.querySelectorAll(".modal-bg.show")
+.forEach(modal=>{
+
+modal.classList.remove(
+"show"
+);
+
+});
+
+searchResults.style.display=
+"none";
+
+});
 
 </script>
 
 </body>
+
 </html>
+
