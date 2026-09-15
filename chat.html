@@ -774,7 +774,7 @@ button:disabled{
     display:none;
     align-items:center;
     justify-content:center;
-    z-index:1000;
+    z-index:3000;
     padding:20px;
     backdrop-filter:blur(3px);
 }
@@ -3455,6 +3455,8 @@ document
 .getElementById("groupNameInput")
 .value="";
 
+closeMobileSidebar();
+
 openModal(
 "createGroupModal"
 );
@@ -5881,6 +5883,8 @@ window.openRequests=async()=>{
 
 setActiveNav("requestsBtn");
 
+closeMobileSidebar();
+
 const box=
 document.getElementById(
 "requestsContent"
@@ -6901,5 +6905,6 @@ searchResults.style.display=
 </body>
 
 </html>
+
 
 
