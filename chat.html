@@ -912,6 +912,27 @@ button:disabled{
     display:none!important;
 }
 
+.avatar-photo-btn{
+    position:absolute;
+    right:2px;
+    bottom:10px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:var(--accent);
+    color:white;
+    border:3px solid white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:transform .15s ease,background .2s ease;
+}
+
+.avatar-photo-btn:hover{
+    background:var(--accent-dark);
+    transform:scale(1.06);
+}
+
 /* =====================================================
    SEARCH
    ===================================================== */
@@ -1394,10 +1415,29 @@ onclick="closeModal('profileModal')">
 
 <div class="profile-center">
 
+<div class="profile-avatar-wrap" style="position:relative;display:inline-block">
+
 <div
 class="profile-avatar"
 id="profileAvatar">
 U
+</div>
+
+<button
+id="profilePhotoBtn"
+class="avatar-photo-btn"
+style="display:none"
+onclick="document.getElementById('profilePhotoInput').click()">
+<svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;stroke-width:2.4"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+</button>
+
+<input
+type="file"
+id="profilePhotoInput"
+accept="image/*"
+style="display:none"
+onchange="changeProfilePhoto(this.files[0])">
+
 </div>
 
 <h2 id="profileName">
@@ -1492,8 +1532,38 @@ onclick="closeModal('groupSettingsModal')">
 <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
 </button>
 
-<h2 id="settingsGroupName">
-👥 Gruppe
+<div
+class="profile-avatar-wrap"
+style="position:relative;display:block;width:90px;margin:0 auto 12px">
+
+<div
+class="profile-avatar"
+id="groupSettingsAvatar"
+style="margin:0;width:90px;height:90px">
+👥
+</div>
+
+<button
+id="groupPhotoBtn"
+class="avatar-photo-btn"
+style="display:none"
+onclick="document.getElementById('groupPhotoInput').click()">
+<svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;stroke-width:2.4"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+</button>
+
+<input
+type="file"
+id="groupPhotoInput"
+accept="image/*"
+style="display:none"
+onchange="changeGroupPhoto(this.files[0])">
+
+</div>
+
+<h2
+id="settingsGroupName"
+style="text-align:center">
+Gruppe
 </h2>
 
 <div id="groupClosedArea">
@@ -1685,6 +1755,110 @@ return String(v)
 .replace(/>/g,"&gt;")
 .replace(/"/g,"&quot;")
 .replace(/'/g,"&#039;");
+
+}
+
+/* =====================================================
+   IMAGE RESIZE -> BASE64
+
+   No Firebase Storage (paid Blaze plan) needed.
+   We shrink the picture to a small square and store
+   it as a base64 string directly on the Firestore
+   document ("photoURL" field), same as any other
+   free Firestore write. A small JPEG at this size is
+   only a few KB, far under Firestore's 1MB doc limit.
+   ===================================================== */
+
+const MAX_PHOTO_BYTES=700000;
+
+function resizeImageToDataUrl(file,maxSize){
+
+return new Promise((resolve,reject)=>{
+
+if(!file||!file.type?.startsWith("image/")){
+
+reject(new Error("notimage"));
+
+return;
+
+}
+
+const reader=new FileReader();
+
+reader.onerror=()=>reject(new Error("read"));
+
+reader.onload=()=>{
+
+const img=new Image();
+
+img.onerror=()=>reject(new Error("decode"));
+
+img.onload=()=>{
+
+const size=maxSize||200;
+
+const canvas=
+document.createElement("canvas");
+
+canvas.width=size;
+
+canvas.height=size;
+
+const ctx=
+canvas.getContext("2d");
+
+const minSide=
+Math.min(img.width,img.height);
+
+const sx=
+(img.width-minSide)/2;
+
+const sy=
+(img.height-minSide)/2;
+
+ctx.drawImage(
+img,
+sx,sy,minSide,minSide,
+0,0,size,size
+);
+
+let quality=.78;
+
+let dataUrl=
+canvas.toDataURL("image/jpeg",quality);
+
+while(
+dataUrl.length>MAX_PHOTO_BYTES
+&&
+quality>.3
+){
+
+quality-=.12;
+
+dataUrl=
+canvas.toDataURL("image/jpeg",quality);
+
+}
+
+if(dataUrl.length>MAX_PHOTO_BYTES){
+
+reject(new Error("toolarge"));
+
+return;
+
+}
+
+resolve(dataUrl);
+
+};
+
+img.src=reader.result;
+
+};
+
+reader.readAsDataURL(file);
+
+});
 
 }
 
@@ -3577,7 +3751,13 @@ openGroup('${escapeHtml(group.id)}')
 ">
 
 <div class="avatar" style="background:var(--sidebar)">
-${GROUP_ICON_SVG}
+${
+group.photoURL
+?
+`<img src="${escapeHtml(group.photoURL)}">`
+:
+GROUP_ICON_SVG
+}
 </div>
 
 <div class="person-info">
@@ -3689,9 +3869,18 @@ document.getElementById(
 );
 
 ha.style.background=
+group.photoURL
+?
+"transparent"
+:
 "var(--accent)";
 
-ha.innerHTML=GROUP_ICON_SVG;
+ha.innerHTML=
+group.photoURL
+?
+`<img src="${escapeHtml(group.photoURL)}">`
+:
+GROUP_ICON_SVG;
 
 }
 
@@ -3793,9 +3982,35 @@ document
 "settingsGroupName"
 )
 .textContent=
-"👥 "+(
-group.name||"Gruppe"
+group.name||"Gruppe";
+
+{
+
+const ga=
+document.getElementById(
+"groupSettingsAvatar"
 );
+
+ga.style.background=
+"var(--sidebar)";
+
+ga.innerHTML=
+group.photoURL
+?
+`<img src="${escapeHtml(group.photoURL)}">`
+:
+GROUP_ICON_SVG;
+
+document
+.getElementById("groupPhotoBtn")
+.style.display=
+currentUser.uid===group.ownerId
+?
+"flex"
+:
+"none";
+
+}
 
 const invite=
 document.getElementById(
@@ -3971,6 +4186,21 @@ currentUser.uid===group.ownerId
 
 ?
 
+(
+group.closed
+?
+`
+
+<button
+class="modal-btn danger"
+onclick="deleteGroupForever()">
+
+🗑️ Gruppe endgültig löschen
+
+</button>
+
+`
+:
 `
 
 <button
@@ -3981,7 +4211,16 @@ Gruppe schließen
 
 </button>
 
+<button
+class="modal-btn secondary"
+onclick="deleteGroupForever()">
+
+🗑️ Gruppe endgültig löschen
+
+</button>
+
 `
+)
 
 :
 
@@ -4015,6 +4254,137 @@ error
 showToast(
 "Gruppenprofil konnte nicht geladen werden."
 );
+
+}
+
+};
+
+/* =====================================================
+   CHANGE GROUP PHOTO
+
+   Owner-only. Same free base64-on-Firestore-doc
+   approach as the profile photo - needs a matching
+   Firestore rule update (see the rules file).
+   ===================================================== */
+
+window.changeGroupPhoto=async function(file){
+
+if(!file||!currentUser||!currentGroupId)
+return;
+
+if(
+!currentGroupData
+||
+currentGroupData.ownerId!==currentUser.uid
+){
+
+showToast(
+"Nur der Owner kann das Gruppenbild ändern."
+);
+
+return;
+
+}
+
+const input=
+document.getElementById(
+"groupPhotoInput"
+);
+
+const btn=
+document.getElementById(
+"groupPhotoBtn"
+);
+
+try{
+
+btn.disabled=true;
+
+const dataUrl=
+await resizeImageToDataUrl(file,260);
+
+await updateDoc(
+doc(
+db,
+"groups",
+currentGroupId
+),
+{
+
+photoURL:dataUrl
+
+}
+);
+
+currentGroupData=
+{
+
+...currentGroupData,
+
+photoURL:dataUrl
+
+};
+
+const ga=
+document.getElementById(
+"groupSettingsAvatar"
+);
+
+ga.innerHTML=
+`<img src="${escapeHtml(dataUrl)}">`;
+
+if(currentMode==="group"){
+
+const ha=
+document.getElementById(
+"headerAvatar"
+);
+
+ha.style.background=
+"transparent";
+
+ha.innerHTML=
+`<img src="${escapeHtml(dataUrl)}">`;
+
+}
+
+showToast(
+"Gruppenbild aktualisiert!"
+);
+
+}catch(error){
+
+console.error(
+"CHANGE GROUP PHOTO ERROR:",
+error
+);
+
+if(error.message==="toolarge"){
+
+showToast(
+"Bild ist zu groß. Wähle ein anderes."
+);
+
+}else if(error.message==="notimage"){
+
+showToast(
+"Bitte wähle eine Bilddatei."
+);
+
+}else{
+
+showToast(
+"Gruppenbild konnte nicht gespeichert werden."
+);
+
+}
+
+}finally{
+
+btn.disabled=false;
+
+if(input)
+input.value="";
 
 }
 
@@ -4373,6 +4743,83 @@ error
 
 showToast(
 "Gruppe konnte nicht geschlossen werden."
+);
+
+}
+
+};
+
+/* =====================================================
+   DELETE GROUP FOREVER
+
+   Uses the existing Firestore rule
+   ("allow delete: if owner") that was already
+   in place but never wired up in the UI - closing
+   a group only marked it "closed", it stayed in
+   everyone's sidebar forever. This removes the
+   group document permanently for everyone.
+   ===================================================== */
+
+window.deleteGroupForever=async function(){
+
+if(!currentGroupId||!currentUser)
+return;
+
+if(
+!currentGroupData
+||
+currentGroupData.ownerId!==currentUser.uid
+){
+
+showToast(
+"Nur der Owner kann die Gruppe löschen."
+);
+
+return;
+
+}
+
+const ok=
+confirm(
+"Gruppe endgültig löschen? Das kann nicht rückgängig gemacht werden."
+);
+
+if(!ok)
+return;
+
+try{
+
+await deleteDoc(
+doc(
+db,
+"groups",
+currentGroupId
+)
+);
+
+closeModal(
+"groupSettingsModal"
+);
+
+currentGroupId=null;
+
+currentGroupData=null;
+
+showToast(
+"Gruppe wurde gelöscht."
+);
+
+openCommunity();
+
+}catch(error){
+
+console.error(
+"DELETE GROUP ERROR:",
+error
+);
+
+showToast(
+"Gruppe konnte nicht gelöscht werden."
 );
 
 }
@@ -5185,6 +5632,15 @@ document.getElementById(
 "profileActions"
 );
 
+document
+.getElementById("profilePhotoBtn")
+.style.display=
+uid===currentUser.uid
+?
+"flex"
+:
+"none";
+
 if(uid===currentUser.uid){
 
 actions.innerHTML="";
@@ -5310,6 +5766,108 @@ error
 showToast(
 "Profil konnte nicht geladen werden."
 );
+
+}
+
+};
+
+/* =====================================================
+   CHANGE PROFILE PHOTO
+
+   Free approach: resize to a small square, store
+   as base64 directly on the user doc. No Storage
+   bucket / Blaze plan required.
+   ===================================================== */
+
+window.changeProfilePhoto=async function(file){
+
+if(!file||!currentUser)
+return;
+
+const input=
+document.getElementById(
+"profilePhotoInput"
+);
+
+const btn=
+document.getElementById(
+"profilePhotoBtn"
+);
+
+try{
+
+btn.disabled=true;
+
+const dataUrl=
+await resizeImageToDataUrl(file,220);
+
+await updateDoc(
+doc(
+db,
+"users",
+currentUser.uid
+),
+{
+
+photoURL:dataUrl
+
+}
+);
+
+currentUserData=
+{
+
+...currentUserData,
+
+photoURL:dataUrl
+
+};
+
+const avatar=
+document.getElementById(
+"profileAvatar"
+);
+
+avatar.innerHTML=
+`<img src="${escapeHtml(dataUrl)}">`;
+
+showToast(
+"Profilbild aktualisiert!"
+);
+
+}catch(error){
+
+console.error(
+"CHANGE PROFILE PHOTO ERROR:",
+error
+);
+
+if(error.message==="toolarge"){
+
+showToast(
+"Bild ist zu groß. Wähle ein anderes."
+);
+
+}else if(error.message==="notimage"){
+
+showToast(
+"Bitte wähle eine Bilddatei."
+);
+
+}else{
+
+showToast(
+"Profilbild konnte nicht gespeichert werden."
+);
+
+}
+
+}finally{
+
+btn.disabled=false;
+
+if(input)
+input.value="";
 
 }
 
@@ -6343,4 +6901,5 @@ searchResults.style.display=
 </body>
 
 </html>
+
 
