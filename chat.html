@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Community – Deutsch Einfach</title>
 
@@ -69,6 +69,8 @@ textarea{
 
 button{
     cursor:pointer;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
 }
 
 button:disabled{
@@ -146,6 +148,7 @@ button:disabled{
     outline:none;
     background:#222;
     color:white;
+    font-size:16px;
     transition:
         border .2s ease,
         box-shadow .2s ease,
@@ -726,6 +729,8 @@ button:disabled{
     border-radius:10px;
     padding:12px;
     outline:none;
+    font-size:16px;
+    font-family:inherit;
     transition:
         border .2s ease,
         box-shadow .2s ease;
@@ -833,6 +838,8 @@ button:disabled{
     border-radius:9px;
     margin-bottom:10px;
     outline:none;
+    font-size:16px;
+    font-family:inherit;
 }
 
 .modal input:focus{
@@ -1057,6 +1064,40 @@ button:disabled{
 }
 
 /* =====================================================
+   LOADING SKELETON (sidebar chats)
+   ===================================================== */
+
+.chats-skeleton{
+    padding:4px 2px;
+}
+
+.chats-skeleton-row{
+    height:56px;
+    border-radius:9px;
+    margin-bottom:4px;
+    background:linear-gradient(
+        90deg,
+        rgba(255,255,255,.04) 25%,
+        rgba(255,255,255,.09) 37%,
+        rgba(255,255,255,.04) 63%
+    );
+    background-size:400% 100%;
+    animation:skeletonShine 1.4s ease infinite;
+}
+
+@keyframes skeletonShine{
+
+    0%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0 50%;
+    }
+
+}
+
+/* =====================================================
    TOAST
    ===================================================== */
 
@@ -1127,6 +1168,7 @@ button:disabled{
         z-index:2000;
         transition:left .25s ease;
         box-shadow:10px 0 30px rgba(0,0,0,.25);
+        padding-bottom:env(safe-area-inset-bottom);
     }
 
     .sidebar.open{
@@ -1139,6 +1181,8 @@ button:disabled{
 
     .chat-header{
         padding:0 10px;
+        padding-top:env(safe-area-inset-top);
+        height:calc(72px + env(safe-area-inset-top));
     }
 
     .messages{
@@ -1151,6 +1195,7 @@ button:disabled{
 
     .input-area{
         padding:10px;
+        padding-bottom:calc(10px + env(safe-area-inset-bottom));
     }
 
     .send-btn{
@@ -1164,6 +1209,15 @@ button:disabled{
     .modal{
         max-height:94vh;
         padding:18px;
+        padding-bottom:calc(18px + env(safe-area-inset-bottom));
+    }
+
+    .toast{
+        left:14px;
+        right:14px;
+        bottom:calc(78px + env(safe-area-inset-bottom));
+        text-align:center;
+        font-size:13.5px;
     }
 
 }
@@ -3232,6 +3286,24 @@ getUserName(a).localeCompare(
 getUserName(b)
 )
 );
+
+if(!friendsLoaded){
+
+list.innerHTML=`
+
+<div class="chats-skeleton">
+
+<div class="chats-skeleton-row"></div>
+<div class="chats-skeleton-row"></div>
+<div class="chats-skeleton-row"></div>
+
+</div>
+
+`;
+
+return;
+
+}
 
 if(!conversations.length&&!remainingFriends.length){
 
@@ -5581,6 +5653,17 @@ return;
 
 currentProfileId=uid;
 
+/*
+   IMPORTANT (mobile):
+   This can be opened from the search dropdown,
+   which lives INSIDE the sidebar. If we don't
+   close the sidebar here too, the profile modal
+   opens underneath/behind the still-open mobile
+   sidebar overlay.
+*/
+
+closeMobileSidebar();
+
 try{
 
 const snap=
@@ -6470,6 +6553,28 @@ document.getElementById(
 "messages"
 );
 
+if(!friendsLoaded){
+
+box.innerHTML=`
+
+<div class="empty">
+
+<div>
+
+<p style="color:#aaa">
+Wird geladen...
+</p>
+
+</div>
+
+</div>
+
+`;
+
+return;
+
+}
+
 if(!friendsCache.length){
 
 box.innerHTML=`
@@ -6905,6 +7010,7 @@ searchResults.style.display=
 </body>
 
 </html>
+
 
 
 
