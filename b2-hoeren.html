@@ -14,6 +14,12 @@
     .correct { background-color: #d4edda; }
     .wrong { background-color: #f8d7da; }
     #warningBox { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--de-red); color: #fff; padding: 15px 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); font-size: 14px; font-weight: bold; z-index: 9999; }
+    .teil-nav-wrap { display: flex; justify-content: center; gap: 10px; margin: 0 auto 24px; flex-wrap: wrap; max-width: 7xl; }
+    .teil-nav-btn { padding: 10px 26px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; background: #fff; border: 2px solid var(--de-red); color: var(--de-red); transition: .22s; }
+    .teil-nav-btn:hover { background: var(--de-red); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(214,0,0,0.2); }
+    .teil-nav-btn.active { background: var(--de-red); color: #fff; box-shadow: 0 4px 12px rgba(214,0,0,0.25); }
+    html.dark .teil-nav-btn { background: #1f1f1f; border-color: var(--de-red); color: #f1f1f1; }
+    html.dark .teil-nav-btn.active { background: var(--de-red); color: #fff; }
   </style>
 <!-- AUTO_NAV_START -->
 <style>
@@ -123,6 +129,227 @@
 
 
 
+<!-- THEME_STACK_LAYOUT_V1 -->
+<style>
+  #hoeren-teil1-stack {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 4px 4px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+  .theme-item {
+    background: #fff;
+    border: 1.5px solid #f0d0d0;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(214,0,0,0.06);
+    overflow: hidden;
+  }
+  html.dark .theme-item {
+    background: #1b1b1b;
+    border-color: #3a3a3a;
+  }
+  .theme-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #fff1f1 0%, #fff8d8 100%);
+    border-bottom: 1.5px solid #f0d0d0;
+    cursor: pointer;
+    user-select: none;
+  }
+  html.dark .theme-item-header {
+    background: #241f1f;
+    border-color: #3a3a3a;
+  }
+  .theme-item-index {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .theme-item-title {
+    flex: 1;
+    font-weight: 700;
+    font-size: 16px;
+    color: #171717;
+  }
+  html.dark .theme-item-title { color: #f1f1f1; }
+  .theme-item-chevron {
+    flex: 0 0 auto;
+    color: var(--de-red);
+    transition: transform .25s ease;
+  }
+  .theme-item.collapsed .theme-item-chevron { transform: rotate(-90deg); }
+  .theme-iframe-wrap {
+    position: relative;
+    background: #f5f6f8;
+  }
+  html.dark .theme-iframe-wrap { background: #111214; }
+  .theme-iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    min-height: 520px;
+  }
+  .theme-item.collapsed .theme-iframe-wrap { display: none; }
+
+  /* ===== UNIFORM THEMA CARDS ===== */
+  .theme-card-body {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: #fff;
+    min-height: 76px;
+  }
+  .theme-card-icon {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 6px 14px rgba(214,0,0,0.16);
+  }
+  .theme-card-info { flex: 1; min-width: 0; }
+  .theme-card-label { font-size: 14px; font-weight: 800; color: #171717; margin-bottom: 4px; }
+  .theme-card-subtitle { font-size: 12px; color: #777; line-height: 1.45; }
+  .theme-card-open {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 11px;
+    background: var(--de-red);
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+    transition: transform .2s, background .2s, box-shadow .2s;
+  }
+  .theme-card-open:hover {
+    background: var(--de-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(214,0,0,0.2);
+  }
+  .theme-card-open i { transition: transform .2s; }
+  .theme-card-open:hover i { transform: translateX(-3px); }
+  html.dark .theme-card-body { background: #1b1b1b; }
+  html.dark .theme-card-label { color: #f1f1f1; }
+  html.dark .theme-card-subtitle { color: #aaa; }
+  @media (max-width: 620px) {
+    .theme-card-body { align-items: flex-start; flex-wrap: wrap; padding: 15px; }
+    .theme-card-info { padding-top: 2px; }
+    .theme-card-open { width: 100%; margin-top: 2px; }
+  }
+  .theme-iframe-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--de-red);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .theme-iframe-loading i { animation: theme-spin 0.8s linear infinite; }
+  @keyframes theme-spin { to { transform: rotate(360deg); } }
+
+  /* ===== NATIVE RICHTIG/FALSCH QUIZ (no iframe) ===== */
+  .theme-item.collapsed .native-quiz-wrap { display: none; }
+  .native-quiz-wrap { padding: 16px 18px 20px; background: #f5f6f8; }
+  html.dark .native-quiz-wrap { background: #111214; }
+  .nq-intro { margin: 0 0 14px; font-size: 13px; color: #555; }
+  html.dark .nq-intro { color: #bbb; }
+  .nq-question-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 15px 14px;
+    border: 1.5px solid #f0d0d0;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    background: #fff;
+    transition: background .2s, border-color .2s, transform .2s;
+  }
+  html.dark .nq-question-row { background: #1b1b1b; border-color: #3a3a3a; }
+  .nq-question-row:last-child { margin-bottom: 0; }
+  .nq-question-row.nq-correct { border-color: #16803c; background: #e9f8ef; }
+  html.dark .nq-question-row.nq-correct { border-color: #51d88a; background: #153d28; }
+  .nq-question-row.nq-wrong { border-color: #c62828; background: #fff0f0; }
+  html.dark .nq-question-row.nq-wrong { border-color: #ff7070; background: #421d1d; }
+  .nq-question-text { font-size: 14px; line-height: 1.6; font-weight: 600; color: #171717; }
+  html.dark .nq-question-text { color: #f1f1f1; }
+  .nq-question-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--de-red); color: #fff; font-size: 12px; font-weight: 800; margin-right: 7px;
+  }
+  .nq-answers { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .nq-radio-option {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 12px; border: 1px solid #ddd; border-radius: 10px;
+    cursor: pointer; user-select: none; background: #fff; font-size: 12px; font-weight: 700;
+    transition: border .2s, background .2s;
+  }
+  html.dark .nq-radio-option { background: #1f1f1f; border-color: #3a3a3a; color: #f1f1f1; }
+  .nq-radio-option:hover { border-color: var(--de-red); }
+  .nq-radio-option input { accent-color: var(--de-red); cursor: pointer; }
+  .nq-radio-option.nq-correct-opt { border-color: #16803c; background: #e9f8ef; color: #16803c; }
+  html.dark .nq-radio-option.nq-correct-opt { border-color: #51d88a; background: #153d28; color: #51d88a; }
+  .nq-radio-option.nq-correct-opt::after { content: "✓"; font-weight: 900; margin-left: 2px; }
+  .nq-solution-badge {
+    display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; margin-top: 6px;
+    padding: 5px 9px; border-radius: 8px; background: #e9f8ef; color: #16803c;
+    border: 1px solid rgba(22,128,60,0.2); font-size: 11px; font-weight: 800;
+  }
+  html.dark .nq-solution-badge { background: #153d28; color: #51d88a; }
+  .nq-action-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 18px 0 4px; }
+  .nq-btn {
+    border: none; border-radius: 13px; min-height: 44px; padding: 0 18px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit; font-size: 13px; font-weight: 800; cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .nq-btn:hover { transform: translateY(-2px); }
+  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(214,0,0,0.22); }
+  .nq-btn-show { background: #22252a; color: #fff; }
+  html.dark .nq-btn-show { background: #f0f0f0; color: #161616; }
+  .nq-btn-retry { background: var(--de-yellow); color: #171717; }
+  .nq-result-box { margin: 14px 0 0; min-height: 0; border-radius: 12px; text-align: center; font-weight: 800; font-size: 14px; }
+  .nq-result-box:not(:empty) { padding: 13px; border: 1px solid #e4e4e4; background: rgba(128,128,128,0.05); }
+  html.dark .nq-result-box:not(:empty) { border-color: #3a3a3a; }
+  .nq-result-success { color: #16803c; }
+  html.dark .nq-result-success { color: #51d88a; }
+  .nq-result-info { color: var(--de-red); }
+  @media (max-width: 620px) {
+    .nq-question-row { grid-template-columns: 1fr; gap: 10px; }
+    .nq-answers { justify-content: flex-start; }
+    .nq-action-buttons { flex-direction: column; }
+    .nq-btn { width: 100%; }
+  }
+</style>
+
 <!-- TELC_EXERCISE_TILES -->
 <link rel="stylesheet" href="../telc-exercise-tiles.css">
 <link rel="stylesheet" href="../telc-score-badge.css">
@@ -137,54 +364,345 @@
 
 <div class="telc-exercise-topbar telc-exercise-toolbar"></div>
 
-<div class="telc-exercise-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4 max-w-7xl mx-auto" id="hoeren-hub-grid">
-  <a href="50-euro.html" class="ex-btn cursor-pointer" data-quiz-id="quiz16" data-qid="q_50_euro"><span class="ex-label">50 Euro</span><span class="score-dot">–</span></a>
-  <a href="europaeischen.html" class="ex-btn cursor-pointer" data-quiz-id="quiz6" data-qid="q_europaeischen"><span class="ex-label">In der Europäischen</span><span class="score-dot">–</span></a>
-  <a href="die-tschechische-stadt-pilsen.html" class="ex-btn cursor-pointer" data-quiz-id="quiz21" data-qid="q_die_tschechische_stadt_pilsen"><span class="ex-label">Die tschechische Stadt Pilsen</span><span class="score-dot">–</span></a>
-  <a href="die-wahlbeteiligung.html" class="ex-btn cursor-pointer" data-quiz-id="quiz11" data-qid="q_die_wahlbeteiligung"><span class="ex-label">Die Wahlbeteiligung</span><span class="score-dot">–</span></a>
-  <a href="internationale-konferenz.html" class="ex-btn cursor-pointer" data-quiz-id="quiz22" data-qid="q_internationale_konferenz"><span class="ex-label">Internationale Konferenz</span><span class="score-dot">–</span></a>
-  <a href="vier-tage-pro.html" class="ex-btn cursor-pointer" data-quiz-id="quiz23" data-qid="q_vier_tage_pro"><span class="ex-label">Vier Tage pro</span><span class="score-dot">–</span></a>
-  <a href="unwetterschaeden.html" class="ex-btn cursor-pointer" data-quiz-id="quiz7" data-qid="q_wetter"><span class="ex-label">Unwetterschäden</span><span class="score-dot">–</span></a>
-  <a href="konjunkturentwicklung.html" class="ex-btn cursor-pointer" data-quiz-id="quiz24" data-qid="q_konjunkturentwicklung"><span class="ex-label">Konjunkturentwicklung</span><span class="score-dot">–</span></a>
-  <a href="es-ist-unklar.html" class="ex-btn cursor-pointer" data-quiz-id="quiz25" data-qid="q_es_ist_unklar"><span class="ex-label">Es ist unklar</span><span class="score-dot">–</span></a>
-  <a href="nicht-sicher.html" class="ex-btn cursor-pointer" data-quiz-id="quiz8" data-qid="q_nicht_sicher"><span class="ex-label">Es ist nicht sicher</span><span class="score-dot">–</span></a>
-  <a href="bio-siegels.html" class="ex-btn cursor-pointer" data-quiz-id="quiz26" data-qid="q_bio_siegels"><span class="ex-label">Bio-Siegels</span><span class="score-dot">–</span></a>
-  <a href="erdbeben.html" class="ex-btn cursor-pointer" data-quiz-id="quiz2" data-qid="q_erdbeben"><span class="ex-label">Erdbeben</span><span class="score-dot">–</span></a>
-  <a href="die-fluggeselschaft.html" class="ex-btn cursor-pointer" data-quiz-id="quiz14" data-qid="q_die_fluggeselschaft"><span class="ex-label">Die Fluggesellschaft</span><span class="score-dot">–</span></a>
-  <a href="die-fluggeselschaft-2.html" class="ex-btn cursor-pointer" data-quiz-id="quiz27" data-qid="q_die_fluggeselschaft_2"><span class="ex-label">Die Fluggesellschaft 2</span><span class="score-dot">–</span></a>
-  <a href="lufthansa.html" class="ex-btn cursor-pointer" data-quiz-id="quiz1" data-qid="q_lufthansa"><span class="ex-label">Lufthansa</span><span class="score-dot">–</span></a>
-  <a href="lufthansa-2.html" class="ex-btn cursor-pointer" data-quiz-id="quiz28" data-qid="q_lufthansa_2"><span class="ex-label">Lufthansa 2</span><span class="score-dot">–</span></a>
-  <a href="in-den-alpen.html" class="ex-btn cursor-pointer" data-quiz-id="quiz12" data-qid="q_in_den_alpen"><span class="ex-label">In den Alpen</span><span class="score-dot">–</span></a>
-  <a href="bundesfamilienministerium.html" class="ex-btn cursor-pointer" data-quiz-id="quiz29" data-qid="q_bundesfamilienministerium"><span class="ex-label">Bundesfamilienministerium</span><span class="score-dot">–</span></a>
-  <a href="bei-der-sportveranstaltung.html" class="ex-btn cursor-pointer" data-quiz-id="quiz30" data-qid="q_bei_der_sportveranstaltung"><span class="ex-label">Bei der Sportveranstaltung</span><span class="score-dot">–</span></a>
-  <a href="bierkonsum.html" class="ex-btn cursor-pointer" data-quiz-id="quiz3" data-qid="q_bierkonsum"><span class="ex-label">Bierkonsum</span><span class="score-dot">–</span></a>
-  <a href="bierkonsum-2.html" class="ex-btn cursor-pointer" data-quiz-id="quiz31" data-qid="q_bierkonsum_2"><span class="ex-label">Bierkonsum 2</span><span class="score-dot">–</span></a>
-  <a href="deutsche-filmmuseum.html" class="ex-btn cursor-pointer" data-quiz-id="quiz32" data-qid="q_deutsche_filmmuseum"><span class="ex-label">Deutsche Filmmuseum</span><span class="score-dot">–</span></a>
-  <a href="bauern-warnen.html" class="ex-btn cursor-pointer" data-quiz-id="quiz33" data-qid="q_bauern_warnen"><span class="ex-label">Bauern warnen</span><span class="score-dot">–</span></a>
-  <a href="nach-ansicht-mancher.html" class="ex-btn cursor-pointer" data-quiz-id="quiz34" data-qid="q_nach_ansicht_mancher"><span class="ex-label">Nach Ansicht mancher</span><span class="score-dot">–</span></a>
-  <a href="meereskuesten.html" class="ex-btn cursor-pointer" data-quiz-id="quiz35" data-qid="q_meereskuesten"><span class="ex-label">Meeresküsten</span><span class="score-dot">–</span></a>
-  <a href="um-tickets-zu-gewinnen.html" class="ex-btn cursor-pointer" data-quiz-id="quiz36" data-qid="q_um_tickets_zu_gewinnen"><span class="ex-label">Um Tickets zu gewinnen</span><span class="score-dot">–</span></a>
-  <a href="die-piloten-der-lufthansa.html" class="ex-btn cursor-pointer" data-quiz-id="quiz37" data-qid="q_die_piloten_der_lufthansa"><span class="ex-label">Die Piloten der Lufthansa</span><span class="score-dot">–</span></a>
-  <a href="studentenparty-in-frankreich.html" class="ex-btn cursor-pointer" data-quiz-id="quiz38" data-qid="q_studentenparty_in_frankreich"><span class="ex-label">Studentenparty in Frankreich</span><span class="score-dot">–</span></a>
-  <a href="bei-den-europawahlen.html" class="ex-btn cursor-pointer" data-quiz-id="quiz18" data-qid="q_bei_den_europawahlen"><span class="ex-label">Bei den Europawahlen</span><span class="score-dot">–</span></a>
-  <a href="insel-bali.html" class="ex-btn cursor-pointer" data-quiz-id="quiz13" data-qid="q_insel_bali"><span class="ex-label">Insel Bali</span><span class="score-dot">–</span></a>
-  <a href="die-zahl-der-arbeitslosen.html" class="ex-btn cursor-pointer" data-quiz-id="quiz39" data-qid="q_die_zahl_der_arbeitslosen"><span class="ex-label">Die Zahl der Arbeitslosen</span><span class="score-dot">–</span></a>
-  <a href="schiff.html" class="ex-btn cursor-pointer" data-quiz-id="quiz4" data-qid="q_schiff"><span class="ex-label">Ein deutsches Schiff</span><span class="score-dot">–</span></a>
-  <a href="die-bundeslaender.html" class="ex-btn cursor-pointer" data-quiz-id="quiz40" data-qid="q_die_bundeslaender"><span class="ex-label">Die Bundesländer</span><span class="score-dot">–</span></a>
-  <a href="das-schladminger.html" class="ex-btn cursor-pointer" data-quiz-id="quiz17" data-qid="q_das_schladminger"><span class="ex-label">Das Schladminger</span><span class="score-dot">–</span></a>
-  <a href="bild-am-sonntag.html" class="ex-btn cursor-pointer" data-quiz-id="quiz41" data-qid="q_bild_am_sonntag"><span class="ex-label">Bild am Sonntag</span><span class="score-dot">–</span></a>
-  <a href="in-frankfurt-haben-manager.html" class="ex-btn cursor-pointer" data-quiz-id="quiz42" data-qid="q_in_frankfurt_haben_manager"><span class="ex-label">In Frankfurt haben Manager</span><span class="score-dot">–</span></a>
-  <a href="die-sprecherin-ist-verheiratet.html" class="ex-btn cursor-pointer" data-quiz-id="quiz43" data-qid="q_die_sprecherin_ist_verheiratet"><span class="ex-label">Die Sprecherin ist verheiratet</span><span class="score-dot">–</span></a>
-  <a href="bei-den-europawahlen-quiz20.html" class="ex-btn cursor-pointer" data-quiz-id="quiz20" data-qid="q_bei_den_europawahlen_quiz20"><span class="ex-label">Bei den Europawahlen 2</span><span class="score-dot">–</span></a>
-  <a href="der-bau.html" class="ex-btn cursor-pointer" data-quiz-id="quiz15" data-qid="q_der_bau"><span class="ex-label">Der Bau</span><span class="score-dot">–</span></a>
-  <a href="ein-treffen-bei-der-integrationsbeauftragten.html" class="ex-btn cursor-pointer" data-quiz-id="quiz44" data-qid="q_ein_treffen_bei_der_integrationsbeauftragten"><span class="ex-label">Ein Treffen bei der Integrationsbeauftragten</span><span class="score-dot">–</span></a>
-  <a href="laut-statistischem-bundesamt.html" class="ex-btn cursor-pointer" data-quiz-id="quiz45" data-qid="q_laut_statistischem_bundesamt"><span class="ex-label">Laut Statistischem Bundesamt</span><span class="score-dot">–</span></a>
-  <a href="die-stadt-friedrichsberg.html" class="ex-btn cursor-pointer" data-quiz-id="quiz9" data-qid="q_die_stadt_friedrichsberg"><span class="ex-label">Die Stadt Friedrichsberg</span><span class="score-dot">–</span></a>
-  <a href="in-den-alpen-quiz19.html" class="ex-btn cursor-pointer" data-quiz-id="quiz19" data-qid="q_in_den_alpen_quiz19"><span class="ex-label">In den Alpen 2</span><span class="score-dot">–</span></a>
-  <a href="voegel.html" class="ex-btn cursor-pointer" data-quiz-id="quiz5" data-qid="q_voegel"><span class="ex-label">Vögel</span><span class="score-dot">–</span></a>
-  <a href="frau-juergens.html" class="ex-btn cursor-pointer" data-quiz-id="quiz10" data-qid="q_frau_juergens"><span class="ex-label">Frau Jürgens</span><span class="score-dot">–</span></a>
-  <a href="fuer-die-polizei-in-berlin.html" class="ex-btn cursor-pointer" data-quiz-id="quiz46" data-qid="q_fuer_die_polizei_in_berlin"><span class="ex-label">Für die Polizei in Berlin</span><span class="score-dot">–</span></a>
-          </div>
+<div class="teil-nav-wrap">
+  <a href="b2-hoeren.html" class="teil-nav-btn active">Teil 1</a>
+  <a href="b2-hoeren-teil2.html" class="teil-nav-btn">Teil 2</a>
+  <a href="b2-hoeren-teil3.html" class="teil-nav-btn">Teil 3</a>
+</div>
+
+<div id="hoeren-teil1-stack"></div>
+<script>
+(function () {
+  var THEMES = [
+    { href: "50-euro.html", title: "50 Euro", quizId: "50_euro", questions: [
+      { text: "Die 50 Euro Noten der Deutschen Bundesbank sind jetzt fälschungssicherer.", answer: "falsch" },
+      { text: "Der Ärzteverband hat gefordert, dass junge Ärzte in Zukunft ein Pflichtjahr in einer Landarztpraxis absolvieren müssen.", answer: "falsch" },
+      { text: "Wissenschaftler der Universität Mainz sind am Projekt zur Erforschung des Planeten Mars beteiligt.", answer: "richtig" },
+      { text: "Der Verband Bildung und Erziehung fordert 10.000 zusätzliche Lehrerstellen.", answer: "falsch" },
+      { text: "Die Schwarzarbeit hat im vergangenen Jahr um 15% zugenommen.", answer: "falsch" }
+    ] },
+    { href: "europaeischen.html", title: "In der Europäischen" , quizId: "Europäischen", questions: [
+      { text: "In der Europäischen Union verzeichnet man weniger jugendliche Arbeitslose.", answer: "richtig" },
+      { text: "Das Bundesarbeitsministerium bemüht sich um ausländische Arbeitnehmer bestimmter       Berufsgruppen.", answer: "richtig" },
+      { text: "Die „Lange Nacht der Musik“ findet am Odeonsplatz in München statt.", answer: "falsch" },
+      { text: "Im „Tal der goldenen Mumien“ würden bisher fast 10,000 Tote gefunden.", answer: "falsch" },
+      { text: "Die Gefahr schwerer Unwetter ist nun vorbei.", answer: "falsch" }
+     ] },
+    { href: "die-tschechische-stadt-pilsen.html", title: "Die tschechische Stadt Pilsen" },
+    { href: "die-wahlbeteiligung.html", title: "Die Wahlbeteiligung" },
+    { href: "internationale-konferenz.html", title: "Internationale Konferenz" },
+    { href: "vier-tage-pro.html", title: "Vier Tage pro" },
+    { href: "unwetterschaeden.html", title: "Unwetterschäden" },
+    { href: "konjunkturentwicklung.html", title: "Konjunkturentwicklung" },
+    { href: "es-ist-unklar.html", title: "Es ist unklar" },
+    { href: "nicht-sicher.html", title: "Es ist nicht sicher" },
+    { href: "bio-siegels.html", title: "Bio-Siegels" },
+    { href: "erdbeben.html", title: "Erdbeben" },
+    { href: "die-fluggeselschaft.html", title: "Die Fluggesellschaft" },
+    { href: "die-fluggeselschaft-2.html", title: "Die Fluggesellschaft 2" },
+    { href: "lufthansa.html", title: "Lufthansa" },
+    { href: "lufthansa-2.html", title: "Lufthansa 2" },
+    { href: "in-den-alpen.html", title: "In den Alpen" },
+    { href: "bundesfamilienministerium.html", title: "Bundesfamilienministerium" },
+    { href: "bei-der-sportveranstaltung.html", title: "Bei der Sportveranstaltung" },
+    { href: "bierkonsum.html", title: "Bierkonsum" },
+    { href: "bierkonsum-2.html", title: "Bierkonsum 2" },
+    { href: "deutsche-filmmuseum.html", title: "Deutsche Filmmuseum" },
+    { href: "bauern-warnen.html", title: "Bauern warnen" },
+    { href: "nach-ansicht-mancher.html", title: "Nach Ansicht mancher" },
+    { href: "meereskuesten.html", title: "Meeresküsten" },
+    { href: "um-tickets-zu-gewinnen.html", title: "Um Tickets zu gewinnen" },
+    { href: "die-piloten-der-lufthansa.html", title: "Die Piloten der Lufthansa" },
+    { href: "studentenparty-in-frankreich.html", title: "Studentenparty in Frankreich" },
+    { href: "bei-den-europawahlen.html", title: "Bei den Europawahlen" },
+    { href: "insel-bali.html", title: "Insel Bali" },
+    { href: "die-zahl-der-arbeitslosen.html", title: "Die Zahl der Arbeitslosen" },
+    { href: "schiff.html", title: "Ein deutsches Schiff" },
+    { href: "die-bundeslaender.html", title: "Die Bundesländer" },
+    { href: "das-schladminger.html", title: "Das Schladminger" },
+    { href: "bild-am-sonntag.html", title: "Bild am Sonntag" },
+    { href: "in-frankfurt-haben-manager.html", title: "In Frankfurt haben Manager" },
+    { href: "die-sprecherin-ist-verheiratet.html", title: "Die Sprecherin ist verheiratet" },
+    { href: "bei-den-europawahlen-quiz20.html", title: "Bei den Europawahlen 2" },
+    { href: "der-bau.html", title: "Der Bau" },
+    { href: "ein-treffen-bei-der-integrationsbeauftragten.html", title: "Ein Treffen bei der Integrationsbeauftragten" },
+    { href: "laut-statistischem-bundesamt.html", title: "Laut Statistischem Bundesamt" },
+    { href: "die-stadt-friedrichsberg.html", title: "Die Stadt Friedrichsberg" },
+    { href: "in-den-alpen-quiz19.html", title: "In den Alpen 2" },
+    { href: "voegel.html", title: "Vögel" },
+    { href: "frau-juergens.html", title: "Frau Jürgens" },
+    { href: "fuer-die-polizei-in-berlin.html", title: "Für die Polizei in Berlin" }
+  ];
+
+  var stack = document.getElementById("hoeren-teil1-stack");
+  if (!stack) return;
+
+  var frag = document.createDocumentFragment();
+
+  THEMES.forEach(function (theme, i) {
+    var item = document.createElement("div");
+    item.className = "theme-item";
+    item.id = "theme-item-" + (i + 1);
+
+    var header = document.createElement("div");
+    header.className = "theme-item-header";
+    header.innerHTML =
+      '<span class="theme-item-index">' + (i + 1) + '</span>' +
+      '<span class="theme-item-title">' + theme.title + '</span>' +
+      '<i class="fa-solid fa-chevron-down theme-item-chevron"></i>';
+
+    header.addEventListener("click", function () {
+      item.classList.toggle("collapsed");
+    });
+
+    item.appendChild(header);
+
+    if (theme.questions && theme.questions.length) {
+      item.appendChild(buildNativeQuiz(theme));
+    } else {
+      /*
+         IMPORTANT:
+         Each Thema has its own complete HTML exercise page.
+         We load that real page inside the same cadre instead
+         of showing an "Öffnen" placeholder.
+      */
+      var iframeWrap = document.createElement("div");
+      iframeWrap.className = "theme-iframe-wrap";
+
+      var loading = document.createElement("div");
+      loading.className = "theme-iframe-loading";
+      loading.innerHTML = '<i class="fa-solid fa-spinner"></i> Wird geladen…';
+      iframeWrap.appendChild(loading);
+
+      var iframe = document.createElement("iframe");
+      iframe.className = "theme-iframe";
+      iframe.src = theme.href;
+      iframe.loading = "lazy";
+      iframe.title = theme.title;
+      iframe.setAttribute("scrolling", "no");
+      iframe.setAttribute("frameborder", "0");
+
+      function resizeAndClean() {
+        try {
+          var doc = iframe.contentWindow.document;
+
+          /* Keep the exercise itself, but remove the duplicated
+             page chrome because the Thema already has our outer cadre. */
+          [
+            ".top-header",
+            ".breadcrumb",
+            ".quiz-header",
+            ".info-row",
+            ".page-footer"
+          ].forEach(function(selector) {
+            var el = doc.querySelector(selector);
+            if (el) el.style.display = "none";
+          });
+
+          if (doc.body) {
+            doc.body.style.margin = "0";
+            doc.body.style.background = "transparent";
+            doc.body.style.minHeight = "0";
+          }
+
+          var page = doc.querySelector(".quiz-page");
+          if (page) {
+            page.style.maxWidth = "none";
+            page.style.padding = "0";
+          }
+
+          var quiz = doc.querySelector(".quiz-container");
+          if (quiz) {
+            quiz.style.marginTop = "0";
+            quiz.style.borderRadius = "0";
+            quiz.style.boxShadow = "none";
+            quiz.style.borderLeft = "0";
+            quiz.style.borderRight = "0";
+            quiz.style.borderBottom = "0";
+          }
+
+          var h = Math.max(
+            doc.documentElement ? doc.documentElement.scrollHeight : 0,
+            doc.body ? doc.body.scrollHeight : 0
+          );
+
+          if (h > 0) iframe.style.height = h + "px";
+        } catch (e) {
+          iframe.style.height = "850px";
+        }
+      }
+
+      iframe.addEventListener("load", function () {
+        loading.style.display = "none";
+        resizeAndClean();
+
+        /* Recalculate after fonts/scripts finish rendering. */
+        setTimeout(resizeAndClean, 300);
+        setTimeout(resizeAndClean, 1000);
+        setTimeout(resizeAndClean, 2000);
+      });
+
+      iframeWrap.appendChild(iframe);
+      item.appendChild(iframeWrap);
+    }
+
+    frag.appendChild(item);
+  });
+
+  /* ==========================================
+     BUILD A NATIVE RICHTIG/FALSCH QUIZ
+     (rendered directly inside the theme-item
+     cadre — no iframe, nothing external to load)
+  ========================================== */
+  function buildNativeQuiz(theme) {
+    var qid = theme.quizId || theme.href.replace(/[^a-z0-9]/gi, "_");
+
+    var wrap = document.createElement("div");
+    wrap.className = "native-quiz-wrap";
+
+    var intro = document.createElement("p");
+    intro.className = "nq-intro";
+    intro.textContent = "Höre die Informationen aufmerksam und entscheide: Richtig oder Falsch?";
+    wrap.appendChild(intro);
+
+    var rows = [];
+
+    theme.questions.forEach(function (q, i) {
+      var row = document.createElement("div");
+      row.className = "nq-question-row";
+
+      var textEl = document.createElement("div");
+      textEl.className = "nq-question-text";
+      var numEl = document.createElement("span");
+      numEl.className = "nq-question-number";
+      numEl.textContent = (i + 1);
+      textEl.appendChild(numEl);
+      textEl.appendChild(document.createTextNode(q.text));
+      row.appendChild(textEl);
+
+      var answers = document.createElement("div");
+      answers.className = "nq-answers";
+
+      ["richtig", "falsch"].forEach(function (val) {
+        var label = document.createElement("label");
+        label.className = "nq-radio-option";
+
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = qid + "_q" + (i + 1);
+        input.value = val;
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(val === "richtig" ? "Richtig" : "Falsch"));
+        answers.appendChild(label);
+      });
+
+      row.appendChild(answers);
+      wrap.appendChild(row);
+      rows.push({ row: row, textEl: textEl, name: qid + "_q" + (i + 1), answer: q.answer });
+    });
+
+    function clearReveal() {
+      rows.forEach(function (r) {
+        r.row.classList.remove("nq-correct", "nq-wrong");
+        r.row.querySelectorAll(".nq-radio-option").forEach(function (l) {
+          l.classList.remove("nq-correct-opt");
+        });
+        var badge = r.textEl.querySelector(".nq-solution-badge");
+        if (badge) badge.remove();
+      });
+    }
+
+    var resultBox = document.createElement("div");
+    resultBox.className = "nq-result-box";
+    resultBox.setAttribute("aria-live", "polite");
+
+    var actions = document.createElement("div");
+    actions.className = "nq-action-buttons";
+
+    var btnCheck = document.createElement("button");
+    btnCheck.type = "button";
+    btnCheck.className = "nq-btn nq-btn-check";
+    btnCheck.innerHTML = '<i class="fa-solid fa-check-double"></i> Antworten prüfen';
+    btnCheck.addEventListener("click", function () {
+      clearReveal();
+      var score = 0;
+      rows.forEach(function (r) {
+        var selected = wrap.querySelector('input[name="' + r.name + '"]:checked');
+        if (!selected) return;
+        if (selected.value === r.answer) {
+          score++;
+          r.row.classList.add("nq-correct");
+        } else {
+          r.row.classList.add("nq-wrong");
+        }
+      });
+      var total = rows.length;
+      if (score === total) {
+        resultBox.innerHTML = '<span class="nq-result-success"><i class="fa-solid fa-trophy"></i> ' + score + ' von ' + total + ' richtig – Sehr gut!</span>';
+      } else {
+        resultBox.innerHTML = '<span class="nq-result-info"><i class="fa-solid fa-chart-simple"></i> ' + score + ' von ' + total + ' richtig</span>';
+      }
+    });
+
+    var btnShow = document.createElement("button");
+    btnShow.type = "button";
+    btnShow.className = "nq-btn nq-btn-show";
+    btnShow.innerHTML = '<i class="fa-solid fa-eye"></i> Antworten anzeigen';
+    btnShow.addEventListener("click", function () {
+      clearReveal();
+      rows.forEach(function (r) {
+        r.row.querySelectorAll('input[name="' + r.name + '"]').forEach(function (input) {
+          var label = input.closest(".nq-radio-option");
+          if (label && input.value === r.answer) label.classList.add("nq-correct-opt");
+        });
+        var badge = document.createElement("span");
+        badge.className = "nq-solution-badge";
+        badge.innerHTML = '<i class="fa-solid fa-lightbulb"></i> Lösung: ' + (r.answer === "richtig" ? "Richtig" : "Falsch");
+        r.textEl.appendChild(badge);
+      });
+      resultBox.innerHTML = '<span class="nq-result-info"><i class="fa-solid fa-eye"></i> Die richtigen Antworten werden angezeigt. Du kannst die Aufgabe jetzt noch einmal versuchen.</span>';
+    });
+
+    var btnRetry = document.createElement("button");
+    btnRetry.type = "button";
+    btnRetry.className = "nq-btn nq-btn-retry";
+    btnRetry.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Nochmal versuchen';
+    btnRetry.addEventListener("click", function () {
+      rows.forEach(function (r) {
+        r.row.querySelectorAll('input[name="' + r.name + '"]').forEach(function (input) {
+          input.checked = false;
+        });
+      });
+      clearReveal();
+      resultBox.innerHTML = "";
+    });
+
+    actions.appendChild(btnCheck);
+    actions.appendChild(btnShow);
+    actions.appendChild(btnRetry);
+    wrap.appendChild(actions);
+    wrap.appendChild(resultBox);
+
+    return wrap;
+  }
+
+  stack.appendChild(frag);
+
+  window.addEventListener("resize", function () {
+    document.querySelectorAll(".theme-iframe").forEach(function (f) {
+      try {
+        var doc = f.contentWindow.document;
+        var h = Math.max(
+          doc.documentElement ? doc.documentElement.scrollHeight : 0,
+          doc.body ? doc.body.scrollHeight : 0
+        );
+        if (h > 0) f.style.height = h + "px";
+      } catch (e) {}
+    });
+  });
+})();
+</script>
 <script>
 let pingTimeout;
 let logoutTimer;
@@ -279,7 +797,7 @@ resetTimers();
 </script>
 <!-- AUTO_NAV_START -->
 <div class="auto-nav-wrap">
-  <a id="autoPrevBtn" class="auto-nav-btn auto-nav-secondary" href="dashboard.html">← Previous</a>
+  <a id="autoPrevBtn" class="auto-nav-btn auto-nav-secondary" href="b2.html">← Previous</a>
   <button type="button" id="telcThemeToggle" class="telc-theme-capsule" aria-label="Dunkelmodus aktivieren" title="Dunkelmodus"><span class="telc-theme-capsule__track"><span class="telc-theme-capsule__btn telc-theme-capsule__btn--sun" data-theme-mode="light"><i class="fa-solid fa-sun" aria-hidden="true"></i></span><span class="telc-theme-capsule__btn telc-theme-capsule__btn--moon" data-theme-mode="dark"><i class="fa-solid fa-moon" aria-hidden="true"></i></span></span></button>
   <a class="auto-nav-btn auto-nav-secondary telc-home-btn telc-home-btn--compact" href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Startseite</a>
 </div>
