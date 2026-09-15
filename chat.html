@@ -1167,6 +1167,7 @@ button:disabled{
         bottom:0;
         z-index:2000;
         transition:left .25s ease;
+        will-change:left;
         box-shadow:10px 0 30px rgba(0,0,0,.25);
         padding-bottom:env(safe-area-inset-bottom);
     }
@@ -2209,9 +2210,34 @@ document
 
 function closeMobileSidebar(){
 
+/*
+   IMPORTANT (real iOS Safari bug):
+   Several call sites (openPrivateChat, openGroup...)
+   remove the "open" class here AND immediately mutate
+   a descendant's innerHTML (renderConversations,
+   renderGroups...) in the same synchronous tick.
+
+   On real iOS Safari devices (this does NOT repro in
+   Chrome's mobile emulator, which is why it only
+   showed up on an actual iPhone) that combination can
+   make the CSS transition never actually commit - the
+   sidebar silently stays "open" on top of the chat
+   that DID switch correctly underneath it.
+
+   Deferring the class removal to the next animation
+   frame lets the current synchronous DOM mutations
+   settle and paint first, then starts the close
+   transition cleanly - this is the standard fix for
+   this class of Safari timing bug.
+*/
+
+requestAnimationFrame(()=>{
+
 document
 .getElementById("sidebar")
 .classList.remove("open");
+
+});
 
 }
 
@@ -7010,6 +7036,7 @@ searchResults.style.display=
 </body>
 
 </html>
+
 
 
 
