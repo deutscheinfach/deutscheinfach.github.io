@@ -10,6 +10,8 @@
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         html {
@@ -17,14 +19,13 @@
         }
 
         body {
-            margin: 0;
             font-family: Arial, Helvetica, sans-serif;
             background:
-                radial-gradient(circle at 10% 10%, rgba(255, 210, 0, 0.14), transparent 25%),
-                radial-gradient(circle at 90% 20%, rgba(214, 0, 0, 0.10), transparent 28%),
-                linear-gradient(135deg, #f8f9fb, #e9eef5);
-            min-height: 100vh;
+                radial-gradient(circle at 10% 0%, rgba(255, 210, 0, 0.10), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(214, 0, 0, 0.08), transparent 30%),
+                #f5f6f8;
             color: #171717;
+            min-height: 100vh;
         }
 
         /* =========================
@@ -32,43 +33,16 @@
         ========================= */
 
         header {
-            position: relative;
-            overflow: hidden;
             background: #111;
             color: white;
-            padding: 22px 25px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
-        }
-
-        header::before {
-            content: "";
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: #d60000;
-            border-radius: 50%;
-            top: -180px;
-            left: -100px;
-            opacity: 0.18;
-        }
-
-        header::after {
-            content: "";
-            position: absolute;
-            width: 250px;
-            height: 250px;
-            background: #ffd200;
-            border-radius: 50%;
-            bottom: -170px;
-            right: -80px;
-            opacity: 0.12;
+            padding: 20px 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         }
 
         .header-content {
-            position: relative;
-            z-index: 2;
             max-width: 1150px;
             margin: auto;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -82,36 +56,33 @@
         }
 
         .logo {
-            width: 62px;
-            height: 62px;
+            width: 60px;
+            height: 60px;
             object-fit: contain;
-            border-radius: 18px;
             background: white;
             padding: 4px;
+            border-radius: 17px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
         }
 
         .brand-text h1 {
-            margin: 0;
             font-size: 25px;
             font-weight: 800;
         }
 
         .brand-text p {
-            margin: 5px 0 0;
-            color: #bbb;
-            font-size: 14px;
+            margin-top: 5px;
+            color: #aaa;
+            font-size: 13px;
         }
 
-        .level-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #d60000, #a50000);
+        .level {
+            background: linear-gradient(135deg, #d60000, #a90000);
             padding: 11px 20px;
             border-radius: 50px;
+            font-size: 13px;
             font-weight: bold;
-            box-shadow: 0 6px 20px rgba(214, 0, 0, 0.28);
+            box-shadow: 0 6px 20px rgba(214, 0, 0, 0.25);
         }
 
         /* =========================
@@ -120,28 +91,62 @@
 
         .container {
             max-width: 1150px;
-            margin: 35px auto;
-            padding: 0 20px 40px;
+            margin: 32px auto;
+            padding: 0 20px 45px;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
         }
 
         .back {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: white;
-            color: #222;
+
             text-decoration: none;
+            color: #222;
+            background: white;
+
             padding: 11px 18px;
             border-radius: 12px;
+
+            font-size: 13px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
             transition: 0.25s;
-            margin-bottom: 25px;
         }
 
         .back:hover {
             transform: translateX(5px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.10);
+        }
+
+        .home {
+            text-decoration: none;
+            color: white;
+            background: #111;
+
+            padding: 11px 18px;
+            border-radius: 12px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .home:hover {
+            background: #d60000;
+            transform: translateY(-2px);
         }
 
         /* =========================
@@ -151,34 +156,47 @@
         .hero {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, #d60000, #a90000 55%, #850000);
-            border-radius: 28px;
-            padding: 42px;
+
+            background:
+                linear-gradient(135deg, #d60000, #a90000 60%, #850000);
+
             color: white;
-            margin-bottom: 28px;
-            box-shadow: 0 15px 40px rgba(150, 0, 0, 0.22);
+            border-radius: 28px;
+
+            padding: 42px;
+            margin-bottom: 32px;
+
+            box-shadow: 0 15px 40px rgba(150, 0, 0, 0.20);
         }
 
         .hero::before {
             content: "";
             position: absolute;
+
             width: 350px;
             height: 350px;
+
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.07);
-            top: -180px;
+
+            background: rgba(255, 255, 255, 0.06);
+
             right: -100px;
+            top: -190px;
         }
 
         .hero::after {
             content: "";
             position: absolute;
+
             width: 180px;
             height: 180px;
+
             border-radius: 50%;
-            background: rgba(255, 210, 0, 0.13);
-            bottom: -100px;
-            left: 10%;
+
+            background: rgba(255, 210, 0, 0.12);
+
+            left: 8%;
+            bottom: -110px;
         }
 
         .hero-content {
@@ -186,108 +204,144 @@
             z-index: 2;
         }
 
-        .hero-small {
+        .hero-label {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.14);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+
             padding: 8px 14px;
             border-radius: 30px;
-            font-size: 13px;
-            margin-bottom: 15px;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            margin-bottom: 16px;
         }
 
         .hero h2 {
-            margin: 0;
-            font-size: 38px;
+            font-size: 40px;
             line-height: 1.2;
+            font-weight: 900;
+        }
+
+        .hero h2 span {
+            color: #ffd200;
         }
 
         .hero p {
-            margin: 15px 0 0;
-            font-size: 17px;
-            color: rgba(255, 255, 255, 0.88);
+            margin-top: 15px;
+
             max-width: 700px;
+
+            color: rgba(255, 255, 255, 0.86);
+
+            font-size: 16px;
             line-height: 1.7;
         }
 
-        .hero-bottom {
+        .hero-info {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 25px;
             flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 25px;
         }
 
-        .exam-info {
-            background: rgba(255, 255, 255, 0.12);
-            padding: 11px 18px;
-            border-radius: 12px;
-            font-size: 14px;
+        .hero-info span {
+            background: rgba(255, 255, 255, 0.11);
+
+            padding: 10px 16px;
+            border-radius: 11px;
+
+            font-size: 12px;
+            font-weight: bold;
         }
 
         /* =========================
-           TITLE
+           SECTION HEADER
         ========================= */
 
-        .section-title {
+        .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+
             margin: 35px 0 18px;
         }
 
-        .section-title h2 {
-            margin: 0;
+        .section-header h2 {
             font-size: 25px;
+            font-weight: 800;
         }
 
-        .section-title span {
-            color: #777;
-            font-size: 14px;
+        .section-header p {
+            color: #888;
+            font-size: 13px;
         }
 
         /* =========================
-           SKILLS
+           CARDS
         ========================= */
 
         .sections {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 22px;
+            gap: 20px;
         }
 
         .card {
             position: relative;
             overflow: hidden;
+
             background: white;
-            border-radius: 24px;
+
+            border-radius: 23px;
             padding: 28px;
-            min-height: 245px;
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
-            transition: 0.3s ease;
+
+            min-height: 260px;
+
+            border: 1px solid rgba(0, 0, 0, 0.05);
+
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+
             cursor: pointer;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+
+            box-shadow:
+                0 18px 42px rgba(0, 0, 0, 0.12);
+
+            border-color: rgba(214, 0, 0, 0.15);
         }
 
         .card::before {
             content: "";
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background: #f4f4f4;
-            top: -45px;
-            right: -35px;
-            transition: 0.3s;
-        }
 
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.13);
+            position: absolute;
+
+            width: 130px;
+            height: 130px;
+
+            border-radius: 50%;
+
+            background: #f4f4f4;
+
+            right: -50px;
+            top: -55px;
+
+            transition: 0.35s;
         }
 
         .card:hover::before {
-            transform: scale(1.6);
+            transform: scale(1.35);
         }
 
         .card-content {
@@ -295,52 +349,97 @@
             z-index: 2;
         }
 
-        .icon-box {
-            width: 66px;
-            height: 66px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 19px;
-            background: #f5f5f5;
-            font-size: 33px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        .card:hover .icon-box {
-            transform: scale(1.08) rotate(-3deg);
-        }
-
-        .card h3 {
-            margin: 0 0 9px;
-            font-size: 25px;
-        }
-
-        .card p {
-            margin: 0;
-            color: #6d6d6d;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        .card-footer {
-            margin-top: 23px;
+        .card-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+        .card-icon {
+            width: 62px;
+            height: 62px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 17px;
+
+            background: #f2f2f2;
+
+            color: #222;
+
+            font-size: 17px;
+            font-weight: 900;
+
+            transition: 0.3s;
+        }
+
+        .card:hover .card-icon {
+            background: #d60000;
+            color: white;
+
+            transform: scale(1.05);
+        }
+
+        .card-number {
+            color: #999;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .card h3 {
+            margin-top: 20px;
+
+            font-size: 25px;
+            font-weight: 900;
+        }
+
+        .card p {
+            margin-top: 9px;
+
+            color: #707070;
+
+            font-size: 14px;
+            line-height: 1.7;
+
+            max-width: 500px;
+        }
+
+        .card-footer {
+            margin-top: 22px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-tag {
+            color: #888;
+            background: #f3f3f3;
+
+            padding: 7px 11px;
+            border-radius: 20px;
+
+            font-size: 10px;
+            font-weight: bold;
+        }
+
         .open-button {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            padding: 11px 19px;
-            border-radius: 12px;
-            background: #171717;
+            gap: 8px;
+
+            background: #111;
             color: white;
-            font-size: 14px;
+
+            padding: 11px 17px;
+            border-radius: 11px;
+
+            font-size: 12px;
             font-weight: bold;
+
             transition: 0.25s;
         }
 
@@ -349,82 +448,67 @@
         }
 
         .arrow {
-            font-size: 18px;
+            font-size: 17px;
+
             transition: 0.25s;
         }
 
         .card:hover .arrow {
-            transform: translateX(-5px);
+            transform: translateX(-4px);
         }
 
         /* =========================
-           STATS
-        ========================= */
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 28px;
-        }
-
-        .stat {
-            background: white;
-            border-radius: 18px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        .stat-number {
-            font-size: 25px;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: #777;
-        }
-
-        /* =========================
-           INFO BOX
+           INFO
         ========================= */
 
         .info {
-            margin-top: 30px;
+            margin-top: 25px;
+
             background: #111;
             color: white;
+
             border-radius: 22px;
-            padding: 25px 28px;
+
+            padding: 24px 27px;
+
             display: flex;
             align-items: center;
-            gap: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.13);
+
+            gap: 18px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
         }
 
         .info-icon {
-            width: 52px;
-            height: 52px;
+            width: 50px;
+            height: 50px;
+
             flex-shrink: 0;
+
             display: flex;
             align-items: center;
             justify-content: center;
+
             border-radius: 15px;
+
             background: #d60000;
-            font-size: 25px;
+
+            font-size: 13px;
+            font-weight: 900;
         }
 
         .info h3 {
-            margin: 0 0 7px;
-            font-size: 18px;
+            font-size: 17px;
+            font-weight: 800;
         }
 
         .info p {
-            margin: 0;
-            color: #bbb;
-            line-height: 1.6;
-            font-size: 14px;
+            margin-top: 6px;
+
+            color: #aaa;
+
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         /* =========================
@@ -433,9 +517,12 @@
 
         footer {
             text-align: center;
-            padding: 25px;
-            color: #777;
-            font-size: 13px;
+
+            padding: 25px 20px 35px;
+
+            color: #888;
+
+            font-size: 12px;
         }
 
         /* =========================
@@ -453,62 +540,92 @@
                 flex-direction: column;
             }
 
+            .navigation {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
             .hero {
-                padding: 30px 23px;
+                padding: 32px 24px;
             }
 
             .hero h2 {
-                font-size: 30px;
+                font-size: 32px;
             }
 
             .sections {
                 grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .info {
-                align-items: flex-start;
             }
         }
 
         @media (max-width: 500px) {
 
             .container {
-                padding: 0 13px 30px;
-                margin-top: 22px;
+                width: calc(100% - 24px);
+                padding: 0 0 30px;
+                margin-top: 20px;
             }
 
             header {
                 padding: 18px 15px;
             }
 
-            .brand-text h1 {
-                font-size: 22px;
+            .logo {
+                width: 57px;
+                height: 57px;
             }
 
-            .level-badge {
-                font-size: 13px;
+            .brand-text h1 {
+                font-size: 21px;
+            }
+
+            .level {
+                font-size: 11px;
+                padding: 10px 15px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .back,
+            .home {
+                justify-content: center;
+                text-align: center;
             }
 
             .hero {
                 border-radius: 21px;
-                padding: 25px 20px;
+                padding: 27px 20px;
             }
 
             .hero h2 {
-                font-size: 27px;
+                font-size: 29px;
             }
 
             .hero p {
-                font-size: 15px;
+                font-size: 14px;
+            }
+
+            .hero-info span {
+                width: 100%;
+                text-align: center;
+            }
+
+            .section-header {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .section-header h2 {
+                font-size: 23px;
             }
 
             .card {
-                min-height: auto;
                 padding: 23px;
+                min-height: auto;
                 border-radius: 20px;
             }
 
@@ -516,19 +633,22 @@
                 font-size: 22px;
             }
 
-            .stats {
-                gap: 10px;
+            .card-footer {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 12px;
             }
 
-            .stat {
-                padding: 16px 10px;
+            .open-button {
+                justify-content: center;
             }
 
-            .stat-number {
-                font-size: 21px;
+            .card-tag {
+                text-align: center;
             }
 
             .info {
+                align-items: flex-start;
                 padding: 20px;
             }
         }
@@ -538,387 +658,434 @@
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
 
-<header>
+    <!-- =========================
+         HEADER
+    ========================= -->
 
-    <div class="header-content">
+    <header>
 
-        <div class="brand">
+        <div class="header-content">
 
-            <img
-                src="icon1.png"
-                class="logo"
-                alt="Deutsch Einfach"
+            <div class="brand">
+
+                <img
+                    src="icon1.png"
+                    class="logo"
+                    alt="Deutsch Einfach"
+                >
+
+                <div class="brand-text">
+
+                    <h1>Deutsch Einfach</h1>
+
+                    <p>
+                        Deutsch lernen. Prüfung bestehen.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="level">
+                TELC B2
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="container">
+
+
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+            <a href="dashboard.html" class="back">
+                ← Zurück zum Dashboard
+            </a>
+
+            <a href="index.html" class="home">
+                Startseite
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             HERO
+        ========================= -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-label">
+                    TELC B2 Prüfungsvorbereitung
+                </div>
+
+                <h2>
+                    Willkommen bei
+                    <span>TELC B2</span>
+                </h2>
+
+                <p>
+                    Trainiere Lesen, Hören, Schreiben und Sprechen
+                    Schritt für Schritt und bereite dich gezielt
+                    auf deine B2-Prüfung vor.
+                </p>
+
+
+                <div class="hero-info">
+
+                    <span>
+                        4 Prüfungsteile
+                    </span>
+
+                    <span>
+                        TELC B2
+                    </span>
+
+                    <span>
+                        Schritt für Schritt
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SECTION TITLE
+        ========================= -->
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Prüfungsteile
+                </h2>
+
+                <p>
+                    Wähle einen Bereich und starte dein Training.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             SKILLS
+        ========================= -->
+
+        <div class="sections">
+
+
+            <!-- LESEN -->
+
+            <div
+                class="card"
+                onclick="openLesen()"
             >
 
-            <div class="brand-text">
+                <div class="card-content">
 
-                <h1>Deutsch Einfach 🇩🇪</h1>
+                    <div class="card-top">
 
-                <p>
-                    Deutsch lernen. Prüfung bestehen.
-                </p>
+                        <div class="card-icon">
+                            LESEN
+                        </div>
+
+                        <div class="card-number">
+                            01
+                        </div>
+
+                    </div>
+
+
+                    <h3>
+                        Lesen
+                    </h3>
+
+                    <p>
+                        Trainiere dein Leseverstehen und übe
+                        typische Aufgaben der TELC B2 Prüfung.
+                    </p>
+
+
+                    <div class="card-footer">
+
+                        <span class="card-tag">
+                            B2 Prüfung
+                        </span>
+
+                        <span class="open-button">
+
+                            Öffnen
+
+                            <span class="arrow">
+                                ←
+                            </span>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HÖREN -->
+
+            <div
+                class="card"
+                onclick="openHoeren()"
+            >
+
+                <div class="card-content">
+
+                    <div class="card-top">
+
+                        <div class="card-icon">
+                            HÖREN
+                        </div>
+
+                        <div class="card-number">
+                            02
+                        </div>
+
+                    </div>
+
+
+                    <h3>
+                        Hören
+                    </h3>
+
+                    <p>
+                        Verbessere dein Hörverstehen mit Übungen
+                        und typischen B2-Prüfungsaufgaben.
+                    </p>
+
+
+                    <div class="card-footer">
+
+                        <span class="card-tag">
+                            B2 Prüfung
+                        </span>
+
+                        <span class="open-button">
+
+                            Öffnen
+
+                            <span class="arrow">
+                                ←
+                            </span>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCHREIBEN -->
+
+            <div
+                class="card"
+                onclick="openSchreiben()"
+            >
+
+                <div class="card-content">
+
+                    <div class="card-top">
+
+                        <div class="card-icon">
+                            SCHREIBEN
+                        </div>
+
+                        <div class="card-number">
+                            03
+                        </div>
+
+                    </div>
+
+
+                    <h3>
+                        Schreiben
+                    </h3>
+
+                    <p>
+                        Übe wichtige Schreibaufgaben und lerne,
+                        wie du deine B2 Texte besser formulierst.
+                    </p>
+
+
+                    <div class="card-footer">
+
+                        <span class="card-tag">
+                            B2 Prüfung
+                        </span>
+
+                        <span class="open-button">
+
+                            Öffnen
+
+                            <span class="arrow">
+                                ←
+                            </span>
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SPRECHEN -->
+
+            <div
+                class="card"
+                onclick="openSprechen()"
+            >
+
+                <div class="card-content">
+
+                    <div class="card-top">
+
+                        <div class="card-icon">
+                            SPRECHEN
+                        </div>
+
+                        <div class="card-number">
+                            04
+                        </div>
+
+                    </div>
+
+
+                    <h3>
+                        Sprechen
+                    </h3>
+
+                    <p>
+                        Bereite dich auf die mündliche Prüfung vor
+                        und trainiere wichtige B2 Themen.
+                    </p>
+
+
+                    <div class="card-footer">
+
+                        <span class="card-tag">
+                            B2 Prüfung
+                        </span>
+
+                        <span class="open-button">
+
+                            Öffnen
+
+                            <span class="arrow">
+                                ←
+                            </span>
+
+                        </span>
+
+                    </div>
+
+                </div>
 
             </div>
 
         </div>
 
 
-        <div class="level-badge">
-            🇩🇪 TELC B2
-        </div>
+        <!-- =========================
+             INFO
+        ========================= -->
 
-    </div>
+        <div class="info">
 
-</header>
-
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<div class="container">
-
-    <a href="dashboard.html" class="back">
-        ← Zurück zum Dashboard
-    </a>
-
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <span class="hero-small">
-                🎯 Prüfungsvorbereitung
-            </span>
-
-            <h2>
-                Willkommen bei TELC B2 👋
-            </h2>
-
-            <p>
-                Trainiere Lesen, Hören, Schreiben und Sprechen
-                Schritt für Schritt und bereite dich optimal auf
-                deine B2-Prüfung vor.
-            </p>
-
-
-            <div class="hero-bottom">
-
-                <div class="exam-info">
-                    📚 4 Prüfungsteile
-                </div>
-
-                <div class="exam-info">
-                    📝 TELC B2 Vorbereitung
-                </div>
-
-                <div class="exam-info">
-                    🚀 Schritt für Schritt
-                </div>
-
+            <div class="info-icon">
+                B2
             </div>
 
-        </div>
-
-    </section>
-
-
-    <!-- TITLE -->
-
-    <div class="section-title">
-
-        <h2>
-            Prüfungsteile
-        </h2>
-
-        <span>
-            Wähle einen Bereich
-        </span>
-
-    </div>
-
-
-    <!-- SKILLS -->
-
-    <div class="sections">
-
-
-        <!-- LESEN -->
-
-        <div class="card" onclick="openLesen()">
-
-            <div class="card-content">
-
-                <div class="icon-box">
-                    📖
-                </div>
+            <div>
 
                 <h3>
-                    Lesen
+                    Deine B2 Vorbereitung
                 </h3>
 
                 <p>
-                    Trainiere dein Leseverstehen und übe
-                    typische Aufgaben der TELC B2 Prüfung.
+                    Wähle einen Prüfungsteil und trainiere
+                    Schritt für Schritt. Alle Bereiche sind
+                    direkt miteinander verbunden.
                 </p>
 
-                <div class="card-footer">
-
-                    <span class="open-button">
-                        Öffnen
-                        <span class="arrow">←</span>
-                    </span>
-
-                </div>
-
             </div>
 
         </div>
 
+    </main>
 
-        <!-- HÖREN -->
 
-        <div class="card" onclick="openHoeren()">
+    <!-- =========================
+         FOOTER
+    ========================= -->
 
-            <div class="card-content">
+    <footer>
 
-                <div class="icon-box">
-                    🎧
-                </div>
+        © 2026 Deutsch Einfach
 
-                <h3>
-                    Hören
-                </h3>
+        <br>
 
-                <p>
-                    Verbessere dein Hörverstehen mit Übungen
-                    und typischen B2-Prüfungsaufgaben.
-                </p>
-
-                <div class="card-footer">
-
-                    <span class="open-button">
-                        Öffnen
-                        <span class="arrow">←</span>
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- SCHREIBEN -->
-
-        <div class="card" onclick="openSchreiben()">
-
-            <div class="card-content">
-
-                <div class="icon-box">
-                    ✍️
-                </div>
-
-                <h3>
-                    Schreiben
-                </h3>
-
-                <p>
-                    Übe wichtige Schreibaufgaben und lerne,
-                    wie du deine B2 Texte besser formulierst.
-                </p>
-
-                <div class="card-footer">
-
-                    <span class="open-button">
-                        Öffnen
-                        <span class="arrow">←</span>
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- SPRECHEN -->
-
-        <div class="card" onclick="openSprechen()">
-
-            <div class="card-content">
-
-                <div class="icon-box">
-                    🗣️
-                </div>
-
-                <h3>
-                    Sprechen
-                </h3>
-
-                <p>
-                    Bereite dich auf die mündliche Prüfung vor
-                    und trainiere wichtige B2 Themen.
-                </p>
-
-                <div class="card-footer">
-
-                    <span class="open-button">
-                        Öffnen
-                        <span class="arrow">←</span>
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- STATS -->
-
-    <div class="section-title">
-
-        <h2>
-            Dein B2 Training
-        </h2>
-
-        <span>
-            Übersicht
-        </span>
-
-    </div>
-
-
-    <div class="stats">
-
-        <div class="stat">
-
-            <div class="stat-number">
-                📖
-            </div>
-
-            <div class="stat-label">
-                Lesen
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-number">
-                🎧
-            </div>
-
-            <div class="stat-label">
-                Hören
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-number">
-                ✍️
-            </div>
-
-            <div class="stat-label">
-                Schreiben
-            </div>
-
-        </div>
-
-
-        <div class="stat">
-
-            <div class="stat-number">
-                🗣️
-            </div>
-
-            <div class="stat-label">
-                Sprechen
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- INFO -->
-
-    <div class="info">
-
-        <div class="info-icon">
-            💡
-        </div>
-
-        <div>
-
-            <h3>
-                So funktioniert Deutsch Einfach
-            </h3>
-
-            <p>
-                Wähle zuerst einen Prüfungsteil.
-                Danach kannst du die verschiedenen
-                Teilaufgaben öffnen und Schritt für Schritt
-                für deine TELC B2 Prüfung trainieren.
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- FOOTER -->
-
-<footer>
-
-    © 2026 Deutsch Einfach 🇩🇪
-    <br>
-
-    <span>
         Deutsch lernen. Prüfung bestehen.
-    </span>
 
-</footer>
+    </footer>
 
 
-<!-- =========================
-     JAVASCRIPT
-========================= -->
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
-<script>
+    <script>
 
-    function openLesen() {
-        window.location.href = "b2-lesen.html";
-    }
+        function openLesen() {
+            window.location.href = "b2-lesen.html";
+        }
 
-    function openHoeren() {
-        window.location.href = "b2-hoeren.html";
-    }
 
-    function openSchreiben() {
-        window.location.href = "b2-schreiben.html";
-    }
+        function openHoeren() {
+            window.location.href = "b2-hoeren.html";
+        }
 
-    function openSprechen() {
-        window.location.href = "b2-sprechen.html";
-    }
 
-</script>
+        function openSchreiben() {
+            window.location.href = "b2-schreiben.html";
+        }
+
+
+        function openSprechen() {
+            window.location.href = "b2-sprechen.html";
+        }
+
+    </script>
+
 
 </body>
+
 </html>
