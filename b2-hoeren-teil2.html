@@ -8,7 +8,7 @@
   <title>Hören: Teil2</title>
   <style>
     :root { --de-red:#d60000; --de-red-dark:#a80000; --de-yellow:#f2c500; --de-black:#171717; }
-    body { background: radial-gradient(circle at top right, #fff4bd 0%, transparent 25%), radial-gradient(circle at bottom left, #ffe5e5 0%, transparent 28%), #f6f7f9; font-family: Arial, sans-serif; padding: 30px; }
+    body { background: #fff4bd; font-family: Arial, sans-serif; padding: 30px; }
     .btn-check { margin-top: 20px; padding: 10px 18px; font-size: 16px; background-color: var(--de-red); color: white; border: none; border-radius: 8px; cursor: pointer; }
     .btn-check:hover { background-color: var(--de-red-dark); }
     .correct { background-color: #d4edda; }
@@ -129,6 +129,227 @@
 
 
 
+<!-- THEME_STACK_LAYOUT_V1 -->
+<style>
+  #hoeren-teil2-stack {
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 4px 4px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+  .theme-item {
+    background: #fff;
+    border: 1.5px solid #f0d0d0;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(214,0,0,0.06);
+    overflow: hidden;
+  }
+  html.dark .theme-item {
+    background: #1b1b1b;
+    border-color: #3a3a3a;
+  }
+  .theme-item-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #fff1f1 0%, #fff8d8 100%);
+    border-bottom: 1.5px solid #f0d0d0;
+    cursor: pointer;
+    user-select: none;
+  }
+  html.dark .theme-item-header {
+    background: #241f1f;
+    border-color: #3a3a3a;
+  }
+  .theme-item-index {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .theme-item-title {
+    flex: 1;
+    font-weight: 700;
+    font-size: 16px;
+    color: #171717;
+  }
+  html.dark .theme-item-title { color: #f1f1f1; }
+  .theme-item-chevron {
+    flex: 0 0 auto;
+    color: var(--de-red);
+    transition: transform .25s ease;
+  }
+  .theme-item.collapsed .theme-item-chevron { transform: rotate(-90deg); }
+  .theme-iframe-wrap {
+    position: relative;
+    background: #f5f6f8;
+  }
+  html.dark .theme-iframe-wrap { background: #111214; }
+  .theme-iframe {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    min-height: 520px;
+  }
+  .theme-item.collapsed .theme-iframe-wrap { display: none; }
+
+  /* ===== UNIFORM THEMA CARDS ===== */
+  .theme-card-body {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: #fff;
+    min-height: 76px;
+  }
+  .theme-card-icon {
+    flex: 0 0 auto;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 6px 14px rgba(214,0,0,0.16);
+  }
+  .theme-card-info { flex: 1; min-width: 0; }
+  .theme-card-label { font-size: 14px; font-weight: 800; color: #171717; margin-bottom: 4px; }
+  .theme-card-subtitle { font-size: 12px; color: #777; line-height: 1.45; }
+  .theme-card-open {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 11px;
+    background: var(--de-red);
+    color: #fff !important;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+    transition: transform .2s, background .2s, box-shadow .2s;
+  }
+  .theme-card-open:hover {
+    background: var(--de-red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(214,0,0,0.2);
+  }
+  .theme-card-open i { transition: transform .2s; }
+  .theme-card-open:hover i { transform: translateX(-3px); }
+  html.dark .theme-card-body { background: #1b1b1b; }
+  html.dark .theme-card-label { color: #f1f1f1; }
+  html.dark .theme-card-subtitle { color: #aaa; }
+  @media (max-width: 620px) {
+    .theme-card-body { align-items: flex-start; flex-wrap: wrap; padding: 15px; }
+    .theme-card-info { padding-top: 2px; }
+    .theme-card-open { width: 100%; margin-top: 2px; }
+  }
+  .theme-iframe-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--de-red);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .theme-iframe-loading i { animation: theme-spin 0.8s linear infinite; }
+  @keyframes theme-spin { to { transform: rotate(360deg); } }
+
+  /* ===== NATIVE RICHTIG/FALSCH QUIZ (no iframe) ===== */
+  .theme-item.collapsed .native-quiz-wrap { display: none; }
+  .native-quiz-wrap { padding: 16px 18px 20px; background: #f5f6f8; }
+  html.dark .native-quiz-wrap { background: #111214; }
+  .nq-intro { margin: 0 0 14px; font-size: 13px; color: #555; }
+  html.dark .nq-intro { color: #bbb; }
+  .nq-question-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 15px 14px;
+    border: 1.5px solid #f0d0d0;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    background: #fff;
+    transition: background .2s, border-color .2s, transform .2s;
+  }
+  html.dark .nq-question-row { background: #1b1b1b; border-color: #3a3a3a; }
+  .nq-question-row:last-child { margin-bottom: 0; }
+  .nq-question-row.nq-correct { border-color: #16803c; background: #e9f8ef; }
+  html.dark .nq-question-row.nq-correct { border-color: #51d88a; background: #153d28; }
+  .nq-question-row.nq-wrong { border-color: #c62828; background: #fff0f0; }
+  html.dark .nq-question-row.nq-wrong { border-color: #ff7070; background: #421d1d; }
+  .nq-question-text { font-size: 14px; line-height: 1.6; font-weight: 600; color: #171717; }
+  html.dark .nq-question-text { color: #f1f1f1; }
+  .nq-question-number {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 8px;
+    background: var(--de-red); color: #fff; font-size: 12px; font-weight: 800; margin-right: 7px;
+  }
+  .nq-answers { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .nq-radio-option {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 12px; border: 1px solid #ddd; border-radius: 10px;
+    cursor: pointer; user-select: none; background: #fff; font-size: 12px; font-weight: 700;
+    transition: border .2s, background .2s;
+  }
+  html.dark .nq-radio-option { background: #1f1f1f; border-color: #3a3a3a; color: #f1f1f1; }
+  .nq-radio-option:hover { border-color: var(--de-red); }
+  .nq-radio-option input { accent-color: var(--de-red); cursor: pointer; }
+  .nq-radio-option.nq-correct-opt { border-color: #16803c; background: #e9f8ef; color: #16803c; }
+  html.dark .nq-radio-option.nq-correct-opt { border-color: #51d88a; background: #153d28; color: #51d88a; }
+  .nq-radio-option.nq-correct-opt::after { content: "✓"; font-weight: 900; margin-left: 2px; }
+  .nq-solution-badge {
+    display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; margin-top: 6px;
+    padding: 5px 9px; border-radius: 8px; background: #e9f8ef; color: #16803c;
+    border: 1px solid rgba(22,128,60,0.2); font-size: 11px; font-weight: 800;
+  }
+  html.dark .nq-solution-badge { background: #153d28; color: #51d88a; }
+  .nq-action-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 18px 0 4px; }
+  .nq-btn {
+    border: none; border-radius: 13px; min-height: 44px; padding: 0 18px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit; font-size: 13px; font-weight: 800; cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .nq-btn:hover { transform: translateY(-2px); }
+  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(214,0,0,0.22); }
+  .nq-btn-show { background: #22252a; color: #fff; }
+  html.dark .nq-btn-show { background: #f0f0f0; color: #161616; }
+  .nq-btn-retry { background: var(--de-yellow); color: #171717; }
+  .nq-result-box { margin: 14px 0 0; min-height: 0; border-radius: 12px; text-align: center; font-weight: 800; font-size: 14px; }
+  .nq-result-box:not(:empty) { padding: 13px; border: 1px solid #e4e4e4; background: rgba(128,128,128,0.05); }
+  html.dark .nq-result-box:not(:empty) { border-color: #3a3a3a; }
+  .nq-result-success { color: #16803c; }
+  html.dark .nq-result-success { color: #51d88a; }
+  .nq-result-info { color: var(--de-red); }
+  @media (max-width: 620px) {
+    .nq-question-row { grid-template-columns: 1fr; gap: 10px; }
+    .nq-answers { justify-content: flex-start; }
+    .nq-action-buttons { flex-direction: column; }
+    .nq-btn { width: 100%; }
+  }
+</style>
+
 <!-- TELC_EXERCISE_TILES -->
 <link rel="stylesheet" href="../telc-exercise-tiles.css">
 <link rel="stylesheet" href="../telc-score-badge.css">
@@ -149,10 +370,299 @@
   <a href="b2-hoeren-teil3.html" class="teil-nav-btn">Teil 3</a>
 </div>
 
-<div class="telc-exercise-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4 max-w-7xl mx-auto" id="hoeren-hub-grid">
-  <p style="grid-column:1/-1;text-align:center;color:#888;padding:30px 10px;font-weight:600;">Übungen für Teil 2 folgen bald.</p>
+<div id="hoeren-teil2-stack"></div>
+<script>
+(function () {
+  var THEMES = [ 
+  { href: "", title: "", quizId: "", questions: [
+    { text: "", answer: "" },
+    { text: "", answer: "" },
+    { text: "", answer: "" },
+    { text: "", answer: "" },
+    { text: "", answer: "" }
+  ]
+},
+{ href: "", title: "", quizId: "", questions: [
+    { text: "", answer: "" },
+    { text: "", answer: "" },
+    { text: "", answer: "" },
+    { text: "", answer: "" },
+    { text: "", answer: "" }
+  ]
+},
 
-          </div>
+
+] 
+
+  var stack = document.getElementById("hoeren-teil2-stack");
+  if (!stack) return;
+
+  var frag = document.createDocumentFragment();
+
+  THEMES.forEach(function (theme, i) {
+    var item = document.createElement("div");
+    item.className = "theme-item";
+    item.id = "theme-item-" + (i + 1);
+
+    var header = document.createElement("div");
+    header.className = "theme-item-header";
+    header.innerHTML =
+      '<span class="theme-item-index">' + (i + 1) + '</span>' +
+      '<span class="theme-item-title">' + theme.title + '</span>' +
+      '<i class="fa-solid fa-chevron-down theme-item-chevron"></i>';
+
+    header.addEventListener("click", function () {
+      item.classList.toggle("collapsed");
+    });
+
+    item.appendChild(header);
+
+    if (theme.questions && theme.questions.length) {
+      item.appendChild(buildNativeQuiz(theme));
+    } else {
+      /*
+         IMPORTANT:
+         Each Thema has its own complete HTML exercise page.
+         We load that real page inside the same cadre instead
+         of showing an "Öffnen" placeholder.
+      */
+      var iframeWrap = document.createElement("div");
+      iframeWrap.className = "theme-iframe-wrap";
+
+      var loading = document.createElement("div");
+      loading.className = "theme-iframe-loading";
+      loading.innerHTML = '<i class="fa-solid fa-spinner"></i> Wird geladen…';
+      iframeWrap.appendChild(loading);
+
+      var iframe = document.createElement("iframe");
+      iframe.className = "theme-iframe";
+      iframe.src = theme.href;
+      iframe.loading = "lazy";
+      iframe.title = theme.title;
+      iframe.setAttribute("scrolling", "no");
+      iframe.setAttribute("frameborder", "0");
+
+      function resizeAndClean() {
+        try {
+          var doc = iframe.contentWindow.document;
+
+          /* Keep the exercise itself, but remove the duplicated
+             page chrome because the Thema already has our outer cadre. */
+          [
+            ".top-header",
+            ".breadcrumb",
+            ".quiz-header",
+            ".info-row",
+            ".page-footer"
+          ].forEach(function(selector) {
+            var el = doc.querySelector(selector);
+            if (el) el.style.display = "none";
+          });
+
+          if (doc.body) {
+            doc.body.style.margin = "0";
+            doc.body.style.background = "transparent";
+            doc.body.style.minHeight = "0";
+          }
+
+          var page = doc.querySelector(".quiz-page");
+          if (page) {
+            page.style.maxWidth = "none";
+            page.style.padding = "0";
+          }
+
+          var quiz = doc.querySelector(".quiz-container");
+          if (quiz) {
+            quiz.style.marginTop = "0";
+            quiz.style.borderRadius = "0";
+            quiz.style.boxShadow = "none";
+            quiz.style.borderLeft = "0";
+            quiz.style.borderRight = "0";
+            quiz.style.borderBottom = "0";
+          }
+
+          var h = Math.max(
+            doc.documentElement ? doc.documentElement.scrollHeight : 0,
+            doc.body ? doc.body.scrollHeight : 0
+          );
+
+          if (h > 0) iframe.style.height = h + "px";
+        } catch (e) {
+          iframe.style.height = "850px";
+        }
+      }
+
+      iframe.addEventListener("load", function () {
+        loading.style.display = "none";
+        resizeAndClean();
+
+        /* Recalculate after fonts/scripts finish rendering. */
+        setTimeout(resizeAndClean, 300);
+        setTimeout(resizeAndClean, 1000);
+        setTimeout(resizeAndClean, 2000);
+      });
+
+      iframeWrap.appendChild(iframe);
+      item.appendChild(iframeWrap);
+    }
+
+    frag.appendChild(item);
+  });
+
+  /* ==========================================
+     BUILD A NATIVE RICHTIG/FALSCH QUIZ
+     (rendered directly inside the theme-item
+     cadre — no iframe, nothing external to load)
+  ========================================== */
+  function buildNativeQuiz(theme) {
+    var qid = theme.quizId || theme.href.replace(/[^a-z0-9]/gi, "_");
+
+    var wrap = document.createElement("div");
+    wrap.className = "native-quiz-wrap";
+
+    var intro = document.createElement("p");
+    intro.className = "nq-intro";
+    intro.textContent = "Höre die Informationen aufmerksam und entscheide: Richtig oder Falsch?";
+    wrap.appendChild(intro);
+
+    var rows = [];
+
+    theme.questions.forEach(function (q, i) {
+      var row = document.createElement("div");
+      row.className = "nq-question-row";
+
+      var textEl = document.createElement("div");
+      textEl.className = "nq-question-text";
+      var numEl = document.createElement("span");
+      numEl.className = "nq-question-number";
+      numEl.textContent = (i + 1);
+      textEl.appendChild(numEl);
+      textEl.appendChild(document.createTextNode(q.text));
+      row.appendChild(textEl);
+
+      var answers = document.createElement("div");
+      answers.className = "nq-answers";
+
+      ["richtig", "falsch"].forEach(function (val) {
+        var label = document.createElement("label");
+        label.className = "nq-radio-option";
+
+        var input = document.createElement("input");
+        input.type = "radio";
+        input.name = qid + "_q" + (i + 1);
+        input.value = val;
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(val === "richtig" ? "Richtig" : "Falsch"));
+        answers.appendChild(label);
+      });
+
+      row.appendChild(answers);
+      wrap.appendChild(row);
+      rows.push({ row: row, textEl: textEl, name: qid + "_q" + (i + 1), answer: q.answer });
+    });
+
+    function clearReveal() {
+      rows.forEach(function (r) {
+        r.row.classList.remove("nq-correct", "nq-wrong");
+        r.row.querySelectorAll(".nq-radio-option").forEach(function (l) {
+          l.classList.remove("nq-correct-opt");
+        });
+        var badge = r.textEl.querySelector(".nq-solution-badge");
+        if (badge) badge.remove();
+      });
+    }
+
+    var resultBox = document.createElement("div");
+    resultBox.className = "nq-result-box";
+    resultBox.setAttribute("aria-live", "polite");
+
+    var actions = document.createElement("div");
+    actions.className = "nq-action-buttons";
+
+    var btnCheck = document.createElement("button");
+    btnCheck.type = "button";
+    btnCheck.className = "nq-btn nq-btn-check";
+    btnCheck.innerHTML = '<i class="fa-solid fa-check-double"></i> Antworten prüfen';
+    btnCheck.addEventListener("click", function () {
+      clearReveal();
+      var score = 0;
+      rows.forEach(function (r) {
+        var selected = wrap.querySelector('input[name="' + r.name + '"]:checked');
+        if (!selected) return;
+        if (selected.value === r.answer) {
+          score++;
+          r.row.classList.add("nq-correct");
+        } else {
+          r.row.classList.add("nq-wrong");
+        }
+      });
+      var total = rows.length;
+      if (score === total) {
+        resultBox.innerHTML = '<span class="nq-result-success"><i class="fa-solid fa-trophy"></i> ' + score + ' von ' + total + ' richtig – Sehr gut!</span>';
+      } else {
+        resultBox.innerHTML = '<span class="nq-result-info"><i class="fa-solid fa-chart-simple"></i> ' + score + ' von ' + total + ' richtig</span>';
+      }
+    });
+
+    var btnShow = document.createElement("button");
+    btnShow.type = "button";
+    btnShow.className = "nq-btn nq-btn-show";
+    btnShow.innerHTML = '<i class="fa-solid fa-eye"></i> Antworten anzeigen';
+    btnShow.addEventListener("click", function () {
+      clearReveal();
+      rows.forEach(function (r) {
+        r.row.querySelectorAll('input[name="' + r.name + '"]').forEach(function (input) {
+          var label = input.closest(".nq-radio-option");
+          if (label && input.value === r.answer) label.classList.add("nq-correct-opt");
+        });
+        var badge = document.createElement("span");
+        badge.className = "nq-solution-badge";
+        badge.innerHTML = '<i class="fa-solid fa-lightbulb"></i> Lösung: ' + (r.answer === "richtig" ? "Richtig" : "Falsch");
+        r.textEl.appendChild(badge);
+      });
+      resultBox.innerHTML = '<span class="nq-result-info"><i class="fa-solid fa-eye"></i> Die richtigen Antworten werden angezeigt. Du kannst die Aufgabe jetzt noch einmal versuchen.</span>';
+    });
+
+    var btnRetry = document.createElement("button");
+    btnRetry.type = "button";
+    btnRetry.className = "nq-btn nq-btn-retry";
+    btnRetry.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Nochmal versuchen';
+    btnRetry.addEventListener("click", function () {
+      rows.forEach(function (r) {
+        r.row.querySelectorAll('input[name="' + r.name + '"]').forEach(function (input) {
+          input.checked = false;
+        });
+      });
+      clearReveal();
+      resultBox.innerHTML = "";
+    });
+
+    actions.appendChild(btnCheck);
+    actions.appendChild(btnShow);
+    actions.appendChild(btnRetry);
+    wrap.appendChild(actions);
+    wrap.appendChild(resultBox);
+
+    return wrap;
+  }
+
+  stack.appendChild(frag);
+
+  window.addEventListener("resize", function () {
+    document.querySelectorAll(".theme-iframe").forEach(function (f) {
+      try {
+        var doc = f.contentWindow.document;
+        var h = Math.max(
+          doc.documentElement ? doc.documentElement.scrollHeight : 0,
+          doc.body ? doc.body.scrollHeight : 0
+        );
+        if (h > 0) f.style.height = h + "px";
+      } catch (e) {}
+    });
+  });
+})();
+</script>
 <script>
 let pingTimeout;
 let logoutTimer;
