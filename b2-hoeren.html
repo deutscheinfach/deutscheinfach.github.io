@@ -806,10 +806,10 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
 </head>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
-  <a class="hoeren-nav-btn hoeren-nav-back" href="../dashboard.html">
+  <a class="hoeren-nav-btn hoeren-nav-back" href="b2.html">
     <i class="fa-solid fa-arrow-left"></i><span>Zurück</span>
   </a>
-  <a class="hoeren-nav-btn hoeren-nav-start" href="../index.html">
+  <a class="hoeren-nav-btn hoeren-nav-start" href="index.html">
     <i class="fa-solid fa-house"></i><span>Startseite</span>
   </a>
   <span class="hoeren-nav-divider"></span>
@@ -817,6 +817,14 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
   <a class="hoeren-nav-btn hoeren-nav-part" href="b2-hoeren-teil2.html">Teil 2</a>
   <a class="hoeren-nav-btn hoeren-nav-part" href="b2-hoeren-teil3.html">Teil 3</a>
 </nav>
+<script>
+(function(){
+var b=document.querySelector('.hoeren-nav-back'),h=document.querySelector('.hoeren-nav-start');
+if(b)b.onclick=function(e){e.preventDefault();location.href='b2.html';};
+if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
+})();
+</script>
+
 
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <audio id="success-sound" src="../applause.mp3" preload="none" style="display:none;" oncontextmenu="return false;"></audio>
