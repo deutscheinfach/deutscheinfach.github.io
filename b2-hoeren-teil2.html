@@ -356,19 +356,482 @@
 <link rel="stylesheet" href="../telc-gold-crown-badge.css">
 <link rel="stylesheet" href="../telc-global-check-btn.css">
 <link rel="stylesheet" href="lesen-teil2-action-layout.css?v=t2-retry-1">
+
+<style id="hoeren-pro-b2-final">
+/* ===== DEUTSCH EINFACH — B2 / SCHREIBEN VISUAL IDENTITY ===== */
+:root{
+  --de-red:#d60000 !important;
+  --de-red-dark:#a80000 !important;
+  --de-yellow:#f2c500 !important;
+  --de-black:#171717 !important;
+}
+
+html:not(.dark) body{
+  background:
+    radial-gradient(900px 420px at -8% -8%, rgba(214,0,0,.14), transparent 62%),
+    radial-gradient(760px 360px at 108% -5%, rgba(242,197,0,.16), transparent 60%),
+    radial-gradient(600px 420px at 50% 110%, rgba(214,0,0,.055), transparent 65%),
+    linear-gradient(135deg,#eef0f4 0%,#ffffff 43%,#f0f1f4 100%) !important;
+  color:#171717 !important;
+}
+
+/* Premium topbar */
+.telc-exercise-topbar.telc-exercise-toolbar{
+  border-radius:16px !important;
+  margin-bottom:18px !important;
+  background:linear-gradient(90deg,#171717 0%,#252525 72%,#d60000 100%) !important;
+  box-shadow:0 8px 24px rgba(23,23,23,.14),0 2px 0 rgba(242,197,0,.7) inset !important;
+}
+
+/* Part navigation */
+.teil-nav-wrap{
+  gap:12px !important;
+  margin-bottom:28px !important;
+}
+.teil-nav-btn{
+  background:#fff !important;
+  border:1.5px solid #dfe1e6 !important;
+  color:#171717 !important;
+  border-radius:13px !important;
+  padding:11px 28px !important;
+  box-shadow:0 5px 16px rgba(23,23,23,.06) !important;
+}
+.teil-nav-btn:hover{
+  background:#fff8f8 !important;
+  border-color:#d60000 !important;
+  color:#d60000 !important;
+  box-shadow:0 10px 24px rgba(214,0,0,.13) !important;
+}
+.teil-nav-btn.active{
+  background:linear-gradient(135deg,#d60000,#a80000) !important;
+  border-color:#d60000 !important;
+  color:#fff !important;
+  box-shadow:0 9px 22px rgba(214,0,0,.25) !important;
+}
+
+/* Exercise stack */
+#hoeren-teil2-stack{
+  max-width:1150px !important;
+  margin:0 auto !important;
+  padding:8px 6px 45px !important;
+  gap:24px !important;
+}
+
+/* Every listening card */
+#hoeren-teil2-stack .theme-item{
+  background:#fff !important;
+  border:1px solid #e0e2e7 !important;
+  border-radius:22px !important;
+  overflow:hidden !important;
+  box-shadow:0 10px 30px rgba(23,23,23,.075) !important;
+  position:relative !important;
+}
+#hoeren-teil2-stack .theme-item::before{
+  content:"" !important;
+  position:absolute !important;
+  left:0 !important;
+  top:0 !important;
+  bottom:0 !important;
+  width:5px !important;
+  background:linear-gradient(180deg,#d60000 0%,#d60000 55%,#f2c500 100%) !important;
+  z-index:2 !important;
+}
+
+/* Card header */
+#hoeren-teil2-stack .theme-item-header{
+  background:linear-gradient(135deg,#171717 0%,#252525 72%,#3a2020 100%) !important;
+  border-bottom:0 !important;
+  color:#fff !important;
+  padding:17px 21px !important;
+}
+#hoeren-teil2-stack .theme-item-title{
+  color:#fff !important;
+  font-weight:800 !important;
+  letter-spacing:.1px !important;
+}
+#hoeren-teil2-stack .theme-item-chevron{
+  color:#f2c500 !important;
+}
+#hoeren-teil2-stack .theme-item-index{
+  background:linear-gradient(135deg,#d60000,#a80000) !important;
+  border:2px solid rgba(255,255,255,.18) !important;
+  box-shadow:0 5px 13px rgba(0,0,0,.22) !important;
+}
+
+/* Audio / iframe surface */
+#hoeren-teil2-stack .theme-iframe-wrap{
+  background:#f0f2f5 !important;
+  border-top:1px solid #e4e6ea !important;
+}
+
+/* Native quiz */
+#hoeren-teil2-stack .native-quiz-wrap{
+  background:#f3f4f6 !important;
+  padding:18px 20px 22px !important;
+  border-top:1px solid #e5e7eb !important;
+}
+#hoeren-teil2-stack .nq-intro{
+  color:#555 !important;
+  font-weight:600 !important;
+}
+#hoeren-teil2-stack .nq-question-row{
+  background:#fff !important;
+  border:1px solid #e1e3e8 !important;
+  border-left:4px solid #d60000 !important;
+  border-radius:15px !important;
+  box-shadow:0 4px 13px rgba(23,23,23,.045) !important;
+}
+#hoeren-teil2-stack .nq-question-row:hover{
+  border-color:#d5a8a8 !important;
+  border-left-color:#d60000 !important;
+  box-shadow:0 8px 19px rgba(214,0,0,.08) !important;
+}
+#hoeren-teil2-stack .nq-question-text{
+  color:#171717 !important;
+}
+#hoeren-teil2-stack .nq-question-number{
+  background:linear-gradient(135deg,#d60000,#a80000) !important;
+  border-radius:8px !important;
+}
+#hoeren-teil2-stack .nq-radio-option{
+  background:#fff !important;
+  border:1px solid #d9dce1 !important;
+  color:#272727 !important;
+  border-radius:10px !important;
+}
+#hoeren-teil2-stack .nq-radio-option:hover{
+  background:#fff7f7 !important;
+  border-color:#d60000 !important;
+}
+
+/* Buttons */
+#hoeren-teil2-stack .nq-btn{
+  border-radius:12px !important;
+  min-height:45px !important;
+}
+#hoeren-teil2-stack .nq-btn-check{
+  background:linear-gradient(135deg,#d60000,#a80000) !important;
+  box-shadow:0 8px 19px rgba(214,0,0,.23) !important;
+}
+#hoeren-teil2-stack .nq-btn-show{
+  background:#171717 !important;
+  color:#fff !important;
+}
+#hoeren-teil2-stack .nq-btn-retry{
+  background:#f2c500 !important;
+  color:#171717 !important;
+}
+
+/* Existing exercise buttons */
+#hoeren-hub-grid a.ex-btn,
+#hoeren-teil1-grid a.ex-btn{
+  background:#fff !important;
+  border:1px solid #e0e2e7 !important;
+  color:#171717 !important;
+  border-radius:15px !important;
+  box-shadow:0 5px 15px rgba(23,23,23,.055) !important;
+}
+#hoeren-hub-grid a.ex-btn:hover,
+#hoeren-teil1-grid a.ex-btn:hover{
+  background:linear-gradient(135deg,#fff 0%,#fff5f5 72%,#fffaf0 100%) !important;
+  border-color:#d60000 !important;
+  box-shadow:0 10px 24px rgba(214,0,0,.13) !important;
+}
+#hoeren-hub-grid a.ex-btn::before,
+#hoeren-teil1-grid a.ex-btn::before{
+  opacity:1 !important;
+  background:linear-gradient(180deg,#d60000,#f2c500) !important;
+  width:4px !important;
+}
+#hoeren-hub-grid a.ex-btn .ex-label,
+#hoeren-teil1-grid a.ex-btn .ex-label{
+  color:#171717 !important;
+}
+
+/* Auto navigation */
+.auto-nav-btn{
+  border-radius:12px !important;
+  box-shadow:0 6px 16px rgba(23,23,23,.12) !important;
+}
+.auto-nav-btn:not(.auto-nav-secondary){
+  background:#171717 !important;
+}
+.auto-nav-btn.auto-nav-secondary{
+  background:#d60000 !important;
+}
+
+/* Dark mode remains compatible */
+html.dark body{
+  background:
+    radial-gradient(850px 420px at -8% -8%,rgba(214,0,0,.18),transparent 62%),
+    radial-gradient(700px 380px at 108% 0%,rgba(242,197,0,.10),transparent 60%),
+    linear-gradient(135deg,#0d0f14,#171a21 52%,#0d0f14) !important;
+}
+html.dark #hoeren-teil2-stack .theme-item{
+  background:#17191f !important;
+  border-color:#30343d !important;
+}
+html.dark #hoeren-teil2-stack .theme-item-header{
+  background:linear-gradient(135deg,#111318,#1d2028 72%,#351919) !important;
+}
+html.dark #hoeren-teil2-stack .theme-iframe-wrap,
+html.dark #hoeren-teil2-stack .native-quiz-wrap{
+  background:#101217 !important;
+}
+html.dark #hoeren-teil2-stack .nq-question-row{
+  background:#1a1d23 !important;
+  border-color:#343842 !important;
+  border-left-color:#d60000 !important;
+}
+html.dark #hoeren-teil2-stack .nq-question-text,
+html.dark #hoeren-hub-grid a.ex-btn .ex-label,
+html.dark #hoeren-teil1-grid a.ex-btn .ex-label{
+  color:#f5f5f5 !important;
+}
+html.dark #hoeren-hub-grid a.ex-btn,
+html.dark #hoeren-teil1-grid a.ex-btn{
+  background:#191c22 !important;
+  border-color:#343842 !important;
+  color:#f5f5f5 !important;
+}
+</style>
+
+
+<style id="hoeren-sticky-top-nav">
+/* ===== HÖREN — STICKY TOP NAV ===== */
+:root{ --hoeren-nav-height:64px; }
+
+body{
+  padding-top:92px !important;
+}
+
+/* Fixed navigation: always visible while scrolling */
+.hoeren-sticky-nav{
+  position:fixed !important;
+  top:12px !important;
+  left:50% !important;
+  transform:translateX(-50%) !important;
+  width:min(1150px,calc(100vw - 24px)) !important;
+  min-height:64px !important;
+  z-index:10000 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  padding:8px 10px !important;
+  box-sizing:border-box !important;
+  border:1px solid rgba(255,255,255,.72) !important;
+  border-radius:17px !important;
+  background:rgba(255,255,255,.92) !important;
+  backdrop-filter:blur(16px) saturate(150%) !important;
+  -webkit-backdrop-filter:blur(16px) saturate(150%) !important;
+  box-shadow:0 12px 34px rgba(23,23,23,.15),0 2px 0 rgba(214,0,0,.75) inset !important;
+}
+
+.hoeren-sticky-nav .hoeren-nav-btn{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:7px !important;
+  min-height:42px !important;
+  padding:0 16px !important;
+  border-radius:11px !important;
+  text-decoration:none !important;
+  font:700 13px/1 Arial,sans-serif !important;
+  white-space:nowrap !important;
+  transition:all .2s ease !important;
+  box-sizing:border-box !important;
+}
+
+.hoeren-sticky-nav .hoeren-nav-back,
+.hoeren-sticky-nav .hoeren-nav-start{
+  background:#171717 !important;
+  color:#fff !important;
+  border:1px solid #171717 !important;
+}
+.hoeren-sticky-nav .hoeren-nav-back:hover,
+.hoeren-sticky-nav .hoeren-nav-start:hover{
+  background:#2a2a2a !important;
+  transform:translateY(-2px) !important;
+}
+
+.hoeren-sticky-nav .hoeren-nav-part{
+  background:#fff !important;
+  color:#171717 !important;
+  border:1px solid #dfe1e6 !important;
+}
+.hoeren-sticky-nav .hoeren-nav-part:hover{
+  color:#d60000 !important;
+  border-color:#d60000 !important;
+  background:#fff7f7 !important;
+  transform:translateY(-2px) !important;
+}
+.hoeren-sticky-nav .hoeren-nav-part.active{
+  background:linear-gradient(135deg,#d60000,#a80000) !important;
+  color:#fff !important;
+  border-color:#d60000 !important;
+  box-shadow:0 7px 16px rgba(214,0,0,.22) !important;
+}
+
+.hoeren-sticky-nav .hoeren-nav-divider{
+  width:1px !important;
+  height:28px !important;
+  background:#ddd !important;
+  margin:0 2px !important;
+}
+
+html.dark .hoeren-sticky-nav{
+  background:rgba(20,22,27,.92) !important;
+  border-color:#343842 !important;
+  box-shadow:0 12px 34px rgba(0,0,0,.35),0 2px 0 rgba(214,0,0,.8) inset !important;
+}
+html.dark .hoeren-sticky-nav .hoeren-nav-part{
+  background:#191c22 !important;
+  color:#f5f5f5 !important;
+  border-color:#343842 !important;
+}
+html.dark .hoeren-sticky-nav .hoeren-nav-part:hover{
+  background:#2b1c1c !important;
+  color:#fff !important;
+  border-color:#d60000 !important;
+}
+html.dark .hoeren-sticky-nav .hoeren-nav-divider{
+  background:#3a3d44 !important;
+}
+
+@media(max-width:760px){
+  body{padding-top:136px !important;}
+  .hoeren-sticky-nav{
+    top:8px !important;
+    width:calc(100vw - 16px) !important;
+    flex-wrap:wrap !important;
+    gap:5px !important;
+    padding:7px !important;
+  }
+  .hoeren-sticky-nav .hoeren-nav-btn{
+    min-height:38px !important;
+    padding:0 10px !important;
+    font-size:11.5px !important;
+  }
+  .hoeren-sticky-nav .hoeren-nav-divider{
+    display:none !important;
+  }
+}
+</style>
+
+
+<style id="hoeren-quiz-feedback-fix">
+  .nq-question-row.nq-correct {
+    border: 2px solid #16803c !important;
+    background: #e9f8ef !important;
+    box-shadow: 0 5px 16px rgba(22,128,60,.12) !important;
+  }
+  .nq-question-row.nq-wrong {
+    border: 2px solid #c62828 !important;
+    background: #fff0f0 !important;
+    box-shadow: 0 5px 16px rgba(198,40,40,.10) !important;
+  }
+  .nq-question-row.nq-unanswered {
+    border-color: #e0b000 !important;
+  }
+  .nq-radio-option.nq-selected-correct {
+    border: 2px solid #16803c !important;
+    background: #d9f3e3 !important;
+    color: #16803c !important;
+  }
+  .nq-radio-option.nq-selected-wrong {
+    border: 2px solid #c62828 !important;
+    background: #ffe0e0 !important;
+    color: #b71c1c !important;
+  }
+  .nq-feedback-badge,
+  .nq-solution-badge {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+    margin-top: 7px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    vertical-align: middle;
+  }
+  .nq-feedback-correct {
+    background: #d9f3e3 !important;
+    color: #16803c !important;
+    border: 1px solid #16803c !important;
+  }
+  .nq-feedback-wrong {
+    background: #ffe0e0 !important;
+    color: #b71c1c !important;
+    border: 1px solid #c62828 !important;
+  }
+  .nq-solution-badge {
+    background: #e9f8ef !important;
+    color: #16803c !important;
+    border: 1px solid #16803c !important;
+  }
+  html.dark .nq-question-row.nq-correct {
+    background: #153d28 !important;
+    border-color: #51d88a !important;
+  }
+  html.dark .nq-question-row.nq-wrong {
+    background: #421d1d !important;
+    border-color: #ff7070 !important;
+  }
+  html.dark .nq-radio-option.nq-selected-correct {
+    background: #153d28 !important;
+    color: #51d88a !important;
+    border-color: #51d88a !important;
+  }
+  html.dark .nq-radio-option.nq-selected-wrong {
+    background: #421d1d !important;
+    color: #ff8a8a !important;
+    border-color: #ff7070 !important;
+  }
+  html.dark .nq-feedback-correct,
+  html.dark .nq-solution-badge {
+    background: #153d28 !important;
+    color: #51d88a !important;
+    border-color: #51d88a !important;
+  }
+  html.dark .nq-feedback-wrong {
+    background: #421d1d !important;
+    color: #ff8a8a !important;
+    border-color: #ff7070 !important;
+  }
+</style>
+
 </head>
+
+<nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
+  <a class="hoeren-nav-btn hoeren-nav-back" href="b2.html">
+    <i class="fa-solid fa-arrow-left"></i><span>Zurück</span>
+  </a>
+  <a class="hoeren-nav-btn hoeren-nav-start" href="index.html">
+    <i class="fa-solid fa-house"></i><span>Startseite</span>
+  </a>
+  <span class="hoeren-nav-divider"></span>
+  <a class="hoeren-nav-btn hoeren-nav-part" href="b2-hoeren.html">Teil 1</a>
+  <a class="hoeren-nav-btn hoeren-nav-part active" href="b2-hoeren-teil2.html">Teil 2</a>
+  <a class="hoeren-nav-btn hoeren-nav-part" href="b2-hoeren-teil3.html">Teil 3</a>
+</nav>
+<script>
+(function(){
+var b=document.querySelector('.hoeren-nav-back'),h=document.querySelector('.hoeren-nav-start');
+if(b)b.onclick=function(e){e.preventDefault();location.href='b2.html';};
+if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
+})();
+</script>
+
+
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <audio id="success-sound" src="../applause.mp3" preload="none" style="display:none;" oncontextmenu="return false;"></audio>
 
 <div id="warningBox">Tu vas être déconnecté dans <span id="countdown">30</span> secondes d'inactivité</div>
 
 <div class="telc-exercise-topbar telc-exercise-toolbar"></div>
-
-<div class="teil-nav-wrap">
-  <a href="b2-hoeren.html" class="teil-nav-btn">Teil 1</a>
-  <a href="b2-hoeren-teil2.html" class="teil-nav-btn active">Teil 2</a>
-  <a href="b2-hoeren-teil3.html" class="teil-nav-btn">Teil 3</a>
-</div>
 
 <div id="hoeren-teil2-stack"></div>
 <script>
@@ -1456,12 +1919,13 @@
 
     function clearReveal() {
       rows.forEach(function (r) {
-        r.row.classList.remove("nq-correct", "nq-wrong");
+        r.row.classList.remove("nq-correct", "nq-wrong", "nq-unanswered");
         r.row.querySelectorAll(".nq-radio-option").forEach(function (l) {
-          l.classList.remove("nq-correct-opt");
+          l.classList.remove("nq-correct-opt", "nq-selected-correct", "nq-selected-wrong");
         });
-        var badge = r.textEl.querySelector(".nq-solution-badge");
-        if (badge) badge.remove();
+        r.textEl.querySelectorAll(".nq-solution-badge, .nq-feedback-badge").forEach(function (badge) {
+          badge.remove();
+        });
       });
     }
 
@@ -1479,21 +1943,98 @@
     btnCheck.addEventListener("click", function () {
       clearReveal();
       var score = 0;
+      var answered = 0;
+
       rows.forEach(function (r) {
         var selected = wrap.querySelector('input[name="' + r.name + '"]:checked');
-        if (!selected) return;
+
+        // Reset visual state first.
+        r.row.classList.remove("nq-correct", "nq-wrong", "nq-unanswered");
+        r.row.querySelectorAll(".nq-radio-option").forEach(function (label) {
+          label.classList.remove("nq-selected-correct", "nq-selected-wrong");
+        });
+
+        if (!selected) {
+          /*
+           * Kein Antwort gewählt:
+           * Beim Klick auf "Antworten prüfen" soll die komplette Aussage
+           * trotzdem ROT markiert werden und die richtige Antwort darunter
+           * angezeigt werden.
+           */
+          r.row.classList.add("nq-wrong");
+
+          var noAnswerBadge = document.createElement("span");
+          noAnswerBadge.className = "nq-feedback-badge nq-feedback-wrong";
+          noAnswerBadge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Keine Antwort';
+          r.textEl.appendChild(noAnswerBadge);
+
+          var noAnswerSolution = document.createElement("span");
+          noAnswerSolution.className = "nq-solution-badge";
+          noAnswerSolution.innerHTML = '<i class="fa-solid fa-lightbulb"></i> Richtige Antwort: ' +
+            (r.answer === "richtig" ? "Richtig" : "Falsch");
+          r.textEl.appendChild(noAnswerSolution);
+
+          return;
+        }
+
+        answered++;
+
+        var selectedLabel = selected.closest(".nq-radio-option");
+
         if (selected.value === r.answer) {
           score++;
           r.row.classList.add("nq-correct");
+          var selectedOption = selected.closest(".nq-radio-option");
+          if (selectedOption) selectedOption.classList.add("nq-selected-correct");
+          if (selectedLabel) selectedLabel.classList.add("nq-selected-correct");
+
+          var okBadge = document.createElement("span");
+          okBadge.className = "nq-feedback-badge nq-feedback-correct";
+          okBadge.innerHTML = '<i class="fa-solid fa-circle-check"></i> Richtig';
+          r.textEl.appendChild(okBadge);
         } else {
           r.row.classList.add("nq-wrong");
+          var selectedOption = selected.closest(".nq-radio-option");
+          if (selectedOption) selectedOption.classList.add("nq-selected-wrong");
+          if (selectedLabel) selectedLabel.classList.add("nq-selected-wrong");
+
+          var wrongBadge = document.createElement("span");
+          wrongBadge.className = "nq-feedback-badge nq-feedback-wrong";
+          wrongBadge.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Falsch';
+          r.textEl.appendChild(wrongBadge);
+
+          var solutionBadge = document.createElement("span");
+          solutionBadge.className = "nq-solution-badge";
+          solutionBadge.innerHTML = '<i class="fa-solid fa-lightbulb"></i> Lösung: ' +
+            (r.answer === "richtig" ? "Richtig" : "Falsch");
+          r.textEl.appendChild(solutionBadge);
         }
       });
+
+
+      var correctNumbers = [];
+      rows.forEach(function (r, idx) {
+        // Toujours afficher les numéros des affirmations dont la bonne réponse est "Richtig",
+        // même si l'utilisateur n'a choisi aucune réponse.
+        if (r.answer === "richtig") {
+          correctNumbers.push(idx + 1);
+        }
+      });
+
+      finalSummary.hidden = false;
+      finalSummary.innerHTML =
+        '<div class="nq-summary-title">الصحيح هو:</div>' +
+        '<div class="nq-summary-correct">' +
+          (correctNumbers.length ? correctNumbers.join("-") : "—") +
+        '</div>' +
+        '<div class="nq-summary-falsch">أما الباقي فهو (Falsch)</div>';
+
       var total = rows.length;
       if (score === total) {
         resultBox.innerHTML = '<span class="nq-result-success"><i class="fa-solid fa-trophy"></i> ' + score + ' von ' + total + ' richtig – Sehr gut!</span>';
       } else {
-        resultBox.innerHTML = '<span class="nq-result-info"><i class="fa-solid fa-chart-simple"></i> ' + score + ' von ' + total + ' richtig</span>';
+        resultBox.innerHTML = '<span class="nq-result-info"><i class="fa-solid fa-chart-simple"></i> ' + score + ' von ' + total + ' richtig' +
+          (answered < total ? ' – ' + (total - answered) + ' noch nicht beantwortet' : '') + '</span>';
       }
     });
 
@@ -1508,9 +2049,11 @@
           var label = input.closest(".nq-radio-option");
           if (label && input.value === r.answer) label.classList.add("nq-correct-opt");
         });
+
         var badge = document.createElement("span");
         badge.className = "nq-solution-badge";
-        badge.innerHTML = '<i class="fa-solid fa-lightbulb"></i> Lösung: ' + (r.answer === "richtig" ? "Richtig" : "Falsch");
+        badge.innerHTML = '<i class="fa-solid fa-lightbulb"></i> Lösung: ' +
+          (r.answer === "richtig" ? "Richtig" : "Falsch");
         r.textEl.appendChild(badge);
       });
       resultBox.innerHTML = '<span class="nq-result-info"><i class="fa-solid fa-eye"></i> Die richtigen Antworten werden angezeigt. Du kannst die Aufgabe jetzt noch einmal versuchen.</span>';
@@ -1521,6 +2064,9 @@
     btnRetry.className = "nq-btn nq-btn-retry";
     btnRetry.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Nochmal versuchen';
     btnRetry.addEventListener("click", function () {
+      finalSummary.hidden = true;
+      finalSummary.innerHTML = "";
+
       rows.forEach(function (r) {
         r.row.querySelectorAll('input[name="' + r.name + '"]').forEach(function (input) {
           input.checked = false;
@@ -1535,6 +2081,10 @@
     actions.appendChild(btnRetry);
     wrap.appendChild(actions);
     wrap.appendChild(resultBox);
+      var finalSummary = document.createElement("div");
+      finalSummary.className = "nq-final-summary";
+      finalSummary.hidden = true;
+      wrap.appendChild(finalSummary);
 
     return wrap;
   }
@@ -1685,5 +2235,128 @@ resetTimers();
 <script src="../telc-validee.js?v=streak-v7"></script>
 <script src="../telc-return-focus.js"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"1d259d82f9a64fa6a2818b10e5954ebb","r":1,"spa":2}' crossorigin="anonymous"></script>
+
+<style id="hoeren-quiz-color-fix">
+/* Antworten prüfen: richtig = grün, falsch = rot */
+.nq-question-row.nq-correct{
+  border:2px solid #16a34a !important;
+  background:#dcfce7 !important;
+}
+.nq-question-row.nq-wrong{
+  border:2px solid #dc2626 !important;
+  background:#fee2e2 !important;
+}
+.nq-radio-option.nq-selected-correct{
+  border-color:#16a34a !important;
+  background:#dcfce7 !important;
+  color:#166534 !important;
+}
+.nq-radio-option.nq-selected-wrong{
+  border-color:#dc2626 !important;
+  background:#fee2e2 !important;
+  color:#991b1b !important;
+}
+.nq-feedback-badge{
+  display:inline-flex !important;
+  margin:12px 8px 0 0 !important;
+  padding:7px 13px !important;
+  border-radius:999px !important;
+  font-weight:900 !important;
+}
+.nq-feedback-correct{
+  background:#16a34a !important;
+  color:#fff !important;
+}
+.nq-feedback-wrong{
+  background:#dc2626 !important;
+  color:#fff !important;
+}
+.nq-solution-badge{
+  display:inline-flex !important;
+  margin:12px 0 0 !important;
+  padding:7px 13px !important;
+  border-radius:999px !important;
+  background:#15803d !important;
+  color:#fff !important;
+  font-weight:900 !important;
+}
+</style>
+
+
+<style id="hoeren-final-check-behavior">
+/* FINAL: Antworten prüfen colors the complete sentence only */
+.nq-question-row.nq-correct,
+.nq-question-row.nq-correct .nq-question-text{
+  background:#dcfce7 !important;
+  border-color:#16a34a !important;
+}
+.nq-question-row.nq-wrong,
+.nq-question-row.nq-wrong .nq-question-text{
+  background:#fee2e2 !important;
+  border-color:#dc2626 !important;
+}
+.nq-question-row.nq-correct .nq-question-text,
+.nq-question-row.nq-wrong .nq-question-text{
+  color:inherit !important;
+}
+.nq-question-row.nq-correct{
+  border:2px solid #16a34a !important;
+  border-radius:14px !important;
+}
+.nq-question-row.nq-wrong{
+  border:2px solid #dc2626 !important;
+  border-radius:14px !important;
+}
+/* No "Lösung: ..." when using Antworten prüfen */
+.nq-question-row.nq-correct .nq-solution-badge,
+.nq-question-row.nq-wrong .nq-solution-badge{
+  display:none !important;
+}
+/* Keep Richtig/Falsch indicator */
+.nq-feedback-badge{
+  display:inline-flex !important;
+  margin:10px 0 0 !important;
+  padding:7px 13px !important;
+  border-radius:999px !important;
+  font-weight:900 !important;
+}
+.nq-feedback-correct{background:#16a34a !important;color:#fff !important;}
+.nq-feedback-wrong{background:#dc2626 !important;color:#fff !important;}
+</style>
+
+
+<style id="hoeren-final-result-summary">
+.nq-final-summary{
+  margin:16px 0 0 !important;
+  padding:16px 18px !important;
+  border-radius:15px !important;
+  border:1px solid #e2e2e2 !important;
+  background:#fff !important;
+  text-align:left !important;
+}
+.nq-summary-title{
+  font-size:17px !important;
+  font-weight:900 !important;
+  margin-bottom:5px !important;
+}
+.nq-summary-correct{
+  color:#15803d !important;
+  font-size:21px !important;
+  font-weight:900 !important;
+  margin-bottom:10px !important;
+}
+.nq-summary-falsch{
+  color:#171717 !important;
+  font-size:16px !important;
+  font-weight:900 !important;
+}
+html.dark .nq-final-summary{
+  background:#1b1b1b !important;
+  border-color:#3a3a3a !important;
+}
+html.dark .nq-summary-falsch{color:#f1f1f1 !important;}
+html.dark .nq-summary-correct{color:#51d88a !important;}
+</style>
+
 </body>
 </html>
