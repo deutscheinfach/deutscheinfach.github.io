@@ -803,6 +803,50 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
   }
 </style>
 
+<style id="hoeren-teil3-premium-lock">
+.premium-theme-body{
+  background:#fff !important;
+  min-height:100px;
+}
+.premium-theme-icon{
+  background:#171717 !important;
+  color:#f2c500 !important;
+  box-shadow:0 6px 14px rgba(23,23,23,.18) !important;
+}
+.premium-theme-open{
+  background:#171717 !important;
+  color:#f2c500 !important;
+  border:1px solid #171717 !important;
+}
+.premium-theme-open:hover{
+  background:#d60000 !important;
+  color:#fff !important;
+  border-color:#d60000 !important;
+}
+html.dark .premium-theme-body{background:#1b1b1b !important;}
+html.dark .premium-theme-open{
+  background:#111318 !important;
+  color:#f2c500 !important;
+  border-color:#343842 !important;
+}
+html.dark .premium-theme-open:hover{
+  background:#d60000 !important;
+  color:#fff !important;
+  border-color:#d60000 !important;
+}
+@media(max-width:620px){
+  .premium-theme-body{
+    align-items:flex-start !important;
+    flex-wrap:wrap !important;
+    padding:15px !important;
+  }
+  .premium-theme-open{
+    width:100% !important;
+    margin-top:2px !important;
+  }
+}
+</style>
+
 </head>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
@@ -1310,7 +1354,44 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 
     item.appendChild(header);
 
-    if (theme.questions && theme.questions.length) {
+    /* ===== PREMIUM LOCK: first 5 themes free, from theme 6 paid ===== */
+    if (i >= 5) {
+      var premiumBody = document.createElement("div");
+      premiumBody.className = "theme-card-body premium-theme-body";
+
+      var premiumIcon = document.createElement("div");
+      premiumIcon.className = "theme-card-icon premium-theme-icon";
+      premiumIcon.innerHTML = '<i class="fa-solid fa-lock"></i>';
+
+      var premiumInfo = document.createElement("div");
+      premiumInfo.className = "theme-card-info";
+
+      var premiumLabel = document.createElement("div");
+      premiumLabel.className = "theme-card-label";
+      premiumLabel.textContent = "Premium – " + theme.title;
+
+      var premiumSubtitle = document.createElement("div");
+      premiumSubtitle.className = "theme-card-subtitle";
+      premiumSubtitle.innerHTML = "🇩🇪 Dieses Thema ist Premium.<br>🇲🇦 هاد الموضوع Premium.";
+
+      premiumInfo.appendChild(premiumLabel);
+      premiumInfo.appendChild(premiumSubtitle);
+
+      var premiumButton = document.createElement("a");
+      premiumButton.href = "#";
+      premiumButton.className = "theme-card-open premium-theme-open";
+      premiumButton.innerHTML = '<i class="fa-solid fa-lock"></i> Premium – Entsperren';
+      premiumButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        openHoerenTeil3Premium(theme.title);
+      });
+
+      premiumBody.appendChild(premiumIcon);
+      premiumBody.appendChild(premiumInfo);
+      premiumBody.appendChild(premiumButton);
+      item.appendChild(premiumBody);
+
+    } else if (theme.questions && theme.questions.length) {
       item.appendChild(buildNativeQuiz(theme));
     } else {
       /*
@@ -1896,6 +1977,225 @@ html.dark .nq-final-summary{
 html.dark .nq-summary-falsch{color:#f1f1f1 !important;}
 html.dark .nq-summary-correct{color:#51d88a !important;}
 </style>
+
+
+
+<!-- ===== HÖREN TEIL 3 PREMIUM MODAL ===== -->
+<div id="hoerenTeil3PremiumModal" class="de-premium-modal" onclick="closeHoerenTeil3PremiumOutside(event)">
+  <div class="de-premium-box">
+    <button type="button" class="de-premium-close" onclick="closeHoerenTeil3Premium()" aria-label="Schließen">×</button>
+
+    <div class="de-premium-title">🔒 Premium Zugang</div>
+
+    <div id="hoerenTeil3PremiumTopic" class="de-premium-topic"></div>
+
+    <div class="de-premium-text">
+      <div>🇩🇪 Dieses Thema ist Premium. Wähle ein Angebot, um den Zugang freizuschalten.</div>
+      <div>🇲🇦 هاد الموضوع Premium. اختار العرض باش تفتح الولوج للتمرين.</div>
+    </div>
+
+    <div class="de-premium-offers">
+      <a href="#" class="de-premium-offer" onclick="chooseHoerenTeil3Offer(event,'15 Tage – 49 DH')">
+        <strong>15 Tage</strong>
+        <span>49 DH</span>
+        <small>ولوج Hören Premium</small>
+      </a>
+
+      <a href="#" class="de-premium-offer" onclick="chooseHoerenTeil3Offer(event,'1 Monat – 99,99 DH')">
+        <strong>1 Monat</strong>
+        <span>99,99 DH</span>
+        <small>ولوج Hören Premium</small>
+      </a>
+
+      <a href="#" class="de-premium-offer" onclick="chooseHoerenTeil3Offer(event,'2 Monate – 150 DH')">
+        <strong>2 Monate</strong>
+        <span>150 DH</span>
+        <small>ولوج Hören Premium</small>
+      </a>
+    </div>
+
+    <a href="#" class="de-premium-whatsapp" onclick="chooseHoerenTeil3Offer(event,'Kontakt über WhatsApp')">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span>WhatsApp: 0653618205</span>
+    </a>
+  </div>
+</div>
+
+<style id="hoeren-teil3-premium-modal-style">
+.de-premium-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.de-premium-modal.show{display:flex;}
+.de-premium-box{
+  width:min(620px,100%);
+  max-height:90vh;
+  overflow:auto;
+  position:relative;
+  padding:28px;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid #e0e2e7;
+  box-shadow:0 25px 70px rgba(0,0,0,.28);
+  text-align:center;
+}
+.de-premium-close{
+  position:absolute;
+  top:10px;
+  right:13px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:#171717;
+  color:#fff;
+  font-size:26px;
+  line-height:1;
+  cursor:pointer;
+}
+.de-premium-title{
+  font-size:24px;
+  font-weight:900;
+  color:#171717;
+  margin:4px 30px 14px;
+}
+.de-premium-topic{
+  padding:13px 15px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#fff1f1,#fff8d8);
+  border:1px solid #f0d0d0;
+  color:#171717;
+  font-weight:800;
+  line-height:1.55;
+}
+.de-premium-text{
+  margin:16px 0;
+  color:#555;
+  font-size:13px;
+  line-height:1.65;
+}
+.de-premium-offers{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.de-premium-offer{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  min-height:112px;
+  padding:14px 10px;
+  border-radius:15px;
+  text-decoration:none;
+  background:#171717;
+  color:#fff;
+  border:1px solid #171717;
+  transition:.2s ease;
+}
+.de-premium-offer:hover{
+  transform:translateY(-3px);
+  background:#d60000;
+  border-color:#d60000;
+}
+.de-premium-offer strong{font-size:15px;}
+.de-premium-offer span{font-size:20px;font-weight:900;color:#f2c500;}
+.de-premium-offer small{font-size:10px;opacity:.82;}
+.de-premium-whatsapp{
+  margin-top:14px;
+  width:100%;
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  border-radius:13px;
+  background:#f2c500;
+  color:#171717;
+  text-decoration:none;
+  font-weight:900;
+  border:1px solid #e0b800;
+  transition:.2s ease;
+}
+.de-premium-whatsapp:hover{
+  background:#d60000;
+  color:#fff;
+  border-color:#d60000;
+}
+html.dark .de-premium-box{background:#17191f;border-color:#30343d;}
+html.dark .de-premium-title{color:#fff;}
+html.dark .de-premium-topic{background:#241f1f;border-color:#3a3a3a;color:#fff;}
+html.dark .de-premium-text{color:#bbb;}
+html.dark .de-premium-offer{background:#111318;border-color:#343842;}
+html.dark .de-premium-offer:hover{background:#d60000;border-color:#d60000;}
+@media(max-width:620px){
+  .de-premium-box{padding:23px 16px;}
+  .de-premium-title{font-size:21px;}
+  .de-premium-offers{grid-template-columns:1fr;}
+  .de-premium-offer{min-height:82px;}
+}
+</style>
+
+<script>
+(function(){
+  const HOEREN_TEIL3_WHATSAPP_NUMBER = "212653618205";
+  let selectedHoerenTeil3Topic = "";
+
+  window.openHoerenTeil3Premium = function(topic){
+    selectedHoerenTeil3Topic = topic || "";
+    var topicEl = document.getElementById("hoerenTeil3PremiumTopic");
+    var modal = document.getElementById("hoerenTeil3PremiumModal");
+    if(topicEl){
+      topicEl.innerHTML =
+        "🔒 <strong>" + selectedHoerenTeil3Topic + "</strong><br>" +
+        "🇩🇪 Dieses Thema ist Premium.<br>" +
+        "🇲🇦 هاد الموضوع Premium.";
+    }
+    if(modal) modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  };
+
+  window.closeHoerenTeil3Premium = function(){
+    var modal = document.getElementById("hoerenTeil3PremiumModal");
+    if(modal) modal.classList.remove("show");
+    document.body.style.overflow = "";
+  };
+
+  window.closeHoerenTeil3PremiumOutside = function(event){
+    if(event.target && event.target.id === "hoerenTeil3PremiumModal"){
+      window.closeHoerenTeil3Premium();
+    }
+  };
+
+  window.chooseHoerenTeil3Offer = function(event, offer){
+    event.preventDefault();
+    var message =
+      "Salam, bghit nفتح الولوج لـ Hören B2 Teil 3" +
+      "\nThema: " + selectedHoerenTeil3Topic +
+      "\nAngebot: " + offer;
+
+    window.open(
+      "https://wa.me/" + HOEREN_TEIL3_WHATSAPP_NUMBER +
+      "?text=" + encodeURIComponent(message),
+      "_blank"
+    );
+  };
+
+  document.addEventListener("keydown",function(event){
+    if(event.key === "Escape"){
+      window.closeHoerenTeil3Premium();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
