@@ -803,6 +803,17 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
   }
 </style>
 
+
+<style id="hoeren-premium-lock">
+.premium-theme-body{background:#fff !important;min-height:100px;}
+.premium-theme-icon{background:#171717 !important;color:#f2c500 !important;box-shadow:0 6px 14px rgba(23,23,23,.18) !important;}
+.premium-theme-open{background:#171717 !important;color:#f2c500 !important;border:1px solid #171717 !important;}
+.premium-theme-open:hover{background:#d60000 !important;color:#fff !important;border-color:#d60000 !important;}
+html.dark .premium-theme-body{background:#1b1b1b !important;}
+html.dark .premium-theme-open{background:#111318 !important;color:#f2c500 !important;border-color:#343842 !important;}
+html.dark .premium-theme-open:hover{background:#d60000 !important;color:#fff !important;border-color:#d60000 !important;}
+</style>
+
 </head>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
@@ -834,8 +845,69 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 <div class="telc-exercise-topbar telc-exercise-toolbar"></div>
 
 <div id="hoeren-teil1-stack"></div>
+
+<!-- ===== PREMIUM CHECK (Firebase) ===== -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+  authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+  projectId: "deutsch-einfach-4c81f",
+  storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+  messagingSenderId: "152448766933",
+  appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+  measurementId: "G-9QV234Z0KZ"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/*
+ * كنبنيو Promise غادي يتحل (resolve) بـ true/false
+ * باش نعرفو واش اليوزر عندو premium فعلاً فـ Firestore،
+ * الـ IIFE ديال THEMES غادي تستناها قبل ما تبني الصفحة.
+ */
+window.__deutschEinfachPremiumReady = new Promise(function (resolve) {
+  onAuthStateChanged(auth, async function (user) {
+    if (!user) {
+      resolve(false);
+      return;
+    }
+
+    try {
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+
+      if (!userSnap.exists()) {
+        resolve(false);
+        return;
+      }
+
+      const data = userSnap.data();
+
+      const active = data.subscriptionActive === true;
+
+      let notExpired = true;
+      if (data.subscriptionEnd && typeof data.subscriptionEnd.toDate === "function") {
+        notExpired = data.subscriptionEnd.toDate().getTime() > Date.now();
+      }
+
+      resolve(active && notExpired);
+    } catch (error) {
+      console.error("Premium check error:", error);
+      resolve(false);
+    }
+  });
+});
+</script>
+
 <script>
-(function () {
+(async function () {
+  var isPremiumUser = await (window.__deutschEinfachPremiumReady || Promise.resolve(false));
+
   var THEMES = [ 
   { href: "50-euro.html", title: "50 Euro", quizId: "50_euro", questions: [
       { text: "Die 50 Euro Noten der Deutschen Bundesbank sind jetzt fälschungssicherer.", answer: "falsch" },
@@ -1358,7 +1430,43 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 
     item.appendChild(header);
 
-    if (theme.questions && theme.questions.length) {
+    /* ===== PREMIUM LOCK: Thema 06 und höher (غير إلا ماشي premium) ===== */
+    if (i >= 5 && !isPremiumUser) {
+      var premiumBody = document.createElement("div");
+      premiumBody.className = "theme-card-body premium-theme-body";
+
+      var premiumIcon = document.createElement("div");
+      premiumIcon.className = "theme-card-icon premium-theme-icon";
+      premiumIcon.innerHTML = '<i class="fa-solid fa-lock"></i>';
+
+      var premiumInfo = document.createElement("div");
+      premiumInfo.className = "theme-card-info";
+
+      var premiumLabel = document.createElement("div");
+      premiumLabel.className = "theme-card-label";
+      premiumLabel.textContent = "Premium – " + theme.title;
+
+      var premiumSubtitle = document.createElement("div");
+      premiumSubtitle.className = "theme-card-subtitle";
+      premiumSubtitle.innerHTML = "🇩🇪 Dieses Thema ist Premium.<br>🇲🇦 هاد الموضوع Premium.";
+
+      premiumInfo.appendChild(premiumLabel);
+      premiumInfo.appendChild(premiumSubtitle);
+
+      var premiumButton = document.createElement("a");
+      premiumButton.href = "#";
+      premiumButton.className = "theme-card-open premium-theme-open";
+      premiumButton.innerHTML = '<i class="fa-solid fa-lock"></i> Premium – Entsperren';
+      premiumButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        openHoerenPremium(theme.title);
+      });
+
+      premiumBody.appendChild(premiumIcon);
+      premiumBody.appendChild(premiumInfo);
+      premiumBody.appendChild(premiumButton);
+      item.appendChild(premiumBody);
+    } else if (theme.questions && theme.questions.length) {
       item.appendChild(buildNativeQuiz(theme));
     } else {
       /*
@@ -1944,6 +2052,69 @@ html.dark .nq-final-summary{
 html.dark .nq-summary-falsch{color:#f1f1f1 !important;}
 html.dark .nq-summary-correct{color:#51d88a !important;}
 </style>
+
+
+<!-- ===== HÖREN PREMIUM MODAL ===== -->
+<div class="hoeren-premium-modal" id="hoerenPremiumModal" onclick="closeHoerenPremiumOutside(event)">
+  <div class="hoeren-premium-box">
+    <button class="hoeren-premium-close" onclick="closeHoerenPremium()">×</button>
+    <div class="hoeren-premium-head"><h3>🔒 Premium – Hören</h3><p id="hoerenPremiumTopic">Dieses Thema ist Premium.</p></div>
+    <div class="hoeren-premium-body">
+      <div class="hoeren-premium-intro">
+        <span class="hp-de">🇩🇪 <strong>Dieses Thema ist Premium.</strong><br>Wähle ein Angebot und kontaktiere uns danach über WhatsApp, damit wir deinen Zugang aktivieren.</span>
+        <span class="hp-ar">🇲🇦 <strong>هاد الموضوع Premium.</strong><br>اختار العرض اللي مناسب ليك، ومن بعد تواصل معانا فـ WhatsApp باش نفعّلو ليك الولوج.</span>
+      </div>
+      <div class="hoeren-offer-grid">
+        <div class="hoeren-offer-card"><h4>15 Tage</h4><div class="hoeren-offer-price">49 DH</div><div class="hoeren-offer-description"><span>Zugang für 15 Tage</span><span class="hp-ar-small">الولوج لمدة 15 يوم</span></div><a href="#" class="hoeren-offer-btn" onclick="chooseHoerenOffer(event,'15 Tage – 49 DH')">WhatsApp</a></div>
+        <div class="hoeren-offer-card"><h4>1 Monat</h4><div class="hoeren-offer-price">99,99 DH</div><div class="hoeren-offer-description"><span>Zugang für 1 Monat</span><span class="hp-ar-small">الولوج لمدة شهر</span></div><a href="#" class="hoeren-offer-btn" onclick="chooseHoerenOffer(event,'1 Monat – 99,99 DH')">WhatsApp</a></div>
+        <div class="hoeren-offer-card"><h4>2 Monate</h4><div class="hoeren-offer-price">150 DH</div><div class="hoeren-offer-description"><span>Zugang für 2 Monate</span><span class="hp-ar-small">الولوج لمدة شهرين</span></div><a href="#" class="hoeren-offer-btn" onclick="chooseHoerenOffer(event,'2 Monate – 150 DH')">WhatsApp</a></div>
+      </div>
+      <div class="hoeren-whatsapp-area"><p><span class="hp-de">🇩🇪 Nach der Auswahl kannst du uns direkt über WhatsApp kontaktieren.</span><span class="hp-ar">🇲🇦 من بعد ما تختار العرض، تواصل معانا مباشرة عبر WhatsApp.</span></p><a href="https://wa.me/212653618205" target="_blank" rel="noopener noreferrer" class="hoeren-whatsapp-main">💬 WhatsApp – تواصل معنا</a></div>
+    </div>
+  </div>
+</div>
+<style id="hoeren-premium-modal-style">
+.hoeren-premium-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:50000;padding:20px;overflow-y:auto;}
+.hoeren-premium-modal.show{display:flex;align-items:center;justify-content:center;}
+.hoeren-premium-box{width:100%;max-width:650px;background:#fff;border-radius:18px;box-shadow:0 15px 50px rgba(0,0,0,.3);overflow:hidden;position:relative;animation:hoerenPremiumIn .22s ease;}
+@keyframes hoerenPremiumIn{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.hoeren-premium-head{background:#171717;color:#fff;padding:22px 60px 20px 22px;border-bottom:4px solid #f2c500;}
+.hoeren-premium-head h3{margin-bottom:7px;font-size:24px;}
+.hoeren-premium-head p{line-height:1.6;color:#eee;}
+.hoeren-premium-close{position:absolute;top:12px;right:14px;width:38px;height:38px;border:none;border-radius:50%;background:#d60000;color:#fff;font-size:24px;cursor:pointer;z-index:5;}
+.hoeren-premium-close:hover{background:#111;color:#f2c500;}
+.hoeren-premium-body{padding:22px;}
+.hoeren-premium-intro{background:#fff4bd;border-radius:12px;padding:15px;margin-bottom:20px;color:#222;line-height:1.7;text-align:center;}
+.hp-de{direction:ltr;text-align:center;display:block;}
+.hp-ar{direction:rtl;text-align:center;display:block;margin-top:6px;}
+.hoeren-offer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.hoeren-offer-card{border:2px solid #eee;border-radius:14px;padding:16px 12px;text-align:center;background:#fafafa;direction:ltr;transition:.2s;}
+.hoeren-offer-card:hover{border-color:#d60000;transform:translateY(-2px);}
+.hoeren-offer-card h4{margin-bottom:8px;font-size:17px;}
+.hoeren-offer-price{color:#d60000;font-size:24px;font-weight:bold;margin-bottom:10px;}
+.hoeren-offer-description{color:#555;font-size:13px;line-height:1.8;min-height:62px;text-align:center;display:flex;flex-direction:column;justify-content:center;}
+.hp-ar-small{direction:rtl;display:block;font-size:13px;}
+.hoeren-offer-btn{display:block;margin-top:12px;text-decoration:none;background:#d60000;color:#fff;padding:10px 8px;border-radius:8px;font-weight:bold;font-size:13px;transition:.2s;}
+.hoeren-offer-btn:hover{background:#111;color:#f2c500;}
+.hoeren-whatsapp-area{margin-top:20px;padding-top:18px;border-top:1px solid #ddd;text-align:center;}
+.hoeren-whatsapp-area p{margin-bottom:11px;color:#555;line-height:1.7;}
+.hoeren-whatsapp-main{display:block;width:100%;background:#171717;color:#f2c500;text-decoration:none;padding:13px 15px;border-radius:9px;font-weight:bold;transition:.2s;}
+.hoeren-whatsapp-main:hover{background:#d60000;color:#fff;}
+html.dark .hoeren-premium-box{background:#1b1b1b;color:#f1f1f1;}
+html.dark .hoeren-premium-intro{background:#2b2818;color:#f1f1f1;}
+html.dark .hoeren-offer-card{background:#191c22;border-color:#343842;}
+html.dark .hoeren-offer-description{color:#bbb;}
+@media(max-width:650px){.hoeren-offer-grid{grid-template-columns:1fr}.hoeren-premium-modal{padding:12px}.hoeren-premium-head{padding:20px 55px 18px 18px}.hoeren-premium-head h3{font-size:20px}.hoeren-premium-body{padding:16px}.hoeren-offer-card{padding:15px}.hoeren-offer-description{min-height:auto}}
+</style>
+<script>
+const HOEREN_WHATSAPP_NUMBER="212653618205";
+let selectedHoerenTopic="";
+function openHoerenPremium(topic){selectedHoerenTopic=topic;document.getElementById("hoerenPremiumTopic").innerHTML="🔒 <strong>"+topic+"</strong><br>🇩🇪 Dieses Thema ist Premium.<br>🇲🇦 هاد الموضوع Premium.";document.getElementById("hoerenPremiumModal").classList.add("show");document.body.style.overflow="hidden";}
+function closeHoerenPremium(){document.getElementById("hoerenPremiumModal").classList.remove("show");document.body.style.overflow="";}
+function closeHoerenPremiumOutside(event){if(event.target.id==="hoerenPremiumModal")closeHoerenPremium();}
+function chooseHoerenOffer(event,offer){event.preventDefault();const message="Salam, bghit nفتح الولوج لـ Hören B2\nThema: "+selectedHoerenTopic+"\nAngebot: "+offer;window.open("https://wa.me/"+HOEREN_WHATSAPP_NUMBER+"?text="+encodeURIComponent(message),"_blank");}
+document.addEventListener("keydown",function(event){if(event.key==="Escape")closeHoerenPremium();});
+</script>
 
 </body>
 </html>
