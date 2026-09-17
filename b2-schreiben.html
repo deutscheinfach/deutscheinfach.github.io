@@ -2023,6 +2023,93 @@
 
 <!-- ===== JAVASCRIPT ===== -->
 
+<!-- ===== PREMIUM CHECK (Firebase) ===== -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+  authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+  projectId: "deutsch-einfach-4c81f",
+  storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+  messagingSenderId: "152448766933",
+  appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+  measurementId: "G-9QV234Z0KZ"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/*
+ * كنبنيو Promise غادي يتحل (resolve) بـ true/false
+ * باش نعرفو واش اليوزر عندو premium فعلاً فـ Firestore.
+ */
+window.__deutschEinfachPremiumReady = new Promise(function (resolve) {
+  onAuthStateChanged(auth, async function (user) {
+    if (!user) {
+      resolve(false);
+      return;
+    }
+
+    try {
+      const userSnap = await getDoc(doc(db, "users", user.uid));
+
+      if (!userSnap.exists()) {
+        resolve(false);
+        return;
+      }
+
+      const data = userSnap.data();
+
+      const active = data.subscriptionActive === true;
+
+      let notExpired = true;
+      if (data.subscriptionEnd && typeof data.subscriptionEnd.toDate === "function") {
+        notExpired = data.subscriptionEnd.toDate().getTime() > Date.now();
+      }
+
+      resolve(active && notExpired);
+    } catch (error) {
+      console.error("Premium check error:", error);
+      resolve(false);
+    }
+  });
+});
+</script>
+
+<!-- ===== UNLOCK PREMIUM THEMES FOR PAID USERS ===== -->
+<script>
+(async function () {
+  var isPremiumUser = await (window.__deutschEinfachPremiumReady || Promise.resolve(false));
+
+  if (!isPremiumUser) return;
+
+  document.querySelectorAll(".start-btn.premium").forEach(function (btn) {
+
+    var card = btn.closest(".topic-card");
+    if (!card) return;
+
+    var numberEl = card.querySelector(".topic-number");
+    if (!numberEl) return;
+
+    var match = numberEl.textContent.match(/\d+/);
+    if (!match) return;
+
+    var num = match[0].padStart(2, "0");
+
+    btn.href = "b2-schreiben-" + num + ".html";
+    btn.removeAttribute("onclick");
+    btn.classList.remove("premium");
+    btn.textContent = "Aufgabe öffnen →";
+
+    numberEl.textContent = numberEl.textContent.replace("🔒", "").trim();
+  });
+})();
+</script>
+
 <script>
 
     const WHATSAPP_NUMBER = "212653618205";
