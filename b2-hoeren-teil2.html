@@ -803,6 +803,172 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
   }
 </style>
 
+
+<style id="hoeren-teil2-premium-lock">
+/* ===== PREMIUM LOCK: first 5 themes free, from theme 6 paid ===== */
+.premium-theme-body{
+  background:#fff !important;
+  min-height:100px;
+}
+.premium-theme-icon{
+  background:#171717 !important;
+  color:#f2c500 !important;
+  box-shadow:0 6px 14px rgba(23,23,23,.18) !important;
+}
+.premium-theme-open{
+  background:#171717 !important;
+  color:#f2c500 !important;
+  border:1px solid #171717 !important;
+}
+.premium-theme-open:hover{
+  background:#d60000 !important;
+  color:#fff !important;
+  border-color:#d60000 !important;
+}
+html.dark .premium-theme-body{background:#1b1b1b !important;}
+html.dark .premium-theme-open{
+  background:#111318 !important;
+  color:#f2c500 !important;
+  border-color:#343842 !important;
+}
+html.dark .premium-theme-open:hover{
+  background:#d60000 !important;
+  color:#fff !important;
+  border-color:#d60000 !important;
+}
+@media(max-width:620px){
+  .premium-theme-body{
+    align-items:flex-start !important;
+    flex-wrap:wrap !important;
+    padding:15px !important;
+  }
+  .premium-theme-open{
+    width:100% !important;
+    margin-top:2px !important;
+  }
+}
+
+/* Premium offer modal */
+#hoerenTeil2PremiumModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(5px);
+  -webkit-backdrop-filter:blur(5px);
+}
+#hoerenTeil2PremiumModal.show{display:flex;}
+.h2-premium-box{
+  width:min(560px,100%);
+  max-height:calc(100vh - 36px);
+  overflow:auto;
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 24px 70px rgba(0,0,0,.28);
+  border:1px solid #e2e2e2;
+  padding:22px;
+  position:relative;
+}
+.h2-premium-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:38px;
+  height:38px;
+  border:none;
+  border-radius:12px;
+  background:#171717;
+  color:#fff;
+  cursor:pointer;
+  font-size:18px;
+}
+.h2-premium-title{
+  margin:0 45px 8px 0;
+  font-size:21px;
+  font-weight:900;
+  color:#171717;
+}
+.h2-premium-topic{
+  padding:12px 14px;
+  border-radius:13px;
+  background:#fff7f7;
+  border:1px solid #f0d0d0;
+  color:#333;
+  line-height:1.55;
+  font-size:13px;
+  margin-bottom:16px;
+}
+.h2-premium-text{
+  margin:0 0 15px;
+  color:#555;
+  font-size:13px;
+  line-height:1.6;
+}
+.h2-offers{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.h2-offer{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:145px;
+  padding:14px;
+  border:1px solid #e1e3e8;
+  border-radius:16px;
+  background:#fafafa;
+}
+.h2-offer-name{font-weight:900;color:#171717;font-size:14px;}
+.h2-offer-price{font-size:22px;font-weight:900;color:#d60000;margin:7px 0;}
+.h2-offer-desc{font-size:11px;color:#666;line-height:1.45;margin-bottom:10px;}
+.h2-offer-btn{
+  width:100%;
+  min-height:39px;
+  border:none;
+  border-radius:10px;
+  background:#171717;
+  color:#f2c500;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+}
+.h2-offer-btn:hover{background:#d60000;color:#fff;transform:translateY(-1px);}
+.h2-whatsapp{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  width:100%;
+  min-height:46px;
+  margin-top:14px;
+  border-radius:13px;
+  background:#16803c;
+  color:#fff !important;
+  text-decoration:none;
+  font-weight:900;
+}
+.h2-whatsapp:hover{background:#116b31;}
+.h2-wa-number{text-align:center;margin:8px 0 0;font-size:11px;color:#777;}
+html.dark .h2-premium-box{background:#1b1b1b;border-color:#343842;}
+html.dark .h2-premium-title{color:#f5f5f5;}
+html.dark .h2-premium-topic{background:#241f1f;border-color:#493535;color:#f1f1f1;}
+html.dark .h2-premium-text{color:#bbb;}
+html.dark .h2-offer{background:#17191f;border-color:#343842;}
+html.dark .h2-offer-name{color:#f5f5f5;}
+html.dark .h2-offer-desc,.h2-wa-number{color:#aaa;}
+@media(max-width:620px){
+  #hoerenTeil2PremiumModal{padding:10px;}
+  .h2-premium-box{padding:18px;border-radius:18px;}
+  .h2-offers{grid-template-columns:1fr;}
+  .h2-offer{min-height:auto;}
+}
+</style>
+
 </head>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
@@ -1772,7 +1938,44 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 
     item.appendChild(header);
 
-    if (theme.questions && theme.questions.length) {
+    /* ===== PREMIUM LOCK: first 5 themes free, from theme 6 paid ===== */
+    if (i >= 5) {
+      var premiumBody = document.createElement("div");
+      premiumBody.className = "theme-card-body premium-theme-body";
+
+      var premiumIcon = document.createElement("div");
+      premiumIcon.className = "theme-card-icon premium-theme-icon";
+      premiumIcon.innerHTML = '<i class="fa-solid fa-lock"></i>';
+
+      var premiumInfo = document.createElement("div");
+      premiumInfo.className = "theme-card-info";
+
+      var premiumLabel = document.createElement("div");
+      premiumLabel.className = "theme-card-label";
+      premiumLabel.textContent = "Premium – " + theme.title;
+
+      var premiumSubtitle = document.createElement("div");
+      premiumSubtitle.className = "theme-card-subtitle";
+      premiumSubtitle.innerHTML = "🇩🇪 Dieses Thema ist Premium.<br>🇲🇦 هاد الموضوع Premium.";
+
+      premiumInfo.appendChild(premiumLabel);
+      premiumInfo.appendChild(premiumSubtitle);
+
+      var premiumButton = document.createElement("a");
+      premiumButton.href = "#";
+      premiumButton.className = "theme-card-open premium-theme-open";
+      premiumButton.innerHTML = '<i class="fa-solid fa-lock"></i> Premium – Entsperren';
+      premiumButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        openHoerenTeil2Premium(theme.title);
+      });
+
+      premiumBody.appendChild(premiumIcon);
+      premiumBody.appendChild(premiumInfo);
+      premiumBody.appendChild(premiumButton);
+      item.appendChild(premiumBody);
+
+    } else if (theme.questions && theme.questions.length) {
       item.appendChild(buildNativeQuiz(theme));
     } else {
       /*
@@ -2357,6 +2560,127 @@ html.dark .nq-final-summary{
 html.dark .nq-summary-falsch{color:#f1f1f1 !important;}
 html.dark .nq-summary-correct{color:#51d88a !important;}
 </style>
+
+
+<!-- ===== HÖREN TEIL 2 PREMIUM MODAL ===== -->
+<div id="hoerenTeil2PremiumModal" onclick="closeHoerenTeil2PremiumOutside(event)">
+  <div class="h2-premium-box" role="dialog" aria-modal="true" aria-labelledby="h2PremiumTitle">
+    <button class="h2-premium-close" type="button" onclick="closeHoerenTeil2Premium()" aria-label="Schließen">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 class="h2-premium-title" id="h2PremiumTitle">🔒 Premium Zugang</h2>
+
+    <div class="h2-premium-topic" id="hoerenTeil2PremiumTopic"></div>
+
+    <p class="h2-premium-text">
+      🇩🇪 Dieses Thema gehört zum Premium-Bereich. Wähle ein Angebot und kontaktiere uns über WhatsApp.
+      <br>
+      🇲🇦 هاد الموضوع Premium ومفتوح غير للمشتركين. اختار العرض اللي بغيتي وتواصل معانا عبر WhatsApp.
+    </p>
+
+    <div class="h2-offers">
+      <div class="h2-offer">
+        <div>
+          <div class="h2-offer-name">15 Tage</div>
+          <div class="h2-offer-price">49 DH</div>
+          <div class="h2-offer-desc">🇩🇪 Zugang für 15 Tage<br>🇲🇦 الولوج لمدة 15 يوم</div>
+        </div>
+        <button class="h2-offer-btn" onclick="chooseHoerenTeil2Offer(event,'15 Tage – 49 DH')">Auswählen</button>
+      </div>
+
+      <div class="h2-offer">
+        <div>
+          <div class="h2-offer-name">1 Monat</div>
+          <div class="h2-offer-price">99,99 DH</div>
+          <div class="h2-offer-desc">🇩🇪 Zugang für 1 Monat<br>🇲🇦 الولوج لمدة شهر</div>
+        </div>
+        <button class="h2-offer-btn" onclick="chooseHoerenTeil2Offer(event,'1 Monat – 99,99 DH')">Auswählen</button>
+      </div>
+
+      <div class="h2-offer">
+        <div>
+          <div class="h2-offer-name">2 Monate</div>
+          <div class="h2-offer-price">150 DH</div>
+          <div class="h2-offer-desc">🇩🇪 Zugang für 2 Monate<br>🇲🇦 الولوج لمدة شهرين</div>
+        </div>
+        <button class="h2-offer-btn" onclick="chooseHoerenTeil2Offer(event,'2 Monate – 150 DH')">Auswählen</button>
+      </div>
+    </div>
+
+    <a class="h2-whatsapp" href="#" onclick="openHoerenTeil2WhatsApp(event)">
+      <i class="fa-brands fa-whatsapp"></i>
+      WhatsApp kontaktieren
+    </a>
+    <div class="h2-wa-number">0653618205</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const HOEREN_TEIL2_WHATSAPP_NUMBER = "212653618205";
+  let selectedHoerenTeil2Topic = "";
+
+  window.openHoerenTeil2Premium = function(topic){
+    selectedHoerenTeil2Topic = topic || "";
+    var topicEl = document.getElementById("hoerenTeil2PremiumTopic");
+    var modal = document.getElementById("hoerenTeil2PremiumModal");
+
+    if(topicEl){
+      topicEl.innerHTML =
+        "🔒 <strong>" + selectedHoerenTeil2Topic + "</strong><br>" +
+        "🇩🇪 Dieses Thema ist Premium.<br>" +
+        "🇲🇦 هاد الموضوع Premium.";
+    }
+
+    if(modal) modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  };
+
+  window.closeHoerenTeil2Premium = function(){
+    var modal = document.getElementById("hoerenTeil2PremiumModal");
+    if(modal) modal.classList.remove("show");
+    document.body.style.overflow = "";
+  };
+
+  window.closeHoerenTeil2PremiumOutside = function(event){
+    if(event.target && event.target.id === "hoerenTeil2PremiumModal"){
+      window.closeHoerenTeil2Premium();
+    }
+  };
+
+  function openWhatsApp(message){
+    window.open(
+      "https://wa.me/" + HOEREN_TEIL2_WHATSAPP_NUMBER +
+      "?text=" + encodeURIComponent(message),
+      "_blank"
+    );
+  }
+
+  window.chooseHoerenTeil2Offer = function(event, offer){
+    event.preventDefault();
+    var message =
+      "Salam, bghit nفتح الولوج لـ Hören B2 Teil 2" +
+      "\\nThema: " + selectedHoerenTeil2Topic +
+      "\\nAngebot: " + offer;
+    openWhatsApp(message);
+  };
+
+  window.openHoerenTeil2WhatsApp = function(event){
+    event.preventDefault();
+    var message =
+      "Salam, bghit nفتح الولوج لـ Hören B2 Teil 2" +
+      "\\nThema: " + selectedHoerenTeil2Topic;
+    openWhatsApp(message);
+  };
+
+  document.addEventListener("keydown",function(event){
+    if(event.key === "Escape"){
+      window.closeHoerenTeil2Premium();
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
