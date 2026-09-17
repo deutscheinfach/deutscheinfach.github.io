@@ -1002,61 +1002,75 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 <div id="hoeren-teil2-stack"></div>
 
 <!-- ===== PREMIUM CHECK (Firebase) ===== -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+<script>
+window.__deutschEinfachPremiumReady = (async function () {
+  try {
+    var appMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
+    var authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
+    var fsMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-  authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
-  projectId: "deutsch-einfach-4c81f",
-  storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
-  messagingSenderId: "152448766933",
-  appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
-  measurementId: "G-9QV234Z0KZ"
-};
+    var initializeApp = appMod.initializeApp;
+    var getAuth = authMod.getAuth;
+    var onAuthStateChanged = authMod.onAuthStateChanged;
+    var getFirestore = fsMod.getFirestore;
+    var doc = fsMod.doc;
+    var getDoc = fsMod.getDoc;
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+    var firebaseConfig = {
+      apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+      authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+      projectId: "deutsch-einfach-4c81f",
+      storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+      messagingSenderId: "152448766933",
+      appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+      measurementId: "G-9QV234Z0KZ"
+    };
 
-/*
- * كنبنيو Promise غادي يتحل (resolve) بـ true/false
- * باش نعرفو واش اليوزر عندو premium فعلاً فـ Firestore،
- * الـ IIFE ديال THEMES غادي تستناها قبل ما تبني الصفحة.
- */
-window.__deutschEinfachPremiumReady = new Promise(function (resolve) {
-  onAuthStateChanged(auth, async function (user) {
-    if (!user) {
-      resolve(false);
-      return;
-    }
+    var app = initializeApp(firebaseConfig);
+    var auth = getAuth(app);
+    var db = getFirestore(app);
 
-    try {
-      const userSnap = await getDoc(doc(db, "users", user.uid));
+    /*
+     * كنرجعو Promise غادي يتحل (resolve) بـ true/false.
+     * حيت هاد السكريبت عادي (ماشي module)، كيتنفذ
+     * بالترتيب الصحيح قبل السكريبت اللي كيبني THEMES.
+     */
+    return await new Promise(function (resolve) {
+      onAuthStateChanged(auth, async function (user) {
+        if (!user) {
+          resolve(false);
+          return;
+        }
 
-      if (!userSnap.exists()) {
-        resolve(false);
-        return;
-      }
+        try {
+          var userSnap = await getDoc(doc(db, "users", user.uid));
 
-      const data = userSnap.data();
+          if (!userSnap.exists()) {
+            resolve(false);
+            return;
+          }
 
-      const active = data.subscriptionActive === true;
+          var data = userSnap.data();
 
-      let notExpired = true;
-      if (data.subscriptionEnd && typeof data.subscriptionEnd.toDate === "function") {
-        notExpired = data.subscriptionEnd.toDate().getTime() > Date.now();
-      }
+          var active = data.subscriptionActive === true;
 
-      resolve(active && notExpired);
-    } catch (error) {
-      console.error("Premium check error:", error);
-      resolve(false);
-    }
-  });
-});
+          var notExpired = true;
+          if (data.subscriptionEnd && typeof data.subscriptionEnd.toDate === "function") {
+            notExpired = data.subscriptionEnd.toDate().getTime() > Date.now();
+          }
+
+          resolve(active && notExpired);
+        } catch (error) {
+          console.error("Premium check error:", error);
+          resolve(false);
+        }
+      });
+    });
+  } catch (error) {
+    console.error("Premium check load error:", error);
+    return false;
+  }
+})();
 </script>
 
 <script>
