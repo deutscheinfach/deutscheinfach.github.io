@@ -273,6 +273,8 @@
             color: #222;
         }
 
+        /* ===== NORMAL FREE BUTTON ===== */
+
         .start-btn {
             display: block;
             width: 100%;
@@ -284,6 +286,9 @@
             border-radius: 9px;
             font-weight: bold;
             transition: 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
         }
 
         .start-btn:hover {
@@ -291,7 +296,251 @@
             color: #ffd500;
         }
 
+        /* ===== PREMIUM BUTTON ===== */
+
+        .start-btn.premium {
+            background: #111;
+            color: #ffd500;
+        }
+
+        .start-btn.premium:hover {
+            background: #e30613;
+            color: white;
+        }
+
+        /* ===== PREMIUM MODAL ===== */
+
+        .premium-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.72);
+            z-index: 5000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .premium-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .premium-box {
+            width: 100%;
+            max-width: 650px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            animation: premiumIn 0.22s ease;
+        }
+
+        @keyframes premiumIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .premium-head {
+            background: #111;
+            color: white;
+            padding: 22px 60px 20px 22px;
+            border-bottom: 4px solid #ffd500;
+        }
+
+        .premium-head h3 {
+            margin-bottom: 7px;
+            font-size: 24px;
+        }
+
+        .premium-head p {
+            line-height: 1.6;
+            color: #eee;
+        }
+
+        .premium-close {
+            position: absolute;
+            top: 12px;
+            right: 14px;
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 50%;
+            background: #e30613;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .premium-close:hover {
+            background: #111;
+            color: #ffd500;
+        }
+
+        .premium-body {
+            padding: 22px;
+        }
+
+        /* ===== PREMIUM INTRO ===== */
+
+        .premium-intro {
+            background: #fff4bd;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #222;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .premium-intro .ar-text {
+            direction: rtl;
+            text-align: center;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .premium-intro .de-text {
+            direction: ltr;
+            text-align: center;
+            display: block;
+        }
+
+        /* ===== OFFERS ===== */
+
+        .offer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .offer-card {
+            border: 2px solid #eee;
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+            background: #fafafa;
+            direction: ltr;
+            transition: 0.2s;
+        }
+
+        .offer-card:hover {
+            border-color: #e30613;
+            transform: translateY(-2px);
+        }
+
+        .offer-card h4 {
+            margin-bottom: 8px;
+            font-size: 17px;
+            direction: ltr;
+            text-align: center;
+        }
+
+        .offer-price {
+            color: #e30613;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            direction: ltr;
+            text-align: center;
+        }
+
+        .offer-description {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.8;
+            min-height: 62px;
+            text-align: center;
+            direction: ltr;
+        }
+
+        .offer-de {
+            direction: ltr;
+            text-align: center;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .offer-ar {
+            direction: rtl;
+            text-align: center;
+            display: block;
+            font-size: 13px;
+        }
+
+        .offer-btn {
+            display: block;
+            margin-top: 12px;
+            text-decoration: none;
+            background: #e30613;
+            color: white;
+            padding: 10px 8px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .offer-btn:hover {
+            background: #111;
+            color: #ffd500;
+        }
+
+        /* ===== WHATSAPP ===== */
+
+        .whatsapp-area {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .whatsapp-area p {
+            margin-bottom: 11px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .whatsapp-ar {
+            direction: rtl;
+            text-align: center;
+            display: block;
+        }
+
+        .whatsapp-de {
+            direction: ltr;
+            text-align: center;
+            display: block;
+        }
+
+        .whatsapp-main {
+            display: block;
+            width: 100%;
+            background: #111;
+            color: #ffd500;
+            text-decoration: none;
+            padding: 13px 15px;
+            border-radius: 9px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .whatsapp-main:hover {
+            background: #e30613;
+            color: white;
+        }
+
         /* ===== FOOTER ===== */
+
         footer {
             background: #111;
             color: white;
@@ -311,7 +560,9 @@
         }
 
         /* ===== RESPONSIVE ===== */
+
         @media (max-width: 950px) {
+
             .topics-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -322,6 +573,7 @@
         }
 
         @media (max-width: 650px) {
+
             header {
                 padding: 14px 15px;
                 flex-direction: column;
@@ -369,6 +621,34 @@
             .topic-title {
                 font-size: 18px;
             }
+
+            .offer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .premium-modal {
+                padding: 12px;
+            }
+
+            .premium-head {
+                padding: 20px 55px 18px 18px;
+            }
+
+            .premium-head h3 {
+                font-size: 20px;
+            }
+
+            .premium-body {
+                padding: 16px;
+            }
+
+            .offer-card {
+                padding: 15px;
+            }
+
+            .offer-description {
+                min-height: auto;
+            }
         }
     </style>
 </head>
@@ -376,31 +656,48 @@
 <body>
 
 <!-- ===== HEADER ===== -->
+
 <header>
 
     <div class="brand">
-        <div class="brand-logo">DE</div>
+
+        <div class="brand-logo">
+            DE
+        </div>
 
         <div class="brand-text">
             <h1>Deutsch Einfach</h1>
             <p>TELC B1 & B2 Vorbereitung</p>
         </div>
+
     </div>
 
     <div class="top-buttons">
-        <a href="b2.html" class="top-btn back">← Zurück</a>
-        <a href="index.html" class="top-btn">Startseite</a>
+
+        <a href="b2.html" class="top-btn back">
+            ← Zurück
+        </a>
+
+        <a href="index.html" class="top-btn">
+            Startseite
+        </a>
+
     </div>
 
 </header>
 
 
 <!-- ===== HERO ===== -->
+
 <section class="hero">
 
-    <div class="label">B2 • SCHREIBEN</div>
+    <div class="label">
+        B2 • SCHREIBEN
+    </div>
 
-    <h2>Schreiben <span>– Beschwerde</span></h2>
+    <h2>
+        Schreiben <span>– Beschwerde</span>
+    </h2>
 
     <p>
         Trainiere deine B2-Schreibaufgaben und bereite dich gezielt
@@ -411,6 +708,7 @@
 
 
 <!-- ===== STATS ===== -->
+
 <section class="stats">
 
     <div class="stats-box">
@@ -436,628 +734,1082 @@
 
 
 <!-- ===== MAIN ===== -->
+
 <main>
 
     <div class="section-title">
-        <h3>B2 <span>Schreiben</span></h3>
-        <p>Wähle ein Thema und beginne deine Beschwerde-Aufgabe.</p>
+
+        <h3>
+            B2 <span>Schreiben</span>
+        </h3>
+
+        <p>
+            Wähle ein Thema und beginne deine Beschwerde-Aufgabe.
+        </p>
+
     </div>
 
 
     <div class="topics-grid">
 
 
-        <!-- 1 -->
+        <!-- ===== THEMA 01 FREE ===== -->
+
         <article class="topic-card">
             <div class="topic-number">Thema 01</div>
+
             <div class="topic-content">
-                <div class="topic-title">Abenteuer "TIKKI TAKKA"</div>
+
+                <div class="topic-title">
+                    Abenteuer "TIKKI TAKKA"
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-01.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="b2-schreiben-01.html" class="start-btn">
+                    Aufgabe öffnen →
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 2 -->
+        <!-- ===== THEMA 02 FREE ===== -->
+
         <article class="topic-card">
             <div class="topic-number">Thema 02</div>
+
             <div class="topic-content">
-                <div class="topic-title">Informatik-Shop</div>
+
+                <div class="topic-title">
+                    Informatik-Shop
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-02.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="b2-schreiben-02.html" class="start-btn">
+                    Aufgabe öffnen →
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 3 -->
+        <!-- ===== THEMA 03 FREE ===== -->
+
         <article class="topic-card">
             <div class="topic-number">Thema 03</div>
+
             <div class="topic-content">
-                <div class="topic-title">Partyservice</div>
+
+                <div class="topic-title">
+                    Partyservice
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-03.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="b2-schreiben-03.html" class="start-btn">
+                    Aufgabe öffnen →
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 4 -->
+        <!-- ===== THEMA 04 FREE ===== -->
+
         <article class="topic-card">
             <div class="topic-number">Thema 04</div>
+
             <div class="topic-content">
-                <div class="topic-title">Autovermietung Neustadt - Metro</div>
+
+                <div class="topic-title">
+                    Autovermietung Neustadt - Metro
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-04.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="b2-schreiben-04.html" class="start-btn">
+                    Aufgabe öffnen →
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 5 -->
+        <!-- ===== THEMA 05 FREE ===== -->
+
         <article class="topic-card">
             <div class="topic-number">Thema 05</div>
+
             <div class="topic-content">
-                <div class="topic-title">Fotobuch</div>
+
+                <div class="topic-title">
+                    Fotobuch
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-05.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="b2-schreiben-05.html" class="start-btn">
+                    Aufgabe öffnen →
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 6 -->
+        <!-- ===== THEMA 06 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 06</div>
+            <div class="topic-number">Thema 06 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Kosmetik-Shop</div>
+
+                <div class="topic-title">
+                    Kosmetik-Shop
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-06.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 06 – Kosmetik-Shop');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 7 -->
+        <!-- ===== THEMA 07 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 07</div>
+            <div class="topic-number">Thema 07 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Hotel</div>
+
+                <div class="topic-title">
+                    Hotel
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-07.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 07 – Hotel');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 8 -->
+        <!-- ===== THEMA 08 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 08</div>
+            <div class="topic-number">Thema 08 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Reisebüro Sonnenschein – Ihr Online-Reisebüro für Last-Minute-Urlaub</div>
+
+                <div class="topic-title">
+                    Reisebüro Sonnenschein – Ihr Online-Reisebüro für Last-Minute-Urlaub
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-08.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 08 – Reisebüro Sonnenschein');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 9 -->
+        <!-- ===== THEMA 09 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 09</div>
+            <div class="topic-number">Thema 09 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Nie mehr schlaflos in Deutschland!</div>
+
+                <div class="topic-title">
+                    Nie mehr schlaflos in Deutschland!
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-09.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 09 – Nie mehr schlaflos in Deutschland');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 10 -->
+        <!-- ===== THEMA 10 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 10</div>
+            <div class="topic-number">Thema 10 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Appartement-Haus</div>
+
+                <div class="topic-title">
+                    Appartement-Haus
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-10.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 10 – Appartement-Haus');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 11 -->
+        <!-- ===== THEMA 11 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 11</div>
+            <div class="topic-number">Thema 11 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Kursbeschreibung</div>
+
+                <div class="topic-title">
+                    Kursbeschreibung
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-11.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 11 – Kursbeschreibung');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 12 -->
+        <!-- ===== THEMA 12 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 12</div>
+            <div class="topic-number">Thema 12 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Renovierungskurs</div>
+
+                <div class="topic-title">
+                    Renovierungskurs
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-12.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 12 – Renovierungskurs');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 13 -->
+        <!-- ===== THEMA 13 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 13</div>
+            <div class="topic-number">Thema 13 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Engagement für Jugendliche</div>
+
+                <div class="topic-title">
+                    Engagement für Jugendliche
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-13.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 13 – Engagement für Jugendliche');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 14 -->
+        <!-- ===== THEMA 14 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 14</div>
+            <div class="topic-number">Thema 14 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Wohnen auf Zeit in Oranienburg</div>
+
+                <div class="topic-title">
+                    Wohnen auf Zeit in Oranienburg
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-14.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 14 – Wohnen auf Zeit in Oranienburg');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 15 -->
+        <!-- ===== THEMA 15 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 15</div>
+            <div class="topic-number">Thema 15 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Freizeitverein Mainz</div>
+
+                <div class="topic-title">
+                    Freizeitverein Mainz
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-15.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 15 – Freizeitverein Mainz');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 16 -->
+        <!-- ===== THEMA 16 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 16</div>
+            <div class="topic-number">Thema 16 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Naturmuseum - Museum</div>
+
+                <div class="topic-title">
+                    Naturmuseum - Museum
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-16.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 16 – Naturmuseum - Museum');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 17 -->
+        <!-- ===== THEMA 17 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 17</div>
+            <div class="topic-number">Thema 17 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Backstage Musical</div>
+
+                <div class="topic-title">
+                    Backstage Musical
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-17.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 17 – Backstage Musical');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 18 -->
+        <!-- ===== THEMA 18 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 18</div>
+            <div class="topic-number">Thema 18 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">KULTUR UND KULINARIK</div>
+
+                <div class="topic-title">
+                    KULTUR UND KULINARIK
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-18.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 18 – KULTUR UND KULINARIK');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 19 -->
+        <!-- ===== THEMA 19 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 19</div>
+            <div class="topic-number">Thema 19 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Fahrradtour mit Trainer</div>
+
+                <div class="topic-title">
+                    Fahrradtour mit Trainer
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-19.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 19 – Fahrradtour mit Trainer');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 20 -->
+        <!-- ===== THEMA 20 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 20</div>
+            <div class="topic-number">Thema 20 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">SuperClean-Staubsaugroboter</div>
+
+                <div class="topic-title">
+                    SuperClean-Staubsaugroboter
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-20.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 20 – SuperClean-Staubsaugroboter');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 21 -->
+        <!-- ===== THEMA 21 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 21</div>
+            <div class="topic-number">Thema 21 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Schmelzkäse Alpengeschmack</div>
+
+                <div class="topic-title">
+                    Schmelzkäse Alpengeschmack
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-21.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 21 – Schmelzkäse Alpengeschmack');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 22 -->
+        <!-- ===== THEMA 22 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 22</div>
+            <div class="topic-number">Thema 22 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Meine Kiste: Obst und Gemüse im Abo bestellbar</div>
+
+                <div class="topic-title">
+                    Meine Kiste: Obst und Gemüse im Abo bestellbar
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-22.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 22 – Meine Kiste');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 23 -->
+        <!-- ===== THEMA 23 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 23</div>
+            <div class="topic-number">Thema 23 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Kostenlose Apps für dein Handy!</div>
+
+                <div class="topic-title">
+                    Kostenlose Apps für dein Handy!
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-23.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 23 – Kostenlose Apps für dein Handy');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 24 -->
+        <!-- ===== THEMA 24 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 24</div>
+            <div class="topic-number">Thema 24 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">kabelloser Kopfhörer</div>
+
+                <div class="topic-title">
+                    kabelloser Kopfhörer
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-24.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 24 – kabelloser Kopfhörer');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 25 -->
+        <!-- ===== THEMA 25 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 25</div>
+            <div class="topic-number">Thema 25 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">FITWATCH</div>
+
+                <div class="topic-title">
+                    FITWATCH
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-25.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 25 – FITWATCH');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 26 -->
+        <!-- ===== THEMA 26 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 26</div>
+            <div class="topic-number">Thema 26 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Apartmenthaus Frankfurt</div>
+
+                <div class="topic-title">
+                    Apartmenthaus Frankfurt
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-26.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 26 – Apartmenthaus Frankfurt');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 27 -->
+        <!-- ===== THEMA 27 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 27</div>
+            <div class="topic-number">Thema 27 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">DIGIBIKE – DAS SMARTE HIGHTECH-FAHRRAD</div>
+
+                <div class="topic-title">
+                    DIGIBIKE – DAS SMARTE HIGHTECH-FAHRRAD
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-27.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 27 – DIGIBIKE');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 28 -->
+        <!-- ===== THEMA 28 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 28</div>
+            <div class="topic-number">Thema 28 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">ESS Firma</div>
+
+                <div class="topic-title">
+                    ESS Firma
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-28.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 28 – ESS Firma');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 29 -->
+        <!-- ===== THEMA 29 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 29</div>
+            <div class="topic-number">Thema 29 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Fotografieren für Fortgeschrittene!</div>
+
+                <div class="topic-title">
+                    Fotografieren für Fortgeschrittene!
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-29.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 29 – Fotografieren für Fortgeschrittene');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 30 -->
+        <!-- ===== THEMA 30 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 30</div>
+            <div class="topic-number">Thema 30 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">FREIZEITBAD MEERESRAUSCHEN</div>
+
+                <div class="topic-title">
+                    FREIZEITBAD MEERESRAUSCHEN
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-30.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 30 – FREIZEITBAD MEERESRAUSCHEN');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 31 -->
+        <!-- ===== THEMA 31 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 31</div>
+            <div class="topic-number">Thema 31 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">HOLLANDBLUMEN-ONLINESHOP</div>
+
+                <div class="topic-title">
+                    HOLLANDBLUMEN-ONLINESHOP
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-31.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 31 – HOLLANDBLUMEN-ONLINESHOP');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 32 -->
+        <!-- ===== THEMA 32 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 32</div>
+            <div class="topic-number">Thema 32 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">In Offenbach zu Hause ...</div>
+
+                <div class="topic-title">
+                    In Offenbach zu Hause ...
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-32.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 32 – In Offenbach zu Hause');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 33 -->
+        <!-- ===== THEMA 33 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 33</div>
+            <div class="topic-number">Thema 33 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Kochen leicht gemacht!</div>
+
+                <div class="topic-title">
+                    Kochen leicht gemacht!
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-33.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 33 – Kochen leicht gemacht');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 34 -->
+        <!-- ===== THEMA 34 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 34</div>
+            <div class="topic-number">Thema 34 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Rundum sorglos unterwegs – die Securvia Reisegepäckversicherung</div>
+
+                <div class="topic-title">
+                    Rundum sorglos unterwegs – die Securvia Reisegepäckversicherung
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-34.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 34 – Securvia Reisegepäckversicherung');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 35 -->
+        <!-- ===== THEMA 35 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 35</div>
+            <div class="topic-number">Thema 35 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Schlüsseldienst- Notservice bundesweit</div>
+
+                <div class="topic-title">
+                    Schlüsseldienst- Notservice bundesweit
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-35.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 35 – Schlüsseldienst');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 36 -->
+        <!-- ===== THEMA 36 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 36</div>
+            <div class="topic-number">Thema 36 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">SPORTHEINPARKPLATZ FÜR KINDER</div>
+
+                <div class="topic-title">
+                    SPORTHEINPARKPLATZ FÜR KINDER
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-36.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 36 – SPORTHEINPARKPLATZ FÜR KINDER');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 37 -->
+        <!-- ===== THEMA 37 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 37</div>
+            <div class="topic-number">Thema 37 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">T & W Elektronikversicherung Wir schützen Ihre Haushaltsgeräte !</div>
+
+                <div class="topic-title">
+                    T & W Elektronikversicherung Wir schützen Ihre Haushaltsgeräte !
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-37.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 37 – T & W Elektronikversicherung');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 38 -->
+        <!-- ===== THEMA 38 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 38</div>
+            <div class="topic-number">Thema 38 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Umzugsunternehmen Bühler - der Perfekte Partner für Ihren Umzug !</div>
+
+                <div class="topic-title">
+                    Umzugsunternehmen Bühler - der Perfekte Partner für Ihren Umzug !
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-38.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 38 – Umzugsunternehmen Bühler');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 39 -->
+        <!-- ===== THEMA 39 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 39</div>
+            <div class="topic-number">Thema 39 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Unsere Nachbarschaft vernetzt sich: Schon 656 Nachbarn machen mit!</div>
+
+                <div class="topic-title">
+                    Unsere Nachbarschaft vernetzt sich: Schon 656 Nachbarn machen mit!
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-39.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 39 – Unsere Nachbarschaft vernetzt sich');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 40 -->
+        <!-- ===== THEMA 40 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 40</div>
+            <div class="topic-number">Thema 40 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">Waldschwimmbad Langen</div>
+
+                <div class="topic-title">
+                    Waldschwimmbad Langen
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-40.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 40 – Waldschwimmbad Langen');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
 
-        <!-- 41 -->
+        <!-- ===== THEMA 41 PREMIUM ===== -->
+
         <article class="topic-card">
-            <div class="topic-number">Thema 41</div>
+            <div class="topic-number">Thema 41 🔒</div>
+
             <div class="topic-content">
-                <div class="topic-title">ZEITSCHRIFTEN - ABONNENTENSERVICE</div>
+
+                <div class="topic-title">
+                    ZEITSCHRIFTEN - ABONNENTENSERVICE
+                </div>
+
                 <div class="badges">
                     <span class="badge type">Beschwerde</span>
                     <span class="badge time">30 min</span>
                     <span class="badge level">B2</span>
                 </div>
-                <a href="b2-schreiben-41.html" class="start-btn">Aufgabe öffnen →</a>
+
+                <a href="#" class="start-btn premium"
+                   onclick="event.preventDefault(); openPremium('Thema 41 – ZEITSCHRIFTEN - ABONNENTENSERVICE');">
+                    🔒 Premium – Entsperren
+                </a>
+
             </div>
         </article>
 
@@ -1066,11 +1818,299 @@
 </main>
 
 
+<!-- ===== PREMIUM MODAL ===== -->
+
+<div class="premium-modal" id="premiumModal" onclick="closePremiumOutside(event)">
+
+    <div class="premium-box">
+
+        <button class="premium-close" onclick="closePremium()">
+            ×
+        </button>
+
+
+        <div class="premium-head">
+
+            <h3>
+                🔒 Premium – B2 Schreiben
+            </h3>
+
+            <p id="premiumTopic">
+                Dieses Thema ist Premium.
+            </p>
+
+        </div>
+
+
+        <div class="premium-body">
+
+
+            <!-- ===== INTRO ===== -->
+
+            <div class="premium-intro">
+
+                <span class="de-text">
+                    🇩🇪 <strong>Dieses Thema ist Premium.</strong><br>
+                    Wähle ein Angebot und kontaktiere uns danach über WhatsApp,
+                    damit wir deinen Zugang aktivieren.
+                </span>
+
+                <span class="ar-text">
+                    🇲🇦 <strong>هاد الموضوع Premium.</strong><br>
+                    اختار العرض اللي مناسب ليك، ومن بعد تواصل معانا فـ WhatsApp
+                    باش نفعّلو ليك الولوج.
+                </span>
+
+            </div>
+
+
+            <!-- ===== OFFERS ===== -->
+
+            <div class="offer-grid">
+
+
+                <!-- 15 TAGE -->
+
+                <div class="offer-card">
+
+                    <h4>
+                        15 Tage
+                    </h4>
+
+                    <div class="offer-price">
+                        49 DH
+                    </div>
+
+                    <div class="offer-description">
+
+                        <span class="offer-de">
+                            Zugang für 15 Tage
+                        </span>
+
+                        <span class="offer-ar">
+                            الولوج لمدة 15 يوم
+                        </span>
+
+                    </div>
+
+                    <a href="#"
+                       class="offer-btn"
+                       onclick="chooseOffer(event, '15 Tage – 49 DH')">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+
+                <!-- 1 MONAT -->
+
+                <div class="offer-card">
+
+                    <h4>
+                        1 Monat
+                    </h4>
+
+                    <div class="offer-price">
+                        99,99 DH
+                    </div>
+
+                    <div class="offer-description">
+
+                        <span class="offer-de">
+                            Zugang für 1 Monat
+                        </span>
+
+                        <span class="offer-ar">
+                            الولوج لمدة شهر
+                        </span>
+
+                    </div>
+
+                    <a href="#"
+                       class="offer-btn"
+                       onclick="chooseOffer(event, '1 Monat – 99,99 DH')">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+
+                <!-- 2 MONATE -->
+
+                <div class="offer-card">
+
+                    <h4>
+                        2 Monate
+                    </h4>
+
+                    <div class="offer-price">
+                        150 DH
+                    </div>
+
+                    <div class="offer-description">
+
+                        <span class="offer-de">
+                            Zugang für 2 Monate
+                        </span>
+
+                        <span class="offer-ar">
+                            الولوج لمدة شهرين
+                        </span>
+
+                    </div>
+
+                    <a href="#"
+                       class="offer-btn"
+                       onclick="chooseOffer(event, '2 Monate – 150 DH')">
+                        WhatsApp
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ===== WHATSAPP ===== -->
+
+            <div class="whatsapp-area">
+
+                <p>
+
+                    <span class="whatsapp-de">
+                        🇩🇪 Nach der Auswahl kannst du uns direkt über WhatsApp kontaktieren.
+                    </span>
+
+                    <span class="whatsapp-ar">
+                        🇲🇦 من بعد ما تختار العرض، تواصل معانا مباشرة عبر WhatsApp.
+                    </span>
+
+                </p>
+
+                <a
+                    href="https://wa.me/212653618205"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="whatsapp-main"
+                >
+                    💬 WhatsApp – تواصل معنا
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <!-- ===== FOOTER ===== -->
+
 <footer>
-    <strong>Deutsch Einfach</strong>
-    <p>TELC B1 & B2 Vorbereitung • Schreiben B2</p>
+
+    <strong>
+        Deutsch Einfach
+    </strong>
+
+    <p>
+        TELC B1 & B2 Vorbereitung • Schreiben B2
+    </p>
+
 </footer>
+
+
+<!-- ===== JAVASCRIPT ===== -->
+
+<script>
+
+    const WHATSAPP_NUMBER = "212653618205";
+
+    let selectedTopic = "";
+
+
+    /* ===== OPEN PREMIUM ===== */
+
+    function openPremium(topic) {
+
+        selectedTopic = topic;
+
+        document.getElementById("premiumTopic").innerHTML =
+            "🔒 <strong>" +
+            topic +
+            "</strong><br>" +
+            "🇩🇪 Dieses Thema ist Premium.<br>" +
+            "🇲🇦 هاد الموضوع Premium.";
+
+        const modal =
+            document.getElementById("premiumModal");
+
+        modal.classList.add("show");
+
+        document.body.style.overflow = "hidden";
+    }
+
+
+    /* ===== CLOSE PREMIUM ===== */
+
+    function closePremium() {
+
+        document
+            .getElementById("premiumModal")
+            .classList.remove("show");
+
+        document.body.style.overflow = "";
+    }
+
+
+    /* ===== CLOSE OUTSIDE ===== */
+
+    function closePremiumOutside(event) {
+
+        if (event.target.id === "premiumModal") {
+            closePremium();
+        }
+
+    }
+
+
+    /* ===== CHOOSE OFFER ===== */
+
+    function chooseOffer(event, offer) {
+
+        event.preventDefault();
+
+        const message =
+            "Salam, bghit nفتح الولوج لـ B2 Schreiben.\n" +
+            "Thema: " +
+            selectedTopic +
+            "\n" +
+            "Angebot: " +
+            offer;
+
+        const url =
+            "https://wa.me/" +
+            WHATSAPP_NUMBER +
+            "?text=" +
+            encodeURIComponent(message);
+
+        window.open(url, "_blank");
+
+    }
+
+
+    /* ===== ESC KEY ===== */
+
+    document.addEventListener("keydown", function(event) {
+
+        if (event.key === "Escape") {
+            closePremium();
+        }
+
+    });
+
+</script>
 
 </body>
 </html>
