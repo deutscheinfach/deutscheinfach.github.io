@@ -16,17 +16,17 @@
 
 :root{
 
-    --sidebar:#141414;
-    --sidebar-hover:#232323;
-    --accent:#d60000;
-    --accent-dark:#a80000;
-    --gold:#ffd500;
-    --bg:#f4f4f5;
-    --surface:#ffffff;
-    --border:#e7e7ea;
-    --text:#17181a;
-    --text-muted:#7c7c82;
-    --bubble-mine:#1f2023;
+    --sidebar:#0d0f14;
+    --sidebar-hover:#181b22;
+    --accent:#d4af37;
+    --accent-dark:#a8842a;
+    --gold:#f4e5a1;
+    --bg:#08090c;
+    --surface:#121419;
+    --border:rgba(255,255,255,.08);
+    --text:#f5f4f0;
+    --text-muted:#b9b6ad;
+    --bubble-mine:#23262c;
 
 }
 
@@ -146,7 +146,7 @@ button:disabled{
     border-radius:10px;
     border:1px solid transparent;
     outline:none;
-    background:#222;
+    background:#1d2028;
     color:white;
     font-size:16px;
     transition:
@@ -156,9 +156,9 @@ button:disabled{
 }
 
 .search-box input:focus{
-    border-color:#d60000;
+    border-color:#d4af37;
     background:#1d1d1d;
-    box-shadow:0 0 0 3px rgba(214,0,0,.12);
+    box-shadow:0 0 0 3px rgba(212,175,55,.12);
 }
 
 .search-box input::placeholder{
@@ -214,9 +214,9 @@ button:disabled{
 
 .nav button.active{
     background:var(--accent);
-    color:white;
+    color:#1a1400;
     box-shadow:
-        0 5px 15px rgba(214,0,0,.28);
+        0 5px 15px rgba(212,175,55,.28);
 }
 
 .nav button.active svg.icon{
@@ -261,7 +261,7 @@ button:disabled{
 
 .badge{
     float:right;
-    background:#ffd500;
+    background:#f4e5a1;
     color:#111;
     min-width:22px;
     height:22px;
@@ -271,7 +271,7 @@ button:disabled{
     line-height:22px;
     font-size:12px;
     font-weight:bold;
-    box-shadow:0 2px 8px rgba(255,213,0,.25);
+    box-shadow:0 2px 8px rgba(244,229,161,.25);
     animation:badgePop .25s ease;
 }
 
@@ -295,7 +295,7 @@ button:disabled{
 
 .section-title{
     padding:15px 16px 8px;
-    color:#888;
+    color:#b9b6ad;
     font-size:12px;
     text-transform:uppercase;
     letter-spacing:.5px;
@@ -341,35 +341,35 @@ button:disabled{
 
 .person.active,
 .group-item.active{
-    background:#d60000 !important;
-    color:white;
-    box-shadow:0 4px 12px rgba(214,0,0,.2);
+    background:#d4af37 !important;
+    color:#1a1400;
+    box-shadow:0 4px 12px rgba(212,175,55,.2);
 }
 
 .person.active .person-email,
 .group-item.active .person-email{
-    color:#eee;
+    color:rgba(26,20,0,.7);
 }
 
 .person:hover,
 .group-item:hover{
-    background:#222;
+    background:#1d2028;
 }
 
 .person.active:hover,
 .group-item.active:hover{
-    background:#d60000 !important;
+    background:#d4af37 !important;
 }
 
 .avatar{
     width:40px;
     height:40px;
     border-radius:50%;
-    background:#d60000;
+    background:#d4af37;
     display:flex;
     align-items:center;
     justify-content:center;
-    color:white;
+    color:#1a1400;
     font-weight:bold;
     overflow:hidden;
     flex-shrink:0;
@@ -394,7 +394,7 @@ button:disabled{
 }
 
 .person-email{
-    color:#888;
+    color:#b9b6ad;
     font-size:12px;
     white-space:nowrap;
     overflow:hidden;
@@ -403,7 +403,7 @@ button:disabled{
 }
 
 .conversation-preview{
-    color:#888;
+    color:#b9b6ad;
     font-size:11px;
     white-space:nowrap;
     overflow:hidden;
@@ -412,11 +412,11 @@ button:disabled{
 }
 
 .person.active .conversation-preview{
-    color:#eee;
+    color:rgba(26,20,0,.7);
 }
 
 .conversation-time{
-    color:#777;
+    color:#b9b6ad;
     font-size:10px;
     flex-shrink:0;
     align-self:flex-start;
@@ -424,7 +424,7 @@ button:disabled{
 }
 
 .person.active .conversation-time{
-    color:#fff;
+    color:rgba(26,20,0,.7);
 }
 
 .create-group{
@@ -447,7 +447,7 @@ button:disabled{
 }
 
 .create-group:hover{
-    box-shadow:0 5px 15px rgba(255,213,0,.18);
+    box-shadow:0 5px 15px rgba(244,229,161,.18);
     transform:translateY(-1px);
 }
 
@@ -464,14 +464,14 @@ button:disabled{
     display:flex;
     flex-direction:column;
     min-width:0;
-    background:#f5f5f5;
+    background:var(--bg);
 }
 
 .chat-header{
     height:72px;
     min-height:72px;
-    background:white;
-    border-bottom:1px solid #ddd;
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
     display:flex;
     align-items:center;
     padding:0 20px;
@@ -483,7 +483,7 @@ button:disabled{
 .mobile-menu{
     display:none;
     border:none;
-    background:#111;
+    background:#181b22;
     color:white;
     width:40px;
     height:40px;
@@ -494,8 +494,8 @@ button:disabled{
     width:44px;
     height:44px;
     border-radius:50%;
-    background:#d60000;
-    color:white;
+    background:#d4af37;
+    color:#1a1400;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -525,7 +525,7 @@ button:disabled{
 
 .header-sub{
     font-size:12px;
-    color:#777;
+    color:#b9b6ad;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
@@ -533,7 +533,7 @@ button:disabled{
 
 .header-btn{
     border:none;
-    background:#111;
+    background:#181b22;
     color:white;
     padding:9px 13px;
     border-radius:8px;
@@ -543,7 +543,7 @@ button:disabled{
 }
 
 .header-btn:hover{
-    background:#222;
+    background:#20242e;
 }
 
 .header-btn:active{
@@ -603,7 +603,7 @@ button:disabled{
 }
 
 .message-content{
-    background:white;
+    background:var(--surface);
     border-radius:12px 12px 12px 4px;
     padding:10px 13px;
     box-shadow:0 1px 3px rgba(0,0,0,.08);
@@ -625,8 +625,8 @@ button:disabled{
     width:38px;
     height:38px;
     border-radius:50%;
-    background:#d60000;
-    color:white;
+    background:#d4af37;
+    color:#1a1400;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -666,7 +666,7 @@ button:disabled{
 }
 
 .message-time{
-    color:#999;
+    color:#b9b6ad;
     font-size:10.5px;
     margin-top:5px;
     display:flex;
@@ -696,11 +696,11 @@ button:disabled{
     align-items:center;
     justify-content:center;
     text-align:center;
-    color:#777;
+    color:#b9b6ad;
 }
 
 .empty h2{
-    color:#222;
+    color:var(--text);
     margin-bottom:8px;
 }
 
@@ -713,8 +713,8 @@ button:disabled{
    ===================================================== */
 
 .input-area{
-    background:white;
-    border-top:1px solid #ddd;
+    background:var(--surface);
+    border-top:1px solid var(--border);
     padding:14px;
     display:flex;
     gap:10px;
@@ -725,7 +725,7 @@ button:disabled{
     flex:1;
     resize:none;
     height:46px;
-    border:1px solid #ccc;
+    border:1px solid rgba(255,255,255,.15);
     border-radius:10px;
     padding:12px;
     outline:none;
@@ -737,8 +737,8 @@ button:disabled{
 }
 
 .input-area textarea:focus{
-    border-color:#d60000;
-    box-shadow:0 0 0 3px rgba(214,0,0,.08);
+    border-color:#d4af37;
+    box-shadow:0 0 0 3px rgba(212,175,55,.08);
 }
 
 .send-btn{
@@ -746,7 +746,7 @@ button:disabled{
     border:none;
     border-radius:10px;
     background:var(--accent);
-    color:white;
+    color:#1a1400;
     font-weight:700;
     font-size:14px;
     display:flex;
@@ -760,8 +760,8 @@ button:disabled{
 }
 
 .send-btn:hover{
-    background:#b90000;
-    box-shadow:0 5px 15px rgba(214,0,0,.2);
+    background:#a8842a;
+    box-shadow:0 5px 15px rgba(212,175,55,.2);
 }
 
 .send-btn:active{
@@ -806,7 +806,7 @@ button:disabled{
     max-width:500px;
     max-height:90vh;
     overflow-y:auto;
-    background:white;
+    background:var(--surface);
     border-radius:15px;
     padding:22px;
     animation:modalIn .25s ease;
@@ -834,7 +834,7 @@ button:disabled{
 .modal input{
     width:100%;
     padding:12px;
-    border:1px solid #ccc;
+    border:1px solid rgba(255,255,255,.15);
     border-radius:9px;
     margin-bottom:10px;
     outline:none;
@@ -843,7 +843,7 @@ button:disabled{
 }
 
 .modal input:focus{
-    border-color:#d60000;
+    border-color:#d4af37;
 }
 
 .modal-btn{
@@ -852,14 +852,14 @@ button:disabled{
     border:none;
     border-radius:9px;
     margin-top:8px;
-    background:#d60000;
-    color:white;
+    background:#d4af37;
+    color:#1a1400;
     font-weight:bold;
     transition:transform .15s ease,box-shadow .2s ease;
 }
 
 .modal-btn:hover{
-    box-shadow:0 5px 15px rgba(214,0,0,.16);
+    box-shadow:0 5px 15px rgba(212,175,55,.16);
 }
 
 .modal-btn:active{
@@ -867,18 +867,18 @@ button:disabled{
 }
 
 .modal-btn.secondary{
-    background:#222;
+    background:#181b22;
 }
 
 .modal-btn.yellow{
-    background:#ffd500;
+    background:#f4e5a1;
     color:#111;
 }
 
 .close-btn{
     float:right;
     border:none;
-    background:#eee;
+    background:#181b22;
     width:32px;
     height:32px;
     border-radius:50%;
@@ -886,7 +886,7 @@ button:disabled{
 }
 
 .close-btn:hover{
-    background:#ddd;
+    background:#20242e;
     transform:rotate(90deg);
 }
 
@@ -899,8 +899,8 @@ button:disabled{
     height:90px;
     border-radius:50%;
     margin:0 auto 15px;
-    background:#d60000;
-    color:white;
+    background:#d4af37;
+    color:#1a1400;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -927,8 +927,8 @@ button:disabled{
     height:30px;
     border-radius:50%;
     background:var(--accent);
-    color:white;
-    border:3px solid white;
+    color:#1a1400;
+    border:3px solid var(--surface);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -949,8 +949,8 @@ button:disabled{
     top:70px;
     left:14px;
     right:14px;
-    background:white;
-    color:#111;
+    background:var(--surface);
+    color:var(--text);
     border-radius:10px;
     box-shadow:0 5px 20px rgba(0,0,0,.25);
     overflow:hidden;
@@ -977,7 +977,7 @@ button:disabled{
    ===================================================== */
 
 .request-card{
-    border:1px solid #ddd;
+    border:1px solid var(--border);
     border-radius:10px;
     padding:13px;
     margin-bottom:10px;
@@ -1011,12 +1011,12 @@ button:disabled{
 }
 
 .reject{
-    background:#eee;
-    color:#111;
+    background:#181b22;
+    color:var(--text);
 }
 
 .danger{
-    background:#d60000!important;
+    background:#dc2626!important;
     color:white!important;
 }
 
@@ -1029,12 +1029,12 @@ button:disabled{
     align-items:center;
     gap:10px;
     padding:10px 0;
-    border-bottom:1px solid #eee;
+    border-bottom:1px solid var(--border);
 }
 
 .member-remove{
     border:none;
-    background:#d60000;
+    background:#dc2626;
     color:white;
     padding:7px 9px;
     border-radius:7px;
@@ -1043,24 +1043,24 @@ button:disabled{
 }
 
 .closed-banner{
-    background:#eee;
-    color:#555;
+    background:#181b22;
+    color:#b9b6ad;
     padding:10px;
     border-radius:9px;
     margin:15px 0;
 }
 
 .friend-limit-box{
-    background:#f5f5f5;
+    background:#181b22;
     border-radius:10px;
     padding:10px;
     margin-bottom:12px;
     font-size:13px;
-    color:#555;
+    color:#b9b6ad;
 }
 
 .friend-limit-box strong{
-    color:#d60000;
+    color:#d4af37;
 }
 
 /* =====================================================
@@ -1105,7 +1105,7 @@ button:disabled{
     position:fixed;
     right:20px;
     bottom:20px;
-    background:#111;
+    background:#181b22;
     color:white;
     padding:13px 18px;
     border-radius:10px;
@@ -1150,7 +1150,7 @@ button:disabled{
 .messages::-webkit-scrollbar-thumb,
 .modal::-webkit-scrollbar-thumb,
 .search-results::-webkit-scrollbar-thumb{
-    background:#777;
+    background:#33373f;
     border-radius:10px;
 }
 
@@ -1244,6 +1244,63 @@ button:disabled{
 
     .message-content{
         max-width:82%;
+    }
+
+}
+
+
+/* =====================================================
+   PC / GRANDS ÉCRANS
+   ===================================================== */
+
+@media(min-width:1600px){
+
+    .sidebar{
+        width:360px;
+        min-width:360px;
+    }
+
+}
+
+/* =====================================================
+   TRÈS GRANDS ÉCRANS / TV
+   ===================================================== */
+
+@media(min-width:2200px){
+
+    body{
+        font-size:17px;
+    }
+
+    .sidebar{
+        width:420px;
+        min-width:420px;
+    }
+
+    .logo{
+        width:52px;
+        height:52px;
+    }
+
+    .logo-text{
+        font-size:21px;
+    }
+
+    .message-content{
+        max-width:min(760px,75%);
+    }
+
+    .message-text{
+        font-size:17px;
+    }
+
+    .chat-header{
+        height:84px;
+        min-height:84px;
+    }
+
+    .header-name{
+        font-size:20px;
     }
 
 }
@@ -7036,8 +7093,6 @@ searchResults.style.display=
 </body>
 
 </html>
-
-
 
 
 
