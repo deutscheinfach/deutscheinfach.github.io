@@ -1,474 +1,404 @@
 <!DOCTYPE html>
-<html lang="de" dir="rtl">
-
+<html lang="ar" dir="rtl">
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>تسجيل الدخول – Deutsch Einfach</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
+/* ============================================
+   Deutsch Einfach — Thème Noir & Or
+   Design responsive: mobile / tablette / PC / grand écran
+   ============================================ */
+
+:root {
+  --bg: #08090c;
+  --bg-soft: #0d0f14;
+  --surface: #121419;
+  --surface-2: #181b22;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(212, 175, 55, 0.35);
+  --gold: #d4af37;
+  --gold-light: #f4e5a1;
+  --gold-dark: #a8842a;
+  --text: #f5f4f0;
+  --text-dim: #b9b6ad;
+  --text-faint: #7c7a72;
+  --radius: 18px;
+  --shadow-gold: 0 0 40px -10px rgba(212, 175, 55, 0.25);
+}
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-
-    margin: 0;
-
-    font-family:
-        Arial,
-        sans-serif;
-
-    min-height: 100vh;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f8f8f8,
-            #fff8d8
-        );
-
-    padding: 20px;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Cairo", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  direction: rtl;
+  text-align: right;
+  line-height: 1.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.login-container {
-
-    width: 100%;
-
-    max-width: 450px;
-
-    background: white;
-
-    border-radius: 25px;
-
-    padding: 35px 30px;
-
-    box-shadow:
-        0 15px 45px
-        rgba(0,0,0,0.12);
-
-    border-top:
-        6px solid #d60000;
+img {
+  max-width: 100%;
+  display: block;
 }
 
-.logo-container {
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-    text-align: center;
+/* Background texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.10), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.06), transparent 45%),
+    linear-gradient(180deg, #08090c 0%, #0a0b10 100%);
+}
 
-    margin-bottom: 20px;
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-size: 44px 44px;
+  background-image:
+    linear-gradient(to right, rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 70%);
+  mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 70%);
+}
+
+/* ---------- Auth card ---------- */
+.auth-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  padding: 40px 34px;
+  box-shadow: var(--shadow-gold);
+}
+
+.auth-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
 }
 
 .logo {
-
-    width: 90px;
-
-    height: 90px;
-
-    object-fit: cover;
-
-    border-radius: 50%;
-
-    border:
-        4px solid #f0c400;
-
-    box-shadow:
-        0 8px 25px
-        rgba(0,0,0,0.12);
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  box-shadow: var(--shadow-gold);
 }
 
 h1 {
-
-    text-align: center;
-
-    color: #d60000;
-
-    margin:
-        12px 0 5px;
-
-    font-size: 29px;
-
-    font-weight: 900;
+  text-align: center;
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 900;
+  margin: 4px 0 6px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .subtitle {
-
-    text-align: center;
-
-    color: #777;
-
-    margin-bottom: 28px;
-
-    font-size: 14px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 30px;
 }
 
+/* ---------- Form ---------- */
 .form-group {
-
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
 
 label {
-
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: #333;
-
-    font-weight: bold;
-
-    font-size: 14px;
+  display: block;
+  font-size: 13.5px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-dim);
 }
 
 input {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s;
+  direction: ltr;
+  text-align: left;
+}
 
-    width: 100%;
-
-    padding: 14px 15px;
-
-    border:
-        2px solid #e5e5e5;
-
-    border-radius: 13px;
-
-    font-size: 15px;
-
-    outline: none;
-
-    transition: 0.25s;
-
-    direction: ltr;
-
-    text-align: left;
+input::placeholder {
+  color: var(--text-faint);
 }
 
 input:focus {
-
-    border-color: #d60000;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(214,0,0,0.08);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
 }
 
 .login-button {
-
-    width: 100%;
-
-    border: none;
-
-    padding: 15px;
-
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #d60000,
-            #aa0000
-        );
-
-    color: white;
-
-    font-size: 17px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.3s;
-
-    margin-top: 5px;
+  width: 100%;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
+  color: #1a1400;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.25s ease;
+  margin-top: 6px;
+  box-shadow: var(--shadow-gold);
 }
 
 .login-button:hover {
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 8px 20px
-        rgba(214,0,0,0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -8px rgba(212, 175, 55, 0.45);
 }
 
 .login-button:disabled {
-
-    opacity: 0.65;
-
-    cursor: not-allowed;
-
-    transform: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
-.links {
-
-    text-align: center;
-
-    margin-top: 22px;
-
-    line-height: 2;
-}
-
-.links a {
-
-    color: #d60000;
-
-    text-decoration: none;
-
-    font-weight: bold;
-
-    font-size: 14px;
-}
-
-.links a:hover {
-
-    text-decoration: underline;
+/* ---------- Messages ---------- */
+.error,
+.success {
+  display: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+  text-align: center;
+  font-size: 13.5px;
+  line-height: 1.6;
 }
 
 .error {
-
-    display: none;
-
-    background:
-        #fff0f0;
-
-    color:
-        #b00000;
-
-    border:
-        1px solid #ffcccc;
-
-    border-radius: 12px;
-
-    padding: 12px;
-
-    margin-bottom: 18px;
-
-    text-align: center;
-
-    font-size: 14px;
-
-    line-height: 1.6;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.35);
+  color: #fca5a5;
 }
 
 .success {
-
-    display: none;
-
-    background:
-        #effff1;
-
-    color:
-        #167526;
-
-    border:
-        1px solid #bce8c4;
-
-    border-radius: 12px;
-
-    padding: 12px;
-
-    margin-bottom: 18px;
-
-    text-align: center;
-
-    font-size: 14px;
-
-    line-height: 1.6;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #86efac;
 }
 
 .loading {
+  display: none;
+  text-align: center;
+  color: var(--text-faint);
+  margin-top: 14px;
+  font-size: 13px;
+}
 
-    display: none;
+/* ---------- Links ---------- */
+.links {
+  text-align: center;
+  margin-top: 24px;
+  line-height: 2;
+  font-size: 14px;
+  color: var(--text-dim);
+}
 
-    text-align: center;
+.links a {
+  color: var(--gold-light);
+  font-weight: 700;
+}
 
-    color: #777;
-
-    margin-top: 12px;
-
-    font-size: 13px;
+.links a:hover {
+  text-decoration: underline;
 }
 
 .back-home {
-
-    display: block;
-
-    text-align: center;
-
-    margin-top: 22px;
-
-    color: #555;
-
-    text-decoration: none;
-
-    font-size: 14px;
+  display: block;
+  text-align: center;
+  margin-top: 18px;
+  color: var(--text-faint);
+  font-size: 13px;
 }
 
 .back-home:hover {
-
-    color: #d60000;
+  color: var(--gold-light);
 }
 
-@media (max-width: 500px) {
+/* ============================================
+   Responsive — mobile / tablette / PC / TV
+   ============================================ */
 
-    .login-container {
-
-        padding:
-            30px 20px;
-    }
-
-    h1 {
-
-        font-size: 25px;
-    }
-
+/* Mobile */
+@media (max-width: 480px) {
+  body {
+    padding: 16px;
+  }
+  .auth-card {
+    padding: 30px 22px;
+    border-radius: 20px;
+  }
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
 }
 
+/* Tablette */
+@media (min-width: 700px) and (max-width: 1024px) {
+  .auth-card {
+    max-width: 480px;
+    padding: 46px 40px;
+  }
+}
+
+/* PC / grands écrans */
+@media (min-width: 1440px) {
+  .auth-card {
+    max-width: 500px;
+    padding: 52px 46px;
+  }
+  h1 {
+    font-size: 30px;
+  }
+  .subtitle {
+    font-size: 15px;
+  }
+  input {
+    padding: 15px 18px;
+    font-size: 16px;
+  }
+  .login-button {
+    padding: 16px;
+    font-size: 17px;
+  }
+}
+
+/* Très grands écrans / TV */
+@media (min-width: 2200px) {
+  .auth-card {
+    max-width: 620px;
+    padding: 64px 56px;
+    border-radius: 30px;
+  }
+  h1 {
+    font-size: 38px;
+  }
+  .subtitle {
+    font-size: 18px;
+  }
+  label {
+    font-size: 16px;
+  }
+  input {
+    padding: 18px 22px;
+    font-size: 19px;
+    border-radius: 14px;
+  }
+  .login-button {
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 14px;
+  }
+  .links,
+  .back-home {
+    font-size: 16px;
+  }
+}
 </style>
-
 </head>
 
-
 <body>
+<div class="bg-grid"></div>
 
+<div class="auth-wrap">
+  <div class="auth-card">
 
-<div class="login-container">
-
-
-    <div class="logo-container">
-
-        <img
-            src="icon1.png"
-            alt="Deutsch Einfach"
-            class="logo"
-        >
-
+    <div class="auth-logo">
+      <img src="icon1.png" alt="Deutsch Einfach" class="logo">
     </div>
 
+    <h1>Deutsch Einfach 🇩🇪</h1>
 
-    <h1>
-        Deutsch Einfach 🇩🇪
-    </h1>
+    <div class="subtitle">تسجيل الدخول إلى حسابك</div>
 
-
-    <div class="subtitle">
-
-        تسجيل الدخول إلى حسابك
-
-    </div>
-
-
-    <div
-        class="error"
-        id="errorMessage"
-    ></div>
-
-
-    <div
-        class="success"
-        id="successMessage"
-    ></div>
-
+    <div class="error" id="errorMessage"></div>
+    <div class="success" id="successMessage"></div>
 
     <form id="loginForm">
 
+      <div class="form-group">
+        <label for="email">📧 البريد الإلكتروني</label>
+        <input type="email" id="email" placeholder="example@email.com" autocomplete="email" required>
+      </div>
 
-        <div class="form-group">
+      <div class="form-group">
+        <label for="password">🔒 كلمة المرور</label>
+        <input type="password" id="password" placeholder="كلمة المرور" autocomplete="current-password" required>
+      </div>
 
-            <label for="email">
-                📧 البريد الإلكتروني
-            </label>
+      <button type="submit" class="login-button" id="loginButton">تسجيل الدخول</button>
 
-            <input
-                type="email"
-                id="email"
-                placeholder="example@email.com"
-                autocomplete="email"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="password">
-                🔒 كلمة المرور
-            </label>
-
-            <input
-                type="password"
-                id="password"
-                placeholder="كلمة المرور"
-                autocomplete="current-password"
-                required
-            >
-
-        </div>
-
-
-        <button
-            type="submit"
-            class="login-button"
-            id="loginButton"
-        >
-            تسجيل الدخول
-        </button>
-
-
-        <div
-            class="loading"
-            id="loading"
-        >
-            ⏳ جاري تسجيل الدخول...
-        </div>
-
+      <div class="loading" id="loading">⏳ جاري تسجيل الدخول...</div>
 
     </form>
 
-
     <div class="links">
-
-        <div>
-            ما عندكش حساب؟
-            <a
-                href="signup.html"
-                id="signupLink"
-            >
-                إنشاء حساب
-            </a>
-        </div>
-
-        <div>
-            <a href="forgot-password.html">
-                نسيت كلمة المرور؟
-            </a>
-        </div>
-
+      <div>
+        ما عندكش حساب؟
+        <a href="signup.html" id="signupLink">إنشاء حساب</a>
+      </div>
+      <div>
+        <a href="forgot-password.html">نسيت كلمة المرور؟</a>
+      </div>
     </div>
 
+    <a href="index.html" class="back-home">← العودة إلى الصفحة الرئيسية</a>
 
-    <a
-        href="index.html"
-        class="back-home"
-    >
-        ← العودة إلى الصفحة الرئيسية
-    </a>
-
-
+  </div>
 </div>
-
 
 <script type="module">
 
@@ -1230,5 +1160,4 @@ loginForm.addEventListener(
 </script>
 
 </body>
-
 </html>
