@@ -1414,6 +1414,52 @@ button: disabled{
     .emoji-btn { width: 42px; height: 42px; }
 }
 
+
+/* ===== صور الرسائل ===== */
+.message-image {
+    display: block;
+    max-width: min(320px, 70vw);
+    max-height: 320px;
+    margin-top: 6px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    cursor: zoom-in;
+    object-fit: cover;
+}
+.message-image:hover { border-color: var(--line-gold); }
+
+.image-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0,0,0,.9);
+    cursor: zoom-out;
+}
+.image-viewer.show { display: flex; }
+.image-viewer img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+}
+
+.upload-bar {
+    position: absolute;
+    inset-inline: 14px;
+    bottom: calc(100% + 6px);
+    padding: 7px 12px;
+    display: none;
+    border-radius: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--line-gold);
+    color: var(--gold-soft);
+    font-size: 13px;
+}
+.upload-bar.show { display: block; }
+
 </style>
 
 </head>
@@ -1597,11 +1643,17 @@ Schreib mit anderen Deutschlernenden.
 
 <button class="scroll-down" id="scrollDown" type="button" aria-label="Nach unten">↓</button>
 
+<div class="upload-bar" id="uploadBar"></div>
+
 <div class="input-area">
 
 <div class="emoji-panel" id="emojiPanel"></div>
 
 <button class="emoji-btn" id="emojiBtn" type="button" aria-label="Emoji">😊</button>
+
+<button class="emoji-btn" id="imageBtn" type="button" aria-label="Bild senden">🖼️</button>
+
+<input type="file" id="imageInput" accept="image/*" hidden>
 
 <textarea
 id="messageInput"
@@ -1882,6 +1934,13 @@ runTransaction
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
+import {
+getStorage,
+ref as storageRef,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
+
 /* =====================================================
    FIREBASE CONFIG
    ===================================================== */
@@ -1915,6 +1974,8 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 
 const db=getFirestore(app);
+
+const storage=getStorage(app);
 
 /* =====================================================
    LIMITS
@@ -2820,7 +2881,15 @@ ${escapeHtml(name)}
 
 <div class="message-text">
 
-${linkify(escapeHtml(message.text))}
+${message.text ? linkify(escapeHtml(message.text)) : ""}
+
+${
+message.image
+?
+`<img class="message-image" src="${escapeHtml(message.image)}" alt="Bild" loading="lazy">`
+:
+""
+}
 
 </div>
 
@@ -2865,7 +2934,7 @@ container.scrollHeight;
    SEND MESSAGE
    ===================================================== */
 
-window.sendMessage=async()=>{
+window.sendMessage=async(extra)=>{
 
 const input=
 document.getElementById("messageInput");
@@ -2876,7 +2945,8 @@ document.getElementById("sendBtn");
 const text=
 input.value.trim();
 
-if(!text)
+/* رسالة ديال تصويرة تقدر تجي بلا نص */
+if(!text&&!extra?.image)
 return;
 
 if(text.length>500){
@@ -2911,7 +2981,9 @@ getUserName(currentUserData),
 text:text,
 
 createdAt:
-serverTimestamp()
+serverTimestamp(),
+
+...(extra||{})
 
 };
 
@@ -3022,7 +3094,7 @@ updatedAt:
 serverTimestamp(),
 
 lastMessage:
-text,
+text||(extra?.image?"📷 Bild":""),
 
 lastMessageSenderId:
 currentUser.uid
@@ -7183,6 +7255,144 @@ searchResults.style.display=
 }
 
 });
+
+
+
+/* =====================================================
+   إرسال الصور
+
+   الصورة كتمشي لـ Firebase Storage، والرسالة كتحمل غير
+   الرابط. base64 داخل Firestore كان غادي يرجّع نفس
+   مشكل البطء اللي صلحنا: 100 رسالة × 150KB = 15MB
+   فكل مرة كيتحل الشات.
+   ===================================================== */
+
+const MAX_IMAGE_BYTES=3*1024*1024;
+
+const imageBtn=document.getElementById("imageBtn");
+const imageInput=document.getElementById("imageInput");
+const uploadBar=document.getElementById("uploadBar");
+const imageViewer=document.getElementById("imageViewer");
+
+function showUploadBar(text){
+
+if(!uploadBar)
+return;
+
+uploadBar.textContent=text;
+uploadBar.classList.toggle("show",!!text);
+
+}
+
+/* dataURL → Blob باش نرفعوها بحال ملف */
+function dataUrlToBlob(dataUrl){
+
+const [head,body]=dataUrl.split(",");
+const mime=head.match(/:(.*?);/)[1];
+const binary=atob(body);
+const bytes=new Uint8Array(binary.length);
+
+for(let i=0;i<binary.length;i++)
+bytes[i]=binary.charCodeAt(i);
+
+return new Blob([bytes],{type:mime});
+
+}
+
+async function sendImageMessage(file){
+
+if(!currentUser)
+return;
+
+if(file.size>MAX_IMAGE_BYTES){
+showToast("الصورة كبيرة بزاف (ماكس 3MB)");
+return;
+}
+
+try{
+
+showUploadBar("كنرفعو الصورة…");
+
+/* كنصغروها قبل الرفع: أسرع للرافع وللقارئ */
+const dataUrl=
+await resizeImageToDataUrl(file,1280);
+
+const blob=dataUrlToBlob(dataUrl);
+
+const path=
+`chatImages/${currentUser.uid}/${Date.now()}_${Math.random().toString(36).slice(2,9)}.jpg`;
+
+const fileRef=storageRef(storage,path);
+
+await uploadBytes(fileRef,blob);
+
+const url=await getDownloadURL(fileRef);
+
+/* كنعديو عبر sendMessage باش ناخدو نفس التوجيه
+   (community / private / group) وتحديث اللائحة. */
+await sendMessage({image:url});
+
+showUploadBar("");
+
+}catch(error){
+
+console.error("IMAGE SEND ERROR:",error);
+showUploadBar("");
+showToast("ما قدرناش نصيفطو الصورة");
+
+}
+
+}
+
+if(imageBtn&&imageInput){
+
+imageBtn.addEventListener(
+"click",
+()=>imageInput.click());
+
+imageInput.addEventListener(
+"change",
+async ()=>{
+
+const file=imageInput.files?.[0];
+imageInput.value="";
+
+if(file)
+await sendImageMessage(file);
+
+});
+
+}
+
+/* تكبير الصورة */
+if(imageViewer){
+
+document.addEventListener(
+"click",
+event=>{
+
+const img=
+event.target.closest(".message-image");
+
+if(img){
+imageViewer.querySelector("img").src=img.src;
+imageViewer.classList.add("show");
+return;
+}
+
+if(event.target.closest(".image-viewer"))
+imageViewer.classList.remove("show");
+
+});
+
+document.addEventListener(
+"keydown",
+event=>{
+if(event.key==="Escape")
+imageViewer.classList.remove("show");
+});
+
+}
 
 
 /* =====================================================

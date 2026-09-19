@@ -49,8 +49,15 @@ service cloud.firestore {
       allow create: if request.auth != null
         && request.resource.data.userId == request.auth.uid
         && request.resource.data.text is string
-        && request.resource.data.text.size() > 0
-        && request.resource.data.text.size() <= 500;
+        && request.resource.data.text.size() <= 500
+        && (
+             request.resource.data.text.size() > 0
+             || (
+                  request.resource.data.get("image", "") is string
+                  && request.resource.data.get("image", "").size() > 0
+                  && request.resource.data.get("image", "").size() <= 2000
+                )
+           );
 
       allow update: if false;
 
@@ -219,9 +226,16 @@ service cloud.firestore {
 
           && request.resource.data.text is string
 
-          && request.resource.data.text.size() > 0
-
           && request.resource.data.text.size() <= 500
+
+          && (
+               request.resource.data.text.size() > 0
+               || (
+                    request.resource.data.get("image", "") is string
+                    && request.resource.data.get("image", "").size() > 0
+                    && request.resource.data.get("image", "").size() <= 2000
+                  )
+             )
 
           && request.auth.uid in get(
             /databases/$(database)/documents/privateChats/$(chatId)
@@ -446,9 +460,16 @@ service cloud.firestore {
 
           && request.resource.data.text is string
 
-          && request.resource.data.text.size() > 0
-
           && request.resource.data.text.size() <= 500
+
+          && (
+               request.resource.data.text.size() > 0
+               || (
+                    request.resource.data.get("image", "") is string
+                    && request.resource.data.get("image", "").size() > 0
+                    && request.resource.data.get("image", "").size() <= 2000
+                  )
+             )
 
           && exists(
             /databases/$(database)/documents/groups/$(groupId)
