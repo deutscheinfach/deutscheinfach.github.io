@@ -1,2218 +1,384 @@
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Deutsch Einfach – B2 Schreiben</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f5f5f5;
-            color: #111;
-        }
-
-        /* ===== HEADER ===== */
-        header {
-            background: #111;
-            color: white;
-            padding: 18px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 4px solid #e30613;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo {
-            width: 48px;
-            height: 48px;
-            background: #e30613;
-            color: #ffd500;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 20px;
-        }
-
-        .brand-text h1 {
-            font-size: 22px;
-            margin-bottom: 4px;
-        }
-
-        .brand-text p {
-            color: #ffd500;
-            font-size: 13px;
-        }
-
-        .top-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .top-btn {
-            text-decoration: none;
-            color: #111;
-            background: #ffd500;
-            padding: 11px 18px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .top-btn:hover {
-            background: white;
-            transform: translateY(-2px);
-        }
-
-        .top-btn.back {
-            background: #e30613;
-            color: white;
-        }
-
-        .top-btn.back:hover {
-            background: #ff1c2a;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            background: linear-gradient(135deg, #111 0%, #222 70%, #e30613 100%);
-            color: white;
-            padding: 55px 25px;
-            text-align: center;
-        }
-
-        .hero .label {
-            display: inline-block;
-            background: #ffd500;
-            color: #111;
-            padding: 8px 18px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 18px;
-        }
-
-        .hero h2 {
-            font-size: 42px;
-            margin-bottom: 12px;
-        }
-
-        .hero h2 span {
-            color: #ffd500;
-        }
-
-        .hero p {
-            max-width: 700px;
-            margin: auto;
-            color: #eee;
-            font-size: 17px;
-            line-height: 1.7;
-        }
-
-        /* ===== STATS ===== */
-        .stats {
-            max-width: 1100px;
-            margin: -25px auto 35px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .stats-box {
-            background: white;
-            border-radius: 16px;
-            padding: 22px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            text-align: center;
-        }
-
-        .stat {
-            padding: 12px;
-            border-right: 1px solid #ddd;
-        }
-
-        .stat:last-child {
-            border-right: none;
-        }
-
-        .stat strong {
-            display: block;
-            font-size: 27px;
-            color: #e30613;
-            margin-bottom: 5px;
-        }
-
-        .stat span {
-            font-size: 14px;
-            color: #555;
-        }
-
-        /* ===== MAIN ===== */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 10px 20px 60px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .section-title h3 {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .section-title h3 span {
-            color: #e30613;
-        }
-
-        .section-title p {
-            color: #666;
-            font-size: 15px;
-        }
-
-        /* ===== TOPICS GRID ===== */
-        .topics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .topic-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
-            border: 1px solid #e5e5e5;
-            transition: 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            min-height: 235px;
-        }
-
-        .topic-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-            border-color: #e30613;
-        }
-
-        .topic-number {
-            background: #111;
-            color: #ffd500;
-            font-weight: bold;
-            padding: 9px 15px;
-            font-size: 13px;
-        }
-
-        .topic-content {
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .topic-title {
-            font-size: 19px;
-            line-height: 1.45;
-            margin-bottom: 18px;
-            color: #111;
-            font-weight: bold;
-        }
-
-        .badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: auto;
-            margin-bottom: 17px;
-        }
-
-        .badge {
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .badge.type {
-            background: #ffe5e7;
-            color: #c9000b;
-        }
-
-        .badge.time {
-            background: #fff4bd;
-            color: #725d00;
-        }
-
-        .badge.level {
-            background: #e8e8e8;
-            color: #222;
-        }
-
-        /* ===== NORMAL FREE BUTTON ===== */
-
-        .start-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            background: #e30613;
-            color: white;
-            padding: 11px 15px;
-            border-radius: 9px;
-            font-weight: bold;
-            transition: 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .start-btn:hover {
-            background: #111;
-            color: #ffd500;
-        }
-
-        /* ===== PREMIUM BUTTON ===== */
-
-        .start-btn.premium {
-            background: #111;
-            color: #ffd500;
-        }
-
-        .start-btn.premium:hover {
-            background: #e30613;
-            color: white;
-        }
-
-        /* ===== PREMIUM MODAL ===== */
-
-        .premium-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.72);
-            z-index: 5000;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .premium-modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .premium-box {
-            width: 100%;
-            max-width: 650px;
-            background: white;
-            border-radius: 18px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
-            overflow: hidden;
-            position: relative;
-            animation: premiumIn 0.22s ease;
-        }
-
-        @keyframes premiumIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px) scale(0.98);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .premium-head {
-            background: #111;
-            color: white;
-            padding: 22px 60px 20px 22px;
-            border-bottom: 4px solid #ffd500;
-        }
-
-        .premium-head h3 {
-            margin-bottom: 7px;
-            font-size: 24px;
-        }
-
-        .premium-head p {
-            line-height: 1.6;
-            color: #eee;
-        }
-
-        .premium-close {
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            width: 38px;
-            height: 38px;
-            border: none;
-            border-radius: 50%;
-            background: #e30613;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 5;
-        }
-
-        .premium-close:hover {
-            background: #111;
-            color: #ffd500;
-        }
-
-        .premium-body {
-            padding: 22px;
-        }
-
-        /* ===== PREMIUM INTRO ===== */
-
-        .premium-intro {
-            background: #fff4bd;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 20px;
-            color: #222;
-            line-height: 1.7;
-            text-align: center;
-        }
-
-        .premium-intro .ar-text {
-            direction: rtl;
-            text-align: center;
-            display: block;
-            margin-top: 8px;
-        }
-
-        .premium-intro .de-text {
-            direction: ltr;
-            text-align: center;
-            display: block;
-        }
-
-        /* ===== OFFERS ===== */
-
-        .offer-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .offer-card {
-            border: 2px solid #eee;
-            border-radius: 14px;
-            padding: 16px 12px;
-            text-align: center;
-            background: #fafafa;
-            direction: ltr;
-            transition: 0.2s;
-        }
-
-        .offer-card:hover {
-            border-color: #e30613;
-            transform: translateY(-2px);
-        }
-
-        .offer-card h4 {
-            margin-bottom: 8px;
-            font-size: 17px;
-            direction: ltr;
-            text-align: center;
-        }
-
-        .offer-price {
-            color: #e30613;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            direction: ltr;
-            text-align: center;
-        }
-
-        .offer-description {
-            color: #555;
-            font-size: 13px;
-            line-height: 1.8;
-            min-height: 62px;
-            text-align: center;
-            direction: ltr;
-        }
-
-        .offer-de {
-            direction: ltr;
-            text-align: center;
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .offer-ar {
-            direction: rtl;
-            text-align: center;
-            display: block;
-            font-size: 13px;
-        }
-
-        .offer-btn {
-            display: block;
-            margin-top: 12px;
-            text-decoration: none;
-            background: #e30613;
-            color: white;
-            padding: 10px 8px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 13px;
-            transition: 0.2s;
-        }
-
-        .offer-btn:hover {
-            background: #111;
-            color: #ffd500;
-        }
-
-        /* ===== WHATSAPP ===== */
-
-        .whatsapp-area {
-            margin-top: 20px;
-            padding-top: 18px;
-            border-top: 1px solid #ddd;
-            text-align: center;
-        }
-
-        .whatsapp-area p {
-            margin-bottom: 11px;
-            color: #555;
-            line-height: 1.7;
-        }
-
-        .whatsapp-ar {
-            direction: rtl;
-            text-align: center;
-            display: block;
-        }
-
-        .whatsapp-de {
-            direction: ltr;
-            text-align: center;
-            display: block;
-        }
-
-        .whatsapp-main {
-            display: block;
-            width: 100%;
-            background: #111;
-            color: #ffd500;
-            text-decoration: none;
-            padding: 13px 15px;
-            border-radius: 9px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        .whatsapp-main:hover {
-            background: #e30613;
-            color: white;
-        }
-
-        /* ===== FOOTER ===== */
-
-        footer {
-            background: #111;
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            border-top: 4px solid #ffd500;
-        }
-
-        footer strong {
-            color: #ffd500;
-        }
-
-        footer p {
-            margin-top: 8px;
-            color: #bbb;
-            font-size: 13px;
-        }
-
-        /* ===== RESPONSIVE ===== */
-
-        @media (max-width: 950px) {
-
-            .topics-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .hero h2 {
-                font-size: 35px;
-            }
-        }
-
-        @media (max-width: 650px) {
-
-            header {
-                padding: 14px 15px;
-                flex-direction: column;
-            }
-
-            .top-buttons {
-                width: 100%;
-            }
-
-            .top-btn {
-                flex: 1;
-                text-align: center;
-                font-size: 13px;
-            }
-
-            .hero {
-                padding: 40px 18px;
-            }
-
-            .hero h2 {
-                font-size: 29px;
-            }
-
-            .hero p {
-                font-size: 15px;
-            }
-
-            .stats-box {
-                grid-template-columns: 1fr;
-            }
-
-            .stat {
-                border-right: none;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .stat:last-child {
-                border-bottom: none;
-            }
-
-            .topics-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .topic-title {
-                font-size: 18px;
-            }
-
-            .offer-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .premium-modal {
-                padding: 12px;
-            }
-
-            .premium-head {
-                padding: 20px 55px 18px 18px;
-            }
-
-            .premium-head h3 {
-                font-size: 20px;
-            }
-
-            .premium-body {
-                padding: 16px;
-            }
-
-            .offer-card {
-                padding: 15px;
-            }
-
-            .offer-description {
-                min-height: auto;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch Einfach – B2 Schreiben</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --gold: #d4af37;
+    --gold-soft: #f4e5a1;
+    --ink: #08090c;
+    --card: #121419;
+    --line: rgba(255,255,255,.08);
+    --line-gold: rgba(212,175,55,.35);
+    --text: #f5f4f0;
+    --muted: #b9b6ad;
+}
+
+body {
+    font-family: "Cairo", "Segoe UI", Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 12% 8%, rgba(212,175,55,.10), transparent 40%),
+        radial-gradient(circle at 88% 26%, rgba(212,175,55,.07), transparent 44%),
+        var(--ink);
+    min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 30px;
+    background: rgba(8,9,12,.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.brand-logo {
+    width: 46px; height: 46px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color: #17130a;
+    font-weight: 900; font-size: 18px;
+}
+
+.brand-text h1 { font-size: 20px; font-weight: 800; }
+.brand-text p { color: var(--gold); font-size: 12.5px; }
+
+.top-buttons { display: flex; gap: 10px; }
+
+.top-btn {
+    padding: 10px 17px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #181b22;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: .25s;
+}
+.top-btn:hover { border-color: var(--line-gold); color: var(--gold-soft); transform: translateY(-2px); }
+
+.top-btn.primary {
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    border-color: transparent;
+    color: #17130a;
+}
+.top-btn.primary:hover { box-shadow: 0 12px 26px -10px rgba(212,175,55,.6); }
+
+/* ===== HERO ===== */
+.hero { text-align: center; padding: 58px 25px 42px; }
+
+.hero .label {
+    display: inline-block;
+    margin-bottom: 18px;
+    padding: 7px 18px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color: #17130a;
+    font-size: 13px; font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.hero h2 {
+    font-size: 42px; font-weight: 900; margin-bottom: 14px;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+.hero p { max-width: 680px; margin: auto; color: var(--muted); font-size: 16.5px; line-height: 1.8; }
+
+/* ===== STATS ===== */
+.stats { max-width: 1000px; margin: 0 auto 40px; padding: 0 20px; }
+
+.stats-box {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.stat { background: var(--card); padding: 22px 12px; }
+.stat strong { display: block; font-size: 27px; font-weight: 900; color: var(--gold-soft); margin-bottom: 4px; }
+.stat span { font-size: 13.5px; color: var(--muted); }
+
+/* ===== MAIN ===== */
+main { max-width: 1200px; margin: 0 auto; padding: 0 20px 70px; }
+
+.section-title { text-align: center; margin-bottom: 32px; }
+.section-title h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-title h3 span { color: var(--gold); }
+.section-title p { color: var(--muted); font-size: 15px; }
+
+.topics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+.topic-card {
+    display: flex; flex-direction: column;
+    min-height: 232px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    overflow: hidden;
+    transition: .28s ease;
+}
+.topic-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--line-gold);
+    box-shadow: 0 22px 45px -16px rgba(212,175,55,.35);
+}
+
+.topic-number {
+    padding: 9px 16px;
+    background: rgba(255,255,255,.03);
+    border-bottom: 1px solid var(--line);
+    color: var(--gold);
+    font-size: 12.5px; font-weight: 800;
+    letter-spacing: .4px;
+}
+
+.topic-content { display: flex; flex-direction: column; flex: 1; padding: 20px; }
+.topic-title { font-size: 18px; font-weight: 700; line-height: 1.45; margin-bottom: 18px; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; margin-bottom: 16px; }
+
+.badge { padding: 5px 11px; border-radius: 20px; font-size: 11.5px; font-weight: 700; border: 1px solid var(--line); color: var(--muted); }
+.badge.type { border-color: var(--line-gold); color: var(--gold-soft); }
+
+.start-btn {
+    display: block; width: 100%;
+    padding: 11px 15px;
+    border: none; border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color: #17130a;
+    font-family: inherit; font-size: 14px; font-weight: 800;
+    text-align: center; text-decoration: none; cursor: pointer;
+    transition: .25s;
+}
+.start-btn:hover { box-shadow: 0 12px 26px -10px rgba(212,175,55,.6); }
+
+.start-btn.premium {
+    background: #181b22;
+    border: 1px solid var(--line-gold);
+    color: var(--gold-soft);
+}
+.start-btn.premium:hover { background: #1f2229; box-shadow: none; }
+
+/* ===== MODAL ===== */
+.premium-modal {
+    display: none;
+    position: fixed; inset: 0; z-index: 5000;
+    padding: 20px;
+    overflow-y: auto;
+    background: rgba(0,0,0,.8);
+    backdrop-filter: blur(4px);
+}
+.premium-modal.show { display: flex; align-items: flex-start; justify-content: center; }
+
+.premium-box {
+    position: relative;
+    width: 100%; max-width: 900px;
+    margin: 5vh 0;
+    background: var(--ink);
+    border: 1px solid var(--line-gold);
+    border-radius: 22px;
+    overflow: hidden;
+    animation: premiumIn .22s ease;
+}
+
+@keyframes premiumIn {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to { opacity: 1; transform: none; }
+}
+
+.premium-head { padding: 26px 62px 24px 26px; border-bottom: 1px solid var(--line); }
+.premium-head h3 {
+    font-size: 23px; font-weight: 900; margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.premium-head p { color: var(--muted); line-height: 1.7; font-size: 14.5px; }
+
+.premium-close {
+    position: absolute; top: 16px; right: 18px;
+    width: 36px; height: 36px;
+    border: 1px solid var(--line); border-radius: 50%;
+    background: #181b22; color: var(--muted);
+    font-size: 20px; cursor: pointer;
+    transition: .25s;
+}
+.premium-close:hover { border-color: var(--line-gold); color: var(--gold-soft); }
+
+.premium-body { padding: 24px 26px 28px; }
+
+.offer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+.offer-card {
+    display: flex; flex-direction: column;
+    padding: 24px 20px;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 18px;
+    text-align: center;
+    transition: .28s;
+}
+.offer-card:hover { transform: translateY(-5px); border-color: var(--line-gold); }
+.offer-card.best { border-color: rgba(212,175,55,.5); }
+
+.offer-tag {
+    align-self: center; margin-bottom: 10px;
+    padding: 4px 13px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color: #17130a; font-size: 11.5px; font-weight: 800;
+}
+
+.offer-card h4 { font-size: 20px; color: var(--gold-soft); margin-bottom: 4px; }
+.offer-card .sub { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+.offer-price { font-size: 30px; font-weight: 900; margin-bottom: 4px; }
+.offer-period { color: var(--muted); font-size: 14px; }
+
+.offer-card ul { list-style: none; flex: 1; margin: 18px 0 0; text-align: start; }
+.offer-card li { display: flex; gap: 8px; margin-bottom: 11px; font-size: 13.5px; line-height: 1.6; color: var(--text); }
+.offer-card li::before { content: "✓"; color: #4ade80; font-weight: 800; }
+
+.offer-btn {
+    display: block; margin-top: 18px; padding: 12px 10px;
+    background: #25d366; color: #fff;
+    border-radius: 11px; text-decoration: none;
+    font-size: 14px; font-weight: 800;
+    transition: .25s;
+}
+.offer-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
+
+.whatsapp-area { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); text-align: center; }
+.whatsapp-area p { margin-bottom: 12px; color: var(--muted); line-height: 1.8; font-size: 14px; }
+.whatsapp-ar { display: block; direction: rtl; }
+
+.whatsapp-main {
+    display: block; padding: 13px 15px;
+    background: #181b22; border: 1px solid var(--line-gold);
+    border-radius: 11px; color: var(--gold-soft);
+    text-decoration: none; font-weight: 800;
+    transition: .25s;
+}
+.whatsapp-main:hover { background: #1f2229; }
+
+/* ===== FOOTER ===== */
+footer { padding: 34px 20px; text-align: center; border-top: 1px solid var(--line-gold); }
+footer strong { color: var(--gold-soft); font-size: 17px; }
+footer p { margin-top: 8px; color: var(--muted); font-size: 13px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 950px) {
+    .topics-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero h2 { font-size: 34px; }
+    .offer-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 650px) {
+    header { flex-direction: column; padding: 14px 16px; }
+    .top-buttons { width: 100%; }
+    .top-btn { flex: 1; text-align: center; font-size: 13px; }
+    .hero { padding: 40px 18px 32px; }
+    .hero h2 { font-size: 28px; }
+    .stats-box { grid-template-columns: 1fr; }
+    .topics-grid { grid-template-columns: 1fr; }
+    .premium-head { padding: 22px 56px 20px 20px; }
+    .premium-body { padding: 20px; }
+}
+</style>
 </head>
 
 <body>
 
-<!-- ===== HEADER ===== -->
-
 <header>
-
     <div class="brand">
-
-        <div class="brand-logo">
-            DE
-        </div>
-
+        <div class="brand-logo">DE</div>
         <div class="brand-text">
             <h1>Deutsch Einfach</h1>
-            <p>TELC B1 & B2 Vorbereitung</p>
+            <p>TELC B1 &amp; B2 Vorbereitung</p>
         </div>
-
     </div>
-
     <div class="top-buttons">
-
-        <a href="b2.html" class="top-btn back">
-            ← Zurück
-        </a>
-
-        <a href="index.html" class="top-btn">
-            Startseite
-        </a>
-
+        <a href="b2.html" class="top-btn">← Zurück</a>
+        <a href="index.html" class="top-btn primary">Startseite</a>
     </div>
-
 </header>
 
-
-<!-- ===== HERO ===== -->
-
 <section class="hero">
-
-    <div class="label">
-        B2 • SCHREIBEN
-    </div>
-
-    <h2>
-        Schreiben <span>– Beschwerde</span>
-    </h2>
-
-    <p>
-        Trainiere deine B2-Schreibaufgaben und bereite dich gezielt
-        auf den TELC-Test vor.
-    </p>
-
+    <div class="label">B2 • SCHREIBEN</div>
+    <h2>Schreiben – Beschwerde</h2>
+    <p>Trainiere deine B2-Schreibaufgaben und bereite dich gezielt auf den TELC-Test vor.</p>
 </section>
-
-
-<!-- ===== STATS ===== -->
 
 <section class="stats">
-
     <div class="stats-box">
-
-        <div class="stat">
-            <strong>41</strong>
-            <span>Schreiben Themen</span>
-        </div>
-
-        <div class="stat">
-            <strong>30 min</strong>
-            <span>Bearbeitungszeit</span>
-        </div>
-
-        <div class="stat">
-            <strong>B2</strong>
-            <span>Schwierigkeitsstufe</span>
-        </div>
-
+        <div class="stat"><strong id="stat-count">–</strong><span>Schreiben Themen</span></div>
+        <div class="stat"><strong>30 min</strong><span>Bearbeitungszeit</span></div>
+        <div class="stat"><strong>B2</strong><span>Schwierigkeitsstufe</span></div>
     </div>
-
 </section>
 
-
-<!-- ===== MAIN ===== -->
-
 <main>
-
     <div class="section-title">
-
-        <h3>
-            B2 <span>Schreiben</span>
-        </h3>
-
-        <p>
-            Wähle ein Thema und beginne deine Beschwerde-Aufgabe.
-        </p>
-
+        <h3>B2 <span>Schreiben</span></h3>
+        <p>Wähle ein Thema und beginne deine Beschwerde-Aufgabe.</p>
     </div>
 
-
-    <div class="topics-grid">
-
-
-        <!-- ===== THEMA 01 FREE ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 01</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Abenteuer "TIKKI TAKKA"
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="b2-schreiben-01.html" class="start-btn">
-                    Aufgabe öffnen →
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 02 FREE ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 02</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Informatik-Shop
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="b2-schreiben-02.html" class="start-btn">
-                    Aufgabe öffnen →
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 03 FREE ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 03</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Partyservice
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="b2-schreiben-03.html" class="start-btn">
-                    Aufgabe öffnen →
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 04 FREE ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 04</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Autovermietung Neustadt - Metro
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="b2-schreiben-04.html" class="start-btn">
-                    Aufgabe öffnen →
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 05 FREE ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 05</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Fotobuch
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="b2-schreiben-05.html" class="start-btn">
-                    Aufgabe öffnen →
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 06 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 06 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Kosmetik-Shop
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 06 – Kosmetik-Shop');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 07 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 07 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Hotel
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 07 – Hotel');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 08 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 08 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Reisebüro Sonnenschein – Ihr Online-Reisebüro für Last-Minute-Urlaub
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 08 – Reisebüro Sonnenschein');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 09 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 09 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Nie mehr schlaflos in Deutschland!
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 09 – Nie mehr schlaflos in Deutschland');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 10 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 10 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Appartement-Haus
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 10 – Appartement-Haus');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 11 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 11 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Kursbeschreibung
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 11 – Kursbeschreibung');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 12 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 12 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Renovierungskurs
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 12 – Renovierungskurs');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 13 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 13 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Engagement für Jugendliche
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 13 – Engagement für Jugendliche');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 14 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 14 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Wohnen auf Zeit in Oranienburg
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 14 – Wohnen auf Zeit in Oranienburg');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 15 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 15 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Freizeitverein Mainz
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 15 – Freizeitverein Mainz');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 16 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 16 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Naturmuseum - Museum
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 16 – Naturmuseum - Museum');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 17 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 17 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Backstage Musical
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 17 – Backstage Musical');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 18 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 18 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    KULTUR UND KULINARIK
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 18 – KULTUR UND KULINARIK');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 19 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 19 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Fahrradtour mit Trainer
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 19 – Fahrradtour mit Trainer');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 20 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 20 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    SuperClean-Staubsaugroboter
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 20 – SuperClean-Staubsaugroboter');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 21 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 21 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Schmelzkäse Alpengeschmack
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 21 – Schmelzkäse Alpengeschmack');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 22 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 22 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Meine Kiste: Obst und Gemüse im Abo bestellbar
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 22 – Meine Kiste');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 23 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 23 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Kostenlose Apps für dein Handy!
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 23 – Kostenlose Apps für dein Handy');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 24 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 24 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    kabelloser Kopfhörer
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 24 – kabelloser Kopfhörer');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 25 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 25 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    FITWATCH
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 25 – FITWATCH');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 26 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 26 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Apartmenthaus Frankfurt
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 26 – Apartmenthaus Frankfurt');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 27 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 27 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    DIGIBIKE – DAS SMARTE HIGHTECH-FAHRRAD
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 27 – DIGIBIKE');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 28 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 28 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    ESS Firma
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 28 – ESS Firma');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 29 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 29 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Fotografieren für Fortgeschrittene!
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 29 – Fotografieren für Fortgeschrittene');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 30 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 30 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    FREIZEITBAD MEERESRAUSCHEN
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 30 – FREIZEITBAD MEERESRAUSCHEN');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 31 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 31 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    HOLLANDBLUMEN-ONLINESHOP
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 31 – HOLLANDBLUMEN-ONLINESHOP');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 32 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 32 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    In Offenbach zu Hause ...
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 32 – In Offenbach zu Hause');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 33 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 33 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Kochen leicht gemacht!
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 33 – Kochen leicht gemacht');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 34 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 34 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Rundum sorglos unterwegs – die Securvia Reisegepäckversicherung
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 34 – Securvia Reisegepäckversicherung');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 35 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 35 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Schlüsseldienst- Notservice bundesweit
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 35 – Schlüsseldienst');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 36 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 36 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    SPORTHEINPARKPLATZ FÜR KINDER
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 36 – SPORTHEINPARKPLATZ FÜR KINDER');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 37 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 37 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    T & W Elektronikversicherung Wir schützen Ihre Haushaltsgeräte !
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 37 – T & W Elektronikversicherung');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 38 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 38 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Umzugsunternehmen Bühler - der Perfekte Partner für Ihren Umzug !
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 38 – Umzugsunternehmen Bühler');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 39 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 39 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Unsere Nachbarschaft vernetzt sich: Schon 656 Nachbarn machen mit!
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 39 – Unsere Nachbarschaft vernetzt sich');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 40 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 40 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    Waldschwimmbad Langen
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 40 – Waldschwimmbad Langen');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-
-        <!-- ===== THEMA 41 PREMIUM ===== -->
-
-        <article class="topic-card">
-            <div class="topic-number">Thema 41 🔒</div>
-
-            <div class="topic-content">
-
-                <div class="topic-title">
-                    ZEITSCHRIFTEN - ABONNENTENSERVICE
-                </div>
-
-                <div class="badges">
-                    <span class="badge type">Beschwerde</span>
-                    <span class="badge time">30 min</span>
-                    <span class="badge level">B2</span>
-                </div>
-
-                <a href="#" class="start-btn premium"
-                   onclick="event.preventDefault(); openPremium('Thema 41 – ZEITSCHRIFTEN - ABONNENTENSERVICE');">
-                    🔒 Premium – Entsperren
-                </a>
-
-            </div>
-        </article>
-
-    </div>
-
+    <div class="topics-grid" id="topics-grid"></div>
 </main>
 
-
-<!-- ===== PREMIUM MODAL ===== -->
-
-<div class="premium-modal" id="premiumModal" onclick="closePremiumOutside(event)">
-
+<div class="premium-modal" id="premiumModal">
     <div class="premium-box">
-
-        <button class="premium-close" onclick="closePremium()">
-            ×
-        </button>
-
+        <button class="premium-close" id="premiumClose" type="button" aria-label="Schließen">×</button>
 
         <div class="premium-head">
-
-            <h3>
-                🔒 Premium – B2 Schreiben
-            </h3>
-
-            <p id="premiumTopic">
-                Dieses Thema ist Premium.
-            </p>
-
+            <h3>🔒 Premium – B2 Schreiben</h3>
+            <p id="premiumTopic">Dieses Thema ist Premium.</p>
         </div>
-
 
         <div class="premium-body">
-
-
-            <!-- ===== INTRO ===== -->
-
-            <div class="premium-intro">
-
-                <span class="de-text">
-                    🇩🇪 <strong>Dieses Thema ist Premium.</strong><br>
-                    Wähle ein Angebot und kontaktiere uns danach über WhatsApp,
-                    damit wir deinen Zugang aktivieren.
-                </span>
-
-                <span class="ar-text">
-                    🇲🇦 <strong>هاد الموضوع Premium.</strong><br>
-                    اختار العرض اللي مناسب ليك، ومن بعد تواصل معانا فـ WhatsApp
-                    باش نفعّلو ليك الولوج.
-                </span>
-
-            </div>
-
-
-            <!-- ===== OFFERS ===== -->
-
-            <div class="offer-grid">
-
-
-                <!-- 15 TAGE -->
-
-                <div class="offer-card">
-
-                    <h4>
-                        15 Tage
-                    </h4>
-
-                    <div class="offer-price">
-                        49 DH
-                    </div>
-
-                    <div class="offer-description">
-
-                        <span class="offer-de">
-                            Zugang für 15 Tage
-                        </span>
-
-                        <span class="offer-ar">
-                            الولوج لمدة 15 يوم
-                        </span>
-
-                    </div>
-
-                    <a href="#"
-                       class="offer-btn"
-                       onclick="chooseOffer(event, '15 Tage – 49 DH')">
-                        WhatsApp
-                    </a>
-
-                </div>
-
-
-                <!-- 1 MONAT -->
-
-                <div class="offer-card">
-
-                    <h4>
-                        1 Monat
-                    </h4>
-
-                    <div class="offer-price">
-                        99,99 DH
-                    </div>
-
-                    <div class="offer-description">
-
-                        <span class="offer-de">
-                            Zugang für 1 Monat
-                        </span>
-
-                        <span class="offer-ar">
-                            الولوج لمدة شهر
-                        </span>
-
-                    </div>
-
-                    <a href="#"
-                       class="offer-btn"
-                       onclick="chooseOffer(event, '1 Monat – 99,99 DH')">
-                        WhatsApp
-                    </a>
-
-                </div>
-
-
-                <!-- 2 MONATE -->
-
-                <div class="offer-card">
-
-                    <h4>
-                        2 Monate
-                    </h4>
-
-                    <div class="offer-price">
-                        150 DH
-                    </div>
-
-                    <div class="offer-description">
-
-                        <span class="offer-de">
-                            Zugang für 2 Monate
-                        </span>
-
-                        <span class="offer-ar">
-                            الولوج لمدة شهرين
-                        </span>
-
-                    </div>
-
-                    <a href="#"
-                       class="offer-btn"
-                       onclick="chooseOffer(event, '2 Monate – 150 DH')">
-                        WhatsApp
-                    </a>
-
-                </div>
-
-
-            </div>
-
-
-            <!-- ===== WHATSAPP ===== -->
+            <div class="offer-grid" id="offerGrid"></div>
 
             <div class="whatsapp-area">
-
                 <p>
-
-                    <span class="whatsapp-de">
-                        🇩🇪 Nach der Auswahl kannst du uns direkt über WhatsApp kontaktieren.
-                    </span>
-
-                    <span class="whatsapp-ar">
-                        🇲🇦 من بعد ما تختار العرض، تواصل معانا مباشرة عبر WhatsApp.
-                    </span>
-
+                    🇩🇪 Nach der Auswahl kannst du uns direkt über WhatsApp kontaktieren.
+                    <span class="whatsapp-ar">🇲🇦 من بعد ما تختار العرض، تواصل معانا مباشرة عبر WhatsApp.</span>
                 </p>
-
-                <a
-                    href="https://wa.me/212653618205"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="whatsapp-main"
-                >
+                <a href="https://wa.me/212653618205" target="_blank" rel="noopener noreferrer" class="whatsapp-main">
                     💬 WhatsApp – تواصل معنا
                 </a>
-
             </div>
-
-
         </div>
-
     </div>
-
 </div>
 
-
-<!-- ===== FOOTER ===== -->
-
 <footer>
-
-    <strong>
-        Deutsch Einfach
-    </strong>
-
-    <p>
-        TELC B1 & B2 Vorbereitung • Schreiben B2
-    </p>
-
+    <strong>Deutsch Einfach</strong>
+    <p>TELC B1 &amp; B2 Vorbereitung • Schreiben B2</p>
 </footer>
 
-
-<!-- ===== JAVASCRIPT ===== -->
-
-<!-- ===== PREMIUM CHECK (Firebase) ===== -->
-<script>
-window.__deutschEinfachPremiumReady = (async function () {
-  try {
-    var appMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
-    var authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
-    var fsMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
-
-    var initializeApp = appMod.initializeApp;
-    var getAuth = authMod.getAuth;
-    var onAuthStateChanged = authMod.onAuthStateChanged;
-    var getFirestore = fsMod.getFirestore;
-    var doc = fsMod.doc;
-    var getDoc = fsMod.getDoc;
-
-    var firebaseConfig = {
-      apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-      authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
-      projectId: "deutsch-einfach-4c81f",
-      storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
-      messagingSenderId: "152448766933",
-      appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
-      measurementId: "G-9QV234Z0KZ"
-    };
-
-    var app = initializeApp(firebaseConfig);
-    var auth = getAuth(app);
-    var db = getFirestore(app);
-
-    /*
-     * كنرجعو Promise غادي يتحل (resolve) بـ true/false.
-     * حيت هاد السكريبت عادي (ماشي module)، كيتنفذ
-     * بالترتيب الصحيح قبل السكريبت اللي كيبني THEMES.
-     */
-    return await new Promise(function (resolve) {
-      onAuthStateChanged(auth, async function (user) {
-        if (!user) {
-          resolve(false);
-          return;
-        }
-
-        try {
-          var userSnap = await getDoc(doc(db, "users", user.uid));
-
-          if (!userSnap.exists()) {
-            resolve(false);
-            return;
-          }
-
-          var data = userSnap.data();
-
-          var active = data.subscriptionActive === true;
-
-          var notExpired = true;
-          if (data.subscriptionEnd && typeof data.subscriptionEnd.toDate === "function") {
-            notExpired = data.subscriptionEnd.toDate().getTime() > Date.now();
-          }
-
-          resolve(active && notExpired);
-        } catch (error) {
-          console.error("Premium check error:", error);
-          resolve(false);
-        }
-      });
-    });
-  } catch (error) {
-    console.error("Premium check load error:", error);
-    return false;
-  }
-})();
-</script>
-
-<!-- ===== UNLOCK PREMIUM THEMES FOR PAID USERS ===== -->
-<script>
-(async function () {
-  var isPremiumUser = await (window.__deutschEinfachPremiumReady || Promise.resolve(false));
-
-  if (!isPremiumUser) return;
-
-  document.querySelectorAll(".start-btn.premium").forEach(function (btn) {
-
-    var card = btn.closest(".topic-card");
-    if (!card) return;
-
-    var numberEl = card.querySelector(".topic-number");
-    if (!numberEl) return;
-
-    var match = numberEl.textContent.match(/\d+/);
-    if (!match) return;
-
-    var num = match[0].padStart(2, "0");
-
-    btn.href = "b2-schreiben-" + num + ".html";
-    btn.removeAttribute("onclick");
-    btn.classList.remove("premium");
-    btn.textContent = "Aufgabe öffnen →";
-
-    numberEl.textContent = numberEl.textContent.replace("🔒", "").trim();
-  });
-})();
-</script>
-
-<script>
-
-    const WHATSAPP_NUMBER = "212653618205";
-
-    let selectedTopic = "";
-
-
-    /* ===== OPEN PREMIUM ===== */
-
-    function openPremium(topic) {
-
-        selectedTopic = topic;
-
-        document.getElementById("premiumTopic").innerHTML =
-            "🔒 <strong>" +
-            topic +
-            "</strong><br>" +
-            "🇩🇪 Dieses Thema ist Premium.<br>" +
-            "🇲🇦 هاد الموضوع Premium.";
-
-        const modal =
-            document.getElementById("premiumModal");
-
-        modal.classList.add("show");
-
-        document.body.style.overflow = "hidden";
-    }
-
-
-    /* ===== CLOSE PREMIUM ===== */
-
-    function closePremium() {
-
-        document
-            .getElementById("premiumModal")
-            .classList.remove("show");
-
-        document.body.style.overflow = "";
-    }
-
-
-    /* ===== CLOSE OUTSIDE ===== */
-
-    function closePremiumOutside(event) {
-
-        if (event.target.id === "premiumModal") {
-            closePremium();
-        }
-
-    }
-
-
-    /* ===== CHOOSE OFFER ===== */
-
-    function chooseOffer(event, offer) {
-
-        event.preventDefault();
-
-        const message =
-            "Salam, bghit nفتح الولوج لـ B2 Schreiben.\n" +
-            "Thema: " +
-            selectedTopic +
-            "\n" +
-            "Angebot: " +
-            offer;
-
-        const url =
-            "https://wa.me/" +
-            WHATSAPP_NUMBER +
-            "?text=" +
-            encodeURIComponent(message);
-
-        window.open(url, "_blank");
-
-    }
-
-
-    /* ===== ESC KEY ===== */
-
-    document.addEventListener("keydown", function(event) {
-
-        if (event.key === "Escape") {
-            closePremium();
-        }
-
-    });
-
-</script>
-
+<script src="assets/schreiben-topics-b2.js"></script>
+<script src="assets/schreiben-premium.js"></script>
+<script src="assets/b2-schreiben-list.js"></script>
 </body>
 </html>
