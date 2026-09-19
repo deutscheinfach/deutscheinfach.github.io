@@ -134,7 +134,7 @@ button: disabled{
 
 .logo-sub{
     font-size: 11px;
-    color: #8a8a8f;
+    color: var(--muted);
     margin-top: 1px;
 }
 
@@ -165,7 +165,7 @@ button: disabled{
 }
 
 .search-box input: :placeholder{
-    color: #aaa;
+    color: var(--muted);
 }
 
 /* =====================================================
@@ -459,6 +459,7 @@ button: disabled{
    ===================================================== */
 
 .main{
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -1300,6 +1301,119 @@ button: disabled{
 
 }
 
+
+/* ===== تحسينات ===== */
+
+/* الروابط داخل الرسائل */
+.message-text a {
+    color: var(--gold-soft);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    word-break: break-word;
+}
+.message-text a:hover { color: var(--gold); }
+
+/* تجميع الرسائل المتتالية ديال نفس الشخص */
+.message.grouped { margin-top: -10px; }
+.message.grouped .message-avatar { visibility: hidden; height: 0; }
+.message.grouped .message-name { display: none; }
+
+/* شريط التمرير */
+.messages::-webkit-scrollbar,
+.friend-list::-webkit-scrollbar,
+.group-list::-webkit-scrollbar { width: 9px; }
+.messages::-webkit-scrollbar-thumb,
+.friend-list::-webkit-scrollbar-thumb,
+.group-list::-webkit-scrollbar-thumb {
+    background: rgba(212,175,55,.25);
+    border-radius: 99px;
+}
+.messages::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,.45); }
+.messages, .friend-list, .group-list {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212,175,55,.3) transparent;
+}
+
+/* منطقة الكتابة */
+.input-area { align-items: flex-end; position: relative; }
+
+.input-area textarea {
+    max-height: 160px;
+    transition: border-color .2s, box-shadow .2s;
+}
+.input-area textarea:focus {
+    border-color: var(--line-gold);
+    box-shadow: 0 0 0 3px rgba(212,175,55,.12);
+    outline: none;
+}
+
+.emoji-btn {
+    flex-shrink: 0;
+    width: 46px; height: 46px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px;
+    background: var(--surface-2);
+    color: var(--muted);
+    font-size: 19px;
+    cursor: pointer;
+    transition: .2s;
+}
+.emoji-btn:hover { border-color: var(--line-gold); transform: translateY(-1px); }
+
+.emoji-panel {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    inset-inline-start: 14px;
+    width: min(320px, calc(100% - 28px));
+    max-height: 230px;
+    overflow-y: auto;
+    padding: 12px;
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+    gap: 4px;
+    background: var(--surface);
+    border: 1px solid var(--line-gold);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,.5);
+    z-index: 40;
+}
+.emoji-panel.show { display: grid; }
+
+.emoji-panel button {
+    border: none;
+    background: transparent;
+    border-radius: 9px;
+    padding: 6px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: .15s;
+}
+.emoji-panel button:hover { background: rgba(212,175,55,.16); transform: scale(1.15); }
+
+/* زر النزول للأسفل */
+.scroll-down {
+    position: absolute;
+    inset-inline-end: 22px;
+    bottom: 94px;
+    width: 42px; height: 42px;
+    display: none;
+    align-items: center; justify-content: center;
+    border: 1px solid var(--line-gold);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--gold-soft);
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 10px 26px rgba(0,0,0,.45);
+    z-index: 30;
+}
+.scroll-down.show { display: flex; }
+
+@media (max-width: 650px) {
+    .emoji-panel { inset-inline-start: 8px; width: calc(100% - 16px); }
+    .emoji-btn { width: 42px; height: 42px; }
+}
+
 </style>
 
 </head>
@@ -1481,7 +1595,13 @@ Schreib mit anderen Deutschlernenden.
 
 </div>
 
+<button class="scroll-down" id="scrollDown" type="button" aria-label="Nach unten">↓</button>
+
 <div class="input-area">
+
+<div class="emoji-panel" id="emojiPanel"></div>
+
+<button class="emoji-btn" id="emojiBtn" type="button" aria-label="Emoji">😊</button>
 
 <textarea
 id="messageInput"
@@ -1850,6 +1970,76 @@ let messagesViewId=0;
 /* =====================================================
    HELPERS
    ===================================================== */
+
+
+/* =====================================================
+   LINKIFY
+
+   كيخدم على نص *مُهرَّب من قبل*، ماشي على النص الخام.
+   هكا كنزيدو روابط بلا ما نفتحو باب XSS.
+   ===================================================== */
+
+function linkify(escapedText){
+
+const URL_RE=
+/\b(https?:\/\/[^\s<]+|www\.[^\s<]+)/g;
+
+return escapedText.replace(
+URL_RE,
+match=>{
+
+// &quot; ولا &amp; فالآخر كيكونو من التهريب، ماشي من الرابط
+const trailing=
+match.match(/(&(amp|quot|#039|lt|gt);|[.,!?)\]]+)$/);
+
+const clean=
+trailing
+? match.slice(0, -trailing[0].length)
+: match;
+
+const rest=
+trailing ? trailing[0] : "";
+
+const href=
+clean.startsWith("http")
+? clean
+: "https://"+clean;
+
+return `<a href="${href}" target="_blank" rel="noopener noreferrer nofollow">${clean}</a>`+rest;
+
+});
+
+}
+
+
+/* =====================================================
+   MESSAGE GROUPING
+
+   رسالتين ورا بعضهم من نفس الشخص فأقل من 5 دقايق
+   كيتجمعو: كنخبيو الأفاتار والاسم باش القراية تكون
+   أنقى، بحال Slack ولا Discord.
+   ===================================================== */
+
+const GROUP_WINDOW_MS=5*60*1000;
+
+function isGrouped(message, previous){
+
+if(!previous)
+return false;
+
+if(previous.userId!==message.userId)
+return false;
+
+const a=message.createdAt?.toDate?.();
+const b=previous.createdAt?.toDate?.();
+
+if(!a||!b)
+return false;
+
+return (a.getTime()-b.getTime())<GROUP_WINDOW_MS;
+
+}
+
 
 function escapeHtml(v){
 
@@ -2521,7 +2711,7 @@ return;
 const html=
 await Promise.all(
 messages.map(
-async message=>{
+async (message,index)=>{
 
 if(viewId!==messagesViewId)
 return "";
@@ -2577,9 +2767,12 @@ user
 const mine=
 message.userId===currentUser.uid;
 
+const grouped=
+isGrouped(message, messages[index-1]);
+
 return `
 
-<div class="message ${mine?"mine":""}" data-message-id="${escapeHtml(message.id)}">
+<div class="message ${mine?"mine":""} ${grouped?"grouped":""}" data-message-id="${escapeHtml(message.id)}">
 
 <div
 class="message-avatar"
@@ -2608,7 +2801,7 @@ ${escapeHtml(name)}
 
 <div class="message-text">
 
-${escapeHtml(message.text)}
+${linkify(escapeHtml(message.text))}
 
 </div>
 
@@ -2633,9 +2826,17 @@ ${mine?'<svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12">
 if(viewId!==messagesViewId)
 return;
 
+const wasNearBottom=
+(container.scrollHeight
+-container.scrollTop
+-container.clientHeight)<140;
+
 container.innerHTML=
 html.join("");
 
+/* رسالة جديدة ملي الشخص كيقرا القدام ما خاصهاش
+   تقفز بيه — كيبان ليه غير زر النزول. */
+if(wasNearBottom||container.scrollTop===0)
 container.scrollTop=
 container.scrollHeight;
 
@@ -3268,7 +3469,7 @@ getLastMessagePreview(user)
 
 <div
 class="conversation-preview"
-style="color:${active?"#eee":"#aaa"};font-style:italic">
+style="color:${active?"var(--text)":"var(--muted)"};font-style:italic">
 
 Sag Hallo 👋
 
@@ -3390,7 +3591,7 @@ list.innerHTML=`
 <div
 style="
 padding:16px 10px;
-color:#8a8a8f;
+color:var(--muted);
 font-size:12.5px;
 text-align:center;
 line-height:1.5;
@@ -3871,7 +4072,7 @@ list.innerHTML=`
 <div
 style="
 padding:10px;
-color:#777;
+color:var(--muted);
 font-size:13px;
 ">
 
@@ -4272,7 +4473,7 @@ me
 `
 
 <div
-style="font-size:12px;color:#777">
+style="font-size:12px;color:var(--muted)">
 
 Du
 
@@ -5031,7 +5232,7 @@ if(!available.length){
 
 list.innerHTML=`
 
-<p style="color:#777">
+<p style="color:var(--muted)">
 
 Keine Freunde zum Einladen verfügbar.
 
@@ -6269,7 +6470,7 @@ html=`
 style="
 text-align:center;
 padding:30px;
-color:#777;
+color:var(--muted);
 ">
 
 <h3>
@@ -6639,7 +6840,7 @@ box.innerHTML=`
 
 <div>
 
-<p style="color:#aaa">
+<p style="color:var(--muted)">
 Wird geladen...
 </p>
 
@@ -6745,7 +6946,7 @@ getUserName(f)
 
 <div
 class="person-email"
-style="color:#777">
+style="color:var(--muted)">
 
 Freund
 
@@ -6903,7 +7104,7 @@ getUserName(u)
 <div
 style="
 padding:15px;
-color:#777;
+color:var(--muted);
 ">
 
 Kein Benutzer gefunden.
@@ -6961,6 +7162,156 @@ searchResults.style.display=
 }
 
 });
+
+
+/* =====================================================
+   EMOJI
+   ===================================================== */
+
+const EMOJIS=[
+"😀","😃","😄","😁","😆","😅","🤣","😂","🙂","😉",
+"😊","😍","🥰","😘","😎","🤩","🥳","🤗","🤔","😐",
+"😴","😢","😭","😤","😡","🥺","😳","🤯","🤒","🤓",
+"👍","👎","👏","🙌","🙏","💪","✌️","🤝","👋","🫶",
+"❤️","🔥","⭐","✨","🎉","🎯","💯","✅","❌","⚡",
+"📚","✍️","📖","🎧","🗣️","🇩🇪","🇲🇦","☕","🌙","☀️"
+];
+
+const emojiPanel=
+document.getElementById("emojiPanel");
+
+const emojiBtn=
+document.getElementById("emojiBtn");
+
+const messageInput=
+document.getElementById("messageInput");
+
+if(emojiPanel&&emojiBtn&&messageInput){
+
+emojiPanel.innerHTML=
+EMOJIS.map(
+e=>`<button type="button">${e}</button>`
+).join("");
+
+emojiBtn.addEventListener(
+"click",
+event=>{
+event.stopPropagation();
+emojiPanel.classList.toggle("show");
+});
+
+emojiPanel.addEventListener(
+"click",
+event=>{
+
+const button=
+event.target.closest("button");
+
+if(!button)
+return;
+
+/* كندخلو الإيموجي فبلاصة المؤشر، ماشي فالآخر */
+const start=messageInput.selectionStart;
+const end=messageInput.selectionEnd;
+const emoji=button.textContent;
+
+messageInput.value=
+messageInput.value.slice(0,start)
++emoji
++messageInput.value.slice(end);
+
+messageInput.selectionStart=
+messageInput.selectionEnd=
+start+emoji.length;
+
+messageInput.focus();
+autoGrow();
+
+});
+
+document.addEventListener(
+"click",
+event=>{
+if(
+!emojiPanel.contains(event.target)
+&&
+event.target!==emojiBtn
+)
+emojiPanel.classList.remove("show");
+});
+
+document.addEventListener(
+"keydown",
+event=>{
+if(event.key==="Escape")
+emojiPanel.classList.remove("show");
+});
+
+}
+
+
+/* =====================================================
+   TEXTAREA كتكبر مع النص
+   ===================================================== */
+
+function autoGrow(){
+
+if(!messageInput)
+return;
+
+messageInput.style.height="46px";
+
+messageInput.style.height=
+Math.min(messageInput.scrollHeight,160)+"px";
+
+}
+
+if(messageInput)
+messageInput.addEventListener("input",autoGrow);
+
+
+/* =====================================================
+   SCROLL
+
+   ما كنزلوش للأسفل إلا كان الشخص كيقرا الرسائل
+   القدام — كنوريوه غير زر "كاين جديد".
+   ===================================================== */
+
+const messagesEl=
+document.getElementById("messages");
+
+const scrollDownBtn=
+document.getElementById("scrollDown");
+
+function nearBottom(){
+
+if(!messagesEl)
+return true;
+
+return (
+messagesEl.scrollHeight
+-messagesEl.scrollTop
+-messagesEl.clientHeight
+)<140;
+
+}
+
+if(messagesEl&&scrollDownBtn){
+
+messagesEl.addEventListener(
+"scroll",
+()=>{
+scrollDownBtn.classList.toggle("show",!nearBottom());
+});
+
+scrollDownBtn.addEventListener(
+"click",
+()=>{
+messagesEl.scrollTop=messagesEl.scrollHeight;
+scrollDownBtn.classList.remove("show");
+});
+
+}
 
 /* =====================================================
    ENTER = SEND
