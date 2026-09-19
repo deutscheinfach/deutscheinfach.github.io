@@ -1602,14 +1602,21 @@ button: disabled{
     box-shadow: 0 30px 70px rgba(0,0,0,.6);
 }
 
+/* فمكالمة صوتية ما كنخبيوش العنصر بـ display:none —
+   شي متصفحات كتوقف القراءة. كنصغروه لنقطة بدل. */
 .call-remote {
     width: 100%;
     height: 100%;
     object-fit: cover;
     background: #000;
-    display: none;
 }
-.call-box.video .call-remote { display: block; }
+.call-box:not(.video) .call-remote {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
 
 .call-local {
     position: absolute;
@@ -1692,6 +1699,28 @@ button: disabled{
     .call-overlay { padding: 0; }
     .call-box { width: 100%; height: 100%; border-radius: 0; border: none; }
     .call-btn { width: 52px; height: 52px; font-size: 20px; }
+}
+
+
+/* ===== PRESENCE ===== */
+.presence-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #6b6f76;
+    border: 2px solid var(--surface);
+    flex-shrink: 0;
+}
+.presence-dot.on {
+    background: #4ade80;
+    box-shadow: 0 0 0 2px rgba(74,222,128,.25);
+}
+
+.avatar-wrap { position: relative; flex-shrink: 0; }
+.avatar-wrap .presence-dot {
+    position: absolute;
+    inset-block-end: -1px;
+    inset-inline-end: -1px;
 }
 
 </style>
@@ -2287,6 +2316,9 @@ let currentProfileId=null;
 
 let unsubscribeMessages=null;
 
+const friendDocUnsubs=new Map();
+const friendDocs=new Map();
+
 let unsubscribeFriends=null;
 
 let unsubscribeGroups=null;
@@ -2737,6 +2769,8 @@ startConversationsListener();
 /* كنبداو نسناو المكالمات الداخلة غير من بعد
    ما يتأكد الدخول — القواعد كتحتاج uid. */
 listenIncomingCalls();
+
+startHeartbeat();
 
 openCommunity();
 
@@ -3528,6 +3562,93 @@ return 0;
    FRIEND LISTENER
    ===================================================== */
 
+
+/* =====================================================
+   ONLINE / OFFLINE
+
+   كل مستخدم كيجدّد lastSeen فوثيقته. الطرف الآخر
+   كيحسب: آخر ظهور قريب = online.
+
+   النبضة كل 3 دقايق ماشي كل 30 ثانية — كل تجديد
+   كيكلف قراءة عند كل صديق كيشوفك، والخطة المجانية
+   عندها حدود.
+   ===================================================== */
+
+const HEARTBEAT_MS=3*60*1000;
+const ONLINE_WINDOW_MS=6*60*1000;
+
+let heartbeatTimer=null;
+
+async function sendHeartbeat(online){
+
+if(!currentUser)
+return;
+
+try{
+
+await updateDoc(
+doc(db,"users",currentUser.uid),
+{
+online:online!==false,
+lastSeen:serverTimestamp()
+});
+
+}catch(error){
+console.debug("HEARTBEAT:",error?.code);
+}
+
+}
+
+function startHeartbeat(){
+
+if(heartbeatTimer)
+clearInterval(heartbeatTimer);
+
+sendHeartbeat(true);
+
+heartbeatTimer=
+setInterval(()=>sendHeartbeat(true),HEARTBEAT_MS);
+
+/* ملي يرجع للتبويبة، نجددو دغيا بدل ما نتسناو */
+document.addEventListener("visibilitychange",()=>{
+if(document.visibilityState==="visible")
+sendHeartbeat(true);
+});
+
+window.addEventListener("pagehide",()=>{
+sendHeartbeat(false);
+});
+
+}
+
+function isUserOnline(user){
+
+if(!user||user.online===false)
+return false;
+
+const seen=user.lastSeen?.toDate?.();
+
+if(!seen)
+return false;
+
+return (Date.now()-seen.getTime())<ONLINE_WINDOW_MS;
+
+}
+
+function presenceDot(user){
+
+return `<span class="presence-dot${isUserOnline(user)?" on":""}" title="${
+isUserOnline(user)?"Online":"Offline"
+}"></span>`;
+
+}
+
+function presenceLabel(user){
+
+return isUserOnline(user)?"Online":"Offline";
+
+}
+
 function startFriendsListener(){
 
 const q=
@@ -3549,79 +3670,66 @@ unsubscribeFriends();
 unsubscribeFriends=
 onSnapshot(
 q,
-async snapshot=>{
+snapshot=>{
 
-const newFriends=[];
+/* الـ uid ديال كل صديق + رقم الصداقة */
+const wanted=new Map();
 
-for(const item of snapshot.docs){
-
-const data=
-item.data();
+snapshot.docs.forEach(item=>{
 
 const uid=
-data.users.find(
+item.data().users?.find(
 x=>x!==currentUser.uid
 );
 
-if(!uid)
-continue;
-
-try{
-
-const snap=
-await getDoc(
-doc(
-db,
-"users",
-uid
-)
-);
-
-if(snap.exists()){
-
-newFriends.push({
-
-uid,
-
-friendshipId:
-item.id,
-
-...snap.data()
+if(uid)
+wanted.set(uid,item.id);
 
 });
 
+/* صداقة تحيّدات: كنوقفو المراقبة */
+for(const [uid,unsub] of friendDocUnsubs){
+
+if(!wanted.has(uid)){
+unsub();
+friendDocUnsubs.delete(uid);
+friendDocs.delete(uid);
 }
 
-}catch(error){
-
-console.error(
-"FRIEND USER LOAD ERROR:",
-error
-);
-
 }
 
-}
+/* صديق جديد: كنراقبو الوثيقة ديالو.
 
-friendsCache=
-newFriends;
+   قبل كنا كنقراوها مرة وحدة بـ getDoc، ف الاسم،
+   الصورة وحالة online كانو كيتجمدو حتى تعاود تحل
+   الصفحة. onSnapshot كيخلينا نشوفو التبديل دغيا. */
+for(const [uid,friendshipId] of wanted){
+
+if(friendDocUnsubs.has(uid))
+continue;
+
+friendDocUnsubs.set(
+uid,
+onSnapshot(
+doc(db,"users",uid),
+snap=>{
+
+if(snap.exists())
+friendDocs.set(uid,{uid,friendshipId,...snap.data()});
+else
+friendDocs.delete(uid);
+
+publishFriends();
+
+},
+error=>{
+console.error("FRIEND DOC:",error?.code||error);
+}));
+
+}
 
 friendsLoaded=true;
-
-/*
-   IMPORTANT:
-   Conversations depend on friendsCache,
-   so recompute them every time the friend
-   list changes (new friend, removed friend).
-*/
-
-rebuildConversations();
-
-if(currentMode==="friends"){
-
-renderFriendsPage();
-
-}
+publishFriends();
 
 },
 error=>{
@@ -3631,14 +3739,31 @@ console.error(
 error
 );
 
-}
-);
+friendsLoaded=true;
+publishFriends();
+
+});
 
 }
 
-/* =====================================================
-   BUILD CONVERSATIONS
-   ===================================================== */
+
+/* كنجمعو الوثائق اللي عندنا ونعاودو الرسم */
+function publishFriends(){
+
+friendsCache=
+Array.from(friendDocs.values())
+.sort((a,b)=>
+getUserName(a).localeCompare(getUserName(b)));
+
+/* المحادثات كتعتمد على friendsCache، ف خاصها
+   تتعاود كل مرة كتبدل اللائحة. */
+rebuildConversations();
+
+if(currentMode==="friends")
+renderFriendsPage();
+
+}
+
 
 function rebuildConversations(){
 
@@ -3888,6 +4013,8 @@ setActiveItem(this);
 openPrivateChat('${escapeHtml(user.uid)}')
 ">
 
+<div class="avatar-wrap">
+
 <div
 class="avatar"
 style="background:${getAvatarColor(user.uid)}">
@@ -3899,6 +4026,10 @@ user.photoURL
 :
 escapeHtml(getInitial(user))
 }
+
+</div>
+
+${presenceDot(user)}
 
 </div>
 
@@ -4125,7 +4256,7 @@ getUserName(other);
 document
 .getElementById("headerSub")
 .textContent=
-"Privater Chat";
+isUserOnline(other)?"Online":"Offline";
 
 const avatar=
 document.getElementById(
@@ -7386,10 +7517,10 @@ ${friendsCache.map(f=>`
 <div
 class="person"
 style="
-background:white;
+background:var(--surface);
 margin-bottom:10px;
 padding:15px;
-box-shadow:0 2px 8px rgba(0,0,0,.05);
+border:1px solid var(--line);
 display:flex;
 justify-content:space-between;
 ">
@@ -7400,6 +7531,8 @@ onclick="
 openUserProfile('${escapeHtml(f.uid)}')
 ">
 
+<div class="avatar-wrap">
+
 <div class="avatar" style="background:${getAvatarColor(f.uid)}">
 
 ${
@@ -7409,6 +7542,10 @@ f.photoURL
 :
 escapeHtml(getInitial(f))
 }
+
+</div>
+
+${presenceDot(f)}
 
 </div>
 
@@ -7424,9 +7561,9 @@ getUserName(f)
 
 <div
 class="person-email"
-style="color:var(--muted)">
+style="color:${isUserOnline(f)?"#4ade80":"var(--muted)"}">
 
-Freund
+${presenceLabel(f)}
 
 </div>
 
@@ -8091,15 +8228,27 @@ peerConnection=new RTCPeerConnection(ICE_CONFIG);
 localStream.getTracks().forEach(
 track=>peerConnection.addTrack(track,localStream));
 
-const remoteStream=new MediaStream();
-
-if(remoteVideo)
-remoteVideo.srcObject=remoteStream;
-
+/* كنربطو التيار اللي كيجي من الطرف الآخر نيشان.
+   قبل كنا كنعطيو MediaStream خاوي وكنزيدو المسارات
+   من بعد — والمتصفح ساعتها ما كيبداش القراءة، ف
+   الصوت ما كان كيتسمع حتى فمكالمة متصلة مزيان. */
 peerConnection.ontrack=event=>{
 
-event.streams[0].getTracks().forEach(
-track=>remoteStream.addTrack(track));
+const stream=
+event.streams[0]
+||
+new MediaStream([event.track]);
+
+if(!remoteVideo)
+return;
+
+if(remoteVideo.srcObject!==stream)
+remoteVideo.srcObject=stream;
+
+/* بعض المتصفحات كتحتاج play() صريح */
+remoteVideo.play().catch(error=>{
+console.debug("REMOTE PLAY:",error?.name);
+});
 
 };
 
@@ -8249,8 +8398,10 @@ return;
 
 localStream=stream;
 
-if(localVideo)
+if(localVideo){
 localVideo.srcObject=stream;
+localVideo.play().catch(()=>{});
+}
 
 const name=
 document.getElementById("headerName")?.textContent||"";
@@ -8406,8 +8557,10 @@ return;
 
 localStream=stream;
 
-if(localVideo)
+if(localVideo){
 localVideo.srcObject=stream;
+localVideo.play().catch(()=>{});
+}
 
 currentCallId=id;
 currentCallRole="callee";
