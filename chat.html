@@ -6437,19 +6437,68 @@ Freund entfernen
 
 }else{
 
-const requestId=
+const outgoingId=
 currentUser.uid+"_"+uid;
 
-const req=
-await getDoc(
-doc(
-db,
-"friendRequests",
-requestId
-)
+const incomingId=
+uid+"_"+currentUser.uid;
+
+/* واش صيفطت ليه؟ وواش صيفط ليا؟
+   إلا فشلات القراءة لأي سبب، ما نخبيوش الزر —
+   نوريوه ونخليو Firestore هو اللي يحكم. */
+let req={exists:()=>false,data:()=>({})};
+let incoming={exists:()=>false,data:()=>({})};
+
+try{
+
+[req,incoming]=await Promise.all([
+getDoc(doc(db,"friendRequests",outgoingId)),
+getDoc(doc(db,"friendRequests",incomingId))
+]);
+
+}catch(error){
+
+console.warn(
+"FRIEND REQUEST CHECK FAILED:",
+error?.code||error
 );
 
+}
+
 if(
+incoming.exists()
+&&
+incoming.data().status==="pending"
+){
+
+/* هو اللي صيفط — ف الزر خاصو يكون "قبول" */
+actions.innerHTML=`
+
+<button
+class="modal-btn"
+onclick="
+acceptFriendRequest('${escapeHtml(incomingId)}','${escapeHtml(uid)}')
+.then(()=>openUserProfile('${escapeHtml(uid)}'))
+">
+
+✓ Anfrage annehmen
+
+</button>
+
+<button
+class="modal-btn danger"
+onclick="
+rejectFriendRequest('${escapeHtml(incomingId)}')
+.then(()=>openUserProfile('${escapeHtml(uid)}'))
+">
+
+Ablehnen
+
+</button>
+
+`;
+
+}else if(
 req.exists()
 &&
 req.data().status==="pending"

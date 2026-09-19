@@ -163,7 +163,24 @@ service cloud.firestore {
 
     match /friendRequests/{requestId} {
 
-      allow read: if request.auth != null
+      /* get و list منفصلين عمداً.
+
+         وثيقة ماكايناش = resource هو null، و
+         resource.data كيطيح. الواجهة كتسول "واش
+         صيفطت ليه طلب؟" بـ getDoc على ID يمكن ما
+         يكونش موجود — ف بلا هاد الشرط، الزر ديال
+         "زيد صديق" ما كيبانش أصلاً.
+
+         الـ ID ثابت (uid_uid)، ف وجودها ماشي سر. */
+
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || resource.data.fromUid == request.auth.uid
+          || resource.data.toUid == request.auth.uid
+        );
+
+      allow list: if request.auth != null
         && (
           resource.data.fromUid == request.auth.uid
           || resource.data.toUid == request.auth.uid
@@ -597,7 +614,14 @@ service cloud.firestore {
 
     match /groupInvites/{inviteId} {
 
-      allow read: if request.auth != null
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || resource.data.fromUid == request.auth.uid
+          || resource.data.toUid == request.auth.uid
+        );
+
+      allow list: if request.auth != null
         && (
           resource.data.fromUid == request.auth.uid
           || resource.data.toUid == request.auth.uid
