@@ -6,11 +6,12 @@
 //
 // Optional environment variables:
 // ALLOWED_ORIGIN = https://deutscheinfach.github.io
-// GEMINI_MODEL   = gemini-3-flash
+// GEMINI_MODEL   = gemini-3.6-flash
 
-// gemini-2.5-flash بقا محجور على الحسابات الجداد.
+// gemini-2.5-flash بقا محجور على الحسابات الجداد، و Gemini نفسها
+// كتوصي بـ gemini-3.6-flash. تأكدنا منو عبر ListModels.
 // يقدر يتبدل بلا ما نعاودو الكود: زيد variable سميتها GEMINI_MODEL.
-const DEFAULT_GEMINI_MODEL = "gemini-3-flash";
+const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash";
 
 export default {
   async fetch(request, env) {
