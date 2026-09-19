@@ -4,10 +4,14 @@
 // Required Cloudflare secret:
 // GEMINI_API_KEY
 //
-// Optional environment variable:
+// Optional environment variables:
 // ALLOWED_ORIGIN = https://deutscheinfach.github.io
+// GEMINI_MODEL   = gemini-3.6-flash
 
-const GEMINI_MODEL = "gemini-2.5-flash";
+// gemini-2.5-flash بقا محجور على الحسابات الجداد، و Gemini نفسها
+// كتوصي بـ gemini-3.6-flash. تأكدنا منو عبر ListModels.
+// يقدر يتبدل بلا ما نعاودو الكود: زيد variable سميتها GEMINI_MODEL.
+const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash";
 
 export default {
   async fetch(request, env) {
@@ -32,6 +36,51 @@ export default {
 
     try {
       const body = await request.json();
+
+      /*
+       * أداة تشخيص: POST {"listModels": true}
+       * كترجع الموديلات المتاحة للمفتاح. المفتاح كيبقى فالسيرفر.
+       */
+      if (body.listModels === true) {
+        if (!env.GEMINI_API_KEY) {
+          return jsonResponse(
+            { error: "GEMINI_API_KEY is not configured." },
+            500,
+            allowedOrigin
+          );
+        }
+
+        const listResponse = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200",
+          { headers: { "x-goog-api-key": env.GEMINI_API_KEY } }
+        );
+
+        const listData = await listResponse.json();
+
+        if (!listResponse.ok) {
+          return jsonResponse(
+            {
+              error: "ListModels failed.",
+              details: listData?.error?.message || "Unknown error.",
+            },
+            502,
+            allowedOrigin
+          );
+        }
+
+        // غير اللي كيدعمو generateContent — هوما اللي كينفعونا.
+        const usable = (listData.models || [])
+          .filter((m) =>
+            (m.supportedGenerationMethods || []).includes("generateContent")
+          )
+          .map((m) => m.name);
+
+        return jsonResponse(
+          { currentModel: env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL, usable },
+          200,
+          allowedOrigin
+        );
+      }
 
       const {
         level,
@@ -135,16 +184,7 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
 `;
 
       // Gemini REST API
-      const geminiUrl =
-        `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
-
-      const geminiResponse = await fetch(geminiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": env.GEMINI_API_KEY,
-        },
-        body: JSON.stringify({
+      const requestPayload = {
           systemInstruction: {
             parts: [
               {
@@ -166,8 +206,8 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
 
           generationConfig: {
             temperature: 0.2,
-            response_mime_type: "application/json",
-            response_schema: {
+            responseMimeType: "application/json",
+            responseSchema: {
               type: "OBJECT",
               properties: {
                 score: {
@@ -201,10 +241,21 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
               ],
             },
           },
-        }),
-      });
+        };
 
-      const geminiData = await geminiResponse.json();
+      const primaryModel = env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
+
+      // ديما كنبداو بالموديل الأساسي، ومن بعد الاحتياطيين إلا كان معمّر.
+      const candidates = [primaryModel].concat(
+        FALLBACK_MODELS.filter((m) => m !== primaryModel)
+      );
+
+      const { response: geminiResponse, data: geminiData } =
+        await callGeminiWithRetry(
+          candidates,
+          requestPayload,
+          env.GEMINI_API_KEY
+        );
 
       if (!geminiResponse.ok) {
         console.error("Gemini API error:", geminiData);
@@ -213,8 +264,11 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
           {
             error: "Gemini API request failed.",
             details:
-              geminiData?.error?.message ||
-              "Unknown Gemini API error.",
+              (geminiData?.error?.message ||
+                "Unknown Gemini API error.") +
+              " (Gemini HTTP " + geminiResponse.status + ")",
+            retryable:
+              geminiResponse.status === 503 || geminiResponse.status === 429,
           },
           502,
           allowedOrigin
@@ -320,4 +374,59 @@ function jsonResponse(data, status, origin) {
     status,
     headers: corsHeaders(origin),
   });
+}
+
+
+/*
+ * 503 = الموديل معمّر، و 429 = تجاوزنا المعدل. بجوج مؤقتين،
+ * علا هاكدا كنعاودو المحاولة قبل ما نيأسو، ومن بعد كنجربو موديل احتياطي.
+ */
+const FALLBACK_MODELS = ["gemini-3.5-flash", "gemini-flash-latest"];
+
+const MAX_ATTEMPTS_PER_MODEL = 3;
+
+function isTransient(status) {
+  return status === 503 || status === 429 || status >= 500;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function callGeminiWithRetry(models, payload, apiKey) {
+  let last = null;
+
+  for (const model of models) {
+    const url =
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
+
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS_PER_MODEL; attempt++) {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": apiKey,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok) return { response, data };
+
+      last = { response, data };
+
+      // خطأ دائم (مفتاح خايب، موديل ماكاينش): ما كاين علاش نعاودو.
+      if (!isTransient(response.status)) break;
+
+      console.error(
+        `Gemini ${model} attempt ${attempt} failed with ${response.status}`
+      );
+
+      // 1s ثم 2s — الـ Worker عندو حدود ديال الوقت، ف ما نطولوش.
+      if (attempt < MAX_ATTEMPTS_PER_MODEL) await sleep(attempt * 1000);
+    }
+  }
+
+  return last;
 }
