@@ -9,11 +9,24 @@
    ========================================================== */
 const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
 
-(function () {
-    const topic = SCHREIBEN_B2_TOPICS[TOPIC_ID];
-    if (!topic) {
-        document.body.innerHTML = "<p style='padding:40px;font-family:sans-serif'>Thema nicht gefunden.</p>";
+(async function () {
+    const meta = SCHREIBEN_B2_TOPICS[TOPIC_ID];
+    if (!meta) {
+        showNotice("Thema nicht gefunden.", "");
         return;
+    }
+
+    /* المواضيع Premium ما كيجيوش فالملف العام (الـ repo عام):
+       كنجيبو النص من الـ Worker من بعد ما يتحقق من الاشتراك. */
+    let topic = meta;
+
+    if (!Array.isArray(meta.points) || meta.points.length === 0) {
+        try {
+            topic = Object.assign({}, meta, await loadPremiumTopic(TOPIC_ID));
+        } catch (error) {
+            showPremiumNotice(error.code || String(error.message || error));
+            return;
+        }
     }
 
     // ---------- render header ----------
@@ -311,6 +324,76 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         }
 
         return "💡 عاود المحاولة، وإلا بقا المشكل شوف اللوغ ديال الـ Worker: npx wrangler tail";
+    }
+
+    async function loadPremiumTopic(id) {
+        const idToken = await (window.__deutschEinfachIdToken || Promise.resolve(null));
+
+        const res = await fetch(CORRECTION_ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ topicId: id, idToken: idToken || "" }),
+        });
+
+        const raw = await res.text();
+        let data = null;
+        try {
+            data = JSON.parse(raw);
+        } catch (parseError) {
+            data = null;
+        }
+
+        if (res.ok && data && Array.isArray(data.points)) return data;
+
+        const error = new Error("HTTP " + res.status);
+        error.code = data && data.error ? data.error : "HTTP " + res.status;
+        throw error;
+    }
+
+    function showNotice(titleText, bodyHtml) {
+        document.body.innerHTML =
+            '<div style="max-width:560px;margin:60px auto;padding:28px;font-family:Arial,sans-serif;' +
+            'background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.12);text-align:center">' +
+            '<h1 style="font-size:22px;margin-bottom:14px">' + titleText + "</h1>" +
+            bodyHtml +
+            "</div>";
+    }
+
+    function showPremiumNotice(code) {
+        const backLink =
+            '<a href="b2-schreiben.html" style="display:inline-block;margin-top:18px;background:#e30613;' +
+            'color:#fff;padding:11px 20px;border-radius:9px;text-decoration:none;font-weight:bold">' +
+            "← رجع للمواضيع</a>";
+
+        if (code === "not_signed_in") {
+            showNotice(
+                "🔒 خاصك تسجل الدخول",
+                '<p style="line-height:1.8;color:#555">هاد الموضوع ديال المشتركين. دخل لحسابك باش تكمل.</p>' +
+                '<a href="login.html" style="display:inline-block;margin-top:18px;background:#111;color:#ffd500;' +
+                'padding:11px 20px;border-radius:9px;text-decoration:none;font-weight:bold">تسجيل الدخول</a> ' +
+                backLink
+            );
+            return;
+        }
+
+        if (code === "not_subscribed") {
+            showNotice(
+                "🔒 هاد الموضوع Premium",
+                '<p style="line-height:1.8;color:#555">باش تفتح هاد الموضوع، فعّل الاشتراك ديالك.</p>' +
+                '<a href="https://wa.me/212653618205" target="_blank" rel="noopener noreferrer" ' +
+                'style="display:inline-block;margin-top:18px;background:#111;color:#ffd500;padding:11px 20px;' +
+                'border-radius:9px;text-decoration:none;font-weight:bold">💬 WhatsApp</a> ' +
+                backLink
+            );
+            return;
+        }
+
+        showNotice(
+            "⚠️ ما قدرناش نحملو الموضوع",
+            '<p style="line-height:1.8;color:#555">' + escapeHtml(code) + "</p>" +
+            '<p style="line-height:1.8;color:#555;margin-top:8px">' + escapeHtml(errorHint(code)) + "</p>" +
+            backLink
+        );
     }
 
     function escapeHtml(str) {

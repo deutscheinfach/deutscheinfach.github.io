@@ -82,6 +82,60 @@ export default {
         );
       }
 
+      /*
+       * نص موضوع Premium. كيرجع غير للمشتركين.
+       * النصوص كيسكنو فـ KV، ماشي فالـ repo — الـ repo عام.
+       */
+      if (typeof body.topicId === "string") {
+        const topicId = body.topicId;
+
+        if (!/^\d{2}$/.test(topicId)) {
+          return jsonResponse({ error: "Invalid topic id." }, 400, allowedOrigin);
+        }
+
+        if (!env.TOPICS) {
+          return jsonResponse(
+            { error: "KV binding TOPICS is not configured." },
+            500,
+            allowedOrigin
+          );
+        }
+
+        let claims;
+        try {
+          claims = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse(
+            { error: "not_signed_in", details: authError.message },
+            401,
+            allowedOrigin
+          );
+        }
+
+        let subscribed;
+        try {
+          subscribed = await hasActiveSubscription(claims.sub, body.idToken);
+        } catch (lookupError) {
+          return jsonResponse(
+            { error: "subscription_lookup_failed", details: lookupError.message },
+            502,
+            allowedOrigin
+          );
+        }
+
+        if (!subscribed) {
+          return jsonResponse({ error: "not_subscribed" }, 403, allowedOrigin);
+        }
+
+        const stored = await env.TOPICS.get("topic-" + topicId);
+
+        if (!stored) {
+          return jsonResponse({ error: "Topic not found." }, 404, allowedOrigin);
+        }
+
+        return jsonResponse(JSON.parse(stored), 200, allowedOrigin);
+      }
+
       /* ترجمة الـ Anzeige والمهام للدارجة. ماشي محتاجة حساب. */
       if (body.translate && typeof body.translate.text === "string") {
         if (!env.GEMINI_API_KEY) {
@@ -502,4 +556,111 @@ async function callGeminiWithRetry(models, payload, apiKey) {
   }
 
   return last;
+}
+
+/* ================= Firebase auth =================
+ * الـ Worker ما كيثقش فالمتصفح: كيتحقق من توقيع الـ ID token
+ * بالمفاتيح العمومية ديال Google، ومن بعد كيقرا الاشتراك من Firestore.
+ */
+
+const FIREBASE_PROJECT_ID = "deutsch-einfach-4c81f";
+
+const FIREBASE_JWKS_URL =
+  "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
+
+let jwksCache = { keys: null, expiresAt: 0 };
+
+async function getSigningKeys() {
+  if (jwksCache.keys && Date.now() < jwksCache.expiresAt) return jwksCache.keys;
+
+  const res = await fetch(FIREBASE_JWKS_URL);
+  if (!res.ok) throw new Error("Could not fetch Google signing keys.");
+
+  const data = await res.json();
+
+  // Google كيقول شحال يعيش الكاش؛ كنحترموه بدل ما نخمنو.
+  const maxAge = (res.headers.get("cache-control") || "").match(/max-age=(\d+)/);
+  const ttl = maxAge ? Number(maxAge[1]) * 1000 : 3600 * 1000;
+
+  jwksCache = { keys: data.keys, expiresAt: Date.now() + ttl };
+  return data.keys;
+}
+
+function base64UrlToBytes(value) {
+  let text = value.replace(/-/g, "+").replace(/_/g, "/");
+  while (text.length % 4) text += "=";
+
+  const binary = atob(text);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+function decodeSegment(segment) {
+  return JSON.parse(new TextDecoder().decode(base64UrlToBytes(segment)));
+}
+
+async function verifyIdToken(token) {
+  const parts = String(token || "").split(".");
+  if (parts.length !== 3) throw new Error("Malformed token.");
+
+  const header = decodeSegment(parts[0]);
+  const claims = decodeSegment(parts[1]);
+
+  if (header.alg !== "RS256" || !header.kid) {
+    throw new Error("Unexpected token algorithm.");
+  }
+
+  if (claims.aud !== FIREBASE_PROJECT_ID) throw new Error("Token audience mismatch.");
+  if (claims.iss !== `https://securetoken.google.com/${FIREBASE_PROJECT_ID}`) {
+    throw new Error("Token issuer mismatch.");
+  }
+  if (!claims.sub) throw new Error("Token has no subject.");
+  if (claims.exp <= Math.floor(Date.now() / 1000)) throw new Error("Token expired.");
+
+  const keys = await getSigningKeys();
+  const jwk = keys.find((k) => k.kid === header.kid);
+  if (!jwk) throw new Error("Unknown signing key.");
+
+  const key = await crypto.subtle.importKey(
+    "jwk",
+    jwk,
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["verify"]
+  );
+
+  const valid = await crypto.subtle.verify(
+    "RSASSA-PKCS1-v1_5",
+    key,
+    base64UrlToBytes(parts[2]),
+    new TextEncoder().encode(parts[0] + "." + parts[1])
+  );
+
+  if (!valid) throw new Error("Invalid token signature.");
+
+  return claims;
+}
+
+async function hasActiveSubscription(uid, idToken) {
+  const url =
+    `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}` +
+    `/databases/(default)/documents/users/${uid}`;
+
+  const res = await fetch(url, {
+    headers: { Authorization: "Bearer " + idToken },
+  });
+
+  // ما كاينش وثيقة = ما كاينش اشتراك، ماشي خطأ.
+  if (res.status === 404) return false;
+  if (!res.ok) throw new Error("Could not read the subscription record.");
+
+  const fields = (await res.json()).fields || {};
+
+  if (fields.subscriptionActive?.booleanValue !== true) return false;
+
+  const end = fields.subscriptionEnd?.timestampValue;
+  if (end && new Date(end).getTime() <= Date.now()) return false;
+
+  return true;
 }
