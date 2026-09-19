@@ -238,6 +238,9 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         if (m.indexOf("api key not valid") !== -1 || m.indexOf("api_key_invalid") !== -1 || m.indexOf("http 401") !== -1 || m.indexOf("http 403") !== -1) {
             return "💡 المفتاح خايب ولا expiré: جيب واحد جديد من https://aistudio.google.com/apikey وبدّلو فـ Cloudflare.";
         }
+        if (m.indexOf("high demand") !== -1 || m.indexOf("overloaded") !== -1 || m.indexOf("http 503") !== -1) {
+            return "💡 السيرفرات ديال Gemini معمّرين دابا. تسنا شي دقيقة وعاود — المشكل مؤقت وماشي منك.";
+        }
         if (m.indexOf("quota") !== -1 || m.indexOf("resource_exhausted") !== -1 || m.indexOf("http 429") !== -1) {
             return "💡 سالا الـ quota المجاني ديال اليوم. تسنا شوية ولا استعمل مفتاح آخر.";
         }
