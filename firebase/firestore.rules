@@ -329,6 +329,11 @@ service cloud.firestore {
 
             && request.resource.data.members.size()
                 == resource.data.members.size() - 1
+            && request.resource.data.get("name", "")
+                == resource.data.get("name", "")
+
+            && request.resource.data.get("photoURL", "")
+                == resource.data.get("photoURL", "")
           )
 
 
@@ -354,6 +359,11 @@ service cloud.firestore {
 
             && request.resource.data.closed
                 == resource.data.closed
+            && request.resource.data.get("name", "")
+                == resource.data.get("name", "")
+
+            && request.resource.data.get("photoURL", "")
+                == resource.data.get("photoURL", "")
           )
 
 
@@ -381,6 +391,11 @@ service cloud.firestore {
 
             && request.resource.data.closed
                 == resource.data.closed
+            && request.resource.data.get("name", "")
+                == resource.data.get("name", "")
+
+            && request.resource.data.get("photoURL", "")
+                == resource.data.get("photoURL", "")
           )
 
 

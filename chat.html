@@ -1875,6 +1875,7 @@ collection,
 query,
 where,
 orderBy,
+limit,
 onSnapshot,
 serverTimestamp,
 runTransaction
@@ -2587,8 +2588,9 @@ db,
 ),
 orderBy(
 "createdAt",
-"asc"
-)
+"desc"
+),
+limit(MESSAGE_PAGE_SIZE)
 )
 );
 
@@ -2603,6 +2605,19 @@ renderConversations(conversationsCache);
 /* =====================================================
    MESSAGE LISTENER
    ===================================================== */
+
+/* =====================================================
+   كم من رسالة كنحملو
+
+   قبل، الشات العام كان كيجيب *جميع* الرسائل. مع الوقت
+   هادشي كيبطّئ الصفحة، كيكبّر فاتورة القراءات، وفالآخر
+   كيحبس المتصفح.
+
+   دابا كنجيبو آخر 100 (desc + limit) ومن بعد كنقلبوهم
+   باش يتشافو بالترتيب الصحيح.
+   ===================================================== */
+
+const MESSAGE_PAGE_SIZE=100;
 
 function listenMessages(q){
 
@@ -2628,6 +2643,10 @@ id:d.id,
 });
 
 });
+
+/* الاستعلام desc باش ناخدو الأخيرين؛ العرض كيمشي
+   من القديم للجديد، ف كنقلبوهم هنا. */
+messages.reverse();
 
 renderMessages(
 messages,
@@ -3766,8 +3785,9 @@ chatId,
 ),
 orderBy(
 "createdAt",
-"asc"
-)
+"desc"
+),
+limit(MESSAGE_PAGE_SIZE)
 )
 );
 
@@ -4256,8 +4276,9 @@ groupId,
 ),
 orderBy(
 "createdAt",
-"asc"
-)
+"desc"
+),
+limit(MESSAGE_PAGE_SIZE)
 )
 );
 
