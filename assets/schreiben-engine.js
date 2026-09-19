@@ -95,6 +95,68 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         });
     });
 
+    // ---------- translation ----------
+    /* كنخزنو الترجمة باش الضغطة الثانية تخبي/تبين بلا ما نعاودو الطلب. */
+    const translationCache = {};
+
+    const translationSources = {
+        situation: () => topic.ad + "\n\n" + topic.situation,
+        aufgabe: () => topic.points.map((p, i) => (i + 1) + ". " + p).join("\n"),
+    };
+
+    document.querySelectorAll("[data-translate]").forEach((btn) => {
+        const kind = btn.getAttribute("data-translate");
+        const box = document.getElementById("translation-" + kind);
+        if (!box || !translationSources[kind]) return;
+
+        btn.addEventListener("click", async function () {
+            // عندنا الترجمة ديجا: غير نبينوها/نخبيوها.
+            if (translationCache[kind]) {
+                box.hidden = !box.hidden;
+                return;
+            }
+
+            btn.setAttribute("aria-busy", "true");
+            box.classList.remove("error");
+            box.textContent = "جاري الترجمة…";
+            box.hidden = false;
+
+            try {
+                const res = await fetch(CORRECTION_ENDPOINT, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        translate: { text: translationSources[kind]() },
+                    }),
+                });
+
+                const raw = await res.text();
+                let data = null;
+                try {
+                    data = JSON.parse(raw);
+                } catch (parseError) {
+                    data = null;
+                }
+
+                if (!res.ok || !data || !data.translation) {
+                    const serverMessage = data
+                        ? [data.error, data.details].filter(Boolean).join(" — ")
+                        : raw.slice(0, 200);
+                    throw new Error("HTTP " + res.status + (serverMessage ? " · " + serverMessage : ""));
+                }
+
+                translationCache[kind] = data.translation;
+                box.textContent = data.translation;
+            } catch (err) {
+                const message = String(err && err.message ? err.message : err);
+                box.classList.add("error");
+                box.textContent = "ما قدرناش نترجمو. " + message + "\n" + errorHint(message);
+            } finally {
+                btn.removeAttribute("aria-busy");
+            }
+        });
+    });
+
     // ---------- AI correction ----------
     const correctBtn = document.getElementById("correct-btn");
     const overlay = document.getElementById("result-overlay");

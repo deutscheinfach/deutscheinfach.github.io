@@ -82,6 +82,79 @@ export default {
         );
       }
 
+      /* ترجمة الـ Anzeige والمهام للدارجة. ماشي محتاجة حساب. */
+      if (body.translate && typeof body.translate.text === "string") {
+        if (!env.GEMINI_API_KEY) {
+          return jsonResponse(
+            { error: "GEMINI_API_KEY is not configured." },
+            500,
+            allowedOrigin
+          );
+        }
+
+        const sourceText = body.translate.text.trim().slice(0, 4000);
+
+        if (sourceText.length < 2) {
+          return jsonResponse(
+            { error: "Nothing to translate." },
+            400,
+            allowedOrigin
+          );
+        }
+
+        const translatePayload = {
+          systemInstruction: {
+            parts: [
+              {
+                text:
+                  "ترجم النص الألماني للدارجة المغربية بالحروف العربية.\n" +
+                  "- ترجمة مفهومة لطالب مغربي كيتعلم الألمانية، ماشي حرفية.\n" +
+                  "- خلي الأرقام، الأسماء، العناوين والأثمنة كيف ما هوما.\n" +
+                  "- حافظ على نفس تقسيم الأسطر والنقط.\n" +
+                  "- رد غير بالترجمة، بلا شرح وبلا مقدمة.",
+              },
+            ],
+          },
+          contents: [{ role: "user", parts: [{ text: sourceText }] }],
+          generationConfig: { temperature: 0.3 },
+        };
+
+        const translateResult = await callGeminiWithRetry(
+          [env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL].concat(FALLBACK_MODELS),
+          translatePayload,
+          env.GEMINI_API_KEY
+        );
+
+        if (!translateResult.response.ok) {
+          return jsonResponse(
+            {
+              error: "Translation failed.",
+              details:
+                translateResult.data?.error?.message ||
+                "Unknown Gemini API error.",
+            },
+            502,
+            allowedOrigin
+          );
+        }
+
+        const translation =
+          translateResult.data?.candidates?.[0]?.content?.parts
+            ?.map((part) => part.text || "")
+            .join("")
+            .trim();
+
+        if (!translation) {
+          return jsonResponse(
+            { error: "Gemini returned an empty translation." },
+            502,
+            allowedOrigin
+          );
+        }
+
+        return jsonResponse({ translation }, 200, allowedOrigin);
+      }
+
       const {
         level,
         taskType,
