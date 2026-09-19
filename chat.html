@@ -1460,6 +1460,17 @@ button: disabled{
 }
 .upload-bar.show { display: block; }
 
+
+.message-image.loading {
+    width: 220px;
+    height: 150px;
+    background:
+        linear-gradient(100deg, var(--surface-2) 30%, rgba(212,175,55,.10) 50%, var(--surface-2) 70%)
+        0 0 / 240% 100%;
+    animation: imgShimmer 1.3s infinite linear;
+}
+@keyframes imgShimmer { to { background-position: -240% 0; } }
+
 </style>
 
 </head>
@@ -1934,13 +1945,6 @@ runTransaction
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
-import {
-getStorage,
-ref as storageRef,
-uploadBytes,
-getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
-
 /* =====================================================
    FIREBASE CONFIG
    ===================================================== */
@@ -1974,8 +1978,6 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 
 const db=getFirestore(app);
-
-const storage=getStorage(app);
 
 /* =====================================================
    LIMITS
@@ -2884,9 +2886,9 @@ ${escapeHtml(name)}
 ${message.text ? linkify(escapeHtml(message.text)) : ""}
 
 ${
-message.image
+message.imageId
 ?
-`<img class="message-image" src="${escapeHtml(message.image)}" alt="Bild" loading="lazy">`
+`<img class="message-image loading" data-image-id="${escapeHtml(message.imageId)}" alt="Bild">`
 :
 ""
 }
@@ -2928,6 +2930,8 @@ if(wasNearBottom||container.scrollTop===0)
 container.scrollTop=
 container.scrollHeight;
 
+watchChatImages(container);
+
 }
 
 /* =====================================================
@@ -2946,7 +2950,7 @@ const text=
 input.value.trim();
 
 /* رسالة ديال تصويرة تقدر تجي بلا نص */
-if(!text&&!extra?.image)
+if(!text&&!extra?.imageId)
 return;
 
 if(text.length>500){
@@ -3094,7 +3098,7 @@ updatedAt:
 serverTimestamp(),
 
 lastMessage:
-text||(extra?.image?"📷 Bild":""),
+text||(extra?.imageId?"📷 Bild":""),
 
 lastMessageSenderId:
 currentUser.uid
@@ -7267,7 +7271,11 @@ searchResults.style.display=
    فكل مرة كيتحل الشات.
    ===================================================== */
 
-const MAX_IMAGE_BYTES=3*1024*1024;
+/* الحد ديال وثيقة Firestore هو 1MB.
+   600px بجودة متوسطة = ~50KB base64 — بعيد على الحد. */
+const MAX_IMAGE_BYTES=5*1024*1024;
+const MAX_IMAGE_WIDTH=600;
+const MAX_STORED_CHARS=700000;
 
 const imageBtn=document.getElementById("imageBtn");
 const imageInput=document.getElementById("imageInput");
@@ -7284,53 +7292,42 @@ uploadBar.classList.toggle("show",!!text);
 
 }
 
-/* dataURL → Blob باش نرفعوها بحال ملف */
-function dataUrlToBlob(dataUrl){
-
-const [head,body]=dataUrl.split(",");
-const mime=head.match(/:(.*?);/)[1];
-const binary=atob(body);
-const bytes=new Uint8Array(binary.length);
-
-for(let i=0;i<binary.length;i++)
-bytes[i]=binary.charCodeAt(i);
-
-return new Blob([bytes],{type:mime});
-
-}
-
 async function sendImageMessage(file){
 
 if(!currentUser)
 return;
 
 if(file.size>MAX_IMAGE_BYTES){
-showToast("الصورة كبيرة بزاف (ماكس 3MB)");
+showToast("الصورة كبيرة بزاف (ماكس 5MB)");
 return;
 }
 
 try{
 
-showUploadBar("كنرفعو الصورة…");
+showUploadBar("كنحضرو الصورة…");
 
-/* كنصغروها قبل الرفع: أسرع للرافع وللقارئ */
 const dataUrl=
-await resizeImageToDataUrl(file,1280);
+await resizeImageToDataUrl(file,MAX_IMAGE_WIDTH);
 
-const blob=dataUrlToBlob(dataUrl);
+if(dataUrl.length>MAX_STORED_CHARS){
+showUploadBar("");
+showToast("الصورة كبيرة بزاف من بعد الضغط");
+return;
+}
 
-const path=
-`chatImages/${currentUser.uid}/${Date.now()}_${Math.random().toString(36).slice(2,9)}.jpg`;
+/* الصورة كتسكن فوثيقة بوحدها. الرسالة كتحمل غير
+   الـ ID، ف لائحة الرسائل كتبقى خفيفة والصورة ما
+   كتتحملش إلا ملي توصل للشاشة. */
+const imageDoc=
+await addDoc(
+collection(db,"chatImages"),
+{
+userId:currentUser.uid,
+data:dataUrl,
+createdAt:serverTimestamp()
+});
 
-const fileRef=storageRef(storage,path);
-
-await uploadBytes(fileRef,blob);
-
-const url=await getDownloadURL(fileRef);
-
-/* كنعديو عبر sendMessage باش ناخدو نفس التوجيه
-   (community / private / group) وتحديث اللائحة. */
-await sendMessage({image:url});
+await sendMessage({imageId:imageDoc.id});
 
 showUploadBar("");
 
@@ -7363,6 +7360,90 @@ await sendImageMessage(file);
 });
 
 }
+
+
+/* =====================================================
+   تحميل الصور ملي توصل للشاشة
+
+   بلا هادشي، 100 رسالة فيها صور = 100 قراءة و5MB
+   فكل مرة كيتحل الشات.
+   ===================================================== */
+
+const imageCache=new Map();
+
+async function loadChatImage(element){
+
+const id=element.dataset.imageId;
+
+if(!id||element.dataset.loaded)
+return;
+
+element.dataset.loaded="1";
+
+try{
+
+let dataUrl=imageCache.get(id);
+
+if(!dataUrl){
+
+const snap=
+await getDoc(doc(db,"chatImages",id));
+
+if(!snap.exists())
+return;
+
+dataUrl=snap.data().data;
+imageCache.set(id,dataUrl);
+
+}
+
+element.src=dataUrl;
+element.classList.remove("loading");
+
+}catch(error){
+
+console.error("IMAGE LOAD ERROR:",error);
+
+}
+
+}
+
+const imageObserver=
+"IntersectionObserver" in window
+?
+new IntersectionObserver(
+entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+loadChatImage(entry.target);
+imageObserver.unobserve(entry.target);
+}
+
+});
+
+},
+{rootMargin:"200px"}
+)
+:
+null;
+
+function watchChatImages(container){
+
+container
+.querySelectorAll(".message-image[data-image-id]")
+.forEach(img=>{
+
+if(imageObserver)
+imageObserver.observe(img);
+else
+loadChatImage(img);
+
+});
+
+}
+
 
 /* تكبير الصورة */
 if(imageViewer){
