@@ -12,7 +12,7 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
 (async function () {
     const meta = SCHREIBEN_B2_TOPICS[TOPIC_ID];
     if (!meta) {
-        showNotice("Thema nicht gefunden.", "");
+        showNotice("❓", "Thema nicht gefunden.", "هاد الموضوع ماكاينش.", '<a class="premium-btn ghost" href="b2-schreiben.html">← رجع للمواضيع</a>', false);
         return;
     }
 
@@ -363,49 +363,126 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         throw error;
     }
 
-    function showNotice(titleText, bodyHtml) {
+    /* العروض — نفس اللي فـ payment.html */
+    const PREMIUM_OFFERS = [
+        {
+            name: "باقة 15 يوم",
+            sub: "بداية سريعة ومميزة.",
+            amount: "49 DH",
+            per: "/ 15 يوم",
+            tag: "",
+            whatsapp: "السلام عليكم، بغيت نشترك في باقة 15 يوم بثمن 49 DH.",
+        },
+        {
+            name: "باقة شهر واحد",
+            sub: "تحضير أقوى ووقت أكثر.",
+            amount: "99 DH",
+            per: "/ شهر",
+            tag: "الأكثر طلباً",
+            whatsapp: "السلام عليكم، بغيت نشترك في باقة شهر واحد بثمن 99 DH.",
+        },
+        {
+            name: "باقة شهرين",
+            sub: "أفضل اختيار للتحضير المكثف.",
+            amount: "150 DH",
+            per: "/ شهرين",
+            tag: "",
+            whatsapp: "السلام عليكم، بغيت نشترك في باقة شهرين بثمن 150 DH.",
+        },
+    ];
+
+    const OFFER_FEATURES = [
+        "وصول كامل لمواضيع Lesen و Hören و Schreiben",
+        "تصحيح Schreiben بالذكاء الاصطناعي (لامحدود)",
+        "المساعد الذكي للقراءة (لامحدود)",
+        "المقاطع الصوتية ديال Hören",
+    ];
+
+    const WHATSAPP_LINK = "https://wa.me/212653618205";
+
+    function offerHtml(offer) {
+        return (
+            '<div class="offer-box' + (offer.tag ? " best" : "") + '">' +
+            (offer.tag ? '<span class="offer-tag">' + offer.tag + "</span>" : "") +
+            "<h3>" + offer.name + "</h3>" +
+            '<p class="sub">' + offer.sub + "</p>" +
+            '<div><span class="amount">' + offer.amount + '</span> ' +
+            '<span class="per">' + offer.per + "</span></div>" +
+            "<ul>" +
+            OFFER_FEATURES.map(function (f) { return "<li>" + f + "</li>"; }).join("") +
+            "</ul>" +
+            '<a class="premium-btn whatsapp" style="margin-top:18px" target="_blank" ' +
+            'rel="noopener noreferrer" href="' + WHATSAPP_LINK + "?text=" +
+            encodeURIComponent(offer.whatsapp) + '">الترقية عبر WhatsApp</a>' +
+            "</div>"
+        );
+    }
+
+    /* كنبدلو الصفحة كاملة: ما خاصش المحتوى يبان ولو للحظة. */
+    function showNotice(lock, titleText, bodyText, actionsHtml, withOffers) {
         document.body.innerHTML =
-            '<div style="max-width:560px;margin:60px auto;padding:28px;font-family:Arial,sans-serif;' +
-            'background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,.12);text-align:center">' +
-            '<h1 style="font-size:22px;margin-bottom:14px">' + titleText + "</h1>" +
-            bodyHtml +
+            '<div class="premium-screen">' +
+            '<div class="premium-card">' +
+            '<div class="premium-lock">' + lock + "</div>" +
+            "<h1>" + titleText + "</h1>" +
+            "<p>" + bodyText + "</p>" +
+            '<div class="premium-actions">' + actionsHtml + "</div>" +
+            "</div>" +
+            (withOffers
+                ? '<div class="offers-sheet" id="offers-sheet" hidden><div class="offers-grid">' +
+                  PREMIUM_OFFERS.map(offerHtml).join("") +
+                  "</div></div>"
+                : "") +
             "</div>";
+
+        const toggle = document.getElementById("offers-toggle");
+        const sheet = document.getElementById("offers-sheet");
+
+        if (toggle && sheet) {
+            toggle.addEventListener("click", function () {
+                sheet.hidden = !sheet.hidden;
+                toggle.textContent = sheet.hidden ? "📦 شوف العروض" : "✕ خبي العروض";
+                if (!sheet.hidden) sheet.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+        }
     }
 
     function showPremiumNotice(code) {
-        const backLink =
-            '<a href="b2-schreiben.html" style="display:inline-block;margin-top:18px;background:#e30613;' +
-            'color:#fff;padding:11px 20px;border-radius:9px;text-decoration:none;font-weight:bold">' +
-            "← رجع للمواضيع</a>";
+        const back = '<a class="premium-btn ghost" href="b2-schreiben.html">← رجع للمواضيع</a>';
 
         if (code === "not_signed_in") {
             showNotice(
-                "🔒 خاصك تسجل الدخول",
-                '<p style="line-height:1.8;color:#555">هاد الموضوع ديال المشتركين. دخل لحسابك باش تكمل.</p>' +
-                '<a href="login.html" style="display:inline-block;margin-top:18px;background:#111;color:#ffd500;' +
-                'padding:11px 20px;border-radius:9px;text-decoration:none;font-weight:bold">تسجيل الدخول</a> ' +
-                backLink
+                "🔒",
+                "خاصك تسجل الدخول",
+                "هاد الموضوع ديال المشتركين. دخل لحسابك باش تكمل، وإلا ما عندكش حساب صايب واحد فدقيقة.",
+                '<a class="premium-btn gold" href="login.html">تسجيل الدخول</a>' +
+                '<button class="premium-btn ghost" id="offers-toggle" type="button">📦 شوف العروض</button>' +
+                back,
+                true
             );
             return;
         }
 
         if (code === "not_subscribed") {
             showNotice(
-                "🔒 هاد الموضوع Premium",
-                '<p style="line-height:1.8;color:#555">باش تفتح هاد الموضوع، فعّل الاشتراك ديالك.</p>' +
-                '<a href="https://wa.me/212653618205" target="_blank" rel="noopener noreferrer" ' +
-                'style="display:inline-block;margin-top:18px;background:#111;color:#ffd500;padding:11px 20px;' +
-                'border-radius:9px;text-decoration:none;font-weight:bold">💬 WhatsApp</a> ' +
-                backLink
+                "🔒",
+                "هاد الموضوع Premium",
+                "باش تفتح هاد الموضوع وجميع المواضيع الأخرى، فعّل الاشتراك ديالك. ختار العرض اللي يناسبك.",
+                '<button class="premium-btn gold" id="offers-toggle" type="button">📦 شوف العروض</button>' +
+                '<a class="premium-btn whatsapp" href="' + WHATSAPP_LINK +
+                '" target="_blank" rel="noopener noreferrer">💬 تواصل معنا</a>' +
+                back,
+                true
             );
             return;
         }
 
         showNotice(
-            "⚠️ ما قدرناش نحملو الموضوع",
-            '<p style="line-height:1.8;color:#555">' + escapeHtml(code) + "</p>" +
-            '<p style="line-height:1.8;color:#555;margin-top:8px">' + escapeHtml(errorHint(code)) + "</p>" +
-            backLink
+            "⚠️",
+            "ما قدرناش نحملو الموضوع",
+            escapeHtml(code) + " — " + escapeHtml(errorHint(code)),
+            back,
+            false
         );
     }
 
