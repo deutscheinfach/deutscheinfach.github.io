@@ -4,10 +4,13 @@
 // Required Cloudflare secret:
 // GEMINI_API_KEY
 //
-// Optional environment variable:
+// Optional environment variables:
 // ALLOWED_ORIGIN = https://deutscheinfach.github.io
+// GEMINI_MODEL   = gemini-3-flash
 
-const GEMINI_MODEL = "gemini-2.5-flash";
+// gemini-2.5-flash بقا محجور على الحسابات الجداد.
+// يقدر يتبدل بلا ما نعاودو الكود: زيد variable سميتها GEMINI_MODEL.
+const DEFAULT_GEMINI_MODEL = "gemini-3-flash";
 
 export default {
   async fetch(request, env) {
@@ -135,8 +138,10 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
 `;
 
       // Gemini REST API
+      const model = env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL;
+
       const geminiUrl =
-        `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
       const geminiResponse = await fetch(geminiUrl, {
         method: "POST",
@@ -166,8 +171,8 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
 
           generationConfig: {
             temperature: 0.2,
-            response_mime_type: "application/json",
-            response_schema: {
+            responseMimeType: "application/json",
+            responseSchema: {
               type: "OBJECT",
               properties: {
                 score: {
