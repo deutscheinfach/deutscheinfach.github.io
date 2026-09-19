@@ -8,6 +8,10 @@
 
     <title>Deutsch Einfach – Lesen Teil 1</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css">
     <style>
 
         * {
@@ -19,15 +23,10 @@
         body {
             font-family: Arial, sans-serif;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #fff7e6,
-                    #ffe9c9
-                );
+            background: radial-gradient(circle at 12% 6%, rgba(212,175,55,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(212,175,55,.07), transparent 44%),#08090c;
 
             min-height: 100vh;
-            color: #333;
+            color: var(--text);
         }
 
 
@@ -74,8 +73,7 @@
 
             transition: 0.2s ease;
 
-            box-shadow:
-                0 5px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
         }
 
 
@@ -94,9 +92,9 @@
 
         .page-progress {
 
-            background: white;
+            background: var(--surface);
 
-            border: 2px solid #ffd166;
+            border: 2px solid var(--gold-soft);
 
             border-radius: 15px;
 
@@ -106,12 +104,11 @@
 
             font-weight: bold;
 
-            color: #555;
+            color: var(--muted);
 
             line-height: 1.5;
 
-            box-shadow:
-                0 5px 15px rgba(0,0,0,0.07);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
         }
 
 
@@ -121,17 +118,16 @@
 
         header {
 
-            background: white;
+            background: var(--surface);
 
             text-align: center;
 
             padding: 25px 15px;
 
-            border-top: 4px solid #ffd166;
-            border-bottom: 4px solid #ffd166;
+            border-top: 4px solid var(--gold-soft);
+            border-bottom: 4px solid var(--gold-soft);
 
-            box-shadow:
-                0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
 
@@ -144,7 +140,7 @@
 
             border-radius: 50%;
 
-            border: 3px solid #ffd166;
+            border: 3px solid var(--gold-soft);
 
             vertical-align: middle;
 
@@ -158,7 +154,7 @@
 
             vertical-align: middle;
 
-            color: #d62828;
+            color: var(--gold);
 
             font-size: 30px;
         }
@@ -172,7 +168,7 @@
 
             font-weight: bold;
 
-            color: #555;
+            color: var(--muted);
         }
 
 
@@ -186,9 +182,9 @@
 
             border-radius: 20px;
 
-            background: #fff3cd;
+            background: rgba(212,175,55,.14);
 
-            border: 2px solid #ffd166;
+            border: 2px solid var(--gold-soft);
 
             color: #8a5a00;
 
@@ -212,7 +208,7 @@
 
         .intro {
 
-            background: white;
+            background: var(--surface);
 
             padding: 25px;
 
@@ -220,16 +216,15 @@
 
             margin-bottom: 25px;
 
-            border-left: 6px solid #d62828;
+            border-left: 6px solid var(--gold);
 
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
 
         .intro h2 {
 
-            color: #d62828;
+            color: var(--gold);
 
             margin-bottom: 10px;
         }
@@ -237,7 +232,7 @@
 
         .intro p {
 
-            color: #555;
+            color: var(--muted);
 
             line-height: 1.7;
         }
@@ -251,8 +246,7 @@
 
             display: grid;
 
-            grid-template-columns:
-                repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr);
 
             gap: 20px;
         }
@@ -260,9 +254,9 @@
 
         .theme-card {
 
-            background: white;
+            background: var(--surface);
 
-            border: 3px solid #ffd166;
+            border: 3px solid var(--gold-soft);
 
             border-radius: 18px;
 
@@ -276,8 +270,7 @@
 
             justify-content: space-between;
 
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.07);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
 
             transition: 0.25s ease;
         }
@@ -287,8 +280,7 @@
 
             transform: translateY(-5px);
 
-            box-shadow:
-                0 12px 25px rgba(0,0,0,0.12);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
         }
 
 
@@ -300,11 +292,10 @@
 
             border-color: #2a9d8f;
 
-            background:
-                linear-gradient(
+            background: linear-gradient(
                     135deg,
-                    #ffffff,
-                    #effff9
+                    var(--surface),
+                    rgba(74,222,128,.12)
                 );
         }
 
@@ -323,7 +314,7 @@
 
             opacity: 0.72;
 
-            background: #f5f5f5;
+            background: var(--ink);
 
             border-color: #cccccc;
 
@@ -335,8 +326,7 @@
 
             transform: none;
 
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.07);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
         }
 
 
@@ -356,7 +346,7 @@
 
             border-radius: 50%;
 
-            background: #d62828;
+            background: var(--gold);
 
             color: white;
 
@@ -390,7 +380,7 @@
 
             font-weight: bold;
 
-            color: #333;
+            color: var(--text);
 
             line-height: 1.5;
 
@@ -400,7 +390,7 @@
 
         .theme-description {
 
-            color: #777;
+            color: var(--muted);
 
             font-size: 14px;
 
@@ -472,7 +462,7 @@
 
             padding: 30px 15px;
 
-            color: #777;
+            color: var(--muted);
         }
 
 
@@ -484,8 +474,7 @@
 
             .themes {
 
-                grid-template-columns:
-                    repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 

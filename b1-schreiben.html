@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch Einfach – B1 Schreiben</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
+<style>
+.wrap {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 22px; min-height: 100vh;
+    padding: var(--gutter); text-align: center;
+}
+.card {
+    width: min(100%, 540px);
+    padding: clamp(28px, 5vw, 48px);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.45);
+}
+.icon { font-size: var(--step-4); line-height: 1; }
+h1 { margin: 14px 0 10px; font-size: var(--step-3); font-weight: 900; }
+p { margin: 0 0 26px; color: var(--muted); font-size: var(--step-1); }
+.actions { display: flex; flex-wrap: wrap; gap: 11px; justify-content: center; }
+a.btn {
+    padding: 13px 22px; border-radius: 12px;
+    font-weight: 800; text-decoration: none;
+    border: 1px solid var(--line); background: var(--surface-2); color: var(--muted);
+    transition: .25s;
+}
+a.btn:hover { border-color: var(--line-gold); color: var(--gold-soft); transform: translateY(-2px); }
+a.btn.gold {
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    border-color: transparent; color: #17130a;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="card">
+        <div class="icon">✍️</div>
+        <h1 class="gold-text">B1 Schreiben</h1>
+        <p>
+            Die Schreibaufgaben für B1 werden gerade vorbereitet.<br>
+            <span style="direction:rtl;display:inline-block;margin-top:8px">
+                هاد القسم كنوجدوه دابا. تسنانا شوية 🙏
+            </span>
+        </p>
+        <div class="actions">
+            <a class="btn gold" href="b1.html">← Zurück zu B1</a>
+            <a class="btn" href="b2-schreiben.html">B2 Schreiben</a>
+            <a class="btn" href="index.html">Startseite</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

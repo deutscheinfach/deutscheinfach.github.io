@@ -7,6 +7,10 @@
 
     <title>Deutsch Einfach – Leseverstehen Teil 1</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css">
     <style>
 
         * {
@@ -17,8 +21,8 @@
 
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #fff7e6, #ffe9c9);
-            color: #333;
+            background: radial-gradient(circle at 12% 6%, rgba(212,175,55,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(212,175,55,.07), transparent 44%),#08090c;
+            color: var(--text);
             min-height: 100vh;
         }
 
@@ -64,24 +68,24 @@
         }
 
         .nav-home {
-            background: white;
-            color: #d62828;
-            border: 2px solid #ffd166;
+            background: var(--surface);
+            color: var(--gold);
+            border: 2px solid var(--gold-soft);
         }
 
         .nav-offer {
-            background: #d62828;
+            background: var(--gold);
             color: white;
         }
 
         .page-progress {
-            background: white;
-            border: 2px solid #ffd166;
+            background: var(--surface);
+            border: 2px solid var(--gold-soft);
             border-radius: 15px;
             padding: 9px 18px;
             text-align: center;
             font-weight: bold;
-            color: #555;
+            color: var(--muted);
             box-shadow: 0 5px 15px rgba(0,0,0,0.07);
             line-height: 1.5;
         }
@@ -91,11 +95,11 @@
         /* ========================================= */
 
         header {
-            background: white;
+            background: var(--surface);
             padding: 20px;
             margin-top: 15px;
             text-align: center;
-            border-bottom: 4px solid #ffd166;
+            border-bottom: 4px solid var(--gold-soft);
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
@@ -106,13 +110,13 @@
             object-fit: cover;
             vertical-align: middle;
             margin-right: 10px;
-            border: 3px solid #ffd166;
+            border: 3px solid var(--gold-soft);
         }
 
         header h1 {
             display: inline-block;
             vertical-align: middle;
-            color: #d62828;
+            color: var(--gold);
             font-size: 30px;
         }
 
@@ -120,7 +124,7 @@
             margin-top: 10px;
             font-size: 18px;
             font-weight: bold;
-            color: #555;
+            color: var(--muted);
         }
 
         .badge {
@@ -128,8 +132,8 @@
             margin-top: 10px;
             padding: 8px 15px;
             border-radius: 20px;
-            background: #fff3cd;
-            border: 2px solid #ffd166;
+            background: rgba(212,175,55,.14);
+            border: 2px solid var(--gold-soft);
             color: #8a5a00;
             font-weight: bold;
         }
@@ -145,21 +149,21 @@
         }
 
         .intro {
-            background: white;
+            background: var(--surface);
             padding: 20px;
             border-radius: 18px;
             margin-bottom: 25px;
-            border-left: 6px solid #d62828;
+            border-left: 6px solid var(--gold);
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
         .intro h2 {
-            color: #d62828;
+            color: var(--gold);
             margin-bottom: 8px;
         }
 
         .intro p {
-            color: #555;
+            color: var(--muted);
             line-height: 1.6;
         }
 
@@ -181,8 +185,8 @@
         }
 
         .text-card {
-            background: white;
-            border: 3px solid #ffd166;
+            background: var(--surface);
+            border: 3px solid var(--gold-soft);
             border-radius: 18px;
             padding: 22px;
             cursor: pointer;
@@ -196,9 +200,8 @@
         }
 
         .text-card.selected {
-            border-color: #d62828;
-            box-shadow:
-                0 0 0 4px rgba(214,40,40,0.12),
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(214,40,40,0.12),
                 0 12px 25px rgba(214,40,40,0.15);
         }
 
@@ -206,12 +209,11 @@
             border-color: #2a9d8f;
             background: linear-gradient(
                 135deg,
-                #ffffff,
-                #effff9
+                var(--surface),
+                rgba(74,222,128,.12)
             );
 
-            box-shadow:
-                0 0 0 4px rgba(42,157,143,0.10),
+            box-shadow: 0 0 0 4px rgba(42,157,143,0.10),
                 0 10px 25px rgba(42,157,143,0.12);
         }
 
@@ -220,20 +222,19 @@
         }
 
         .text-card.wrong-answer {
-            border-color: #d62828;
+            border-color: var(--gold);
             background: linear-gradient(
                 135deg,
-                #ffffff,
-                #fff0f0
+                var(--surface),
+                rgba(255,107,107,.12)
             );
 
-            box-shadow:
-                0 0 0 4px rgba(214,40,40,0.10),
+            box-shadow: 0 0 0 4px rgba(214,40,40,0.10),
                 0 10px 25px rgba(214,40,40,0.12);
         }
 
         .text-card.wrong-answer:hover {
-            border-color: #d62828;
+            border-color: var(--gold);
         }
 
         .text-number {
@@ -243,7 +244,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: #d62828;
+            background: var(--gold);
             color: white;
             font-size: 20px;
             font-weight: bold;
@@ -264,8 +265,8 @@
             margin-top: 18px;
             min-height: 52px;
             padding: 12px 15px;
-            background: #f8f8f8;
-            border: 2px dashed #ccc;
+            background: var(--surface-2);
+            border: 2px dashed var(--line);
             border-radius: 12px;
 
             display: flex;
@@ -274,7 +275,7 @@
 
             gap: 10px;
 
-            color: #777;
+            color: var(--muted);
             font-weight: bold;
         }
 
@@ -284,19 +285,19 @@
 
         .answer-box.filled {
             border-color: #2a9d8f;
-            background: #effff9;
+            background: rgba(74,222,128,.12);
             animation: answerPop 0.45s ease;
         }
 
         .answer-box.correct {
             border-color: #2a9d8f;
-            background: #e7fff7;
+            background: rgba(74,222,128,.12);
             color: #176b5f;
         }
 
         .answer-box.wrong {
-            border-color: #d62828;
-            background: #fff0f0;
+            border-color: var(--gold);
+            background: rgba(255,107,107,.12);
             color: #a51d1d;
         }
 
@@ -304,7 +305,7 @@
             display: block;
             margin-top: 8px;
             padding: 9px 12px;
-            background: #e7fff7;
+            background: rgba(74,222,128,.12);
             border: 1px solid #2a9d8f;
             border-radius: 9px;
             color: #176b5f;
@@ -342,7 +343,7 @@
             padding: 0;
             border: none;
             border-radius: 50%;
-            background: #eeeeee;
+            background: var(--surface-2);
             color: #000000;
             font-size: 16px;
             font-weight: bold;
@@ -367,25 +368,25 @@
         .headings {
             position: sticky;
             top: 20px;
-            background: white;
+            background: var(--surface);
             border-radius: 18px;
             padding: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border: 3px solid #ffd166;
+            border: 3px solid var(--gold-soft);
             max-height: 80vh;
             overflow-y: auto;
         }
 
         .headings h2 {
-            color: #d62828;
+            color: var(--gold);
             margin-bottom: 15px;
             text-align: center;
         }
 
         .heading {
             position: relative;
-            background: #fffaf0;
-            border: 2px solid #ffd166;
+            background: var(--surface-2);
+            border: 2px solid var(--gold-soft);
             border-radius: 12px;
             padding: 14px 45px 14px 14px;
             margin-bottom: 12px;
@@ -395,20 +396,19 @@
         }
 
         .heading:hover {
-            background: #fff2d5;
+            background: rgba(212,175,55,.14);
             transform: translateX(-3px);
         }
 
         .heading.selected {
-            border-color: #d62828;
-            background: #fff0f0;
-            box-shadow:
-                0 0 0 3px rgba(214,40,40,0.10);
+            border-color: var(--gold);
+            background: rgba(255,107,107,.12);
+            box-shadow: 0 0 0 3px rgba(214,40,40,0.10);
         }
 
         .heading.used {
             opacity: 0.5;
-            background: #eeeeee;
+            background: var(--surface-2);
             border-color: #aaa;
             cursor: not-allowed;
             position: relative;
@@ -416,7 +416,7 @@
 
         .heading.used:hover {
             transform: none;
-            background: #eeeeee;
+            background: var(--surface-2);
         }
 
         .heading.used::after {
@@ -444,7 +444,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: #d62828;
+            background: var(--gold);
             color: white;
             font-weight: bold;
             margin-right: 8px;
@@ -457,7 +457,7 @@
 
         .controls {
             margin-top: 30px;
-            background: white;
+            background: var(--surface);
             padding: 20px;
             border-radius: 18px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
@@ -480,12 +480,12 @@
         }
 
         .btn-answer {
-            background: #d62828;
+            background: var(--gold);
             color: white;
         }
 
         .btn-repeat {
-            background: #ffd166;
+            background: var(--gold-soft);
             color: #5c4300;
         }
 
@@ -498,7 +498,7 @@
             margin-top: 20px;
             padding: 15px;
             border-radius: 12px;
-            background: #effff9;
+            background: rgba(74,222,128,.12);
             border: 2px solid #2a9d8f;
             color: #176b5f;
             font-size: 22px;
@@ -550,7 +550,7 @@
             position: relative;
             width: 100%;
             max-width: 500px;
-            background: white;
+            background: var(--surface);
             border-radius: 22px;
             padding: 30px;
             text-align: center;
@@ -564,19 +564,19 @@
         }
 
         .offer-box h2 {
-            color: #d62828;
+            color: var(--gold);
             margin-bottom: 12px;
         }
 
         .offer-box p {
-            color: #555;
+            color: var(--muted);
             line-height: 1.7;
             margin-bottom: 20px;
         }
 
         .offer-item {
-            background: #fffaf0;
-            border: 2px solid #ffd166;
+            background: var(--surface-2);
+            border: 2px solid var(--gold-soft);
             border-radius: 12px;
             padding: 13px;
             margin: 10px 0;
@@ -591,14 +591,14 @@
             height: 35px;
             border: none;
             border-radius: 50%;
-            background: #eeeeee;
+            background: var(--surface-2);
             cursor: pointer;
             font-weight: bold;
             font-size: 17px;
         }
 
         .offer-close:hover {
-            background: #d62828;
+            background: var(--gold);
             color: white;
         }
 
@@ -621,7 +621,7 @@
         footer {
             text-align: center;
             padding: 30px 15px;
-            color: #777;
+            color: var(--muted);
         }
 
         /* ========================================= */

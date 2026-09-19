@@ -8,6 +8,10 @@
 
     <title>Deutsch Einfach – B1 Lesen Teil 1</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css">
     <style>
 
         * {
@@ -20,16 +24,11 @@
 
             font-family: Arial, sans-serif;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #fff7e6,
-                    #ffe9c9
-                );
+            background: radial-gradient(circle at 12% 6%, rgba(212,175,55,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(212,175,55,.07), transparent 44%),#08090c;
 
             min-height: 100vh;
 
-            color: #333;
+            color: var(--text);
         }
 
         /* ============================= */
@@ -70,8 +69,7 @@
 
             transition: 0.2s ease;
 
-            box-shadow:
-                0 5px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.08);
         }
 
         .nav-btn:hover {
@@ -88,9 +86,9 @@
 
         .page-progress {
 
-            background: white;
+            background: var(--surface);
 
-            border: 2px solid #ffd166;
+            border: 2px solid var(--gold-soft);
 
             border-radius: 15px;
 
@@ -100,12 +98,11 @@
 
             font-weight: bold;
 
-            color: #555;
+            color: var(--muted);
 
             line-height: 1.5;
 
-            box-shadow:
-                0 5px 15px rgba(0,0,0,0.07);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.07);
         }
 
         /* ============================= */
@@ -114,18 +111,17 @@
 
         header {
 
-            background: white;
+            background: var(--surface);
 
             text-align: center;
 
             padding: 25px 15px;
 
-            border-top: 4px solid #ffd166;
+            border-top: 4px solid var(--gold-soft);
 
-            border-bottom: 4px solid #ffd166;
+            border-bottom: 4px solid var(--gold-soft);
 
-            box-shadow:
-                0 5px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
         .logo {
@@ -138,7 +134,7 @@
 
             border-radius: 50%;
 
-            border: 3px solid #ffd166;
+            border: 3px solid var(--gold-soft);
 
             vertical-align: middle;
 
@@ -151,7 +147,7 @@
 
             vertical-align: middle;
 
-            color: #d62828;
+            color: var(--gold);
 
             font-size: 30px;
         }
@@ -164,7 +160,7 @@
 
             font-weight: bold;
 
-            color: #555;
+            color: var(--muted);
         }
 
         .badge {
@@ -177,9 +173,9 @@
 
             border-radius: 20px;
 
-            background: #fff3cd;
+            background: rgba(212,175,55,.14);
 
-            border: 2px solid #ffd166;
+            border: 2px solid var(--gold-soft);
 
             color: #8a5a00;
 
@@ -201,7 +197,7 @@
 
         .intro {
 
-            background: white;
+            background: var(--surface);
 
             padding: 25px;
 
@@ -209,22 +205,21 @@
 
             margin-bottom: 25px;
 
-            border-left: 6px solid #d62828;
+            border-left: 6px solid var(--gold);
 
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
         .intro h2 {
 
-            color: #d62828;
+            color: var(--gold);
 
             margin-bottom: 10px;
         }
 
         .intro p {
 
-            color: #555;
+            color: var(--muted);
 
             line-height: 1.7;
         }
@@ -235,19 +230,18 @@
 
         .exercise {
 
-            background: white;
+            background: var(--surface);
 
             border-radius: 20px;
 
             padding: 30px;
 
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
 
         .exercise-title {
 
-            color: #d62828;
+            color: var(--gold);
 
             font-size: 24px;
 
@@ -256,7 +250,7 @@
 
         .instruction {
 
-            color: #666;
+            color: var(--muted);
 
             line-height: 1.7;
 
@@ -271,8 +265,7 @@
 
             display: grid;
 
-            grid-template-columns:
-                repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
 
             gap: 20px;
 
@@ -281,9 +274,9 @@
 
         .text-card {
 
-            background: #fffdf8;
+            background: var(--surface-2);
 
-            border: 2px solid #ffd166;
+            border: 2px solid var(--gold-soft);
 
             border-radius: 16px;
 
@@ -296,8 +289,7 @@
 
             transform: translateY(-3px);
 
-            box-shadow:
-                0 8px 18px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.08);
         }
 
         .text-number {
@@ -327,12 +319,12 @@
 
             margin-bottom: 10px;
 
-            color: #333;
+            color: var(--text);
         }
 
         .text-card p {
 
-            color: #555;
+            color: var(--muted);
 
             line-height: 1.7;
 
@@ -347,8 +339,7 @@
 
             display: grid;
 
-            grid-template-columns:
-                repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
 
             gap: 18px;
 
@@ -357,9 +348,9 @@
 
         .question {
 
-            background: #f8f8f8;
+            background: var(--surface-2);
 
-            border: 2px solid #ddd;
+            border: 2px solid var(--line);
 
             border-radius: 15px;
 
@@ -368,7 +359,7 @@
 
         .question h3 {
 
-            color: #333;
+            color: var(--text);
 
             margin-bottom: 12px;
 
@@ -386,9 +377,9 @@
 
         .answers label {
 
-            background: white;
+            background: var(--surface);
 
-            border: 1px solid #ddd;
+            border: 1px solid var(--line);
 
             border-radius: 10px;
 
@@ -399,11 +390,11 @@
             transition: 0.2s ease;
         }
 
-        .answers label:hover {
+        .answers label: hover {
 
             border-color: #2a9d8f;
 
-            background: #effff9;
+            background: rgba(74,222,128,.12);
         }
 
         .answers input {
@@ -461,9 +452,9 @@
 
             border-radius: 15px;
 
-            background: #fff3cd;
+            background: rgba(212,175,55,.14);
 
-            border: 2px solid #ffd166;
+            border: 2px solid var(--gold-soft);
 
             text-align: center;
 
@@ -482,7 +473,7 @@
 
             padding: 30px 15px;
 
-            color: #777;
+            color: var(--muted);
         }
 
         /* ============================= */

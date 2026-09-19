@@ -13,6 +13,10 @@
     <title>B1 Lesen – Deutsch Einfach</title>
 
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/theme.css">
     <style>
 
         * {
@@ -24,15 +28,13 @@
 
             margin: 0;
 
-            font-family:
-                Arial,
+            font-family: Arial,
                 sans-serif;
 
-            background:
-                linear-gradient(
+            background: linear-gradient(
                     135deg,
-                    #f8f8f8,
-                    #eeeeee
+                    var(--surface-2),
+                    var(--surface-2)
                 );
 
             min-height: 100vh;
@@ -53,7 +55,7 @@
 
         .header {
 
-            background: white;
+            background: var(--surface);
 
             padding: 25px;
 
@@ -61,8 +63,7 @@
 
             text-align: center;
 
-            box-shadow:
-                0 8px 25px
+            box-shadow: 0 8px 25px
                 rgba(0,0,0,0.10);
 
             margin-bottom: 25px;
@@ -74,14 +75,14 @@
 
             margin: 0;
 
-            color: #d60000;
+            color: var(--gold);
 
         }
 
 
         .header p {
 
-            color: #555;
+            color: var(--muted);
 
             margin-bottom: 0;
 
@@ -92,8 +93,7 @@
 
             display: grid;
 
-            grid-template-columns:
-                repeat(
+            grid-template-columns: repeat(
                     auto-fit,
                     minmax(250px, 1fr)
                 );
@@ -105,28 +105,25 @@
 
         .card {
 
-            background: white;
+            background: var(--surface);
 
             border-radius: 18px;
 
             padding: 25px;
 
-            box-shadow:
-                0 8px 25px
+            box-shadow: 0 8px 25px
                 rgba(0,0,0,0.10);
 
             text-align: center;
 
-            transition:
-                transform 0.2s;
+            transition: transform 0.2s;
 
         }
 
 
         .card:hover {
 
-            transform:
-                translateY(-5px);
+            transform: translateY(-5px);
 
         }
 
@@ -135,14 +132,14 @@
 
             margin-top: 0;
 
-            color: #333;
+            color: var(--text);
 
         }
 
 
         .card p {
 
-            color: #666;
+            color: var(--muted);
 
             line-height: 1.6;
 
@@ -153,7 +150,7 @@
 
             border: none;
 
-            background: #d60000;
+            background: var(--gold);
 
             color: white;
 
@@ -172,7 +169,7 @@
 
         .open-button:hover {
 
-            background: #a90000;
+            background: var(--gold-dark);
 
         }
 
@@ -232,7 +229,7 @@
 
             inset: 0;
 
-            background: white;
+            background: var(--surface);
 
             display: flex;
 
@@ -246,7 +243,7 @@
 
             font-weight: bold;
 
-            color: #d60000;
+            color: var(--gold);
 
         }
 
