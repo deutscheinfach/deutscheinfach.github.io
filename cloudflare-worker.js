@@ -127,13 +127,19 @@ export default {
           return jsonResponse({ error: "not_subscribed" }, 403, allowedOrigin);
         }
 
-        const stored = await env.TOPICS.get("topic-" + topicId);
+        /*
+         * مفتاح واحد "premium-topics" فيه جميع المواضيع: تحديث واحد
+         * فالـ dashboard بدل 36. وإلا ما كانش، كنقلبو على مفتاح خاص
+         * بالموضوع، باش يمكن تحديث واحد بوحدو.
+         */
+        const all = await env.TOPICS.get("premium-topics", "json");
+        const topic = all?.[topicId] || (await env.TOPICS.get("topic-" + topicId, "json"));
 
-        if (!stored) {
+        if (!topic) {
           return jsonResponse({ error: "Topic not found." }, 404, allowedOrigin);
         }
 
-        return jsonResponse(JSON.parse(stored), 200, allowedOrigin);
+        return jsonResponse(topic, 200, allowedOrigin);
       }
 
       /* ترجمة الـ Anzeige والمهام للدارجة. ماشي محتاجة حساب. */
