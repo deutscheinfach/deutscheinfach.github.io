@@ -562,15 +562,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "BEAUTYWELT – Kosmetik, die wirkt!\n\n• Naturkosmetik für jeden Hauttyp\n• Klimaneutraler Versand\n• Persönliche Beratung online\n• 30 Tage Rückgaberecht\n\nBeautywelt Online-Shop\nwww.beautywelt-shop.de",
-    "situation": "Sie haben eine Gesichtscreme im Kosmetik-Shop Beautywelt bestellt. Nach der Anwendung bekamen Sie eine Hautreaktion, und außerdem wurde Ihnen ein falsches Produkt geliefert. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Produkt haben Sie bestellt und was wurde stattdessen geliefert?",
-      "Welche Beschwerden hatten Sie nach der Anwendung?",
-      "Wie hat sich das auf Sie ausgewirkt?",
-      "Was fordern Sie vom Kosmetik-Shop?"
-    ]
+    "locked": true
   },
   "07": {
     "title": "Hotel",
