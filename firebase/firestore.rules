@@ -51,7 +51,14 @@ service cloud.firestore {
 
     match /calls/{callId} {
 
-      allow read: if request.auth != null
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        );
+
+      allow list: if request.auth != null
         && (
           resource.data.callerId == request.auth.uid
           || resource.data.calleeId == request.auth.uid
@@ -233,7 +240,16 @@ service cloud.firestore {
 
     match /friendships/{friendshipId} {
 
-      allow read: if request.auth != null
+      /* وثيقة ماكايناش = resource هو null. الكود كيسول
+         "واش راهم أصدقاء؟" قبل ما يصيفط الطلب، و
+         بلا هاد الشرط داك السؤال بوحدو كيترفض. */
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || request.auth.uid in resource.data.users
+        );
+
+      allow list: if request.auth != null
         && request.auth.uid in resource.data.users;
 
       allow create: if request.auth != null
@@ -270,7 +286,13 @@ service cloud.firestore {
          query AND single-doc reads are allowed.
          ----------------------------------------------- */
 
-      allow read: if request.auth != null
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || request.auth.uid in resource.data.participants
+        );
+
+      allow list: if request.auth != null
         && request.auth.uid in resource.data.participants;
 
 
@@ -367,9 +389,14 @@ service cloud.firestore {
 
     match /groups/{groupId} {
 
-      allow read: if request.auth != null
-        && request.auth.uid
-            in resource.data.members;
+      allow get: if request.auth != null
+        && (
+          resource == null
+          || request.auth.uid in resource.data.members
+        );
+
+      allow list: if request.auth != null
+        && request.auth.uid in resource.data.members;
 
 
       allow create: if request.auth != null

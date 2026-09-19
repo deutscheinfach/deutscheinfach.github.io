@@ -6254,7 +6254,11 @@ error
 );
 
 showToast(
-"Anfrage konnte nicht gesendet werden."
+error.code==="permission-denied"
+?
+"Anfrage abgelehnt — Firestore-Regeln prüfen."
+:
+"Anfrage: "+(error.code||error.message||"Fehler")
 );
 
 }
