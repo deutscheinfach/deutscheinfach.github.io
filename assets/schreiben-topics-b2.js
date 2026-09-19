@@ -532,13 +532,13 @@ const SCHREIBEN_B2_TOPICS = {
     "level": "B2",
     "time": "30 min",
     "locked": false,
-    "ad": "AUTOVERMIETUNG NEUSTADT-METRO – Mobil in jeder Situation!\n\n• Moderne Fahrzeugflotte\n• Faire Preise ohne versteckte Kosten\n• Abholung direkt am Bahnhof\n• 24-Stunden-Notfallservice\n\nAutovermietung Neustadt-Metro\nBahnhofsplatz 3, 04109 Leipzig\nwww.neustadt-metro-mietwagen.de",
-    "situation": "Sie haben für Ihren Urlaub ein Auto bei der Autovermietung Neustadt-Metro gemietet. Das Fahrzeug hatte technische Mängel und Ihnen wurden zusätzliche Kosten berechnet, die nicht vereinbart waren. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
+    "ad": "Brauchen Sie ein Auto? Wir haben das passende Modell für Sie!\n\n• Preiswerte Kleinwagen\n• Geräumige Kleinbusse\n• Praktische Kombis\n• Schicke Cabrios\n• Luxuriöse Oberklasse und vieles mehr\n\nBuchen Sie noch heute Ihr Wunschauto ganz bequem online! Wir stellen Ihnen ein modernes, sicheres und sauberes Fahrzeug zur Verfügung. Mieten Sie Ihr Auto für wenige Stunden, ein Wochenende oder mehrere Tage. Bei Fragen und Problemen können Sie sich rund um die Uhr an unseren Service wenden. Unsere kompetenten Mitarbeiter helfen Ihnen gern.",
+    "situation": "Sie haben bei der Autovermietung Neustadt ein Auto fürs Wochenende gemietet. Leider waren Sie mit dem Auto und dem Service der Firma sehr unzufrieden. Das Auto war weder modern noch sauber, und Sie konnten keinen Service-Mitarbeiter erreichen. Schreiben Sie eine E-Mail, in der Sie sich über die Unannehmlichkeiten beschweren.",
     "points": [
-      "Welches Fahrzeug hatten Sie gebucht und für welchen Zeitraum?",
-      "Welche Mängel hatte das Auto bei der Übergabe?",
-      "Welche zusätzlichen Kosten wurden Ihnen berechnet?",
-      "Was fordern Sie von der Autovermietung?"
+      "Erklären Sie, warum Sie sich für die Autovermietung Neustadt entschieden haben.",
+      "Beschreiben Sie, welche Probleme es mit dem Auto gab.",
+      "Erläutern Sie, welche Probleme es mit dem Service der Firma gab.",
+      "Schreiben Sie, was Sie jetzt von der Autovermietung Neustadt erwarten."
     ]
   },
   "05": {
