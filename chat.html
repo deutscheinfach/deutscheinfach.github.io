@@ -5839,8 +5839,15 @@ console.error(
 error
 );
 
+/* الرسالة العامة كانت كتخبي السبب. القاعدة اللي
+   كترفض عادة هي: المجموعة عامرة، ولا `closed`
+   ناقص فالوثيقة، ولا القواعد ماشي مـ Publish. */
 showToast(
-"Einladung konnte nicht gesendet werden."
+error.code==="permission-denied"
+?
+"Einladung abgelehnt von den Regeln — Firestore-Regeln prüfen."
+:
+"Einladung: "+(error.code||error.message||"Fehler")
 );
 
 }

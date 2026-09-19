@@ -411,7 +411,7 @@ service cloud.firestore {
           (
             resource.data.ownerId == request.auth.uid
 
-            && resource.data.closed == false
+            && resource.data.get("closed", false) == false
 
             && request.resource.data.closed == true
 
@@ -434,7 +434,7 @@ service cloud.firestore {
           (
             resource.data.ownerId == request.auth.uid
 
-            && resource.data.closed == false
+            && resource.data.get("closed", false) == false
 
             && request.resource.data.closed
                 == resource.data.closed
@@ -466,7 +466,7 @@ service cloud.firestore {
           /* MEMBER LEAVES GROUP */
 
           (
-            resource.data.closed == false
+            resource.data.get("closed", false) == false
 
             && request.auth.uid
                 in resource.data.members
@@ -498,7 +498,7 @@ service cloud.firestore {
           /* ACCEPT GROUP INVITE */
 
           (
-            resource.data.closed == false
+            resource.data.get("closed", false) == false
 
             && !(request.auth.uid
                 in resource.data.members)
@@ -594,7 +594,7 @@ service cloud.firestore {
 
           && get(
             /databases/$(database)/documents/groups/$(groupId)
-          ).data.closed == false;
+          ).data.get("closed", false) == false;
 
 
         allow update: if false;
@@ -653,13 +653,14 @@ service cloud.firestore {
 
         && get(
           /databases/$(database)/documents/groups/$(request.resource.data.groupId)
-        ).data.closed == false
+        ).data.get("closed", false) == false
 
         && get(
           /databases/$(database)/documents/groups/$(request.resource.data.groupId)
         ).data.members.size() < 8;
 
 
+      /* المستقبل كيقبل ولا كيرفض */
       allow update: if request.auth != null
 
         && resource.data.toUid
@@ -679,6 +680,40 @@ service cloud.firestore {
 
         && request.resource.data.status
             in ["accepted", "rejected"];
+
+
+      /* المرسل كيعاود الدعوة
+
+         الـ ID ثابت (groupId_uid)، ف دعوة مرفوضة
+         كانت كتسدّ الباب للأبد: setDoc عليها كيولي
+         تحديث، والتحديث مسموح غير للمستقبل. */
+      allow update: if request.auth != null
+
+        && resource.data.fromUid
+            == request.auth.uid
+
+        && resource.data.status
+            != "pending"
+
+        && request.resource.data.fromUid
+            == request.auth.uid
+
+        && request.resource.data.toUid
+            == resource.data.toUid
+
+        && request.resource.data.groupId
+            == resource.data.groupId
+
+        && request.resource.data.status
+            == "pending"
+
+        && exists(
+          /databases/$(database)/documents/groups/$(resource.data.groupId)
+        )
+
+        && request.auth.uid in get(
+          /databases/$(database)/documents/groups/$(resource.data.groupId)
+        ).data.members;
 
       allow delete: if false;
     }
