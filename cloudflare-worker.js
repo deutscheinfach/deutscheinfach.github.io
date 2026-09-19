@@ -213,8 +213,9 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
           {
             error: "Gemini API request failed.",
             details:
-              geminiData?.error?.message ||
-              "Unknown Gemini API error.",
+              (geminiData?.error?.message ||
+                "Unknown Gemini API error.") +
+              " (Gemini HTTP " + geminiResponse.status + ")",
           },
           502,
           allowedOrigin

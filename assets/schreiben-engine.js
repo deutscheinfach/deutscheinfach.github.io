@@ -129,14 +129,39 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
                 }),
             });
 
-            if (!res.ok) throw new Error("HTTP " + res.status);
-            const data = await res.json();
+            // كنقراو الجواب ديما، حتى ملي كيكون خطأ،
+            // باش نوريو الرسالة الحقيقية اللي كيرجع الـ Worker.
+            const raw = await res.text();
+
+            let data = null;
+            try {
+                data = JSON.parse(raw);
+            } catch (parseError) {
+                data = null;
+            }
+
+            if (!res.ok) {
+                const serverMessage = data
+                    ? [data.error, data.details].filter(Boolean).join(" — ")
+                    : raw.slice(0, 300);
+
+                throw new Error(
+                    "HTTP " + res.status + (serverMessage ? " · " + serverMessage : "")
+                );
+            }
+
+            if (!data) throw new Error("الـ Worker رجّع جواب ماشي JSON: " + raw.slice(0, 300));
+
             renderResult(data);
         } catch (err) {
+            const message = String(err && err.message ? err.message : err);
+
             resultBody.innerHTML =
-                '<div class="error-banner">وقع مشكل فالتصحيح. تأكد أن الـ Worker خدام مزيان، وعاود المحاولة. (' +
-                (err.message || err) +
-                ")</div>";
+                '<div class="error-banner"><strong>وقع مشكل فالتصحيح.</strong><br>' +
+                escapeHtml(message) +
+                "<br><br>" +
+                escapeHtml(errorHint(message)) +
+                "</div>";
         } finally {
             correctBtn.disabled = false;
             correctBtn.innerHTML = "✅ تصحيح";
@@ -185,6 +210,29 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         document.getElementById("result-close-2").addEventListener("click", function () {
             overlay.classList.add("hidden");
         });
+    }
+
+    /* كتعطي شرح بالدارجة حسب نوع الخطأ */
+    function errorHint(message) {
+        const m = message.toLowerCase();
+
+        if (m.indexOf("failed to fetch") !== -1 || m.indexOf("networkerror") !== -1) {
+            return "💡 ما وصلناش للـ Worker: تأكد من CORRECTION_ENDPOINT، وأن الـ Worker مـ deployé، وأن ALLOWED_ORIGIN موافق للدومين ديال الموقع.";
+        }
+        if (m.indexOf("gemini_api_key") !== -1) {
+            return "💡 المفتاح ما مضاف والو: زيد Secret سميتو GEMINI_API_KEY فـ Cloudflare (Workers → Settings → Variables → Secrets) وعاود Deploy.";
+        }
+        if (m.indexOf("api key not valid") !== -1 || m.indexOf("api_key_invalid") !== -1 || m.indexOf("http 401") !== -1 || m.indexOf("http 403") !== -1) {
+            return "💡 المفتاح خايب ولا expiré: جيب واحد جديد من https://aistudio.google.com/apikey وبدّلو فـ Cloudflare.";
+        }
+        if (m.indexOf("quota") !== -1 || m.indexOf("resource_exhausted") !== -1 || m.indexOf("http 429") !== -1) {
+            return "💡 سالا الـ quota المجاني ديال اليوم. تسنا شوية ولا استعمل مفتاح آخر.";
+        }
+        if (m.indexOf("http 500") !== -1 || m.indexOf("http 502") !== -1) {
+            return "💡 مشكل من جيهة الـ Worker. شوف اللوغ: npx wrangler tail";
+        }
+
+        return "💡 عاود المحاولة، وإلا بقا المشكل شوف اللوغ ديال الـ Worker: npx wrangler tail";
     }
 
     function escapeHtml(str) {
