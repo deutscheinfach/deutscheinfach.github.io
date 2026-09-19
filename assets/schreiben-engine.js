@@ -9,6 +9,43 @@
    ========================================================== */
 const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
 
+/* العروض — نفس اللي فـ payment.html */
+const PREMIUM_OFFERS = [
+    {
+        name: "باقة 15 يوم",
+        sub: "بداية سريعة ومميزة.",
+        amount: "49 DH",
+        per: "/ 15 يوم",
+        tag: "",
+        whatsapp: "السلام عليكم، بغيت نشترك في باقة 15 يوم بثمن 49 DH.",
+    },
+    {
+        name: "باقة شهر واحد",
+        sub: "تحضير أقوى ووقت أكثر.",
+        amount: "99 DH",
+        per: "/ شهر",
+        tag: "الأكثر طلباً",
+        whatsapp: "السلام عليكم، بغيت نشترك في باقة شهر واحد بثمن 99 DH.",
+    },
+    {
+        name: "باقة شهرين",
+        sub: "أفضل اختيار للتحضير المكثف.",
+        amount: "150 DH",
+        per: "/ شهرين",
+        tag: "",
+        whatsapp: "السلام عليكم، بغيت نشترك في باقة شهرين بثمن 150 DH.",
+    },
+];
+
+const OFFER_FEATURES = [
+    "وصول كامل لمواضيع Lesen و Hören و Schreiben",
+    "تصحيح Schreiben بالذكاء الاصطناعي (لامحدود)",
+    "المساعد الذكي للقراءة (لامحدود)",
+    "المقاطع الصوتية ديال Hören",
+];
+
+const WHATSAPP_LINK = "https://wa.me/212653618205";
+
 (async function () {
     const meta = SCHREIBEN_B2_TOPICS[TOPIC_ID];
     if (!meta) {
@@ -363,42 +400,6 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         throw error;
     }
 
-    /* العروض — نفس اللي فـ payment.html */
-    const PREMIUM_OFFERS = [
-        {
-            name: "باقة 15 يوم",
-            sub: "بداية سريعة ومميزة.",
-            amount: "49 DH",
-            per: "/ 15 يوم",
-            tag: "",
-            whatsapp: "السلام عليكم، بغيت نشترك في باقة 15 يوم بثمن 49 DH.",
-        },
-        {
-            name: "باقة شهر واحد",
-            sub: "تحضير أقوى ووقت أكثر.",
-            amount: "99 DH",
-            per: "/ شهر",
-            tag: "الأكثر طلباً",
-            whatsapp: "السلام عليكم، بغيت نشترك في باقة شهر واحد بثمن 99 DH.",
-        },
-        {
-            name: "باقة شهرين",
-            sub: "أفضل اختيار للتحضير المكثف.",
-            amount: "150 DH",
-            per: "/ شهرين",
-            tag: "",
-            whatsapp: "السلام عليكم، بغيت نشترك في باقة شهرين بثمن 150 DH.",
-        },
-    ];
-
-    const OFFER_FEATURES = [
-        "وصول كامل لمواضيع Lesen و Hören و Schreiben",
-        "تصحيح Schreiben بالذكاء الاصطناعي (لامحدود)",
-        "المساعد الذكي للقراءة (لامحدود)",
-        "المقاطع الصوتية ديال Hören",
-    ];
-
-    const WHATSAPP_LINK = "https://wa.me/212653618205";
 
     function offerHtml(offer) {
         return (
