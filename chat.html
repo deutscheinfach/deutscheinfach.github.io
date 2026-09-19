@@ -1576,6 +1576,124 @@ button: disabled{
     .char-count { display: none; }
 }
 
+
+/* ===== ANRUF ===== */
+.call-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(4,5,7,.94);
+    backdrop-filter: blur(6px);
+}
+.call-overlay.show { display: flex; }
+
+.call-box {
+    position: relative;
+    width: min(100%, 980px);
+    height: min(100%, 640px);
+    background: var(--surface);
+    border: 1px solid var(--line-gold);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0,0,0,.6);
+}
+
+.call-remote {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #000;
+    display: none;
+}
+.call-box.video .call-remote { display: block; }
+
+.call-local {
+    position: absolute;
+    inset-block-start: 16px;
+    inset-inline-end: 16px;
+    width: clamp(110px, 20%, 190px);
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid var(--line-gold);
+    background: #000;
+    display: none;
+    z-index: 2;
+}
+.call-box.video .call-local { display: block; }
+
+.call-info {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    pointer-events: none;
+}
+.call-box.video .call-info {
+    inset: auto 0 96px 0;
+    background: linear-gradient(transparent, rgba(0,0,0,.55));
+    padding: 14px 0;
+}
+.call-box.video .call-avatar { display: none; }
+
+.call-avatar {
+    width: 104px; height: 104px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    color: #17130a;
+    font-size: 40px; font-weight: 900;
+    overflow: hidden;
+}
+.call-avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+.call-name { font-size: 21px; font-weight: 800; color: var(--text); }
+.call-status { font-size: 14px; color: var(--muted); }
+.call-status.ringing::after {
+    content: "";
+    animation: callDots 1.4s infinite steps(4);
+}
+@keyframes callDots { to { content: "...."; } }
+
+.call-actions {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    z-index: 3;
+}
+
+.call-btn {
+    width: 58px; height: 58px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--surface-2);
+    font-size: 22px;
+    cursor: pointer;
+    transition: .2s;
+}
+.call-btn:hover { transform: translateY(-3px); }
+.call-btn.off { background: rgba(255,107,107,.18); border-color: rgba(255,107,107,.5); }
+.call-btn.accept { background: #25d366; border-color: transparent; }
+.call-btn.hangup { background: #e5484d; border-color: transparent; }
+
+@media (max-width: 650px) {
+    .call-overlay { padding: 0; }
+    .call-box { width: 100%; height: 100%; border-radius: 0; border: none; }
+    .call-btn { width: 52px; height: 52px; font-size: 20px; }
+}
+
 </style>
 
 </head>
@@ -1724,6 +1842,24 @@ Deutsch Einfach Community
 </div>
 
 </div>
+
+<button
+id="callAudioBtn"
+class="header-btn"
+style="display:none"
+title="Anruf"
+onclick="startCall('audio')">
+<svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+</button>
+
+<button
+id="callVideoBtn"
+class="header-btn"
+style="display:none"
+title="Videoanruf"
+onclick="startCall('video')">
+<svg class="icon" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+</button>
 
 <button
 id="headerAction"
@@ -2572,6 +2708,10 @@ startRequestsListener();
 
 startConversationsListener();
 
+/* كنبداو نسناو المكالمات الداخلة غير من بعد
+   ما يتأكد الدخول — القواعد كتحتاج uid. */
+listenIncomingCalls();
+
 openCommunity();
 
 }
@@ -2754,6 +2894,8 @@ ha.innerHTML=
 document
 .getElementById("headerAction")
 .style.display="none";
+
+document.getElementById("callAudioBtn")&&setCallButtons(false);
 
 document
 .getElementById("messageInput")
@@ -3053,6 +3195,22 @@ watchChatImages(container);
 /* =====================================================
    SEND MESSAGE
    ===================================================== */
+
+
+/* أزرار المكالمة كتبان غير فالشات الخاص —
+   المكالمات الجماعية كتحتاج بنية مختلفة تماماً. */
+function setCallButtons(visible){
+
+["callAudioBtn","callVideoBtn"].forEach(id=>{
+
+const el=document.getElementById(id);
+
+if(el)
+el.style.display=visible?"flex":"none";
+
+});
+
+}
 
 window.sendMessage=async(extra)=>{
 
@@ -3959,6 +4117,8 @@ document
 .getElementById("headerAction")
 .style.display="none";
 
+document.getElementById("callAudioBtn")&&setCallButtons(true);
+
 document
 .getElementById("messageInput")
 .disabled=false;
@@ -4456,6 +4616,8 @@ GROUP_ICON_SVG;
 document
 .getElementById("headerAction")
 .style.display="block";
+
+document.getElementById("callAudioBtn")&&setCallButtons(false);
 
 document
 .getElementById("messageInput")
@@ -7034,6 +7196,8 @@ document
 .getElementById("headerAction")
 .style.display="none";
 
+document.getElementById("callAudioBtn")&&setCallButtons(false);
+
 document
 .getElementById("messageInput")
 .disabled=true;
@@ -7602,6 +7766,618 @@ imageViewer.classList.remove("show");
 });
 
 }
+
+
+
+/* =====================================================
+   ANRUFE (WebRTC)
+
+   الإشارات كتدوز عبر Firestore: كل مكالمة هي وثيقة فيها
+   offer/answer، وجوج subcollections للـ ICE candidates.
+
+   ⚠️ كنستعملو غير STUN (مجاني). بلا TURN، الاتصال ما
+   كيتمش ملي يكونو جوج الأطراف وراء NAT صارم — حوالي
+   20-25% ديال الحالات. ولهذا كنراقبو حالة الاتصال
+   وكنقولو للمستخدم بوضوح بدل ما نخليوه مسنّي.
+   ===================================================== */
+
+const ICE_CONFIG={
+iceServers:[
+{urls:[
+"stun:stun.l.google.com:19302",
+"stun:stun1.l.google.com:19302",
+"stun:stun.cloudflare.com:3478"
+]}
+]
+};
+
+/* شحال نسناو قبل ما نقولو "ما وصلش" */
+const CONNECT_TIMEOUT_MS=30000;
+
+let peerConnection=null;
+let localStream=null;
+let currentCallId=null;
+let currentCallRole=null;      /* "caller" | "callee" */
+let currentCallType="audio";
+let unsubscribeCall=null;
+let unsubscribeRemoteIce=null;
+let connectTimer=null;
+let ringTimer=null;
+
+const callOverlay=document.getElementById("callOverlay");
+const callBox=callOverlay?.querySelector(".call-box");
+const remoteVideo=document.getElementById("remoteVideo");
+const localVideo=document.getElementById("localVideo");
+const callNameEl=document.getElementById("callName");
+const callStatusEl=document.getElementById("callStatus");
+const callAvatarEl=document.getElementById("callAvatar");
+const callAcceptBtn=document.getElementById("callAcceptBtn");
+const callHangupBtn=document.getElementById("callHangupBtn");
+const callMuteBtn=document.getElementById("callMuteBtn");
+const callCamBtn=document.getElementById("callCamBtn");
+
+
+function setCallStatus(text,ringing){
+
+if(!callStatusEl)
+return;
+
+callStatusEl.textContent=text;
+callStatusEl.classList.toggle("ringing",!!ringing);
+
+}
+
+function showCallUI(type,name,avatarHtml,incoming){
+
+if(!callOverlay)
+return;
+
+currentCallType=type;
+
+callBox.classList.toggle("video",type==="video");
+callOverlay.classList.add("show");
+
+callNameEl.textContent=name||"—";
+callAvatarEl.innerHTML=avatarHtml||"";
+
+callAcceptBtn.style.display=incoming?"flex":"none";
+callCamBtn.style.display=type==="video"?"flex":"none";
+
+callMuteBtn.classList.remove("off");
+callCamBtn.classList.remove("off");
+
+}
+
+function hideCallUI(){
+
+if(callOverlay)
+callOverlay.classList.remove("show");
+
+}
+
+
+/* -----------------------------------------------------
+   تنظيف — ضروري: بلاها الكاميرا والميكرو كيبقاو خدامين
+   ----------------------------------------------------- */
+
+function cleanupCall(){
+
+clearTimeout(connectTimer);
+clearTimeout(ringTimer);
+connectTimer=null;
+ringTimer=null;
+
+if(unsubscribeCall){
+unsubscribeCall();
+unsubscribeCall=null;
+}
+
+if(unsubscribeRemoteIce){
+unsubscribeRemoteIce();
+unsubscribeRemoteIce=null;
+}
+
+if(peerConnection){
+peerConnection.onicecandidate=null;
+peerConnection.ontrack=null;
+peerConnection.onconnectionstatechange=null;
+peerConnection.close();
+peerConnection=null;
+}
+
+if(localStream){
+localStream.getTracks().forEach(t=>t.stop());
+localStream=null;
+}
+
+if(remoteVideo)
+remoteVideo.srcObject=null;
+
+if(localVideo)
+localVideo.srcObject=null;
+
+currentCallId=null;
+currentCallRole=null;
+
+hideCallUI();
+
+}
+
+
+async function endCall(reason){
+
+const id=currentCallId;
+const role=currentCallRole;
+
+cleanupCall();
+
+if(!id)
+return;
+
+try{
+
+await updateDoc(
+doc(db,"calls",id),
+{
+status:"ended",
+endedBy:role||"",
+endReason:reason||""
+});
+
+}catch(error){
+/* الطرف الآخر يمكن سبقنا — ماشي مشكل */
+console.debug("END CALL:",error?.code||error);
+}
+
+}
+
+
+/* -----------------------------------------------------
+   إنشاء الاتصال
+   ----------------------------------------------------- */
+
+async function buildPeerConnection(callId,role){
+
+peerConnection=new RTCPeerConnection(ICE_CONFIG);
+
+localStream.getTracks().forEach(
+track=>peerConnection.addTrack(track,localStream));
+
+const remoteStream=new MediaStream();
+
+if(remoteVideo)
+remoteVideo.srcObject=remoteStream;
+
+peerConnection.ontrack=event=>{
+
+event.streams[0].getTracks().forEach(
+track=>remoteStream.addTrack(track));
+
+};
+
+const myCandidates=
+collection(
+db,
+"calls",
+callId,
+role==="caller"?"callerCandidates":"calleeCandidates");
+
+peerConnection.onicecandidate=event=>{
+
+if(!event.candidate)
+return;
+
+addDoc(myCandidates,event.candidate.toJSON())
+.catch(error=>console.debug("ICE:",error?.code));
+
+};
+
+peerConnection.onconnectionstatechange=()=>{
+
+const state=peerConnection?.connectionState;
+
+if(state==="connected"){
+
+clearTimeout(connectTimer);
+setCallStatus("Verbunden",false);
+
+}
+
+if(state==="failed"){
+
+/* هادي هي الحالة ديال NAT صارم بلا TURN */
+setCallStatus("Verbindung fehlgeschlagen",false);
+showToast("الاتصال ما نجحش — الشبكة كتمنع. جرب WiFi آخر.");
+endCall("ice-failed");
+
+}
+
+if(state==="disconnected")
+setCallStatus("Verbindung unterbrochen…",false);
+
+};
+
+/* ICE ديال الطرف الآخر */
+unsubscribeRemoteIce=
+onSnapshot(
+collection(
+db,
+"calls",
+callId,
+role==="caller"?"calleeCandidates":"callerCandidates"),
+snapshot=>{
+
+snapshot.docChanges().forEach(change=>{
+
+if(change.type!=="added")
+return;
+
+peerConnection
+?.addIceCandidate(new RTCIceCandidate(change.doc.data()))
+.catch(error=>console.debug("ADD ICE:",error));
+
+});
+
+});
+
+}
+
+
+async function getLocalMedia(type){
+
+try{
+
+return await navigator.mediaDevices.getUserMedia({
+audio:true,
+video:type==="video"?{width:{ideal:1280}}:false
+});
+
+}catch(error){
+
+console.error("MEDIA ERROR:",error);
+
+if(error.name==="NotAllowedError")
+showToast("خاصك تسمح بالميكرو/الكاميرا");
+else if(error.name==="NotFoundError")
+showToast("ما لقيناش ميكرو ولا كاميرا");
+else
+showToast("ما قدرناش نحلو الميكرو");
+
+return null;
+
+}
+
+}
+
+
+/* -----------------------------------------------------
+   المتصل
+   ----------------------------------------------------- */
+
+window.startCall=async function(type){
+
+if(!currentUser){
+showToast("سجّل الدخول أولاً");
+return;
+}
+
+if(currentMode!=="private"||!currentPrivateUserId){
+showToast("المكالمات غير متاحة إلا فالشات الخاص");
+return;
+}
+
+if(currentCallId){
+showToast("كاينة مكالمة خدامة");
+return;
+}
+
+if(!window.RTCPeerConnection){
+showToast("هاد المتصفح ما كيدعمش المكالمات");
+return;
+}
+
+const stream=await getLocalMedia(type);
+
+if(!stream)
+return;
+
+localStream=stream;
+
+if(localVideo)
+localVideo.srcObject=stream;
+
+const name=
+document.getElementById("headerName")?.textContent||"";
+
+showCallUI(
+type,
+name,
+document.getElementById("headerAvatar")?.innerHTML||"",
+false);
+
+setCallStatus("Klingelt",true);
+
+try{
+
+const callDoc=
+await addDoc(collection(db,"calls"),{
+callerId:currentUser.uid,
+calleeId:currentPrivateUserId,
+callerName:getUserName(currentUserData),
+type:type,
+status:"ringing",
+createdAt:serverTimestamp()
+});
+
+currentCallId=callDoc.id;
+currentCallRole="caller";
+
+await buildPeerConnection(currentCallId,"caller");
+
+const offer=await peerConnection.createOffer();
+await peerConnection.setLocalDescription(offer);
+
+await updateDoc(
+doc(db,"calls",currentCallId),
+{
+offer:{type:offer.type,sdp:offer.sdp}
+});
+
+/* ما نسناوش للأبد إلا ما جاوبش */
+ringTimer=setTimeout(()=>{
+if(peerConnection?.connectionState!=="connected"){
+showToast("ما جاوبش");
+endCall("no-answer");
+}
+},45000);
+
+connectTimer=setTimeout(()=>{
+if(peerConnection?.connectionState!=="connected"){
+showToast("الاتصال طوّل بزاف — الشبكة كتمنع");
+endCall("timeout");
+}
+},CONNECT_TIMEOUT_MS+20000);
+
+/* كنسناو الجواب */
+unsubscribeCall=
+onSnapshot(
+doc(db,"calls",currentCallId),
+async snapshot=>{
+
+const data=snapshot.data();
+
+if(!data)
+return;
+
+if(data.status==="declined"){
+showToast("رفض المكالمة");
+cleanupCall();
+return;
+}
+
+if(data.status==="ended"){
+cleanupCall();
+return;
+}
+
+if(
+data.answer
+&&
+peerConnection
+&&
+!peerConnection.currentRemoteDescription
+){
+
+clearTimeout(ringTimer);
+setCallStatus("Verbinden…",false);
+
+await peerConnection.setRemoteDescription(
+new RTCSessionDescription(data.answer));
+
+}
+
+});
+
+}catch(error){
+
+console.error("START CALL ERROR:",error);
+showToast("ما قدرناش نبداو المكالمة: "+(error.code||error.message||""));
+cleanupCall();
+
+}
+
+};
+
+
+/* -----------------------------------------------------
+   المتلقي
+   ----------------------------------------------------- */
+
+let incomingCallData=null;
+
+async function acceptIncomingCall(){
+
+if(!incomingCallData)
+return;
+
+const {id,data}=incomingCallData;
+
+const stream=await getLocalMedia(data.type);
+
+if(!stream){
+await declineIncomingCall();
+return;
+}
+
+localStream=stream;
+
+if(localVideo)
+localVideo.srcObject=stream;
+
+currentCallId=id;
+currentCallRole="callee";
+
+callAcceptBtn.style.display="none";
+setCallStatus("Verbinden…",false);
+
+try{
+
+await buildPeerConnection(id,"callee");
+
+await peerConnection.setRemoteDescription(
+new RTCSessionDescription(data.offer));
+
+const answer=await peerConnection.createAnswer();
+await peerConnection.setLocalDescription(answer);
+
+await updateDoc(
+doc(db,"calls",id),
+{
+status:"accepted",
+answer:{type:answer.type,sdp:answer.sdp}
+});
+
+connectTimer=setTimeout(()=>{
+if(peerConnection?.connectionState!=="connected"){
+showToast("الاتصال ما نجحش — الشبكة كتمنع");
+endCall("timeout");
+}
+},CONNECT_TIMEOUT_MS);
+
+unsubscribeCall=
+onSnapshot(
+doc(db,"calls",id),
+snapshot=>{
+
+if(snapshot.data()?.status==="ended")
+cleanupCall();
+
+});
+
+}catch(error){
+
+console.error("ACCEPT CALL ERROR:",error);
+showToast("ما قدرناش نجاوبو");
+endCall("accept-failed");
+
+}
+
+incomingCallData=null;
+
+}
+
+async function declineIncomingCall(){
+
+const id=incomingCallData?.id;
+
+incomingCallData=null;
+cleanupCall();
+
+if(!id)
+return;
+
+try{
+await updateDoc(doc(db,"calls",id),{status:"declined"});
+}catch(error){
+console.debug("DECLINE:",error?.code);
+}
+
+}
+
+
+/* كنسناو المكالمات الداخلة */
+function listenIncomingCalls(){
+
+if(!currentUser)
+return;
+
+onSnapshot(
+query(
+collection(db,"calls"),
+where("calleeId","==",currentUser.uid),
+where("status","==","ringing")),
+snapshot=>{
+
+snapshot.docChanges().forEach(change=>{
+
+if(change.type!=="added")
+return;
+
+const data=change.doc.data();
+
+/* مكالمة قديمة بقات فالقاعدة — ما نرنّوش عليها */
+const age=
+Date.now()-(data.createdAt?.toDate?.()?.getTime()||Date.now());
+
+if(age>60000)
+return;
+
+if(currentCallId||incomingCallData)
+return;
+
+incomingCallData={id:change.doc.id,data:data};
+
+showCallUI(
+data.type,
+data.callerName||"Anruf",
+"",
+true);
+
+setCallStatus(
+data.type==="video"?"Videoanruf…":"Anruf…",
+true);
+
+});
+
+});
+
+}
+
+
+/* -----------------------------------------------------
+   الأزرار
+   ----------------------------------------------------- */
+
+callAcceptBtn?.addEventListener("click",acceptIncomingCall);
+
+callHangupBtn?.addEventListener("click",()=>{
+
+if(incomingCallData)
+declineIncomingCall();
+else
+endCall("hangup");
+
+});
+
+callMuteBtn?.addEventListener("click",()=>{
+
+const track=localStream?.getAudioTracks()[0];
+
+if(!track)
+return;
+
+track.enabled=!track.enabled;
+callMuteBtn.classList.toggle("off",!track.enabled);
+
+});
+
+callCamBtn?.addEventListener("click",()=>{
+
+const track=localStream?.getVideoTracks()[0];
+
+if(!track)
+return;
+
+track.enabled=!track.enabled;
+callCamBtn.classList.toggle("off",!track.enabled);
+
+});
+
+/* الكاميرا ما تبقاش خدامة إلا سدّ الصفحة */
+window.addEventListener("beforeunload",()=>{
+if(currentCallId)
+endCall("unload");
+});
 
 
 /* =====================================================

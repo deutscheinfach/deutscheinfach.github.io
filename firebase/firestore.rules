@@ -39,6 +39,65 @@ service cloud.firestore {
 
 
     /* =====================================================
+       CALLS (WebRTC signaling)
+
+       كل مكالمة هي وثيقة فيها offer/answer، وجوج
+       subcollections للـ ICE candidates.
+
+       غير المتصل والمتلقي كيقراو ويكتبو. الوثيقة ما
+       فيهاش محتوى حساس — الصوت والصورة كيمشيو
+       مباشرة بين الجهازين، ماشي عبر Firestore.
+       ===================================================== */
+
+    match /calls/{callId} {
+
+      allow read: if request.auth != null
+        && (
+          resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        );
+
+      allow create: if request.auth != null
+        && request.resource.data.callerId == request.auth.uid
+        && request.resource.data.calleeId is string
+        && request.resource.data.calleeId != request.auth.uid
+        && request.resource.data.status == "ringing"
+        && request.resource.data.type in ["audio", "video"];
+
+      /* الطرفين كيقدرو يبدلو الحالة، ولكن ما يقدروش
+         يبدلو شكون فالمكالمة. */
+      allow update: if request.auth != null
+        && (
+          resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        )
+        && request.resource.data.callerId == resource.data.callerId
+        && request.resource.data.calleeId == resource.data.calleeId;
+
+      allow delete: if request.auth != null
+        && (
+          resource.data.callerId == request.auth.uid
+          || resource.data.calleeId == request.auth.uid
+        );
+
+
+      match /{candidateType}/{candidateId} {
+
+        allow read, create: if request.auth != null
+          && candidateType in ["callerCandidates", "calleeCandidates"]
+          && (
+            get(/databases/$(database)/documents/calls/$(callId)).data.callerId
+              == request.auth.uid
+            || get(/databases/$(database)/documents/calls/$(callId)).data.calleeId
+              == request.auth.uid
+          );
+
+        allow update, delete: if false;
+      }
+    }
+
+
+    /* =====================================================
        COMMUNITY CHAT
        ===================================================== */
 
