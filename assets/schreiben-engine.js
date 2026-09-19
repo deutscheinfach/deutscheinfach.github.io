@@ -168,8 +168,21 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         }
     });
 
-    document.getElementById("result-close").addEventListener("click", function () {
-        overlay.classList.add("hidden");
+    // زر الإغلاق اختياري: شي صفحات ماعندهاش، وخاصنا ما نطيحوش السكريبت كامل.
+    const resultClose = document.getElementById("result-close");
+    if (resultClose) {
+        resultClose.addEventListener("click", function () {
+            overlay.classList.add("hidden");
+        });
+    }
+
+    // الإغلاق بالضغط برّا الكارد ولا بـ Escape
+    overlay.addEventListener("click", function (event) {
+        if (event.target === overlay) overlay.classList.add("hidden");
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") overlay.classList.add("hidden");
     });
 
     function renderResult(data) {
