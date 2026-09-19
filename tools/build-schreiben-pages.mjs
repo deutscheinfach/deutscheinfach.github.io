@@ -5,6 +5,7 @@
 */
 
 import { readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 
 const TEMPLATE_FILE = "b2-schreiben-01.html";
 const TOPICS_FILE = "assets/schreiben-topics-b2.js";
@@ -17,6 +18,33 @@ const topics = new Function(
 
 const template = readFileSync(TEMPLATE_FILE, "utf8");
 
+/* المتصفح كيحتافظ بالـ JS والـ CSS. بلا بصمة فالرابط، الطالب
+   كيبقى يشوف النسخة القديمة حتى يخلص الكاش — ولهذا كنزيدو ?v=hash:
+   كيتبدل غير ملي يتبدل الملف. */
+function fingerprint(file) {
+  return createHash("sha256")
+    .update(readFileSync(file))
+    .digest("hex")
+    .slice(0, 8);
+}
+
+const ASSETS = [
+  "assets/schreiben-style.css",
+  "assets/schreiben-auth.js",
+  "assets/schreiben-topics-b2.js",
+  "assets/schreiben-engine.js",
+];
+
+function withFingerprints(html) {
+  for (const asset of ASSETS) {
+    html = html.replace(
+      new RegExp(asset.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + '(\\?v=[a-f0-9]+)?"', "g"),
+      asset + "?v=" + fingerprint(asset) + '"'
+    );
+  }
+  return html;
+}
+
 const TOPIC_ID_RE = /const TOPIC_ID = "(\d+)";/;
 
 if (!TOPIC_ID_RE.test(template)) {
@@ -28,7 +56,9 @@ let written = 0;
 
 for (const id of ids) {
   const file = `b2-schreiben-${id}.html`;
-  const html = template.replace(TOPIC_ID_RE, `const TOPIC_ID = "${id}";`);
+  const html = withFingerprints(
+    template.replace(TOPIC_ID_RE, `const TOPIC_ID = "${id}";`)
+  );
 
   // ما نعاودوش نكتبو ملف ما تبدل فيه والو.
   let current = null;
