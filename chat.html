@@ -3329,32 +3329,9 @@ return;
    flicker or disappear from the sidebar).
 */
 
-await addDoc(
-collection(
-db,
-"privateChats",
-currentPrivateChatId,
-"messages"
-),
-data
-);
-
-/*
-   STEP 2
-   Create/update the parent conversation doc.
-
-   startConversationsListener() keeps a live
-   onSnapshot on "privateChats" (participants
-   array-contains me), so as soon as this write
-   lands it will refresh the sidebar by itself.
-   That's the SINGLE source of truth for the
-   sidebar now - we no longer also do a manual
-   getDocs() pull here, which used to overwrite
-   the listener's fresher data with a stale
-   snapshot and made the chat vanish from
-   "Chats" after leaving it.
-*/
-
+/* الوثيقة الأم قبل الرسالة: قاعدة الإنشاء كتفرض
+   exists(privateChats/chatId)، ف أول رسالة فشات
+   جديد كانت كتترفض ديما. */
 await setDoc(
 doc(
 db,
@@ -3381,6 +3358,32 @@ currentUser.uid
 {
 merge:true
 }
+);
+
+/*
+   STEP 2
+   Create/update the parent conversation doc.
+
+   startConversationsListener() keeps a live
+   onSnapshot on "privateChats" (participants
+   array-contains me), so as soon as this write
+   lands it will refresh the sidebar by itself.
+   That's the SINGLE source of truth for the
+   sidebar now - we no longer also do a manual
+   getDocs() pull here, which used to overwrite
+   the listener's fresher data with a stale
+   snapshot and made the chat vanish from
+   "Chats" after leaving it.
+*/
+
+await addDoc(
+collection(
+db,
+"privateChats",
+currentPrivateChatId,
+"messages"
+),
+data
 );
 
 }
@@ -7864,6 +7867,12 @@ let unsubscribeRemoteIce=null;
 let connectTimer=null;
 let ringTimer=null;
 
+/* الـ candidates كيوصلو من Firestore بسرعة، بزاف ديال
+   المرات قبل ما يتسجل الـ remote description. addIceCandidate
+   ساعتها كيطيح والمكالمة ما كتوصلش. كنحتافظو بيهم وكنزيدوهم
+   من بعد. */
+let pendingCandidates=[];
+
 const callOverlay=document.getElementById("callOverlay");
 const callBox=callOverlay?.querySelector(".call-box");
 const remoteVideo=document.getElementById("remoteVideo");
@@ -7958,6 +7967,7 @@ localVideo.srcObject=null;
 
 currentCallId=null;
 currentCallRole=null;
+pendingCandidates=[];
 
 hideCallUI();
 
@@ -7995,6 +8005,43 @@ console.debug("END CALL:",error?.code||error);
 /* -----------------------------------------------------
    إنشاء الاتصال
    ----------------------------------------------------- */
+
+function addRemoteCandidate(candidate){
+
+if(!peerConnection)
+return;
+
+/* ما زال ما عندناش remote description: كنخبيوه */
+if(!peerConnection.remoteDescription){
+pendingCandidates.push(candidate);
+return;
+}
+
+peerConnection
+.addIceCandidate(new RTCIceCandidate(candidate))
+.catch(error=>console.debug("ADD ICE:",error));
+
+}
+
+async function flushPendingCandidates(){
+
+if(!peerConnection)
+return;
+
+const queued=pendingCandidates;
+pendingCandidates=[];
+
+for(const candidate of queued){
+
+try{
+await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+}catch(error){
+console.debug("FLUSH ICE:",error);
+}
+
+}
+
+}
 
 async function buildPeerConnection(callId,role){
 
@@ -8072,9 +8119,7 @@ snapshot.docChanges().forEach(change=>{
 if(change.type!=="added")
 return;
 
-peerConnection
-?.addIceCandidate(new RTCIceCandidate(change.doc.data()))
-.catch(error=>console.debug("ADD ICE:",error));
+addRemoteCandidate(change.doc.data());
 
 });
 
@@ -8234,6 +8279,8 @@ setCallStatus("Verbinden…",false);
 await peerConnection.setRemoteDescription(
 new RTCSessionDescription(data.answer));
 
+await flushPendingCandidates();
+
 }
 
 });
@@ -8277,6 +8324,12 @@ localVideo.srcObject=stream;
 currentCallId=id;
 currentCallRole="callee";
 
+/* كان كاين listener ديال الرنين — كنبدلوه */
+if(unsubscribeCall){
+unsubscribeCall();
+unsubscribeCall=null;
+}
+
 callAcceptBtn.style.display="none";
 setCallStatus("Verbinden…",false);
 
@@ -8286,6 +8339,8 @@ await buildPeerConnection(id,"callee");
 
 await peerConnection.setRemoteDescription(
 new RTCSessionDescription(data.offer));
+
+await flushPendingCandidates();
 
 const answer=await peerConnection.createAnswer();
 await peerConnection.setLocalDescription(answer);
@@ -8386,6 +8441,31 @@ true);
 setCallStatus(
 data.type==="video"?"Videoanruf…":"Anruf…",
 true);
+
+/* إلا سدّ المتصل قبل ما نجاوبو، خاص الرنين يوقف —
+   بلا هادشي كيبقى يرن للأبد. */
+unsubscribeCall=
+onSnapshot(
+doc(db,"calls",change.doc.id),
+snap=>{
+
+const status=snap.data()?.status;
+
+if(
+incomingCallData
+&&
+incomingCallData.id===change.doc.id
+&&
+(status==="ended"||status==="declined")
+){
+
+incomingCallData=null;
+showToast("المكالمة توقفات");
+cleanupCall();
+
+}
+
+});
 
 });
 

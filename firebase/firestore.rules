@@ -332,15 +332,23 @@ service cloud.firestore {
 
       match /messages/{messageId} {
 
+        /* شات خاوي = الوثيقة الأم ماكايناش بعد.
+           بلا هاد الشرط، فتح شات جديد كيعطي خطأ
+           بدل ما يبان خاوي.
+
+           ما كاين حتى تسريب: رسالة ما يمكن تكون بلا
+           وثيقة أم (قاعدة الإنشاء تحت كتفرضها)، ف
+           "ماكايناش" معناها "ما كاينة حتى رسالة". */
         allow read: if request.auth != null
 
-          && exists(
-            /databases/$(database)/documents/privateChats/$(chatId)
-          )
-
-          && request.auth.uid in get(
-            /databases/$(database)/documents/privateChats/$(chatId)
-          ).data.participants;
+          && (
+            !exists(
+              /databases/$(database)/documents/privateChats/$(chatId)
+            )
+            || request.auth.uid in get(
+              /databases/$(database)/documents/privateChats/$(chatId)
+            ).data.participants
+          );
 
 
         allow create: if request.auth != null
