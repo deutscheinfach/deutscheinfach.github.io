@@ -316,6 +316,10 @@ service cloud.firestore {
         && request.resource.data.closed == false;
 
 
+      /* memberCount كيتفرض غير فالفروع اللي كتبدل
+         الأعضاء. كان مفروض على كل تعديل، ف مجموعة
+         قديمة بلا هاد الحقل (ولا برقم غير متطابق)
+         كانت كترفض حتى تبديل الصورة. */
       allow update: if request.auth != null
 
         && request.resource.data.members is list
@@ -323,9 +327,6 @@ service cloud.firestore {
         && request.resource.data.members.size() >= 1
 
         && request.resource.data.members.size() <= 8
-
-        && request.resource.data.memberCount
-            == request.resource.data.members.size()
 
         && (
 
@@ -378,6 +379,8 @@ service cloud.firestore {
 
             && request.resource.data.get("photoURL", "")
                 == resource.data.get("photoURL", "")
+            && request.resource.data.memberCount
+                == request.resource.data.members.size()
           )
 
 
@@ -408,6 +411,8 @@ service cloud.firestore {
 
             && request.resource.data.get("photoURL", "")
                 == resource.data.get("photoURL", "")
+            && request.resource.data.memberCount
+                == request.resource.data.members.size()
           )
 
 
@@ -440,6 +445,8 @@ service cloud.firestore {
 
             && request.resource.data.get("photoURL", "")
                 == resource.data.get("photoURL", "")
+            && request.resource.data.memberCount
+                == request.resource.data.members.size()
           )
 
 
