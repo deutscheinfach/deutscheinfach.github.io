@@ -22,13 +22,13 @@ const SCHREIBEN_B2_TOPICS = {
     "level": "B2",
     "time": "30 min",
     "locked": false,
-    "ad": "INFORMATIK-SHOP – Ihr Fachgeschäft für Computer & Zubehör!\n\n• Große Auswahl an Laptops, PCs und Druckern\n• Kostenloser Versand ab 50 €\n• Schneller Lieferservice – in 2-3 Werktagen bei Ihnen\n• 2 Jahre Garantie auf alle Geräte\n\nInformatik-Shop GmbH\nHauptstraße 22, 50667 Köln\nwww.informatik-shop.de",
-    "situation": "Sie haben vor zwei Wochen einen Laptop im Informatik-Shop bestellt. Das Gerät kam beschädigt an und funktioniert nicht richtig. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
+    "ad": "Online-Shop für Informatik\nIhr Experte für Computer & Technik!\nEntdecken Sie die neuesten Computer & Technik – alles bequem in unserem Online-Shop!\n\n• Große Auswahl an PCs, Laptops, Tablets und Zubehör\n• Top Marken zu günstigen Preisen\n• Individuelle Beratung & Technik-Service\n• Schneller Versand deutschlandweit\n• Sicheres, einfaches & komfortables Online-Shopping\n\nBesuchen Sie unseren Online-Shop und finden Sie den perfekten PC oder Laptop für Ihre Bedürfnisse. Unser freundlicher Kundenservice steht Ihnen jederzeit zur Verfügung. Ob für Zuhause, Büro oder Gaming – wir haben die passende Lösung für Sie!\n\nGARANTIERT ZUFRIEDENHEIT!\n\nInformatik-Shop Müller\nTechnikstraße 123, 12345 Technikhaven\nwww.informatik-mueller.de\n+49 1234 567890",
+    "situation": "Sie haben bei der Firma Informatik-Shop Müller einen neuen PC bestellt. Trotz Garantie konnten die Probleme Ihres Computers nicht behoben werden und Sie sind mit dem Gerät unzufrieden. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
     "points": [
-      "In welchem Zustand ist der Laptop bei Ihnen angekommen?",
-      "Welche konkreten technischen Probleme haben Sie festgestellt?",
-      "Wie hat sich das auf Ihre Arbeit/Ihren Alltag ausgewirkt?",
-      "Was erwarten Sie vom Informatik-Shop (Umtausch, Reparatur, Rückerstattung) und bis wann?"
+      "Erklären Sie, warum Sie mit Ihrem PC unzufrieden sind.",
+      "Beschreiben Sie, welche Probleme es trotz Garantie mit Ihrem PC gab.",
+      "Erläutern Sie, wie die Firma erfolglos versucht hat, Ihren PC zu reparieren.",
+      "Schreiben Sie, was Sie jetzt von der Firma erwarten."
     ]
   },
   "03": {
