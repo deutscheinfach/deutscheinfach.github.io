@@ -1,7 +1,7 @@
 /* كيبدل ad / situation / points ديال موضوع فـ assets/schreiben-topics-b2.js.
 
    الاستعمال:  node tools/set-topic.mjs < topic.json
-   و topic.json فيه: { "id": "03", "ad": "...", "situation": "...", "points": ["...", ...] }
+   و topic.json فيه: { "id": "03", "ad": "...", "situation": "...", "points": [...], "words": "150–180" }
 
    كيتحقق أن الموضوع كاين وأن النقط 4، حيت TELC كيعطي ديما 4.
 */
@@ -19,7 +19,7 @@ if (!match) throw new Error(`ما قدرتش نقرا بنية ${FILE}`);
 const [, header, body, tail] = match;
 const topics = JSON.parse(body);
 
-const { id, ad, situation, points } = input;
+const { id, ad, situation, points, words } = input;
 
 if (!topics[id]) throw new Error(`الموضوع ${id} ماكاينش`);
 if (!Array.isArray(points) || points.length !== 4) {
@@ -27,6 +27,7 @@ if (!Array.isArray(points) || points.length !== 4) {
 }
 
 if (ad) topics[id].ad = ad;
+if (words) topics[id].words = words;
 if (situation) topics[id].situation = situation;
 topics[id].points = points;
 

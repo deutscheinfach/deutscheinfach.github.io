@@ -221,6 +221,7 @@ export default {
         situation,
         ad,
         points,
+        words,
         studentText,
       } = body;
 
@@ -309,6 +310,7 @@ ${safeAd}
 
 Aufgabenpunkte:
 ${JSON.stringify(safePoints)}
+${words ? `Erwarteter Umfang: ${String(words).slice(0, 40)} Wörter` : ""}
 
 Text des Studenten:
 ${safeStudentText}

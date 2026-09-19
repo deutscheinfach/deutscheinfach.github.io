@@ -547,14 +547,15 @@ const SCHREIBEN_B2_TOPICS = {
     "level": "B2",
     "time": "30 min",
     "locked": false,
-    "ad": "MEMOBOOK – Ihre Erinnerungen, gedruckt in Premiumqualität!\n\n• Individuell gestaltbare Fotobücher\n• Hochwertiger Fotodruck\n• Lieferung innerhalb von 5 Werktagen\n• Geld-zurück-Garantie bei Qualitätsmängeln\n\nMemoBook GmbH\nDruckerstraße 14, 70173 Stuttgart\nwww.memobook.de",
-    "situation": "Sie haben ein Fotobuch von Ihrer Hochzeit bei MemoBook bestellt. Als das Buch ankam, waren die Farben verfälscht und einige Seiten fehlten. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
+    "ad": "Fotobuch\nHalten Sie Ihre schönsten Erinnerungen fest! Wir machen aus Ihren Fotos ein Meisterwerk!\n\n• Brillante Farben und gestochen scharfe Bilder\n• Hochwertiges Papier und edle Einbände\n• Kinderleichte Gestaltung mit unserer Software\n• Blitzschnelle Lieferung innerhalb von 48 Stunden\n• 100% Zufriedenheitsgarantie und 24/7 Kundenservice\n\nGestalten Sie noch heute Ihr persönliches Fotobuch! Wir garantieren Ihnen ein perfektes Ergebnis für Ihre Urlaubs-, Hochzeits- oder Familienfotos. Laden Sie einfach Ihre Bilder hoch und wir kümmern uns um den Rest. Bei Fragen und Problemen können Sie sich rund um die Uhr an unseren Service wenden. Unsere kompetenten Mitarbeiter helfen Ihnen gern.",
+    "situation": "Sie haben bei der Firma Premium-Fotobuch24 ein Fotobuch mit Ihren Urlaubsfotos bestellt. Leider waren Sie mit dem Produkt und dem Service der Firma sehr unzufrieden. Die Druckqualität war schlecht, die Lieferung kam viel zu spät, und Sie konnten keinen Service-Mitarbeiter erreichen. Schreiben Sie eine E-Mail, in der Sie sich über die Unannehmlichkeiten beschweren.",
     "points": [
-      "Was für ein Fotobuch haben Sie bestellt und wofür war es gedacht?",
-      "Welche Mängel haben Sie beim Erhalt festgestellt?",
-      "Warum ist das für Sie besonders ärgerlich?",
-      "Was fordern Sie (Neudruck, Rückerstattung) und bis wann?"
-    ]
+      "Erklären Sie, warum Sie sich für Premium-Fotobuch24 entschieden haben.",
+      "Beschreiben Sie, welche Probleme es mit dem Fotobuch gab.",
+      "Erläutern Sie, welche Probleme es mit dem Service der Firma gab.",
+      "Schreiben Sie, was Sie jetzt von der Firma erwarten."
+    ],
+    "words": "150–180"
   },
   "06": {
     "title": "Kosmetik-Shop",

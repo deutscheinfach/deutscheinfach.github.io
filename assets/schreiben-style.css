@@ -376,3 +376,14 @@ body[data-theme="dark"] .task-header { background: #000; }
     border-inline-start-color: var(--red);
     color: #a11;
 }
+
+.words-badge {
+    display: inline-block;
+    margin-inline-start: 8px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--yellow);
+    color: #111;
+    font-size: 12px;
+    font-weight: 700;
+}

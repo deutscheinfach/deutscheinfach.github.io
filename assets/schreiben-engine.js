@@ -49,6 +49,18 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
         pointsWrap.appendChild(row);
     });
 
+    // ---------- expected length ----------
+    /* TELC كيحدد عدد الكلمات، والتصحيح كيحسبو. */
+    if (topic.words) {
+        const intro = document.querySelector(".aufgabe-intro");
+        if (intro) {
+            const badge = document.createElement("span");
+            badge.className = "words-badge";
+            badge.textContent = topic.words + " Wörter";
+            intro.appendChild(badge);
+        }
+    }
+
     // ---------- timer ----------
     const timerEl = document.getElementById("timer-pill");
     let totalSeconds = (parseInt(topic.time, 10) || 30) * 60;
@@ -200,6 +212,7 @@ const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.wo
                     situation: topic.situation,
                     ad: topic.ad,
                     points: topic.points,
+                    words: topic.words || "",
                     studentText: studentText,
                 }),
             });
