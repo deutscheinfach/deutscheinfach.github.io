@@ -36,6 +36,51 @@ export default {
     try {
       const body = await request.json();
 
+      /*
+       * أداة تشخيص: POST {"listModels": true}
+       * كترجع الموديلات المتاحة للمفتاح. المفتاح كيبقى فالسيرفر.
+       */
+      if (body.listModels === true) {
+        if (!env.GEMINI_API_KEY) {
+          return jsonResponse(
+            { error: "GEMINI_API_KEY is not configured." },
+            500,
+            allowedOrigin
+          );
+        }
+
+        const listResponse = await fetch(
+          "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200",
+          { headers: { "x-goog-api-key": env.GEMINI_API_KEY } }
+        );
+
+        const listData = await listResponse.json();
+
+        if (!listResponse.ok) {
+          return jsonResponse(
+            {
+              error: "ListModels failed.",
+              details: listData?.error?.message || "Unknown error.",
+            },
+            502,
+            allowedOrigin
+          );
+        }
+
+        // غير اللي كيدعمو generateContent — هوما اللي كينفعونا.
+        const usable = (listData.models || [])
+          .filter((m) =>
+            (m.supportedGenerationMethods || []).includes("generateContent")
+          )
+          .map((m) => m.name);
+
+        return jsonResponse(
+          { currentModel: env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL, usable },
+          200,
+          allowedOrigin
+        );
+      }
+
       const {
         level,
         taskType,
