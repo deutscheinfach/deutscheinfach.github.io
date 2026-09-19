@@ -546,7 +546,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
+    "locked": false,
     "ad": "MEMOBOOK – Ihre Erinnerungen, gedruckt in Premiumqualität!\n\n• Individuell gestaltbare Fotobücher\n• Hochwertiger Fotodruck\n• Lieferung innerhalb von 5 Werktagen\n• Geld-zurück-Garantie bei Qualitätsmängeln\n\nMemoBook GmbH\nDruckerstraße 14, 70173 Stuttgart\nwww.memobook.de",
     "situation": "Sie haben ein Fotobuch von Ihrer Hochzeit bei MemoBook bestellt. Als das Buch ankam, waren die Farben verfälscht und einige Seiten fehlten. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
     "points": [
