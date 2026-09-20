@@ -202,15 +202,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "UMZUGSUNTERNEHMEN BÜHLER – Der perfekte Partner für Ihren Umzug!\n\n• Umzüge europaweit\n• Kostenlose Kartons inklusive\n• Erfahrenes Team seit 20 Jahren\n• Festpreisgarantie\n\nUmzugsunternehmen Bühler\nwww.umzug-buehler.de",
-    "situation": "Sie haben Ihren Umzug bei der Firma Bühler gebucht. Am Umzugstag erschien nur die Hälfte des vereinbarten Teams und mehrere Kartons gingen verloren. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was war vereinbart (Team, Leistungen, Preis)?",
-      "Was ist am Umzugstag konkret schiefgelaufen?",
-      "Welche Folgen hatte das für Sie?",
-      "Was fordern Sie von der Firma?"
-    ]
+    "locked": true
   },
   "39": {
     "title": "Unsere Nachbarschaft vernetzt sich: Schon 656 Nachbarn machen mit!",
