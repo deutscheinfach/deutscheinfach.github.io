@@ -174,15 +174,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "SECURVIA – Rundum sorglos unterwegs!\n\n• Schutz bei Verlust und Beschädigung\n• Weltweiter Versicherungsschutz\n• Schnelle Schadensregulierung\n• Erstattung bereits nach 48 Stunden\n\nSecurvia Reiseversicherungen\nwww.securvia-versicherung.de",
-    "situation": "Ihr Koffer wurde bei einer Flugreise beschädigt und Sie haben den Schaden bei Ihrer Securvia Reisegepäckversicherung gemeldet. Trotz der Werbung mit schneller Regulierung haben Sie nach drei Wochen weder eine Antwort noch eine Erstattung erhalten. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was ist passiert und wann haben Sie den Schaden gemeldet?",
-      "Was wurde Ihnen laut Werbung/Vertrag versprochen?",
-      "Was ist seitdem (nicht) passiert?",
-      "Was fordern Sie von Securvia und bis wann?"
-    ]
+    "locked": true
   },
   "35": {
     "title": "Schlüsseldienst- Notservice bundesweit",
