@@ -223,15 +223,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "ZEITSCHRIFTEN-ABOSERVICE – Ihr Lieblingsmagazin, bequem zu Hause!\n\n• Über 200 Zeitschriften im Abo\n• Pünktliche Lieferung garantiert\n• Jederzeit kündbar\n• Prämie bei Neuabschluss\n\nZeitschriften-Aboservice\nwww.zeitschriften-aboservice.de",
-    "situation": "Sie haben ein Zeitschriften-Abo abgeschlossen, das trotz mehrfacher Kündigung weiterhin beliefert und abgebucht wird. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Abo hatten Sie und wann haben Sie gekündigt?",
-      "Was ist trotz Ihrer Kündigung passiert?",
-      "Welche Folgen hatte das für Sie (Kosten, Ärger)?",
-      "Was fordern Sie vom Aboservice?"
-    ]
+    "locked": true
   },
   "01": {
     "title": "Abenteuer \"TIKKI TAKKA\"",
