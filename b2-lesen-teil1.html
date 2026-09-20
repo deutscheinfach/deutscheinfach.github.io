@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deutsch Einfach – B2 Lesen Teil 1</title>
-<meta name="description" content="TELC B2 Leseverstehen – Überschriften zuordnen.">
+<meta name="description" content="TELC B2 Leseverstehen – Teil 1.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
 <link rel="stylesheet" href="assets/theme.css">
 <script src="assets/theme-toggle.js?v=ced3b684"></script>
-<link rel="stylesheet" href="assets/lesen-style.css?v=d5343b60">
+<link rel="stylesheet" href="assets/lesen-style.css?v=824794dc">
 </head>
 <body>
 
@@ -33,17 +33,31 @@
 
     <section class="lesen-hero">
         <span class="lesen-badge">B2 · Leseverstehen</span>
-        <h1>Teil 1 – Überschriften zuordnen</h1>
-        <p class="lead">خمسة ديال النصوص القصار، ولائحة ديال العناوين. لكل نص اختار العنوان اللي كيوافقو.</p>
+        <h1>Teil 1</h1>
+        <p class="lead">Überschriften zuordnen — اختار الموضوع وغادي يتحل على Teil 1.</p>
     </section>
 
+    <div class="lesen-toolbar">
+        <label class="lesen-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+            </svg>
+            <input id="lesen-search-input" type="search" placeholder="ابحث عن المواضيع..."
+                   autocomplete="off" aria-label="ابحث عن المواضيع">
+        </label>
+        <button class="lesen-sort" id="lesen-sort-btn" type="button">
+            ⇅ <span class="label">ترتيب</span>
+        </button>
+    </div>
 
-<div id="lesen-stack"></div>
+    <div class="lesen-count" id="lesen-count"></div>
+    <div class="lesen-grid" id="lesen-grid" data-teil="teil1"></div>
 
 </main>
 
-<script src="assets/lesen-b2-teil1.js?v=7e4bc2cf"></script>
-<script src="assets/lesen-engine.js?v=e72f1ba5"></script>
+<script src="assets/lesen-b2-topics.js?v=8ed36357"></script>
+<script src="assets/lesen-hub.js?v=b49690a8"></script>
 <script src="assets/session-guard.js?v=7bdfa3ca"></script>
 </body>
 </html>

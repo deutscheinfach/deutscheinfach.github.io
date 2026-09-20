@@ -76,7 +76,11 @@
     function card(topic) {
         const node = document.createElement("a");
         node.className = "lesen-card" + (topic.locked ? " locked" : "");
-        node.href = "b2-lesen-teil1.html?thema=" + encodeURIComponent(topic.id);
+        /* البطاقة كتحل الامتحان ديال الموضوع، وفيه الأجزاء
+           ديالو. قبل كانت كتوجه لصفحة Teil 1 عامة — علاش كان
+           كيبان بحال ما تبدل والو. */
+        node.href = "b2-lesen-thema.html?thema=" + encodeURIComponent(topic.id);
+        if (grid.dataset.teil) node.href += "&teil=" + grid.dataset.teil;
 
         const title = document.createElement("div");
         title.className = "lesen-card-title";

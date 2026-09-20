@@ -32,18 +32,33 @@
     const root = document.getElementById("lesen-stack");
     if (!root) return;
 
-    const topics = window.LESEN_TOPICS;
+    /* صفحة الموضوع الواحد كتبدل التمرين ملي تبرك على تبويب،
+       إذن خاصها تعاود ترسم. كنخرجو الرسم ف دالة. */
+    function render() {
+        const topics = window.LESEN_TOPICS;
 
-    if (!Array.isArray(topics) || !topics.length) {
-        root.innerHTML =
-            '<div class="lesen-empty">ما زال ماكاينش تمارين ف هاد الجزء.<br>' +
-            "غادي يتزادو قريب.</div>";
-        return;
+        root.textContent = "";
+
+        if (!Array.isArray(topics) || !topics.length) {
+            const empty = document.createElement("div");
+            empty.className = "lesen-empty";
+            empty.textContent = "ما زال ماكاينش تمارين ف هاد الجزء.";
+            root.appendChild(empty);
+            return;
+        }
+
+        topics.forEach(function (topic, index) {
+            root.appendChild(buildTask(topic, index));
+        });
     }
 
-    topics.forEach(function (topic, index) {
-        root.appendChild(buildTask(topic, index));
-    });
+    window.__lesenRender = render;
+
+    /* الصفحات العادية كترسم دغيا. صفحة الموضوع كتحط
+       data-manual وكترسم بوحدها من بعد ما تعرف الجزء. */
+    if (!root.hasAttribute("data-manual")) {
+        render();
+    }
 
     /* ---------- بناء تمرين واحد ---------- */
 

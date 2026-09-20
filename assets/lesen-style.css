@@ -287,6 +287,13 @@
 .lesen-tabs::-webkit-scrollbar { display: none; }
 
 .lesen-tab {
+    /* التبويبات ديال صفحة الموضوع هوما <button>، والـ navigateur
+       كيعطيهم خلفية رمادية ديالو. خاصنا نمسحوها هنا. */
+    background: transparent;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+
     flex: 1 0 auto;
     display: inline-flex;
     align-items: center;
@@ -470,3 +477,7 @@
 }
 
 .lesen-chip svg { width: 13px; height: 13px; flex: 0 0 auto; }
+
+/* تبويب ديال جزء ما زال خاوي: كيبان ولكن باهت */
+.lesen-tab.is-empty { opacity: .45; }
+.lesen-tab.is-empty.active { opacity: 1; }
