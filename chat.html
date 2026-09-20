@@ -8276,6 +8276,16 @@ let ringNodes=null;
 let ringLoop=null;
 let ringSecondTone=null;
 
+/* iOS وSafari (ماك وآيفون) ماكيخليوش AudioContext يخدم إلا
+   إلا تصاوب ولا تفيّق جوا لمسة/ضغطة ديال المستخدم. ملي كيجي
+   الأبيل، ماكاينش شي لمسة فداك الوقت — إذن الرنة كانت ساكتة.
+
+   الحل: كنفيقو الـ context من أول مرة كيمس فيها المستخدم
+   الصفحة (أي لمسة ولا ضغطة)، وكنشغلو فيه صوت ساكت بزاف
+   باش يبقا "مفتوح". من بعد الرنة كتخدم ف أي وقت. */
+
+let audioUnlocked=false;
+
 function getAudioContext(){
 
 if(!audioContext){
@@ -8286,7 +8296,11 @@ window.AudioContext||window.webkitAudioContext;
 if(!Ctx)
 return null;
 
+try{
 audioContext=new Ctx();
+}catch(error){
+return null;
+}
 
 }
 
@@ -8296,6 +8310,38 @@ audioContext.resume().catch(()=>{});
 return audioContext;
 
 }
+
+function unlockAudio(){
+
+if(audioUnlocked)
+return;
+
+const ctx=getAudioContext();
+
+if(!ctx)
+return;
+
+try{
+
+/* نغمة ساكتة قصيرة: كتفتح الصوت ف iOS بلا ما يتسمع والو */
+const buffer=ctx.createBuffer(1,1,22050);
+const source=ctx.createBufferSource();
+
+source.buffer=buffer;
+source.connect(ctx.destination);
+source.start(0);
+
+audioUnlocked=true;
+
+}catch(error){
+/* نعاودو ف اللمسة الجاية */
+}
+
+}
+
+[ "pointerdown", "touchstart", "keydown", "click" ].forEach(
+eventName=>document.addEventListener(
+eventName,unlockAudio,{passive:true}));
 
 function playRingTone(frequency,duration){
 
@@ -8326,9 +8372,97 @@ ringNodes={oscillator,gain};
 
 }
 
+/* ===== إشعار النظام + الهزاز =====
+   ملي تكون الصفحة محلولة ولكن ماشي قدام (تبويب آخر، ولا
+   التيليفون فالجيب)، الصوت بوحدو ماكيكفيش. كنزيدو إشعار
+   ديال النظام وهزاز فالأندرويد. */
+
+let callNotification=null;
+
+function canNotify(){
+return typeof Notification!=="undefined"
+&&Notification.permission==="granted";
+}
+
+function askNotificationPermission(){
+
+if(typeof Notification==="undefined")
+return;
+
+if(Notification.permission!=="default")
+return;
+
+/* الطلب خاصو يكون جوا تفاعل ديال المستخدم ف Safari */
+Notification.requestPermission().catch(()=>{});
+
+}
+
+document.addEventListener(
+"pointerdown",askNotificationPermission,{once:true});
+
+function showCallNotification(name,type){
+
+if(!canNotify())
+return;
+
+if(!document.hidden)
+return;
+
+try{
+
+closeCallNotification();
+
+callNotification=new Notification(
+(type==="video"?"📹 ":"📞 ")+"مكالمة واردة",
+{
+body:(name||"صديق")+" كيعيط ليك",
+icon:"icon1.png",
+tag:"de-call",
+requireInteraction:true
+});
+
+callNotification.onclick=()=>{
+window.focus();
+closeCallNotification();
+};
+
+}catch(error){
+/* شي متصفحات كيمنعو new Notification برا service worker */
+}
+
+}
+
+function closeCallNotification(){
+
+if(callNotification){
+
+try{
+callNotification.close();
+}catch(error){}
+
+callNotification=null;
+
+}
+
+}
+
+function vibrate(pattern){
+
+if(navigator.vibrate)
+try{
+navigator.vibrate(pattern);
+}catch(error){}
+
+}
+
 function startRinging(incoming){
 
 stopRinging();
+
+/* الأندرويد كيهز. الآيفون ماكيدعمش navigator.vibrate —
+   تما الإشعار هو اللي كيهز. */
+if(incoming)
+vibrate([400,200,400,200,400]);
 
 /* داخلة: نغمتين. خارجة: نغمة وحدة أهدى. */
 /* الـ setTimeout ديال النغمة الثانية كان ماشي محفوظ، إذن
@@ -8358,6 +8492,9 @@ if(ringSecondTone){
 clearTimeout(ringSecondTone);
 ringSecondTone=null;
 }
+
+vibrate(0);
+closeCallNotification();
 
 if(ringNodes){
 
@@ -8501,6 +8638,11 @@ callMuteBtn.classList.remove("off");
 callCamBtn.classList.remove("off");
 
 startRinging(incoming);
+
+/* إلا كانت الصفحة ماشي قدام، الإشعار هو اللي كيبين
+   الأبيل — فالتيليفون كيهز وكيضوي حتى وهو فالجيب. */
+if(incoming)
+showCallNotification(name,type);
 
 }
 
@@ -9565,7 +9707,35 @@ html[data-theme="light"] body{
 }
 
 /* الفقاعة ديال الطرف الآخر كانت داكنة بالتوريث */
-html[data-theme="light"] .bubble{ color: var(--text); }
+/* الفقاعة ديالك كانت مكتوبة color: white نيشان. فالوضع
+   الفاتح الخلفية ولات كريمية — أبيض على كريمي ماكيتقراش
+   بالمرة. هادا علاش الرسالة ماكانتش كتبان ملي كتسيفطها. */
+html[data-theme="light"] .message.mine .message-content{
+    background: var(--bubble-mine);
+    color: var(--text);
+    border: 1px solid rgba(184,145,44,.28);
+}
+html[data-theme="light"] .message.mine .message-time{
+    color: rgba(22,24,29,.55);
+}
+html[data-theme="light"] .message-content{
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 2px rgba(20,22,26,.06);
+}
+html[data-theme="light"] .message-time{ color: rgba(22,24,29,.50); }
+html[data-theme="light"] .message-text{ color: inherit; }
+
+/* ===== لمسة أخيرة على الفقاعات ===== */
+.message-content{
+    position: relative;
+    transition: box-shadow .18s ease;
+}
+.message-text a{ color: var(--accent); text-decoration: underline; }
+html[data-theme="light"] .message-text a{ color: var(--accent-dark); }
+
+/* الوقت والعلامات ماخاصهومش يتقصو ملي تكون الرسالة قصيرة */
+.message-time{ white-space: nowrap; }
+
 
 /* الظلال كانت مصممة لخلفية كحلة */
 html[data-theme="light"] .sidebar,
