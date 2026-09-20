@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=acb0f1d1">
+<link rel="stylesheet" href="assets/theme.css?v=689893e8">
 <style>
 /* ============================================
    Deutsch Einfach — Thème Noir & Or
@@ -22,15 +22,15 @@
   --surface: #121419;
   --surface-2: #181b22;
   --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(212, 175, 55, 0.35);
-  --gold: #d4af37;
-  --gold-light: #f4e5a1;
-  --gold-dark: #a8842a;
+  --border-strong: rgba(109,108,246, 0.35);
+  --gold: var(--brand);
+  --gold-light: var(--brand-soft);
+  --gold-dark: var(--brand-dark);
   --text: #f5f4f0;
   --text-dim: #b9b6ad;
   --text-faint: #7c7a72;
   --radius: 18px;
-  --shadow-gold: 0 0 40px -10px rgba(212, 175, 55, 0.25);
+  --shadow-gold: 0 0 40px -10px rgba(109,108,246, 0.25);
 }
 
 * {
@@ -75,8 +75,8 @@ body::before {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.10), transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.06), transparent 45%),
+    radial-gradient(circle at 15% 10%, rgba(109,108,246, 0.10), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(109,108,246, 0.06), transparent 45%),
     linear-gradient(180deg, #08090c 0%, #0a0b10 100%);
 }
 
@@ -86,8 +86,8 @@ body::before {
   z-index: -1;
   background-size: 44px 44px;
   background-image:
-    linear-gradient(to right, rgba(212, 175, 55, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(109,108,246, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(109,108,246, 0.04) 1px, transparent 1px);
   -webkit-mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 70%);
   mask-image: radial-gradient(circle at 50% 30%, black 0%, transparent 70%);
 }
@@ -177,7 +177,7 @@ input::placeholder {
 
 input:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 0 3px rgba(109,108,246, 0.15);
 }
 
 .login-button {
@@ -197,7 +197,7 @@ input:focus {
 
 .login-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px -8px rgba(212, 175, 55, 0.45);
+  box-shadow: 0 10px 30px -8px rgba(109,108,246, 0.45);
 }
 
 .login-button:disabled {
@@ -372,7 +372,7 @@ input:focus {
     padding: 0;
     transition: .2s;
 }
-.password-toggle:hover { background: rgba(212,175,55,.14); color: var(--gold-soft, #f4e5a1); }
+.password-toggle:hover { background: rgba(109,108,246,.14); color: var(--gold-soft, var(--brand-soft)); }
 .password-toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .password-toggle .off { display: none; }
 .password-toggle.shown .on { display: none; }

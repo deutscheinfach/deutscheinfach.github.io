@@ -7,23 +7,37 @@
    لكل مقاس. */
 
 :root {
-    /* اللوحة */
-    --gold: #d4af37;
-    --gold-dark: #a8842a;
-    --gold-soft: #f4e5a1;
+    /* ===== اللوحة =====
+       بنفسجي/نيلي على كحل مزرق — ماشي أسود قاح.
+       الأسود القاح مع نص أبيض كيتعب العينين فالليل،
+       والكحل المزرق أهدى وكيبان أكثر احترافية.
 
-    --ink: #08090c;
-    --surface: #121419;
-    --surface-2: #181b22;
+       الأسماء --gold* بقاو كيف ما هوما حيت مستعملين
+       ف عشرات الصفحات. دابا كيحملو لون العلامة، ماشي
+       الذهبي. الأسماء الجديدة --brand* هي اللي خاص
+       يتستعملو ف أي كود جديد. */
 
-    --text: #f5f4f0;
-    --muted: #b9b6ad;
+    --brand: #6d6cf6;
+    --brand-dark: #4f46e5;
+    --brand-soft: #c3c6fd;
 
-    --line: rgba(255,255,255,.08);
-    --line-gold: rgba(212,175,55,.35);
+    --gold: var(--brand);
+    --gold-dark: var(--brand-dark);
+    --gold-soft: var(--brand-soft);
 
-    --ok: #4ade80;
-    --danger: #ff6b6b;
+    --ink: #0d0f1a;
+    --surface: #151928;
+    --surface-2: #1c2133;
+
+    --text: #e9eaf5;
+    --muted: #9aa0bb;
+
+    --line: rgba(255,255,255,.09);
+    --line-gold: rgba(109,108,246,.38);
+    --line-brand: var(--line-gold);
+
+    --ok: #34d399;
+    --danger: #fb7185;
 
     /* الأسماء القديمة — باش الصفحات القديمة تبقى خدامة */
     --red: var(--gold);
@@ -66,8 +80,9 @@ body {
     line-height: 1.7;
     color: var(--text);
     background:
-        radial-gradient(circle at 12% 6%, rgba(212,175,55,.10), transparent 40%),
-        radial-gradient(circle at 88% 24%, rgba(212,175,55,.07), transparent 44%),
+        radial-gradient(900px 520px at 10% -5%, rgba(109,108,246,.16), transparent 58%),
+        radial-gradient(760px 460px at 92% 8%, rgba(139,92,246,.12), transparent 56%),
+        radial-gradient(700px 500px at 50% 108%, rgba(79,70,229,.10), transparent 62%),
         var(--ink);
     min-height: 100vh;
 }
@@ -169,32 +184,38 @@ table { display: block; max-width: 100%; overflow-x: auto; }
    النصوص الذهبية كتولي --gold-dark. */
 
 html[data-theme="light"] {
-    --gold: #b8912c;
-    --gold-dark: #8a6a1d;
-    --gold-soft: #f0dfa0;
+    --brand: #5b55e8;
+    --brand-dark: #4338ca;
+    --brand-soft: #e0e1fe;
+
+    --gold: var(--brand);
+    --gold-dark: var(--brand-dark);
+    --gold-soft: var(--brand-soft);
 
     --ink: #ffffff;
     --surface: #ffffff;
-    --surface-2: #f7f5ef;
+    --surface-2: #f5f6fd;
 
-    --text: #16181d;
-    --muted: #5f5c55;
+    --text: #171a2e;
+    --muted: #5b6079;
 
-    --line: rgba(20,22,26,.12);
-    --line-gold: rgba(184,145,44,.40);
+    --line: rgba(23,26,46,.11);
+    --line-gold: rgba(91,85,232,.30);
+    --line-brand: var(--line-gold);
 
-    --ok: #15803d;
-    --danger: #c62828;
+    --ok: #059669;
+    --danger: #e11d48;
 
-    --shadow: 0 10px 30px rgba(20,22,26,.10);
+    --shadow: 0 10px 30px rgba(23,26,46,.09);
 }
 
 html[data-theme="light"] body {
     color: var(--text);
     background:
-        radial-gradient(circle at 12% 6%, rgba(184,145,44,.13), transparent 42%),
-        radial-gradient(circle at 88% 24%, rgba(184,145,44,.09), transparent 46%),
-        #fbfaf6;
+        radial-gradient(900px 520px at 8% -6%, rgba(99,102,241,.13), transparent 56%),
+        radial-gradient(760px 460px at 94% 6%, rgba(168,85,247,.10), transparent 54%),
+        radial-gradient(700px 480px at 50% 106%, rgba(56,189,248,.09), transparent 60%),
+        #fafaff;
 }
 
 /* ===== زر الوضع الفاتح/المظلم ===== */
