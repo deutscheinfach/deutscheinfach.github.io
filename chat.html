@@ -1723,6 +1723,81 @@ button: disabled{
     inset-inline-end: -1px;
 }
 
+
+/* ===== ANRUF: أزرار بحال WhatsApp ===== */
+.call-actions { gap: 26px; align-items: flex-start; }
+
+.call-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+}
+.call-action span {
+    font-size: 12px;
+    color: rgba(255,255,255,.72);
+    letter-spacing: .2px;
+}
+.call-action[hidden] { display: none; }
+
+.call-btn {
+    width: 62px; height: 62px;
+    border: none;
+    background: rgba(255,255,255,.14);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    transition: transform .18s, background .18s;
+}
+.call-btn svg {
+    width: 25px; height: 25px;
+    fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.call-btn:hover { transform: translateY(-3px); background: rgba(255,255,255,.22); }
+.call-btn:active { transform: scale(.93); }
+
+.call-btn.off { background: #fff; color: #17130a; }
+.call-btn.accept { background: #25d366; }
+.call-btn.accept:hover { background: #1ebe5d; }
+.call-btn.hangup { background: #e5484d; }
+.call-btn.hangup:hover { background: #cf3b40; }
+.call-btn.hangup svg { transform: rotate(135deg); }
+
+/* الزر ديال الجواب كينبض باش يشد العين */
+.call-btn.accept { animation: callPulse 1.5s ease-in-out infinite; }
+@keyframes callPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,.55); }
+    50%      { box-shadow: 0 0 0 16px rgba(37,211,102,0); }
+}
+
+/* نوع المكالمة فوق الاسم */
+.call-kind {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--gold);
+}
+
+/* الأفاتار كينبض أثناء الرنين */
+.call-box.ringing .call-avatar {
+    animation: avatarPulse 1.6s ease-in-out infinite;
+}
+@keyframes avatarPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,.45); }
+    50%      { box-shadow: 0 0 0 22px rgba(212,175,55,0); }
+}
+
+/* المدة */
+.call-status { font-variant-numeric: tabular-nums; }
+
+@media (max-width: 650px) {
+    .call-actions { gap: 16px; bottom: 30px; }
+    .call-btn { width: 56px; height: 56px; }
+    .call-btn svg { width: 22px; height: 22px; }
+    .call-action span { font-size: 11px; }
+}
+
 </style>
 
 </head>
@@ -2195,15 +2270,41 @@ Freunde einladen
 
 <div class="call-info">
 <div class="call-avatar" id="callAvatar"></div>
+<div class="call-kind" id="callKind"></div>
 <div class="call-name" id="callName">—</div>
 <div class="call-status" id="callStatus">…</div>
 </div>
 
-<div class="call-actions">
-<button class="call-btn mute" id="callMuteBtn" type="button" title="Stumm">🎤</button>
-<button class="call-btn cam" id="callCamBtn" type="button" title="Kamera">📹</button>
-<button class="call-btn accept" id="callAcceptBtn" type="button" title="Annehmen">✅</button>
-<button class="call-btn hangup" id="callHangupBtn" type="button" title="Auflegen">📴</button>
+<div class="call-actions" id="callActions">
+
+<div class="call-action">
+<button class="call-btn mute" id="callMuteBtn" type="button" aria-label="Stumm">
+<svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line></svg>
+</button>
+<span>Stumm</span>
+</div>
+
+<div class="call-action">
+<button class="call-btn cam" id="callCamBtn" type="button" aria-label="Kamera">
+<svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2"></rect></svg>
+</button>
+<span>Kamera</span>
+</div>
+
+<div class="call-action">
+<button class="call-btn accept" id="callAcceptBtn" type="button" aria-label="Annehmen">
+<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+</button>
+<span>Annehmen</span>
+</div>
+
+<div class="call-action">
+<button class="call-btn hangup" id="callHangupBtn" type="button" aria-label="Auflegen">
+<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+</button>
+<span id="callHangupLabel">Auflegen</span>
+</div>
+
 </div>
 
 </div>
@@ -8049,6 +8150,171 @@ const callMuteBtn=document.getElementById("callMuteBtn");
 const callCamBtn=document.getElementById("callCamBtn");
 
 
+
+/* =====================================================
+   الرنة + مؤقت المدة
+
+   الرنة مولّدة بـ Web Audio — بلا ملف صوتي، بلا
+   استضافة. المتصفح ما كيخليش الصوت يخدم قبل ما
+   يتفاعل المستخدم مع الصفحة، ف كنجربو وكنسكتو
+   بهدوء إلا رفض.
+   ===================================================== */
+
+let audioContext=null;
+let ringNodes=null;
+let ringLoop=null;
+
+function getAudioContext(){
+
+if(!audioContext){
+
+const Ctx=
+window.AudioContext||window.webkitAudioContext;
+
+if(!Ctx)
+return null;
+
+audioContext=new Ctx();
+
+}
+
+if(audioContext.state==="suspended")
+audioContext.resume().catch(()=>{});
+
+return audioContext;
+
+}
+
+function playRingTone(frequency,duration){
+
+const ctx=getAudioContext();
+
+if(!ctx)
+return;
+
+const oscillator=ctx.createOscillator();
+const gain=ctx.createGain();
+
+oscillator.type="sine";
+oscillator.frequency.value=frequency;
+
+/* بلا fade كيخرج "طق" فالبداية والنهاية */
+gain.gain.setValueAtTime(0,ctx.currentTime);
+gain.gain.linearRampToValueAtTime(.18,ctx.currentTime+.04);
+gain.gain.setValueAtTime(.18,ctx.currentTime+duration-.06);
+gain.gain.linearRampToValueAtTime(0,ctx.currentTime+duration);
+
+oscillator.connect(gain);
+gain.connect(ctx.destination);
+
+oscillator.start();
+oscillator.stop(ctx.currentTime+duration);
+
+ringNodes={oscillator,gain};
+
+}
+
+function startRinging(incoming){
+
+stopRinging();
+
+/* داخلة: نغمتين. خارجة: نغمة وحدة أهدى. */
+const pattern=incoming
+?()=>{
+playRingTone(880,.35);
+setTimeout(()=>playRingTone(680,.35),420);
+}
+:()=>playRingTone(440,.6);
+
+pattern();
+
+ringLoop=setInterval(pattern,incoming?2200:3000);
+
+}
+
+function stopRinging(){
+
+if(ringLoop){
+clearInterval(ringLoop);
+ringLoop=null;
+}
+
+if(ringNodes){
+
+try{
+ringNodes.oscillator.stop();
+}catch(error){
+/* كان ديجا واقف */
+}
+
+ringNodes=null;
+
+}
+
+}
+
+
+/* ---------- المدة ---------- */
+
+let callStartedAt=null;
+let durationTimer=null;
+
+function startCallTimer(){
+
+if(durationTimer)
+return;
+
+callStartedAt=Date.now();
+
+const tick=()=>{
+
+const seconds=
+Math.floor((Date.now()-callStartedAt)/1000);
+
+const mm=
+String(Math.floor(seconds/60)).padStart(2,"0");
+
+const ss=
+String(seconds%60).padStart(2,"0");
+
+setCallStatus(mm+":"+ss,false);
+
+};
+
+tick();
+durationTimer=setInterval(tick,1000);
+
+}
+
+function stopCallTimer(){
+
+if(durationTimer){
+clearInterval(durationTimer);
+durationTimer=null;
+}
+
+callStartedAt=null;
+
+}
+
+function callDurationText(){
+
+if(!callStartedAt)
+return "";
+
+const seconds=
+Math.floor((Date.now()-callStartedAt)/1000);
+
+const mm=
+String(Math.floor(seconds/60)).padStart(2,"0");
+
+const ss=
+String(seconds%60).padStart(2,"0");
+
+return mm+":"+ss;
+
+}
+
 function setCallStatus(text,ringing){
 
 if(!callStatusEl)
@@ -8056,6 +8322,34 @@ return;
 
 callStatusEl.textContent=text;
 callStatusEl.classList.toggle("ringing",!!ringing);
+
+}
+
+/* كل زر عندو حالة كيبان فيها:
+   داخلة = جاوب + رفض · نشطة = ميكرو + كاميرا + سد */
+function setCallButtonState(state){
+
+const show=(el,visible)=>{
+
+const wrap=el?.closest(".call-action");
+
+if(wrap)
+wrap.hidden=!visible;
+
+};
+
+const incoming=state==="incoming";
+
+show(callAcceptBtn,incoming);
+show(callMuteBtn,!incoming);
+show(callCamBtn,!incoming&&currentCallType==="video");
+show(callHangupBtn,true);
+
+const label=
+document.getElementById("callHangupLabel");
+
+if(label)
+label.textContent=incoming?"Ablehnen":"Auflegen";
 
 }
 
@@ -8067,16 +8361,26 @@ return;
 currentCallType=type;
 
 callBox.classList.toggle("video",type==="video");
+callBox.classList.add("ringing");
 callOverlay.classList.add("show");
 
 callNameEl.textContent=name||"—";
 callAvatarEl.innerHTML=avatarHtml||"";
 
-callAcceptBtn.style.display=incoming?"flex":"none";
-callCamBtn.style.display=type==="video"?"flex":"none";
+const kind=
+document.getElementById("callKind");
+
+if(kind)
+kind.textContent=
+(incoming?"Eingehender ":"")+
+(type==="video"?"Videoanruf":"Anruf");
+
+setCallButtonState(incoming?"incoming":"active");
 
 callMuteBtn.classList.remove("off");
 callCamBtn.classList.remove("off");
+
+startRinging(incoming);
 
 }
 
@@ -8093,6 +8397,12 @@ callOverlay.classList.remove("show");
    ----------------------------------------------------- */
 
 function cleanupCall(){
+
+stopRinging();
+stopCallTimer();
+
+if(callBox)
+callBox.classList.remove("ringing");
 
 clearTimeout(connectTimer);
 clearTimeout(ringTimer);
@@ -8143,7 +8453,14 @@ async function endCall(reason){
 const id=currentCallId;
 const role=currentCallRole;
 
+/* خاصنا ناخدو المدة قبل cleanupCall — هو اللي
+   كيوقف المؤقت وكيمسح البداية. */
+const duration=callDurationText();
+
 cleanupCall();
+
+if(duration)
+showToast("المكالمة سالات · "+duration);
 
 if(!id)
 return;
@@ -8289,7 +8606,13 @@ clearTimeout(ringTimer);
 connectTimer=null;
 ringTimer=null;
 
-setCallStatus("Verbunden",false);
+stopRinging();
+
+if(callBox)
+callBox.classList.remove("ringing");
+
+setCallButtonState("active");
+startCallTimer();
 
 return;
 
@@ -8571,7 +8894,8 @@ unsubscribeCall();
 unsubscribeCall=null;
 }
 
-callAcceptBtn.style.display="none";
+stopRinging();
+setCallButtonState("active");
 setCallStatus("Verbinden…",false);
 
 try{
