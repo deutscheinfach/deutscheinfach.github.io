@@ -456,7 +456,11 @@ import {
 
     setPersistence,
 
-    browserLocalPersistence
+    browserLocalPersistence,
+
+    browserSessionPersistence,
+
+    inMemoryPersistence
 
 }
 from
@@ -521,11 +525,124 @@ const db =
 
 
 /* =========================================
+   أدوات آمنة ل iOS
+
+   1) crypto.randomUUID() ماكايناش ف Safari قبل 15.4، و
+      كانت كتطيح السكريبت كامل هنا، إذن زر الدخول ما كان
+      كيخدم حتى شي حاجة ف الآيفونات القدام.
+   2) ف التصفح الخاص ديال Safari، localStorage كيرمي
+      استثناء ملي كتكتب فيه. كنغلفوه.
+========================================= */
+
+function makeId() {
+
+    try {
+
+        if (
+            typeof crypto !== "undefined" &&
+            typeof crypto.randomUUID === "function"
+        ) {
+
+            return crypto.randomUUID();
+
+        }
+
+
+        if (
+            typeof crypto !== "undefined" &&
+            typeof crypto.getRandomValues === "function"
+        ) {
+
+            const bytes =
+                crypto.getRandomValues(
+                    new Uint8Array(16)
+                );
+
+            /* نفس شكل UUID v4 */
+            bytes[6] = (bytes[6] & 0x0f) | 0x40;
+            bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+            const hex =
+                Array.from(
+                    bytes,
+                    function(b) {
+                        return b
+                            .toString(16)
+                            .padStart(2, "0");
+                    }
+                ).join("");
+
+            return (
+                hex.slice(0, 8) + "-" +
+                hex.slice(8, 12) + "-" +
+                hex.slice(12, 16) + "-" +
+                hex.slice(16, 20) + "-" +
+                hex.slice(20)
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        /* كنطيحو للحل الأخير تحت */
+
+    }
+
+
+    return (
+        "id-" +
+        Date.now().toString(36) + "-" +
+        Math.random().toString(36).slice(2, 10) +
+        Math.random().toString(36).slice(2, 10)
+    );
+
+}
+
+
+function safeGet(key) {
+
+    try {
+
+        return localStorage.getItem(key);
+
+    }
+
+    catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function safeSet(key, value) {
+
+    try {
+
+        localStorage.setItem(key, value);
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================
    DEVICE ID
 ========================================= */
 
 let deviceId =
-    localStorage.getItem(
+    safeGet(
         "deutschEinfachDeviceId"
     );
 
@@ -533,9 +650,9 @@ let deviceId =
 if (!deviceId) {
 
     deviceId =
-        crypto.randomUUID();
+        makeId();
 
-    localStorage.setItem(
+    safeSet(
         "deutschEinfachDeviceId",
         deviceId
     );
@@ -951,10 +1068,38 @@ loginForm.addEventListener(
                FIREBASE PERSISTENCE
             ========================= */
 
-            await setPersistence(
-                auth,
-                browserLocalPersistence
-            );
+            /* التصفح الخاص ف iOS كيسد IndexedDB، و
+               browserLocalPersistence كيطيح. كنجربو واحد
+               ورا الآخر باش الدخول يبقى خدام على أي حال. */
+            for (
+                const mode of [
+                    browserLocalPersistence,
+                    browserSessionPersistence,
+                    inMemoryPersistence
+                ]
+            ) {
+
+                try {
+
+                    await setPersistence(
+                        auth,
+                        mode
+                    );
+
+                    break;
+
+                }
+
+                catch (error) {
+
+                    console.warn(
+                        "Persistence mode refused, trying the next one:",
+                        error
+                    );
+
+                }
+
+            }
 
 
             /* =========================
@@ -978,7 +1123,7 @@ loginForm.addEventListener(
             ========================= */
 
             const sessionId =
-                crypto.randomUUID();
+                makeId();
 
 
             /* =========================
@@ -1061,7 +1206,7 @@ loginForm.addEventListener(
                SAVE LOCAL SESSION
             ========================= */
 
-            localStorage.setItem(
+            safeSet(
 
                 "deutschEinfachSessionId",
 
@@ -1120,8 +1265,14 @@ loginForm.addEventListener(
             );
 
 
+            /* بلا التفصيل، أي مشكل ف الآيفون كيبان
+               بحال بحال ومحال تعرف السبب. */
             let message =
-                "❌ وقع مشكل ف تسجيل الدخول.";
+                "❌ وقع مشكل ف تسجيل الدخول. (" +
+                (error && (error.code || error.message)
+                    ? String(error.code || error.message)
+                    : "سبب مجهول") +
+                ")";
 
 
             if (

@@ -631,6 +631,35 @@ input:focus {
                 // FIRESTORE
                 // =========================
 
+                /* نفس الحكاية ديال login.html: crypto.randomUUID
+                   ماكايناش ف Safari القديم، وlocalStorage كيرمي
+                   استثناء ف التصفح الخاص. */
+                var newSessionId;
+                try {
+                    newSessionId =
+                        (typeof crypto !== "undefined" &&
+                         typeof crypto.randomUUID === "function")
+                            ? crypto.randomUUID()
+                            : "id-" + Date.now().toString(36) + "-" +
+                              Math.random().toString(36).slice(2, 10) +
+                              Math.random().toString(36).slice(2, 10);
+                }
+                catch (idError) {
+                    newSessionId =
+                        "id-" + Date.now().toString(36) + "-" +
+                        Math.random().toString(36).slice(2, 10);
+                }
+
+                try {
+                    localStorage.setItem(
+                        "deutschEinfachSessionId",
+                        newSessionId
+                    );
+                }
+                catch (storageError) {
+                    /* التصفح الخاص: الحارس غادي يتخطى، ماشي مشكل */
+                }
+
                 try {
 
                     await setDoc(
@@ -654,7 +683,16 @@ input:focus {
                             subscriptionEnd: null,
 
                             createdAt:
-                                serverTimestamp()
+                                serverTimestamp(),
+
+                            /* الحساب الجديد كيولي هو الجلسة النشيطة.
+                               بلا هادشي، المسجل الجديد كيبقى بلا
+                               sessionId والحارس ماعندو باش يقارن. */
+                            sessionId:
+                                newSessionId,
+
+                            sessionUpdatedAt:
+                                new Date()
 
                         }
                     );
