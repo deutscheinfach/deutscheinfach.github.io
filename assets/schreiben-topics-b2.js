@@ -111,15 +111,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "FITWATCH – Deine Fitness immer im Blick!\n\n• Herzfrequenz- und Schlafüberwachung\n• Wasserdicht bis 50m\n• 7 Tage Akkulaufzeit\n• Kompatibel mit allen Smartphones\n\nFitWatch Technologies\nwww.fitwatch-tech.de",
-    "situation": "Sie haben die FitWatch bestellt, weil die Werbung eine Akkulaufzeit von 7 Tagen verspricht. Tatsächlich hält der Akku nur einen Tag und die Messwerte sind offensichtlich falsch. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Produkt haben Sie bestellt und was wurde beworben?",
-      "Welche Abweichungen haben Sie bei der Nutzung festgestellt?",
-      "Wie hat sich das auf Sie ausgewirkt?",
-      "Was fordern Sie vom Hersteller?"
-    ]
+    "locked": true
   },
   "26": {
     "title": "Apartmenthaus Frankfurt",
