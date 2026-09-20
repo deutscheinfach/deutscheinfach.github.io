@@ -6,15 +6,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "CITY APARTMENTS – Wohnen auf Zeit, ganz flexibel!\n\n• Voll möblierte Apartments\n• Zentrale Lage in der Innenstadt\n• Wöchentliche Reinigung inklusive\n• Keine Kaution nötig\n\nCity Apartments Berlin\nwww.city-apartments-berlin.de",
-    "situation": "Sie haben für drei Monate ein Apartment bei City Apartments gemietet. Die versprochene Reinigung fand nicht statt und im Apartment gab es einen Schimmelbefall. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Apartment hatten Sie gemietet und was war im Mietvertrag versprochen?",
-      "Welche konkreten Mängel haben Sie festgestellt?",
-      "Wie hat sich das auf Ihr Wohlbefinden ausgewirkt?",
-      "Was fordern Sie vom Vermieter?"
-    ]
+    "locked": true
   },
   "11": {
     "title": "Kursbeschreibung",
