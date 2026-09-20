@@ -34,15 +34,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "WOHNEN AUF ZEIT – Oranienburg zentral erleben!\n\n• Möblierte Wohnungen für Berufspendler\n• Flexible Mietdauer ab 1 Monat\n• Alle Nebenkosten inklusive\n• Persönlicher Ansprechpartner vor Ort\n\nWohnen auf Zeit Oranienburg\nwww.wohnen-auf-zeit-oranienburg.de",
-    "situation": "Sie haben für Ihren befristeten Arbeitseinsatz eine möblierte Wohnung in Oranienburg gemietet. Wichtige Möbel fehlten und die Heizung funktionierte in den ersten Wochen nicht. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie gemietet und was war laut Anzeige inklusive?",
-      "Welche Mängel gab es bei Einzug?",
-      "Wie hat sich das auf Ihren Alltag ausgewirkt?",
-      "Was fordern Sie vom Vermieter?"
-    ]
+    "locked": true
   },
   "15": {
     "title": "Freizeitverein Mainz",
