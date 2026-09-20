@@ -83,15 +83,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "ALPENGESCHMACK – Schmelzkäse wie aus den Bergen!\n\n• Aus 100% Alpenmilch\n• Ohne künstliche Zusatzstoffe\n• In drei Sorten erhältlich\n• Jetzt im Supermarkt Ihres Vertrauens\n\nAlpengeschmack Molkereiprodukte\nwww.alpengeschmack.de",
-    "situation": "Sie haben den Schmelzkäse Alpengeschmack gekauft, der laut Werbung ohne Zusatzstoffe ist. Zu Hause haben Sie festgestellt, dass die Zutatenliste dem widerspricht und die Verpackung bereits beschädigt war. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Produkt haben Sie gekauft und was wurde beworben?",
-      "Was haben Sie beim Öffnen/bei der Zutatenliste festgestellt?",
-      "Warum ist das für Sie problematisch?",
-      "Was fordern Sie vom Hersteller?"
-    ]
+    "locked": true
   },
   "22": {
     "title": "Meine Kiste: Obst und Gemüse im Abo bestellbar",
