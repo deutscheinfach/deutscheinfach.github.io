@@ -27,15 +27,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "ZUKUNFT JETZT – Engagement-Programm für Jugendliche!\n\n• Praktische Projekte in der Gemeinde\n• Betreuung durch erfahrene Mentoren\n• Zertifikat für den Lebenslauf\n• Kostenlose Teilnahme\n\nZukunft Jetzt e.V.\nwww.zukunft-jetzt.de",
-    "situation": "Ihr Kind hat am Engagement-Programm Zukunft Jetzt teilgenommen. Die versprochene Betreuung durch Mentoren fand kaum statt und die Projekte wurden mehrfach ohne Ankündigung abgesagt. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "An welchem Programm hat Ihr Kind teilgenommen und was war versprochen?",
-      "Was ist konkret nicht wie angekündigt gelaufen?",
-      "Welche Auswirkungen hatte das auf Ihr Kind?",
-      "Was erwarten Sie vom Verein?"
-    ]
+    "locked": true
   },
   "14": {
     "title": "Wohnen auf Zeit in Oranienburg",
