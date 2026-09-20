@@ -104,15 +104,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "SOUNDFREE – Kabellose Kopfhörer für perfekten Klang!\n\n• Bis zu 30 Stunden Akkulaufzeit\n• Aktive Geräuschunterdrückung\n• Wasserfest nach IPX5\n• 2 Jahre Garantie\n\nSoundFree Audio\nwww.soundfree-audio.de",
-    "situation": "Sie haben kabellose Kopfhörer der Marke SoundFree online bestellt. Die Akkulaufzeit liegt weit unter der beworbenen Angabe und die Geräuschunterdrückung funktioniert nicht. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Produkt haben Sie bestellt und was wurde beworben?",
-      "Welche Mängel haben Sie nach der Nutzung festgestellt?",
-      "Wie hat sich das auf Sie ausgewirkt?",
-      "Was fordern Sie vom Hersteller?"
-    ]
+    "locked": true
   },
   "25": {
     "title": "FITWATCH",
