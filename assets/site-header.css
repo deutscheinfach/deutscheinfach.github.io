@@ -223,3 +223,23 @@
 @media (max-width: 560px) {
     .site-level a { padding: 0 18px; font-size: 13px; }
 }
+
+/* ===== حجم اللمس =====
+   على الشاشات ديال اللمس (تيليفون/تابليت)، كل زر فالهيدر
+   خاصو على الأقل 44px باش يتنقر بالصبع بلا ما تخطئ.
+   على PC بالفأر ماكاينش هاد المشكل. */
+@media (pointer: coarse) {
+    .site-brand { min-height: 44px; }
+    .site-nav a,
+    .site-level a,
+    .site-btn,
+    .site-user { min-height: 44px; }
+    .site-btn-icon { width: 44px; }
+}
+
+/* حتى ف الشاشات الصغار ماكنقصوش تحت 44 فاللمس */
+@media (max-width: 560px) and (pointer: coarse) {
+    .site-btn { min-height: 44px; padding: 0 13px; }
+    .site-btn-icon { width: 44px; padding: 0; }
+    .site-nav a { min-height: 44px; }
+}

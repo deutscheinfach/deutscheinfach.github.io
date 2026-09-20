@@ -646,3 +646,14 @@
 }
 .soon-box h2 { font-size: var(--step-2); font-weight: 900; margin-bottom: 10px; }
 .soon-box p { color: var(--muted); font-size: var(--step-0); line-height: 1.7; }
+
+/* نفس القاعدة داخل الأقسام */
+@media (pointer: coarse) {
+    .lesen-tab,
+    .lesen-teil-btn,
+    .lesen-back,
+    .lesen-sort,
+    .lesen-btn,
+    .lesen-option,
+    .lesen-select { min-height: 44px; }
+}

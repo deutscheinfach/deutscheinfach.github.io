@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css">
-<link rel="stylesheet" href="assets/site-header.css?v=2fe74a2b">
+<link rel="stylesheet" href="assets/theme.css?v=acb0f1d1">
+<link rel="stylesheet" href="assets/site-header.css?v=43b2c394">
 <script src="assets/theme-toggle.js?v=98b0dab3"></script>
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
@@ -2485,6 +2485,12 @@ body{ padding-top: 0 !important; }
 @media (max-width: 760px){
   body{ padding-top: 0 !important; }
   .hoeren-sticky-nav{ width: calc(100% - 16px) !important; }
+}
+
+/* القاعدة القديمة كانت كتصغر الأزرار ل 38px بـ !important
+   فالتيليفون — صغار بزاف على الصبع. */
+@media (pointer: coarse){
+  .hoeren-sticky-nav .hoeren-nav-btn{ min-height: 44px !important; }
 }
 </style>
 </body>
