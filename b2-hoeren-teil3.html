@@ -1,11 +1,12 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html><html lang="de">
 
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script id="telc-theme-boot">(function(){const savedTheme=localStorage.getItem('theme');if(savedTheme==='dark'){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
@@ -24,8 +25,8 @@
     #warningBox { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--de-red); color: #fff; padding: 15px 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); font-size: 14px; font-weight: bold; z-index: 9999; }
     .teil-nav-wrap { display: flex; justify-content: center; gap: 10px; margin: 0 auto 24px; flex-wrap: wrap; max-width: 7xl; }
     .teil-nav-btn { padding: 10px 26px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; background: var(--surface); border: 2px solid var(--de-red); color: var(--de-red); transition: .22s; }
-    .teil-nav-btn:hover { background: var(--de-red); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(214,0,0,0.2); }
-    .teil-nav-btn.active { background: var(--de-red); color: #fff; box-shadow: 0 4px 12px rgba(214,0,0,0.25); }
+    .teil-nav-btn:hover { background: var(--de-red); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(212,175,55,0.2); }
+    .teil-nav-btn.active { background: var(--de-red); color: #fff; box-shadow: 0 4px 12px rgba(212,175,55,0.25); }
     html.dark .teil-nav-btn { background: #1f1f1f; border-color: var(--de-red); color: #f1f1f1; }
     html.dark .teil-nav-btn.active { background: var(--de-red); color: #fff; }
   </style>
@@ -45,7 +46,6 @@
 <link rel="stylesheet" href="../telc-theme-dark.css">
 <link rel="stylesheet" href="../telc-micro-interactions.css">
 <link rel="stylesheet" href="quiz-ui-premium.css">
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <link rel="stylesheet" href="quiz-celebration.css">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0056b3">
@@ -54,9 +54,19 @@
 <meta name="apple-mobile-web-app-title" content="TelccFree">
 <link rel="apple-touch-icon" href="/icon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://cdn.tailwindcss.com"></script>
+<style id="hoeren-preflight">
+/* هادشي كان كيجي من Tailwind. حيدنا Tailwind حيت ماكان كيتستعمل
+   فحتى قاعدة ف هاد الصفحة، وكان كيحبس رسم الصفحة كاملة حتى يتحمل
+   ويولد الـ CSS ف الـ navigateur. هادو هوما القواعد الوحيدين اللي
+   كانو خدامين منو، مكتوبين نيشان: */
+*, *::before, *::after { box-sizing: border-box; }
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+button, input, select, textarea { font: inherit; color: inherit; margin: 0; }
+img, svg, video, canvas { display: block; max-width: 100%; }
+</style>
 <script>tailwind.config = { darkMode: "class" };</script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap"></noscript>
 <link rel="stylesheet" href="../telc-exercise-chrome.css">
 <link rel="stylesheet" href="../telc-home-nav.css">
 <link rel="stylesheet" href="../telc-theme-dark-exercises.css">
@@ -83,7 +93,7 @@
     font-size: 13.5px;
     font-weight: 600;
     transition: all .22s ease;
-    box-shadow: 0 2px 6px rgba(214,0,0,0.06);
+    box-shadow: 0 2px 6px rgba(212,175,55,0.06);
     position: relative;
     overflow: visible !important;
     min-height: 56px;
@@ -95,7 +105,7 @@
     background: linear-gradient(135deg, rgba(212,175,55,.12) 0%, rgba(212,175,55,.14) 100%);
     border-color: var(--gold);
     transform: translateY(-3px) scale(1.015);
-    box-shadow: 0 6px 20px rgba(214,0,0,0.15);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.15);
   }
   #hoeren-hub-grid a.ex-btn:active,
   #hoeren-teil1-grid a.ex-btn:active { transform: translateY(-1px) scale(1.005); }
@@ -151,7 +161,7 @@
     background: var(--surface);
     border: 1.5px solid #f0d0d0;
     border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(214,0,0,0.06);
+    box-shadow: 0 2px 10px rgba(212,175,55,0.06);
     overflow: hidden;
   }
   html.dark .theme-item {
@@ -169,7 +179,7 @@
     user-select: none;
   }
   html.dark .theme-item-header {
-    background: #241f1f;
+    background: #22201a;
     border-color: #3a3a3a;
   }
   .theme-item-index {
@@ -232,7 +242,7 @@
     background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
     color: #fff;
     font-size: 18px;
-    box-shadow: 0 6px 14px rgba(214,0,0,0.16);
+    box-shadow: 0 6px 14px rgba(212,175,55,0.16);
   }
   .theme-card-info { flex: 1; min-width: 0; }
   .theme-card-label { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
@@ -256,7 +266,7 @@
   .theme-card-open:hover {
     background: var(--de-red-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(214,0,0,0.2);
+    box-shadow: 0 6px 15px rgba(212,175,55,0.2);
   }
   .theme-card-open i { transition: transform .2s; }
   .theme-card-open:hover i { transform: translateX(-3px); }
@@ -340,7 +350,7 @@
     transition: transform .2s, box-shadow .2s;
   }
   .nq-btn:hover { transform: translateY(-2px); }
-  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(214,0,0,0.22); }
+  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(212,175,55,0.22); }
   .nq-btn-show { background: #22252a; color: #fff; }
   html.dark .nq-btn-show { background: var(--surface-2); color: #161616; }
   .nq-btn-retry { background: var(--de-yellow); color: var(--text); }
@@ -375,9 +385,9 @@
 }
 
 body{
-  background: radial-gradient(900px 420px at -8% -8%, rgba(214,0,0,.14), transparent 62%),
-    radial-gradient(760px 360px at 108% -5%, rgba(242,197,0,.16), transparent 60%),
-    radial-gradient(600px 420px at 50% 110%, rgba(214,0,0,.055), transparent 65%),
+  background: radial-gradient(900px 420px at -8% -8%, rgba(212,175,55,.14), transparent 62%),
+    radial-gradient(760px 360px at 108% -5%, rgba(212,175,55,.16), transparent 60%),
+    radial-gradient(600px 420px at 50% 110%, rgba(212,175,55,.055), transparent 65%),
     linear-gradient(135deg,var(--surface-2) 0%,#121419 43%,var(--surface-2) 100%) !important;
   color: var(--text) !important;
 }
@@ -387,7 +397,7 @@ body{
   border-radius: 16px !important;
   margin-bottom: 18px !important;
   background: linear-gradient(90deg,#171717 0%,#252525 72%,var(--gold) 100%) !important;
-  box-shadow: 0 8px 24px rgba(23,23,23,.14),0 2px 0 rgba(242,197,0,.7) inset !important;
+  box-shadow: 0 8px 24px rgba(23,23,23,.14),0 2px 0 rgba(212,175,55,.7) inset !important;
 }
 
 /* Part navigation */
@@ -407,13 +417,13 @@ body{
   background: rgba(212,175,55,.12) !important;
   border-color: var(--gold) !important;
   color: var(--gold) !important;
-  box-shadow: 0 10px 24px rgba(214,0,0,.13) !important;
+  box-shadow: 0 10px 24px rgba(212,175,55,.13) !important;
 }
 .teil-nav-btn.active{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
   border-color: var(--gold) !important;
   color: #fff !important;
-  box-shadow: 0 9px 22px rgba(214,0,0,.25) !important;
+  box-shadow: 0 9px 22px rgba(212,175,55,.25) !important;
 }
 
 /* Exercise stack */
@@ -446,7 +456,7 @@ body{
 
 /* Card header */
 #hoeren-teil3-stack .theme-item-header{
-  background: linear-gradient(135deg,#171717 0%,#252525 72%,#3a2020 100%) !important;
+  background: linear-gradient(135deg,#171717 0%,#252525 72%,#3a3320 100%) !important;
   border-bottom: 0 !important;
   color: #fff !important;
   padding: 17px 21px !important;
@@ -491,7 +501,7 @@ body{
 #hoeren-teil3-stack .nq-question-row:hover{
   border-color: var(--gold) !important;
   border-left-color: var(--gold) !important;
-  box-shadow: 0 8px 19px rgba(214,0,0,.08) !important;
+  box-shadow: 0 8px 19px rgba(212,175,55,.08) !important;
 }
 #hoeren-teil3-stack .nq-question-text{
   color: var(--text) !important;
@@ -518,7 +528,7 @@ body{
 }
 #hoeren-teil3-stack .nq-btn-check{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
-  box-shadow: 0 8px 19px rgba(214,0,0,.23) !important;
+  box-shadow: 0 8px 19px rgba(212,175,55,.23) !important;
 }
 #hoeren-teil3-stack .nq-btn-show{
   background: var(--surface-2) !important;
@@ -542,7 +552,7 @@ body{
 #hoeren-teil1-grid a.ex-btn:hover{
   background: linear-gradient(135deg,var(--surface) 0%,rgba(212,175,55,.12) 72%,var(--surface-2) 100%) !important;
   border-color: var(--gold) !important;
-  box-shadow: 0 10px 24px rgba(214,0,0,.13) !important;
+  box-shadow: 0 10px 24px rgba(212,175,55,.13) !important;
 }
 #hoeren-hub-grid a.ex-btn::before,
 #hoeren-teil1-grid a.ex-btn::before{
@@ -569,8 +579,8 @@ body{
 
 /* Dark mode remains compatible */
 html.dark body{
-  background: radial-gradient(850px 420px at -8% -8%,rgba(214,0,0,.18),transparent 62%),
-    radial-gradient(700px 380px at 108% 0%,rgba(242,197,0,.10),transparent 60%),
+  background: radial-gradient(850px 420px at -8% -8%,rgba(212,175,55,.18),transparent 62%),
+    radial-gradient(700px 380px at 108% 0%,rgba(212,175,55,.10),transparent 60%),
     linear-gradient(135deg,#0d0f14,#171a21 52%,#0d0f14) !important;
 }
 html.dark #hoeren-teil3-stack .theme-item{
@@ -578,7 +588,7 @@ html.dark #hoeren-teil3-stack .theme-item{
   border-color: #30343d !important;
 }
 html.dark #hoeren-teil3-stack .theme-item-header{
-  background: linear-gradient(135deg,#111318,#1d2028 72%,#351919) !important;
+  background: linear-gradient(135deg,#111318,#1d2028 72%,#33301c) !important;
 }
 html.dark #hoeren-teil3-stack .theme-iframe-wrap,
 html.dark #hoeren-teil3-stack .native-quiz-wrap{
@@ -631,7 +641,7 @@ body{
   background: rgba(18,20,25,.92) !important;
   backdrop-filter: blur(16px) saturate(150%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
-  box-shadow: 0 12px 34px rgba(23,23,23,.15),0 2px 0 rgba(214,0,0,.75) inset !important;
+  box-shadow: 0 12px 34px rgba(23,23,23,.15),0 2px 0 rgba(212,175,55,.75) inset !important;
 }
 
 .hoeren-sticky-nav .hoeren-nav-btn{
@@ -676,7 +686,7 @@ body{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
   color: var(--ink) !important;
   border-color: var(--gold) !important;
-  box-shadow: 0 7px 16px rgba(214,0,0,.22) !important;
+  box-shadow: 0 7px 16px rgba(212,175,55,.22) !important;
 }
 
 .hoeren-sticky-nav .hoeren-nav-divider{
@@ -689,7 +699,7 @@ body{
 html.dark .hoeren-sticky-nav{
   background: rgba(20,22,27,.92) !important;
   border-color: #343842 !important;
-  box-shadow: 0 12px 34px rgba(0,0,0,.35),0 2px 0 rgba(214,0,0,.8) inset !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.35),0 2px 0 rgba(212,175,55,.8) inset !important;
 }
 html.dark .hoeren-sticky-nav .hoeren-nav-part{
   background: #191c22 !important;
@@ -697,7 +707,7 @@ html.dark .hoeren-sticky-nav .hoeren-nav-part{
   border-color: #343842 !important;
 }
 html.dark .hoeren-sticky-nav .hoeren-nav-part:hover{
-  background: #2b1c1c !important;
+  background: #262218 !important;
   color: #fff !important;
   border-color: var(--gold) !important;
 }
@@ -769,7 +779,7 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
     border: 1px solid #16803c !important;
   }
   .nq-feedback-wrong {
-    background: rgba(255,107,107,.14) !important;
+    background: rgba(212,175,55,.14) !important;
     color: #ff9494 !important;
     border: 1px solid var(--danger) !important;
   }
@@ -1966,7 +1976,7 @@ resetTimers();
 }
 .nq-question-row.nq-wrong{
   border: 2px solid var(--danger) !important;
-  background: rgba(255,107,107,.14) !important;
+  background: rgba(212,175,55,.14) !important;
 }
 .nq-radio-option.nq-selected-correct{
   border-color: #16a34a !important;
@@ -1975,7 +1985,7 @@ resetTimers();
 }
 .nq-radio-option.nq-selected-wrong{
   border-color: var(--danger) !important;
-  background: rgba(255,107,107,.14) !important;
+  background: rgba(212,175,55,.14) !important;
   color: #991b1b !important;
 }
 .nq-feedback-badge{
@@ -2014,7 +2024,7 @@ resetTimers();
 }
 .nq-question-row.nq-wrong,
 .nq-question-row.nq-wrong .nq-question-text{
-  background: rgba(255,107,107,.14) !important;
+  background: rgba(212,175,55,.14) !important;
   border-color: var(--danger) !important;
 }
 .nq-question-row.nq-correct .nq-question-text,
@@ -2234,7 +2244,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 }
 html.dark .de-premium-box{background: #17191f;border-color: #30343d;}
 html.dark .de-premium-title{color: #fff;}
-html.dark .de-premium-topic{background: #241f1f;border-color: #3a3a3a;color: #fff;}
+html.dark .de-premium-topic{background: #22201a;border-color: #3a3a3a;color: #fff;}
 html.dark .de-premium-text{color: var(--muted);}
 html.dark .de-premium-offer{background: #111318;border-color: #343842;}
 html.dark .de-premium-offer:hover{background: var(--gold);border-color: var(--gold);}
@@ -2386,5 +2396,24 @@ html.dark .teil-nav-btn.active,
 .theme-item-index i, .theme-card-icon i, .nq-btn-check i, .theme-card-open i{ color: inherit !important; }
 </style>
 
+
+<script id="hoeren-nav-spacing">
+/* الـ nav ثابت (fixed)، إذن خاص الصفحة padding فوق بقدرو بالضبط.
+   كان مكتوب 136px نيشان، وهادشي كيخلي فراغ خاوي كبير فالتيليفون
+   ملي الـ nav كيدخل فسطر واحد. دابا كنقيسوه بجد. */
+(function () {
+  var nav = document.querySelector(".hoeren-sticky-nav");
+  if (!nav) return;
+  function applySpacing() {
+    var top = parseFloat(getComputedStyle(nav).top) || 0;
+    document.body.style.setProperty(
+      "padding-top", Math.round(nav.offsetHeight + top + 14) + "px", "important");
+  }
+  applySpacing();
+  window.addEventListener("resize", applySpacing);
+  window.addEventListener("orientationchange", applySpacing);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(applySpacing);
+})();
+</script>
 </body>
 </html>
