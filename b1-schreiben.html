@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/site-header.css?v=2fe74a2b">
 <style>
 .wrap {
     display: flex; flex-direction: column;
@@ -16,8 +17,12 @@
     padding: var(--gutter); text-align: center;
 }
 .card {
+    /* بلا box-sizing، الـ padding كيتزاد على 100% والبطاقة
+       كتخرج على عرض الشاشة فالتيليفون. */
+    box-sizing: border-box;
     width: min(100%, 540px);
-    padding: clamp(28px, 5vw, 48px);
+    max-width: 100%;
+    padding: clamp(24px, 5vw, 48px);
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 22px;
@@ -41,6 +46,8 @@ a.btn.gold {
 </style>
 </head>
 <body>
+<div id="site-header" data-active="schreiben"></div>
+
 <div class="wrap">
     <div class="card">
         <div class="icon">✍️</div>
@@ -52,12 +59,13 @@ a.btn.gold {
             </span>
         </p>
         <div class="actions">
-            <a class="btn gold" href="b1.html">← Zurück zu B1</a>
+            <a class="btn gold" href="index.html">← Zurück zu B1</a>
             <a class="btn" href="b2-schreiben.html">B2 Schreiben</a>
             <a class="btn" href="index.html">Startseite</a>
         </div>
     </div>
 </div>
 <script src="assets/session-guard.js?v=7bdfa3ca"></script>
+<script src="assets/site-header.js?v=de75223f"></script>
 </body>
 </html>

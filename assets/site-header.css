@@ -188,3 +188,38 @@
     .site-btn-icon { width: 38px; }
     .site-user { font-size: 12px; padding: 0 10px 0 5px; }
 }
+
+/* ===== مبدّل المستوى (Telc B1 / Telc B2) ===== */
+.site-level-wrap {
+    direction: ltr;
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+.site-level {
+    display: inline-flex;
+    gap: 4px;
+    padding: 5px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+}
+.site-level a {
+    min-height: 38px;
+    padding: 0 24px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 800;
+    font-size: 13.5px;
+}
+.site-level a:hover { color: var(--text); }
+.site-level a.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+}
+@media (max-width: 560px) {
+    .site-level a { padding: 0 18px; font-size: 13px; }
+}

@@ -97,6 +97,36 @@
 
     inner.appendChild(actions);
     header.appendChild(inner);
+
+    /* ---- مبدّل المستوى ----
+       بدل صفحات b1.html و b2.html اللي كانو كيجمعو كلشي،
+       المستوى كيتبدل جوا القسم نفسو: Lesen B1 ↔ Lesen B2.
+       كنعرفو المستوى الحالي من اسم الصفحة. */
+    if (active) {
+        const file = (location.pathname.split("/").pop() || "").toLowerCase();
+        const level = file.indexOf("b1-") === 0 ? "b1" : "b2";
+
+        const wrap = document.createElement("div");
+        wrap.className = "site-level-wrap";
+
+        const box = document.createElement("div");
+        box.className = "site-level";
+
+        [["b1", "Telc B1"], ["b2", "Telc B2"]].forEach(function (pair) {
+            const link = document.createElement("a");
+            link.href = pair[0] + "-" + active + ".html";
+            link.textContent = pair[1];
+            if (pair[0] === level) {
+                link.classList.add("active");
+                link.setAttribute("aria-current", "page");
+            }
+            box.appendChild(link);
+        });
+
+        wrap.appendChild(box);
+        header.appendChild(wrap);
+    }
+
     mount.replaceWith(header);
 
     /* الزر العايم ديال الوضع ماعندوش معنى وهاد الزر كاين */
