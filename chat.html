@@ -109,10 +109,12 @@ button:disabled{
     width: 330px;
     min-width: 330px;
     background: var(--sidebar);
-    color: white;
+    /* كان مكتوب white نيشان — وفالوضع الفاتح الخلفية
+       ولات بيضا، إذن العنوان والاسم كانو كيختافيو. */
+    color: var(--text);
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #333;
+    border-right: 1px solid var(--border);
     position: relative;
     z-index: 100;
 }
@@ -1926,6 +1928,8 @@ style="display:none">
 
 </div>
 
+<section class="tab-panel" id="tab-chats">
+
 <div class="section-title">
 Chats
 </div>
@@ -1951,6 +1955,109 @@ onclick="openCreateGroup()">
 Gruppe erstellen
 </button>
 
+</section>
+
+
+<section class="tab-panel" id="tab-community" hidden>
+
+<div class="panel-head">
+<h2>Community</h2>
+<span class="online-pill" id="onlinePill" hidden>
+<span class="online-dot"></span>
+<span id="onlineCount">0</span> online
+</span>
+</div>
+
+<button class="row-item" onclick="openCommunity()">
+<span class="row-avatar">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+</span>
+<span class="row-body">
+<span class="row-title">Deutsch Einfach Community</span>
+<span class="row-sub" id="communityPreview">الشات ديال الجميع</span>
+</span>
+</button>
+
+<div class="empty-row" id="communityHint">
+هنا كتهضر مع كل الطلبة.<br>
+باش تهضر مع واحد بوحدو، سير لـ Discussions.
+</div>
+
+</section>
+
+
+<section class="tab-panel" id="tab-calls" hidden>
+
+<div class="panel-head">
+<h2>Appels</h2>
+</div>
+
+<div id="callList"></div>
+
+<div class="empty-row" id="callsEmpty">
+ما زال ماكاينش مكالمات.<br>
+حل شات مع صاحبك وبرك على زر المكالمة.
+</div>
+
+</section>
+
+
+<section class="tab-panel" id="tab-profile" hidden>
+
+<div class="panel-head">
+<h2>Vous</h2>
+</div>
+
+<div class="me-card">
+<span class="me-avatar" id="meAvatar" onclick="pickProfilePhoto()" title="بدّل الصورة">
+<span class="edit">✎</span>
+</span>
+<span class="row-body">
+<span class="me-name" id="meName">—</span>
+<span class="me-mail" id="meMail"></span>
+</span>
+</div>
+
+<input type="file" id="profilePhotoInput" accept="image/*" hidden>
+
+<div class="settings-list">
+
+<button class="settings-row" onclick="pickProfilePhoto()">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+بدّل صورة البروفيل
+</button>
+
+<button class="settings-row" onclick="openRenameProfile()">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"></path></svg>
+بدّل الاسم
+<span class="val" id="meNameVal"></span>
+</button>
+
+<button class="settings-row" onclick="window.__deTheme && window.__deTheme.toggle()">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"></path></svg>
+الوضع فاتح / مظلم
+</button>
+
+<button class="settings-row" onclick="openRequests()">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+طلبات الصداقة
+<span class="val" id="meRequestCount"></span>
+</button>
+
+<button class="settings-row" onclick="location.href='index.html'">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"></path></svg>
+الصفحة الرئيسية
+</button>
+
+<button class="settings-row danger" onclick="logoutFromChat()">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+تسجيل الخروج
+</button>
+
+</div>
+
+</section>
+
 </aside>
 
 <main class="main">
@@ -1958,9 +2065,10 @@ Gruppe erstellen
 <header class="chat-header">
 
 <button
-class="mobile-menu"
-onclick="toggleSidebar()">
-<svg class="icon" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+class="mobile-back"
+aria-label="رجوع"
+onclick="leaveConversationView()">
+<svg class="icon" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
 </button>
 
 <div
@@ -2080,6 +2188,32 @@ onclick="sendMessage()">
 </div>
 
 </main>
+
+<nav class="tabbar" id="tabbar" aria-label="Navigation">
+
+<button type="button" data-tab="chats" class="active" onclick="openChatTab('chats')">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"></path></svg>
+Discussions
+<span class="tab-badge" id="tabBadgeChats" hidden>0</span>
+</button>
+
+<button type="button" data-tab="community" onclick="openChatTab('community')">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+Community
+</button>
+
+<button type="button" data-tab="calls" onclick="openChatTab('calls')">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.9 2z"></path></svg>
+Appels
+<span class="tab-badge" id="tabBadgeCalls" hidden>0</span>
+</button>
+
+<button type="button" data-tab="profile" onclick="openChatTab('profile')">
+<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+Vous
+</button>
+
+</nav>
 
 </div>
 
@@ -2372,7 +2506,8 @@ from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 import {
 getAuth,
-onAuthStateChanged
+onAuthStateChanged,
+signOut
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
@@ -3060,6 +3195,9 @@ window.setActiveItem=setActiveItem;
    ===================================================== */
 
 window.openCommunity=()=>{
+
+enterConversationView();
+
 
 currentMode="community";
 
@@ -3805,6 +3943,9 @@ window.addEventListener("pagehide",()=>{
 sendHeartbeat(false);
 });
 
+/* العدّاد ديال اللي أونلاين كيمشي مع نفس النبض */
+startOnlineCounter();
+
 }
 
 function isUserOnline(user){
@@ -4381,6 +4522,9 @@ rows.join("");
 
 window.openPrivateChat=async uid=>{
 
+enterConversationView();
+
+
 setActiveNav("friendsBtn");
 
 if(
@@ -4891,6 +5035,9 @@ Mitglieder
    ===================================================== */
 
 window.openGroup=async groupId=>{
+
+enterConversationView();
+
 
 try{
 
@@ -9729,6 +9876,384 @@ searchResults.style.display=
 
 });
 
+
+
+
+/* =====================================================
+   تبويبات كيف WhatsApp: Discussions · Community ·
+   Appels · Vous
+   ===================================================== */
+
+const CHAT_TABS=["chats","community","calls","profile"];
+let activeChatTab="chats";
+
+window.openChatTab=function(name){
+
+if(CHAT_TABS.indexOf(name)===-1)
+return;
+
+activeChatTab=name;
+
+CHAT_TABS.forEach(function(key){
+const panel=document.getElementById("tab-"+key);
+if(panel)panel.hidden=(key!==name);
+});
+
+document.querySelectorAll(".tabbar button").forEach(function(btn){
+btn.classList.toggle("active",btn.dataset.tab===name);
+});
+
+/* الرجوع للائحة فالتيليفون */
+document.querySelector(".app")?.classList.remove("in-chat");
+
+if(name==="calls")renderCallLog();
+if(name==="profile")renderProfileTab();
+if(name==="community")refreshOnlineCount();
+
+};
+
+/* ملي كتحل شي شات فالتيليفون، اللائحة كتخبا والمحادثة كتبان.
+
+   الصفحة كتحل Community بوحدها ملي كتبدا — وهاديك ماشي
+   اختيار ديال المستخدم. بلا هاد الحارس، التيليفون كيبدا
+   ديركت جوا المحادثة وشريط التبويبات ماكيبانش. */
+let conversationViewArmed=false;
+
+setTimeout(function(){conversationViewArmed=true;},1200);
+
+function enterConversationView(){
+if(!conversationViewArmed)return;
+if(window.innerWidth<=750)
+document.querySelector(".app")?.classList.add("in-chat");
+}
+
+window.leaveConversationView=function(){
+document.querySelector(".app")?.classList.remove("in-chat");
+};
+
+
+/* =====================================================
+   شحال من واحد أونلاين دابا
+   ===================================================== */
+
+let onlineTimer=null;
+
+async function refreshOnlineCount(){
+
+const pill=document.getElementById("onlinePill");
+const out=document.getElementById("onlineCount");
+
+if(!pill||!out||!currentUser)
+return;
+
+try{
+
+const cutoff=new Date(Date.now()-ONLINE_WINDOW_MS);
+
+const snap=await getDocs(
+query(
+collection(db,"users"),
+where("lastSeen",">",cutoff)
+)
+);
+
+let count=0;
+snap.forEach(function(){count++;});
+
+out.textContent=String(count);
+pill.hidden=false;
+
+}catch(error){
+
+/* القاعدة ممكن تمنع الاستعلام — ماشي سبب باش نوقفو كلشي */
+console.debug("ONLINE COUNT:",error?.code||error);
+pill.hidden=true;
+
+}
+
+}
+
+function startOnlineCounter(){
+if(onlineTimer)clearInterval(onlineTimer);
+refreshOnlineCount();
+onlineTimer=setInterval(refreshOnlineCount,60*1000);
+}
+
+
+/* =====================================================
+   سجل المكالمات
+   ===================================================== */
+
+function callWhen(date){
+
+if(!date)
+return "";
+
+const now=new Date();
+const sameDay=date.toDateString()===now.toDateString();
+
+const yesterday=new Date(now);
+yesterday.setDate(now.getDate()-1);
+
+if(sameDay)
+return date.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+
+if(date.toDateString()===yesterday.toDateString())
+return "Hier";
+
+return date.toLocaleDateString();
+
+}
+
+async function renderCallLog(){
+
+const list=document.getElementById("callList");
+const empty=document.getElementById("callsEmpty");
+
+if(!list||!currentUser)
+return;
+
+list.textContent="";
+
+try{
+
+/* جوج استعلامات: اللي درتهم واللي جاوني.
+   Firestore ماكيدعمش OR على حقلين مختلفين. */
+const [mine,theirs]=await Promise.all([
+getDocs(query(
+collection(db,"calls"),
+where("callerId","==",currentUser.uid),
+orderBy("createdAt","desc"),
+limit(40))),
+getDocs(query(
+collection(db,"calls"),
+where("calleeId","==",currentUser.uid),
+orderBy("createdAt","desc"),
+limit(40)))
+]);
+
+const rows=[];
+
+mine.forEach(function(d){rows.push({id:d.id,out:true,...d.data()});});
+theirs.forEach(function(d){rows.push({id:d.id,out:false,...d.data()});});
+
+rows.sort(function(a,b){
+const ta=a.createdAt?.toDate?.()?.getTime()||0;
+const tb=b.createdAt?.toDate?.()?.getTime()||0;
+return tb-ta;
+});
+
+const shown=rows.slice(0,40);
+
+if(empty)empty.hidden=shown.length>0;
+
+let missed=0;
+
+shown.forEach(function(call){
+
+/* فايتة = جاتك وما جاوبتيهاش */
+const wasMissed=!call.out
+&&(call.status==="ringing"||call.status==="no-answer"
+||call.status==="declined"||call.endedReason==="no-answer");
+
+if(wasMissed)missed++;
+
+const name=call.out
+?(call.calleeName||"صديق")
+:(call.callerName||"صديق");
+
+const row=document.createElement("div");
+row.className="row-item";
+
+const avatar=document.createElement("span");
+avatar.className="row-avatar";
+avatar.textContent=(name||"?").trim().charAt(0).toUpperCase();
+row.appendChild(avatar);
+
+const body=document.createElement("span");
+body.className="row-body";
+
+const title=document.createElement("span");
+title.className="row-title";
+title.textContent=name;
+body.appendChild(title);
+
+const sub=document.createElement("span");
+sub.className="row-sub"+(wasMissed?" missed":"");
+sub.textContent=
+(call.out?"↗ ":"↙ ")
++(call.type==="video"?"Videoanruf":"Anruf")
++(wasMissed?" · ماجاوبتيهاش":"");
+body.appendChild(sub);
+
+row.appendChild(body);
+
+const when=document.createElement("span");
+when.className="row-time";
+when.textContent=callWhen(call.createdAt?.toDate?.());
+row.appendChild(when);
+
+list.appendChild(row);
+
+});
+
+const badge=document.getElementById("tabBadgeCalls");
+if(badge){
+badge.textContent=String(missed);
+badge.hidden=missed===0;
+}
+
+}catch(error){
+
+console.debug("CALL LOG:",error?.code||error);
+if(empty){
+empty.hidden=false;
+empty.textContent="ما قدرناش نجيبو سجل المكالمات.";
+}
+
+}
+
+}
+
+
+/* =====================================================
+   Vous — البروفيل والإعدادات
+   ===================================================== */
+
+function renderProfileTab(){
+
+if(!currentUser)
+return;
+
+const name=getUserName(currentUserData)||"Student";
+
+const nameEl=document.getElementById("meName");
+const mailEl=document.getElementById("meMail");
+const valEl=document.getElementById("meNameVal");
+const avatar=document.getElementById("meAvatar");
+
+if(nameEl)nameEl.textContent=name;
+if(mailEl)mailEl.textContent=currentUser.email||"";
+if(valEl)valEl.textContent=name;
+
+if(avatar){
+const edit=avatar.querySelector(".edit");
+avatar.textContent="";
+const photo=currentUserData?.photoURL;
+if(photo){
+const img=document.createElement("img");
+img.src=photo;
+img.alt="";
+avatar.appendChild(img);
+}else{
+avatar.appendChild(
+document.createTextNode(name.trim().charAt(0).toUpperCase()));
+}
+if(edit)avatar.appendChild(edit);
+}
+
+const req=document.getElementById("meRequestCount");
+const badge=document.getElementById("requestBadge");
+if(req&&badge)
+req.textContent=badge.style.display==="none"?"":badge.textContent;
+
+}
+
+window.pickProfilePhoto=function(){
+document.getElementById("profilePhotoInput")?.click();
+};
+
+document.getElementById("profilePhotoInput")
+?.addEventListener("change",async function(event){
+
+const file=event.target.files&&event.target.files[0];
+event.target.value="";
+
+if(!file||!currentUser)
+return;
+
+try{
+
+showToast("كنحفظو الصورة…");
+
+/* ماكاينش Firebase Storage — الصورة كتصغر وكتبقى
+   ف الوثيقة بحال صور الݣروبات. */
+const dataUrl=await resizeImageToDataUrl(file,220);
+
+await setDoc(
+doc(db,"users",currentUser.uid),
+{photoURL:dataUrl},
+{merge:true}
+);
+
+currentUserData={...(currentUserData||{}),photoURL:dataUrl};
+
+renderProfileTab();
+showToast("تبدلات الصورة ✅");
+
+}catch(error){
+
+console.error("PROFILE PHOTO:",error);
+showToast("ما تبدلاتش الصورة");
+
+}
+
+});
+
+window.openRenameProfile=async function(){
+
+if(!currentUser)
+return;
+
+const current=getUserName(currentUserData)||"";
+const next=prompt("الاسم الجديد:",current);
+
+if(next===null)
+return;
+
+const clean=next.trim().slice(0,40);
+
+if(!clean){
+showToast("الاسم خاصو ما يكونش خاوي");
+return;
+}
+
+try{
+
+await setDoc(
+doc(db,"users",currentUser.uid),
+{name:clean},
+{merge:true}
+);
+
+currentUserData={...(currentUserData||{}),name:clean};
+renderProfileTab();
+showToast("تبدل الاسم ✅");
+
+}catch(error){
+
+console.error("RENAME:",error);
+showToast("ما تبدلش الاسم");
+
+}
+
+};
+
+window.logoutFromChat=async function(){
+
+if(!confirm("بغيتي تخرج من الحساب؟"))
+return;
+
+try{
+await signOut(auth);
+}catch(error){
+console.error("LOGOUT:",error);
+}
+
+location.replace("login.html");
+
+};
+
 </script>
 
 <script src="assets/session-guard.js?v=d6dfc66e"></script>
@@ -9825,6 +10350,278 @@ html[data-theme="light"] .de-theme-btn,
 window.__DE_VAPID_KEY = "";
 </script>
 <script src="assets/push-register.js?v=5807c76d"></script>
+
+<style id="chat-tabbar">
+.mobile-back { display: none; }
+/* =====================================================
+   شريط التبويبات تحت (كيف WhatsApp)
+   ===================================================== */
+
+.tabbar { display: none; }
+
+.tab-panel[hidden] { display: none !important; }
+/* display:grid تحت كيغلب [hidden] — خاصنا نقولوها بصراحة */
+.tabbar .tab-badge[hidden] { display: none !important; }
+
+/* عدّاد اللي أونلاين */
+.online-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+}
+.online-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 0 3px rgba(74,222,128,.22);
+}
+
+/* صف واحد فاللائحة (شات، مكالمة، إعداد) */
+.row-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    text-align: start;
+    cursor: pointer;
+    border-radius: 12px;
+    font: inherit;
+    min-height: 60px;
+}
+.row-item:hover { background: var(--sidebar-hover); }
+.row-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #16181d;
+    font-weight: 900;
+    font-size: 16px;
+}
+.row-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.row-body { flex: 1; min-width: 0; }
+.row-title { font-weight: 700; font-size: 15px; }
+.row-sub {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.row-sub.missed { color: #ff6b6b; font-weight: 700; }
+.row-time { font-size: 11.5px; color: var(--text-muted); flex: 0 0 auto; }
+
+.panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 16px 10px;
+    flex-wrap: wrap;
+}
+.panel-head h2 { font-size: 19px; font-weight: 900; }
+
+.empty-row {
+    padding: 28px 18px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13.5px;
+    line-height: 1.7;
+}
+
+/* ===== Vous / الإعدادات ===== */
+.me-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 16px;
+    margin: 0 12px 14px;
+    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+.me-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #16181d;
+    font-weight: 900;
+    font-size: 24px;
+    position: relative;
+    cursor: pointer;
+}
+.me-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.me-avatar .edit {
+    position: absolute;
+    inset-inline-end: -2px;
+    bottom: -2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--accent);
+    color: #16181d;
+    font-size: 12px;
+    border: 2px solid var(--sidebar);
+}
+.me-name { font-weight: 800; font-size: 17px; }
+.me-mail { font-size: 12.5px; color: var(--text-muted); margin-top: 3px; word-break: break-all; }
+
+.settings-list { padding: 0 12px 20px; display: flex; flex-direction: column; gap: 4px; }
+.settings-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    min-height: 52px;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 14.5px;
+    text-align: start;
+    cursor: pointer;
+}
+.settings-row:hover { background: var(--sidebar-hover); }
+.settings-row .ico { width: 20px; height: 20px; flex: 0 0 auto; color: var(--accent); }
+.settings-row .val { margin-inline-start: auto; color: var(--text-muted); font-size: 12.5px; }
+/* كاينة .danger ديجا ف الصفحة بخلفية حمرا كاملة.
+   هنا بغينا غير النص حمر بحال WhatsApp. */
+.settings-row.danger {
+    background: transparent !important;
+    color: #ff6b6b !important;
+    border: none !important;
+}
+.settings-row.danger:hover { background: rgba(255,107,107,.10) !important; }
+.settings-row.danger .ico { color: #ff6b6b; }
+
+/* الاسم والإيميل كانو كيتلزقو فسطر واحد */
+.me-name, .me-mail { display: block; }
+.me-card .row-body { display: block; }
+
+/* =====================================================
+   التيليفون: اللائحة هي الصفحة، والمحادثة كتغطيها
+   ===================================================== */
+@media (max-width: 750px) {
+
+    .tabbar {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2500;
+        background: var(--sidebar);
+        border-top: 1px solid var(--border);
+        padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    }
+
+    .tabbar button {
+        flex: 1;
+        min-height: 52px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        border: none;
+        background: transparent;
+        color: var(--text-muted);
+        font: inherit;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        border-radius: 12px;
+        position: relative;
+    }
+    .tabbar button .ico { width: 22px; height: 22px; }
+    .tabbar button.active { color: var(--accent); }
+    .tabbar button.active .ico { transform: translateY(-1px); }
+    .tabbar .tab-badge {
+        position: absolute;
+        top: 3px;
+        inset-inline-end: 50%;
+        transform: translateX(50%) translateX(16px);
+        min-width: 18px;
+        height: 18px;
+        padding: 0 5px;
+        border-radius: 999px;
+        background: #ff6b6b;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 900;
+        display: grid;
+        place-items: center;
+    }
+
+    /* اللائحة ولات هي الصفحة، ماشي درج كيخرج من الجنب */
+    .sidebar {
+        position: static !important;
+        left: auto !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        box-shadow: none !important;
+        padding-bottom: calc(66px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .app.in-chat .sidebar { display: none; }
+    .app:not(.in-chat) .main { display: none; }
+    .app.in-chat .tabbar { display: none; }
+
+    /* زر القائمة القديم ولا زر رجوع */
+    .mobile-menu { display: none !important; }
+
+    /* التبويبات تحت كتعوض القائمة القديمة فوق */
+    .sidebar .nav { display: none; }
+    .logo-area { padding-bottom: 6px; }
+
+    .create-group {
+        position: static;
+        width: calc(100% - 24px);
+        margin: 10px 12px 4px;
+        min-height: 46px;
+    }
+    .mobile-back {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        margin-inline-end: 4px;
+        border: none;
+        border-radius: 12px;
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+    }
+    .mobile-back .icon { width: 22px; height: 22px; }
+}
+</style>
 </body>
 
 </html>
