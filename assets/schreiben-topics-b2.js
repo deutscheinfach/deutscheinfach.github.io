@@ -90,15 +90,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "MEINE KISTE – Frisches Obst & Gemüse im Abo!\n\n• Regional & saisonal\n• Wöchentliche Lieferung an die Haustür\n• Individuell zusammenstellbar\n• Jederzeit kündbar\n\nMeine Kiste GmbH\nwww.meine-kiste.de",
-    "situation": "Sie haben ein Obst- und Gemüse-Abo bei Meine Kiste bestellt. Mehrfach kamen die Lieferungen verspätet und mit verdorbenen Produkten an. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Abo haben Sie bestellt und was war versprochen?",
-      "Was ist bei den letzten Lieferungen konkret schiefgelaufen?",
-      "Welche Folgen hatte das für Sie?",
-      "Was fordern Sie von der Firma (Erstattung, Kündigung)?"
-    ]
+    "locked": true
   },
   "23": {
     "title": "Kostenlose Apps für dein Handy!",
