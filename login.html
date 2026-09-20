@@ -668,8 +668,6 @@ const allowedPages = [
 
     "index.html",
 
-    "dashboard.html",
-
     "chat.html",
 
     "b1-lesen.html",
@@ -803,11 +801,8 @@ function normalizeReturnTo(value) {
 
 
         /*
-         * مهم بزاف:
-         *
-         * dashboard.html?section=lesen
-         *
-         * غادي تبقى كاملة
+         * مهم بزاف: الـ query كتبقى كاملة.
+         * مثال: b2-lesen-teil1.html?thema=sport
          */
 
         return (

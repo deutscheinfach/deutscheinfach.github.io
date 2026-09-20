@@ -91,7 +91,7 @@
     const user = document.createElement("a");
     user.className = "site-user";
     user.id = "site-user";
-    user.href = "dashboard.html";
+    user.href = "index.html";
     user.hidden = true;
     actions.appendChild(user);
 

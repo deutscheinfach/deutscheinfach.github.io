@@ -4,388 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deutsch Einfach – B2 Schreiben</title>
-
+<meta name="description" content="TELC B2 Schreiben – 41 Themen mit KI-Korrektur.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
-
 <link rel="stylesheet" href="assets/theme.css">
-<link rel="stylesheet" href="assets/site-header.css?v=2fe74a2b">
 <script src="assets/theme-toggle.js?v=98b0dab3"></script>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-    --gold: #d4af37;
-    --gold-soft: #f4e5a1;
-    --ink: #08090c;
-    --card: #121419;
-    --line: rgba(255,255,255,.08);
-    --line-gold: rgba(212,175,55,.35);
-    --text: #f5f4f0;
-    --muted: #b9b6ad;
-}
-
-body {
-    font-family: "Cairo", "Segoe UI", Arial, Helvetica, sans-serif;
-    color: var(--text);
-    background:
-        radial-gradient(circle at 12% 8%, rgba(212,175,55,.10), transparent 40%),
-        radial-gradient(circle at 88% 26%, rgba(212,175,55,.07), transparent 44%),
-        var(--ink);
-    min-height: 100vh;
-}
-
-/* ===== HEADER ===== */
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 16px 30px;
-    background: rgba(8,9,12,.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line-gold);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.brand { display: flex; align-items: center; gap: 12px; }
-
-.brand-logo {
-    width: 46px; height: 46px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 12px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    color: #17130a;
-    font-weight: 900; font-size: 18px;
-}
-
-.brand-text h1 { font-size: 20px; font-weight: 800; }
-.brand-text p { color: var(--gold); font-size: 12.5px; }
-
-.top-buttons { display: flex; gap: 10px; }
-
-.top-btn {
-    padding: 10px 17px;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: #181b22;
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    transition: .25s;
-}
-.top-btn:hover { border-color: var(--line-gold); color: var(--gold-soft); transform: translateY(-2px); }
-
-.top-btn.primary {
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    border-color: transparent;
-    color: #17130a;
-}
-.top-btn.primary:hover { box-shadow: 0 12px 26px -10px rgba(212,175,55,.6); }
-
-/* ===== HERO ===== */
-.hero { text-align: center; padding: 58px 25px 42px; }
-
-.hero .label {
-    display: inline-block;
-    margin-bottom: 18px;
-    padding: 7px 18px;
-    border-radius: 30px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    color: #17130a;
-    font-size: 13px; font-weight: 800;
-    letter-spacing: .5px;
-}
-
-.hero h2 {
-    font-size: 42px; font-weight: 900; margin-bottom: 14px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-
-.hero p { max-width: 680px; margin: auto; color: var(--muted); font-size: 16.5px; line-height: 1.8; }
-
-/* ===== STATS ===== */
-.stats { max-width: 1000px; margin: 0 auto 40px; padding: 0 20px; }
-
-.stats-box {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    overflow: hidden;
-    text-align: center;
-}
-
-.stat { background: var(--card); padding: 22px 12px; }
-.stat strong { display: block; font-size: 27px; font-weight: 900; color: var(--gold-soft); margin-bottom: 4px; }
-.stat span { font-size: 13.5px; color: var(--muted); }
-
-/* ===== MAIN ===== */
-main { max-width: 1200px; margin: 0 auto; padding: 0 20px 70px; }
-
-.section-title { text-align: center; margin-bottom: 32px; }
-.section-title h3 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-.section-title h3 span { color: var(--gold); }
-.section-title p { color: var(--muted); font-size: 15px; }
-
-.topics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-
-.topic-card {
-    display: flex; flex-direction: column;
-    min-height: 232px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    overflow: hidden;
-    transition: .28s ease;
-}
-.topic-card:hover {
-    transform: translateY(-6px);
-    border-color: var(--line-gold);
-    box-shadow: 0 22px 45px -16px rgba(212,175,55,.35);
-}
-
-.topic-number {
-    padding: 9px 16px;
-    background: rgba(255,255,255,.03);
-    border-bottom: 1px solid var(--line);
-    color: var(--gold);
-    font-size: 12.5px; font-weight: 800;
-    letter-spacing: .4px;
-}
-
-.topic-content { display: flex; flex-direction: column; flex: 1; padding: 20px; }
-.topic-title { font-size: 18px; font-weight: 700; line-height: 1.45; margin-bottom: 18px; }
-
-.badges { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; margin-bottom: 16px; }
-
-.badge { padding: 5px 11px; border-radius: 20px; font-size: 11.5px; font-weight: 700; border: 1px solid var(--line); color: var(--muted); }
-.badge.type { border-color: var(--line-gold); color: var(--gold-soft); }
-
-.start-btn {
-    display: block; width: 100%;
-    padding: 11px 15px;
-    border: none; border-radius: 10px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    color: #17130a;
-    font-family: inherit; font-size: 14px; font-weight: 800;
-    text-align: center; text-decoration: none; cursor: pointer;
-    transition: .25s;
-}
-.start-btn:hover { box-shadow: 0 12px 26px -10px rgba(212,175,55,.6); }
-
-.start-btn.premium {
-    background: #181b22;
-    border: 1px solid var(--line-gold);
-    color: var(--gold-soft);
-}
-.start-btn.premium:hover { background: #1f2229; box-shadow: none; }
-
-/* ===== MODAL ===== */
-.premium-modal {
-    display: none;
-    position: fixed; inset: 0; z-index: 5000;
-    padding: 20px;
-    overflow-y: auto;
-    background: rgba(0,0,0,.8);
-    backdrop-filter: blur(4px);
-}
-.premium-modal.show { display: flex; align-items: flex-start; justify-content: center; }
-
-.premium-box {
-    position: relative;
-    width: 100%; max-width: 900px;
-    margin: 5vh 0;
-    background: var(--ink);
-    border: 1px solid var(--line-gold);
-    border-radius: 22px;
-    overflow: hidden;
-    animation: premiumIn .22s ease;
-}
-
-@keyframes premiumIn {
-    from { opacity: 0; transform: translateY(14px) scale(.98); }
-    to { opacity: 1; transform: none; }
-}
-
-.premium-head { padding: 26px 62px 24px 26px; border-bottom: 1px solid var(--line); }
-.premium-head h3 {
-    font-size: 23px; font-weight: 900; margin-bottom: 8px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-.premium-head p { color: var(--muted); line-height: 1.7; font-size: 14.5px; }
-
-.premium-close {
-    position: absolute; top: 16px; right: 18px;
-    width: 36px; height: 36px;
-    border: 1px solid var(--line); border-radius: 50%;
-    background: #181b22; color: var(--muted);
-    font-size: 20px; cursor: pointer;
-    transition: .25s;
-}
-.premium-close:hover { border-color: var(--line-gold); color: var(--gold-soft); }
-
-.premium-body { padding: 24px 26px 28px; }
-
-.offer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-
-.offer-card {
-    display: flex; flex-direction: column;
-    padding: 24px 20px;
-    background: var(--card);
-    border: 2px solid var(--line);
-    border-radius: 18px;
-    text-align: center;
-    transition: .28s;
-}
-.offer-card:hover { transform: translateY(-5px); border-color: var(--line-gold); }
-.offer-card.best { border-color: rgba(212,175,55,.5); }
-
-.offer-tag {
-    align-self: center; margin-bottom: 10px;
-    padding: 4px 13px; border-radius: 999px;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    color: #17130a; font-size: 11.5px; font-weight: 800;
-}
-
-.offer-card h4 { font-size: 20px; color: var(--gold-soft); margin-bottom: 4px; }
-.offer-card .sub { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
-.offer-price { font-size: 30px; font-weight: 900; margin-bottom: 4px; }
-.offer-period { color: var(--muted); font-size: 14px; }
-
-.offer-card ul { list-style: none; flex: 1; margin: 18px 0 0; text-align: start; }
-.offer-card li { display: flex; gap: 8px; margin-bottom: 11px; font-size: 13.5px; line-height: 1.6; color: var(--text); }
-.offer-card li::before { content: "✓"; color: #4ade80; font-weight: 800; }
-
-.offer-btn {
-    display: block; margin-top: 18px; padding: 12px 10px;
-    background: #25d366; color: #fff;
-    border-radius: 11px; text-decoration: none;
-    font-size: 14px; font-weight: 800;
-    transition: .25s;
-}
-.offer-btn:hover { background: #1ebe5d; transform: translateY(-2px); }
-
-.whatsapp-area { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); text-align: center; }
-.whatsapp-area p { margin-bottom: 12px; color: var(--muted); line-height: 1.8; font-size: 14px; }
-.whatsapp-ar { display: block; direction: rtl; }
-
-.whatsapp-main {
-    display: block; padding: 13px 15px;
-    background: #181b22; border: 1px solid var(--line-gold);
-    border-radius: 11px; color: var(--gold-soft);
-    text-decoration: none; font-weight: 800;
-    transition: .25s;
-}
-.whatsapp-main:hover { background: #1f2229; }
-
-/* ===== FOOTER ===== */
-footer { padding: 34px 20px; text-align: center; border-top: 1px solid var(--line-gold); }
-footer strong { color: var(--gold-soft); font-size: 17px; }
-footer p { margin-top: 8px; color: var(--muted); font-size: 13px; }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 950px) {
-    .topics-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero h2 { font-size: 34px; }
-    .offer-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 650px) {
-    header { flex-direction: column; padding: 14px 16px; }
-    .top-buttons { width: 100%; }
-    .top-btn { flex: 1; text-align: center; font-size: 13px; }
-    .hero { padding: 40px 18px 32px; }
-    .hero h2 { font-size: 28px; }
-    .stats-box { grid-template-columns: 1fr; }
-    .topics-grid { grid-template-columns: 1fr; }
-    .premium-head { padding: 22px 56px 20px 20px; }
-    .premium-body { padding: 20px; }
-}
-</style>
+<link rel="stylesheet" href="assets/site-header.css?v=2fe74a2b">
+<link rel="stylesheet" href="assets/section.css?v=258738f3">
 </head>
-
 <body>
+
 <div id="site-header" data-active="schreiben"></div>
 
+<main class="lesen-shell">
 
-<header>
-    <div class="brand">
-        <div class="brand-logo">DE</div>
-        <div class="brand-text">
-            <h1>Deutsch Einfach</h1>
-            <p>TELC B1 &amp; B2 Vorbereitung</p>
+    <div class="lesen-head-row">
+        <section class="lesen-hero">
+            <span class="lesen-badge">B2 · Schriftlicher Ausdruck</span>
+            <h1>Schreiben</h1>
+            <p class="lead">اختار موضوع، كتب الجواب ديالك، والذكاء الاصطناعي كيصححو ليك.</p>
+        </section>
+
+        <div class="lesen-stats">
+            <div class="lesen-stat"><b>41</b><span>مواضيع</span></div>
+            <div class="lesen-stat"><b>B2</b><span>المستوى</span></div>
         </div>
     </div>
-    <div class="top-buttons">
-        <a href="index.html" class="top-btn">← Zurück</a>
-        <a href="index.html" class="top-btn primary">Startseite</a>
-    </div>
-</header>
 
-<section class="hero">
-    <div class="label">B2 • SCHREIBEN</div>
-    <h2>Schreiben – Beschwerde</h2>
-    <p>Trainiere deine B2-Schreibaufgaben und bereite dich gezielt auf den TELC-Test vor.</p>
-</section>
-
-<section class="stats">
-    <div class="stats-box">
-        <div class="stat"><strong id="stat-count">–</strong><span>Schreiben Themen</span></div>
-        <div class="stat"><strong>30 min</strong><span>Bearbeitungszeit</span></div>
-        <div class="stat"><strong>B2</strong><span>Schwierigkeitsstufe</span></div>
-    </div>
-</section>
-
-<main>
-    <div class="section-title">
-        <h3>B2 <span>Schreiben</span></h3>
-        <p>Wähle ein Thema und beginne deine Beschwerde-Aufgabe.</p>
+    <div class="lesen-toolbar">
+        <label class="lesen-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+            </svg>
+            <input id="lesen-search-input" type="search" placeholder="ابحث عن المواضيع..."
+                   autocomplete="off" aria-label="ابحث عن المواضيع">
+        </label>
+        <button class="lesen-sort" id="lesen-sort-btn" type="button">
+            ⇅ <span class="label">ترتيب</span>
+        </button>
     </div>
 
-    <div class="topics-grid" id="topics-grid"></div>
+    <div class="lesen-count" id="lesen-count"></div>
+    <div class="lesen-grid" id="lesen-grid"></div>
+
 </main>
 
-<div class="premium-modal" id="premiumModal">
-    <div class="premium-box">
-        <button class="premium-close" id="premiumClose" type="button" aria-label="Schließen">×</button>
-
-        <div class="premium-head">
-            <h3>🔒 Premium – B2 Schreiben</h3>
-            <p id="premiumTopic">Dieses Thema ist Premium.</p>
-        </div>
-
-        <div class="premium-body">
-            <div class="offer-grid" id="offerGrid"></div>
-
-            <div class="whatsapp-area">
-                <p>
-                    🇩🇪 Nach der Auswahl kannst du uns direkt über WhatsApp kontaktieren.
-                    <span class="whatsapp-ar">🇲🇦 من بعد ما تختار العرض، تواصل معانا مباشرة عبر WhatsApp.</span>
-                </p>
-                <a href="https://wa.me/212653618205" target="_blank" rel="noopener noreferrer" class="whatsapp-main">
-                    💬 WhatsApp – تواصل معنا
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <strong>Deutsch Einfach</strong>
-    <p>TELC B1 &amp; B2 Vorbereitung • Schreiben B2</p>
-</footer>
-
-<script src="assets/schreiben-topics-b2.js"></script>
-<script src="assets/schreiben-premium.js"></script>
-<script src="assets/b2-schreiben-list.js"></script>
-<script src="assets/session-guard.js?v=7bdfa3ca"></script>
-<script src="assets/site-header.js?v=de75223f"></script>
+<script src="assets/schreiben-topics-b2.js?v=59a5d043"></script>
+<script src="assets/schreiben-hub.js?v=8d911b28"></script>
+<script src="assets/site-header.js?v=21440e99"></script>
+<script src="assets/session-guard.js?v=d6dfc66e"></script>
 </body>
 </html>

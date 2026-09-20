@@ -975,21 +975,21 @@ html.dark .h2-offer-desc,.h2-wa-number{color: #aaa;}
 <div id="site-header" data-active="hoeren"></div>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
-  <a class="hoeren-nav-btn hoeren-nav-back" href="index.html">
+  <a class="hoeren-nav-btn hoeren-nav-back" href="b2-hoeren.html">
     <i class="fa-solid fa-arrow-left"></i><span>Zurück</span>
   </a>
   <a class="hoeren-nav-btn hoeren-nav-start" href="index.html">
     <i class="fa-solid fa-house"></i><span>Startseite</span>
   </a>
   <span class="hoeren-nav-divider"></span>
-  <a class="hoeren-nav-btn hoeren-nav-part" href="b2-hoeren.html">Teil 1</a>
+  <a class="hoeren-nav-btn hoeren-nav-part" href="b2-hoeren-teil1.html">Teil 1</a>
   <a class="hoeren-nav-btn hoeren-nav-part active" href="b2-hoeren-teil2.html">Teil 2</a>
   <a class="hoeren-nav-btn hoeren-nav-part" href="b2-hoeren-teil3.html">Teil 3</a>
 </nav>
 <script>
 (function(){
 var b=document.querySelector('.hoeren-nav-back'),h=document.querySelector('.hoeren-nav-start');
-if(b)b.onclick=function(e){e.preventDefault();location.href='index.html';};
+if(b)b.onclick=function(e){e.preventDefault();location.href='b2-hoeren.html';};
 if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 })();
 </script>
@@ -2454,7 +2454,7 @@ function resetTimers() {
     // Auto logout
     logoutTimer = setTimeout(() => {
         fetch("/logout", { method: "POST" })
-          .then(() => { window.location.href = (window.TelcLevelNav && TelcLevelNav.getDashboardHref()) || 'dashboard.html'; });
+          .then(() => { window.location.href = 'index.html'; });
     }, INACTIVITY_LIMIT);
 }
 
@@ -2499,7 +2499,7 @@ resetTimers();
 </script>
 <!-- AUTO_NAV_START -->
 <div class="auto-nav-wrap">
-  <a id="autoPrevBtn" class="auto-nav-btn auto-nav-secondary" href="index.html">← Previous</a>
+  <a id="autoPrevBtn" class="auto-nav-btn auto-nav-secondary" href="b2-hoeren.html">← Previous</a>
   <button type="button" id="telcThemeToggle" class="telc-theme-capsule" aria-label="Dunkelmodus aktivieren" title="Dunkelmodus"><span class="telc-theme-capsule__track"><span class="telc-theme-capsule__btn telc-theme-capsule__btn--sun" data-theme-mode="light"><i class="fa-solid fa-sun" aria-hidden="true"></i></span><span class="telc-theme-capsule__btn telc-theme-capsule__btn--moon" data-theme-mode="dark"><i class="fa-solid fa-moon" aria-hidden="true"></i></span></span></button>
   <a class="auto-nav-btn auto-nav-secondary telc-home-btn telc-home-btn--compact" href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i> Startseite</a>
 </div>
@@ -2852,7 +2852,7 @@ html.dark .teil-nav-btn.active,
 </style>
 
 
-<script src="assets/session-guard.js?v=7bdfa3ca"></script>
+<script src="assets/session-guard.js?v=d6dfc66e"></script>
 
 <style id="hoeren-light-mode">
 /* ===== الوضع الفاتح لصفحات Hören =====
@@ -2951,7 +2951,7 @@ html[data-theme="light"] .nq-question-row.nq-wrong{ background: rgba(198,40,40,.
 html[data-theme="light"] .nq-radio-option.nq-selected-correct{ color: #15803d !important; }
 html[data-theme="light"] .nq-radio-option.nq-selected-wrong{ color: #c62828 !important; }
 </style>
-<script src="assets/site-header.js?v=de75223f"></script>
+<script src="assets/site-header.js?v=21440e99"></script>
 
 <style id="hoeren-with-site-header">
 /* الهيدر المشترك ولا هو اللي فوق. الـ nav ديال Hören كان
