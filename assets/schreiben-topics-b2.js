@@ -48,15 +48,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "NATURMUSEUM ERLEBNISWELT – Natur hautnah entdecken!\n\n• Interaktive Ausstellungen für Groß und Klein\n• Wechselnde Sonderausstellungen\n• Geführte Themenrouten\n• Café mit Terrasse\n\nNaturmuseum Erlebniswelt\nwww.naturmuseum-erlebniswelt.de",
-    "situation": "Sie haben mit Ihrer Familie das Naturmuseum Erlebniswelt besucht. Die beworbene Sonderausstellung war geschlossen und das Personal konnte Ihnen keine Auskunft geben. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie sich vom Besuch erhofft und warum?",
-      "Was war bei Ihrem Besuch anders als beworben?",
-      "Wie hat das Personal reagiert?",
-      "Was fordern Sie vom Museum?"
-    ]
+    "locked": true
   },
   "17": {
     "title": "Backstage Musical",
