@@ -167,15 +167,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "KOCHSCHULE APPETIT – Kochen leicht gemacht!\n\n• Praxiskurse für Anfänger und Profis\n• Alle Zutaten werden gestellt\n• Rezepte zum Mitnehmen\n• Gemeinsames Essen nach dem Kurs\n\nKochschule Appetit\nwww.kochschule-appetit.de",
-    "situation": "Sie haben an einem Kochkurs der Kochschule Appetit teilgenommen. Wichtige Zutaten fehlten während des Kurses und die angekündigte gemeinsame Mahlzeit am Ende fiel aus. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welchen Kurs hatten Sie gebucht und was war im Angebot enthalten?",
-      "Was ist während des Kurses konkret schiefgelaufen?",
-      "Wie hat sich das auf Ihr Kurserlebnis ausgewirkt?",
-      "Was fordern Sie von der Kochschule?"
-    ]
+    "locked": true
   },
   "34": {
     "title": "Rundum sorglos unterwegs – die Securvia Reisegepäckversicherung",
