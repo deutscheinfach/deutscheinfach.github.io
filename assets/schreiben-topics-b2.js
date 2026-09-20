@@ -139,15 +139,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "FOTOAKADEMIE LICHTBLICK – Fotografieren für Fortgeschrittene!\n\n• Praxisworkshops mit Profi-Fotografen\n• Eigenes Kameraequipment nutzbar\n• Kleine Gruppen von max. 6 Personen\n• Zertifikat nach Abschluss\n\nFotoakademie Lichtblick\nwww.fotoakademie-lichtblick.de",
-    "situation": "Sie haben einen Fortgeschrittenen-Workshop bei der Fotoakademie Lichtblick gebucht. Der Kursleiter war fachlich nicht auf dem versprochenen Niveau und wichtige Themen aus der Beschreibung wurden nicht behandelt. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welchen Kurs hatten Sie gebucht und was war beschrieben?",
-      "Was war während des Kurses konkret anders?",
-      "Wie hat sich das auf Ihren Lernerfolg ausgewirkt?",
-      "Was erwarten Sie von der Fotoakademie?"
-    ]
+    "locked": true
   },
   "30": {
     "title": "FREIZEITBAD MEERESRAUSCHEN",
