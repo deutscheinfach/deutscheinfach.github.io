@@ -216,15 +216,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "WALDSCHWIMMBAD LANGEN – Baden mitten im Grünen!\n\n• Großes Freibad im Wald\n• Liegewiese & Spielplatz\n• Kiosk mit frischen Snacks\n• Geöffnet von Mai bis September\n\nWaldschwimmbad Langen\nwww.waldschwimmbad-langen.de",
-    "situation": "Sie haben das Waldschwimmbad Langen an einem heißen Sommertag besucht. Der Kiosk war entgegen der Ankündigung geschlossen und das Wasser war sichtbar verschmutzt. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie sich von Ihrem Besuch erhofft?",
-      "Was war bei Ihrem Besuch konkret nicht in Ordnung?",
-      "Wie hat sich das auf Ihren Tag ausgewirkt?",
-      "Was fordern Sie vom Betreiber?"
-    ]
+    "locked": true
   },
   "41": {
     "title": "ZEITSCHRIFTEN - ABONNENTENSERVICE",
