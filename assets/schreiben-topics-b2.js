@@ -118,15 +118,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "APARTMENTHAUS FRANKFURT – Zentral wohnen, stressfrei leben!\n\n• Möblierte 1- bis 3-Zimmer-Apartments\n• Fitnessraum und Dachterrasse\n• 24h-Concierge-Service\n• Nahe am Hauptbahnhof\n\nApartmenthaus Frankfurt\nwww.apartmenthaus-frankfurt.de",
-    "situation": "Sie sind ins Apartmenthaus Frankfurt eingezogen. Der beworbene Fitnessraum ist seit Monaten geschlossen und der Concierge-Service ist praktisch nie erreichbar. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was war laut Anzeige/Vertrag inklusive?",
-      "Was funktioniert seit Ihrem Einzug nicht wie versprochen?",
-      "Wie wirkt sich das auf Ihren Alltag aus?",
-      "Was fordern Sie vom Vermieter?"
-    ]
+    "locked": true
   },
   "27": {
     "title": "DIGIBIKE – DAS SMARTE HIGHTECH-FAHRRAD",
