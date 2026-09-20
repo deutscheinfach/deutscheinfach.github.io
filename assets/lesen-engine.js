@@ -29,12 +29,15 @@
 (function () {
     "use strict";
 
-    const root = document.getElementById("lesen-stack");
-    if (!root) return;
+    /* الصفحة كتبدل التمرين ملي تبرك على تبويب، وكتبني
+       الحاوية ديالو من جديد — إذن ماقدرناش نمسكو عنصر
+       واحد ثابت. كنقبلو الحاوية كوسيطة. */
+    function render(into) {
+        const root = into
+            || document.getElementById("lesen-stack");
 
-    /* صفحة الموضوع الواحد كتبدل التمرين ملي تبرك على تبويب،
-       إذن خاصها تعاود ترسم. كنخرجو الرسم ف دالة. */
-    function render() {
+        if (!root) return;
+
         const topics = window.LESEN_TOPICS;
 
         root.textContent = "";
@@ -53,11 +56,13 @@
     }
 
     window.__lesenRender = render;
+    window.__lesenRenderInto = render;
 
-    /* الصفحات العادية كترسم دغيا. صفحة الموضوع كتحط
-       data-manual وكترسم بوحدها من بعد ما تعرف الجزء. */
-    if (!root.hasAttribute("data-manual")) {
-        render();
+    /* الصفحات العادية كترسم دغيا. الصفحات اللي كتبدل
+       التمرين بوحدها كتحط data-manual. */
+    const initial = document.getElementById("lesen-stack");
+    if (initial && !initial.hasAttribute("data-manual")) {
+        render(initial);
     }
 
     /* ---------- بناء تمرين واحد ---------- */

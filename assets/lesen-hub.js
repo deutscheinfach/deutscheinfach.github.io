@@ -1,21 +1,42 @@
-/* ===== شبكة مواضيع Lesen B2 =====
-   بحث + ترتيب. كلشي من window.LESEN_B2_TOPICS. */
+/* ===== شبكة المواضيع + التمرين فنفس الصفحة =====
+
+   الصفحة عندها حالتين:
+     - اللائحة: بحث، ترتيب، وبطائق.
+     - التمرين: كيعوض اللائحة فنفس الصفحة، مع زر رجوع.
+
+   ماكاينش تنقل لصفحة أخرى — غير الرابط كيتبدل (?thema=…)
+   باش زر الرجوع ديال الـ navigateur والتحديث يخدمو. */
 
 (function () {
     "use strict";
 
     const grid = document.getElementById("lesen-grid");
+    const toolbar = document.querySelector(".lesen-toolbar");
+    const countEl = document.getElementById("lesen-count");
+    const heroEl = document.querySelector(".lesen-hero");
+    const detail = document.getElementById("lesen-detail");
     const search = document.getElementById("lesen-search-input");
     const sortBtn = document.getElementById("lesen-sort-btn");
-    const countEl = document.getElementById("lesen-count");
 
-    if (!grid) return;
+    if (!grid || !detail) return;
+
+    const PARTS = [
+        { key: "teil1",   label: "Teil 1" },
+        { key: "teil2",   label: "Teil 2" },
+        { key: "teil3",   label: "Teil 3" },
+        { key: "sprach1", label: "Sprach 1" },
+        { key: "sprach2", label: "Sprach 2" }
+    ];
+    const PART_LABEL = {};
+    PARTS.forEach(function (p) { PART_LABEL[p.key] = p.label; });
+
+    /* الجزء ديال هاد الصفحة: teil1 مثلا. فارغ = صفحة Prüfungen. */
+    const pagePart = grid.dataset.teil || "";
 
     const topics = Array.isArray(window.LESEN_B2_TOPICS)
         ? window.LESEN_B2_TOPICS.slice()
         : [];
 
-    /* الترتيب: كيف ما جاو → أ-ي → المجاني الأول */
     const SORTS = [
         { key: "default", label: "ترتيب" },
         { key: "alpha", label: "أبجدي" },
@@ -23,10 +44,17 @@
     ];
     let sortIndex = 0;
 
-    function visible() {
+    /* ================= اللائحة ================= */
+
+    function listed() {
         const term = (search ? search.value : "").trim().toLowerCase();
 
         let list = topics.filter(function (topic) {
+            /* صفحة جزء معيّن كتبين غير المواضيع اللي فيهم داك الجزء */
+            if (pagePart) {
+                const parts = topic.parts || [];
+                if (parts.length && parts.indexOf(pagePart) === -1) return false;
+            }
             if (!term) return true;
             return (topic.title || "").toLowerCase().includes(term)
                 || (topic.ar || "").includes(term)
@@ -48,15 +76,11 @@
         return list;
     }
 
-    function render() {
-        const list = visible();
+    function renderList() {
+        const list = listed();
         grid.textContent = "";
 
-        if (countEl) {
-            countEl.textContent = list.length
-                ? list.length + " موضوع"
-                : "";
-        }
+        if (countEl) countEl.textContent = list.length ? list.length + " موضوع" : "";
 
         if (!list.length) {
             const empty = document.createElement("div");
@@ -68,19 +92,13 @@
             return;
         }
 
-        list.forEach(function (topic) {
-            grid.appendChild(card(topic));
-        });
+        list.forEach(function (topic) { grid.appendChild(card(topic)); });
     }
 
     function card(topic) {
         const node = document.createElement("a");
         node.className = "lesen-card" + (topic.locked ? " locked" : "");
-        /* البطاقة كتحل الامتحان ديال الموضوع، وفيه الأجزاء
-           ديالو. قبل كانت كتوجه لصفحة Teil 1 عامة — علاش كان
-           كيبان بحال ما تبدل والو. */
-        node.href = "b2-lesen-thema.html?thema=" + encodeURIComponent(topic.id);
-        if (grid.dataset.teil) node.href += "&teil=" + grid.dataset.teil;
+        node.href = pageUrl(topic.id, pagePart);
 
         const title = document.createElement("div");
         title.className = "lesen-card-title";
@@ -93,16 +111,21 @@
         }
         node.appendChild(title);
 
-        node.appendChild(rule());
+        const rule = document.createElement("div");
+        rule.className = "lesen-card-rule";
+        node.appendChild(rule);
 
         const foot = document.createElement("div");
         foot.className = "lesen-card-foot";
-
-        foot.appendChild(timeChip((topic.minutes || 90) + " min"));
         foot.appendChild(chip("lesen-chip-level", topic.level || "B2"));
 
-        if (topic.parts && topic.parts > 1) {
-            foot.appendChild(chip("lesen-chip-parts", "+" + topic.parts));
+        const parts = topic.parts || [];
+        const shownPart = pagePart || parts[0];
+        if (shownPart) {
+            foot.appendChild(chip("lesen-chip-parts", "Lesen " + (PART_LABEL[shownPart] || shownPart)));
+        }
+        if (!pagePart && parts.length > 1) {
+            foot.appendChild(chip("lesen-chip-parts", "+" + parts.length));
         }
 
         const go = document.createElement("span");
@@ -113,28 +136,13 @@
 
         node.appendChild(foot);
 
-        if (topic.locked) {
-            node.setAttribute("aria-label", (topic.title || "") + " — Premium");
-        }
+        node.addEventListener("click", function (event) {
+            /* فتح ف تبويب جديد خاصو يبقى خدام عادي */
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+            event.preventDefault();
+            open(topic.id, pagePart || parts[0] || "teil1", true);
+        });
 
-        return node;
-    }
-
-    function rule() {
-        const node = document.createElement("div");
-        node.className = "lesen-card-rule";
-        return node;
-    }
-
-    /* ساعة SVG كتاخذ لون النص، عوض إيموجي كيبان بحال نقطة كحلة */
-    function timeChip(text) {
-        const node = document.createElement("span");
-        node.className = "lesen-chip lesen-chip-time";
-        node.innerHTML =
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
-            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-            '<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>';
-        node.appendChild(document.createTextNode(text));
         return node;
     }
 
@@ -145,15 +153,156 @@
         return node;
     }
 
-    if (search) search.addEventListener("input", render);
+    /* ================= التمرين ================= */
 
+    function pageUrl(themaId, part) {
+        const params = new URLSearchParams();
+        params.set("thema", themaId);
+        if (part) params.set("teil", part);
+        return location.pathname + "?" + params.toString();
+    }
+
+    function open(themaId, part, push) {
+        const topic = topics.find(function (t) { return t.id === themaId; });
+        if (!topic) { close(push); return; }
+
+        if (push) history.pushState({ thema: themaId, teil: part }, "", pageUrl(themaId, part));
+
+        if (heroEl) heroEl.hidden = true;
+        if (toolbar) toolbar.hidden = true;
+        if (countEl) countEl.hidden = true;
+        grid.hidden = true;
+        detail.hidden = false;
+
+        detail.textContent = "";
+
+        /* رأس التمرين: رجوع + الاسم */
+        const head = document.createElement("div");
+        head.className = "lesen-detail-head";
+
+        const back = document.createElement("button");
+        back.type = "button";
+        back.className = "lesen-back";
+        back.textContent = "← اللائحة";
+        back.addEventListener("click", function () { close(true); });
+        head.appendChild(back);
+
+        const h1 = document.createElement("h1");
+        h1.className = "lesen-detail-title";
+        h1.appendChild(document.createTextNode(topic.title || topic.id));
+        if (topic.ar) {
+            const ar = document.createElement("span");
+            ar.className = "lesen-card-ar";
+            ar.textContent = "(" + topic.ar + ")";
+            h1.appendChild(ar);
+        }
+        head.appendChild(h1);
+        detail.appendChild(head);
+
+        const content = (window.LESEN_B2_CONTENT || {})[themaId] || {};
+        const available = (topic.parts && topic.parts.length)
+            ? PARTS.filter(function (p) { return topic.parts.indexOf(p.key) !== -1; })
+            : PARTS;
+
+        let current = available.some(function (p) { return p.key === part; })
+            ? part
+            : available[0].key;
+
+        /* تبويبات الأجزاء — غير إلا كان الموضوع فيه أكثر من واحد */
+        if (available.length > 1) {
+            const tabs = document.createElement("nav");
+            tabs.className = "lesen-tabs lesen-part-tabs";
+
+            available.forEach(function (p) {
+                const tab = document.createElement("button");
+                tab.type = "button";
+                tab.className = "lesen-tab" + (p.key === current ? " active" : "");
+                tab.textContent = p.label;
+                if (!content[p.key]) tab.classList.add("is-empty");
+                tab.addEventListener("click", function () {
+                    current = p.key;
+                    Array.from(tabs.children).forEach(function (other, i) {
+                        other.classList.toggle("active", available[i].key === current);
+                    });
+                    history.replaceState({ thema: themaId, teil: current }, "",
+                        pageUrl(themaId, current));
+                    paint();
+                });
+                tabs.appendChild(tab);
+            });
+
+            detail.appendChild(tabs);
+        }
+
+        const stack = document.createElement("div");
+        stack.id = "lesen-stack";
+        stack.setAttribute("data-manual", "");
+        detail.appendChild(stack);
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        paint();
+
+        function paint() {
+            stack.textContent = "";
+
+            if (topic.locked && !window.__deutschEinfachIsPremium) {
+                const box = document.createElement("div");
+                box.className = "lesen-empty";
+                box.textContent = "🔒 هاد الموضوع ديال Premium.";
+                stack.appendChild(box);
+                return;
+            }
+
+            const task = content[current];
+
+            if (!task) {
+                const box = document.createElement("div");
+                box.className = "lesen-empty";
+                box.textContent = "ما زال ماكاينش تمارين ف هاد الجزء.";
+                stack.appendChild(box);
+                return;
+            }
+
+            window.LESEN_TOPICS = [Object.assign({ id: themaId + "-" + current }, task)];
+            if (typeof window.__lesenRenderInto === "function") {
+                window.__lesenRenderInto(stack);
+            }
+        }
+    }
+
+    function close(push) {
+        if (push) history.pushState({}, "", location.pathname);
+        detail.hidden = true;
+        detail.textContent = "";
+        if (heroEl) heroEl.hidden = false;
+        if (toolbar) toolbar.hidden = false;
+        if (countEl) countEl.hidden = false;
+        grid.hidden = false;
+    }
+
+    /* زر الرجوع ديال الـ navigateur */
+    window.addEventListener("popstate", function () {
+        const params = new URLSearchParams(location.search);
+        const thema = params.get("thema");
+        if (thema) open(thema, params.get("teil") || pagePart || "teil1", false);
+        else close(false);
+    });
+
+    if (search) search.addEventListener("input", renderList);
     if (sortBtn) {
         sortBtn.addEventListener("click", function () {
             sortIndex = (sortIndex + 1) % SORTS.length;
             sortBtn.querySelector(".label").textContent = SORTS[sortIndex].label;
-            render();
+            renderList();
         });
     }
 
-    render();
+    renderList();
+
+    /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
+    const startParams = new URLSearchParams(location.search);
+    if (startParams.get("thema")) {
+        open(startParams.get("thema"),
+             startParams.get("teil") || pagePart || "teil1", false);
+    }
 })();
