@@ -160,15 +160,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "IN OFFENBACH ZU HAUSE – Ihr Umzugsservice vor Ort!\n\n• Kompletter Umzugsservice aus einer Hand\n• Erfahrenes, geschultes Team\n• Transportversicherung inklusive\n• Kostenlose Besichtigung vorab\n\nIn Offenbach zu Hause GmbH\nwww.offenbach-zuhause.de",
-    "situation": "Sie haben Ihren Umzug über die Firma In Offenbach zu Hause organisiert. Beim Transport wurden mehrere Möbelstücke beschädigt und das Team erschien drei Stunden später als vereinbart. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was war vereinbart (Termin, Leistungen)?",
-      "Was ist am Umzugstag konkret schiefgelaufen?",
-      "Welche Schäden bzw. Folgen hatten Sie dadurch?",
-      "Was fordern Sie von der Firma?"
-    ]
+    "locked": true
   },
   "33": {
     "title": "Kochen leicht gemacht!",
