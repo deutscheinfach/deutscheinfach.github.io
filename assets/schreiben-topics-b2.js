@@ -576,15 +576,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "REISEBÜRO SONNENSCHEIN – Spontan in den Urlaub!\n\n• Last-Minute-Angebote zu Top-Preisen\n• Über 500 Reiseziele weltweit\n• Persönliche Reiseberatung\n• Flexible Stornobedingungen\n\nReisebüro Sonnenschein\nSonnenallee 9, 20095 Hamburg\nwww.reisebuero-sonnenschein.de",
-    "situation": "Sie haben über das Reisebüro Sonnenschein eine Last-Minute-Pauschalreise gebucht. Das Hotel vor Ort entsprach nicht der gebuchten Kategorie und der versprochene Transfer fand nicht statt. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welche Reise hatten Sie gebucht und was war im Angebot enthalten?",
-      "Was stimmte vor Ort nicht mit der Buchung überein?",
-      "Welche Unannehmlichkeiten hatten Sie dadurch?",
-      "Welche Entschädigung fordern Sie vom Reisebüro?"
-    ]
+    "locked": true
   },
   "09": {
     "title": "Nie mehr schlaflos in Deutschland!",
