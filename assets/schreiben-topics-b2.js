@@ -69,15 +69,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "BIKE & GUIDE – Fahrradtouren mit persönlichem Trainer!\n\n• Geführte Touren durch die Region\n• Für Anfänger und Fortgeschrittene\n• E-Bikes leihweise erhältlich\n• Verpflegung unterwegs inklusive\n\nBike & Guide Touren\nwww.bike-guide-touren.de",
-    "situation": "Sie haben eine geführte Fahrradtour mit Trainer gebucht. Das geliehene Fahrrad war defekt und die versprochene Verpflegung wurde nicht bereitgestellt. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie gebucht und was war im Preis inbegriffen?",
-      "Welches Problem trat während der Tour auf?",
-      "Wie hat sich das auf Sie und die Gruppe ausgewirkt?",
-      "Was fordern Sie vom Anbieter?"
-    ]
+    "locked": true
   },
   "20": {
     "title": "SuperClean-Staubsaugroboter",
