@@ -76,15 +76,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "SUPERCLEAN – Der Staubsaugroboter, der wirklich sauber macht!\n\n• Intelligente Raumkartierung\n• App-Steuerung von unterwegs\n• Bis zu 120 Minuten Laufzeit\n• 2 Jahre Herstellergarantie\n\nSuperClean Household Tech\nwww.superclean-tech.de",
-    "situation": "Sie haben den SuperClean-Staubsaugroboter online bestellt. Das Gerät bleibt ständig stecken und die App funktioniert nicht wie beworben. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Gerät haben Sie bestellt und was war beworben?",
-      "Welche technischen Probleme sind aufgetreten?",
-      "Wie hat sich das auf Ihren Alltag ausgewirkt?",
-      "Was fordern Sie vom Hersteller (Reparatur, Umtausch, Rückerstattung)?"
-    ]
+    "locked": true
   },
   "21": {
     "title": "Schmelzkäse Alpengeschmack",
