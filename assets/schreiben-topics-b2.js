@@ -231,13 +231,12 @@ const SCHREIBEN_B2_TOPICS = {
     "level": "B2",
     "time": "30 min",
     "locked": false,
-    "ad": "Das Party-Abenteuer für Kinder!\nErleben Sie spannende Kinder-Partys mit TIKKI TAKKA!\n\n• Abenteuerliche Spiele und lustige Party-Animation\n• Spaßige Schatzsuchen & spannende Entdeckungsreisen\n• Zauberer, Clowns & Kinderschminken\n• Tolle Party-Pakete für unvergessliche Erlebnisse\nTOLLE AKTIONSPREISE!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890",
+    "ad": "Das Party-Abenteuer für Kinder!\nErleben Sie spannende Kinder-Partys mit TIKKI TAKKA!\n\n• Abenteuerliche Spiele und lustige Party-Animation\n• Spaßige Schatzsuchen & spannende Entdeckungsreisen\n• Zauberer, Clowns & Kinderschminken\n• Tolle Party-Pakete für unvergessliche Erlebnisse\n\nTOLLE AKTIONSPREISE!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890",
     "situation": "Sie haben bei der Firma Abenteuer TIKKI TAKKA eine Schatzsuche für den Geburtstag Ihres Kindes gebucht. Trotz günstiger Preise war die Geburtstagsfeier nicht so schön wie erwartet und Sie sind nicht damit zufrieden. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
     "points": [
       "Welches Angebot haben Sie gebucht und womit waren Sie nicht zufrieden?",
-      "Beschreiben Sie das konkrete Problem während der Feier.",
-      "Erklären Sie, wie die Kinder und Eltern darauf reagiert haben.",
-      "Was fordern Sie von der Firma und bis wann?"
+      "Erklären Sie, warum das Angebot Sie nicht begeistert hat.",
+      "Vorschläge für Verbesserungen: Was könnte TIKKI TAKKA Ihrer Meinung nach besser machen?"
     ]
   },
   "02": {

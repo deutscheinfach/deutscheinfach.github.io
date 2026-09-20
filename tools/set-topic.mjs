@@ -22,8 +22,10 @@ const topics = JSON.parse(body);
 const { id, ad, situation, points, words } = input;
 
 if (!topics[id]) throw new Error(`الموضوع ${id} ماكاينش`);
-if (!Array.isArray(points) || points.length !== 4) {
-  throw new Error(`الموضوع ${id}: خاص 4 نقط، جاو ${points?.length}`);
+/* الأغلبية عندهم 4 نقط، ولكن شي مواضيع حقيقية عندهم 3
+   (بحال 01 و 10). كنرفضو غير اللي برّا هاد المجال. */
+if (!Array.isArray(points) || points.length < 3 || points.length > 4) {
+  throw new Error(`الموضوع ${id}: خاص 3 ولا 4 نقط، جاو ${points?.length}`);
 }
 
 if (ad) topics[id].ad = ad;
