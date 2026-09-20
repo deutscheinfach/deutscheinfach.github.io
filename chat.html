@@ -1798,6 +1798,26 @@ button: disabled{
     .call-action span { font-size: 11px; }
 }
 
+
+/* ===== TICKS ===== */
+.tick {
+    width: 15px;
+    height: 13px;
+    margin-inline-start: 4px;
+    vertical-align: -2px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: .65;
+}
+.tick.double {
+    width: 19px;
+    stroke: #4ade80;
+    opacity: 1;
+}
+
 </style>
 
 </head>
@@ -2265,7 +2285,12 @@ Freunde einladen
 
 <div class="call-box">
 
-<video id="remoteVideo" class="call-remote" autoplay playsinline></video>
+<video id="remoteVideo" class="call-remote" autoplay playsinline muted></video>
+
+<!-- الصوت فعنصر بوحدو: عنصر <video> كيخضع لقواعد
+     العرض، و<audio> لا. هكا الصوت كيخدم حتى
+     فالمكالمة الصوتية فين الفيديو مخبّي. -->
+<audio id="remoteAudio" autoplay></audio>
 <video id="localVideo" class="call-local" autoplay playsinline muted></video>
 
 <div class="call-info">
@@ -3130,6 +3155,8 @@ id:d.id,
    من القديم للجديد، ف كنقلبوهم هنا. */
 messages.reverse();
 
+lastRenderedMessages=messages;
+
 renderMessages(
 messages,
 thisViewId
@@ -3158,6 +3185,46 @@ showToast(
 /* =====================================================
    RENDER MESSAGES
    ===================================================== */
+
+
+/* =====================================================
+   علامات الصح
+
+   ✓   = تصيفطات
+   ✓✓  = وصلات (المستقبل online)
+
+   ماشي "تقرات" — باش نعرفو واش قراها خاصنا نكتبو
+   فكل رسالة ملي تتشاف، وهادشي كيكلف كتابات بزاف
+   فالخطة المجانية.
+   ===================================================== */
+
+const TICK_SENT=
+'<svg class="tick" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+
+const TICK_DELIVERED=
+'<svg class="tick double" viewBox="0 0 30 24"><polyline points="20 6 9 17 4 12"></polyline><polyline points="27 6 16 17 13.5 14.5"></polyline></svg>';
+
+function messageTicks(message,mine){
+
+if(!mine)
+return "";
+
+/* الشات العام والمجموعات ما فيهمش مستقبل واحد */
+if(currentMode!=="private"||!currentPrivateUserId)
+return TICK_SENT;
+
+const other=
+friendDocs.get(currentPrivateUserId);
+
+return isUserOnline(other)
+?TICK_DELIVERED
+:TICK_SENT;
+
+}
+
+/* آخر لائحة رسمناها — باش نقدرو نعاودو الرسم ملي
+   يتبدل شي حاجة برّانية (بحال حالة الصاحب). */
+let lastRenderedMessages=[];
 
 async function renderMessages(
 messages,
@@ -3318,7 +3385,7 @@ message.imageId
 
 ${formatTime(message.createdAt)}
 
-${mine?'<svg class="icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>':""}
+${messageTicks(message,mine)}
 
 </div>
 
@@ -3849,6 +3916,29 @@ publishFriends();
 
 
 /* كنجمعو الوثائق اللي عندنا ونعاودو الرسم */
+
+/* حالة online كتبدل حاجتين فالشات المفتوح:
+   السطر اللي تحت الاسم، وعدد الشارات فالرسائل. */
+function refreshPrivateChatPresence(){
+
+if(currentMode!=="private"||!currentPrivateUserId)
+return;
+
+const other=
+friendDocs.get(currentPrivateUserId);
+
+const sub=
+document.getElementById("headerSub");
+
+if(sub)
+sub.textContent=
+isUserOnline(other)?"Online":"Offline";
+
+if(lastRenderedMessages.length)
+renderMessages(lastRenderedMessages,messagesViewId);
+
+}
+
 function publishFriends(){
 
 friendsCache=
@@ -3862,6 +3952,8 @@ rebuildConversations();
 
 if(currentMode==="friends")
 renderFriendsPage();
+
+refreshPrivateChatPresence();
 
 }
 
@@ -8140,6 +8232,7 @@ let pendingCandidates=[];
 const callOverlay=document.getElementById("callOverlay");
 const callBox=callOverlay?.querySelector(".call-box");
 const remoteVideo=document.getElementById("remoteVideo");
+const remoteAudio=document.getElementById("remoteAudio");
 const localVideo=document.getElementById("localVideo");
 const callNameEl=document.getElementById("callName");
 const callStatusEl=document.getElementById("callStatus");
@@ -8436,6 +8529,9 @@ localStream=null;
 if(remoteVideo)
 remoteVideo.srcObject=null;
 
+if(remoteAudio)
+remoteAudio.srcObject=null;
+
 if(localVideo)
 localVideo.srcObject=null;
 
@@ -8556,16 +8652,39 @@ event.streams[0]
 ||
 new MediaStream([event.track]);
 
-if(!remoteVideo)
-return;
+console.debug(
+"REMOTE TRACK:",
+event.track.kind,
+event.track.readyState);
 
-if(remoteVideo.srcObject!==stream)
+/* الفيديو مكتوم عمداً — الصوت كيخرج من عنصر
+   <audio>. بلا هادشي كيتسمع الصوت مرتين. */
+if(remoteVideo&&remoteVideo.srcObject!==stream){
 remoteVideo.srcObject=stream;
+remoteVideo.play().catch(()=>{});
+}
 
-/* بعض المتصفحات كتحتاج play() صريح */
-remoteVideo.play().catch(error=>{
-console.debug("REMOTE PLAY:",error?.name);
+if(remoteAudio&&remoteAudio.srcObject!==stream){
+
+remoteAudio.srcObject=stream;
+
+remoteAudio.play().catch(error=>{
+
+console.debug("REMOTE AUDIO PLAY:",error?.name);
+
+/* المتصفح رفض القراءة التلقائية — كنطلبو ضغطة */
+showToast("ضغط على الشاشة باش يخدم الصوت");
+
+const unlock=()=>{
+remoteAudio.play().catch(()=>{});
+document.removeEventListener("click",unlock);
+};
+
+document.addEventListener("click",unlock);
+
 });
+
+}
 
 };
 
