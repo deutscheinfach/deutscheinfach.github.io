@@ -13,15 +13,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "SPRACHINSTITUT WORTREICH – Sprachen lernen leicht gemacht!\n\n• Kleine Lerngruppen (max. 8 Personen)\n• Erfahrene Muttersprachler als Kursleiter\n• Flexible Kurszeiten am Abend\n• Moderne Lernmaterialien inklusive\n\nSprachinstitut Wortreich\nwww.wortreich-sprachen.de",
-    "situation": "Sie haben einen Abendkurs beim Sprachinstitut Wortreich gebucht. Die tatsächliche Kursgruppe und der Kursinhalt entsprachen nicht der Beschreibung auf der Webseite. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welchen Kurs hatten Sie gebucht und was war beschrieben?",
-      "Was war in der ersten Kursstunde tatsächlich anders?",
-      "Welche Folgen hatte das für Ihren Lernerfolg?",
-      "Was erwarten Sie vom Sprachinstitut?"
-    ]
+    "locked": true
   },
   "12": {
     "title": "Renovierungskurs",
