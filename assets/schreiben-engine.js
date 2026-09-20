@@ -9,6 +9,21 @@
    ========================================================== */
 const CORRECTION_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
 
+/* فتح الاتصال مع الـ Worker من دابا.
+   الـ handshake (DNS + TCP + TLS) كياخذ نص ثانية تقريبا ف 4G،
+   ومنين يبرك الطالب على "تصحيح" أو "ترجمة" كيكون ديجا محلول. */
+(function preconnectToWorker() {
+    try {
+        const link = document.createElement("link");
+        link.rel = "preconnect";
+        link.href = CORRECTION_ENDPOINT;
+        link.crossOrigin = "";
+        document.head.appendChild(link);
+    } catch (error) {
+        /* ماشي مشكل: هادي غير تسريع. */
+    }
+})();
+
 /* العروض — نفس اللي فـ payment.html */
 const PREMIUM_OFFERS = [
     {
@@ -158,7 +173,36 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
     });
 
     // ---------- translation ----------
-    /* كنخزنو الترجمة باش الضغطة الثانية تخبي/تبين بلا ما نعاودو الطلب. */
+    /* كنخزنو الترجمة باش الضغطة الثانية تخبي/تبين بلا ما نعاودو الطلب،
+       وكنحتافضو بيها ف localStorage حتى من بعد ما يسد الصفحة:
+       الترجمة ديال نفس النص ماكتبدلش، إذن ماكاين علاش نعاودو نسولو Gemini. */
+    const TRANSLATION_STORE_PREFIX = "de-translation:";
+
+    function translationKey(kind, source) {
+        /* hash بسيط على النص: إلا تبدل النص، الترجمة القديمة كتسقط وحدها. */
+        let hash = 5381;
+        for (let i = 0; i < source.length; i++) {
+            hash = ((hash << 5) + hash + source.charCodeAt(i)) | 0;
+        }
+        return TRANSLATION_STORE_PREFIX + TOPIC_ID + ":" + kind + ":" + (hash >>> 0).toString(36);
+    }
+
+    function readStoredTranslation(key) {
+        try {
+            return localStorage.getItem(key);
+        } catch (error) {
+            return null;
+        }
+    }
+
+    function writeStoredTranslation(key, value) {
+        try {
+            localStorage.setItem(key, value);
+        } catch (error) {
+            /* الذاكرة عامرة ولا الـ navigateur حاصر التخزين: ماشي مشكل. */
+        }
+    }
+
     const translationCache = {};
 
     const translationSources = {
@@ -172,7 +216,17 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
         if (!box || !translationSources[kind]) return;
 
         btn.addEventListener("click", async function () {
+            const source = translationSources[kind]();
+            const storeKey = translationKey(kind, source);
+
             // عندنا الترجمة ديجا: غير نبينوها/نخبيوها.
+            if (!translationCache[kind]) {
+                const stored = readStoredTranslation(storeKey);
+                if (stored) {
+                    translationCache[kind] = stored;
+                    box.textContent = stored;
+                }
+            }
             if (translationCache[kind]) {
                 box.hidden = !box.hidden;
                 return;
@@ -180,7 +234,8 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
 
             btn.setAttribute("aria-busy", "true");
             box.classList.remove("error");
-            box.textContent = "جاري الترجمة…";
+            box.innerHTML =
+                'جاري الترجمة <span class="loading-dots"><span></span><span></span><span></span></span>';
             box.hidden = false;
 
             try {
@@ -188,7 +243,7 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        translate: { text: translationSources[kind]() },
+                        translate: { text: source },
                     }),
                 });
 
@@ -208,6 +263,7 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
                 }
 
                 translationCache[kind] = data.translation;
+                writeStoredTranslation(storeKey, data.translation);
                 box.textContent = data.translation;
             } catch (err) {
                 const message = String(err && err.message ? err.message : err);

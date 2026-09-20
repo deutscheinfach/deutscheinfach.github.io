@@ -6,6 +6,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
 <link rel="stylesheet" href="assets/theme.css">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 <script src="../telc-lang-boot.js?v=title-privacy-1"></script>
@@ -1077,8 +1080,14 @@ window.__deutschEinfachPremiumReady = (async function () {
 </script>
 
 <script>
-(async function () {
-  var isPremiumUser = await (window.__deutschEinfachPremiumReady || Promise.resolve(false));
+(function () {
+  /* الصفحة كانت كتسنى Firebase يسالي قبل ما ترسم حتى شي تمرين،
+     إذن الطالب كيشوف بلان خاوي حتى يوصل الجواب من الشبكة.
+     دابا كنرسمو دغيا بـ "ماشي Premium" (وهو الأكثر أمانا)،
+     ومنين يجي الجواب وكان Premium كنعاودو الرسم بالمواضيع محلولة. */
+  var isPremiumUser = false;
+
+  function boot() {
 
   var THEMES = [ 
 { href: "", title: "Mallorca (الأساسي)", quizId: "Mallorca (الأساسي)", questions: [
@@ -2370,7 +2379,22 @@ window.__deutschEinfachPremiumReady = (async function () {
     return wrap;
   }
 
+  stack.innerHTML = "";
   stack.appendChild(frag);
+  }
+
+  boot();
+
+  (window.__deutschEinfachPremiumReady || Promise.resolve(false))
+    .then(function (premium) {
+      if (premium && !isPremiumUser) {
+        isPremiumUser = true;
+        boot();
+      }
+    })
+    .catch(function (error) {
+      console.error("Premium check failed:", error);
+    });
 
   window.addEventListener("resize", function () {
     document.querySelectorAll(".theme-iframe").forEach(function (f) {
