@@ -76,6 +76,9 @@
     /* 2. ملي يكون الـ body جاهز: طبّق عليه وزيد الزر. */
     function addFloatingButton() {
         if (document.querySelector(".de-theme-btn")) return;
+        /* الصفحات اللي فيها الهيدر المشترك عندها زر ديالها
+           فوق — ماكنزيدوش واحد عايم فوقو. */
+        if (document.querySelector(".site-header, #site-header")) return;
         var btn = document.createElement("button");
         btn.type = "button";
         btn.className = "de-theme-btn";

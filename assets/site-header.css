@@ -1,0 +1,190 @@
+/* ===== الهيدر المشترك ديال الموقع =====
+   كيتزاد ف أي صفحة بـ <div id="site-header"></div>.
+   الألوان كلها من assets/theme.css، إذن الوضع الفاتح كيخدم بوحدو. */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    padding: 12px var(--gutter);
+    background: color-mix(in srgb, var(--ink) 86%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.site-header-inner {
+    /* الصفحة الرئيسية RTL والباقي LTR. بلا هادشي الهيدر
+       كينقلب فوحدة وكيبقى فالأخرى — كنثبتوه باش يكون نفسو
+       فكل بلاصة. النصوص العربية داخلو كتبقى كتتقرا مزيان. */
+    direction: ltr;
+
+    max-width: var(--shell);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 14px;
+    border-radius: 18px;
+    border: 1px solid var(--line-gold);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+/* ---- العلامة ---- */
+.site-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--text);
+    flex: 0 0 auto;
+}
+.site-brand img {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+.site-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.site-brand-name { font-weight: 900; font-size: 16px; }
+.site-brand-name span { color: var(--gold); }
+.site-brand-sub {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .6px;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+/* ---- التنقل ---- */
+.site-nav {
+    display: flex;
+    gap: 2px;
+    margin: 0 auto;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+
+.site-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 0 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: color .15s ease, background .15s ease;
+}
+.site-nav a:hover { color: var(--text); background: color-mix(in srgb, var(--gold) 10%, transparent); }
+.site-nav a.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+}
+
+/* ---- الأزرار على اليمين ---- */
+.site-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+
+.site-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 11px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.site-btn:hover { border-color: var(--gold); color: var(--gold); }
+.site-btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-color: transparent;
+    color: var(--ink);
+}
+.site-btn-primary:hover { color: var(--ink); filter: brightness(1.06); }
+.site-btn-icon { width: 40px; padding: 0; }
+
+.site-user {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 40px;
+    padding: 0 12px 0 6px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 700;
+    font-size: 13px;
+}
+.site-user:hover { border-color: var(--gold); }
+.site-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    font-weight: 900;
+    font-size: 13px;
+}
+.site-premium {
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .4px;
+    background: color-mix(in srgb, var(--gold) 20%, transparent);
+    color: var(--gold);
+    border: 1px solid var(--line-gold);
+}
+
+[hidden] { display: none !important; }
+
+/* ---- التيليفون ---- */
+@media (max-width: 1000px) {
+    .site-header-inner { flex-wrap: wrap; }
+    .site-nav { order: 3; width: 100%; margin: 4px 0 0; justify-content: flex-start; }
+    .site-actions { margin-inline-start: auto; }
+}
+@media (max-width: 560px) {
+    .site-header { padding: 8px 10px; }
+    .site-brand-sub { display: none; }
+    .site-brand img { width: 34px; height: 34px; }
+    .site-nav a { padding: 0 13px; font-size: 13px; min-height: 38px; }
+    .site-btn { padding: 0 12px; font-size: 12.5px; }
+    .site-btn-label-long { display: none; }
+}
+
+/* ===== ما يخرجش على عرض الشاشة ===== */
+.site-header, .site-header-inner { max-width: 100%; box-sizing: border-box; }
+.site-header-inner { flex-wrap: wrap; min-width: 0; }
+.site-brand { min-width: 0; }
+.site-brand-name { white-space: nowrap; }
+.site-nav { max-width: 100%; min-width: 0; }
+.site-actions { min-width: 0; flex-wrap: wrap; }
+
+@media (max-width: 560px) {
+    .site-header-inner { gap: 8px; padding: 8px 10px; }
+    .site-brand-name { font-size: 14px; }
+    .site-btn { min-height: 38px; padding: 0 11px; font-size: 12px; }
+    .site-btn-icon { width: 38px; }
+    .site-user { font-size: 12px; padding: 0 10px 0 5px; }
+}

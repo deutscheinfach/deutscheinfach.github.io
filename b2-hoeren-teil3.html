@@ -11,7 +11,8 @@
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
 <link rel="stylesheet" href="assets/theme.css">
-<script src="assets/theme-toggle.js?v=ced3b684"></script>
+<link rel="stylesheet" href="assets/site-header.css?v=a189e4b4">
+<script src="assets/theme-toggle.js?v=98b0dab3"></script>
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Hören: Teil3</title>
@@ -848,6 +849,8 @@ html.dark .premium-theme-open:hover{
 </style>
 
 </head>
+<body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
+<div id="site-header" data-active="hoeren"></div>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
   <a class="hoeren-nav-btn hoeren-nav-back" href="b2.html">
@@ -869,8 +872,6 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 })();
 </script>
 
-
-<body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <audio id="success-sound" src="" preload="none" style="display:none;" oncontextmenu="return false;"></audio>
 
 <div id="warningBox">Tu vas être déconnecté dans <span id="countdown">30</span> secondes d'inactivité</div>
@@ -2366,24 +2367,6 @@ html.dark .teil-nav-btn.active,
 </style>
 
 
-<script id="hoeren-nav-spacing">
-/* الـ nav ثابت (fixed)، إذن خاص الصفحة padding فوق بقدرو بالضبط.
-   كان مكتوب 136px نيشان، وهادشي كيخلي فراغ خاوي كبير فالتيليفون
-   ملي الـ nav كيدخل فسطر واحد. دابا كنقيسوه بجد. */
-(function () {
-  var nav = document.querySelector(".hoeren-sticky-nav");
-  if (!nav) return;
-  function applySpacing() {
-    var top = parseFloat(getComputedStyle(nav).top) || 0;
-    document.body.style.setProperty(
-      "padding-top", Math.round(nav.offsetHeight + top + 14) + "px", "important");
-  }
-  applySpacing();
-  window.addEventListener("resize", applySpacing);
-  window.addEventListener("orientationchange", applySpacing);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(applySpacing);
-})();
-</script>
 <script src="assets/session-guard.js?v=7bdfa3ca"></script>
 
 <style id="hoeren-light-mode">
@@ -2482,6 +2465,27 @@ html[data-theme="light"] .nq-question-row.nq-correct{ background: rgba(21,128,61
 html[data-theme="light"] .nq-question-row.nq-wrong{ background: rgba(198,40,40,.09) !important; }
 html[data-theme="light"] .nq-radio-option.nq-selected-correct{ color: #15803d !important; }
 html[data-theme="light"] .nq-radio-option.nq-selected-wrong{ color: #c62828 !important; }
+</style>
+<script src="assets/site-header.js?v=06b73a3d"></script>
+
+<style id="hoeren-with-site-header">
+/* الهيدر المشترك ولا هو اللي فوق. الـ nav ديال Hören كان
+   fixed فوقو — دابا كيولي شريط عادي تحتو. */
+body{ padding-top: 0 !important; }
+
+.hoeren-sticky-nav{
+  position: static !important;
+  transform: none !important;
+  width: min(1150px, calc(100% - 24px)) !important;
+  margin: 14px auto 0 !important;
+  top: auto !important;
+  left: auto !important;
+}
+
+@media (max-width: 760px){
+  body{ padding-top: 0 !important; }
+  .hoeren-sticky-nav{ width: calc(100% - 16px) !important; }
+}
 </style>
 </body>
 </html>

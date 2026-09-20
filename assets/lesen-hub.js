@@ -299,6 +299,15 @@
 
     renderList();
 
+    /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase.
+       إلا كان التمرين محلول وهو Premium، كنعاودو نرسموه. */
+    document.addEventListener("de-premium", function () {
+        if (detail.hidden) return;
+        const params = new URLSearchParams(location.search);
+        const thema = params.get("thema");
+        if (thema) open(thema, params.get("teil") || pagePart || "teil1", false);
+    });
+
     /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
     const startParams = new URLSearchParams(location.search);
     if (startParams.get("thema")) {

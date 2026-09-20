@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="assets/theme.css">
+<link rel="stylesheet" href="assets/site-header.css?v=a189e4b4">
     <style>
 
         * {
@@ -1341,103 +1342,7 @@
          NAVBAR
     ========================================== -->
 
-    <nav class="navbar">
-
-
-        <a href="index.html" class="brand">
-
-            <img
-                src="icon1.png"
-                alt="Deutsch Einfach Logo"
-            >
-
-            Deutsch <span>Einfach</span> 🇩🇪
-
-        </a>
-
-
-        <div class="nav-links">
-
-            <a href="dashboard.html?section=lesen">
-                📖 Lesen
-            </a>
-
-            <a href="dashboard.html?section=hoeren">
-                🎧 Hören
-            </a>
-
-            <a href="dashboard.html?section=schreiben">
-                ✍️ Schreiben
-            </a>
-
-            <a href="dashboard.html?section=sprechen">
-                🗣️ Sprechen
-            </a>
-
-            <a href="chat.html">
-                💬 Community
-            </a>
-
-        </div>
-
-
-        <!-- NOT LOGGED IN -->
-
-        <div
-            class="nav-actions"
-            id="guest-actions"
-        >
-
-            <a
-                href="signup.html"
-                class="nav-action signup"
-            >
-                إنشاء حساب
-            </a>
-
-            <a
-                href="login.html?returnTo=index.html"
-                class="nav-action login"
-            >
-                تسجيل الدخول
-            </a>
-
-        </div>
-
-
-        <!-- LOGGED IN -->
-
-        <div
-            class="nav-actions user-area"
-            id="user-actions"
-        >
-
-            <div class="user-name">
-
-                👤
-
-                <span
-                    class="user-name-text"
-                    id="navbar-user-name"
-                >
-                    المستخدم
-                </span>
-
-            </div>
-
-
-            <button
-                class="nav-action settings-button"
-                id="settings-button"
-                type="button"
-            >
-                ⚙️
-            </button>
-
-        </div>
-
-
-    </nav>
+    <div id="site-header"></div>
 
 
     <!-- =========================================
@@ -1496,7 +1401,7 @@
 
 
                 <a
-                    href="dashboard.html?section=lesen"
+                    href="b2-lesen.html"
                     class="hero-button hero-secondary"
                 >
                     📖 شوف المواضيع
@@ -1640,7 +1545,7 @@
             </p>
 
             <a
-                href="dashboard.html?section=lesen"
+                href="b2-lesen.html"
                 class="card-link"
             >
                 Mehr erfahren ←
@@ -1673,7 +1578,7 @@
             </p>
 
             <a
-                href="dashboard.html?section=hoeren"
+                href="b2-hoeren.html"
                 class="card-link"
             >
                 Mehr erfahren ←
@@ -1706,7 +1611,7 @@
             </p>
 
             <a
-                href="dashboard.html?section=schreiben"
+                href="b2-schreiben.html"
                 class="card-link"
             >
                 Mehr erfahren ←
@@ -1892,19 +1797,19 @@
 
         <div class="footer-links">
 
-            <a href="dashboard.html?section=lesen">
+            <a href="b2-lesen.html">
                 Lesen
             </a>
 
-            <a href="dashboard.html?section=hoeren">
+            <a href="b2-hoeren.html">
                 Hören
             </a>
 
-            <a href="dashboard.html?section=schreiben">
+            <a href="b2-schreiben.html">
                 Schreiben
             </a>
 
-            <a href="dashboard.html?section=sprechen">
+            <a href="b2-sprechen.html">
                 Sprechen
             </a>
 
@@ -2158,11 +2063,11 @@
                 );
 
 
-                guestActions.style.display =
+                if (guestActions) guestActions.style.display =
                     "none";
 
 
-                userActions.classList.add(
+                if (userActions) userActions.classList.add(
                     "show"
                 );
 
@@ -2228,7 +2133,7 @@
                 }
 
 
-                navbarUserName.textContent =
+                if (navbarUserName) navbarUserName.textContent =
                     name;
 
 
@@ -2244,11 +2149,11 @@
                 );
 
 
-                guestActions.style.display =
+                if (guestActions) guestActions.style.display =
                     "flex";
 
 
-                userActions.classList.remove(
+                if (userActions) userActions.classList.remove(
                     "show"
                 );
 
@@ -2262,7 +2167,7 @@
        OPEN SETTINGS
     ========================================= */
 
-    settingsButton.addEventListener(
+    if (settingsButton) settingsButton.addEventListener(
         "click",
         function() {
 
@@ -2375,7 +2280,7 @@
                 );
 
 
-                navbarUserName.textContent =
+                if (navbarUserName) navbarUserName.textContent =
                     newName;
 
 
@@ -2424,7 +2329,7 @@
        LOGOUT
     ========================================= */
 
-    logoutButton.addEventListener(
+    if (logoutButton) logoutButton.addEventListener(
         "click",
         async function() {
 
@@ -2495,5 +2400,6 @@
 
 
 <script src="assets/session-guard.js?v=7bdfa3ca"></script>
+<script src="assets/site-header.js?v=06b73a3d"></script>
 </body>
 </html>
