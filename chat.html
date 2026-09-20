@@ -89,7 +89,14 @@ button: disabled{
 .app{
     display: flex;
     width: 100%;
+
+    /* 100vh فالهاتف هو الطول بلا شريط العنوان، ف الجزء
+       السفلي (منطقة الكتابة) كيبقى تحت الشاشة و
+       overflow:hidden كيمنعك حتى من التمرير ليه.
+       dvh كيتبع الجزء اللي كيبان بجد. */
     height: 100vh;
+    height: 100dvh;
+
     overflow: hidden;
 }
 
@@ -464,6 +471,12 @@ button: disabled{
     display: flex;
     flex-direction: column;
     min-width: 0;
+
+    /* بلا min-height:0، عنصر flex ما كيقدرش ينكمش تحت
+       حجم محتواه — الرسائل كيكبرو وكيدفعو منطقة
+       الكتابة برّا الشاشة. */
+    min-height: 0;
+
     background: var(--bg);
 }
 
@@ -555,9 +568,11 @@ button: disabled{
 
 .messages{
     flex: 1;
+    min-height: 0;
     overflow-y: auto;
     padding: 22px;
     scroll-behavior: smooth;
+    overscroll-behavior: contain;
 }
 
 .messages.nav-page-effect{
@@ -712,6 +727,8 @@ button: disabled{
    ===================================================== */
 
 .input-area{
+    /* ما تنكمشش عمرها — هي آخر حاجة كيشوفها المستخدم */
+    flex-shrink: 0;
     background: var(--surface);
     border-top: 1px solid var(--border);
     padding: 14px;
