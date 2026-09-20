@@ -41,15 +41,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "FREIZEITVEREIN MAINZ – Gemeinsam aktiv sein!\n\n• Über 30 Sport- und Freizeitkurse\n• Für jedes Alter etwas dabei\n• Moderne Ausstattung\n• Günstige Mitgliedsbeiträge\n\nFreizeitverein Mainz e.V.\nwww.freizeitverein-mainz.de",
-    "situation": "Sie sind Mitglied im Freizeitverein Mainz und haben einen Kurs gebucht, der mehrfach ohne Vorankündigung ausgefallen ist, obwohl der Beitrag weiterläuft. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welchen Kurs haben Sie gebucht und wie oft fand er statt?",
-      "Was ist konkret passiert (Ausfälle, fehlende Information)?",
-      "Welche Folgen hatte das für Sie?",
-      "Was fordern Sie vom Verein (Erstattung, Nachholtermine)?"
-    ]
+    "locked": true
   },
   "16": {
     "title": "Naturmuseum - Museum",
