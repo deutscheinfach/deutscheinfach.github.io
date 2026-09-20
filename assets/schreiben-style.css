@@ -1,6 +1,11 @@
 /* ===== Deutsch Einfach — Schreiben Aufgabe ===== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* بلا هادشي، الـ navigateur كيعطي للأزرار لون النص ديالو
+   (كحل) — وعلى خلفية كحلة كيختافيو بالكامل. هادشي هو اللي
+   وقع لحروف ä ö ü ß. */
+button, input, select, textarea { font: inherit; color: inherit; }
+
 /* ذهبي على أسود، بحال باقي الموقع.
    تنبيه: --ink هنا معناها لون *النص* ماشي الخلفية، و--red
    ولات هي الذهبي. الـ barre فوق عندها --bar بوحدها حيت
@@ -250,11 +255,14 @@ body[data-theme="dark"] .task-header { background: var(--bar); }
 .umlaut-btns button {
     border: 1px solid var(--border);
     background: var(--paper);
+    color: var(--ink);
     border-radius: 8px;
     width: 30px;
     height: 30px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1;
 }
 .umlaut-btns button:hover { border-color: var(--red); color: var(--red); }
 .word-count { font-size: 13px; color: var(--muted); white-space: nowrap; }
@@ -653,4 +661,65 @@ html, body { max-width: 100%; overflow-x: hidden; }
     .word-count { font-size: 12px; }
 
     .result-card { max-height: 88dvh; overflow-y: auto; }
+}
+
+
+/* ===== الوضع الفاتح: أبيض وذهبي =====
+   عندنا جوج: data-theme على <body> (الزر القديم) وعلى
+   <html> (الزر المشترك). كنغطيو بجوج. */
+
+body[data-theme="light"],
+html[data-theme="light"] body {
+    --ink: #16181d;
+    --paper: #fbfaf6;
+    --card: #ffffff;
+    --bar: #ffffff;
+    --bar-text: #16181d;
+    --red: #b8912c;
+    --red-dark: #8a6a1d;
+    --yellow: #f0dfa0;
+    --border: rgba(20,22,26,.14);
+    --muted: #5f5c55;
+
+    background: var(--paper);
+    color: var(--ink);
+}
+
+/* الـ barre فوق فالوضع الفاتح: بيضا بنص كحل وخيط ذهبي تحت */
+body[data-theme="light"] .task-header,
+html[data-theme="light"] body .task-header {
+    border-bottom-color: var(--red);
+    box-shadow: 0 2px 14px rgba(20,22,26,.07);
+}
+body[data-theme="light"] .back-btn,
+body[data-theme="light"] .icon-btn,
+body[data-theme="light"] .timer-pill,
+html[data-theme="light"] body .back-btn,
+html[data-theme="light"] body .icon-btn,
+html[data-theme="light"] body .timer-pill {
+    color: var(--ink);
+    background: rgba(20,22,26,.05);
+    border-color: rgba(20,22,26,.12);
+}
+body[data-theme="light"] .back-btn:hover,
+html[data-theme="light"] body .back-btn:hover {
+    background: rgba(20,22,26,.10);
+}
+body[data-theme="light"] .task-title-block .sub,
+html[data-theme="light"] body .task-title-block .sub {
+    color: var(--red-dark);
+}
+body[data-theme="light"] .correct-btn,
+html[data-theme="light"] body .correct-btn {
+    background: var(--red);
+    color: #fff;
+}
+body[data-theme="light"] .correct-btn:hover,
+html[data-theme="light"] body .correct-btn:hover {
+    background: var(--red-dark);
+}
+body[data-theme="light"] .point-num,
+html[data-theme="light"] body .point-num {
+    background: var(--red);
+    color: #fff;
 }

@@ -128,10 +128,25 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
     setInterval(tick, 1000);
 
     // ---------- theme toggle ----------
-    document.getElementById("theme-toggle").addEventListener("click", function () {
-        const cur = document.body.getAttribute("data-theme");
-        document.body.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
-    });
+    /* التبديل ولا ف assets/theme-toggle.js باش يخدم ف كل
+       الصفحات ويتحفظ الاختيار. هنا غير كنخليو الزر يبان
+       واضح — وماكنزيدوش listener آخر: جوج listeners على
+       نفس الزر كيبدلو الوضع مرتين وكيرجع كيف ما كان. */
+    const themeButton = document.getElementById("theme-toggle");
+    if (themeButton && !window.__deTheme) {
+        themeButton.addEventListener("click", function () {
+            const root = document.documentElement;
+            const next =
+                root.getAttribute("data-theme") === "light" ? "dark" : "light";
+            root.setAttribute("data-theme", next);
+            document.body.setAttribute("data-theme", next);
+            try {
+                localStorage.setItem("de-theme", next);
+            } catch (error) {
+                /* التصفح الخاص */
+            }
+        });
+    }
 
     // ---------- fullscreen ----------
     document.getElementById("fullscreen-toggle").addEventListener("click", function () {
