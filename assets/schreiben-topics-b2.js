@@ -209,15 +209,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "NACHBARSCHAFTSNETZ – Unsere Nachbarschaft vernetzt sich!\n\n• Nachrichten & Hilfe direkt aus der Nachbarschaft\n• Sicher, da nur für verifizierte Anwohner\n• Kostenlose Mitgliedschaft\n• Schon 656 Nachbarn machen mit!\n\nNachbarschaftsnetz App\nwww.nachbarschaftsnetz.de",
-    "situation": "Sie haben sich bei der App Nachbarschaftsnetz angemeldet, die als „nur für verifizierte Anwohner“ beworben wird. Sie haben festgestellt, dass Ihre Daten ohne Zustimmung an Dritte weitergegeben wurden. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Wofür haben Sie sich angemeldet und was wurde beworben (z. B. Sicherheit)?",
-      "Was haben Sie konkret festgestellt?",
-      "Warum ist das für Sie besonders problematisch?",
-      "Was fordern Sie vom Betreiber der App?"
-    ]
+    "locked": true
   },
   "40": {
     "title": "Waldschwimmbad Langen",
