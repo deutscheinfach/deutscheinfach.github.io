@@ -195,15 +195,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "T & W ELEKTRONIKVERSICHERUNG – Wir schützen Ihre Haushaltsgeräte!\n\n• Schutz gegen Defekte und Unfälle\n• Kostenlose Reparatur oder Ersatzgerät\n• Keine Wartezeit bei Neuverträgen\n• Einfache Schadensmeldung online\n\nT & W Elektronikversicherung\nwww.tw-elektronikversicherung.de",
-    "situation": "Ihre Waschmaschine ist defekt und Sie haben den Schaden bei Ihrer T & W Elektronikversicherung gemeldet. Trotz Vertrag wurde die Reparatur abgelehnt und Sie erhielten wochenlang keine Rückmeldung. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was ist passiert und wann haben Sie es gemeldet?",
-      "Wie hat die Versicherung auf Ihre Meldung reagiert?",
-      "Welche Folgen hatte das für Sie im Alltag?",
-      "Was fordern Sie von T & W?"
-    ]
+    "locked": true
   },
   "38": {
     "title": "Umzugsunternehmen Bühler - der Perfekte Partner für Ihren Umzug !",
