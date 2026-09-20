@@ -569,15 +569,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "HOTEL SEEBLICK – Erholung pur am Wasser!\n\n• Zimmer mit Panoramablick\n• Frühstücksbuffet inklusive\n• Ruhige Lage direkt am See\n• Kostenloses WLAN in allen Bereichen\n\nHotel Seeblick\nUferpromenade 1, 88131 Lindau\nwww.hotel-seeblick.de",
-    "situation": "Sie haben für Ihren Kurzurlaub ein Zimmer im Hotel Seeblick gebucht. Das Zimmer entsprach nicht der Beschreibung auf der Webseite und es gab nachts erheblichen Lärm. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Zimmer hatten Sie gebucht und was war online versprochen?",
-      "Was war bei der Ankunft tatsächlich anders?",
-      "Welches Problem hatten Sie während des Aufenthalts?",
-      "Was erwarten Sie als Ausgleich vom Hotel?"
-    ]
+    "locked": true
   },
   "08": {
     "title": "Reisebüro Sonnenschein – Ihr Online-Reisebüro für Last-Minute-Urlaub",
