@@ -1,0 +1,268 @@
+/* ===== Deutsch Einfach — Lesen B2 =====
+   كيعتمد على assets/theme.css: الألوان والوضع الفاتح كيجيو
+   من تما، ماكنعاودوش نعرفوهم هنا. */
+
+.lesen-shell {
+    max-width: var(--shell);
+    margin: 0 auto;
+    padding: 0 var(--gutter) 60px;
+}
+
+/* ===== الرأس ===== */
+.lesen-top {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--ink) 88%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line-gold);
+}
+.lesen-top-inner {
+    max-width: var(--shell);
+    margin: 0 auto;
+    padding: 12px var(--gutter);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.lesen-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 0 14px;
+    border-radius: 11px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+}
+.lesen-back:hover { border-color: var(--gold); color: var(--gold); }
+
+.lesen-teil-nav { display: flex; gap: 8px; margin-inline-start: auto; flex-wrap: wrap; }
+.lesen-teil-btn {
+    min-height: 42px;
+    padding: 0 16px;
+    border-radius: 11px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+}
+.lesen-teil-btn:hover { border-color: var(--gold); color: var(--gold); }
+.lesen-teil-btn.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-color: var(--gold);
+    color: var(--ink);
+}
+
+/* ===== العنوان ===== */
+.lesen-hero { padding: 30px 0 22px; }
+.lesen-hero h1 { font-size: var(--step-3); line-height: 1.2; margin-bottom: 8px; }
+.lesen-hero .lead { color: var(--muted); font-size: var(--step-0); max-width: 70ch; }
+.lesen-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line-gold);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+/* ===== بطاقة التمرين ===== */
+.lesen-task {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+}
+.lesen-task-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--gold) 7%, transparent);
+}
+.lesen-task-num {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    font-weight: 800;
+    font-size: 13px;
+}
+.lesen-task-head h2 { font-size: var(--step-1); font-weight: 800; min-width: 0; }
+.lesen-task-body { padding: 18px; }
+
+/* ===== النص ===== */
+.lesen-text {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-inline-start: 4px solid var(--gold);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    line-height: 1.8;
+    font-size: var(--step-0);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.lesen-text h3 {
+    font-size: var(--step-1);
+    margin-bottom: 8px;
+    color: var(--gold);
+}
+.lesen-text-label {
+    /* block، ماشي inline-block: بلاه الحرف كيلتصق بالنص
+       وكيبان "aErster Text" */
+    display: block;
+    font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-size: 13px;
+}
+
+/* ===== الأسئلة ===== */
+.lesen-q {
+    border: 1px solid var(--line);
+    border-inline-start: 4px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    background: var(--surface);
+}
+.lesen-q-text { font-weight: 700; margin-bottom: 10px; line-height: 1.6; overflow-wrap: anywhere; }
+.lesen-q-num {
+    display: inline-grid;
+    place-items: center;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 7px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 800;
+    margin-inline-end: 8px;
+}
+.lesen-options { display: flex; flex-direction: column; gap: 8px; }
+.lesen-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 13px;
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface-2);
+    cursor: pointer;
+    line-height: 1.5;
+    transition: border-color .15s ease, background .15s ease;
+}
+.lesen-option:hover { border-color: var(--gold); }
+.lesen-option input { accent-color: var(--gold); margin-top: 3px; flex: 0 0 auto; cursor: pointer; }
+
+/* اختيار من لائحة (الترويسات / الإعلانات) */
+.lesen-select {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text);
+    font: inherit;
+    font-size: 15px;
+    cursor: pointer;
+}
+.lesen-select:focus { outline: none; border-color: var(--gold); }
+
+/* ===== التصحيح ===== */
+.lesen-q.correct { border-color: var(--ok); border-inline-start-color: var(--ok); }
+.lesen-q.wrong { border-color: var(--danger); border-inline-start-color: var(--danger); }
+.lesen-option.picked-correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 14%, transparent); }
+.lesen-option.picked-wrong { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent); }
+.lesen-option.is-answer { border-color: var(--ok); }
+
+.lesen-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 9px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}
+.lesen-mark.ok { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.lesen-mark.no { background: color-mix(in srgb, var(--danger) 18%, transparent); color: var(--danger); }
+
+/* ===== الأزرار والنتيجة ===== */
+.lesen-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.lesen-btn {
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font: inherit;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.lesen-btn-check { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--ink); }
+.lesen-btn-show { background: var(--surface-2); color: var(--text); border-color: var(--line); }
+.lesen-btn-retry { background: var(--gold-soft); color: #14161a; }
+.lesen-btn:disabled { opacity: .55; cursor: default; }
+
+.lesen-score {
+    margin-top: 14px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line-gold);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+    font-weight: 800;
+}
+.lesen-score[hidden] { display: none; }
+
+.lesen-empty {
+    padding: 28px 20px;
+    text-align: center;
+    color: var(--muted);
+    border: 1px dashed var(--line-gold);
+    border-radius: var(--radius);
+}
+
+/* ===== التيليفون ===== */
+@media (max-width: 700px) {
+    .lesen-top-inner { padding: 10px var(--gutter); }
+    .lesen-teil-nav { margin-inline-start: 0; width: 100%; }
+    .lesen-teil-btn { flex: 1 1 auto; justify-content: center; padding: 0 10px; font-size: 12.5px; }
+    .lesen-task-body { padding: 14px; }
+    .lesen-text { padding: 14px; }
+    .lesen-btn { flex: 1 1 100%; justify-content: center; }
+}

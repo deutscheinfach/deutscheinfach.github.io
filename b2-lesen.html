@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch Einfach – B2 Lesen</title>
+<meta name="description" content="TELC B2 Leseverstehen – Teil 1, 2 und 3. Deutsch Einfach">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
+<link rel="stylesheet" href="assets/theme.css">
+<script src="assets/theme-toggle.js?v=ced3b684"></script>
+<link rel="stylesheet" href="assets/lesen-style.css?v=f1fe4008">
+<style>
+.lesen-hub {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+.lesen-hub-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 22px 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: border-color .18s ease, transform .18s ease;
+    position: relative;
+    overflow: hidden;
+}
+.lesen-hub-card::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+}
+.lesen-hub-card:hover { border-color: var(--gold); transform: translateY(-2px); }
+.lesen-hub-card .num {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    font-weight: 800;
+}
+.lesen-hub-card h2 { font-size: var(--step-1); font-weight: 800; }
+.lesen-hub-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.lesen-hub-card .go { margin-top: auto; color: var(--gold); font-weight: 800; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header class="lesen-top">
+    <div class="lesen-top-inner">
+        <a class="lesen-back" href="b2.html">← Zurück</a>
+        <nav class="lesen-teil-nav">
+            <a class="lesen-teil-btn" href="b2-lesen-teil1.html">Teil 1</a>
+            <a class="lesen-teil-btn" href="b2-lesen-teil2.html">Teil 2</a>
+            <a class="lesen-teil-btn" href="b2-lesen-teil3.html">Teil 3</a>
+        </nav>
+    </div>
+</header>
+
+<main class="lesen-shell">
+
+    <section class="lesen-hero">
+        <span class="lesen-badge">B2 · Leseverstehen</span>
+        <h1>Lesen</h1>
+        <p class="lead">
+            الامتحان ديال القراءة ف telc B2 فيه تلاتة ديال الأجزاء.
+            اختار الجزء اللي بغيتي تتمرن عليه.
+        </p>
+    </section>
+
+    <div class="lesen-hub">
+
+        <a class="lesen-hub-card" href="b2-lesen-teil1.html">
+            <span class="num">1</span>
+            <h2>Teil 1 – Überschriften</h2>
+            <p>
+                خمسة ديال النصوص القصار ولائحة ديال العناوين.
+                لكل نص اختار العنوان اللي كيوافقو.
+            </p>
+            <span class="go">Öffnen →</span>
+        </a>
+
+        <a class="lesen-hub-card" href="b2-lesen-teil2.html">
+            <span class="num">2</span>
+            <h2>Teil 2 – Multiple Choice</h2>
+            <p>
+                نص طويل ومن بعد أسئلة. لكل سؤال تلاتة ديال
+                الأجوبة، وحدة غير صحيحة.
+            </p>
+            <span class="go">Öffnen →</span>
+        </a>
+
+        <a class="lesen-hub-card" href="b2-lesen-teil3.html">
+            <span class="num">3</span>
+            <h2>Teil 3 – Anzeigen</h2>
+            <p>
+                مواقف وإعلانات. لكل موقف اختار الإعلان المناسب،
+                وإلا ماكاين حتى واحد اختار x.
+            </p>
+            <span class="go">Öffnen →</span>
+        </a>
+
+    </div>
+
+</main>
+
+<script src="assets/session-guard.js?v=7bdfa3ca"></script>
+</body>
+</html>
