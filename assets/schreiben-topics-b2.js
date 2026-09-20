@@ -125,15 +125,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "DIGIBIKE – Das smarte Hightech-Fahrrad!\n\n• GPS-Tracking & Diebstahlschutz\n• App-gesteuerte Gangschaltung\n• 80 km Reichweite mit E-Motor\n• 3 Jahre Garantie\n\nDigiBike Motion GmbH\nwww.digibike-motion.de",
-    "situation": "Sie haben ein DigiBike bestellt. Die App-Steuerung funktioniert nicht zuverlässig und die tatsächliche Reichweite liegt weit unter der beworbenen Angabe. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Produkt haben Sie bestellt und was wurde beworben?",
-      "Welche technischen Probleme sind aufgetreten?",
-      "Wie hat sich das auf Ihre Nutzung des Fahrrads ausgewirkt?",
-      "Was fordern Sie vom Hersteller?"
-    ]
+    "locked": true
   },
   "28": {
     "title": "ESS Firma",
