@@ -62,15 +62,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "KULTUR UND KULINARIK – Genießen Sie die Stadt mit allen Sinnen!\n\n• Geführte Altstadttour mit Verkostung\n• Regionale Spezialitäten an 5 Stationen\n• Kleine Gruppen, persönlicher Guide\n• Ca. 3 Stunden Dauer\n\nKultur und Kulinarik Tours\nwww.kultur-kulinarik-tours.de",
-    "situation": "Sie haben an einer Kultur- und Kulinariktour teilgenommen. Zwei der versprochenen Verkostungsstationen fielen ohne Erklärung aus und der Guide erschien deutlich zu spät. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie gebucht und was war im Programm versprochen?",
-      "Was ist während der Tour konkret schiefgelaufen?",
-      "Wie hat sich das auf Ihr Erlebnis ausgewirkt?",
-      "Was fordern Sie vom Anbieter?"
-    ]
+    "locked": true
   },
   "19": {
     "title": "Fahrradtour mit Trainer",
