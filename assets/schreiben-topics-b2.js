@@ -132,15 +132,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "ESS – Gesunde Mittagessen, direkt ins Büro geliefert!\n\n• Frisch zubereitete Mahlzeiten täglich\n• Ausgewogene, abwechslungsreiche Menüs\n• Lieferung bis 12:00 Uhr garantiert\n• Flexible Wochenabos\n\nESS Firmenverpflegung\nwww.ess-firmenverpflegung.de",
-    "situation": "Ihr Unternehmen hat ein Wochenabo bei ESS Firmenverpflegung für die Mitarbeiter abgeschlossen. Die Lieferungen kommen regelmäßig zu spät und die Menüs entsprechen nicht der Bestellung. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was wurde vereinbart und was war im Abo versprochen?",
-      "Was ist bei den letzten Lieferungen konkret schiefgelaufen?",
-      "Welche Auswirkungen hatte das auf die Mitarbeiter?",
-      "Was fordern Sie vom Anbieter?"
-    ]
+    "locked": true
   },
   "29": {
     "title": "Fotografieren für Fortgeschrittene!",
