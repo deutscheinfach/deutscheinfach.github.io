@@ -153,15 +153,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "HOLLANDBLUMEN – Frische Blumen direkt aus Holland!\n\n• Täglich frisch geschnitten\n• Lieferung innerhalb von 24 Stunden\n• Für jeden Anlass das passende Bouquet\n• Vasen-Frische-Garantie von 7 Tagen\n\nHollandblumen Online-Shop\nwww.hollandblumen-shop.de",
-    "situation": "Sie haben zum Geburtstag Ihrer Mutter einen Blumenstrauß bei Hollandblumen bestellt. Die Blumen kamen einen Tag zu spät und bereits welk an. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie bestellt und für welchen Anlass?",
-      "In welchem Zustand und wann kam die Lieferung an?",
-      "Wie hat sich das auf den Anlass ausgewirkt?",
-      "Was fordern Sie vom Online-Shop?"
-    ]
+    "locked": true
   },
   "32": {
     "title": "In Offenbach zu Hause ...",
