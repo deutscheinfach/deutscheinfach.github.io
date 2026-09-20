@@ -55,15 +55,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "BACKSTAGE MUSICAL – Ein Blick hinter die Kulissen!\n\n• Exklusive Führung durch das Theater\n• Treffen mit Ensemble-Mitgliedern\n• Inklusive Musical-Ticket\n• Limitierte Plätze\n\nStadttheater Backstage-Erlebnis\nwww.stadttheater-backstage.de",
-    "situation": "Sie haben ein Backstage-Erlebnis inklusive Musical-Ticket gebucht. Die Führung fiel ohne Ersatz aus und Ihr Sitzplatz beim Musical war deutlich schlechter als gebucht. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie gebucht und was war im Preis enthalten?",
-      "Was ist an dem Abend konkret nicht wie gebucht abgelaufen?",
-      "Wie haben Sie und Ihre Begleitung darauf reagiert?",
-      "Was fordern Sie vom Theater?"
-    ]
+    "locked": true
   },
   "18": {
     "title": "KULTUR UND KULINARIK",
