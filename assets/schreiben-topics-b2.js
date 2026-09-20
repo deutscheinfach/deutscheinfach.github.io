@@ -97,15 +97,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "APPZONE – Die besten Apps, kostenlos für dich!\n\n• Über 1000 geprüfte Apps\n• Werbefrei laut Beschreibung\n• Regelmäßige Updates\n• Sichere Downloads\n\nAppZone Plattform\nwww.appzone-download.de",
-    "situation": "Sie haben eine App über die Plattform AppZone heruntergeladen, die als „werbefrei“ beworben wurde. Tatsächlich enthält die App ständige Werbung und es wurden ungewollt Kosten abgebucht. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welche App haben Sie heruntergeladen und was wurde beworben?",
-      "Was haben Sie nach der Installation festgestellt?",
-      "Wie hat sich das auf Sie ausgewirkt (Kosten, Ärger)?",
-      "Was fordern Sie von der Plattform?"
-    ]
+    "locked": true
   },
   "24": {
     "title": "kabelloser Kopfhörer",
