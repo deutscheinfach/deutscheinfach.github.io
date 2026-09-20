@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/theme.css">
+<script src="assets/theme-toggle.js?v=ced3b684"></script>
 <style>
 
 :root{
@@ -77,7 +78,7 @@ button{
     -webkit-tap-highlight-color: transparent;
 }
 
-button: disabled{
+button:disabled{
     cursor: not-allowed;
     opacity: .7;
 }
@@ -165,13 +166,13 @@ button: disabled{
         background .2s ease;
 }
 
-.search-box input: focus{
+.search-box input:focus{
     border-color: #d4af37;
     background: #1d1d1d;
     box-shadow: 0 0 0 3px rgba(212,175,55,.12);
 }
 
-.search-box input: :placeholder{
+.search-box input::placeholder{
     color: var(--muted);
 }
 
@@ -216,7 +217,7 @@ button: disabled{
     flex: 1;
 }
 
-.nav button: hover{
+.nav button:hover{
     background: var(--sidebar-hover);
     color: white;
 }
@@ -231,11 +232,11 @@ button: disabled{
     opacity: 1;
 }
 
-.nav button: active{
+.nav button:active{
     transform: scale(.94);
 }
 
-.nav button: :after{
+.nav button::after{
     content: "";
     position: absolute;
     left: 50%;
@@ -751,7 +752,7 @@ button: disabled{
         box-shadow .2s ease;
 }
 
-.input-area textarea: focus{
+.input-area textarea:focus{
     border-color: #d4af37;
     box-shadow: 0 0 0 3px rgba(212,175,55,.08);
 }
@@ -856,7 +857,7 @@ button: disabled{
     font-family: inherit;
 }
 
-.modal input: focus{
+.modal input:focus{
     border-color: #d4af37;
 }
 
@@ -8273,6 +8274,7 @@ const callCamBtn=document.getElementById("callCamBtn");
 let audioContext=null;
 let ringNodes=null;
 let ringLoop=null;
+let ringSecondTone=null;
 
 function getAudioContext(){
 
@@ -8329,10 +8331,13 @@ function startRinging(incoming){
 stopRinging();
 
 /* داخلة: نغمتين. خارجة: نغمة وحدة أهدى. */
+/* الـ setTimeout ديال النغمة الثانية كان ماشي محفوظ، إذن
+   إلا تسالت المكالمة بيناتهم، كيطلق نغمة من بعد ما
+   يتوقف الرنين. كنحفظوه باش نقدرو نلغيوه. */
 const pattern=incoming
 ?()=>{
 playRingTone(880,.35);
-setTimeout(()=>playRingTone(680,.35),420);
+ringSecondTone=setTimeout(()=>playRingTone(680,.35),420);
 }
 :()=>playRingTone(440,.6);
 
@@ -8347,6 +8352,11 @@ function stopRinging(){
 if(ringLoop){
 clearInterval(ringLoop);
 ringLoop=null;
+}
+
+if(ringSecondTone){
+clearTimeout(ringSecondTone);
+ringSecondTone=null;
 }
 
 if(ringNodes){
@@ -8664,6 +8674,14 @@ track=>peerConnection.addTrack(track,localStream));
    الصوت ما كان كيتسمع حتى فمكالمة متصلة مزيان. */
 peerConnection.ontrack=event=>{
 
+/* وصول مسار من الطرف الآخر معناه المكالمة حية.
+   كنوقفو الرنين هنا حتى، ماشي غير ف تبدل الحالة —
+   باش ما يبقاش التصفير فوق صوت الصاحب. */
+stopRinging();
+
+if(callBox)
+callBox.classList.remove("ringing");
+
 const stream=
 event.streams[0]
 ||
@@ -8730,12 +8748,21 @@ function handleConnectionState(){
 if(!peerConnection)
 return;
 
-const state=
-peerConnection.connectionState
-||
-peerConnection.iceConnectionState;
+/* قبل كان مكتوب: connectionState || iceConnectionState.
+   المشكل: ملي كيوصل الـ ICE لـ "connected" وconnectionState
+   باقي "connecting"، الأول truthy إذن الثاني عمرو ما كيتقرا،
+   والاتصال كيتحسب ماشي واصل — والرنين كيبقا خدام فوق
+   المكالمة. علاش كان كيتسمع غير التصفير.
+   دابا كنشوفو بجوج. */
+const states=[
+peerConnection.connectionState,
+peerConnection.iceConnectionState
+];
 
-if(state==="connected"||state==="completed"){
+const isConnected=states.some(
+value=>value==="connected"||value==="completed");
+
+if(isConnected){
 
 clearTimeout(connectTimer);
 clearTimeout(ringTimer);
@@ -8754,7 +8781,7 @@ return;
 
 }
 
-if(state==="failed"){
+if(states.includes("failed")){
 
 /* NAT صارم بلا TURN */
 setCallStatus("Verbindung fehlgeschlagen",false);
@@ -8765,7 +8792,7 @@ return;
 
 }
 
-if(state==="disconnected")
+if(states.includes("disconnected"))
 setCallStatus("Verbindung unterbrochen…",false);
 
 }
@@ -9515,6 +9542,61 @@ searchResults.style.display=
 </script>
 
 <script src="assets/session-guard.js?v=7bdfa3ca"></script>
+
+<style id="chat-light-mode">
+/* ===== الوضع الفاتح ديال الشات: أبيض وذهبي ===== */
+html[data-theme="light"]{
+    --sidebar: #ffffff;
+    --sidebar-hover: #f2efe6;
+    --accent: #b8912c;
+    --accent-dark: #8a6a1d;
+    --gold: #8a6a1d;
+    --bg: #fbfaf6;
+    --surface: #ffffff;
+    --border: rgba(20,22,26,.12);
+    --text: #16181d;
+    --text-muted: #5f5c55;
+    --bubble-mine: #f3ecd8;
+}
+
+html[data-theme="light"] body{
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* الفقاعة ديال الطرف الآخر كانت داكنة بالتوريث */
+html[data-theme="light"] .bubble{ color: var(--text); }
+
+/* الظلال كانت مصممة لخلفية كحلة */
+html[data-theme="light"] .sidebar,
+html[data-theme="light"] .main,
+html[data-theme="light"] .input-area{
+    box-shadow: none;
+    border-color: var(--border);
+}
+
+/* خانة البحث كانت بلون كحل مكتوب نيشان ف الستايل */
+html[data-theme="light"] .search-box input{
+    background: var(--sidebar-hover);
+    color: var(--text);
+}
+html[data-theme="light"] .search-box input:focus{
+    background: #fff;
+    border-color: var(--accent);
+}
+
+/* أزرار القائمة كانت رمادية فاتحة — ماكتتقراش على الأبيض */
+html[data-theme="light"] .nav button{ color: var(--text); }
+html[data-theme="light"] .nav button:hover{ background: var(--sidebar-hover); }
+
+html[data-theme="light"] .section-title,
+html[data-theme="light"] .empty-state p,
+html[data-theme="light"] .chat-subtitle{ color: var(--text-muted); }
+
+/* زر التبديل ماخاصوش يغطي خانة الكتابة */
+html[data-theme="light"] .de-theme-btn,
+.de-theme-btn{ bottom: auto; top: 10px; right: 10px; }
+</style>
 </body>
 
 </html>
