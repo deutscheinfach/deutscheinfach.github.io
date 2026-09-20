@@ -301,6 +301,36 @@ input:focus {
     padding: 13px 22px;
   }
 }
+
+/* ===== إظهار كلمة المرور ===== */
+.password-wrap { position: relative; }
+
+.password-wrap input { padding-inline-start: 46px; }
+
+.password-toggle {
+    position: absolute;
+    inset-inline-start: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--muted, #b9b6ad);
+    cursor: pointer;
+    padding: 0;
+    transition: .2s;
+}
+.password-toggle:hover { background: rgba(212,175,55,.14); color: var(--gold-soft, #f4e5a1); }
+.password-toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.password-toggle .off { display: none; }
+.password-toggle.shown .on { display: none; }
+.password-toggle.shown .off { display: block; }
+
 </style>
 </head>
 
@@ -324,10 +354,16 @@ input:focus {
       <input type="email" id="email" placeholder="example@gmail.com" required>
 
       <label for="password">كلمة المرور</label>
-      <input type="password" id="password" placeholder="دخل كلمة المرور" minlength="6" required>
+      <div class="password-wrap">
+        <input type="password" id="password" placeholder="دخل كلمة المرور" minlength="6" required>
+        <button type="button" class="password-toggle" aria-label="إظهار كلمة المرور"><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg></button>
+      </div>
 
       <label for="confirm-password">تأكيد كلمة المرور</label>
-      <input type="password" id="confirm-password" placeholder="عاود دخل كلمة المرور" minlength="6" required>
+      <div class="password-wrap">
+        <input type="password" id="confirm-password" placeholder="عاود دخل كلمة المرور" minlength="6" required>
+        <button type="button" class="password-toggle" aria-label="إظهار كلمة المرور"><svg class="on" viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg><svg class="off" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg></button>
+      </div>
 
       <button type="submit" class="signup-submit" id="signup-button">إنشاء الحساب</button>
 
@@ -752,6 +788,41 @@ input:focus {
         }
     );
 
+</script>
+
+
+<script>
+/* عين إظهار كلمة المرور.
+
+   كنبدلو type غير ديال الخانة اللي حدا الزر — بلا هادشي
+   الضغطة كانت تبين جميع كلمات السر فالصفحة. */
+document.querySelectorAll(".password-toggle").forEach(function (button) {
+
+  button.addEventListener("click", function () {
+
+    var input = button.parentElement.querySelector("input");
+
+    if (!input) return;
+
+    var hidden = input.type === "password";
+
+    input.type = hidden ? "text" : "password";
+
+    button.classList.toggle("shown", hidden);
+
+    button.setAttribute(
+      "aria-label",
+      hidden ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"
+    );
+
+    /* المؤشر كيرجع للآخر ملي يتبدل النوع — كنرجعوه */
+    var end = input.value.length;
+    input.focus();
+    try { input.setSelectionRange(end, end); } catch (e) {}
+
+  });
+
+});
 </script>
 
 </body>
