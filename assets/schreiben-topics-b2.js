@@ -181,15 +181,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "SCHNELLSCHLÜSSEL – Notservice bundesweit, rund um die Uhr!\n\n• Ankunft innerhalb von 30 Minuten\n• Festpreis-Garantie, keine versteckten Kosten\n• Geprüfte, versicherte Techniker\n• 24/7 erreichbar\n\nSchnellschlüssel Notdienst\nwww.schnellschluessel-notdienst.de",
-    "situation": "Sie haben sich ausgesperrt und den Notdienst Schnellschlüssel gerufen. Der Techniker kam erst nach zwei Stunden und hat Ihnen am Ende einen deutlich höheren Preis als den beworbenen Festpreis berechnet. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was wurde Ihnen am Telefon versprochen (Zeit, Preis)?",
-      "Was ist tatsächlich passiert?",
-      "Wie hat sich das auf Sie ausgewirkt?",
-      "Was fordern Sie vom Schlüsseldienst?"
-    ]
+    "locked": true
   },
   "36": {
     "title": "SPORTHEINPARKPLATZ FÜR KINDER",
