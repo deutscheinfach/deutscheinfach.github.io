@@ -146,15 +146,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "FREIZEITBAD MEERESRAUSCHEN – Urlaubsfeeling das ganze Jahr!\n\n• Wellenbad & Rutschenparadies\n• Saunalandschaft mit Meerblick\n• Kinderbecken mit Aufsicht\n• Täglich geöffnet von 9 bis 22 Uhr\n\nFreizeitbad Meeresrauschen\nwww.freizeitbad-meeresrauschen.de",
-    "situation": "Sie haben das Freizeitbad Meeresrauschen mit Ihrer Familie besucht. Das Wellenbad war den ganzen Tag außer Betrieb und die Kinderaufsicht am Becken fehlte zeitweise komplett. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie sich von Ihrem Besuch erhofft?",
-      "Was war bei Ihrem Besuch konkret nicht in Ordnung?",
-      "Warum ist das besonders problematisch (z. B. Sicherheit der Kinder)?",
-      "Was fordern Sie vom Freizeitbad?"
-    ]
+    "locked": true
   },
   "31": {
     "title": "HOLLANDBLUMEN-ONLINESHOP",
