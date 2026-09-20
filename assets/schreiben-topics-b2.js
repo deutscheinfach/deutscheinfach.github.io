@@ -20,15 +20,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "HANDWERK FÜR ALLE – Renovieren wie ein Profi!\n\n• Praxisnahe Wochenendkurse\n• Werkzeug wird gestellt\n• Kleine Gruppen, viel Übung\n• Zertifikat nach Kursende\n\nHandwerk für Alle e.V.\nwww.handwerk-fuer-alle.de",
-    "situation": "Sie haben an einem Renovierungskurs von Handwerk für Alle teilgenommen. Das versprochene Werkzeug war nicht ausreichend vorhanden und der Kurs war deutlich kürzer als angekündigt. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welchen Kurs hatten Sie gebucht und was war im Angebot versprochen?",
-      "Was hat während des Kurses nicht funktioniert?",
-      "Wie hat sich das auf Ihren Lernerfolg ausgewirkt?",
-      "Was fordern Sie vom Veranstalter?"
-    ]
+    "locked": true
   },
   "13": {
     "title": "Engagement für Jugendliche",
