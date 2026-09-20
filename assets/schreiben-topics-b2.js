@@ -583,14 +583,6 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "TRAUMNACHT – Die Matratze für erholsamen Schlaf!\n\n• Orthopädisch geformter Schaumstoffkern\n• 100 Nächte Probeschlafen\n• Kostenlose Lieferung & Rückholung\n• 10 Jahre Garantie\n\nTraumnacht GmbH\nwww.traumnacht-matratzen.de",
-    "situation": "Sie haben eine Matratze bei Traumnacht bestellt, weil Sie seit Monaten schlecht schlafen. Die Matratze verursacht Rückenschmerzen und unterscheidet sich stark von der Beschreibung. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Welches Produkt haben Sie bestellt und warum?",
-      "Welche Probleme sind nach der Nutzung aufgetreten?",
-      "Wie hat sich das auf Ihren Alltag ausgewirkt?",
-      "Was fordern Sie von der Firma (Rückgabe, Erstattung)?"
-    ]
+    "locked": true
   }
 };
