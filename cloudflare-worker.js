@@ -142,6 +142,86 @@ export default {
         return jsonResponse(topic, 200, allowedOrigin);
       }
 
+      /*
+       * إشعار مكالمة: كيوصل حتى للناس اللي الموقع مسدود عندهم.
+       * كنتحققو من هوية اللي كيعيط، من بعد كنقراو الـ tokens
+       * ديال المستقبل وكنصيفطو عبر FCM.
+       */
+      if (body.notify && typeof body.notify.toUid === "string") {
+        if (!env.FIREBASE_SERVICE_ACCOUNT) {
+          return jsonResponse(
+            { error: "push_not_configured",
+              details: "FIREBASE_SERVICE_ACCOUNT secret is missing." },
+            500,
+            allowedOrigin
+          );
+        }
+
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse(
+            { error: "not_signed_in", details: authError.message },
+            401,
+            allowedOrigin
+          );
+        }
+
+        const toUid = body.notify.toUid;
+        if (!/^[A-Za-z0-9]{1,128}$/.test(toUid)) {
+          return jsonResponse({ error: "Invalid uid." }, 400, allowedOrigin);
+        }
+
+        /* ماكنخليوش شي واحد يصيفط إشعار لراسو باش يجرب النظام */
+        if (toUid === caller.sub) {
+          return jsonResponse({ error: "self_notify" }, 400, allowedOrigin);
+        }
+
+        let accessToken;
+        try {
+          accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+        } catch (tokenError) {
+          return jsonResponse(
+            { error: "service_account_failed", details: tokenError.message },
+            500,
+            allowedOrigin
+          );
+        }
+
+        let tokens;
+        try {
+          tokens = await readPushTokens(toUid, accessToken);
+        } catch (lookupError) {
+          return jsonResponse(
+            { error: "token_lookup_failed", details: lookupError.message },
+            502,
+            allowedOrigin
+          );
+        }
+
+        if (!tokens.length) {
+          return jsonResponse({ sent: 0, reason: "no_tokens" }, 200, allowedOrigin);
+        }
+
+        const data = {
+          kind: "call",
+          fromName: String(body.notify.fromName || "").slice(0, 60),
+          callType: body.notify.callType === "video" ? "video" : "audio",
+          url: "chat.html",
+        };
+
+        const results = await Promise.all(
+          tokens.slice(0, 10).map((token) => sendFcm(accessToken, token, data))
+        );
+
+        return jsonResponse(
+          { sent: results.filter(Boolean).length, tried: results.length },
+          200,
+          allowedOrigin
+        );
+      }
+
       /* ترجمة الـ Anzeige والمهام للدارجة. ماشي محتاجة حساب. */
       if (body.translate && typeof body.translate.text === "string") {
         if (!env.GEMINI_API_KEY) {
@@ -669,6 +749,147 @@ async function hasActiveSubscription(uid, idToken) {
 
   const end = fields.subscriptionEnd?.timestampValue;
   if (end && new Date(end).getTime() <= Date.now()) return false;
+
+  return true;
+}
+
+
+/* =====================================================
+   FCM — إرسال إشعار المكالمة
+   ===================================================== */
+
+/*
+ * كنقراو الـ tokens بحساب الخدمة، ماشي بالـ token ديال اللي
+ * كيعيط. علاش: القاعدة ديال users كتخلي أي واحد مسجل يقرا
+ * وثيقة أي واحد آخر (الشات محتاج الأسماء والصور). لو حطينا
+ * الـ tokens تما، كل طالب يقدر يقرا tokens ديال الآخرين.
+ * إذن كنخبيوهم ف users/{uid}/private/push — حتى شي كليان
+ * ماكيقدر يقراها، وحساب الخدمة كيعدا فوق القواعد.
+ */
+async function readPushTokens(uid, accessToken) {
+  const url =
+    `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}` +
+    `/databases/(default)/documents/users/${uid}/private/push`;
+
+  const res = await fetch(url, {
+    headers: { Authorization: "Bearer " + accessToken },
+  });
+
+  if (res.status === 404) return [];
+  if (!res.ok) throw new Error("Could not read the push tokens.");
+
+  const fields = (await res.json()).fields || {};
+  const map = fields.tokens?.mapValue?.fields || {};
+
+  return Object.keys(map);
+}
+
+/* توقيع JWT بالمفتاح ديال service account، وتبديلو بـ access token.
+   نفس المنطق ديال verifyIdToken ولكن بالمقلوب: هنا كنوقعو. */
+async function getGoogleAccessToken(serviceAccountJson) {
+  const account =
+    typeof serviceAccountJson === "string"
+      ? JSON.parse(serviceAccountJson)
+      : serviceAccountJson;
+
+  if (!account.client_email || !account.private_key) {
+    throw new Error("The service account JSON is missing client_email or private_key.");
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  const header = { alg: "RS256", typ: "JWT" };
+  const claims = {
+    iss: account.client_email,
+    scope:
+      "https://www.googleapis.com/auth/firebase.messaging" +
+      " https://www.googleapis.com/auth/datastore",
+    aud: "https://oauth2.googleapis.com/token",
+    iat: now,
+    exp: now + 3600,
+  };
+
+  const encode = (obj) =>
+    btoa(JSON.stringify(obj))
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+
+  const unsigned = `${encode(header)}.${encode(claims)}`;
+
+  const pem = account.private_key
+    .replace(/-----BEGIN PRIVATE KEY-----/, "")
+    .replace(/-----END PRIVATE KEY-----/, "")
+    .replace(/\s+/g, "");
+
+  const der = Uint8Array.from(atob(pem), (c) => c.charCodeAt(0));
+
+  const key = await crypto.subtle.importKey(
+    "pkcs8",
+    der,
+    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+
+  const signature = await crypto.subtle.sign(
+    "RSASSA-PKCS1-v1_5",
+    key,
+    new TextEncoder().encode(unsigned)
+  );
+
+  const signed =
+    unsigned +
+    "." +
+    btoa(String.fromCharCode(...new Uint8Array(signature)))
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+
+  const res = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body:
+      "grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=" + signed,
+  });
+
+  const data = await res.json();
+
+  if (!res.ok || !data.access_token) {
+    throw new Error(data.error_description || "Could not mint an access token.");
+  }
+
+  return data.access_token;
+}
+
+async function sendFcm(accessToken, token, data) {
+  const res = await fetch(
+    `https://fcm.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/messages:send`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: {
+          token,
+          /* data فقط، بلا notification: باش الـ service worker
+             هو اللي يبني الإشعار ويزيد الهزاز والإلحاح. */
+          data,
+          webpush: {
+            headers: { Urgency: "high", TTL: "60" },
+          },
+          android: { priority: "high" },
+        },
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    const detail = await res.text();
+    console.log("FCM send failed:", res.status, detail.slice(0, 200));
+    return false;
+  }
 
   return true;
 }

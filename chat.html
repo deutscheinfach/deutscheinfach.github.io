@@ -8372,6 +8372,49 @@ ringNodes={oscillator,gain};
 
 }
 
+/* ===== إشعار للطرف الآخر حتى والموقع مسدود =====
+   كنصيفطو للـ Worker، وهو اللي عندو مفاتيح FCM. */
+
+const PUSH_ENDPOINT =
+"https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+
+async function notifyCallee(toUid,type){
+
+if(!toUid||!currentUser)
+return;
+
+try{
+
+const idToken=await currentUser.getIdToken();
+
+const res=await fetch(PUSH_ENDPOINT,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+idToken:idToken,
+notify:{
+toUid:toUid,
+fromName:getUserName(currentUserData),
+callType:type
+}
+})
+});
+
+const data=await res.json().catch(()=>null);
+
+if(!res.ok||!data)
+console.info("Push: ما تصيفطش",res.status,data);
+else if(!data.sent)
+console.info("Push: الصاحب ماعندو حتى جهاز مسجل",data);
+
+}catch(error){
+/* الإشعار زيادة — المكالمة كتكمل بلاه */
+console.info("Push: فشل",error);
+}
+
+}
+
+
 /* ===== إشعار النظام + الهزاز =====
    ملي تكون الصفحة محلولة ولكن ماشي قدام (تبويب آخر، ولا
    التيليفون فالجيب)، الصوت بوحدو ماكيكفيش. كنزيدو إشعار
@@ -9056,6 +9099,11 @@ createdAt:serverTimestamp()
 
 currentCallId=callDoc.id;
 currentCallRole="caller";
+
+/* نبهو الطرف الآخر حتى إلا كان الموقع مسدود عندو.
+   ماكنسناوش الجواب: المكالمة خاصها تمشي حتى إلا فشل
+   الإشعار (مثلا ماشي مسجل جهازو). */
+notifyCallee(currentPrivateUserId,type);
 
 await buildPeerConnection(currentCallId,"caller");
 
@@ -9767,6 +9815,16 @@ html[data-theme="light"] .chat-subtitle{ color: var(--text-muted); }
 html[data-theme="light"] .de-theme-btn,
 .de-theme-btn{ bottom: auto; top: 10px; right: 10px; }
 </style>
+<script>
+/* ===== مفتاح الإشعارات =====
+   حطو هنا من: Firebase Console → Project settings → Cloud Messaging
+   → Web Push certificates → Key pair (كيبدا بـ "B...").
+
+   خليه خاوي = الإشعارات كيخدمو غير ملي يكون الموقع محلول.
+   هاد المفتاح عمومي، ماكاين حتى مشكل يبان فالكود. */
+window.__DE_VAPID_KEY = "";
+</script>
+<script src="assets/push-register.js?v=5807c76d"></script>
 </body>
 
 </html>
