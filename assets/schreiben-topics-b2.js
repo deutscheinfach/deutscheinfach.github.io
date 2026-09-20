@@ -188,15 +188,7 @@ const SCHREIBEN_B2_TOPICS = {
     "type": "Beschwerde",
     "level": "B2",
     "time": "30 min",
-    "locked": true,
-    "ad": "SPORT-SPIELPARK FÜR KINDER – Toben, klettern, Spaß haben!\n\n• Große Kletterlandschaft\n• Betreutes Trampolinspringen\n• Geburtstagsfeiern buchbar\n• Für Kinder von 3 bis 12 Jahren\n\nSport-Spielpark\nwww.sport-spielpark.de",
-    "situation": "Sie haben eine Geburtstagsfeier im Sport-Spielpark für Ihr Kind gebucht. Ein Teil der Kletterlandschaft war aus Sicherheitsgründen gesperrt und die versprochene Betreuung war während der Feier kaum vorhanden. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.",
-    "points": [
-      "Was hatten Sie gebucht und was war im Angebot enthalten?",
-      "Was war bei der Feier konkret anders als erwartet?",
-      "Warum ist das für Sie besonders problematisch (Sicherheit der Kinder)?",
-      "Was fordern Sie vom Anbieter?"
-    ]
+    "locked": true
   },
   "37": {
     "title": "T & W Elektronikversicherung Wir schützen Ihre Haushaltsgeräte !",
