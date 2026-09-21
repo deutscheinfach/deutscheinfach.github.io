@@ -47,8 +47,9 @@
      }
      الخيار "x — keine Anzeige passt" كيتزاد بوحدو.
 
-   ملاحظة: النصوص هنا مكتوبين خصيصا لهاد الموقع على شكل
-   امتحان telc B2 — ماشي منقولين من حتى شي كتاب ولا شي موقع.
+   ملاحظة على المصدر: النصوص اللي كيصيفط صاحب الموقع كتدخل
+   كما هي. اللي كتبتها أنا كتكون مكتوبة على شكل telc B2
+   وكينكتب هادشي فوق الموضوع.
 */
 
 (function () {
@@ -66,6 +67,7 @@
 
         /* ================================================================
            Sport ist gesund
+           النصوص والترويسات والحلول كما صيفطهم صاحب الموقع.
            ================================================================ */
         "sport": {
             teil1: {
@@ -73,142 +75,49 @@
                 kind: "matching",
                 variants: [
 
-                    /* ---------------- الأساسي ---------------- */
                     variant("الأساسي",
                         [
-                            { value: "A", text: "Gesund bleiben – aber nur mit den richtigen Regeln",
-                              ar: "تبقى فصحتك — ولكن غير إلا احترمتي بعض القواعد" },
-                            { value: "B", text: "Vereine auf der Suche nach neuen Mitgliedern",
-                              ar: "الجمعيات الرياضية كتقلب على منخرطين جداد" },
-                            { value: "C", text: "Wenig Zeit und trotzdem fit",
-                              ar: "وقت قليل ومع ذلك تبقى ف اللياقة" },
-                            { value: "D", text: "Was das Gehirn vom Training hat",
-                              ar: "شنو كيستافد الدماغ من التمرين" },
-                            { value: "E", text: "Bewegung zwischen zwei Terminen",
-                              ar: "الحركة بين جوج مواعيد" },
-                            { value: "F", text: "Wenn die Eltern wieder laufen und das Kind mitfährt",
-                              ar: "ملي الوالدين كيرجعو للجري والطفل معاهم" },
-                            { value: "G", text: "Kurze Sprints schlagen jedes Ausdauertraining",
-                              ar: "السباقات القصيرة كتغلب أي تدريب طويل" },
-                            { value: "H", text: "Ein Sport, den man bis ins Alter treiben kann",
-                              ar: "رياضة كتقدر تمارسها حتى للكبر" },
-                            { value: "I", text: "Das richtige Essen vor dem Wettkampf",
-                              ar: "الماكلة المناسبة قبل المباراة" },
-                            { value: "J", text: "Kinderwagen im Test: Worauf Eltern achten sollten",
-                              ar: "اختبار كروسات الصغار: على أش خاص الوالدين يردو البال" }
+                            { value: "A", text: "Sport ist gesund - wenn man einige wichtige Regeln beachtet.",
+                              ar: "الرياضة صحية - إذا تم مراعاة بعض القواعد المهمة." },
+                            { value: "B", text: "Griechische Sportler so erfolgreich wie nie zuvor.",
+                              ar: "الرياضيون اليونانيون ناجحون كما لم يحدث من قبل." },
+                            { value: "C", text: "Fitness auch mit wenig Zeitaufwand erreichbar.",
+                              ar: "يمكن الوصول إلى اللياقة البدنية أيضاً مع قلة الوقت." },
+                            { value: "D", text: "Geprüfte Qualität für Babys.",
+                              ar: "جودة معتمدة للأطفال." },
+                            { value: "E", text: "Bluthochdruck beschleunigt das Abnehmen.",
+                              ar: "ارتفاع ضغط الدم يسرع فقدان الوزن." },
+                            { value: "F", text: "Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.",
+                              ar: "الآباء المهتمون بالرياضة - وحتى الرضع يشاركون في الجري." },
+                            { value: "G", text: "Täglich kurze Sprints besser als langes Ausdauertraining.",
+                              ar: "الجري السريع يوميًا أفضل من التدريب الطويل على التحمل." },
+                            { value: "H", text: "Ein Leistungssport für jedes Alter.",
+                              ar: "رياضة تنافسية لكل الأعمار." },
+                            { value: "I", text: "Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.",
+                              ar: "عرض غير محدود من عربات الأطفال يربك الآباء الشباب." },
+                            { value: "J", text: "Autoindustrie: In Zukunft Mobilität ohne Grenzen.",
+                              ar: "صناعة السيارات: في المستقبل، تنقل بلا حدود." }
                         ],
                         [
                             { answer: "H",
-                              body: "Laufen gehört zu den wenigen Sportarten, die man vom Schulalter bis weit über siebzig betreiben kann. Man braucht weder eine Halle noch einen Verein, sondern nur ein Paar passende Schuhe und eine halbe Stunde Zeit. Ärzte weisen allerdings darauf hin, dass Einsteiger langsam beginnen sollten: Wer jahrelang kaum in Bewegung war, überfordert Sehnen und Gelenke innerhalb weniger Wochen. Wechselt man am Anfang zwischen Gehen und Laufen, gewöhnt sich der Körper ohne Schaden an die neue Belastung. Viele Laufgruppen nehmen deshalb ausdrücklich auch ältere Anfänger auf.",
-                              ar: "الجري من الرياضات القلال اللي كتقدر تمارسها من الصغر حتى لفوق السبعين. ماخاصك لا قاعة لا جمعية — غير صباط مزيان ونص ساعة. ولكن الأطباء كيقولو للمبتدئ يبدا بشوية: اللي بقا سنين بلا حركة كيتعب المفاصل بزربة. الحل: بدّل بين المشي والجري فالبداية. حيت هاكا بزاف ديال مجموعات الجري كتقبل حتى الناس الكبار." },
+                              body: "An der Ostküste Attikas in Griechenland lag in der Antike der Ort Marathon. Dort siegte der griechische König Milthiades im Jahr 490 vor Christus über das Heer der Perser. Der Sage nach soll ein Soldat die 42,2 km lange Strecke nach Athen gerannt sein, um die Nachricht dieses für Griechenland wichtigen Sieges zu überbringen. Bei seiner Ankunft in Athen brach er, noch während er die Nachricht verkündete, vor Erschöpfung tot zusammen. Auf diese Legende geht eine sportliche Disziplin zurück: der Marathonlauf. Bereits seit 1896 ist er olympische Disziplin, seit 1984 auch für Frauen. Die Streckenlänge von 42.195 m wurde 1924 festgelegt. Der Marathonlauf gilt als einziger Leistungssport, der bis ins hohe Alter ausgeübt werden kann. Wissenschaftler erklären das mit der menschlichen Evolution. Der Mensch jagte in der Frühzeit seine Beute so lange vor sich her, bis diese vor Erschöpfung nicht mehr weiter konnte. Die Fähigkeit, ausdauernd über lange Strecken zu rennen, ist also in den menschlichen Genen verankert.",
+                              ar: "النص كيعاود على مدينة ماراثون فاليونان، فاش ربحو اليونانيين على الجيش ديال الفرس عام 490 قبل الميلاد. كيقولو باللي واحد الجندي جرا مسافة 42 كيلومتر حتى لأثينا باش يوصل خبار النصر، ولكن مات بالعيا (بالإرهاق الشديد) ملي وصل. هاد القصة الشهيرة هي الأصل ديال سباق الماراثون اللي ولا رياضة أولمبية معروفة. العلماء كيشوفو بلي القدرة على الجري لمسافات طويلة مدفونة في الجينات ديالنا، حيت الإنسان القديم كان كيتسابق مع الفريسة ديالو حتى كاتطيح من العيا." },
 
                             { answer: "F",
-                              body: "Wer nach der Geburt eines Kindes wieder mit dem Laufen beginnen möchte, stand lange vor einem sehr praktischen Problem: Für das Kind war während des Trainings niemand da. Seit einigen Jahren gibt es dafür Wagen mit drei luftgefüllten Rädern, die sich schieben lassen, ohne bei jedem Schritt zu schwanken. Die Hersteller werben mit Freiheit für die ganze Familie, und tatsächlich kehren viele Mütter und Väter auf diese Weise früher zum Sport zurück. Prüfstellen mahnen allerdings zur Vorsicht: Der Schwerpunkt dieser Wagen liegt weit hinten, sodass sie leichter nach hinten kippen als gewöhnliche Modelle. Auf die Laufstrecke gehören sie erst, wenn das Kind sicher allein sitzen kann.",
-                              ar: "اللي بغا يرجع للجري من بعد ما يجيه الولد كان ديما عندو مشكل بسيط: شكون غادي يبقى مع الصغير وقت التدريب. من شي سنين خرجو كروسات ب تلاتة ديال الروايض بالهوا، كتتدفع بلا ما تهز وتهبط ف كل خطوة. الشركات كتشهر بالحرية للعائلة كاملة، وبالفعل بزاف ديال الوالدين كيرجعو للرياضة بكري بفضلها. ولكن مكاتب الفحص كيحذرو: مركز الثقل ديال هاد الكروسات لور بزاف، ولهذا كتقلب لور بسهولة كتر من العادية. وماخاصهاش تخرج للطريق حتى يقدر الصغير يجلس بوحدو مزيان." },
-
-                            { answer: "E",
-                              body: "Wer acht Stunden am Schreibtisch sitzt, kommt selten auf die empfohlene Zahl von Schritten pro Tag. Arbeitsmediziner raten deshalb, Bewegung in den Arbeitstag einzubauen, statt sie auf den Abend zu verschieben. Das Gespräch mit dem Kollegen lässt sich im Gehen führen, die Treppe ersetzt den Aufzug, und wer telefoniert, kann dabei stehen. Entscheidend ist nicht die Länge der einzelnen Einheit, sondern dass die langen Sitzphasen regelmäßig unterbrochen werden. Schon zwei bis drei Minuten Bewegung pro Stunde wirken sich messbar auf Rücken und Kreislauf aus.",
-                              ar: "اللي كيجلس تمن سوايع قدام الطابلة قلما كيوصل لعدد الخطوات المنصوح بيه. أطباء الشغل كيقولو: دخّل الحركة ف نهار الخدمة، ماتأجلهاش للعشية. هضر مع الزميل وانت كتمشي، طلع بالدرج ماشي بلاسونسور، وهضر فالتيليفون واقف. المهم ماشي طول الحصة، المهم تقطع الجلسة الطويلة بانتظام. حتى جوج ولا تلت دقائق ف كل ساعة كيبان الفرق ديالهم على الضهر والدورة الدموية." },
+                              body: "Warum soll sich der Mensch nun auf Straßen und Wegen fortbewegen? Sich in Feld und Wald, über Stock und Stein fortzubewegen, ist mindestens ebenso interessant. Daher erfand die Autoindustrie den Geländewagen und die Fahrradindustrie das Mountainbike. Da fehlte eigentlich nur noch eine Neuentwicklung eines Gefährts, dessen Mobilitätsmöglichkeiten bisher relativ begrenzt waren: der Kinderwagen. Doch das ist jetzt auch vorbei: Im Trend liegt jetzt der Jogging-Stroller, ein Kinderwagen mit nur noch drei bereiften Rädern. Diese neuen Transportmittel für Babys können sportbegeisterte und von grenzenloser Mobilität träumende Eltern jetzt samt Kind beim Joggen oder beim Inlineskaten vor sich herschieben. Die Babys sollen begeistert sein von der Geschwindigkeit, die mit solchen Geräten erreichbar ist. Doch der die Gerätesicherheit prüfende TÜV, bei Fahrzeugbesitzern in Deutschland schon seit langem als Spielverderber bekannt, warnte vor den Jogging-Strollern: Sie haben einen ungünstigen Schwerpunkt auf der Hinterachse, d.h. sie kippen leicht nach hinten um, und sie können sich leicht selbständig machen - jedenfalls solange, bis die Babys das Bremsen gelernt haben.",
+                              ar: "من بعد ما بانوا الطوموبيلات والبشكليطات ديال الجبل، دابا خرج نوع جديد ديال الكروسات د الدراري الصغار فيها تلاتة ديال الروايض. هاد الكروسة مصاوبة للوالدين اللي كيبغيو يجريو ولا يديرو الرياضة وهوما كيدفعوا ولادهم قدامهم. الدراري الصغار كتعجبهم السرعة ديال هاد الكروسات الجديدة، ولكن الخبراء ف ألمانيا حذروا منها حيت كاين خطر. هاد النوع يقدر يتقلب بسهولة للور وما فيهش الأمان الكافي للدراري." },
 
                             { answer: "C",
-                              body: "Zeitmangel ist der häufigste Grund, den Menschen für fehlenden Sport nennen. Mehrere Studien der letzten Jahre zeigen jedoch, dass auch sehr kurze, dafür sehr intensive Einheiten den Kreislauf verbessern. In einem Versuch trainierte eine Gruppe täglich eine Stunde ausdauernd, eine zweite absolvierte nur wenige Minuten mit hoher Belastung. Nach drei Monaten waren die gemessenen Werte in beiden Gruppen ähnlich. Die Forscher betonen allerdings, dass intensives Training nicht für jeden geeignet ist und dass es das längere Ausdauertraining nicht übertrifft, sondern lediglich ersetzen kann.",
-                              ar: "قلة الوقت هي السبب الأول اللي كيعطيوه الناس باش ماكيديروش الرياضة. ولكن دراسات ديال هاد السنين بينو أن حتى الحصص القصيرة بزاف — إلا كانت قوية — كتحسن الدورة الدموية. ف تجربة، مجموعة تدربات ساعة كل نهار، والأخرى غير شي دقائق بقوة عالية. من بعد تلت شهور، النتائج كانت متقاربة. ولكن الباحثين كيشددو: هاد التدريب القوي ماشي مناسب لكل واحد، وماكيتغلبش على التدريب الطويل — غير كيقدر يعوضو." },
+                              body: "Schweizer Forscher haben herausgefunden, dass nur 6 Minuten Hochleistungstraining pro Woche – also weniger als eine Minute pro Tag – ausreichen, um den Körper fit zu halten. In einem Versuch mit mehreren Probanden nahm eine Gruppe an einem traditionellen Ausdauertraining teil, mit ein bis zwei Trainingsstunden täglich. Die zweite Gruppe führte dagegen täglich 60 Sekunden dauernde Radsprints durch, wobei die Teilnehmer quasi aus dem Stand Höchstgeschwindigkeit erreichen mussten. Das Ergebnis war überraschend: Beide Gruppen zeigten die gleichen gesundheitlichen Verbesserungen. Die Muskeln nahmen gleich viel Sauerstoff auf, und auch die Werte des für die Sauerstoffaufnahme verantwortlichen Zitratenzyms waren gleich. Sehr kurze und hochintensive sportliche Übungen verbessern die Fitness also genauso wie das zeitaufwendige traditionelle Ausdauertraining.",
+                              ar: "الباحثين ف سويسرا لقاو بلي ماشي ضروري تضيع الوقت بزاف فالرياضة باش تحافظ على الصحة ديالك. غير ستة ديال الدقائق ديال التمارين القاصحة في السيمانة كافيين باش الجسم يبقى في صحة جيدة. فواحد التجربة، قارنو بين ناس كيديرو التدريب التقليدي الطويل، وناس كيديرو غير سباقات قصيرة ومجهدة ديال ستين ثانية كل نهار. النتيجة كانت مفاجئة، وهي أن المجموعات بجوج وصلو لنفس التحسن. هادشي كيعني أن التمارين القصيرة والمجهدة عندها نفس الفعالية ديال التدريب الطويل اللي كيطلب وقت بزاف." },
 
                             { answer: "A",
-                              body: "Wer nach langer Pause wieder mit Sport beginnt, sollte einige Regeln beachten, sonst wird aus dem guten Vorsatz schnell eine Verletzung. Die ersten Einheiten dauern besser zwanzig bis dreißig Minuten und finden höchstens zweimal pro Woche statt. Zwischen zwei Trainingstagen gehört ein Ruhetag, weil sich Muskeln und Sehnen erst in der Pause anpassen. Wer älter als vierzig ist oder Vorerkrankungen hat, lässt sich besser vorher ärztlich untersuchen. Und schließlich gilt: Schmerz ist kein Zeichen von Fortschritt, sondern ein Grund aufzuhören.",
-                              ar: "اللي بغا يرجع للرياضة من بعد توقف طويل خاصو يحترم شي قواعد، وإلا النية المزيانة كتولي إصابة. الحصص الأولى حسن يكونو من 20 ل 30 دقيقة، وجوج مرات فالأسبوع ماكترش. وخلي نهار راحة بين جوج تداريب، حيت العضلات كتتأقلم فالراحة ماشي فالتمرين. واللي فات الأربعين ولا عندو شي مرض، حسن ليه يمشي للطبيب قبل. وفالآخر: الحريق ماشي علامة ديال التقدم — هو سبب باش توقف." }
-                        ]),
-
-                    /* ---------------- المعدل 1 ---------------- */
-                    variant("المعدل 1",
-                        [
-                            { value: "A", text: "Wenn der Körper mehr Pause braucht",
-                              ar: "ملي الجسم كيحتاج راحة كتر" },
-                            { value: "B", text: "Das Wasser trägt einen Teil des Gewichts",
-                              ar: "الما كيحمل جزء من الوزن" },
-                            { value: "C", text: "Mitspieler sind der beste Grund zu kommen",
-                              ar: "الزملاء هوما أحسن سبب باش تجي" },
-                            { value: "D", text: "Vertrag unterschrieben, Studio nie gesehen",
-                              ar: "وقّع العقد وعمرو مادخل للقاعة" },
-                            { value: "E", text: "Früh am Morgen oder spät am Abend?",
-                              ar: "بكري فالصباح ولا متأخر فالليل؟" },
-                            { value: "F", text: "Schwimmen lernen im Erwachsenenalter",
-                              ar: "تعلم العومان فسن الكبر" },
-                            { value: "G", text: "Trainer werden im Nebenberuf",
-                              ar: "تولي مدرب كخدمة ثانوية" },
-                            { value: "H", text: "Wettkämpfe für Hobbysportler",
-                              ar: "مباريات لهواة الرياضة" },
-                            { value: "I", text: "Sportverletzungen richtig behandeln",
-                              ar: "تعالج الإصابات الرياضية بالشكل الصحيح" },
-                            { value: "J", text: "Was eine Mitgliedschaft wirklich kostet",
-                              ar: "شحال كيسوى الانخراط بجد" }
-                        ],
-                        [
-                            { answer: "B",
-                              body: "Für Menschen mit Rücken- oder Knieproblemen empfehlen Ärzte fast immer dieselbe Sportart. Im Becken trägt das Wasser einen großen Teil des Körpergewichts, sodass Gelenke und Wirbelsäule deutlich weniger belastet werden als beim Laufen. Gleichzeitig arbeitet fast die gesamte Muskulatur mit, und der Widerstand des Wassers sorgt dafür, dass auch langsame Bewegungen anstrengend bleiben. Wichtig ist allerdings die Technik: Wer den Kopf dauerhaft über Wasser hält, verspannt den Nacken und erreicht genau das Gegenteil dessen, was er wollte.",
-                              ar: "للناس اللي عندهم مشاكل فالضهر ولا الركبة، الأطباء كينصحو ديما بنفس الرياضة. فالبيسين، الما كيحمل جزء كبير من وزن الجسم، وهاكا المفاصل والعمود الفقري كيتحملو أقل بزاف من الجري. وفنفس الوقت تقريبا گاع العضلات كتخدم، ومقاومة الما كتخلي حتى الحركات البطيئة متعبة. ولكن التقنية مهمة: اللي كيبقى رافع راسو فوق الما ديما كيشد ليه الرقبة وكيوصل للعكس ديال اللي بغا." },
-
-                            { answer: "C",
-                              body: "Wer allein trainiert, hört im Schnitt nach wenigen Monaten wieder auf. In einer Mannschaft ist das anders, und der Grund ist weniger sportlich als sozial: Wer nicht kommt, fehlt den anderen. Diese Verpflichtung gegenüber der Gruppe hält viele Spieler über Jahre dabei, auch an Abenden, an denen sie allein sicher zu Hause geblieben wären. Vereine berichten außerdem, dass gerade Zugezogene über die Mannschaft schnell Anschluss finden. Das Training ist dann fast nur noch der Anlass, sich überhaupt regelmäßig zu treffen.",
-                              ar: "اللي كيتدرب بوحدو، فالمعدل كيحبس من بعد شي شهور. فالفريق الأمر مختلف، والسبب اجتماعي ماشي رياضي: اللي ماجاش كينقص على الآخرين. هاد الالتزام مع المجموعة كيخلي بزاف ديال اللاعبين مستمرين سنين، حتى ف الليالي اللي كانو غيبقاو فيهم فالدار بلا شك. الجمعيات كتقول حتى الناس الجداد فالمدينة كيلقاو أصحاب بزربة عن طريق الفريق. والتدريب كيولي تقريبا غير الذريعة باش يتلاقاو بانتظام." },
-
-                            { answer: "A",
-                              body: "Nicht jede Müdigkeit nach dem Sport ist normal. Wer wochenlang hart trainiert und die Pausen streicht, bemerkt irgendwann das Gegenteil des erhofften Fortschritts: Die Leistung sinkt, der Schlaf wird schlechter, und schon kleine Belastungen fühlen sich schwer an. Sportmediziner sprechen dann von einem Zustand, in dem sich der Körper zwischen den Einheiten nicht mehr erholen kann. Hilfreich ist in diesem Fall nur eines, und es fällt den Betroffenen am schwersten: mehrere Tage oder sogar Wochen gar nichts zu tun.",
-                              ar: "ماشي كل عياء من بعد الرياضة طبيعي. اللي كيتدرب بقوة أسابيع وكيمسح الراحة، كيلاحظ فشي وقت عكس اللي كان كيتسنا: المستوى كينقص، النعاس كيخسر، وحتى المجهود الصغير كيولي ثقيل. أطباء الرياضة كيسميوها حالة اللي فيها الجسم مابقاش كيقدر يرتاح بين الحصص. والحل الوحيد هو اللي صعيب على هاد الناس: تبقى أيام ولا حتى أسابيع ماتدير والو." },
-
-                            { answer: "E",
-                              body: "Die Frage taucht in jedem Kurs auf, und die ehrliche Antwort lautet: Es kommt darauf an. Am Morgen ist der Kreislauf noch nicht auf Betriebstemperatur, dafür stört später nichts mehr den Plan. Am Abend arbeiten Muskeln und Reaktionsvermögen nachweislich besser, doch ein intensives Training kurz vor dem Zubettgehen kann das Einschlafen verzögern. Untersuchungen zeigen, dass der Unterschied für Freizeitsportler ohnehin gering ist. Entscheidend bleibt die Tageszeit, zu der man den Sport tatsächlich durchhält, und nicht die theoretisch beste Stunde.",
-                              ar: "هاد السؤال كيطرح ف كل دورة، والجواب الصادق هو: كيتوقف. فالصباح الدورة الدموية ماوصلاتش لحرارتها، ولكن من بعد ماغاديش يخربق ليك شي حاجة فالبرنامج. فالعشية العضلات ورد الفعل كيخدمو حسن، ولكن تدريب قوي قبل النعاس بشوية كيقدر يأخر النوم. الدراسات كتبين أن الفرق عند الهاوي صغير على كل حال. المهم هو الوقت اللي غادي تقدر تستمر فيه بجد، ماشي الساعة المثالية نظريا." },
+                              body: "Mehr Bewegung als Ausgleich für zu langes Sitzen im Büro und in der Freizeit ist zurzeit angesagt, um Übergewicht, Bluthochdruck und Herz-Kreislauf-Erkrankungen vorzubeugen und um fit zu bleiben. Gerade für Einsteiger gibt es jedoch bei den die Ausdauer trainierenden Sportarten wie dem Joggen einige Grundregeln, die beachtet werden müssen, will man gesundheitliche Schäden vermeiden. Die ersten Trainingseinheiten sollen nicht länger als 20 bis 30 Minuten dauern und zweimal pro Woche durchgeführt werden. Der Puls sollte nie den Wert 200 minus Lebensalter überschreiten, bei einem 20-Jährigen kann er also bei 180, bei einem 60-Jährigen hingegen nur bei 140 liegen. Außerdem gilt für alle, die beim Sport abnehmen möchten: Je höher der Pulsschlag, desto weniger Fett wird verbrannt. Hoher Pulsschlag lässt Sporttreibenden langsamer abnehmen.",
+                              ar: "خصنا نديرو الرياضة بزاف باش نوقفو الأمراض بحال السمنة وضغط الدم ونبقاو بصحة جيدة. الناس اللي عاد كيبداو التمارين، خاص الحصة ماتفوتش 20 حتى 30 دقيقة وتكون غير جوج مرات فالأسبوع. من الضروري أن دقات القلب (البولص) ما تفوتش أبداً القيمة ديال 200 ناقص العمر ديالك. وكنصيحة مهمة للي بغا ينقص الوزن: كول ما كانت دقات القلب سريعة بزاف، كول ما كيتحرق دهن أقل." },
 
                             { answer: "D",
-                              body: "Im Januar steigen die Anmeldezahlen in den Fitnessstudios sprunghaft an, im März sind viele Geräte wieder frei. Die Branche kennt das Muster genau und kalkuliert damit: Ein großer Teil der Mitglieder zahlt zwölf Monate lang und erscheint nach den ersten Wochen kaum noch. Verbraucherschützer raten deshalb, vor der Unterschrift auf die Laufzeit und die Kündigungsfrist zu achten und im Zweifel einen kurzen Vertrag zu wählen, auch wenn er pro Monat teurer ist. Wer wirklich regelmäßig geht, kann später immer noch verlängern.",
-                              ar: "ف يناير عدد التسجيلات فقاعات الرياضة كيطلع بزربة، وف مارس بزاف ديال الآلات كيرجعو خاويين. القطاع عارف هاد النمط مزيان وكيحسب عليه: جزء كبير من المنخرطين كيخلص 12 شهر وكيجي غير الأسابيع الأولى. حيت هاكا جمعيات حماية المستهلك كتنصح: قبل ماتوقع شوف مدة العقد وأجل الإلغاء، وإلا شكيتي خود عقد قصير حتى إلا كان غالي فالشهر. واللي غادي يمشي بجد يقدر يمدد من بعد." }
-                        ]),
-
-                    /* ---------------- المعدل 2 ---------------- */
-                    variant("المعدل 2",
-                        [
-                            { value: "A", text: "Zahlen am Handgelenk statt eigenem Gefühl",
-                              ar: "أرقام فالمعصم بدل الإحساس ديالك" },
-                            { value: "B", text: "Wenn Schule und Sofa die Bewegung ersetzen",
-                              ar: "ملي المدرسة والصالون كيعوضو الحركة" },
-                            { value: "C", text: "Der Arbeitsweg als tägliches Training",
-                              ar: "طريق الخدمة كتدريب يومي" },
-                            { value: "D", text: "Eine Sportart ohne Altersgrenze und ohne Verein",
-                              ar: "رياضة بلا حد للعمر وبلا جمعية" },
-                            { value: "E", text: "Lieber abwarten, bis das Fieber weg ist",
-                              ar: "حسن تتسنا حتى يمشي السخون" },
-                            { value: "F", text: "Neue Radwege in den Städten",
-                              ar: "ممرات جديدة ديال البيسكليط فالمدن" },
-                            { value: "G", text: "Warum der Schulsport gestrichen wird",
-                              ar: "علاش كيمسحو حصص الرياضة فالمدرسة" },
-                            { value: "H", text: "Urlaub in den Bergen wird teurer",
-                              ar: "العطلة فالجبال ولات غالية" },
-                            { value: "I", text: "Wie viel Schlaf Sportler brauchen",
-                              ar: "شحال من النعاس خاص الرياضي" },
-                            { value: "J", text: "Den passenden Verein für Kinder finden",
-                              ar: "تلقى الجمعية المناسبة للدراري" }
-                        ],
-                        [
-                            { answer: "B",
-                              body: "Kinderärzte beobachten seit Jahren dieselbe Entwicklung: Der Schulweg wird mit dem Auto zurückgelegt, der Nachmittag vor dem Bildschirm verbracht, und draußen spielt kaum noch jemand ohne Verabredung. Die Folgen zeigen sich nicht sofort, sondern erst in Untersuchungen zur Haltung und zur Ausdauer, die heute deutlich schlechter ausfallen als vor zwanzig Jahren. Fachleute fordern deshalb keine neuen Programme, sondern etwas Einfacheres: Kinder sollten den Weg zur Schule wieder selbst zurücklegen und täglich mindestens eine Stunde draußen sein.",
-                              ar: "أطباء الأطفال كيلاحظو من سنين نفس الشي: الطريق للمدرسة كتقطع بالطوموبيل، العشية كتدوز قدام الشاشة، وفالبرا تقريبا حتى واحد مابقا كيلعب بلا موعد. النتائج ماكتبانش دغيا، كتبان غير فالفحوصات ديال الوضعية والتحمل، اللي ولات ضعيفة بزاف على 20 عام هاد الشي. حيت هاكا الخبراء ماكيطلبوش برامج جديدة، كيطلبو حاجة أبسط: خلي الدراري يمشيو للمدرسة برجليهم ويبقاو فالبرا ساعة على الأقل كل نهار." },
-
-                            { answer: "D",
-                              body: "Kein Beitrag, keine feste Trainingszeit, keine Mannschaft, auf die man Rücksicht nehmen muss: Wandern ist die Sportart mit den wenigsten Hürden. Man kann in jedem Alter damit anfangen und die Belastung über die Streckenlänge fast beliebig steuern. Gesundheitlich wirkt es ähnlich wie leichtes Ausdauertraining, belastet die Gelenke aber kaum. Erfahrene Wanderer warnen allerdings davor, die Strecke zu unterschätzen: Ein langer Abstieg beansprucht die Knie stärker als der Aufstieg, und schlechtes Schuhwerk ist die häufigste Ursache für Verletzungen.",
-                              ar: "لا اشتراك، لا وقت تدريب محدد، لا فريق خاصك تحسب ليه حساب: المشي فالجبال هي الرياضة بأقل عراقيل. كتقدر تبدا فيها ف أي عمر وتتحكم فالمجهود عن طريق طول المسافة. صحيا كتشبه التدريب الخفيف، ولكن تقريبا ماكتعيقش المفاصل. ولكن المتمرسين كيحذرو: ماتستهينش بالمسافة — الهبوط الطويل كيتعب الركبة كتر من الطلوع، والصباط الخايب هو السبب الأول فالإصابات." },
-
-                            { answer: "A",
-                              body: "Schritte, Puls, Schlafphasen, verbrauchte Kalorien: Moderne Uhren messen fast alles und zeigen dem Träger jeden Abend, wie aktiv er war. Für viele ist das eine echte Hilfe, weil abstrakte Vorsätze plötzlich überprüfbar werden. Sportpsychologen sehen die Entwicklung jedoch zwiespältig. Wer nur noch auf das Display schaut, verlernt, auf die eigenen Signale zu hören, und trainiert an Tagen weiter, an denen eine Pause sinnvoller wäre. Die Geräte seien nützlich, so das Fazit, solange sie das Körpergefühl ergänzen und nicht ersetzen.",
-                              ar: "الخطوات، دقات القلب، مراحل النعاس، السعرات: الساعات ديال دابا كتقيس تقريبا كل شي وكتوري ليك كل عشية شحال كنتي نشيط. لبزاف ديال الناس هادي معاونة بجد، حيت النوايا المجردة كتولي قابلة للقياس. ولكن علماء النفس الرياضي شايفين الأمر بعينين: اللي كيبقى غير كيشوف فالشاشة كينسى يسمع لإشارات جسمو، وكيكمل التدريب ف أيام اللي كانت الراحة حسن فيهم. الخلاصة: الأجهزة نافعة باش تكمل الإحساس بالجسم، ماشي باش تعوضو." },
-
-                            { answer: "E",
-                              body: "Eine leichte Erkältung ohne Fieber spricht nach Ansicht der meisten Ärzte nicht grundsätzlich gegen einen ruhigen Spaziergang. Sobald jedoch die Temperatur steigt, gilt eine klare Regel, und sie wird erstaunlich oft ignoriert. Der Kreislauf arbeitet bereits gegen die Infektion, und zusätzliche Belastung kann in seltenen Fällen den Herzmuskel schädigen. Fachleute raten deshalb, nach einem fieberhaften Infekt mindestens so viele Tage zu pausieren, wie die Beschwerden gedauert haben, und danach mit deutlich geringerer Intensität wieder einzusteigen.",
-                              ar: "الرواح الخفيف بلا سخانة ماكيمنعش، فرأي أغلب الأطباء، تخرج تتمشى بشوية. ولكن ملي كتطلع الحرارة كاينة قاعدة واضحة، والناس كيتجاهلوها بزاف. الدورة الدموية أصلا كتحارب العدوى، وزيادة المجهود تقدر ف حالات نادرة تضر عضلة القلب. حيت هاكا الخبراء كينصحو: من بعد عدوى بالسخانة، ارتاح على الأقل نفس عدد الأيام اللي دام فيهم المرض، ومن بعد رجع بشدة أقل بزاف." },
-
-                            { answer: "C",
-                              body: "Wer täglich mit dem Rad zur Arbeit fährt, sammelt ohne zusätzlichen Zeitaufwand eine Trainingsmenge, für die andere abends extra ins Studio gehen. Genau darin liegt der Vorteil: Die Einheit fällt nicht aus, weil sie ohnehin stattfinden muss. Firmen haben das erkannt und bieten inzwischen Duschen, sichere Stellplätze und in einigen Fällen sogar geleaste Räder an. Wer die Strecke anfangs zu weit findet, kann einen Teil mit Bus oder Bahn zurücklegen und erst die letzten Kilometer selbst fahren.",
-                              ar: "اللي كيمشي كل نهار للخدمة بالبيسكليط كيجمع، بلا مايضيع وقت زائد، كمية ديال التدريب اللي الآخرين كيمشيو ليها للقاعة فالعشية. وهنا هي الفايدة: الحصة ماكتطيحش حيت على كل حال خاصها تدار. الشركات فهمات هاد الشي وولات كتوفر دوشات، بلايص آمنة، وفشي حالات حتى بيسكليطات بالكراء. واللي شاف المسافة بعيدة فالبداية، يقدر يدوز جزء بالطوبيس ولا التران ويجري غير الكيلومترات الأخيرة." }
+                              body: "Viele frischgebackene Eltern stehen einem riesigen Angebot an Kinderwagen gegenüber, das in Kinderläden und Großmärkten feilgeboten wird. Doch welcher ist der richtige? Experten raten, beim Kauf dieses für die ersten Jahre mit dem Kleinkind wichtigen Gefährts auf ein paar Dinge zu achten. Erstens sollte die Matratze nicht zu weich sein, damit das Kind nicht einsinkt, wodurch die Atmung behindert werden kann. Zweitens sollten die Räder gefedert sein, um Erschütterungen auf unebenen Wegen auszugleichen. Ein hoher Wagen schützt die Babys vor dem Auspuff der Autos an Straßenkreuzungen. Zusammenklappbare Wagen passen in jeden Kofferraum und lassen sich fast überallhin mitnehmen. Der Wagen sollte vor allem kippsicher sein und keine scharfen Kanten haben, an denen sich die Kinder verletzen können. Vom TÜV geprüfte Kinderwagen erhalten ein Prüfzeichen. Damit haben die Eltern eine gewisse Sicherheit, dass der Kinderwagen auch nach Dauergebrauch nicht zu einem Sicherheitsrisiko für ihr Kind werden kann.",
+                              ar: "الوالدين كيحيروا في الاختيار ديال العربة ديال الرضيع حيت كاين بزاف الأنواع في السوق. الخبراء كينصحوا بالاهتمام لشي نقط مهمة باش يكون الطفل في أمان. خاص المطلة ما تكونش رطبة بزاف باش النفس ديالو ما تضيقش، و الرويض خاصهم يكونوا فيهم السور باش ما يحسش بالتقرقيب في الطريق. و أهم حاجة هي تكون العربة ثابتة ومافيهاش شي حوايج ماضيين، ومن الأحسن تكون عندها علامة السلامة المعتمدة." }
                         ])
                 ]
             }
