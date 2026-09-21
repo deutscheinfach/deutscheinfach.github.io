@@ -858,3 +858,259 @@
 
 /* الاسم بالعربية حدا العنوان ديال التمرين خاصو شي تنفيسة */
 .lesen-detail-title .lesen-card-ar { margin-inline-start: 7px; }
+
+/* =====================================================
+   Lesen Teil 1 — النصوص + لوحة الترويسات
+   ===================================================== */
+
+.t1 { direction: ltr; }
+
+/* ---- تبويبات النسخ ---- */
+.t1-variants {
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+    margin: 0 auto 18px;
+    width: fit-content;
+    max-width: 100%;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    overflow-x: auto;
+    scrollbar-width: none;
+    direction: rtl;
+}
+.t1-variants::-webkit-scrollbar { display: none; }
+.t1-variant {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    font: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: .18s;
+}
+.t1-variant:hover { color: var(--text); }
+.t1-variant.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    box-shadow: 0 5px 14px color-mix(in srgb, var(--gold) 32%, transparent);
+}
+
+/* ---- العنوان ---- */
+.t1-head { text-align: center; margin-bottom: 22px; }
+.t1-title { font-size: var(--step-3); font-weight: 900; line-height: 1.2; }
+.t1-kicker {
+    margin-top: 6px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+}
+
+/* ---- الشبكة: نصوص + لوحة ---- */
+.t1-board {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 20px;
+    align-items: start;
+}
+@media (max-width: 1000px) {
+    .t1-board { grid-template-columns: minmax(0, 1fr); }
+}
+
+.t1-texts { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.t1-intro {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.7;
+    direction: ltr;
+}
+
+/* ---- نص واحد ---- */
+.t1-text {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    transition: border-color .18s ease;
+}
+.t1-text.is-active { border-color: var(--line-gold); }
+.t1-text.correct { border-color: var(--ok); }
+.t1-text.wrong { border-color: var(--danger); }
+
+.t1-text-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.t1-text-num {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+    font-weight: 900;
+    background: color-mix(in srgb, var(--gold) 13%, transparent);
+    color: var(--gold);
+    border: 1px solid var(--line-gold);
+}
+.t1-select {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 12px;
+    border-radius: 11px;
+    border: 1px dashed var(--line-gold);
+    background: var(--surface-2);
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+.t1-select:focus { outline: none; border-style: solid; border-color: var(--gold); }
+
+.t1-body {
+    line-height: 1.85;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+/* ---- الملخص بالدارجة ---- */
+.t1-summary {
+    margin-top: 14px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    direction: rtl;
+}
+.t1-summary > summary {
+    padding: 10px 14px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+    font-size: 13.5px;
+    color: var(--gold);
+    cursor: pointer;
+}
+.t1-summary > summary::-webkit-details-marker { display: none; }
+.t1-summary p {
+    padding: 0 14px 12px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+/* ---- لوحة الترويسات ---- */
+.t1-side { min-width: 0; }
+.t1-panel {
+    position: sticky;
+    top: 92px;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+@media (max-width: 1000px) {
+    .t1-panel { position: static; max-height: none; }
+}
+.t1-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+}
+.t1-panel-title {
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    color: var(--text);
+}
+.t1-progress {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
+    border: 1px solid var(--line-gold);
+    border-radius: 999px;
+    padding: 3px 10px;
+}
+
+.t1-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface-2);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition: .18s;
+}
+.t1-option:hover { border-color: var(--gold); }
+.t1-option.is-used {
+    background: color-mix(in srgb, var(--ok) 10%, transparent);
+    border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+.t1-option-key {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+    font-weight: 900;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--muted);
+}
+.t1-option.is-used .t1-option-key { color: var(--ok); border-color: currentColor; }
+.t1-option-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.t1-option-de {
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--text);
+    overflow-wrap: anywhere;
+}
+.t1-option-ar {
+    font-size: 12.5px;
+    color: var(--muted);
+    direction: rtl;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+    .t1-text { padding: 14px; }
+    .t1-text-top { flex-wrap: wrap; }
+    .t1-select { flex: 1 1 100%; }
+    .t1-body { font-size: 14.5px; }
+}

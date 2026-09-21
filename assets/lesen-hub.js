@@ -13,7 +13,11 @@
     const grid = document.getElementById("lesen-grid");
     const toolbar = document.querySelector(".lesen-toolbar");
     const countEl = document.getElementById("lesen-count");
-    const heroEl = document.querySelector(".lesen-hero");
+    /* الهيدر ديال القسم كامل (العنوان + العداد) والتبويبات ديال فوق —
+       خاصهم يتخباو ملي يتحل التمرين، وإلا كيبقاو معلقين فوقو. */
+    const heroEl = document.querySelector(".lesen-head-row")
+        || document.querySelector(".lesen-hero");
+    const tabsNav = document.querySelector(".lesen-shell > .lesen-tabs");
     const detail = document.getElementById("lesen-detail");
     const search = document.getElementById("lesen-search-input");
     const sortBtn = document.getElementById("lesen-sort-btn");
@@ -169,6 +173,7 @@
         if (push) history.pushState({ thema: themaId, teil: part }, "", pageUrl(themaId, part));
 
         if (heroEl) heroEl.hidden = true;
+        if (tabsNav) tabsNav.hidden = true;
         if (toolbar) toolbar.hidden = true;
         if (countEl) countEl.hidden = true;
         grid.hidden = true;
@@ -263,6 +268,13 @@
                 return;
             }
 
+            /* Teil 1 عندو شكل ديالو: نسخ، لوحة ترويسات، وملخصات. */
+            if (task.kind === "matching"
+                && typeof window.__lesenTeil1Render === "function") {
+                window.__lesenTeil1Render(stack, task);
+                return;
+            }
+
             window.LESEN_TOPICS = [Object.assign({ id: themaId + "-" + current }, task)];
             if (typeof window.__lesenRenderInto === "function") {
                 window.__lesenRenderInto(stack);
@@ -275,6 +287,7 @@
         detail.hidden = true;
         detail.textContent = "";
         if (heroEl) heroEl.hidden = false;
+        if (tabsNav) tabsNav.hidden = false;
         if (toolbar) toolbar.hidden = false;
         if (countEl) countEl.hidden = false;
         grid.hidden = false;
