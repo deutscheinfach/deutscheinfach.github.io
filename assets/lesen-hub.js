@@ -132,6 +132,9 @@
             foot.appendChild(chip("lesen-chip-parts", "+" + parts.length));
         }
 
+        /* المجاني خاصو يبان — هو اللي كيخلي الطالب يجرب */
+        if (!topic.locked) foot.appendChild(chip("lesen-chip-free", "مجاني"));
+
         const go = document.createElement("span");
         go.className = "lesen-card-go";
         go.textContent = topic.locked ? "🔒" : "›";
@@ -251,10 +254,14 @@
             stack.textContent = "";
 
             if (topic.locked && !window.__deutschEinfachIsPremium) {
-                const box = document.createElement("div");
-                box.className = "lesen-empty";
-                box.textContent = "🔒 هاد الموضوع ديال Premium.";
-                stack.appendChild(box);
+                if (typeof window.__premiumGate === "function") {
+                    window.__premiumGate(stack, { title: topic.title });
+                } else {
+                    const box = document.createElement("div");
+                    box.className = "lesen-empty";
+                    box.textContent = "🔒 هاد الموضوع ديال Premium.";
+                    stack.appendChild(box);
+                }
                 return;
             }
 

@@ -1167,3 +1167,163 @@
     .t1-stagger .t1-text,
     .t1-stagger .t1-option { animation: none; }
 }
+
+/* =====================================================
+   لوحة Premium
+   ===================================================== */
+
+.pg {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line-gold);
+    border-radius: var(--radius);
+    background:
+        radial-gradient(600px 240px at 82% -20%, var(--brand-tint), transparent 70%),
+        var(--surface);
+    box-shadow: var(--shadow);
+    padding: clamp(18px, 3vw, 30px);
+    direction: rtl;
+}
+
+.pg-head { display: flex; gap: 16px; align-items: flex-start; }
+
+.pg-lock {
+    flex: 0 0 auto;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    color: var(--ink);
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    box-shadow: 0 10px 22px color-mix(in srgb, var(--gold) 34%, transparent);
+}
+.pg-lock svg { width: 26px; height: 26px; }
+
+.pg-titles { min-width: 0; }
+.pg-chip {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
+    border: 1px solid var(--line-gold);
+    direction: ltr;
+}
+.pg-title { font-size: var(--step-2); font-weight: 900; margin: 8px 0 6px; line-height: 1.3; }
+.pg-lead { color: var(--muted); font-size: 14.5px; line-height: 1.75; }
+
+.pg-perks {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 9px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.pg-perks li {
+    display: flex;
+    gap: 9px;
+    align-items: flex-start;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+}
+.pg-tick {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 7px;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--ok);
+    background: color-mix(in srgb, var(--ok) 13%, transparent);
+}
+
+.pg-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.pg-btn {
+    min-height: 46px;
+    padding: 0 22px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14.5px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform .18s ease, border-color .18s ease;
+}
+.pg-btn-main {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--gold) 30%, transparent);
+}
+.pg-btn-ghost { background: var(--surface-2); color: var(--text); border-color: var(--line); }
+.pg-btn:hover { transform: translateY(-2px); }
+.pg-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+/* النموذج المغبّش — شكل التمرين بلا محتواه */
+.pg-peek {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--line-gold);
+    display: grid;
+    gap: 12px;
+    filter: blur(3.5px);
+    opacity: .5;
+    user-select: none;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+}
+.pg-peek-row { display: flex; gap: 12px; align-items: flex-start; }
+.pg-peek-num {
+    flex: 0 0 auto;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 900;
+    color: var(--gold);
+    background: color-mix(in srgb, var(--gold) 13%, transparent);
+}
+.pg-peek-lines { flex: 1 1 auto; display: grid; gap: 7px; }
+.pg-peek-line { height: 10px; border-radius: 999px; background: var(--surface-2); }
+.pg-peek-line.short { width: 58%; }
+
+@media (prefers-reduced-motion: reduce) { .pg-btn:hover { transform: none; } }
+@media (max-width: 700px) {
+    .pg-head { gap: 12px; }
+    .pg-lock { width: 44px; height: 44px; border-radius: 13px; }
+    .pg-lock svg { width: 22px; height: 22px; }
+    .pg-btn { flex: 1 1 100%; }
+}
+
+/* شارة PRO على البطائق المقفولة */
+.lesen-card.locked .lesen-card-go {
+    font-size: 0;
+    width: auto;
+    padding: 0 10px;
+    border-radius: 999px;
+}
+.lesen-card.locked .lesen-card-go::after {
+    content: "PRO";
+    font-size: 10.5px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--gold);
+    direction: ltr;
+}
+
+/* شارة "مجاني" على البطائق المفتوحة */
+.lesen-chip-free {
+    color: var(--ok);
+    background: color-mix(in srgb, var(--ok) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ok) 40%, transparent);
+    font-weight: 800;
+}

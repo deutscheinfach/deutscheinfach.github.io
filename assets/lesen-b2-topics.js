@@ -41,16 +41,16 @@ window.LESEN_B2_TOPICS = [
     { id: "loewen",       title: "Löwen",                   ar: "الأسود",                     parts: ["teil1"], locked: true },
     { id: "baeder",       title: "Bäder",                   ar: "الحمامات",                   parts: ["teil1"], locked: true },
     { id: "babytv",       title: "Baby TV / Medizin",       ar: "تلفزة الأطفال / الطب",       parts: ["teil1"], locked: true },
-    { id: "autos",        title: "Autos",                   ar: "السيارات",                   parts: ["teil1"], locked: false },
-    { id: "computer",     title: "Computer",                ar: "كمبيوتر",                    parts: ["teil1"], locked: false },
+    { id: "autos",        title: "Autos",                   ar: "السيارات",                   parts: ["teil1"], locked: true },
+    { id: "computer",     title: "Computer",                ar: "كمبيوتر",                    parts: ["teil1"], locked: true },
     { id: "altesleben",   title: "Das alte Leben",          ar: "الحياة القديمة",             parts: ["teil1"], locked: true },
-    { id: "evolution",    title: "Evolution",               ar: "التطور",                     parts: ["teil1"], locked: false },
+    { id: "evolution",    title: "Evolution",               ar: "التطور",                     parts: ["teil1"], locked: true },
     { id: "fische",       title: "Fische",                  ar: "السمك",                      parts: ["teil1"], locked: true },
     { id: "frauenarbeit", title: "Frauen am Arbeitsmarkt",  ar: "النساء في سوق العمل",        parts: ["teil1"], locked: true },
-    { id: "gedaechtnis",  title: "Gedächtnis",              ar: "الذاكرة",                    parts: ["teil1"], locked: false },
+    { id: "gedaechtnis",  title: "Gedächtnis",              ar: "الذاكرة",                    parts: ["teil1"], locked: true },
     { id: "lebensmodelle",title: "Lebensmodelle",           ar: "نماذج الحياة",               parts: ["teil1"], locked: true },
-    { id: "nordsee",      title: "Nordsee",                 ar: "بحر الشمال",                 parts: ["teil1"], locked: false },
+    { id: "nordsee",      title: "Nordsee",                 ar: "بحر الشمال",                 parts: ["teil1"], locked: true },
     { id: "symptomen",    title: "Symptomen",               ar: "الأعراض",                    parts: ["teil1"], locked: true },
-    { id: "wetter",       title: "Wetter",                  ar: "الطقس",                      parts: ["teil1"], locked: false },
-    { id: "wohnen",       title: "Wohnen",                  ar: "السكن",                      parts: ["teil1"], locked: false }
+    { id: "wetter",       title: "Wetter",                  ar: "الطقس",                      parts: ["teil1"], locked: true },
+    { id: "wohnen",       title: "Wohnen",                  ar: "السكن",                      parts: ["teil1"], locked: true }
 ];
