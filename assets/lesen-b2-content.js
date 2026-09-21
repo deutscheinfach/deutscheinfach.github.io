@@ -86,21 +86,25 @@
                               ar: "شنو كيستافد الدماغ من التمرين" },
                             { value: "E", text: "Bewegung zwischen zwei Terminen",
                               ar: "الحركة بين جوج مواعيد" },
-                            { value: "F", text: "Teure Ausrüstung braucht niemand",
-                              ar: "حتى واحد ماخاصو معدات غالية" },
+                            { value: "F", text: "Wenn die Eltern wieder laufen und das Kind mitfährt",
+                              ar: "ملي الوالدين كيرجعو للجري والطفل معاهم" },
                             { value: "G", text: "Kurze Sprints schlagen jedes Ausdauertraining",
                               ar: "السباقات القصيرة كتغلب أي تدريب طويل" },
                             { value: "H", text: "Ein Sport, den man bis ins Alter treiben kann",
                               ar: "رياضة كتقدر تمارسها حتى للكبر" },
                             { value: "I", text: "Das richtige Essen vor dem Wettkampf",
                               ar: "الماكلة المناسبة قبل المباراة" },
-                            { value: "J", text: "Lieber zuschauen als selbst laufen",
-                              ar: "تفرج حسن ما تجري بوحدك" }
+                            { value: "J", text: "Kinderwagen im Test: Worauf Eltern achten sollten",
+                              ar: "اختبار كروسات الصغار: على أش خاص الوالدين يردو البال" }
                         ],
                         [
                             { answer: "H",
                               body: "Laufen gehört zu den wenigen Sportarten, die man vom Schulalter bis weit über siebzig betreiben kann. Man braucht weder eine Halle noch einen Verein, sondern nur ein Paar passende Schuhe und eine halbe Stunde Zeit. Ärzte weisen allerdings darauf hin, dass Einsteiger langsam beginnen sollten: Wer jahrelang kaum in Bewegung war, überfordert Sehnen und Gelenke innerhalb weniger Wochen. Wechselt man am Anfang zwischen Gehen und Laufen, gewöhnt sich der Körper ohne Schaden an die neue Belastung. Viele Laufgruppen nehmen deshalb ausdrücklich auch ältere Anfänger auf.",
                               ar: "الجري من الرياضات القلال اللي كتقدر تمارسها من الصغر حتى لفوق السبعين. ماخاصك لا قاعة لا جمعية — غير صباط مزيان ونص ساعة. ولكن الأطباء كيقولو للمبتدئ يبدا بشوية: اللي بقا سنين بلا حركة كيتعب المفاصل بزربة. الحل: بدّل بين المشي والجري فالبداية. حيت هاكا بزاف ديال مجموعات الجري كتقبل حتى الناس الكبار." },
+
+                            { answer: "F",
+                              body: "Wer nach der Geburt eines Kindes wieder mit dem Laufen beginnen möchte, stand lange vor einem sehr praktischen Problem: Für das Kind war während des Trainings niemand da. Seit einigen Jahren gibt es dafür Wagen mit drei luftgefüllten Rädern, die sich schieben lassen, ohne bei jedem Schritt zu schwanken. Die Hersteller werben mit Freiheit für die ganze Familie, und tatsächlich kehren viele Mütter und Väter auf diese Weise früher zum Sport zurück. Prüfstellen mahnen allerdings zur Vorsicht: Der Schwerpunkt dieser Wagen liegt weit hinten, sodass sie leichter nach hinten kippen als gewöhnliche Modelle. Auf die Laufstrecke gehören sie erst, wenn das Kind sicher allein sitzen kann.",
+                              ar: "اللي بغا يرجع للجري من بعد ما يجيه الولد كان ديما عندو مشكل بسيط: شكون غادي يبقى مع الصغير وقت التدريب. من شي سنين خرجو كروسات ب تلاتة ديال الروايض بالهوا، كتتدفع بلا ما تهز وتهبط ف كل خطوة. الشركات كتشهر بالحرية للعائلة كاملة، وبالفعل بزاف ديال الوالدين كيرجعو للرياضة بكري بفضلها. ولكن مكاتب الفحص كيحذرو: مركز الثقل ديال هاد الكروسات لور بزاف، ولهذا كتقلب لور بسهولة كتر من العادية. وماخاصهاش تخرج للطريق حتى يقدر الصغير يجلس بوحدو مزيان." },
 
                             { answer: "E",
                               body: "Wer acht Stunden am Schreibtisch sitzt, kommt selten auf die empfohlene Zahl von Schritten pro Tag. Arbeitsmediziner raten deshalb, Bewegung in den Arbeitstag einzubauen, statt sie auf den Abend zu verschieben. Das Gespräch mit dem Kollegen lässt sich im Gehen führen, die Treppe ersetzt den Aufzug, und wer telefoniert, kann dabei stehen. Entscheidend ist nicht die Länge der einzelnen Einheit, sondern dass die langen Sitzphasen regelmäßig unterbrochen werden. Schon zwei bis drei Minuten Bewegung pro Stunde wirken sich messbar auf Rücken und Kreislauf aus.",
@@ -112,11 +116,7 @@
 
                             { answer: "A",
                               body: "Wer nach langer Pause wieder mit Sport beginnt, sollte einige Regeln beachten, sonst wird aus dem guten Vorsatz schnell eine Verletzung. Die ersten Einheiten dauern besser zwanzig bis dreißig Minuten und finden höchstens zweimal pro Woche statt. Zwischen zwei Trainingstagen gehört ein Ruhetag, weil sich Muskeln und Sehnen erst in der Pause anpassen. Wer älter als vierzig ist oder Vorerkrankungen hat, lässt sich besser vorher ärztlich untersuchen. Und schließlich gilt: Schmerz ist kein Zeichen von Fortschritt, sondern ein Grund aufzuhören.",
-                              ar: "اللي بغا يرجع للرياضة من بعد توقف طويل خاصو يحترم شي قواعد، وإلا النية المزيانة كتولي إصابة. الحصص الأولى حسن يكونو من 20 ل 30 دقيقة، وجوج مرات فالأسبوع ماكترش. وخلي نهار راحة بين جوج تداريب، حيت العضلات كتتأقلم فالراحة ماشي فالتمرين. واللي فات الأربعين ولا عندو شي مرض، حسن ليه يمشي للطبيب قبل. وفالآخر: الحريق ماشي علامة ديال التقدم — هو سبب باش توقف." },
-
-                            { answer: "D",
-                              body: "Dass Bewegung dem Herzen nützt, ist seit Langem bekannt. Neuere Untersuchungen richten den Blick jedoch auf das Gehirn. Bei regelmäßigem Ausdauertraining wird der Bereich besser durchblutet, der für das Gedächtnis zuständig ist, und Testpersonen schnitten nach mehreren Wochen bei Konzentrationsaufgaben deutlich besser ab. Auch die Stimmung verbessert sich messbar, weshalb Ärzte Sport inzwischen begleitend bei leichten Depressionen empfehlen. Wichtig ist dabei weniger die Intensität als die Regelmäßigkeit: Drei kürzere Einheiten pro Woche wirken stärker als eine lange am Wochenende.",
-                              ar: "أن الحركة نافعة للقلب هادي حاجة معروفة من بكري. ولكن الدراسات الجديدة قلبات على الدماغ. مع التدريب المنتظم، الجزء المسؤول على الذاكرة كيوصلو دم كتر، والمشاركين ف التجربة جابو نتائج حسن بزاف ف تمارين التركيز من بعد شي أسابيع. حتى المزاج كيتحسن، وحيت هاكا الأطباء ولاو كينصحو بالرياضة مع العلاج فحالات الاكتئاب الخفيف. والمهم ماشي القوة — المهم الانتظام: تلت حصص قصار فالأسبوع حسن من وحدة طويلة فالويكاند." }
+                              ar: "اللي بغا يرجع للرياضة من بعد توقف طويل خاصو يحترم شي قواعد، وإلا النية المزيانة كتولي إصابة. الحصص الأولى حسن يكونو من 20 ل 30 دقيقة، وجوج مرات فالأسبوع ماكترش. وخلي نهار راحة بين جوج تداريب، حيت العضلات كتتأقلم فالراحة ماشي فالتمرين. واللي فات الأربعين ولا عندو شي مرض، حسن ليه يمشي للطبيب قبل. وفالآخر: الحريق ماشي علامة ديال التقدم — هو سبب باش توقف." }
                         ]),
 
                     /* ---------------- المعدل 1 ---------------- */
