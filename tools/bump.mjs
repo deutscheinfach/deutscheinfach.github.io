@@ -80,7 +80,20 @@ for (const page of pages) {
     }
 }
 
+/* version.json — الصفحات كتقارن بيه واش عندها آخر نسخة.
+   صفحة HTML ماعندهاش ?v=، إذن المتصفح كيخزنها وكيبقى كيطلب
+   الملفات القدام اللي مذكورين فيها. هاد الملف كيتجاب ديما
+   من الشبكة، وإلا بان الفرق الصفحة كتعاود تتحمل بوحدها. */
+const manifest = {
+    build: createHash("sha256")
+        .update([...cache.entries()].sort().map((e) => e.join(":")).join("|"))
+        .digest("hex").slice(0, 12),
+    assets: Object.fromEntries([...cache.entries()].sort())
+};
+if (!check) writeFileSync("version.json", JSON.stringify(manifest, null, 2) + "\n");
+
 console.log(`\n${pages.length} صفحة · ${cache.size} ملف · ${changed} تبدلات`
-          + (missing ? ` · ${missing} ملف ناقص` : ""));
+          + (missing ? ` · ${missing} ملف ناقص` : "")
+          + `\nbuild ${manifest.build}`);
 
 if (check && changed) process.exit(1);

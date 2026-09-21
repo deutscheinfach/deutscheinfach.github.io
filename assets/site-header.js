@@ -236,3 +236,75 @@
         }).catch(function () { /* الوضع الخاص كيمنع caches — ماشي مشكل */ });
     }).catch(function () { /* ماكاين باس */ });
 })();
+
+/* ===== الصفحة كتعرف بوحدها إلا كانت قديمة =====
+
+   الملفات ديال assets عندهم ?v=<بصمة>، إذن ملي كتبدل شي ملف
+   المتصفح كيجيب الجديد. ولكن صفحة HTML بوحدها ماعندهاش ?v=،
+   والمتصفح كيخزنها. إذن كتبقى الصفحة القديمة كتطلب الملفات
+   القدام — ومنو كيبان "ما زال ماكاينش تمارين" على موضوع
+   راه مدفوع.
+
+   الحل: version.json كيتجاب ديما من الشبكة. إلا كانت البصمات
+   اللي فالصفحة مخالفة لللي فيه، كنعاودو نحملو الصفحة برابط
+   فيه ?_v=<build> — رابط جديد، إذن المتصفح مايقدرش يعطينا
+   النسخة المخزنة. ومن بعد كنمسحو _v من الرابط باش يبقى نقي.
+
+   sessionStorage كيمنع التكرار: كل build كيتعاود مرة وحدة. */
+
+(function () {
+    "use strict";
+
+    /* نمسحو _v من الرابط — كان غير باش نكسرو الكاش */
+    try {
+        const here = new URL(location.href);
+        if (here.searchParams.has("_v")) {
+            here.searchParams.delete("_v");
+            history.replaceState(history.state, "", here.pathname + here.search + here.hash);
+        }
+    } catch (error) { /* متصفح قديم — ماشي مشكل */ }
+
+    /* هاد الملف كيتحمل قبل باقي الـ <script> ديال الصفحة، إذن
+       ف هاد اللحظة ما زال ماكاينينش فالـ DOM وماغاديش نشوفو
+       البصمات ديالهم. خاصنا نتسناو حتى تسالي قراءة الصفحة. */
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", check);
+    } else {
+        check();
+    }
+
+    function check() {
+
+    const stamped = Array.prototype.slice
+        .call(document.querySelectorAll("script[src], link[href]"))
+        .map(function (node) { return node.getAttribute("src") || node.getAttribute("href"); })
+        .filter(function (url) { return url && /^assets\/[^?]+\?v=[0-9a-f]+$/.test(url); });
+
+    if (!stamped.length || typeof fetch !== "function") return;
+
+    fetch("version.json?t=" + Date.now(), { cache: "no-store" })
+        .then(function (response) { return response.ok ? response.json() : null; })
+        .then(function (manifest) {
+            if (!manifest || !manifest.assets || !manifest.build) return;
+
+            const stale = stamped.some(function (url) {
+                const parts = url.split("?v=");
+                const fresh = manifest.assets[parts[0]];
+                return fresh && fresh !== parts[1];
+            });
+            if (!stale) return;
+
+            /* عاودناها من قبل لهاد الـ build؟ ما نبقاوش ندورو. */
+            try {
+                if (sessionStorage.getItem("de-build") === manifest.build) return;
+                sessionStorage.setItem("de-build", manifest.build);
+            } catch (error) { return; }
+
+            const next = new URL(location.href);
+            next.searchParams.set("_v", manifest.build);
+            location.replace(next.toString());
+        })
+        .catch(function () { /* ماكاين لا شبكة لا ملف — الصفحة كتبقى خدامة */ });
+
+    }
+})();
