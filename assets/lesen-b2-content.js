@@ -162,6 +162,65 @@
                     ]
                 }
             };
-        })()
+        })(),
+
+        /* ================================================================
+           Jugend forscht / Kellner
+           النصوص والترويسات كما صيفطهم صاحب الموقع.
+           الحلول ماكانوش معاهم — استنتجتهم من النصوص، شوف الشرح
+           فالمحادثة وأكّدهم.
+           ================================================================ */
+        "jugend": {
+            teil1: {
+                title: "Jugend forscht",
+                kind: "matching",
+                variants: [
+                    variant("الأساسي",
+                        [
+                            { value: "A", text: "Jugend forscht - auch auf dem Meer",
+                              ar: "لقاوا الناس اللي كايتكلّفو بالصحة أن نسبة كبيرة من الأطفال الوزن ديالهم زايد، والسبب الرئيسي هو النقص في الممارسة ديال الطبخ. الخبير تيمو شميت كيقول بلي المشكل كاين في التجربة، حيت الدراري ما كايعرفوش يطيبو. الأطفال باغيين يتعلمو، ولكن الوالدين يا إما ما عندهمش الوقت باش يعلموهم، يا إما كيخافو من الموس الحاد. وهاد النقص في التطبيق خلى بزاف ديال الدراري ما كايقدروش يفرّقو بين الماكلة العادية، بحال اللي كايصحاب ليهم الفريز هو مطيشة." },
+                            { value: "B", text: "Jugend engagiert sich für den Umweltschutz",
+                              ar: "كولشي كيشوف بلي عدد كبير ديال البنات صغار ولاو كيعانيو من أمراض صعيبة ديال الماكلة. أطباء في مستشفى ديال الأطفال في هانوفر دقوا ناقوس الخطر، حيث طلب على بلايص العلاج تزاد بخمسين فالمية في عامين. السبب الرئيسي هو ضغط المجتمع اللي كيفرض على البنات فكرة مبالغ فيها ديال النحافة والرشاقة. هاد المشكل غالباً ما كيبدا بريجيم عادي، خصوصاً ملي كاتكون شي مشكلة أساسية فالعائلة، وكيتحول فالاخير لمرض خطير." },
+                            { value: "C", text: "Kochen für Eltern und Kinder",
+                              ar: "المسابقة الجهوية ديال «الشباب كايقلّب» بيّنات باللي التلاميذ ولا عندهم وعي كبير بالبيئة. شارك فيها تقريبا 100 تلميذ، وكل واحد فيهم خدم على مواضيع علمية صعيبة بزاف. واحد المجموعة ربحات المرتبة الأولى منين صنعت عضلات اصطناعية خلطات فيها ثلاثة ديال العلوم. ومجموعات أخرى وراو باللي الماكينات اللي كاتخدم بالبنزين كاضرّ البيئة والحشرات بزاف. دابا هاد الرابحين كايوجدو للمسابقة الكبيرة ديال البلاد." },
+                            { value: "D", text: "Mehr Gewalt auf Schulhöfen",
+                              ar: "ثلاثة ديال التلاميذ شباب حققوا الحلم ديالهم: خدامين دابا كباحثين فالبحر فواحد الباطو سميتو «ألديباران»، وكيشاركوا فواحد المسابقة ديال البحث. الموضوع ديالهم هو التلوث ديال بحر الشمال بالجزيئات الصغيرة ديال البلاستيك والخطورة ديالها على الكائنات البحرية. الهدف الرئيسي من البحث هو يجلبوا الانتباه لهاد المشكل البيئي. النتائج الأولية أكدات بلي كاين بلاستيك، وكيقولو «النتائج مزيانة للمشروع ولكن ماشي مزيانة بالمرة للبيئة»." },
+                            { value: "E", text: "Psychoterror an der Schule",
+                              ar: "التنمر ظاهرة منتشرة بزاف فالمدارس وعندها بزاف ديال الأشكال. كايقدر يكون على شكل أستاذة كاتهضر بالخايب على التلميذ، أو التلاميذ كايضحكو على صاحبهم ولا كايخطفو منو الفلوس والملابس. الكبار غالباً ماكايعرفوش آش يديرو أو كايتجاهلو هادشي، والضحايا كايحملو الذنب على راسهم وكايتّعزلو. هاد المضايقات كايوقعو بزاف خفية ماشي فوسط القسم، بحال فالفترات ديال الراحة ولا فاش كيكونوا غاديين للمدرسة، داكشي علاش الأساتذة كايتفاجئو فاش كاتهضر معاهم عليها." },
+                            { value: "F", text: "Schiffsreise für Jugendliche",
+                              ar: "رحلة بحرية للشباب" },
+                            { value: "G", text: "Starker Wettbewerb um Schüler",
+                              ar: "تنافس قوي على الطلاب" },
+                            { value: "H", text: "Von der Diät zur Krankheit",
+                              ar: "من الحمية إلى المرض" },
+                            { value: "I", text: "Wenn Lernen krank macht",
+                              ar: "إذا كان التعلم يسبب المرض" },
+                            { value: "J", text: "Wenn aus Erdbeeren Tomaten werden",
+                              ar: "عندما تصبح الفراولة طماطم" }
+                        ],
+                        [
+                            { answer: "J",
+                              body: "Die Zahlen wirken auf den ersten Blick dramatisch: 15 Prozent der Kinder sind übergewichtig und davon sechs Prozent sogar fettleibig. Der Ernährungswissenschaftler Timo Schmidt betreibt in Berlin ein Kochstudio für Kinder und Jugendliche. Timo Schmidt meint, es fehle vor allem an Praxis-Erfahrungen in der Küche. Kinder und Jugendliche können heute oft nicht mehr kochen, so seine Erfahrung. Das Interesse ist oft da, und die Kinder wollen kochen. Aber das Problem sind die Eltern. Oft haben sie keine Zeit, den Kindern alles zu erklären. Zum anderen haben sie Angst wegen der scharfen Messer. Dabei ist die Quote von Schnittverletzungen im Kinder- und Jugendkochstudio verschwindend gering. Besonders erschreckend findet Schmidt, dass viele Kinder Lebensmittel einfach nicht mehr erkennen. So standen im Kochstudio beispielsweise Erdbeeren auf dem Tisch, die dann für Tomaten gehalten wurden. Und eine gelbe Zucchini wird gerne mal als Banane bezeichnet. „Was fehlt, ist die Praxis“, meint Schmidt. „Deswegen schneiden die Kinder dann mit der stumpfen Seite des Messers oder wissen nicht, wie heiß die Pfanne beim Kochen wird.“",
+                              ar: "لقاوا الناس اللي كايتكلّفو بالصحة أن نسبة كبيرة من الأطفال الوزن ديالهم زايد، والسبب الرئيسي هو النقص في الممارسة ديال الطبخ. الخبير تيمو شميت كيقول بلي المشكل كاين في التجربة، حيت الدراري ما كايعرفوش يطيبو. الأطفال باغيين يتعلمو، ولكن الوالدين يا إما ما عندهمش الوقت باش يعلموهم، يا إما كيخافو من الموس الحاد. وهاد النقص في التطبيق خلى بزاف ديال الدراري ما كايقدروش يفرّقو بين الماكلة العادية، بحال اللي كايصحاب ليهم الفريز هو مطيشة." },
+
+                            { answer: "H",
+                              body: "Immer mehr Mädchen leiden an schweren Essstörungen - und das, obwohl Ärzte und Fachleute seit Jahren vor den negativen Folgen des Schlankheitswahns warnen. Die Kinder- und Jugendpsychiatrie im Kinderkrankenhaus in Hannover schlägt jetzt Alarm. „Allein in den letzten zwei Jahren hat die Nachfrage für einen Therapieplatz um fast 50 Prozent zugenommen“, sagt der leitende Psychologe Gerd Kuznik. Von 33 zur Verfügung stehenden Plätzen in der Jugendpsychiatrie seien derzeit 25 von Mädchen mit Essstörungen belegt. „Wir wissen längst, dass dünn zu sein weder gesund noch lebensverlängernd ist“, sagt Kuznik, „doch unsere Gesellschaft konfrontiert gerade junge Mädchen noch immer mit völlig überzogenen Schlankheitsvorstellungen.“ Das allein verursacht noch keine Essstörung. „Wenn aber noch ein grundlegendes familiäres Problem hinzukommt, legen viele Mädchen einen übertriebenen Wert auf ihr Aussehen.“ So berichtet eine 17-Jährige, dass sie aus dem Gefühl heraus, „nichts hinzubekommen“, eine Diät gemacht habe. Und die Diät war dann endlich etwas, das klappte. Als Folge davon hat sie nicht nur wie geplant zwei Kilo abgenommen, sondern dreizehn. So zieht Gerd Kuznik nicht nur in diesem Fall das Fazit: Mit einer harmlosen Diät fängt es meist an, mit einer schweren Krankheit kann es enden.",
+                              ar: "كولشي كيشوف بلي عدد كبير ديال البنات صغار ولاو كيعانيو من أمراض صعيبة ديال الماكلة. أطباء في مستشفى ديال الأطفال في هانوفر دقوا ناقوس الخطر، حيث طلب على بلايص العلاج تزاد بخمسين فالمية في عامين. السبب الرئيسي هو ضغط المجتمع اللي كيفرض على البنات فكرة مبالغ فيها ديال النحافة والرشاقة. هاد المشكل غالباً ما كيبدا بريجيم عادي، خصوصاً ملي كاتكون شي مشكلة أساسية فالعائلة، وكيتحول فالاخير لمرض خطير." },
+
+                            { answer: "B",
+                              body: "Energiesparlampen, umweltfreundliche Elektrogeräte, Bio-Nagellack - sieht man sich die Themen an, mit denen sich die Teilnehmer des 46. Regionalwettbewerbs „Jugend forscht“ beschäftigt haben, wird vor allem eines klar: Das ökologische Bewusstsein hat die Klassenzimmer erreicht. Knapp 100 Schüler nahmen an dem Wettbewerb teil. Die Teilnehmer schreckten auch vor komplexen Themen nicht zurück. Die Zwölftklässler Adrian, Thanh und Son beschäftigten sich mit der Herstellung künstlicher Muskeln. „Die Herausforderung war, sich mit drei Fachgebieten - Anatomie, Technik und Chemie - zu beschäftigen“, sagt Adrian. Gelohnt hat es sich - in der Rubrik Technik erreichte die Gruppe den ersten Platz. In der Rubrik Arbeitswelt ermittelten die Abiturientinnen Yara-Alessandra und Bahir die Ökobilanz von Gartengeräten. „Wir haben festgestellt, dass Laubbläser mit Benzinmotor nicht nur große Mengen Kohlenstoffdioxid produzieren, sie vernichten auch Würmer und Insekten, die für das Gleichgewicht der Umwelt wichtig sind“, sagt Yara-Alessandra. Die Jury honorierte das Projekt mit dem zweiten Platz. Die Gewinner bereiten sich nun auf den Landeswettbewerb „Jugend forscht“ vor.",
+                              ar: "المسابقة الجهوية ديال «الشباب كايقلّب» بيّنات باللي التلاميذ ولا عندهم وعي كبير بالبيئة. شارك فيها تقريبا 100 تلميذ، وكل واحد فيهم خدم على مواضيع علمية صعيبة بزاف. واحد المجموعة ربحات المرتبة الأولى منين صنعت عضلات اصطناعية خلطات فيها ثلاثة ديال العلوم. ومجموعات أخرى وراو باللي الماكينات اللي كاتخدم بالبنزين كاضرّ البيئة والحشرات بزاف. دابا هاد الرابحين كايوجدو للمسابقة الكبيرة ديال البلاد." },
+
+                            { answer: "A",
+                              body: "13,5 Meter lang und leuchtend gelb - die „Aldebaran“ zieht die Blicke im Jachthafen auf sich. Für drei Schüler aus Diepholz ist ein Traum wahr geworden. Als Meeresforscher auf See arbeiten sie an einem eigenen Forschungsprojekt. Sie nehmen am Meereswettbewerb „Forschen auf See“ teil. Ziel des Projektes: junge Leute an wissenschaftliche Arbeiten heranzuführen. Die drei Schüler Jonas, Annika und Katharina sind 17 Jahre alt. Ihr Thema: die Verschmutzung der Nordsee mit winzigen Plastikteilchen. Zu Hause in Diepholz engagieren sich die drei in der Umwelt-Arbeitsgruppe ihrer Schule. Über die Verschmutzung der Meere mit winzigen Plastikteilchen und die Gefahren für Fische und Meeressäuger wissen sie schon einiges. Mit ihren Untersuchungen wollen sie die Aufmerksamkeit auf das Problem lenken. Die Proben sind zwar noch nicht ausgewertet, die ersten Plastikteile haben die Jugendlichen aber schon gefunden. „Es sieht so aus, dass wir Ergebnisse kriegen, die gut für unser Projekt sind - aber nicht gut für die Umwelt.“",
+                              ar: "ثلاثة ديال التلاميذ شباب حققوا الحلم ديالهم: خدامين دابا كباحثين فالبحر فواحد الباطو سميتو «ألديباران»، وكيشاركوا فواحد المسابقة ديال البحث. الموضوع ديالهم هو التلوث ديال بحر الشمال بالجزيئات الصغيرة ديال البلاستيك والخطورة ديالها على الكائنات البحرية. الهدف الرئيسي من البحث هو يجلبوا الانتباه لهاد المشكل البيئي. النتائج الأولية أكدات بلي كاين بلاستيك، وكيقولو «النتائج مزيانة للمشروع ولكن ماشي مزيانة بالمرة للبيئة»." },
+
+                            { answer: "E",
+                              body: "Mobbing ist kein neues Phänomen. Es ist auch in Schulen weitverbreitet. Da spricht zum Beispiel eine Lehrerin vor der Klasse negativ über eine Schülerin, weil sie etwas nicht versteht oder immer wieder krank ist. Oder die Mitschüler lachen oder lassen beleidigende Bemerkungen fallen, wenn ein bestimmter Schüler sich zu Wort meldet. Da lauern Jungen einer 4. Klasse einem schüchternen Mitschüler auf dem Schulweg auf und erpressen von ihm Geld oder Kleidung. Häufig sind die Erwachsenen ratlos oder schauen weg, während die Opfer die Schuld bei sich selbst suchen und zunehmend in eine soziale Isolation geraten. Lehrkräfte sind meist überrascht, wenn man sie auf Mobbing in einer Klasse anspricht. Denn die Schikanen geschehen oft zu subtil und meist außerhalb des Unterrichts, während der Pausen oder auf dem Schulweg.",
+                              ar: "التنمر ظاهرة منتشرة بزاف فالمدارس وعندها بزاف ديال الأشكال. كايقدر يكون على شكل أستاذة كاتهضر بالخايب على التلميذ، أو التلاميذ كايضحكو على صاحبهم ولا كايخطفو منو الفلوس والملابس. الكبار غالباً ماكايعرفوش آش يديرو أو كايتجاهلو هادشي، والضحايا كايحملو الذنب على راسهم وكايتّعزلو. هاد المضايقات كايوقعو بزاف خفية ماشي فوسط القسم، بحال فالفترات ديال الراحة ولا فاش كيكونوا غاديين للمدرسة، داكشي علاش الأساتذة كايتفاجئو فاش كاتهضر معاهم عليها." }
+                        ])
+                ]
+            }
+        }
     };
 })();
