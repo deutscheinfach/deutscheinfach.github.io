@@ -543,6 +543,305 @@
         }
 
 
+
+        /* =========================================
+           SHOWCASE — نظرة على التمرين بلا ما تدخل
+        ========================================== */
+
+        .showcase {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+            gap: clamp(24px, 4vw, 54px);
+            align-items: center;
+            max-width: var(--shell);
+            margin: 0 auto clamp(40px, 7vw, 90px);
+            padding: 0 var(--gutter);
+        }
+
+        .showcase-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--red);
+            font-weight: 900;
+            font-size: 15px;
+            margin-bottom: 14px;
+        }
+
+        .showcase-copy h2 {
+            font-size: clamp(26px, 3.2vw, 44px);
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 16px;
+        }
+
+        .showcase-copy > p {
+            color: var(--muted);
+            font-size: clamp(15px, 1.1vw, 17px);
+            line-height: 1.9;
+            margin-bottom: 26px;
+        }
+
+        .showcase-list { list-style: none; display: grid; gap: 14px; }
+
+        .showcase-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: clamp(14px, 1vw, 16px);
+            line-height: 1.7;
+        }
+
+        .showcase-tick {
+            flex: 0 0 auto;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(15,157,88,.12);
+            color: #0f9d58;
+            font-weight: 900;
+            font-size: 14px;
+            margin-top: 1px;
+        }
+
+        /* ---------- المعاينة ---------- */
+
+        .preview {
+            /* الصفحة RTL، إذن الشبكة كتنقلب. المعاينة هي
+               واجهة ألمانية: النص على اليسار واللائحة على
+               اليمين — كنثبتوها LTR، والأجزاء العربية داخلها
+               كنرجعوها RTL وحدة بوحدة. */
+            direction: ltr;
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            background: #fff;
+            box-shadow: 0 24px 60px -18px rgba(20,22,31,.22);
+            overflow: hidden;
+        }
+
+        .preview-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-2);
+            font-size: 12.5px;
+        }
+        .preview-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--red); flex: 0 0 auto; }
+        .preview-name { font-weight: 800; }
+        .preview-tag {
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(225,29,51,.10);
+            color: var(--red-dark);
+            font-size: 11px;
+            font-weight: 900;
+        }
+        .preview-clock {
+            margin-inline-start: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 11.5px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .preview-body {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+            gap: 14px;
+            padding: 16px;
+        }
+
+        .preview-text {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            font-size: 11.5px;
+            line-height: 1.75;
+            color: #3c4252;
+            direction: ltr;
+            text-align: left;
+        }
+        .preview-text .lead-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+        .preview-num {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            display: grid;
+            place-items: center;
+            background: rgba(225,29,51,.10);
+            color: var(--red-dark);
+            font-size: 11px;
+            font-weight: 900;
+            flex: 0 0 auto;
+        }
+        mark.hl {
+            background: rgba(255,193,7,.32);
+            color: inherit;
+            border-radius: 4px;
+            padding: 0 3px;
+        }
+        mark.hl2 {
+            background: rgba(225,29,51,.14);
+            color: var(--red-dark);
+            border-radius: 4px;
+            padding: 0 3px;
+        }
+
+        .preview-summary {
+            margin-top: 12px;
+            border: 1px solid rgba(15,157,88,.28);
+            border-radius: 14px;
+            padding: 12px;
+            background: rgba(15,157,88,.05);
+            direction: rtl;
+            text-align: right;
+        }
+        .preview-summary-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 12px;
+            color: #0f7a3d;
+            margin-bottom: 8px;
+        }
+        .preview-summary p { font-size: 11px; line-height: 1.85; color: #4a5060; }
+
+        .preview-side {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .preview-side-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .4px;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+        .preview-opt {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 11px;
+            color: var(--muted);
+            background: #fff;
+        }
+        .preview-opt .k {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            display: grid;
+            place-items: center;
+            background: var(--surface-2);
+            font-size: 10px;
+            font-weight: 900;
+            color: var(--muted);
+            flex: 0 0 auto;
+        }
+        .preview-opt.picked {
+            border-color: rgba(15,157,88,.45);
+            background: rgba(15,157,88,.07);
+            color: #14161f;
+            font-weight: 700;
+        }
+        .preview-opt.picked .k { background: #0f9d58; color: #fff; }
+
+        .preview-score {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1px solid rgba(225,29,51,.25);
+            border-radius: 12px;
+            background: rgba(225,29,51,.05);
+            direction: rtl;
+        }
+        .preview-score b { font-size: 16px; font-weight: 900; color: var(--red-dark); }
+        .preview-score span { font-size: 10.5px; color: var(--muted); display: block; }
+
+        .preview-foot {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            background: var(--surface-2);
+        }
+        .preview-dots { display: flex; gap: 5px; }
+        .preview-dots i {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(20,22,31,.18);
+            display: block;
+        }
+        .preview-dots i.on { background: var(--red); width: 16px; border-radius: 99px; }
+        .preview-step {
+            font-size: 10.5px;
+            font-weight: 900;
+            letter-spacing: .6px;
+            color: var(--muted);
+        }
+        .preview-btns { margin-inline-start: auto; display: flex; gap: 8px; }
+        .preview-btn {
+            padding: 7px 14px;
+            border-radius: 9px;
+            font-size: 11.5px;
+            font-weight: 800;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--muted);
+        }
+        .preview-btn.main {
+            background: var(--red);
+            border-color: var(--red);
+            color: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .showcase { grid-template-columns: 1fr; }
+            .preview-body { grid-template-columns: 1fr; }
+            /* فالتيليفون: النص الأول من بعد الترويسات —
+               نفس الترتيب ديال الامتحان: تقرا من بعد تختار. */
+        }
+        @media (max-width: 520px) {
+            .preview-bar { flex-wrap: wrap; }
+            .preview-clock { margin-inline-start: 0; }
+            .preview-foot { flex-wrap: wrap; }
+            .preview-btns { margin-inline-start: 0; width: 100%; }
+            .preview-btn { flex: 1; text-align: center; }
+        }
+
         /* =========================================
            SECTION TITLE
         ========================================= */
@@ -1509,154 +1808,141 @@
 
 
     <!-- =========================================
-         FEATURES
+         SHOWCASE
     ========================================== -->
 
-    <section class="features">
+    <section class="showcase">
 
+        <div class="showcase-copy">
 
-        <div class="card">
+            <span class="showcase-eyebrow">
+                📖 Lesen
+            </span>
 
-            <div class="card-icon">
-                📖
-            </div>
-
-            <h3>
-                Lesen
-            </h3>
+            <h2>
+                تغطية شاملة لكل أجزاء الامتحان.
+            </h2>
 
             <p>
-
-                مواضيع
-
-                <span class="german">
-                    TELC B1
-                </span>
-
-                و
-
-                <span class="german">
-                    B2
-                </span>
-
-                مجموعين ومنظمين بطريقة سهلة، باش تقدر تتدرب
-                بلا ما تضيع الوقت فالبحث.
-
+                كنوفّرو ليك التدريب على جميع أجزاء القراءة
+                (Teil 1, 2, 3) وحتى Sprachbausteine (Teil 1 &amp; 2).
+                النظام ديالنا كيعطيك التصحيح فالبلاصة مع شرح دقيق
+                «علاش» هذيك هي الإجابة الصحيحة، باش تفهم وتتجاوز
+                أخطاءك، مع ملخصات ذكية وتمييز للكلمات المفتاحية.
             </p>
 
-            <a
-                href="b2-lesen.html"
-                class="card-link"
-            >
-                Mehr erfahren ←
-            </a>
+            <ul class="showcase-list">
+
+                <li>
+                    <span class="showcase-tick">✓</span>
+                    <span>جميع الأجزاء: Lesen (1,2,3) و Sprachbausteine (1,2)</span>
+                </li>
+
+                <li>
+                    <span class="showcase-tick">✓</span>
+                    <span>تصحيح فوري مع شرح مفصّل «علاش» لكل إجابة</span>
+                </li>
+
+                <li>
+                    <span class="showcase-tick">✓</span>
+                    <span>ملخصات ذكية للنصوص وتمييز الكلمات المفتاحية (Highlighting)</span>
+                </li>
+
+            </ul>
 
         </div>
 
 
-        <div class="card">
+        <div class="preview" aria-hidden="true">
 
-            <div class="card-icon">
-                🎧
+            <div class="preview-bar">
+                <span class="preview-dot"></span>
+                <span class="preview-name">Tanzkurs — Version 1</span>
+                <span class="preview-tag">B2</span>
+                <span class="preview-clock">🕐 89:47</span>
             </div>
 
-            <h3>
-                Hören
-            </h3>
+            <div class="preview-body">
 
-            <p>
+                <div>
 
-                Audio بحال الامتحان الحقيقي، باش تدرب ودنك
-                وتولي قادر تفهم
+                    <div class="preview-text">
 
-                <span class="german">
-                    Hören
+                        <div class="lead-line">
+                            <span class="preview-num">1</span>
+                            <span>Ein <mark class="hl">Leistungssport</mark> für jedes <mark class="hl2">Alter</mark>.</span>
+                        </div>
+
+                        Der an der Ostküste Attikas in Griechenland liegende Ort Marathon
+                        gab dem Lauf seinen Namen. Dort siegte 490 vor Christus das Heer
+                        der Athener über die Perser. Ein Soldat soll die rund 42 Kilometer
+                        nach Athen gelaufen sein, um die Nachricht zu überbringen — und
+                        brach bei seiner Ankunft zusammen. Seit 1896 gehört der
+                        Marathonlauf zu den olympischen Disziplinen, seit 1984 auch für
+                        Frauen. Wissenschaftler erklären das mit der menschlichen
+                        Evolution: die Fähigkeit, ausdauernd über lange Strecken zu
+                        laufen, steckt in den Genen.
+
+                        <div class="preview-summary">
+                            <div class="preview-summary-head">
+                                <span>✓</span>
+                                <span>ملخص النص</span>
+                            </div>
+                            <p>
+                                النص كيهضر على مدينة Marathon فاليونان، فين ربحو
+                                اليونانيين على الفرس عام 490 قبل الميلاد. واحد العسكري
+                                جرى 42 كيلومتر باش يوصل الخبر لأثينا ومات ملي وصل.
+                                من 1896 والماراثون ولا رياضة أولمبية، ومن 1984 حتى
+                                للنساء. العلماء كيشرحو بلي القدرة على الجري لمسافات
+                                طويلة مدفونة فالجينات ديالنا.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="preview-side">
+
+                    <div class="preview-side-head">
+                        <span>ÜBERSCHRIFTEN</span>
+                        <span>☰</span>
+                    </div>
+
+                    <div class="preview-opt"><span class="k">E</span> Placeholder Headline…</div>
+                    <div class="preview-opt"><span class="k">F</span> Placeholder Headline…</div>
+                    <div class="preview-opt"><span class="k">G</span> Placeholder Headline…</div>
+
+                    <div class="preview-opt picked">
+                        <span class="k">H</span> Ein Leistungssport für jedes Alter.
+                    </div>
+
+                    <div class="preview-opt"><span class="k">I</span> Placeholder Headline…</div>
+
+                    <div class="preview-score">
+                        <b>5/25</b>
+                        <span>واصل التدريب 🏆</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="preview-foot">
+                <span class="preview-dots">
+                    <i class="on"></i><i></i><i></i><i></i><i></i>
                 </span>
-
-                مزيان.
-
-            </p>
-
-            <a
-                href="b2-hoeren.html"
-                class="card-link"
-            >
-                Mehr erfahren ←
-            </a>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ✍️
-            </div>
-
-            <h3>
-                Schreiben
-            </h3>
-
-            <p>
-
-                كتب
-
-                <span class="german">
-                    Antwort
+                <span class="preview-step">TEIL 1 VON 5</span>
+                <span class="preview-btns">
+                    <span class="preview-btn">Zurück</span>
+                    <span class="preview-btn main">Weiter →</span>
                 </span>
-
-                ديالك وتعلم كيفاش تحسن الكتابة ديالك
-                وتوجد راسك للامتحان.
-
-            </p>
-
-            <a
-                href="b2-schreiben.html"
-                class="card-link"
-            >
-                Mehr erfahren ←
-            </a>
-
-        </div>
-
-
-        <div class="card community-card">
-
-            <div class="card-icon">
-                💬
             </div>
 
-            <h3>
-                Community Chat
-            </h3>
-
-            <p>
-
-                تواصل مع متعلمين آخرين، طرح الأسئلة،
-                تعاون مع الآخرين وحسن اللغة الألمانية ديالك
-                داخل مجتمع
-
-                <span class="german">
-                    Deutsch Einfach
-                </span>.
-
-            </p>
-
-            <div class="community-online">
-                Community online
-            </div>
-
-            <a
-                href="chat.html"
-                class="card-link"
-            >
-                Community beitreten ←
-            </a>
-
         </div>
-
 
     </section>
+
 
 
     <!-- =========================================
