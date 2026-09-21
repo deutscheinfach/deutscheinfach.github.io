@@ -37,7 +37,26 @@
 
     /* الشكل القديم → نفس الشكل الجديد */
     function toVariants(task) {
-        if (Array.isArray(task.variants) && task.variants.length) return task.variants;
+        if (Array.isArray(task.variants) && task.variants.length) {
+            /* النسخ ديال موضوع واحد عندهم نفس النصوص. إذن النصوص
+               كيتكتبو مرة وحدة فوق (task.texts) وكل نسخة كتعطي غير
+               الحلول ديالها (answers) — هاكا الترويسات يقدرو يتبدل
+               الترتيب ديالهم بلا ما نعاودو نكتبو النصوص.
+
+               ونسخة اللي عندها texts ديالها كتبقى خدامة كيف ما كانت. */
+            return task.variants.map(function (variant) {
+                if (Array.isArray(variant.texts)) return variant;
+
+                const shared = Array.isArray(task.texts) ? task.texts : [];
+                const keys = variant.answers || [];
+
+                return Object.assign({}, variant, {
+                    texts: shared.map(function (text, i) {
+                        return Object.assign({}, text, { answer: keys[i] });
+                    })
+                });
+            });
+        }
 
         const questions = task.questions || [];
         return [{
