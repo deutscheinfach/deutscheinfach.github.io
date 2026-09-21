@@ -254,6 +254,68 @@
                     ]
                 }
             };
+        })(),
+
+        /* ================================================================
+           Impfung
+           النصوص والترويسات والحلول كما صيفطهم صاحب الموقع.
+           ================================================================ */
+        "impfung": (function () {
+
+            const TEXTS = [
+                { answer: "B",
+                  body: "Immer wieder überspringen Krankheitserreger aus dem Tierreich die Artengrenze und werden auch dem Menschen gefährlich. Allerdings galt die Gruppe Adenoviren bislang als artgebunden: Manche verursachen beim Menschen verschiedene Probleme, von Schnupfen über Durchfall bis hin zu Lungenentzündung. Andere machen bestimmten Tierarten zu schaffen. Aber noch nie wurde bekannt, dass solche Viren von einer Spezies auf eine andere wechseln. Nun berichten Forscher erstmals von einem solchen Fall: Demnach erlitten in einem kalifornischen Primatenzentrum 23 von insgesamt 65 Roten Springaffen Entzündungen der Atemwege oder der Leber. Nur vier der infizierten Tiere überlebten. Als Ursache identifizierten die Mediziner das bislang unbekannte Adenovirus TMAdV. Dieser Erreger kann auch Menschen befallen: Ein Mitarbeiter des Primatenzentrums, der viel Kontakt zu den erkrankten Affen hatte, bekam Fieber und Husten. Zudem steckte er ein Mitglied seiner Familie an. Die Experten empfehlen, Adenoviren künftig sorgfältiger zu beobachten, um rechtzeitig auf mögliche Gefahren für den Menschen aufmerksam zu werden.",
+                  ar: "غالبا الميكروبات كيدوزو من الحيوانات للبشر، ولكن ڤيروسات «أدينوڤيروس» كانو كيحساب ليهم باللي كيبقاو غير فنوع واحد. دابا، الباحثين لقاو حالة جديدة فمركز ديال القردة فكاليفورنيا، فين مرض عدد كبير من القردة الحمر بواحد ڤيروس جديد و ماتو. والأهم من هادشي، أن هاد الفيروس قفز حتى للبشر: واحد خدام فالمركز تصاب بالحمى والكحّة، وعْدى معاه واحد من عائلتو. ذاكشي علاش، الخبراء نصحو باللي خاصنا نراقبو هاد الفيروسات مزيان باش نعرفو أي خطر ممكن يهدد الناس." },
+
+                { answer: "C",
+                  body: "Virologen ist es gelungen, den Vogelgrippe-Erreger hochansteckend zu machen. Nun empfiehlt das US-Gesundheitsministerium Fachzeitschriften, die entsprechenden Daten nicht zu veröffentlichen, weil Terroristen mit ihrer Hilfe Biowaffen basteln könnten. Nur die Ergebnisse der Versuche sollen erscheinen, nicht aber Einzelheiten über die Arbeitsweise der Forscher oder Details über die Beschaffenheit der Viren. Das Ministerium stützt seine Entscheidung auf die Empfehlungen des unabhängigen Expertengremiums NSABB. Es ist das erste Mal, dass das Gremium eine solche Empfehlung ausgesprochen hat. Ihr vorausgegangen war eine wochenlange Diskussion darüber, wie Forscher mit heiklen Erkenntnissen umgehen sollen: Alles offenlegen oder brisante Versuche unterlassen und erst recht nicht veröffentlichen? Für die betroffenen Forscher steht die Freiheit der Forschung und der Presse auf dem Spiel. Unklar ist noch, inwieweit sie und die Fachjournale den Empfehlungen des NSABB folgen. Es ist für die öffentliche Gesundheit notwendig, dass alle Details jeder wissenschaftlichen Analyse zu Influenzaviren Forschern zugänglich sind.",
+                  ar: "العلماء ديال الفيروسات نجحو باش يخليو فيروس أنفلونزا الطيور مُعدي بزاف. لكن وزارة الصحة الأمريكية نصحات باش ما يتنشروش جميع التفاصيل ديال هاد البحث. السبب هو أنهم خايفين الإرهابيين يستعملو ديك المعطيات باش يصنعو أسلحة بيولوجية. هاد القرار دار نقاش كبير حول حرية البحث مقابل حماية الأمن العام، وواش خاص العلماء ينشرو هاد النتائج الخطيرة ولا يخبيوها." },
+
+                { answer: "D",
+                  body: "Ein neuer Impfstoff gegen Grippe könnte in Zukunft sämtliche Varianten der Krankheit abdecken und damit die jährliche Spritze überflüssig machen. Der Stoff bekämpft die stets gleichen Proteine im Inneren der Grippeviren statt wie derzeitige Substanzen die sich ständig ändernden an der Außenhülle. Ein Forscherteam der Universität Oxford hat den Impfstoff erstmals an Menschen getestet. Weitere Studien sollen folgen. Es kann Jahre dauern, bis die Substanz eine Zulassung bekommt. Doch die Forscher sind optimistisch. Derzeit müssen jedes Jahr neue Impfstoffe für die Grippesaison entwickelt werden, weil sich die Virenhülle so schnell wandelt. Da der neue Stoff an den stabileren inneren Proteinen der Viren ansetze, könnte das in Zukunft überflüssig werden. Es könnte eine Routine-Impfung wie gegen andere Krankheiten wie zum Beispiel Tetanus entwickelt werden. Bei der bisherigen Impfung gehe es vor allem darum, den Körper zur Produktion von Antikörpern gegen die Grippeviren zu aktivieren. Der neue Stoff hingegen rege die so genannten T-Zellen an, die ebenfalls ein wichtiger Teil des Immunsystems sind.",
+                  ar: "كاين واحد اللقاح جديد ضد لْگريب، لي يقدر يْغَطِّي جميع السلالات ويْحيد علينا الشّكة دْيال كُل عام. هو كايْهْجَم على البروتينات القارّة لي فْ الداخل ديال الفيروس، ماشي بحال اللقاحات القديمة لي كَتْخْدَم على الغِلاف الخارجي لي ديما كايتْغَيَّر. فريق ديال جامعة أوكسفورد جربوه على الناس، والعلماء متفائلين بزاف بالنتيجة رغم أن العملية دْيال الترخيص غادا تاخد سنين. هادشي يقدر يخليه يولي تلقيح روتيني بحال ديال أمراض أخرى، حيت كايْحَفَّز الخلايا «تي» لي جزء مهم من جهاز المناعة." },
+
+                { answer: "G",
+                  body: "Breitet sich die Grippe in einer Schule aus, sind es besonders geschlechtshomogene Gruppen, in denen das Virus schnell neue Opfer findet. Denn wie US-Mediziner herausgefunden haben, stecken Buben vor allem Buben und Mädchen in erster Linie Mädchen an. Infektionen innerhalb eines Geschlechts passieren dreimal häufiger als über die Geschlechtergrenzen hinweg. Innerhalb derselben Schulklasse sind Übertragungen fünfmal häufiger als zu einer Parallelklasse und 25 Mal häufiger als zu den Schülern anderer Schulstufen, fanden die Forscher bei Untersuchungen an einer Volksschule heraus. Ein weiterer interessanter Befund: Ob ein Kind neben einem bereits infizierten Schulkollegen saß oder nicht, machte keinen Unterschied bei der Ausbreitung der Influenza.",
+                  ar: "العلماء دارو بحث فواحد المدرسة ولقاو بلي لڭريب كتنتشر بالزربة بزاف، وكتصيب التلاميذ اللي من نفس الجنس أكثر من الآخرين. الدراري كيعاديو بعضياتهم والبنات كذلك، وهادشي كيوقع ثلاثة المرات كثر من العدوى بين الذكور والإناث. العدوى بين التلاميذ ديال نفس القسم كتكون قوية بزاف بالمقارنة مع الأقسام الموازية أو المستويات التعليمية الأخرى. المهم هو أن الجلوس حدا شي واحد مريض فالفصل ما عندو حتى شي تأثير كبير على طريقة انتشار الفيروس." },
+
+                { answer: "E",
+                  body: "Da sich Influenzaviren immer wieder verändern, unternimmt die Weltgesundheitsorganisation WHO jedes Jahr große Anstrengungen, um die gerade umlaufenden Grippeviren zu identifizieren, anhand derer Pharmaunternehmen dann gezielt Impfstoffe herstellen können. Die Entwicklung solcher Impfstoffe nimmt allerdings bis zu neun Monate in Anspruch. Daher kann es vorkommen, dass sich gerade aktive Influenza-Viren von denen, die für die Herstellung des Impfstoffes verwendet wurden, etwas unterscheiden. Prinzipiell ist also jedes Jahr eine erneute Impfung notwendig. Eine neue Studie liefert Anhaltspunkte dafür, dass die tatsächliche Wirksamkeit von Grippeimpfstoffen weit niedriger sein soll als bisher angenommen. Denn in der Studie zeigte sich, dass gängige Grippeimpfstoffe nur 59 von 100 Grippefällen verhindern konnten.",
+                  ar: "بما أن فيروسات الكريب كتبدل بزاف، المنظمة العالمية للصحة (WHO) كتبدل مجهود باش تعرف الأنواع الجديدة اللي دايرة باش تصايب لْها دوا. لكن، تصنيع هاد اللقاحات كيطلب حتى لتسعة ديال الشهور، داكشي علاش ضروري نديرو التلقيح كل عام حيت كيقدر يكون الفرق بين الفيروس اللي كاين و الفيروس اللي تصنع بيه اللقاح. ودراسة جديدة بينات بلي هاد اللقاحات الفعالية ديالها أقل من اللي كنا كانظنو، حيت كتمنع غير 59 حالة كريب من كل 100." }
+            ];
+
+            const HEADINGS = [
+                { value: "A", text: "WHO gibt neue Empfehlungen für Grippe-Impfung heraus",
+                  ar: "منظمة الصحة العالمية تصدر توصيات جديدة بشأن لقاح الإنفلونزا" },
+                { value: "B", text: "Neue Erkenntnisse über artübergreifende Krankheitserreger.",
+                  ar: "اكتشافات جديدة حول مسببات الأمراض عبر الأنواع." },
+                { value: "C", text: "Kontroverse um den Zugang zu Forschungsergebnissen.",
+                  ar: "الجدل حول الوصول إلى نتائج البحث." },
+                { value: "D", text: "Hoffnung auf einen allumfassenden Grippeschutz.",
+                  ar: "أمل في حماية شاملة من الإنفلونزا." },
+                { value: "E", text: "Hinweise auf eingeschränkten Erfolg von Influenza-Impfungen.",
+                  ar: "إشارات إلى نجاح محدود للقاحات الإنفلونزا." },
+                { value: "F", text: "Gesetz verpflichtet Forscher zur Veröffentlichung ihrer Ergebnisse.",
+                  ar: "القانون يُلزم الباحثين بنشر نتائجهم." },
+                { value: "G", text: "Geschlechtsspezifische Übertragung von Grippeviren",
+                  ar: "انتقال فيروسات الإنفلونزا حسب الجنس" },
+                { value: "H", text: "Endlich eine universale Grippe-Impfung auf dem Markt",
+                  ar: "أخيرًا لقاح عالمي للإنفلونزا في السوق" },
+                { value: "I", text: "Durchschlagender Erfolg der diesjährigen Grippeimpfung",
+                  ar: "نجاح ساحق للقاح الإنفلونزا هذا العام" },
+                { value: "J", text: "Die häufigsten Kinderkrankheiten in der Grundschule.",
+                  ar: "أكثر الأمراض الشائعة لدى الأطفال في المدرسة الابتدائية." }
+            ];
+
+            return {
+                teil1: {
+                    title: "Impfung",
+                    kind: "matching",
+                    variants: [
+                        variant("الأساسي", overrides(HEADINGS, {}), TEXTS)
+                    ]
+                }
+            };
         })()
     };
 })();
