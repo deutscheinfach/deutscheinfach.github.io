@@ -253,15 +253,34 @@
         function paint() {
             stack.textContent = "";
 
-            if (topic.locked && !window.__deutschEinfachIsPremium) {
-                if (typeof window.__premiumGate === "function") {
-                    window.__premiumGate(stack, { title: topic.title });
-                } else {
-                    const box = document.createElement("div");
-                    box.className = "lesen-empty";
-                    box.textContent = "🔒 هاد الموضوع ديال Premium.";
-                    stack.appendChild(box);
-                }
+            /* المواضيع المدفوعة ماكايناش نصوصهم فهاد الملف. كيتجابو من
+               الـ Worker، اللي كيتحقق من الـ ID token ومن الاشتراك قبل
+               ما يعطي حتى كلمة. */
+            if (topic.locked) {
+                if (!window.__deutschEinfachIsPremium) { gate(); return; }
+
+                const loading = document.createElement("div");
+                loading.className = "lesen-empty";
+                loading.textContent = "كنجيبو التمرين…";
+                stack.appendChild(loading);
+
+                const wanted = current;
+                Promise.resolve(
+                    typeof window.__lesenPremiumFetch === "function"
+                        ? window.__lesenPremiumFetch(themaId)
+                        : null
+                ).then(function (fetched) {
+                    /* بدّل الجزء ولا خرج من التمرين وهو كيجيب؟ نحبسو. */
+                    if (current !== wanted || detail.hidden) return;
+                    stack.textContent = "";
+
+                    const remote = fetched && fetched.teil1
+                        ? (wanted === "teil1" ? fetched.teil1 : fetched[wanted])
+                        : (fetched || {})[wanted];
+
+                    if (!remote) { gate(); return; }
+                    draw(remote);
+                });
                 return;
             }
 
@@ -275,6 +294,22 @@
                 return;
             }
 
+            draw(task);
+        }
+
+        function gate() {
+            stack.textContent = "";
+            if (typeof window.__premiumGate === "function") {
+                window.__premiumGate(stack, { title: topic.title });
+            } else {
+                const box = document.createElement("div");
+                box.className = "lesen-empty";
+                box.textContent = "🔒 هاد الموضوع ديال Premium.";
+                stack.appendChild(box);
+            }
+        }
+
+        function draw(task) {
             /* Teil 1 عندو شكل ديالو: نسخ، لوحة ترويسات، وملخصات. */
             if (task.kind === "matching"
                 && typeof window.__lesenTeil1Render === "function") {

@@ -140,6 +140,11 @@
             const auth = authMod.getAuth(app);
             const db = fsMod.getFirestore(app);
 
+            /* lesen-premium.js كيحتاج الـ ID token باش يجيب المواضيع
+               المدفوعة من الـ Worker. كنعطيوه auth عوض ما يعاود يحمل
+               Firebase من جديد. */
+            window.__deutschEinfachAuth = auth;
+
             authMod.onAuthStateChanged(auth, async function (account) {
                 if (!account) {
                     guest.hidden = false;

@@ -143,6 +143,63 @@ export default {
       }
 
       /*
+       * موضوع Lesen ديال Premium. نفس المنطق ديال topicId، ولكن
+       * المفاتيح هنا حروف (insel, bilder…) والمحتوى كيسكن فـ KV
+       * تحت "premium-lesen". الـ repo عام، إذن النصوص ماكايناش فيه.
+       */
+      if (typeof body.lesenId === "string") {
+        const lesenId = body.lesenId;
+
+        if (!/^[a-z0-9-]{2,40}$/.test(lesenId)) {
+          return jsonResponse({ error: "Invalid lesen id." }, 400, allowedOrigin);
+        }
+
+        if (!env.TOPICS) {
+          return jsonResponse(
+            { error: "KV binding TOPICS is not configured." },
+            500,
+            allowedOrigin
+          );
+        }
+
+        let lesenClaims;
+        try {
+          lesenClaims = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse(
+            { error: "not_signed_in", details: authError.message },
+            401,
+            allowedOrigin
+          );
+        }
+
+        let lesenSubscribed;
+        try {
+          lesenSubscribed = await hasActiveSubscription(lesenClaims.sub, body.idToken);
+        } catch (lookupError) {
+          return jsonResponse(
+            { error: "subscription_lookup_failed", details: lookupError.message },
+            502,
+            allowedOrigin
+          );
+        }
+
+        if (!lesenSubscribed) {
+          return jsonResponse({ error: "not_subscribed" }, 403, allowedOrigin);
+        }
+
+        const lesenAll = await env.TOPICS.get("premium-lesen", "json");
+        const lesenTopic = lesenAll?.[lesenId]
+          || (await env.TOPICS.get("lesen-" + lesenId, "json"));
+
+        if (!lesenTopic) {
+          return jsonResponse({ error: "Topic not found." }, 404, allowedOrigin);
+        }
+
+        return jsonResponse(lesenTopic, 200, allowedOrigin);
+      }
+
+      /*
        * إشعار مكالمة: كيوصل حتى للناس اللي الموقع مسدود عندهم.
        * كنتحققو من هوية اللي كيعيط، من بعد كنقراو الـ tokens
        * ديال المستقبل وكنصيفطو عبر FCM.
