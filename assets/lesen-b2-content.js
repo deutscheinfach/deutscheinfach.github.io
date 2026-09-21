@@ -241,6 +241,15 @@
                             D: { ar: "زيادة العنف في ساحات المدارس" },
                             H: { text: "Madchen abnehmen krankenhelten.",
                                  ar: "فتيات يتخلصن من الوزن ويعالجون المرضى." }
+                        }), TEXTS),
+
+                        /* نفس النصوص ونفس الحلول — B و H بصياغة أخرى.
+                           C و D رجعو لترجمة الأساسي، إذن ماكاينش override. */
+                        variant("المعدل 2", overrides(HEADINGS, {
+                            B: { text: "Schülerwettbewerb mit Schwerpunkt Umwelt.",
+                                 ar: "مسابقة طلابية في مجال البيئة" },
+                            H: { text: "Wenn Abnehmen krank kann",
+                                 ar: "إذا كان فقدان الوزن مرضًا" }
                         }), TEXTS)
                     ]
                 }
