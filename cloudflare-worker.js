@@ -188,9 +188,13 @@ export default {
           return jsonResponse({ error: "not_subscribed" }, 403, allowedOrigin);
         }
 
-        const lesenAll = await env.TOPICS.get("premium-lesen", "json");
-        const lesenTopic = lesenAll?.[lesenId]
-          || (await env.TOPICS.get("lesen-" + lesenId, "json"));
+        /* مفتاح خاص بكل موضوع أولا — خفيف وسريع.
+           الـ blob الكبير "premium-lesen" كيبقى غير كحل احتياطي. */
+        let lesenTopic = await env.TOPICS.get("lesen-" + lesenId, "json");
+        if (!lesenTopic) {
+          const lesenAll = await env.TOPICS.get("premium-lesen", "json");
+          lesenTopic = lesenAll?.[lesenId];
+        }
 
         if (!lesenTopic) {
           return jsonResponse({ error: "Topic not found." }, 404, allowedOrigin);
