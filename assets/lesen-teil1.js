@@ -101,18 +101,31 @@
         into.appendChild(wrap);
         paint();
 
-        /* تبديل النسخة بانتقال — النسخة القديمة كتغيب، الجديدة كتدخل
-           من الجهة اللي مشينا ليها. كنحترمو prefers-reduced-motion. */
+        /* تبديل النسخة بانتقال.
+
+           فخ: transitionend كيطلع من الوليدات. البطائق والترويسات
+           عندهم transition ديالهم على الـ hover، إذن إلا كان الماوس
+           فوق وحدة وبركتي على التبويب، داك الحدث ديالها كيوصل هنا
+           وكيقتل الانتقال قبل ما يبان. حيت هاكا كنقبلو غير الحدث
+           اللي جا من board نفسو. */
         function swap(forward) {
             const still = window.matchMedia
                 && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
             if (still) { paint(); return; }
+            if (board.dataset.busy === "1") return;
+            board.dataset.busy = "1";
 
-            board.classList.remove("t1-in-right", "t1-in-left");
+            board.classList.remove("t1-in-right", "t1-in-left", "t1-stagger");
             board.classList.add(forward ? "t1-out-left" : "t1-out-right");
 
-            const done = function () {
+            let finished = false;
+
+            const done = function (event) {
+                if (event && event.target !== board) return;   /* وليد، ماشي هو */
+                if (finished) return;
+                finished = true;
+
                 board.removeEventListener("transitionend", done);
                 clearTimeout(guard);
 
@@ -124,12 +137,14 @@
                 requestAnimationFrame(function () {
                     requestAnimationFrame(function () {
                         board.classList.remove("t1-in-right", "t1-in-left");
+                        board.classList.add("t1-stagger");
+                        board.dataset.busy = "";
                     });
                 });
             };
 
             /* إلا ما وصلش transitionend (تبويب مخبي مثلا) ما نبقاوش واقفين */
-            const guard = setTimeout(done, 260);
+            const guard = setTimeout(done, 420);
             board.addEventListener("transitionend", done);
         }
 

@@ -1117,26 +1117,53 @@
 
 /* ---- الانتقال بين النسخ (الأساسي ↔ المعدل 1 ↔ المعدل 2) ---- */
 .t1-board {
-    transition: opacity .16s ease, transform .16s ease;
+    transition: opacity .26s ease, transform .26s cubic-bezier(.4, 0, .2, 1);
+    will-change: opacity, transform;
 }
-.t1-out-left   { opacity: 0; transform: translateX(-14px); }
-.t1-out-right  { opacity: 0; transform: translateX(14px); }
-.t1-in-right   { opacity: 0; transform: translateX(14px);  transition: none; }
-.t1-in-left    { opacity: 0; transform: translateX(-14px); transition: none; }
+.t1-out-left   { opacity: 0; transform: translateX(-42px) scale(.985); }
+.t1-out-right  { opacity: 0; transform: translateX(42px)  scale(.985); }
+.t1-in-right   { opacity: 0; transform: translateX(42px)  scale(.985); transition: none; }
+.t1-in-left    { opacity: 0; transform: translateX(-42px) scale(.985); transition: none; }
+
+/* البطائق والترويسات كيطلعو وحدة من بعد وحدة ملي تدخل النسخة */
+@keyframes t1-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+}
+.t1-stagger .t1-text,
+.t1-stagger .t1-option { animation: t1-rise .34s cubic-bezier(.4, 0, .2, 1) both; }
+
+.t1-stagger .t1-text:nth-child(1)  { animation-delay: .02s; }
+.t1-stagger .t1-text:nth-child(2)  { animation-delay: .06s; }
+.t1-stagger .t1-text:nth-child(3)  { animation-delay: .10s; }
+.t1-stagger .t1-text:nth-child(4)  { animation-delay: .14s; }
+.t1-stagger .t1-text:nth-child(5)  { animation-delay: .18s; }
+.t1-stagger .t1-text:nth-child(6)  { animation-delay: .22s; }
+
+.t1-stagger .t1-option:nth-child(2)  { animation-delay: .04s; }
+.t1-stagger .t1-option:nth-child(3)  { animation-delay: .07s; }
+.t1-stagger .t1-option:nth-child(4)  { animation-delay: .10s; }
+.t1-stagger .t1-option:nth-child(5)  { animation-delay: .13s; }
+.t1-stagger .t1-option:nth-child(6)  { animation-delay: .16s; }
+.t1-stagger .t1-option:nth-child(7)  { animation-delay: .19s; }
+.t1-stagger .t1-option:nth-child(8)  { animation-delay: .22s; }
+.t1-stagger .t1-option:nth-child(9)  { animation-delay: .25s; }
+.t1-stagger .t1-option:nth-child(10) { animation-delay: .28s; }
+.t1-stagger .t1-option:nth-child(11) { animation-delay: .31s; }
 
 /* المؤشر اللي كيتزحلق تحت التبويب الخدام */
 .t1-variants { position: relative; }
 .t1-variant { position: relative; z-index: 1; }
-.t1-variant.active {
-    animation: t1-pop .22s ease;
-}
+.t1-variant.active { animation: t1-pop .3s cubic-bezier(.34, 1.56, .64, 1); }
 @keyframes t1-pop {
-    0%   { transform: scale(.93); }
-    60%  { transform: scale(1.04); }
+    0%   { transform: scale(.88); }
+    55%  { transform: scale(1.07); }
     100% { transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .t1-board { transition: none; }
-    .t1-variant.active { animation: none; }
+    .t1-variant.active,
+    .t1-stagger .t1-text,
+    .t1-stagger .t1-option { animation: none; }
 }
