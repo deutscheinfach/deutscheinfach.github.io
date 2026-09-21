@@ -414,7 +414,15 @@
                               ar: "يطالب معلمو الرقص بجعل الرقصات الحديثة أكثر شهرة" },
                             { value: "J", text: "Wandel im Freizeitverhalten von Jugendlichen",
                               ar: "تغيير في سلوك أوقات الفراغ لدى الشباب" }
-                        ], answers(TEXTS, ["D", "J", "C", "B", "E"]))
+                        ], answers(TEXTS, ["D", "J", "C", "B", "E"])),
+
+                        /* رجع لترتيب الأساسي، إذن نفس الحلول E · D · F · A · G.
+                           كيتبدل غير F، و J الترجمة ديالها. */
+                        variant("المعدل 2", overrides(HEADINGS, {
+                            F: { text: "Schulen unterstützen die Konzentration.",
+                                 ar: "تدعم المدارس التركيز." },
+                            J: { ar: "استطلاع يؤكد الأحكام المسبقة القديمة" }
+                        }), TEXTS)
                     ]
                 }
             };
