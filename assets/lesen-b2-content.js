@@ -77,6 +77,19 @@
         });
     }
 
+    /* شي نسخ كتعاود ترتيب الترويسات، إذن الحروف كيتبدلو
+       والحلول معاهم. النصوص كيبقاو هوما هوما — كنعطيوهم غير
+       مفاتيح جدد:
+
+          answers(TEXTS, ["D","J","C","B","E"])
+
+       كل نص كيتنسخ، إذن الحلول ديال نسخة ماكيمساش لللخرى. */
+    function answers(texts, keys) {
+        return texts.map(function (text, i) {
+            return Object.assign({}, text, { answer: keys[i] });
+        });
+    }
+
     window.LESEN_B2_CONTENT = {
 
         /* ================================================================
@@ -374,7 +387,34 @@
                     title: "Tanzkurs",
                     kind: "matching",
                     variants: [
-                        variant("الأساسي", overrides(HEADINGS, {}), TEXTS)
+
+                        variant("الأساسي", overrides(HEADINGS, {}), TEXTS),
+
+                        /* الترويسات معاود ترتيبهم أبجديا، إذن الحروف
+                           كاملين تبدلو — والحلول ولاو D · J · C · B · E.
+                           J هي الوحيدة اللي تبدلات الصياغة ديالها. */
+                        variant("المعدل 1", [
+                            { value: "A", text: "Befragung bestätigt alte Vorurteile",
+                              ar: "استطلاع يؤكد الأحكام المسبقة القديمة" },
+                            { value: "B", text: "Freie Plätze im Tanzkurs",
+                              ar: "أماكن شاغرة في دورة الرقص" },
+                            { value: "C", text: "Hilfen für überforderte Schüler",
+                              ar: "مساعدات للطلاب المتعثرين" },
+                            { value: "D", text: "Höher, schneller, weiter: Suche nach dem Nervenkitzel",
+                              ar: "أعلى، أسرع، أبعد: البحث عن الإثارة" },
+                            { value: "E", text: "Keine Zeit für Langeweile",
+                              ar: "لا وقت للملل" },
+                            { value: "F", text: "Neue Lerntechniken präsentiert",
+                              ar: "تقنيات تعلم جديدة مقدمة" },
+                            { value: "G", text: "Neue Sportarten",
+                              ar: "رياضات جديدة" },
+                            { value: "H", text: "Stolze Eltern: vom Schüler zum Superstar",
+                              ar: "آباء فخورون: من الطالب إلى النجم الساطع" },
+                            { value: "I", text: "Tanzlehrer fordern, moderne Tänze bekannter zu machen",
+                              ar: "يطالب معلمو الرقص بجعل الرقصات الحديثة أكثر شهرة" },
+                            { value: "J", text: "Wandel im Freizeitverhalten von Jugendlichen",
+                              ar: "تغيير في سلوك أوقات الفراغ لدى الشباب" }
+                        ], answers(TEXTS, ["D", "J", "C", "B", "E"]))
                     ]
                 }
             };
