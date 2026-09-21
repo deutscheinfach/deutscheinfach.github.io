@@ -1938,16 +1938,6 @@ resetTimers();
 <!-- TELC_LESEN_TEIL2_ACTION -->
 <!-- AUTO_SHARED_START -->
 <!-- AUTO_SHARED_END -->
-<!-- TELC_PWA_SW_REGISTER -->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('PWA: Service Worker successfully active on scope:', reg.scope))
-        .catch(err => console.log('PWA: Service Worker registration failed:', err));
-    });
-  }
-</script>
 <!-- TELC_HUB_TILE_BADGES -->
 <!-- TELC_PERFECT_STREAK -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"1d259d82f9a64fa6a2818b10e5954ebb","r":1,"spa":2}' crossorigin="anonymous"></script>
@@ -2266,7 +2256,7 @@ html[data-theme="light"] .auto-nav-btn.auto-nav-secondary{
 html[data-theme="light"] .nq-question-row.nq-wrong{ background: rgba(198,40,40,.09) !important; }
 html[data-theme="light"] .nq-radio-option.nq-selected-wrong{ color: #c62828 !important; }
 </style>
-<script src="assets/site-header.js?v=f97f452c"></script>
+<script src="assets/site-header.js?v=36611c15"></script>
 
 <style id="hoeren-with-site-header">
 /* الهيدر المشترك ولا هو اللي فوق. الـ nav ديال Hören كان

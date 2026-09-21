@@ -195,3 +195,44 @@
         }
     })();
 })();
+
+/* ===== تنضيف Service Worker قديم =====
+
+   الموقع كان فيه PWA كيسجل /sw.js. داك الملف تحيد، ولكن
+   اللي زار الموقع من قبل ما زال داك الـ worker مركّب عندو
+   وكيتحكم فالصفحات — يعني كيقدر يعطيه نسخ قدام حتى من بعد
+   Ctrl+Shift+R، حيت هو اللي كيجاوب قبل الشبكة.
+
+   كنحيدو أي worker ماشي ديال الإشعارات، وكنمسحو Cache Storage.
+   firebase-messaging-sw.js كيبقى — الإشعارات كتحتاجو. */
+
+(function () {
+    "use strict";
+
+    if (!("serviceWorker" in navigator)) return;
+
+    navigator.serviceWorker.getRegistrations().then(function (regs) {
+        let removed = 0;
+
+        regs.forEach(function (reg) {
+            const worker = reg.active || reg.waiting || reg.installing;
+            const url = worker ? worker.scriptURL : "";
+            if (url.indexOf("firebase-messaging-sw.js") !== -1) return;
+            removed++;
+            reg.unregister();
+        });
+
+        if (!removed || !window.caches || !caches.keys) return;
+
+        /* الـ worker القديم خلا وراه ملفات مخزنة — خاصهم يمشيو حتى هوما */
+        caches.keys().then(function (names) {
+            return Promise.all(names.map(function (name) { return caches.delete(name); }));
+        }).then(function () {
+            /* تحميلة وحدة بلا worker باش الزائر يشوف النسخة الجديدة دغيا */
+            if (!sessionStorage.getItem("de-sw-cleaned")) {
+                sessionStorage.setItem("de-sw-cleaned", "1");
+                location.reload();
+            }
+        }).catch(function () { /* الوضع الخاص كيمنع caches — ماشي مشكل */ });
+    }).catch(function () { /* ماكاين باس */ });
+})();
