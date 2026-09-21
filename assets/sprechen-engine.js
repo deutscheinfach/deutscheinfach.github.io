@@ -1,0 +1,259 @@
+/* ===== محرك Sprechen B2 =====
+
+   كيبني التمرين من البيانات، وكيزيد جوج حوايج اللي
+   كيحتاجهم الطالب بجد فالمحادثة:
+
+     1) مؤقت بنفس وقت الامتحان
+     2) تسجيل الصوت باش يسمع راسو ويعاود
+
+   التسجيل كيبقا فالجهاز ديالو غير — ماكيتصيفط لحتى بلاصة.
+*/
+
+(function () {
+    "use strict";
+
+    /* عبارات الامتحان المعروفة لكل جزء. هادي حاجة
+       كتتعلم ف أي كتاب تحضير — ماشي محتوى امتحان. */
+    const REDEMITTEL = {
+        teil1: {
+            label: "Präsentation",
+            groups: [
+                { head: "البداية", items: [
+                    "Ich möchte Ihnen heute das Thema … vorstellen.",
+                    "Mein Vortrag besteht aus drei Teilen.",
+                    "Zuerst … , danach … , und zum Schluss …" ] },
+                { head: "الوسط", items: [
+                    "Ein wichtiger Punkt ist, dass …",
+                    "Dazu möchte ich ein Beispiel nennen: …",
+                    "In meinem Heimatland ist es so, dass …" ] },
+                { head: "الخاتمة", items: [
+                    "Zusammenfassend lässt sich sagen, dass …",
+                    "Meiner Meinung nach …",
+                    "Vielen Dank für Ihre Aufmerksamkeit." ] }
+            ]
+        },
+        teil2: {
+            label: "Diskussion",
+            groups: [
+                { head: "الموافقة", items: [
+                    "Da stimme ich Ihnen völlig zu.",
+                    "Das sehe ich genauso, weil …",
+                    "Sie haben recht, allerdings …" ] },
+                { head: "الاعتراض بأدب", items: [
+                    "Da bin ich anderer Meinung.",
+                    "Einerseits … , andererseits …",
+                    "Das mag sein, trotzdem denke ich, dass …" ] },
+                { head: "أخذ الكلمة", items: [
+                    "Darf ich dazu kurz etwas sagen?",
+                    "Ich würde gerne ergänzen, dass …",
+                    "Um auf Ihre Frage zurückzukommen …" ] }
+            ]
+        },
+        teil3: {
+            label: "Problemlösung",
+            groups: [
+                { head: "الاقتراح", items: [
+                    "Ich schlage vor, dass wir …",
+                    "Wie wäre es, wenn wir … ?",
+                    "Wir könnten auch … in Betracht ziehen." ] },
+                { head: "الاتفاق", items: [
+                    "Sind Sie damit einverstanden?",
+                    "Gut, dann halten wir fest: …",
+                    "Einverstanden, machen wir es so." ] },
+                { head: "الترتيب", items: [
+                    "Zunächst sollten wir … , danach …",
+                    "Das Wichtigste ist meiner Meinung nach …",
+                    "Bleibt noch die Frage, wer … übernimmt." ] }
+            ]
+        }
+    };
+
+    function el(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+    }
+
+    /* ---------- المؤقت ---------- */
+
+    function buildTimer(minutes) {
+        const wrap = el("div", "sp-timer");
+        const face = el("span", "sp-timer-face", "");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "sp-btn sp-btn-ghost";
+
+        let total = Math.max(1, Number(minutes) || 3) * 60;
+        let left = total;
+        let ticking = null;
+
+        function paint() {
+            const m = String(Math.floor(left / 60)).padStart(2, "0");
+            const s = String(left % 60).padStart(2, "0");
+            face.textContent = m + ":" + s;
+            wrap.classList.toggle("low", left <= 30);
+        }
+
+        function stop() {
+            clearInterval(ticking);
+            ticking = null;
+            btn.textContent = "▶ بدا";
+        }
+
+        btn.addEventListener("click", function () {
+            if (ticking) { stop(); return; }
+            if (left <= 0) left = total;
+            btn.textContent = "⏸ وقف";
+            ticking = setInterval(function () {
+                left--;
+                paint();
+                if (left <= 0) { stop(); }
+            }, 1000);
+        });
+
+        paint();
+        stop();
+        wrap.append(face, btn);
+        return wrap;
+    }
+
+    /* ---------- التسجيل ---------- */
+
+    function buildRecorder() {
+        const wrap = el("div", "sp-rec");
+
+        const start = document.createElement("button");
+        start.type = "button";
+        start.className = "sp-btn sp-btn-rec";
+        start.textContent = "🎙 سجّل";
+
+        const state = el("span", "sp-rec-state", "");
+        const audio = document.createElement("audio");
+        audio.controls = true;
+        audio.hidden = true;
+        audio.className = "sp-rec-audio";
+
+        let recorder = null;
+        let chunks = [];
+        let url = null;
+
+        start.addEventListener("click", async function () {
+            if (recorder && recorder.state === "recording") {
+                recorder.stop();
+                return;
+            }
+
+            if (!navigator.mediaDevices || !window.MediaRecorder) {
+                state.textContent = "هاد المتصفح ماكيدعمش التسجيل.";
+                return;
+            }
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                recorder = new MediaRecorder(stream);
+                chunks = [];
+
+                recorder.ondataavailable = function (event) {
+                    if (event.data && event.data.size) chunks.push(event.data);
+                };
+
+                recorder.onstop = function () {
+                    stream.getTracks().forEach(function (t) { t.stop(); });
+                    if (url) URL.revokeObjectURL(url);
+                    url = URL.createObjectURL(new Blob(chunks, { type: "audio/webm" }));
+                    audio.src = url;
+                    audio.hidden = false;
+                    start.textContent = "🎙 سجّل من جديد";
+                    start.classList.remove("on");
+                    state.textContent = "سمع راسك 👇";
+                };
+
+                recorder.start();
+                start.textContent = "⏹ سالي";
+                start.classList.add("on");
+                state.textContent = "كيسجل…";
+            } catch (error) {
+                state.textContent = "ما عطيتيش الإذن للميكرو.";
+                console.debug("MIC:", error && error.name);
+            }
+        });
+
+        wrap.append(start, state, audio);
+        return wrap;
+    }
+
+    /* ---------- التمرين ---------- */
+
+    function buildTask(part, task) {
+        const card = el("section", "lesen-task");
+
+        const head = el("div", "lesen-task-head");
+        head.appendChild(el("span", "lesen-task-num",
+            part.replace("teil", "")));
+        head.appendChild(el("h2", "", task.title
+            || (REDEMITTEL[part] ? REDEMITTEL[part].label : "Aufgabe")));
+        card.appendChild(head);
+
+        const body = el("div", "lesen-task-body");
+
+        const tools = el("div", "sp-tools");
+        tools.appendChild(buildTimer(task.minutes));
+        tools.appendChild(buildRecorder());
+        body.appendChild(tools);
+
+        if (task.intro) {
+            const box = el("div", "lesen-text");
+            box.appendChild(el("span", "lesen-text-label", "Aufgabe"));
+            box.appendChild(document.createTextNode(task.intro));
+            body.appendChild(box);
+        }
+
+        if (Array.isArray(task.points) && task.points.length) {
+            const list = el("div", "sp-points");
+            task.points.forEach(function (point, i) {
+                const row = el("div", "sp-point");
+                row.appendChild(el("span", "sp-point-num", String(i + 1)));
+                row.appendChild(el("span", "", point));
+                list.appendChild(row);
+            });
+            body.appendChild(list);
+        }
+
+        if (task.note) {
+            body.appendChild(el("p", "sp-note", task.note));
+        }
+
+        /* العبارات — مطوية باش ما تاخذش البلاصة */
+        const pack = REDEMITTEL[part];
+        if (pack) {
+            const box = document.createElement("details");
+            box.className = "sp-phrases";
+            const sum = document.createElement("summary");
+            sum.textContent = "💬 عبارات كتنفعك ف " + pack.label;
+            box.appendChild(sum);
+            pack.groups.forEach(function (group) {
+                box.appendChild(el("div", "sp-phrase-head", group.head));
+                const ul = el("ul", "sp-phrase-list");
+                group.items.forEach(function (item) {
+                    ul.appendChild(el("li", "", item));
+                });
+                box.appendChild(ul);
+            });
+            body.appendChild(box);
+        }
+
+        card.appendChild(body);
+        return card;
+    }
+
+    window.__sprechenRender = function (into, part, task) {
+        into.textContent = "";
+        if (!task) {
+            into.appendChild(el("div", "lesen-empty",
+                "ما زال ماكاينش تمرين ف هاد الجزء."));
+            return;
+        }
+        into.appendChild(buildTask(part, task));
+    };
+})();

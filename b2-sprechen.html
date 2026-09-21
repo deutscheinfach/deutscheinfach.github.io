@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deutsch Einfach – B2 Sprechen</title>
-<meta name="description" content="TELC B2 Sprechen – Präsentation, Diskussion, Problemlösung.">
+<title>Deutsch Einfach – B2 Sprechen Mündlicher Ausdruck</title>
+<meta name="description" content="TELC B2 Sprechen – Präsentation, Diskussion und Problemlösung mit Timer und Aufnahme.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
 <link rel="stylesheet" href="assets/theme.css?v=43cd561b">
 <link rel="stylesheet" href="assets/site-header.css?v=43b2c394">
-<link rel="stylesheet" href="assets/section.css?v=3852a643">
+<link rel="stylesheet" href="assets/section.css?v=add4b9e7">
 </head>
 <body>
 
@@ -22,33 +22,48 @@
         <section class="lesen-hero">
             <span class="lesen-badge">B2 · Mündlicher Ausdruck</span>
             <h1>Sprechen</h1>
-            <p class="lead">Präsentation، Diskussion و Problemlösung — بحال الامتحان.</p>
+            <p class="lead">اختار موضوع وبدا التمرين فنفس الصفحة — مع مؤقت وتسجيل الصوت.</p>
         </section>
 
         <div class="lesen-stats">
-            <div class="lesen-stat"><b>قريباً</b><span>مواضيع</span></div>
+            <div class="lesen-stat"><b id="sprechen-total">0</b><span>مواضيع</span></div>
+            <div class="lesen-stat"><b>3</b><span>أجزاء</span></div>
             <div class="lesen-stat"><b>B2</b><span>المستوى</span></div>
         </div>
     </div>
 
-    <nav class="lesen-tabs" aria-label="Sprechen">
-        <a class="lesen-tab active" href="#teil1">Teil 1</a>
-        <a class="lesen-tab" href="#teil2">Teil 2</a>
-        <a class="lesen-tab" href="#teil3">Teil 3</a>
+    <nav class="lesen-tabs" id="sprechen-tabs" aria-label="Sprechen">
+        <a class="lesen-tab active" data-teil="" href="b2-sprechen.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M5 10v1a7 7 0 0 0 14 0v-1"/><path d="M12 18v4M8 22h8"/></svg>Prüfungen</a>
+        <a class="lesen-tab" data-teil="teil1" href="b2-sprechen.html?teil=teil1"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18v12H8l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg>Teil 1<span class="sp-tab-name">Präsentation</span></a>
+        <a class="lesen-tab" data-teil="teil2" href="b2-sprechen.html?teil=teil2"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v9h-3l-4 3v-3H9V8"/><path d="M3 8h7v8H6l-3 3v-3H3z"/></svg>Teil 2<span class="sp-tab-name">Diskussion</span></a>
+        <a class="lesen-tab" data-teil="teil3" href="b2-sprechen.html?teil=teil3"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8.9.9 1.5l.1.7h5.2l.1-.7c.1-.6.4-1.1.9-1.5A6 6 0 0 0 12 3z"/></svg>Teil 3<span class="sp-tab-name">Problemlösung</span></a>
     </nav>
 
-    <div class="soon-box">
-        <h2>قريباً</h2>
-        <p>
-            نماذج قسم المحادثة قيد التجهيز.<br>
-            غادي يتزادو هنا بحال باقي الأقسام.
-        </p>
+    <div class="lesen-toolbar">
+        <label class="lesen-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+            </svg>
+            <input id="sprechen-search-input" type="search" placeholder="ابحث عن المواضيع..."
+                   autocomplete="off" aria-label="ابحث عن المواضيع">
+        </label>
+        <button class="lesen-sort" id="sprechen-sort-btn" type="button">
+            ⇅ <span class="label">ترتيب</span>
+        </button>
     </div>
+
+    <div class="lesen-count" id="sprechen-count"></div>
+    <div class="lesen-grid" id="sprechen-grid"></div>
+    <div id="sprechen-detail" hidden></div>
 
 </main>
 
-
 <script src="assets/site-header.js?v=21440e99"></script>
+<script src="assets/sprechen-b2-topics.js?v=886351ae"></script>
+<script src="assets/sprechen-b2-content.js?v=308095e2"></script>
+<script src="assets/sprechen-engine.js?v=45ed2a28"></script>
+<script src="assets/sprechen-hub.js?v=d972c7e8"></script>
 <script src="assets/session-guard.js?v=d6dfc66e"></script>
 </body>
 </html>
