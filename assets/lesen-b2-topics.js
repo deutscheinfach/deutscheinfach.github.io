@@ -12,7 +12,7 @@ window.LESEN_B2_TOPICS = [
     { id: "jugend",       title: "Jugend forscht / Kellner", ar: "النادل",                    parts: ["teil1"], locked: false },
     { id: "impfung",      title: "Impfung",                 ar: "اللقاح",                     parts: ["teil1"], locked: false },
     { id: "tanzkurs",     title: "Tanzkurs",                ar: "دورة الرقص",                 parts: ["teil1"], locked: false },
-    { id: "insel",        title: "Insel",                   ar: "الجزيرة",                    parts: ["teil1"], locked: true },
+    { id: "insel",        title: "Insel",                   ar: "الجزيرة",                    parts: ["teil1"], locked: false },
     { id: "bilder",       title: "Bilder",                  ar: "الصور",                      parts: ["teil1"], locked: true },
     { id: "grundschule",  title: "Grundschule",             ar: "المدرسة الابتدائية",         parts: ["teil1"], locked: true },
     { id: "namssa",       title: "Namssa",                  ar: "النمسا",                     parts: ["teil1"], locked: true },

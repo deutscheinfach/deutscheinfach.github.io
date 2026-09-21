@@ -426,6 +426,68 @@
                     ]
                 }
             };
+        })(),
+
+        /* ================================================================
+           Insel
+           النصوص والترويسات والحلول كما صيفطهم صاحب الموقع.
+           ================================================================ */
+        "insel": (function () {
+
+            const TEXTS = [
+                { answer: "E",
+                  body: "Die Shengsi-Inseln liegen im Ostchinesischen Meer. Nicht einmal 20 der rund 400 Inseln sind bewohnt, und manche, auf denen einst Menschen lebten, wurden wieder verlassen. Ein altes Dorf auf der nun unbewohnten Insel Shengsan ist zu einer Sehenswürdigkeit geworden. Die Einwohner haben das ehemalige Fischerdorf auf der viereinhalb Quadratkilometer großen Insel längst verlassen. Sie sind aus wirtschaftlichen Gründen auf das Festland gezogen. Dort ist es für sie leichter, ihren Fischfang zu verarbeiten und zu verkaufen. Das Dorf aber, das sie zurückgelassen haben, ist in kürzester Zeit von der Natur zurückerobert worden. Farne und Gräser überwuchern Häuser und Wege. Die Grenzen zwischen den von Menschenhand umgebenden Urwald verschwinden: Mauerwerk, von wildem Wein überwuchert; Grün, so weit das Auge reicht. An diesem Ort lebt keine Menschenseele mehr.",
+                  ar: "أغلبية جزر شنغسي اللي فبحر الصين الشرقي خاوية ومافيهاش الناس. واحد الدوار قديم كان ديال الصيادة فجزيرة شنغسان ولى دابا مزار سياحي كايجيو ليه الناس. سكان هاد الدوار هاجرو من زمان ومشاو للبر الكبير باش يسهال عليهم يخدمو ويبيعو الحوت على ود الظروف المعيشية. الدوار اللي خلاوه رجعات ليه الطبيعة بالزربة، وكلشي تغطى بالشجر والنباتات حتى مابقات فيه حتى شي روح." },
+
+                { answer: "B",
+                  body: "Der Reiseveranstalter TOURIMARS hat kürzlich eine Befragung durchgeführt. Er wollte wissen, welche Inseln in Europa unter Reisenden besonders populär sind. Nach dieser Umfrage führt die griechische Insel Santorin die Liste an. Auf Platz zwei steht Madeira, die grüne Insel im Atlantik. Mit Kreta und Zakynthos schaffen es an dritter und vierter Stelle noch zwei weitere griechische Inseln in die Liste – übrigens wird die Attraktivität griechischer Inseln auch in anderen Umfragen bestätigt. Platz fünf nimmt die Badeinsel Fuerteventura ein. Rang sechs kommt der britischen Kanalinsel Jersey zu. Mallorca folgt auf Platz sieben, gefolgt von der italienischen Insel Capri und der Kanareninsel Teneriffa. Gerade noch in die Top Ten schaffte es auch die französische Mittelmeerinsel Korsika, die sowohl für Wanderer als auch für Badeurlauber interessant ist. Für die Umfrage waren Erfahrungsberichte von Urlaubern über einen Zeitraum von 12 Monaten ausgewertet worden. Sie bewerteten dabei die Hotels, Restaurants und Sehenswürdigkeiten der besuchten Insel.",
+                  ar: "دارت شركة ديال السفر سميتها «توريمارس» واحد الاستطلاع باش تعرف الجزر الأوروبية اللي كيعجبو الناس بزاف. النتيجة هي أن جزيرة سانتوريني اليونانية جات هي اللولة فالترتيب، و ماديرا جات هي التانية، و بزاف ديال الجزر اليونانية أخرى دخلو فاللائحة ديال العشرة الأوائل. هاد التقييم داروه على حساب التجارب والتقارير ديال السياح اللي زارو هاد الجزر خلال عام كامل، فين قيّمو الفنادق والمطاعم والمعالم السياحية ديال كل جزيرة." },
+
+                { answer: "I",
+                  body: "Das ostfriesische Memmert ist für seltene Vögel reserviert. Auf der Düneninsel, die vor ein paar Jahrhunderten aus der Nordsee aufgetaucht ist, leben Zigtausende von Vögeln. Nur der Inselvogt lebt zeitweise dort. Von Anfang März bis Ende Oktober ist der Forscher das einzige menschliche Wesen auf der kleinen Vogelschutzinsel im Wattenmeer. Im Auftrag des Landes Niedersachsen ist der Inselvogt zuständig für den Schutz von Natur und Vögeln auf Memmert. Von Mai bis Ende Juli ist Brutzeit auf der Insel. 100.000 Tiere, Vertreter von 60 verschiedenen Vogelarten, kommen Jahr für Jahr zum Brüten nach Memmert. Während dieser Zeit besteht ein absolutes Betretungsverbot - ausgenommen für Personen, die in Seenot geraten sind oder eine schriftliche Genehmigung haben. Ab August, dem Ende der Brutzeit, haben auch Urlauber für kurze Zeit die Chance auf einen Besuch, aber ausschließlich im Rahmen einer geführten Expedition. Nur mit einem Experten dürfen sie die Düneninsel im Wattenmeer erkunden.",
+                  ar: "مِيمرت هي جزيرة صغيرة ف بحر الشمال مخصصة لحماية الطيور النادرة، واللي خرجات من البحر شحال هادي. الجّزيرة مسكونة غير بالطيور، والراجل المكلف بالحماية هو الإنسان الوحيد اللي كَيعيش فيها مُؤقتاً من مارس حتى أكتوبر. من ماي حتى يوليوز، كيكون ممنوع دخول أي واحد، حيت هادي هي فترة التفريخ اللي كَتْجِي فيها آلاف الطيور. مورا هاد الوقت، الناس يقدروا يزوروها غير لفترة قصيرة، وبشرط يكونوا ف رحلة منظمة مع شي خبير." },
+
+                { answer: "C",
+                  body: "Die südamerikanischen Galapagosinseln locken nicht mit weißen Sandstränden und Palmen. Dennoch sind sie das Ziel so mancher Reisesehnsüchte. Für viele Menschen gelten die fernen Inseln als eine Art Paradies. Und tatsächlich kommt man wohl nirgendwo sonst ungezähmten Tieren so nahe wie auf diesen Inseln: Auf den unbewohnten Galapagosinseln verhalten sich die Tiere so, als ob es keine Menschen gäbe. Für die Besucher genauso faszinierend wie für die Entdeckungsreisenden früherer Jahrhunderte ist dabei die Zutraulichkeit, die sich die Tiere durch das Fehlen von natürlichen Feinden auf den Inseln bewahrt haben. Man kann das ganze Jahr über zu den Galapagosinseln reisen. Die bewohnten Inseln kann man dabei ganz gut allein besuchen. Anders sieht es bei den unbewohnten Inseln aus. Hier lassen die Behörden seit einigen Jahren nur eine begrenzte Zahl an Schiffen zu, und ohne Führer ist das Betreten nicht erlaubt. Die Inseln und ihre Tiere bleiben sich selbst überlassen, damit das Naturparadies auch weiterhin erhalten bleibt.",
+                  ar: "جزر غالاباغوس معروفة كجنة طبيعية، ماشي بسبب الشواطئ الرملية، وإنما حيت كتقدر تقرب من الحيوانات المتوحشة بواحد الشكل كبير. هاد الحيوانات كاتبقى أليفة بزاف حيت ما عندهاش أعداء طبيعيين. ممكن تزور الجزر ف أي وقت فالعام، والجزر المسكونة ساهلة باش تشوفها بوحدك. ولكن، باش يحافظو على هاد الطبيعة، الجزر الخاوية (الغير مسكونة) كيخصك ليها مرشد خاص والدخول كيكون محدد بقوانين صارمة." },
+
+                { answer: "J",
+                  body: "Dass Elefanten in Thailand teurer sein können als ein 3er-BMW in München, liegt an ihrem enormen wirtschaftlichen Potenzial: Sie sind eine der Hauptattraktionen der thailändischen Tourismusindustrie. Jeder dritte Besucher des Landes möchte mit Elefanten in Kontakt kommen oder hat das bereits hinter sich, zeigt die Umfrage einer Tierschutzgruppe. Die Organisation schätzt, dass in dem Land mehr als 2000 Elefanten im Einsatz sind, um die Nachfrage der Urlauber zu bedienen - so viele wie in keinem anderen Land der Welt. Was für die Besitzer ein gutes Geschäft ist, steht immer häufiger bei Tierschützern in der Kritik: Elefantenreiten sei die grausamste Tierattraktion der Welt. Sie sprechen von einer lebenslangen Qual für die Elefanten. Mehr als 100 Reiseveranstalter haben solche Angebote schon aus den Katalogen gestrichen. Dies feiern Tierschützer als Sieg: „Elefanten sind Wildtiere, keine Entertainer.“ Dass die Lebensbedingungen der Tourismuselefanten nicht artgerecht sind, ist bekannt. Doch selbst wenn sie nicht mehr als Einnahmequelle dienen, wird das an ihren Lebensumständen wenig ändern.",
+                  ar: "الفيلة في تايلاند عندها قيمة اقتصادية كبيرة بزاف حيت هي الجاذبية الرئيسية للسياحة، وكثر من ألفين فيل كيخدمو باش يلبيو الطلب ديال الزوار. ولكن جمعيات حماية الحيوانات كيحتجّو بقوة، وكيعتابرو ركوب الفيلة هو أقسى أنواع القسوة والتعذيب مدى الحياة. داكشي علاش، بزاف ديال شركات الأسفار حيدو هاد العروض من الكتالوجات ديالهم، واخا هاد النجاح، الظروف المعيشية ديال هاد الفيلة غتبقى صعيبة حتى من بعد ما يبقاو مصدر دخل." }
+            ];
+
+            const HEADINGS = [
+                { value: "A", text: "Deutscher Forscher startet Expedition auf Vogelinsel in Südamerika",
+                  ar: "باحث ألماني يبدأ رحلة استكشافية إلى جزيرة الطيور في أمريكا الجنوبية" },
+                { value: "B", text: "Die beliebtesten Reiseziele unter den europäischen Inseln",
+                  ar: "أكثر وجهات السفر شعبية بين الجزر الأوروبية" },
+                { value: "C", text: "Fernreisen in eine unberührte Tierwelt",
+                  ar: "رحلات بعيدة إلى عالم حيواني بكر" },
+                { value: "D", text: "Geführte Bootsausflüge zu einsamen Badebuchten",
+                  ar: "رحلات قوارب موجهة إلى خلجان سباحة نائية" },
+                { value: "E", text: "Grüne Geisterinsel in Asien",
+                  ar: "جزيرة الأشباح الخضراء في آسيا" },
+                { value: "F", text: "Immer mehr Reiseunternehmen streichen Thailand aus ihrem Angebot",
+                  ar: "تقوم المزيد من شركات السفر بإلغاء تايلاند من عروضها." },
+                { value: "G", text: "Inseln zählen weltweit zu den wichtigsten Reisedestinationen",
+                  ar: "تُعَدُّ الجزر من أهم وجهات السفر في العالم." },
+                { value: "H", text: "Nachhaltiger Tourismus auf chinesischen Inseln",
+                  ar: "السياحة المستدامة في الجزر الصينية" },
+                { value: "I", text: "Tierparadies auf einer Nordseeinsel",
+                  ar: "جنة الحيوانات على جزيرة في بحر الشمال" },
+                { value: "J", text: "Umstrittener Umgang mit Tieren als Touristenmagnet",
+                  ar: "التعامل المثير للجدل مع الحيوانات كجذب سياحي" }
+            ];
+
+            return {
+                teil1: {
+                    title: "Insel",
+                    kind: "matching",
+                    variants: [
+                        variant("الأساسي", overrides(HEADINGS, {}), TEXTS)
+                    ]
+                }
+            };
         })()
     };
 })();
