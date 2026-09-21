@@ -69,10 +69,16 @@
            Sport ist gesund
            النصوص والترويسات والحلول كما صيفطهم صاحب الموقع.
 
-           النسختين عندهم نفس النصوص — اللي كيتبدل هو صياغة
-           الترويسات. حيت هاكا النصوص مكتوبين مرة وحدة هنا
-           وكيتشاركو. إلا بغيتي نسخة تكون عندها نصوص ديالها،
-           عوض SPORT_TEXTS بلائحة ديالها.
+           التلاتة ديال النسخ عندهم نفس النصوص ونفس الحلول
+           (H · F · C · A · D). اللي كيتبدل هو صياغة الترويسات.
+
+           إذن: النصوص مكتوبين مرة وحدة، والترويسات عندهم
+           لائحة أساسية، وكل نسخة كتقول غير أش كتبدل فيها.
+           هاكا الفرق بين النسخ كيبان من بعيد، وإلا صلحتي شي
+           حاجة فالأساس كتتصلح فگاع النسخ.
+
+           باش تزيد نسخة: زيد variant("السمية", overrides(…), SPORT_TEXTS)
+           باش تعطي نسخة نصوص ديالها: عوض SPORT_TEXTS بلائحة ديالها.
            ================================================================ */
 
         "sport": (function () {
@@ -99,63 +105,60 @@
           ar: "الوالدين كيحيروا في الاختيار ديال العربة ديال الرضيع حيت كاين بزاف الأنواع في السوق. الخبراء كينصحوا بالاهتمام لشي نقط مهمة باش يكون الطفل في أمان. خاص المطلة ما تكونش رطبة بزاف باش النفس ديالو ما تضيقش، و الرويض خاصهم يكونوا فيهم السور باش ما يحسش بالتقرقيب في الطريق. و أهم حاجة هي تكون العربة ثابتة ومافيهاش شي حوايج ماضيين، ومن الأحسن تكون عندها علامة السلامة المعتمدة." }
             ];
 
+            /* اللائحة الأساسية ديال الترويسات */
+            const SPORT_HEADINGS = [
+                { value: "A", text: "Sport ist gesund - wenn man einige wichtige Regeln beachtet.",
+                  ar: "الرياضة صحية - إذا تم مراعاة بعض القواعد المهمة." },
+                { value: "B", text: "Griechische Sportler so erfolgreich wie nie zuvor.",
+                  ar: "الرياضيون اليونانيون ناجحون كما لم يحدث من قبل." },
+                { value: "C", text: "Fitness auch mit wenig Zeitaufwand erreichbar.",
+                  ar: "يمكن الوصول إلى اللياقة البدنية أيضاً مع قلة الوقت." },
+                { value: "D", text: "Geprüfte Qualität für Babys.",
+                  ar: "جودة معتمدة للأطفال." },
+                { value: "E", text: "Bluthochdruck beschleunigt das Abnehmen.",
+                  ar: "ارتفاع ضغط الدم يسرع فقدان الوزن." },
+                { value: "F", text: "Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.",
+                  ar: "الآباء المهتمون بالرياضة - وحتى الرضع يشاركون في الجري." },
+                { value: "G", text: "Täglich kurze Sprints besser als langes Ausdauertraining.",
+                  ar: "الجري السريع يوميًا أفضل من التدريب الطويل على التحمل." },
+                { value: "H", text: "Ein Leistungssport für jedes Alter.",
+                  ar: "رياضة تنافسية لكل الأعمار." },
+                { value: "I", text: "Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.",
+                  ar: "عرض غير محدود من عربات الأطفال يربك الآباء الشباب." },
+                { value: "J", text: "Autoindustrie: In Zukunft Mobilität ohne Grenzen.",
+                  ar: "صناعة السيارات: في المستقبل، تنقل بلا حدود." }
+            ];
+
+            /* كتاخد غير اللي كيتبدل: { "H": { text: "…", ar: "…" } } */
+            function overrides(changes) {
+                return SPORT_HEADINGS.map(function (heading) {
+                    return Object.assign({}, heading, changes[heading.value] || {});
+                });
+            }
+
             return {
                 teil1: {
                     title: "Sport ist gesund",
                     kind: "matching",
                     variants: [
 
-                        variant("الأساسي",
-                            [
-                                { value: "A", text: "Sport ist gesund - wenn man einige wichtige Regeln beachtet.",
-                                  ar: "الرياضة صحية - إذا تم مراعاة بعض القواعد المهمة." },
-                                { value: "B", text: "Griechische Sportler so erfolgreich wie nie zuvor.",
-                                  ar: "الرياضيون اليونانيون ناجحون كما لم يحدث من قبل." },
-                                { value: "C", text: "Fitness auch mit wenig Zeitaufwand erreichbar.",
-                                  ar: "يمكن الوصول إلى اللياقة البدنية أيضاً مع قلة الوقت." },
-                                { value: "D", text: "Geprüfte Qualität für Babys.",
-                                  ar: "جودة معتمدة للأطفال." },
-                                { value: "E", text: "Bluthochdruck beschleunigt das Abnehmen.",
-                                  ar: "ارتفاع ضغط الدم يسرع فقدان الوزن." },
-                                { value: "F", text: "Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.",
-                                  ar: "الآباء المهتمون بالرياضة - وحتى الرضع يشاركون في الجري." },
-                                { value: "G", text: "Täglich kurze Sprints besser als langes Ausdauertraining.",
-                                  ar: "الجري السريع يوميًا أفضل من التدريب الطويل على التحمل." },
-                                { value: "H", text: "Ein Leistungssport für jedes Alter.",
-                                  ar: "رياضة تنافسية لكل الأعمار." },
-                                { value: "I", text: "Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.",
-                                  ar: "عرض غير محدود من عربات الأطفال يربك الآباء الشباب." },
-                                { value: "J", text: "Autoindustrie: In Zukunft Mobilität ohne Grenzen.",
-                                  ar: "صناعة السيارات: في المستقبل، تنقل بلا حدود." }
-                            ],
-                            SPORT_TEXTS),
+                        variant("الأساسي", overrides({}), SPORT_TEXTS),
 
-                        /* نفس النصوص — الترويسة H متبدلة الصياغة،
-                           و C و D و F الترجمة ديالهم متبدلة. */
-                        variant("المعدل 1",
-                            [
-                                { value: "A", text: "Sport ist gesund - wenn man einige wichtige Regeln beachtet.",
-                                  ar: "الرياضة صحية - إذا تم مراعاة بعض القواعد المهمة." },
-                                { value: "B", text: "Griechische Sportler so erfolgreich wie nie zuvor.",
-                                  ar: "الرياضيون اليونانيون ناجحون كما لم يحدث من قبل." },
-                                { value: "C", text: "Fitness auch mit wenig Zeitaufwand erreichbar.",
-                                  ar: "اللياقة البدنية ممكنة أيضاً مع جهد زمني قليل." },
-                                { value: "D", text: "Geprüfte Qualität für Babys.",
-                                  ar: "جودة مُعتمَدة للأطفال." },
-                                { value: "E", text: "Bluthochdruck beschleunigt das Abnehmen.",
-                                  ar: "ارتفاع ضغط الدم يسرع فقدان الوزن." },
-                                { value: "F", text: "Sportbegeisterte Eltern - und auch die Babys sind beim Joggen dabei.",
-                                  ar: "الآباء المتحمسون للرياضة - والأطفال الرضع أيضاً يشاركون في الجري." },
-                                { value: "G", text: "Täglich kurze Sprints besser als langes Ausdauertraining.",
-                                  ar: "الجري السريع يوميًا أفضل من التدريب الطويل على التحمل." },
-                                { value: "H", text: "Sport ohne ausgrenzen Alter.",
-                                  ar: "الرياضة دون تمييز بين الأعمار." },
-                                { value: "I", text: "Unüberschaubares Angebot an Kinderwagen überfordert junge Eltern.",
-                                  ar: "عرض غير محدود من عربات الأطفال يربك الآباء الشباب." },
-                                { value: "J", text: "Autoindustrie: In Zukunft Mobilität ohne Grenzen.",
-                                  ar: "صناعة السيارات: في المستقبل، تنقل بلا حدود." }
-                            ],
-                            SPORT_TEXTS)
+                        variant("المعدل 1", overrides({
+                            C: { ar: "اللياقة البدنية ممكنة أيضاً مع جهد زمني قليل." },
+                            D: { ar: "جودة مُعتمَدة للأطفال." },
+                            F: { ar: "الآباء المتحمسون للرياضة - والأطفال الرضع أيضاً يشاركون في الجري." },
+                            H: { text: "Sport ohne ausgrenzen Alter.",
+                                 ar: "الرياضة دون تمييز بين الأعمار." }
+                        }), SPORT_TEXTS),
+
+                        variant("المعدل 2", overrides({
+                            C: { ar: "اللياقة البدنية ممكنة أيضاً مع قلة الوقت." },
+                            D: { ar: "جودة مُعتمَدة للأطفال." },
+                            F: { ar: "آباء مهووسون بالرياضة - والأطفال الرضع أيضاً يشاركون في الجري." },
+                            H: { text: "Eine Disziplin, die für alle Altersgruppen geeignet ist.",
+                                 ar: "انضباط مناسب لجميع الفئات العمرية." }
+                        }), SPORT_TEXTS)
                     ]
                 }
             };
