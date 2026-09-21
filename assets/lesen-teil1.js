@@ -77,11 +77,13 @@
                 btn.textContent = variant.label || ("نسخة " + (i + 1));
                 btn.addEventListener("click", function () {
                     if (i === index) return;
+                    /* من فين لفين — باش الانتقال يمشي فالجهة الصحيحة */
+                    const forward = i > index;
                     index = i;
                     Array.from(bar.children).forEach(function (other, oi) {
                         other.classList.toggle("active", oi === index);
                     });
-                    paint();
+                    swap(forward);
                 });
                 bar.appendChild(btn);
             });
@@ -98,6 +100,38 @@
 
         into.appendChild(wrap);
         paint();
+
+        /* تبديل النسخة بانتقال — النسخة القديمة كتغيب، الجديدة كتدخل
+           من الجهة اللي مشينا ليها. كنحترمو prefers-reduced-motion. */
+        function swap(forward) {
+            const still = window.matchMedia
+                && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            if (still) { paint(); return; }
+
+            board.classList.remove("t1-in-right", "t1-in-left");
+            board.classList.add(forward ? "t1-out-left" : "t1-out-right");
+
+            const done = function () {
+                board.removeEventListener("transitionend", done);
+                clearTimeout(guard);
+
+                board.classList.remove("t1-out-left", "t1-out-right");
+                board.classList.add(forward ? "t1-in-right" : "t1-in-left");
+                paint();
+
+                /* نخليه يترسم مرة قبل ما نرجعوه لبلاصتو */
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        board.classList.remove("t1-in-right", "t1-in-left");
+                    });
+                });
+            };
+
+            /* إلا ما وصلش transitionend (تبويب مخبي مثلا) ما نبقاوش واقفين */
+            const guard = setTimeout(done, 260);
+            board.addEventListener("transitionend", done);
+        }
 
         /* ================= رسم نسخة وحدة ================= */
 

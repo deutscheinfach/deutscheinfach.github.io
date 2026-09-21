@@ -1114,3 +1114,29 @@
     .t1-select { flex: 1 1 100%; }
     .t1-body { font-size: 14.5px; }
 }
+
+/* ---- الانتقال بين النسخ (الأساسي ↔ المعدل 1 ↔ المعدل 2) ---- */
+.t1-board {
+    transition: opacity .16s ease, transform .16s ease;
+}
+.t1-out-left   { opacity: 0; transform: translateX(-14px); }
+.t1-out-right  { opacity: 0; transform: translateX(14px); }
+.t1-in-right   { opacity: 0; transform: translateX(14px);  transition: none; }
+.t1-in-left    { opacity: 0; transform: translateX(-14px); transition: none; }
+
+/* المؤشر اللي كيتزحلق تحت التبويب الخدام */
+.t1-variants { position: relative; }
+.t1-variant { position: relative; z-index: 1; }
+.t1-variant.active {
+    animation: t1-pop .22s ease;
+}
+@keyframes t1-pop {
+    0%   { transform: scale(.93); }
+    60%  { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .t1-board { transition: none; }
+    .t1-variant.active { animation: none; }
+}
