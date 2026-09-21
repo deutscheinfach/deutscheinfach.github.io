@@ -99,8 +99,10 @@
         const parts = topic.parts || [];
         const shownPart = activePart || parts[0] || "teil1";
 
+        const shut = topic.locked && !window.__deutschEinfachIsPremium;
+
         const node = document.createElement("a");
-        node.className = "lesen-card" + (topic.locked ? " locked" : "");
+        node.className = "lesen-card" + (shut ? " locked" : "");
         node.href = pageUrl(topic.id, shownPart);
 
         const title = document.createElement("div");
@@ -126,7 +128,7 @@
 
         const go = document.createElement("span");
         go.className = "lesen-card-go";
-        go.textContent = topic.locked ? "🔒" : "›";
+        go.textContent = shut ? "🔒" : "›";
         go.setAttribute("aria-hidden", "true");
         foot.appendChild(go);
 
@@ -319,7 +321,8 @@
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase. */
     document.addEventListener("de-premium", function () {
-        if (detail.hidden) { renderList(); return; }
+        renderList();
+        if (detail.hidden) return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
         if (thema) open(thema, params.get("teil") || "teil1", false);

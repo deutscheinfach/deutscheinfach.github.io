@@ -73,7 +73,9 @@
 
     function card(topic) {
         const node = document.createElement("a");
-        node.className = "lesen-card" + (topic.locked ? " locked" : "");
+        /* المشترك عندو گاع المواضيع — ماعندوش علاش يشوف القفل */
+        const shut = topic.locked && !window.__deutschEinfachIsPremium;
+        node.className = "lesen-card" + (shut ? " locked" : "");
         node.href = "b2-schreiben-" + topic.id + ".html";
 
         const title = document.createElement("div");
@@ -98,7 +100,7 @@
 
         const go = document.createElement("span");
         go.className = "lesen-card-go";
-        go.textContent = topic.locked ? "🔒" : "›";
+        go.textContent = shut ? "🔒" : "›";
         go.setAttribute("aria-hidden", "true");
         foot.appendChild(go);
 
@@ -133,4 +135,8 @@
     }
 
     render();
+
+    /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase —
+       اللائحة خاصها تتعاود باش الأقفال يطيحو. */
+    document.addEventListener("de-premium", render);
 })();

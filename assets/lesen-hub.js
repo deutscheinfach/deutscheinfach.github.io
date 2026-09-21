@@ -100,8 +100,11 @@
     }
 
     function card(topic) {
+        /* المشترك عندو گاع المواضيع — ماعندوش علاش يشوف PRO */
+        const shut = topic.locked && !window.__deutschEinfachIsPremium;
+
         const node = document.createElement("a");
-        node.className = "lesen-card" + (topic.locked ? " locked" : "");
+        node.className = "lesen-card" + (shut ? " locked" : "");
         node.href = pageUrl(topic.id, pagePart);
 
         const title = document.createElement("div");
@@ -137,7 +140,7 @@
 
         const go = document.createElement("span");
         go.className = "lesen-card-go";
-        go.textContent = topic.locked ? "🔒" : "›";
+        go.textContent = shut ? "🔒" : "›";
         go.setAttribute("aria-hidden", "true");
         foot.appendChild(go);
 
@@ -364,6 +367,9 @@
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase.
        إلا كان التمرين محلول وهو Premium، كنعاودو نرسموه. */
     document.addEventListener("de-premium", function () {
+        /* اللائحة خاصها تتعاود: الأقفال كيطيحو ملي يبان الاشتراك */
+        renderList();
+
         if (detail.hidden) return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");

@@ -23,13 +23,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
     --muted: #b9b6ad;
 }
 
-body[data-theme="dark"] {
-    --paper: #050608;
-    --card: #0e1015;
-    --bar: #ffffff;
-    --border: rgba(225,29,51,.26);
-    --muted: #a8a59d;
-}
 
 body {
     font-family: "Segoe UI", Arial, Helvetica, sans-serif;
@@ -52,7 +45,6 @@ body {
     z-index: 50;
     border-bottom: 4px solid var(--red);
 }
-body[data-theme="dark"] .task-header { background: var(--bar); }
 
 .task-header .left {
     display: flex;
@@ -664,21 +656,12 @@ html, body { max-width: 100%; overflow-x: hidden; }
 }
 
 
-/* ===== الوضع الفاتح: أبيض وذهبي =====
-   عندنا جوج: data-theme على <body> (الزر القديم) وعلى
-   <html> (الزر المشترك). كنغطيو بجوج. */
+/* ===== الشريط ديال التمرين =====
+   الأزرار والمؤقت كانو نص أبيض حيت الشريط كان كحل.
 
-/* الـ barre فوق فالوضع الفاتح: بيضا بنص كحل وخيط ذهبي تحت */
-body[data-theme="light"] .back-btn,
-body[data-theme="light"] .back-btn:hover,
-body[data-theme="light"] .task-title-block .sub,
-body[data-theme="light"] .correct-btn,
-body[data-theme="light"] .correct-btn:hover,
-body[data-theme="light"] .point-num,
-
-
-/* ===== الشريط ديال التمرين ولا أبيض =====
-   الأزرار والمؤقت كانو نص أبيض حيت الشريط كان كحل. */
+   ملاحظة: كانت هنا لائحة محددات ديال body[data-theme="light"]
+   سالات بفاصلة على قبل تعليق، إذن .task-header كان داخل معاهم
+   فنفس القاعدة. الوضع الفاتح/المظلم تحيد، إذن حيدناهم. */
 .task-header { border-bottom: 3px solid var(--red); box-shadow: 0 2px 14px rgba(20,22,31,.06); }
 .back-btn { color: var(--bar-text); }
 .back-btn:hover { background: rgba(20,22,31,.06); }
