@@ -8,36 +8,37 @@
 
 :root {
     /* ===== اللوحة =====
-       بنفسجي/نيلي على كحل مزرق — ماشي أسود قاح.
-       الأسود القاح مع نص أبيض كيتعب العينين فالليل،
-       والكحل المزرق أهدى وكيبان أكثر احترافية.
+       أبيض + أحمر. الخلفية بيضا بشبكة مربعات خفيفة،
+       والأحمر هو لون العلامة — بحال telc والعلم
+       الألماني، إذن كيمشي مع الموقع.
 
        الأسماء --gold* بقاو كيف ما هوما حيت مستعملين
-       ف عشرات الصفحات. دابا كيحملو لون العلامة، ماشي
-       الذهبي. الأسماء الجديدة --brand* هي اللي خاص
-       يتستعملو ف أي كود جديد. */
+       ف عشرات الصفحات. دابا كيحملو لون العلامة (أحمر).
+       الأسماء الجديدة --brand* هي اللي خاص يتستعملو
+       ف أي كود جديد. */
 
-    --brand: #6d6cf6;
-    --brand-dark: #4f46e5;
-    --brand-soft: #c3c6fd;
+    --brand: #e11d33;
+    --brand-dark: #b4142a;
+    --brand-soft: #ffe1e5;
+    --brand-tint: rgba(225,29,51,.08);
 
     --gold: var(--brand);
     --gold-dark: var(--brand-dark);
     --gold-soft: var(--brand-soft);
 
-    --ink: #0d0f1a;
-    --surface: #151928;
-    --surface-2: #1c2133;
+    --ink: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f7f8fc;
 
-    --text: #e9eaf5;
-    --muted: #9aa0bb;
+    --text: #14161f;
+    --muted: #5b6172;
 
-    --line: rgba(255,255,255,.09);
-    --line-gold: rgba(109,108,246,.38);
+    --line: rgba(20,22,31,.10);
+    --line-gold: rgba(225,29,51,.28);
     --line-brand: var(--line-gold);
 
-    --ok: #34d399;
-    --danger: #fb7185;
+    --ok: #0f9d58;
+    --danger: #e11d33;
 
     /* الأسماء القديمة — باش الصفحات القديمة تبقى خدامة */
     --red: var(--gold);
@@ -51,7 +52,7 @@
     --gray: var(--muted);
     --border: var(--line);
     --border-strong: var(--line-gold);
-    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --shadow: 0 10px 28px rgba(20,22,31,.08);
 
     /* الأحجام — كتكبر مع الشاشة */
     --step-0: clamp(14px, .5vw + 12.5px, 19px);
@@ -79,11 +80,17 @@ body {
     font-size: var(--step-0);
     line-height: 1.7;
     color: var(--text);
-    background:
-        radial-gradient(900px 520px at 10% -5%, rgba(109,108,246,.16), transparent 58%),
-        radial-gradient(760px 460px at 92% 8%, rgba(139,92,246,.12), transparent 56%),
-        radial-gradient(700px 500px at 50% 108%, rgba(79,70,229,.10), transparent 62%),
-        var(--ink);
+    /* شبكة مربعات خفيفة + لمستين ديال الأحمر فالزوايا.
+       المربعات كيعطيو إحساس "منصة" بلا ما يشوشو على
+       القراية — الخطوط رقاق بزاف عمداً. */
+    background-color: #fdfdff;
+    background-image:
+        radial-gradient(760px 420px at 6% -8%, rgba(225,29,51,.07), transparent 60%),
+        radial-gradient(700px 420px at 96% 2%, rgba(225,29,51,.05), transparent 58%),
+        linear-gradient(rgba(20,22,31,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20,22,31,.045) 1px, transparent 1px);
+    background-size: auto, auto, 34px 34px, 34px 34px;
+    background-attachment: fixed, fixed, fixed, fixed;
     min-height: 100vh;
 }
 
@@ -177,69 +184,6 @@ table { display: block; max-width: 100%; overflow-x: auto; }
     h2 { font-size: clamp(19px, 5vw, 26px); }
     h3 { font-size: clamp(17px, 4.5vw, 22px); }
 }
-
-/* ===== الوضع الفاتح: أبيض وذهبي =====
-   كيتشعل بـ data-theme="light" على <html>. الافتراضي بقا
-   ذهبي على أسود. الذهبي الفاتح ماكيتقراش على الأبيض، إذن
-   النصوص الذهبية كتولي --gold-dark. */
-
-html[data-theme="light"] {
-    --brand: #5b55e8;
-    --brand-dark: #4338ca;
-    --brand-soft: #e0e1fe;
-
-    --gold: var(--brand);
-    --gold-dark: var(--brand-dark);
-    --gold-soft: var(--brand-soft);
-
-    --ink: #ffffff;
-    --surface: #ffffff;
-    --surface-2: #f5f6fd;
-
-    --text: #171a2e;
-    --muted: #5b6079;
-
-    --line: rgba(23,26,46,.11);
-    --line-gold: rgba(91,85,232,.30);
-    --line-brand: var(--line-gold);
-
-    --ok: #059669;
-    --danger: #e11d48;
-
-    --shadow: 0 10px 30px rgba(23,26,46,.09);
-}
-
-html[data-theme="light"] body {
-    color: var(--text);
-    background:
-        radial-gradient(900px 520px at 8% -6%, rgba(99,102,241,.13), transparent 56%),
-        radial-gradient(760px 460px at 94% 6%, rgba(168,85,247,.10), transparent 54%),
-        radial-gradient(700px 480px at 50% 106%, rgba(56,189,248,.09), transparent 60%),
-        #fafaff;
-}
-
-/* ===== زر الوضع الفاتح/المظلم ===== */
-.de-theme-btn {
-    position: fixed;
-    right: 14px;
-    bottom: 14px;
-    z-index: 9999;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    padding: 0 16px;
-    border-radius: 999px;
-    border: 1px solid var(--line-gold);
-    background: var(--surface);
-    color: var(--text);
-    font: 700 13px/1 "Cairo", Arial, sans-serif;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-}
-.de-theme-btn:hover { border-color: var(--gold); color: var(--gold); }
-@media print { .de-theme-btn { display: none; } }
-
 
 /* ===== حجم اللمس فالتيليفون =====
    الروابط الواقفة بوحدها (رجوع، بطاقة…) خاصهم يكونو

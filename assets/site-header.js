@@ -64,21 +64,6 @@
     const actions = document.createElement("div");
     actions.className = "site-actions";
 
-    const themeBtn = document.createElement("button");
-    themeBtn.type = "button";
-    themeBtn.className = "site-btn site-btn-icon";
-    themeBtn.id = "site-theme-btn";
-    themeBtn.setAttribute("aria-label", "الوضع الفاتح/المظلم");
-    themeBtn.innerHTML =
-        '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" ' +
-        'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-        '<circle cx="12" cy="12" r="8"></circle>' +
-        '<path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"></path></svg>';
-    themeBtn.addEventListener("click", function () {
-        if (window.__deTheme) window.__deTheme.toggle();
-    });
-    actions.appendChild(themeBtn);
-
     /* ضيف — حتى نعرفو شكون داخل */
     const guest = document.createElement("span");
     guest.className = "site-actions";

@@ -10,15 +10,14 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=689893e8">
+<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
 <link rel="stylesheet" href="assets/site-header.css?v=43b2c394">
-<script src="assets/theme-toggle.js?v=98b0dab3"></script>
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Hören: Teil3</title>
   <style>
     :root { --de-red: var(--gold); --de-red-dark: var(--gold-dark); --de-yellow: var(--gold-soft); --de-black: var(--surface-2); }
-    body { background: radial-gradient(circle at 12% 6%, rgba(109,108,246,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(109,108,246,.07), transparent 44%),#08090c; font-family: Arial, sans-serif; padding: 30px; }
+    body { background: radial-gradient(circle at 12% 6%, rgba(225,29,51,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(225,29,51,.07), transparent 44%),#08090c; font-family: Arial, sans-serif; padding: 30px; }
     .btn-check { margin-top: 20px; padding: 10px 18px; font-size: 16px; background-color: var(--de-red); color: white; border: none; border-radius: 8px; cursor: pointer; }
     .btn-check:hover { background-color: var(--de-red-dark); }
     .correct { background-color: rgba(74,222,128,.14); }
@@ -26,8 +25,8 @@
     #warningBox { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--de-red); color: #fff; padding: 15px 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); font-size: 14px; font-weight: bold; z-index: 9999; }
     .teil-nav-wrap { display: flex; justify-content: center; gap: 10px; margin: 0 auto 24px; flex-wrap: wrap; max-width: 7xl; }
     .teil-nav-btn { padding: 10px 26px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; background: var(--surface); border: 2px solid var(--de-red); color: var(--de-red); transition: .22s; }
-    .teil-nav-btn:hover { background: var(--de-red); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(109,108,246,0.2); }
-    .teil-nav-btn.active { background: var(--de-red); color: #fff; box-shadow: 0 4px 12px rgba(109,108,246,0.25); }
+    .teil-nav-btn:hover { background: var(--de-red); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(225,29,51,0.2); }
+    .teil-nav-btn.active { background: var(--de-red); color: #fff; box-shadow: 0 4px 12px rgba(225,29,51,0.25); }
     html.dark .teil-nav-btn { background: #1f1f1f; border-color: var(--de-red); color: #f1f1f1; }
     html.dark .teil-nav-btn.active { background: var(--de-red); color: #fff; }
   </style>
@@ -83,7 +82,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     font-size: 13.5px;
     font-weight: 600;
     transition: all .22s ease;
-    box-shadow: 0 2px 6px rgba(109,108,246,0.06);
+    box-shadow: 0 2px 6px rgba(225,29,51,0.06);
     position: relative;
     overflow: visible !important;
     min-height: 56px;
@@ -92,10 +91,10 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   }
   #hoeren-hub-grid a.ex-btn:hover,
   #hoeren-teil1-grid a.ex-btn:hover {
-    background: linear-gradient(135deg, rgba(109,108,246,.12) 0%, rgba(109,108,246,.14) 100%);
+    background: linear-gradient(135deg, rgba(225,29,51,.12) 0%, rgba(225,29,51,.14) 100%);
     border-color: var(--gold);
     transform: translateY(-3px) scale(1.015);
-    box-shadow: 0 6px 20px rgba(109,108,246,0.15);
+    box-shadow: 0 6px 20px rgba(225,29,51,0.15);
   }
   #hoeren-hub-grid a.ex-btn:active,
   #hoeren-teil1-grid a.ex-btn:active { transform: translateY(-1px) scale(1.005); }
@@ -151,7 +150,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     background: var(--surface);
     border: 1.5px solid #f0d0d0;
     border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(109,108,246,0.06);
+    box-shadow: 0 2px 10px rgba(225,29,51,0.06);
     overflow: hidden;
   }
   html.dark .theme-item {
@@ -163,7 +162,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     align-items: center;
     gap: 10px;
     padding: 16px 20px;
-    background: linear-gradient(135deg, rgba(109,108,246,.12) 0%, rgba(109,108,246,.14) 100%);
+    background: linear-gradient(135deg, rgba(225,29,51,.12) 0%, rgba(225,29,51,.14) 100%);
     border-bottom: 1.5px solid #f0d0d0;
     cursor: pointer;
     user-select: none;
@@ -232,7 +231,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
     color: #fff;
     font-size: 18px;
-    box-shadow: 0 6px 14px rgba(109,108,246,0.16);
+    box-shadow: 0 6px 14px rgba(225,29,51,0.16);
   }
   .theme-card-info { flex: 1; min-width: 0; }
   .theme-card-label { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
@@ -256,7 +255,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   .theme-card-open:hover {
     background: var(--de-red-dark);
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(109,108,246,0.2);
+    box-shadow: 0 6px 15px rgba(225,29,51,0.2);
   }
   .theme-card-open i { transition: transform .2s; }
   .theme-card-open:hover i { transform: translateX(-3px); }
@@ -340,9 +339,9 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     transition: transform .2s, box-shadow .2s;
   }
   .nq-btn:hover { transform: translateY(-2px); }
-  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(109,108,246,0.22); }
-  .nq-btn-show { background: #22252a; color: #fff; }
-  html.dark .nq-btn-show { background: var(--surface-2); color: #161616; }
+  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(225,29,51,0.22); }
+  .nq-btn-show { background: var(--surface-2); color: var(--text); }
+  html.dark .nq-btn-show { background: var(--surface-2); color: var(--text); }
   .nq-btn-retry { background: var(--de-yellow); color: var(--text); }
   .nq-result-box { margin: 14px 0 0; min-height: 0; border-radius: 12px; text-align: center; font-weight: 800; font-size: 14px; }
   .nq-result-box:not(:empty) { padding: 13px; border: 1px solid var(--line); background: rgba(128,128,128,0.05); }
@@ -370,9 +369,9 @@ img, svg, video, canvas { display: block; max-width: 100%; }
 }
 
 body{
-  background: radial-gradient(900px 420px at -8% -8%, rgba(109,108,246,.14), transparent 62%),
-    radial-gradient(760px 360px at 108% -5%, rgba(109,108,246,.16), transparent 60%),
-    radial-gradient(600px 420px at 50% 110%, rgba(109,108,246,.055), transparent 65%),
+  background: radial-gradient(900px 420px at -8% -8%, rgba(225,29,51,.14), transparent 62%),
+    radial-gradient(760px 360px at 108% -5%, rgba(225,29,51,.16), transparent 60%),
+    radial-gradient(600px 420px at 50% 110%, rgba(225,29,51,.055), transparent 65%),
     linear-gradient(135deg,var(--surface-2) 0%,#121419 43%,var(--surface-2) 100%) !important;
   color: var(--text) !important;
 }
@@ -381,8 +380,8 @@ body{
 .telc-exercise-topbar.telc-exercise-toolbar{
   border-radius: 16px !important;
   margin-bottom: 18px !important;
-  background: linear-gradient(90deg,#171717 0%,#252525 72%,var(--gold) 100%) !important;
-  box-shadow: 0 8px 24px rgba(23,23,23,.14),0 2px 0 rgba(109,108,246,.7) inset !important;
+  background: linear-gradient(90deg,#ffffff 0%,#fdf2f4 65%,var(--brand-soft) 100%) !important;
+  box-shadow: 0 8px 24px rgba(23,23,23,.14),0 2px 0 rgba(225,29,51,.7) inset !important;
 }
 
 /* Part navigation */
@@ -399,16 +398,16 @@ body{
   box-shadow: 0 5px 16px rgba(23,23,23,.06) !important;
 }
 .teil-nav-btn:hover{
-  background: rgba(109,108,246,.12) !important;
+  background: rgba(225,29,51,.12) !important;
   border-color: var(--gold) !important;
   color: var(--gold) !important;
-  box-shadow: 0 10px 24px rgba(109,108,246,.13) !important;
+  box-shadow: 0 10px 24px rgba(225,29,51,.13) !important;
 }
 .teil-nav-btn.active{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
   border-color: var(--gold) !important;
   color: #fff !important;
-  box-shadow: 0 9px 22px rgba(109,108,246,.25) !important;
+  box-shadow: 0 9px 22px rgba(225,29,51,.25) !important;
 }
 
 /* Exercise stack */
@@ -441,7 +440,7 @@ body{
 
 /* Card header */
 #hoeren-teil3-stack .theme-item-header{
-  background: linear-gradient(135deg,#171717 0%,#252525 72%,#3a3320 100%) !important;
+  background: linear-gradient(135deg,#ffffff 0%,#fdf2f4 70%,var(--brand-soft) 100%) !important;
   border-bottom: 0 !important;
   color: #fff !important;
   padding: 17px 21px !important;
@@ -486,7 +485,7 @@ body{
 #hoeren-teil3-stack .nq-question-row:hover{
   border-color: var(--gold) !important;
   border-left-color: var(--gold) !important;
-  box-shadow: 0 8px 19px rgba(109,108,246,.08) !important;
+  box-shadow: 0 8px 19px rgba(225,29,51,.08) !important;
 }
 #hoeren-teil3-stack .nq-question-text{
   color: var(--text) !important;
@@ -502,7 +501,7 @@ body{
   border-radius: 10px !important;
 }
 #hoeren-teil3-stack .nq-radio-option:hover{
-  background: rgba(109,108,246,.12) !important;
+  background: rgba(225,29,51,.12) !important;
   border-color: var(--gold) !important;
 }
 
@@ -513,7 +512,7 @@ body{
 }
 #hoeren-teil3-stack .nq-btn-check{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
-  box-shadow: 0 8px 19px rgba(109,108,246,.23) !important;
+  box-shadow: 0 8px 19px rgba(225,29,51,.23) !important;
 }
 #hoeren-teil3-stack .nq-btn-show{
   background: var(--surface-2) !important;
@@ -535,9 +534,9 @@ body{
 }
 #hoeren-hub-grid a.ex-btn:hover,
 #hoeren-teil1-grid a.ex-btn:hover{
-  background: linear-gradient(135deg,var(--surface) 0%,rgba(109,108,246,.12) 72%,var(--surface-2) 100%) !important;
+  background: linear-gradient(135deg,var(--surface) 0%,rgba(225,29,51,.12) 72%,var(--surface-2) 100%) !important;
   border-color: var(--gold) !important;
-  box-shadow: 0 10px 24px rgba(109,108,246,.13) !important;
+  box-shadow: 0 10px 24px rgba(225,29,51,.13) !important;
 }
 #hoeren-hub-grid a.ex-btn::before,
 #hoeren-teil1-grid a.ex-btn::before{
@@ -564,8 +563,8 @@ body{
 
 /* Dark mode remains compatible */
 html.dark body{
-  background: radial-gradient(850px 420px at -8% -8%,rgba(109,108,246,.18),transparent 62%),
-    radial-gradient(700px 380px at 108% 0%,rgba(109,108,246,.10),transparent 60%),
+  background: radial-gradient(850px 420px at -8% -8%,rgba(225,29,51,.18),transparent 62%),
+    radial-gradient(700px 380px at 108% 0%,rgba(225,29,51,.10),transparent 60%),
     linear-gradient(135deg,#0d0f14,#171a21 52%,#0d0f14) !important;
 }
 html.dark #hoeren-teil3-stack .theme-item{
@@ -626,7 +625,7 @@ body{
   background: rgba(18,20,25,.92) !important;
   backdrop-filter: blur(16px) saturate(150%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
-  box-shadow: 0 12px 34px rgba(23,23,23,.15),0 2px 0 rgba(109,108,246,.75) inset !important;
+  box-shadow: 0 12px 34px rgba(23,23,23,.15),0 2px 0 rgba(225,29,51,.75) inset !important;
 }
 
 .hoeren-sticky-nav .hoeren-nav-btn{
@@ -647,7 +646,7 @@ body{
 .hoeren-sticky-nav .hoeren-nav-back,
 .hoeren-sticky-nav .hoeren-nav-start{
   background: var(--surface-2) !important;
-  color: #fff !important;
+  color: var(--text) !important;
   border: 1px solid var(--border) !important;
 }
 .hoeren-sticky-nav .hoeren-nav-back:hover,
@@ -664,14 +663,14 @@ body{
 .hoeren-sticky-nav .hoeren-nav-part:hover{
   color: var(--gold) !important;
   border-color: var(--gold) !important;
-  background: rgba(109,108,246,.12) !important;
+  background: rgba(225,29,51,.12) !important;
   transform: translateY(-2px) !important;
 }
 .hoeren-sticky-nav .hoeren-nav-part.active{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
   color: var(--ink) !important;
   border-color: var(--gold) !important;
-  box-shadow: 0 7px 16px rgba(109,108,246,.22) !important;
+  box-shadow: 0 7px 16px rgba(225,29,51,.22) !important;
 }
 
 .hoeren-sticky-nav .hoeren-nav-divider{
@@ -684,7 +683,7 @@ body{
 html.dark .hoeren-sticky-nav{
   background: rgba(20,22,27,.92) !important;
   border-color: #343842 !important;
-  box-shadow: 0 12px 34px rgba(0,0,0,.35),0 2px 0 rgba(109,108,246,.8) inset !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.35),0 2px 0 rgba(225,29,51,.8) inset !important;
 }
 html.dark .hoeren-sticky-nav .hoeren-nav-part{
   background: #191c22 !important;
@@ -764,7 +763,7 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
     border: 1px solid #16803c !important;
   }
   .nq-feedback-wrong {
-    background: rgba(109,108,246,.14) !important;
+    background: rgba(225,29,51,.14) !important;
     color: #ff9494 !important;
     border: 1px solid var(--danger) !important;
   }
@@ -1946,7 +1945,7 @@ resetTimers();
 }
 .nq-question-row.nq-wrong{
   border: 2px solid var(--danger) !important;
-  background: rgba(109,108,246,.14) !important;
+  background: rgba(225,29,51,.14) !important;
 }
 .nq-radio-option.nq-selected-correct{
   border-color: #16a34a !important;
@@ -1955,7 +1954,7 @@ resetTimers();
 }
 .nq-radio-option.nq-selected-wrong{
   border-color: var(--danger) !important;
-  background: rgba(109,108,246,.14) !important;
+  background: rgba(225,29,51,.14) !important;
   color: #991b1b !important;
 }
 .nq-feedback-badge{
@@ -1994,7 +1993,7 @@ resetTimers();
 }
 .nq-question-row.nq-wrong,
 .nq-question-row.nq-wrong .nq-question-text{
-  background: rgba(109,108,246,.14) !important;
+  background: rgba(225,29,51,.14) !important;
   border-color: var(--danger) !important;
 }
 .nq-question-row.nq-correct .nq-question-text,
@@ -2152,7 +2151,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 .de-premium-topic{
   padding: 13px 15px;
   border-radius: 14px;
-  background: linear-gradient(135deg,rgba(109,108,246,.12),rgba(109,108,246,.14));
+  background: linear-gradient(135deg,rgba(225,29,51,.12),rgba(225,29,51,.14));
   border: 1px solid #f0d0d0;
   color: var(--text);
   font-weight: 800;
@@ -2374,96 +2373,38 @@ html.dark .teil-nav-btn.active,
    القواعد الأصلية ديال هاد الصفحات مكتوبة بـ !important، إذن
    الوضع الفاتح خاصو حتى هو !important باش يغلبهم. */
 
-html[data-theme="light"] body{
-  background:
-    radial-gradient(900px 420px at -8% -8%, rgba(91,85,232,.13), transparent 62%),
-    radial-gradient(760px 360px at 108% -5%, rgba(91,85,232,.09), transparent 60%),
-    #fbfaf6 !important;
-  color: var(--text) !important;
-}
-
 /* الـ barre العايمة */
-html[data-theme="light"] .hoeren-sticky-nav{
-  background: rgba(255,255,255,.94) !important;
-  border-color: var(--line-gold) !important;
-  box-shadow: 0 12px 30px rgba(20,22,26,.12) !important;
-}
 html[data-theme="light"] .hoeren-sticky-nav .hoeren-nav-back,
-html[data-theme="light"] .hoeren-sticky-nav .hoeren-nav-start{
-  background: var(--surface-2) !important;
-  color: var(--text) !important;
-  border-color: var(--line) !important;
-}
 html[data-theme="light"] .hoeren-sticky-nav .hoeren-nav-back:hover,
-html[data-theme="light"] .hoeren-sticky-nav .hoeren-nav-start:hover{
-  background: #ece9e0 !important;
-}
 html[data-theme="light"] .hoeren-sticky-nav .hoeren-nav-part{
   background: #fff !important;
   color: var(--text) !important;
   border-color: var(--line) !important;
-}
-html[data-theme="light"] .hoeren-sticky-nav .hoeren-nav-part.active{
-  background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
-  color: #fff !important;
 }
 html[data-theme="light"] .hoeren-sticky-nav .hoeren-nav-divider{
   background: var(--line) !important;
 }
 
 /* الـ topbar وعناوين البطائق */
-html[data-theme="light"] .telc-exercise-topbar.telc-exercise-toolbar{
-  background: linear-gradient(90deg,#fff 0%,#f6f2e6 72%,var(--gold-soft) 100%) !important;
-  box-shadow: 0 8px 22px rgba(20,22,26,.09) !important;
-}
 html[data-theme="light"] #hoeren-teil1-stack .theme-item{
   background: #fff !important;
   border-color: var(--line) !important;
   box-shadow: 0 10px 26px rgba(20,22,26,.08) !important;
 }
-html[data-theme="light"] #hoeren-teil1-stack .theme-item-header{
-  background: linear-gradient(135deg,#f7f5ef 0%,#f1ecdd 72%,var(--gold-soft) 100%) !important;
-  color: var(--text) !important;
-}
 html[data-theme="light"] #hoeren-teil1-stack .theme-item-title{ color: var(--text) !important; }
-html[data-theme="light"] #hoeren-teil1-stack .theme-item-chevron{ color: var(--gold-dark) !important; }
 html[data-theme="light"] #hoeren-teil1-stack .theme-iframe-wrap,
-html[data-theme="light"] #hoeren-teil1-stack .native-quiz-wrap{
-  background: var(--surface-2) !important;
-}
 html[data-theme="light"] #hoeren-teil1-stack .nq-question-row{
   background: #fff !important;
   border-color: var(--line) !important;
   border-left-color: var(--gold) !important;
 }
-html[data-theme="light"] #hoeren-teil1-stack .nq-radio-option{
-  background: #fff !important;
-  color: var(--text) !important;
-  border-color: var(--line) !important;
-}
-
 /* الأزرار اللي كان نصها أبيض مفروض */
-html[data-theme="light"] .auto-nav-btn,
-html[data-theme="light"] #hoeren-teil1-stack .nq-btn-show{
-  background: var(--surface-2) !important;
-  color: var(--text) !important;
-  border: 1px solid var(--line) !important;
-}
 html[data-theme="light"] .auto-nav-btn.auto-nav-secondary{
   background: var(--gold) !important;
   color: #fff !important;
 }
-html[data-theme="light"] #hoeren-hub-grid a.ex-btn,
-html[data-theme="light"] #hoeren-teil1-grid a.ex-btn{
-  background: #fff !important;
-  color: var(--text) !important;
-  border-color: var(--line) !important;
-}
-
 /* الصح والغلط كيبقاو نفس المعنى */
-html[data-theme="light"] .nq-question-row.nq-correct{ background: rgba(21,128,61,.10) !important; }
 html[data-theme="light"] .nq-question-row.nq-wrong{ background: rgba(198,40,40,.09) !important; }
-html[data-theme="light"] .nq-radio-option.nq-selected-correct{ color: #15803d !important; }
 html[data-theme="light"] .nq-radio-option.nq-selected-wrong{ color: #c62828 !important; }
 </style>
 <script src="assets/site-header.js?v=21440e99"></script>

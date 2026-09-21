@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=689893e8">
+<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
 <link rel="stylesheet" href="assets/site-header.css?v=43b2c394">
     <style>
 
@@ -31,16 +31,16 @@
             --red: var(--brand);
             --red-dark: var(--brand-dark);
             --yellow: var(--brand-soft);
-            --black: #f5f4f0;
-            --white: #121419;
-            --text: #f5f4f0;
-            --muted: #b9b6ad;
-            --border: rgba(255,255,255,0.08);
-            --border-strong: rgba(109,108,246,0.35);
-            --bg: #08090c;
-            --surface: #121419;
-            --surface-2: #181b22;
-            --shadow: 0 20px 60px -10px rgba(109,108,246,0.18);
+            --black: #14161f;
+            --white: #ffffff;
+            --text: #14161f;
+            --muted: #5b6172;
+            --border: rgba(20,22,31,.10);
+            --border-strong: rgba(225,29,51,0.35);
+            --bg: #fdfdff;
+            --surface: #ffffff;
+            --surface-2: #f7f8fc;
+            --shadow: 0 20px 60px -10px rgba(225,29,51,0.18);
         }
 
         html {
@@ -52,9 +52,9 @@
             font-family: "Cairo", "IBM Plex Sans Arabic", Arial, Helvetica, sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 10% 10%, rgba(109,108,246,0.08), transparent 25%),
-                radial-gradient(circle at 90% 20%, rgba(109,108,246,0.06), transparent 25%),
-                linear-gradient(180deg, #08090c 0%, #0a0b10 100%);
+                radial-gradient(circle at 10% 10%, rgba(225,29,51,0.08), transparent 25%),
+                radial-gradient(circle at 90% 20%, rgba(225,29,51,0.06), transparent 25%),
+                linear-gradient(180deg, #fdfdff 0%, #0a0b10 100%);
             overflow-x: hidden;
         }
 
@@ -64,7 +64,7 @@
             width: 350px;
             height: 350px;
             border-radius: 50%;
-            background: rgba(109,108,246,0.05);
+            background: rgba(225,29,51,0.05);
             top: -120px;
             left: -120px;
             z-index: -1;
@@ -77,7 +77,7 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background: rgba(109,108,246,0.05);
+            background: rgba(225,29,51,0.05);
             bottom: -100px;
             right: -100px;
             z-index: -1;
@@ -114,7 +114,7 @@
             border-radius: 22px;
 
             box-shadow:
-                0 10px 40px rgba(0,0,0,0.35);
+                0 10px 40px rgba(20,22,31,.08);
         }
 
         .brand {
@@ -162,9 +162,9 @@
         }
 
         .nav-links a:hover {
-            background: rgba(109,108,246,0.08);
+            background: rgba(225,29,51,0.08);
             color: var(--red-dark);
-            color: var(--yellow);
+            color: var(--red-dark);
         }
 
         .nav-actions {
@@ -194,17 +194,17 @@
 
         .login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px -6px rgba(109,108,246,0.45);
+            box-shadow: 0 10px 25px -6px rgba(225,29,51,0.45);
         }
 
         .signup {
             background: var(--surface-2);
             border: 1px solid var(--border-strong);
-            color: var(--yellow);
+            color: var(--red-dark);
         }
 
         .signup:hover {
-            background: rgba(109,108,246,0.08);
+            background: rgba(225,29,51,0.08);
             transform: translateY(-2px);
         }
 
@@ -229,13 +229,13 @@
             align-items: center;
             gap: 7px;
 
-            background: rgba(109,108,246,0.08);
+            background: rgba(225,29,51,0.08);
             border: 1px solid var(--border-strong);
 
             padding: 10px 13px;
             border-radius: 12px;
 
-            color: var(--yellow);
+            color: var(--red-dark);
             font-weight: bold;
             font-size: 13px;
 
@@ -255,7 +255,7 @@
         }
 
         .settings-button:hover {
-            background: rgba(109,108,246,0.08);
+            background: rgba(225,29,51,0.08);
             border-color: var(--border-strong);
             transform: translateY(-2px);
         }
@@ -289,7 +289,7 @@
             position: absolute;
             width: 260px;
             height: 260px;
-            background: rgba(109,108,246,0.08);
+            background: rgba(225,29,51,0.08);
             border-radius: 50%;
             top: -130px;
             right: -100px;
@@ -300,7 +300,7 @@
             position: absolute;
             width: 220px;
             height: 220px;
-            background: rgba(109,108,246,0.06);
+            background: rgba(225,29,51,0.06);
             border-radius: 50%;
             bottom: -120px;
             left: -80px;
@@ -321,8 +321,8 @@
             padding: 9px 15px;
             margin-bottom: 20px;
 
-            background: rgba(109,108,246,0.10);
-            color: var(--yellow);
+            background: rgba(225,29,51,0.10);
+            color: var(--red-dark);
 
             border: 1px solid var(--border-strong);
             border-radius: 999px;
@@ -337,7 +337,7 @@
             height: 8px;
             border-radius: 50%;
             background: var(--red);
-            box-shadow: 0 0 0 5px rgba(109,108,246,0.15);
+            box-shadow: 0 0 0 5px rgba(225,29,51,0.15);
         }
 
         .hero h1 {
@@ -392,12 +392,12 @@
         .hero-primary {
             background: linear-gradient(135deg, var(--yellow), var(--red) 55%, var(--red-dark));
             color: #1a1400;
-            box-shadow: 0 10px 25px -6px rgba(109,108,246,0.4);
+            box-shadow: 0 10px 25px -6px rgba(225,29,51,0.4);
         }
 
         .hero-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 30px -6px rgba(109,108,246,0.5);
+            box-shadow: 0 15px 30px -6px rgba(225,29,51,0.5);
         }
 
         .hero-secondary {
@@ -408,7 +408,7 @@
 
         .hero-secondary:hover {
             border-color: var(--border-strong);
-            color: var(--yellow);
+            color: var(--red-dark);
             transform: translateY(-3px);
         }
 
@@ -439,7 +439,7 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            border: 2px dashed rgba(109,108,246,0.35);
+            border: 2px dashed rgba(225,29,51,0.35);
             animation: rotate 20s linear infinite;
         }
 
@@ -532,7 +532,7 @@
         .stat strong {
             display: block;
             font-size: 25px;
-            color: var(--yellow);
+            color: var(--red-dark);
             margin-bottom: 5px;
         }
 
@@ -555,8 +555,8 @@
 
         .section-title .mini {
             display: inline-block;
-            color: var(--yellow);
-            background: rgba(109,108,246,0.10);
+            color: var(--red-dark);
+            background: rgba(225,29,51,0.10);
             padding: 7px 13px;
             border-radius: 999px;
             font-size: 13px;
@@ -612,7 +612,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            background: rgba(109,108,246,0.06);
+            background: rgba(225,29,51,0.06);
             top: -60px;
             right: -60px;
             transition: 0.3s;
@@ -638,7 +638,7 @@
             justify-content: center;
 
             border-radius: 18px;
-            background: rgba(109,108,246,0.10);
+            background: rgba(225,29,51,0.10);
 
             font-size: 30px;
         }
@@ -661,7 +661,7 @@
         .card-link {
             display: inline-block;
             margin-top: 18px;
-            color: var(--yellow);
+            color: var(--red-dark);
             text-decoration: none;
             font-size: 14px;
             font-weight: bold;
@@ -680,13 +680,13 @@
         .community-card .card-icon {
             background: linear-gradient(
                 135deg,
-                rgba(109,108,246,0.18),
+                rgba(225,29,51,0.18),
                 rgba(244,229,161,0.18)
             );
         }
 
         .community-card h3 {
-            color: var(--yellow);
+            color: var(--red-dark);
         }
 
         .community-online {
@@ -700,7 +700,7 @@
             border-radius: 999px;
 
             background: rgba(34,197,94,0.12);
-            color: #86efac;
+            color: #0f7a3d;
 
             font-size: 12px;
             font-weight: bold;
@@ -747,7 +747,7 @@
         }
 
         .promise h2 span {
-            color: var(--yellow);
+            color: var(--red-dark);
         }
 
         .promise p {
@@ -812,7 +812,7 @@
             border-radius: 30px;
             color: #1a1400;
 
-            box-shadow: 0 20px 50px -10px rgba(109,108,246,0.35);
+            box-shadow: 0 20px 50px -10px rgba(225,29,51,0.35);
         }
 
         .cta h2 {
@@ -835,7 +835,7 @@
             border-radius: 14px;
 
             background: #14110a;
-            color: var(--yellow);
+            color: var(--red-dark);
 
             text-decoration: none;
             font-weight: 900;
@@ -845,7 +845,7 @@
 
         .cta-button:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+            box-shadow: 0 12px 25px rgba(20,22,31,.08);
         }
 
 
@@ -888,7 +888,7 @@
         }
 
         .settings-modal h2 {
-            color: var(--yellow);
+            color: var(--red-dark);
             margin-bottom: 8px;
         }
 
@@ -912,7 +912,7 @@
 
             border: 1px solid var(--border);
             border-radius: 12px;
-            background: var(--bg-soft, #0d0f14);
+            background: var(--bg-soft, #ffffff);
             color: var(--text);
 
             font-size: 16px;
@@ -922,7 +922,7 @@
 
         .settings-modal input:focus {
             border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(109,108,246,0.15);
+            box-shadow: 0 0 0 3px rgba(225,29,51,0.15);
         }
 
         .modal-buttons {
@@ -1010,12 +1010,12 @@
         }
 
         .footer-brand span {
-            color: var(--yellow);
+            color: var(--red-dark);
         }
 
         footer p {
             font-size: 13px;
-            color: var(--text-faint, #7c7a72);
+            color: var(--text-faint, #858b9c);
             line-height: 1.8;
         }
 
@@ -1035,7 +1035,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--yellow);
+            color: var(--red-dark);
         }
 
 

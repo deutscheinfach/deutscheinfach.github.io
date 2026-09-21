@@ -15,8 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css?v=689893e8">
-<script src="assets/theme-toggle.js?v=98b0dab3"></script>
+<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
 <style>
 
 :root{
@@ -24,17 +23,18 @@
     /* هاد الـ :root كيجي من بعد assets/theme.css، إذن هو
        اللي كيغلب. خاصو يمشي مع نفس اللوحة الجديدة، بلا
        هادشي الشات كيبقى كحل قديم والباقي بنفسجي. */
-    --sidebar: #121627;
-    --sidebar-hover: #1b2133;
+    --sidebar: #ffffff;
+    --sidebar-hover: #f2f4fa;
     --accent: var(--brand);
     --accent-dark: var(--brand-dark);
     --gold: var(--brand-soft);
-    --bg: #0d0f1a;
-    --surface: #151928;
-    --border: rgba(255,255,255,.09);
-    --text: #e9eaf5;
-    --text-muted: #9aa0bb;
-    --bubble-mine: #2a2a56;
+    --bg: #fdfdff;
+    --surface: #ffffff;
+    --border: rgba(20,22,31,.10);
+    --text: #14161f;
+    --text-muted: #5b6172;
+    /* الفقاعة ديالك: وردي فاتح بحال WhatsApp ولكن بالأحمر */
+    --bubble-mine: #ffe8eb;
 
 }
 
@@ -163,8 +163,8 @@ button:disabled{
     border-radius: 10px;
     border: 1px solid transparent;
     outline: none;
-    background: #1d2028;
-    color: white;
+    background: var(--surface-2);
+    color: var(--text);
     font-size: 16px;
     transition: border .2s ease,
         box-shadow .2s ease,
@@ -173,8 +173,8 @@ button:disabled{
 
 .search-box input:focus{
     border-color: var(--brand);
-    background: #1d1d1d;
-    box-shadow: 0 0 0 3px rgba(109,108,246,.12);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(225,29,51,.12);
 }
 
 .search-box input::placeholder{
@@ -194,7 +194,7 @@ button:disabled{
     width: 100%;
     border: none;
     background: transparent;
-    color: #d8d8db;
+    color: var(--text);
     text-align: left;
     padding: 11px 14px;
     border-radius: 10px;
@@ -224,13 +224,13 @@ button:disabled{
 
 .nav button:hover{
     background: var(--sidebar-hover);
-    color: white;
+    color: var(--text);
 }
 
 .nav button.active{
     background: var(--accent);
     color: var(--ink);
-    box-shadow: 0 5px 15px rgba(109,108,246,.28);
+    box-shadow: 0 5px 15px rgba(225,29,51,.28);
 }
 
 .nav button.active svg.icon{
@@ -309,7 +309,7 @@ button:disabled{
 
 .section-title{
     padding: 15px 16px 8px;
-    color: #b9b6ad;
+    color: var(--text-muted);
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: .5px;
@@ -356,7 +356,7 @@ button:disabled{
 .group-item.active{
     background: var(--brand) !important;
     color: var(--ink);
-    box-shadow: 0 4px 12px rgba(109,108,246,.2);
+    box-shadow: 0 4px 12px rgba(225,29,51,.2);
 }
 
 .person.active .person-email,
@@ -366,7 +366,7 @@ button:disabled{
 
 .person:hover,
 .group-item:hover{
-    background: #1d2028;
+    background: var(--surface-2);
 }
 
 .person.active:hover,
@@ -407,7 +407,7 @@ button:disabled{
 }
 
 .person-email{
-    color: #b9b6ad;
+    color: var(--text-muted);
     font-size: 12px;
     white-space: nowrap;
     overflow: hidden;
@@ -416,7 +416,7 @@ button:disabled{
 }
 
 .conversation-preview{
-    color: #b9b6ad;
+    color: var(--text-muted);
     font-size: 11px;
     white-space: nowrap;
     overflow: hidden;
@@ -429,7 +429,7 @@ button:disabled{
 }
 
 .conversation-time{
-    color: #b9b6ad;
+    color: var(--text-muted);
     font-size: 11px;
     flex-shrink: 0;
     align-self: flex-start;
@@ -506,7 +506,7 @@ button:disabled{
     display: none;
     border: none;
     background: #181b22;
-    color: white;
+    color: var(--text);
     width: 40px;
     height: 40px;
     border-radius: 8px;
@@ -547,7 +547,7 @@ button:disabled{
 
 .header-sub{
     font-size: 12px;
-    color: #b9b6ad;
+    color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -556,7 +556,7 @@ button:disabled{
 .header-btn{
     border: none;
     background: #181b22;
-    color: white;
+    color: var(--text);
     padding: 9px 13px;
     border-radius: 8px;
     transition: transform .15s ease,
@@ -640,7 +640,7 @@ button:disabled{
 
 .message.mine .message-content{
     background: var(--bubble-mine);
-    color: white;
+    color: var(--text);
     border-radius: 12px 12px 4px 12px;
 }
 
@@ -689,7 +689,7 @@ button:disabled{
 }
 
 .message-time{
-    color: #b9b6ad;
+    color: var(--text-muted);
     font-size: 11px;
     margin-top: 5px;
     display: flex;
@@ -699,7 +699,7 @@ button:disabled{
 }
 
 .message.mine .message-time{
-    color: rgba(255,255,255,.7);
+    color: rgba(20,22,31,.55);
 }
 
 .message-time svg.icon{
@@ -719,7 +719,7 @@ button:disabled{
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #b9b6ad;
+    color: var(--text-muted);
 }
 
 .empty h2{
@@ -762,7 +762,7 @@ button:disabled{
 
 .input-area textarea:focus{
     border-color: var(--brand);
-    box-shadow: 0 0 0 3px rgba(109,108,246,.08);
+    box-shadow: 0 0 0 3px rgba(225,29,51,.08);
 }
 
 .send-btn{
@@ -784,7 +784,7 @@ button:disabled{
 
 .send-btn:hover{
     background: var(--brand-dark);
-    box-shadow: 0 5px 15px rgba(109,108,246,.2);
+    box-shadow: 0 5px 15px rgba(225,29,51,.2);
 }
 
 .send-btn:active{
@@ -882,7 +882,7 @@ button:disabled{
 }
 
 .modal-btn:hover{
-    box-shadow: 0 5px 15px rgba(109,108,246,.16);
+    box-shadow: 0 5px 15px rgba(225,29,51,.16);
 }
 
 .modal-btn:active{
@@ -1029,7 +1029,7 @@ button:disabled{
 
 .accept{
     background: #19a463;
-    color: white;
+    color: var(--text);
 }
 
 .reject{
@@ -1057,7 +1057,7 @@ button:disabled{
 .member-remove{
     border: none;
     background: var(--danger);
-    color: white;
+    color: var(--text);
     padding: 7px 9px;
     border-radius: 7px;
     font-size: 12px;
@@ -1066,7 +1066,7 @@ button:disabled{
 
 .closed-banner{
     background: #181b22;
-    color: #b9b6ad;
+    color: var(--text-muted);
     padding: 10px;
     border-radius: 9px;
     margin: 15px 0;
@@ -1078,7 +1078,7 @@ button:disabled{
     padding: 10px;
     margin-bottom: 12px;
     font-size: 13px;
-    color: #b9b6ad;
+    color: var(--text-muted);
 }
 
 .friend-limit-box strong{
@@ -1128,7 +1128,7 @@ button:disabled{
     right: 20px;
     bottom: 20px;
     background: #181b22;
-    color: white;
+    color: var(--text);
     padding: 13px 18px;
     border-radius: 10px;
     z-index: 5000;
@@ -1351,13 +1351,13 @@ button:disabled{
 .messages::-webkit-scrollbar-thumb,
 .friend-list::-webkit-scrollbar-thumb,
 .group-list::-webkit-scrollbar-thumb {
-    background: rgba(109,108,246,.25);
+    background: rgba(225,29,51,.25);
     border-radius: 99px;
 }
-.messages::-webkit-scrollbar-thumb:hover { background: rgba(109,108,246,.45); }
+.messages::-webkit-scrollbar-thumb:hover { background: rgba(225,29,51,.45); }
 .messages, .friend-list, .group-list {
     scrollbar-width: thin;
-    scrollbar-color: rgba(109,108,246,.3) transparent;
+    scrollbar-color: rgba(225,29,51,.3) transparent;
 }
 
 /* منطقة الكتابة */
@@ -1369,7 +1369,7 @@ button:disabled{
 }
 .input-area textarea:focus {
     border-color: var(--line-gold);
-    box-shadow: 0 0 0 3px rgba(109,108,246,.12);
+    box-shadow: 0 0 0 3px rgba(225,29,51,.12);
     outline: none;
 }
 
@@ -1414,7 +1414,7 @@ button:disabled{
     cursor: pointer;
     transition: .15s;
 }
-.emoji-panel button:hover { background: rgba(109,108,246,.16); transform: scale(1.15); }
+.emoji-panel button:hover { background: rgba(225,29,51,.16); transform: scale(1.15); }
 
 /* زر النزول للأسفل */
 .scroll-down {
@@ -1491,7 +1491,7 @@ button:disabled{
     width: 220px;
     height: 150px;
     background:
-        linear-gradient(100deg, var(--surface-2) 30%, rgba(109,108,246,.10) 50%, var(--surface-2) 70%)
+        linear-gradient(100deg, var(--surface-2) 30%, rgba(225,29,51,.10) 50%, var(--surface-2) 70%)
         0 0 / 240% 100%;
     animation: imgShimmer 1.3s infinite linear;
 }
@@ -1518,7 +1518,7 @@ button:disabled{
 }
 .composer:focus-within {
     border-color: var(--line-gold);
-    box-shadow: 0 0 0 3px rgba(109,108,246,.10);
+    box-shadow: 0 0 0 3px rgba(225,29,51,.10);
 }
 
 .composer-btn {
@@ -1532,7 +1532,7 @@ button:disabled{
     cursor: pointer;
     transition: .18s;
 }
-.composer-btn:hover { background: rgba(109,108,246,.14); color: var(--gold-soft); }
+.composer-btn:hover { background: rgba(225,29,51,.14); color: var(--gold-soft); }
 .composer-btn:active { transform: scale(.92); }
 .composer-btn svg {
     width: 20px; height: 20px;
@@ -1585,7 +1585,7 @@ button:disabled{
 }
 .send-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 22px -8px rgba(109,108,246,.65);
+    box-shadow: 0 10px 22px -8px rgba(225,29,51,.65);
 }
 .send-btn:disabled { opacity: .45; cursor: not-allowed; }
 .send-btn #sendBtnLabel { display: none; }
@@ -1810,8 +1810,8 @@ button:disabled{
     animation: avatarPulse 1.6s ease-in-out infinite;
 }
 @keyframes avatarPulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(109,108,246,.45); }
-    50%      { box-shadow: 0 0 0 22px rgba(109,108,246,0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(225,29,51,.45); }
+    50%      { box-shadow: 0 0 0 22px rgba(225,29,51,0); }
 }
 
 /* المدة */
@@ -2034,11 +2034,6 @@ Gruppe erstellen
 <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"></path></svg>
 بدّل الاسم
 <span class="val" id="meNameVal"></span>
-</button>
-
-<button class="settings-row" onclick="window.__deTheme && window.__deTheme.toggle()">
-<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor" stroke="none"></path></svg>
-الوضع فاتح / مظلم
 </button>
 
 <button class="settings-row" onclick="openRequests()">
@@ -10263,139 +10258,54 @@ location.replace("login.html");
 
 <style id="chat-light-mode">
 /* ===== الوضع الفاتح ديال الشات: أبيض وذهبي ===== */
-html[data-theme="light"]{
-    --sidebar: #ffffff;
-    --sidebar-hover: #f1f2fd;
-    --accent: var(--brand);
-    --accent-dark: var(--brand-dark);
-    --gold: var(--brand-dark);
-    --bg: #fafaff;
-    --surface: #ffffff;
-    --border: rgba(23,26,46,.11);
-    --text: #171a2e;
-    --text-muted: #5b6079;
-    --bubble-mine: #e8e9fe;
-}
-
-html[data-theme="light"] body{
-    background: var(--bg);
-    color: var(--text);
-}
-
 /* الفقاعة ديال الطرف الآخر كانت داكنة بالتوريث */
 /* الفقاعة ديالك كانت مكتوبة color: white نيشان. فالوضع
    الفاتح الخلفية ولات كريمية — أبيض على كريمي ماكيتقراش
    بالمرة. هادا علاش الرسالة ماكانتش كتبان ملي كتسيفطها. */
-html[data-theme="light"] .message.mine .message-content{
-    background: var(--bubble-mine);
-    color: var(--text);
-    border: 1px solid rgba(91,85,232,.28);
-}
-html[data-theme="light"] .message.mine .message-time{
-    color: rgba(22,24,29,.55);
-}
-html[data-theme="light"] .message-content{
-    border: 1px solid var(--border);
-    box-shadow: 0 1px 2px rgba(20,22,26,.06);
-}
-html[data-theme="light"] .message-time{ color: rgba(22,24,29,.50); }
-html[data-theme="light"] .message-text{ color: inherit; }
-
 /* ===== لمسة أخيرة على الفقاعات ===== */
 .message-content{
     position: relative;
     transition: box-shadow .18s ease;
 }
 .message-text a{ color: var(--accent); text-decoration: underline; }
-html[data-theme="light"] .message-text a{ color: var(--accent-dark); }
-
 /* الوقت والعلامات ماخاصهومش يتقصو ملي تكون الرسالة قصيرة */
 .message-time{ white-space: nowrap; }
 
 
 /* الظلال كانت مصممة لخلفية كحلة */
-html[data-theme="light"] .sidebar,
-html[data-theme="light"] .main,
-html[data-theme="light"] .input-area{
-    box-shadow: none;
-    border-color: var(--border);
-}
-
 /* خانة البحث كانت بلون كحل مكتوب نيشان ف الستايل */
-html[data-theme="light"] .search-box input{
-    background: var(--sidebar-hover);
-    color: var(--text);
-}
-html[data-theme="light"] .search-box input:focus{
-    background: #fff;
-    border-color: var(--accent);
-}
-
 /* أزرار القائمة كانت رمادية فاتحة — ماكتتقراش على الأبيض */
-html[data-theme="light"] .nav button{ color: var(--text); }
-html[data-theme="light"] .nav button:hover{ background: var(--sidebar-hover); }
-
-html[data-theme="light"] .section-title,
-html[data-theme="light"] .empty-state p,
-html[data-theme="light"] .chat-subtitle{ color: var(--text-muted); }
-
-/* الزر العايم ديال الوضع كان فوق زر المكالمة ف الهيدر.
-   دابا كيمشي لتحت اليسار، بعيد على أزرار المحادثة
-   وعلى خانة الكتابة. */
-html[data-theme="light"] .de-theme-btn,
-.de-theme-btn{
-    top: auto;
-    right: auto;
-    inset-inline-start: auto;
-    inset-inline-end: 16px;
-    bottom: 84px;
-    z-index: 1500;
-}
-@media (max-width: 750px){
-    /* فالتيليفون كاين Vous → الوضع، إذن ماكنحتاجوهش عايم */
-    .de-theme-btn{ display: none !important; }
-}
-</style>
-<script>
-/* ===== مفتاح الإشعارات =====
-   حطو هنا من: Firebase Console → Project settings → Cloud Messaging
-   → Web Push certificates → Key pair (كيبدا بـ "B...").
-
-   خليه خاوي = الإشعارات كيخدمو غير ملي يكون الموقع محلول.
-   هاد المفتاح عمومي، ماكاين حتى مشكل يبان فالكود. */
-window.__DE_VAPID_KEY = "";
-</script>
-<script src="assets/push-register.js?v=5807c76d"></script>
-
-<style id="chat-tabbar">
-.mobile-back { display: none; }
-/* =====================================================
-   شريط التبويبات تحت (كيف WhatsApp)
-   ===================================================== */
-
-.tabbar { display: none; }
-
-.tab-panel[hidden] { display: none !important; }
-
-/* اللائحة ديال الݣروبات كانت كتقص واللي تحت ماكيبانش.
-   الـ aside كيتمدّ، والجزء ديال الشاتات/الݣروبات هو
-   اللي كيتزلق. */
-#tab-chats {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 0;
-}
+/* قبل، كل لائحة كانت كتزلق بوحدها وكيتخاصمو على
+   المساحة — والنتيجة أن لائحة الأصدقاء كتنضغط حتى
+   توصل لسطر واحد مقصوص ملي يكونو بزاف ديال الݣروبات.
+   دابا اللائحتين كيتمدّو على طولهم والعمود كامل هو
+   اللي كيتزلق، بحال WhatsApp. */
+#tab-chats { display: block; }
 #tab-chats .friend-list,
 #tab-chats .group-list {
+    overflow: visible;
+    max-height: none;
+    flex: none;
+}
+.sidebar {
     overflow-y: auto;
     overscroll-behavior: contain;
-    flex: 0 1 auto;
 }
-#tab-chats .group-list { max-height: 46vh; }
-.sidebar { overflow-y: auto; }
+/* الشعار والبحث كيبقاو فوق ملي تزلق */
+.sidebar .logo-area,
+.sidebar .search-box {
+    position: sticky;
+    z-index: 5;
+    background: var(--sidebar);
+}
+.sidebar .logo-area { top: 0; }
+.sidebar .search-box { top: 68px; padding-bottom: 10px; }
 /* display:grid تحت كيغلب [hidden] — خاصنا نقولوها بصراحة */
 .tabbar .tab-badge[hidden] { display: none !important; }
+
+/* التبويبات كيبانو غير فالتيليفون. فالـ PC الجوج
+   لوحات كاينين جنب بعضياتهم وماكاينش علاش. */
+.tabbar { display: none; }
 
 /* عدّاد اللي أونلاين */
 .online-pill {
