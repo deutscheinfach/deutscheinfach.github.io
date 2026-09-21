@@ -316,6 +316,68 @@
                     ]
                 }
             };
+        })(),
+
+        /* ================================================================
+           Tanzkurs
+           النصوص والترويسات والحلول كما صيفطهم صاحب الموقع.
+           ================================================================ */
+        "tanzkurs": (function () {
+
+            const TEXTS = [
+                { answer: "E",
+                  body: "Der Begriff Extremsport wird oft subjektiv verwendet. Man kann viele gängige Sportarten als Extremsport bezeichnen, wenn sie mit einem erhöhten Risiko für das eigene Leben ausgeübt werden, z. B. Skifahren auf ungesicherten Pisten oder Klettern ohne Sicherung. Extremsportlern geht es aber nicht darum, das höchste Risiko einzugehen, sondern ihre eigenen Grenzen zu erkennen. Extremsport kann man an vielen Orten betreiben: in der Wüste, unter Wasser, auf Klippen oder Bergen, in der Luft oder sogar auf dem eigenen Hausdach. Es gibt viele Wettbewerbe in verschiedenen extremen Sportarten, zum Beispiel Bungee-Jumping, das früher ursprünglich ein Ritual für junge Männer in der Südsee war. Eine andere Art des Extremsports ist Freeclimbing: Man klettert ohne jegliche Sicherung an mehreren hundert Meter hohen Felswänden. Kein Berg ist zu hoch, keine Wand zu steil, keine Schlucht zu tief, um für den Adrenalinkick zu sorgen. Manchen Sportlern kann es nicht aufregend genug sein. Leider entwickeln nicht wenige Extremsportler dabei eine regelrechte „Sportsucht“, die krankhaft ist. Viele Extremsportler ignorieren die Gefahren, was zu schweren Unfällen führt und sie häufig das Leben kostet.",
+                  ar: "رياضة المخاطر (Extremsport) كتكون ديما مرتبطة بارتفاع الخطر على الحياة ديال بنادم، ولكن الهدف ديال الرياضيين هو يتعرفو على القدرات والحدود ديالهم. هاد الرياضات كيداروا في بزاف ديال البلايص صعيبة بحال الصحراء، تحت الما، و لا فوق الجبال العالية بحال التسلق الحر (اللي كيكون بلا حبال أمان). الرياضيين كيقلبو على الإحساس ديال «الأدرينالين» و الإثارة القوية، ولكن للأسف كاين اللي كيطور عندو إدمان مرضي لهاد الرياضات. هاد الإدمان كيخليهم يتجاهلو الأخطار، و هادشي هو اللي كيأدي لحوادث خطيرة بزاف أو حتى الموت في غالب الأحيان." },
+
+                { answer: "D",
+                  body: "Musik, Sport, ehrenamtliches Engagement – die Teilnahme von Jugendlichen an diesen sogenannten bildungsorientierten Freizeitaktivitäten hat in den vergangenen zehn Jahren deutlich zugenommen. So lautet das Ergebnis einer Studie des Deutschen Instituts für Wirtschaftsforschung. Während vor zehn Jahren erst 48 Prozent aller 16- bis 17-Jährigen an bildungsorientierten Aktivitäten teilnahmen, waren es im vergangenen Jahr bereits 62 Prozent. Die Daten zeigen außerdem: Während vor zehn Jahren nur etwa zehn Prozent der 16- bis 17-Jährigen musizierten, waren es im letzten Jahr bereits 18 Prozent. Noch stärker hat im gleichen Zeitraum das ehrenamtliche Engagement der 16- bis 17-Jährigen zugenommen (von 11 auf 22 Prozent). Darüber hinaus ist auch der Anteil der Jugendlichen gestiegen, die Sport treiben, tanzen oder Theater spielen. Gleichzeitig verzeichnen die Forscher einen Abwärtstrend bei den sogenannten informellen Freizeitbeschäftigungen. So ist der Anteil derer, die täglich mit der besten Freundin oder dem besten Freund unterwegs sind, im Untersuchungszeitraum von 40 auf 25 Prozent zurückgegangen. Auffallend ist, dass Jugendliche aus sozial schwächeren Haushalten bildungsorientierte Angebote deutlich seltener nutzen als junge Menschen aus gut situierten Familien.",
+                  ar: "المشاركة ديال الشباب (بين 16 و 17 سنة) في الأنشطة المنظمة بحال الموسيقى والرياضة زادت بزاف فـ العشر سنين الأخيرة. النسبة ديالهم طلعت من 48 في المية حتى لـ 62 في المية، خصوصاً في العمل التطوعي لي ضاعف. فـ نفس الوقت، نقص الوقت لي كيدوزوه مع صحابهم فـ الأنشطة العادية اليومية. ولكن هاد التطور كاين بقلة عند الشباب ديال العائلات الفقيرة مقارنة مع العائلات الميسورة." },
+
+                { answer: "F",
+                  body: "In Firmen gibt es sie schon, jetzt wollen auch Schulen Entspannungskurse anbieten. Schüler sollen zwischen den Unterrichtsstunden mit Entspannungstechniken lernen, Stress abzubauen. Ein erster Probelauf des Projekts an einer Gesamtschule in Hamburg ist bei den Teilnehmenden gut angekommen. Die Schüler waren zu Beginn zwar skeptisch, dann aber vom Ergebnis überzeugt. „Ich konnte mich in meiner nächsten Stunde nach der Entspannungsübung viel besser konzentrieren und habe viel mehr mitbekommen“, berichtet Jens aus der 12. Klasse. Die Schule hat damit auf Kritik von Schülern und Lehrern reagiert: Nach der Umstrukturierung der Stundenpläne klagten die Schüler zunehmend über Stress und zu wenige Pausen. Gerade Entspannungspausen seien aber wichtig, erklären Pädagogen und auch Neurowissenschaftler. Nur wer ausreichend Pausen macht, kann sich Dinge auch langfristig merken. Nachdem das Projekt in Hamburg einen so großen Erfolg hatte, wollen es jetzt auch andere Schulen anbieten.",
+                  ar: "المدارس بدات كتفكر دير دروس ديال الإسترخاء للتلامذ باش يقدروا ينقصوا من ستريس اللي ولا عندهم بزاف. هادشي جا من بعد ما تشكاو التلاميذ والأساتذة من التوقيت الجديد وقلة ديال الراحة. جربو الفكرة فواحد المدرسة ف هامبورغ ونجحات: التلامذ ولي عندهم تركيز أحسن، وعلماء النفس أكدو بلي هاد الوقفات ديال الإسترخاء مهمة للذاكرة. بما أن المشروع جاب نتيجة مزيانة، مدارس أخرى ناوية تبدأ تطبق هاد البرنامج." },
+
+                { answer: "A",
+                  body: "Tanja Kleist ist vom modernen Tanz absolut begeistert. Seit ihrem neunten Lebensjahr tanzt sie, früher sogar auf Wettkampfniveau. Seit einigen Jahren engagiert sie sich beim TSV Neustadt. Die Freude, die sie beim Tanzen empfindet, möchte sie weitergeben und mehr Jugendliche motivieren, diesem einzigartigen Sport eine Chance zu geben. Und diese Chance ist nun für alle Interessierten besonders groß: Für ihre Hip-Hop-Tanzgruppe sucht Frau Kleist neue tanzbegeisterte Teilnehmerinnen und Teilnehmer, da im vergangenen Sommer viele nach dem Abitur die Gruppe verlassen haben. Das abwechslungsreiche Training vereint Kreatives mit „Handwerklichem“. Im Mittelpunkt der Übungsstunden steht die Erarbeitung kleiner choreografierter Sequenzen auf der Basis von Musikvideos bekannter Hip-Hopper. Aber auch das Techniktraining und die Schulung akrobatischer Grundelemente kommen nicht zu kurz. Es entstehen Choreografien, die die Gruppe bei öffentlichen Auftritten präsentiert. Ein tolles Tanzangebot mit viel Spaß, das es ab sofort beim TSV Neustadt für Jugendliche ab 14 Jahren gibt!",
+                  ar: "السيدة تانيا كلايست، اللي كاتحمق على الرقص وكاتخدم مع «تي إس في نويشتات»، بغات تشجع الشباب على فن الهيب هوب. حالياً، هي كاتقلب على مشاركين جداد اللي كايعجبهم الرقص وعمرهم ابتداءً من 14 عام، حيت بزاف ديال الأعضاء القدام مشاو من بعد الباكالوريا. البرنامج ديال التدريب متنوع، وفيه تمارين ديال التقنيات الأساسية وخلق عروض فنية قصيرة باش تقدمها المجموعة قدام الناس." },
+
+                { answer: "G",
+                  body: "Montags Tennis, dienstags Klavierunterricht, mittwochs Jazztanz in der Gruppe und donnerstags das Treffen der Astronomie-Gruppe. Was wie der Terminkalender eines vielbeschäftigten Erwachsenen klingt, ist heute oft eine ganz normale Woche im Leben von Kindern und Jugendlichen. Nicht genug damit, dass sie sechs oder sieben Stunden Schule haben, dann vielleicht noch Hausaufgaben machen und natürlich auch etwas essen müssen – in ihrer Freizeit haben sie dann gleich weitere Termine. Dabei suchen sich das viele Kinder und Jugendliche gar nicht selbst aus, sondern die Eltern wollen, dass ihr Nachwuchs möglichst viel unternimmt. Einige hoffen, aus ihrem Sohn könnte ein neuer Spitzensportler werden, andere denken an eine Karriere als Musikerin. Meist jedoch glauben die Eltern „nur“, sie müssten ihre Kinder ständig beschäftigen – sonst könnte es ihnen ja langweilig werden, und wer weiß, was sie dann machen. Viele Eltern haben Angst, dass ihre Kinder dann „auf dumme Gedanken“ kommen oder dass sie zu Hause nur vor dem Fernseher oder Computer sitzen, wenn sie nicht ständig etwas unternehmen. Ob der Freizeitstress für alle Beteiligten wirklich gut ist?",
+                  ar: "النص كيهضر على كيفاش بزاف ديال الدراري الصغار والمراهقين ولا عندهم برنامج عامر بزاف بحال الناس الكبار. هاد المواعيد ديال وقت الفراغ ماشي هما اللي كيختاروها، ولكن الوالدين ديالهم اللي كيبغيوهم يديرو بزاف د الأنشطة. الوالدين يا إما كيحلمو بولادهم يوليّو نجوم ف شي حاجة بحال الرياضة أو الموسيقى، ولا خايفين لا يملّو ويجلسو غير قدام البيسي ولا التلفزة. السؤال اللي مطروح هو واش هاد الضغط وهاد الزربة ف وقت الراحة ديال الأطفال مزيان للجميع." }
+            ];
+
+            const HEADINGS = [
+                { value: "A", text: "Freie Plätze im Tanzkurs",
+                  ar: "أماكن شاغرة في دورة الرقص" },
+                { value: "B", text: "Neue Lerntechniken präsentiert",
+                  ar: "تقنيات تعلم جديدة مقدمة" },
+                { value: "C", text: "Stolze Eltern: vom Schüler zum Superstar",
+                  ar: "آباء فخورون: من الطالب إلى النجم الساطع" },
+                { value: "D", text: "Verändertes Freizeitverhalten von Jugendlichen",
+                  ar: "تغير سلوك أوقات الفراغ لدى الشباب" },
+                { value: "E", text: "Höher, schneller, weiter. Suche nach dem Nervenkitzel",
+                  ar: "أعلى، أسرع، أبعد. البحث عن الإثارة" },
+                { value: "F", text: "Hilfen für überforderte Schüler",
+                  ar: "مساعدات للطلاب المرهقين" },
+                { value: "G", text: "Keine Zeit für Langeweile",
+                  ar: "لا وقت للملل" },
+                { value: "H", text: "Neue Sportarten",
+                  ar: "رياضات جديدة" },
+                { value: "I", text: "Tanzlehrer fordern, moderne Tänze bekannter zu machen",
+                  ar: "يطالب معلمو الرقص بجعل الرقصات الحديثة أكثر شهرة" },
+                { value: "J", text: "Befragung bestätigt alte Vorurteile",
+                  ar: "استطلاع يؤكد التحيزات القديمة" }
+            ];
+
+            return {
+                teil1: {
+                    title: "Tanzkurs",
+                    kind: "matching",
+                    variants: [
+                        variant("الأساسي", overrides(HEADINGS, {}), TEXTS)
+                    ]
+                }
+            };
         })()
     };
 })();
