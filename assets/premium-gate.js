@@ -76,6 +76,15 @@
         }
         card.appendChild(actions);
 
+        /* هادي كتبان غير إلا كان المستعمل مشترك وما وصلوش المحتوى —
+           يعني كاين شي حاجة خايبة فالإعداد، ماشي فالاشتراك ديالو. */
+        if (config.note) {
+            const note = el("div", "pg-note");
+            note.appendChild(el("b", "", "ملاحظة تقنية"));
+            note.appendChild(el("span", "", config.note));
+            card.appendChild(note);
+        }
+
         /* ---- نموذج مغبّش: كيوري الشكل بلا ما يعطي المحتوى ---- */
         const peek = el("div", "pg-peek");
         peek.setAttribute("aria-hidden", "true");

@@ -269,16 +269,23 @@
                     typeof window.__lesenPremiumFetch === "function"
                         ? window.__lesenPremiumFetch(themaId)
                         : null
-                ).then(function (fetched) {
+                ).then(function (result) {
                     /* بدّل الجزء ولا خرج من التمرين وهو كيجيب؟ نحبسو. */
                     if (current !== wanted || detail.hidden) return;
                     stack.textContent = "";
 
-                    const remote = fetched && fetched.teil1
-                        ? (wanted === "teil1" ? fetched.teil1 : fetched[wanted])
-                        : (fetched || {})[wanted];
+                    const remote = result && result.ok
+                        ? (result.data || {})[wanted]
+                        : null;
 
-                    if (!remote) { gate(); return; }
+                    /* مشترك وما وصلوش المحتوى = كاين شي حاجة خايبة،
+                       خاصو يعرف شنو هي بدل ما يشوف غير القفل. */
+                    if (!remote) {
+                        gate(result && result.why
+                            ? result.why
+                            : "ما لقيناش هاد الموضوع فالمحتوى المدفوع.");
+                        return;
+                    }
                     draw(remote);
                 });
                 return;
@@ -297,10 +304,10 @@
             draw(task);
         }
 
-        function gate() {
+        function gate(why) {
             stack.textContent = "";
             if (typeof window.__premiumGate === "function") {
-                window.__premiumGate(stack, { title: topic.title });
+                window.__premiumGate(stack, { title: topic.title, note: why });
             } else {
                 const box = document.createElement("div");
                 box.className = "lesen-empty";

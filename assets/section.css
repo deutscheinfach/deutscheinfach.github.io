@@ -1327,3 +1327,16 @@
     border: 1px solid color-mix(in srgb, var(--ok) 40%, transparent);
     font-weight: 800;
 }
+
+/* الملاحظة التقنية جوا لوحة Premium */
+.pg-note {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--danger) 7%, transparent);
+    border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+    font-size: 13.5px;
+    line-height: 1.75;
+}
+.pg-note b { display: block; margin-bottom: 3px; color: var(--danger); font-size: 12px; }
+.pg-note span { color: var(--muted); overflow-wrap: anywhere; }

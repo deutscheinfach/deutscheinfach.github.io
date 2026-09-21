@@ -29,13 +29,26 @@
         }
     }
 
+    /* شنو معناه كل كود — باش الصفحة تقدر تقول للمستعمل فين المشكل
+       بدل ما تبقى ساكتة وتوري القفل. */
+    const WHY = {
+        400: "الـ Worker ف Cloudflare ما زال قديم — ماكيعرفش Lesen. " +
+             "خاصك تدفع cloudflare-worker.js الجديد وتدير Deploy.",
+        401: "الـ Worker ما قبلش الحساب. جرب تخرج وتعاود تدخل.",
+        403: "الـ Worker شاف الحساب ولكن ماشي مشترك. " +
+             "ف Firestore خاص subscriptionActive يكون true بنوع boolean ماشي نص.",
+        404: "الـ Worker خدام، ولكن ماكاينش المفتاح premium-lesen ف KV " +
+             "— ولا كاين وماكاينش فيه هاد الموضوع.",
+        500: "الـ KV binding سميتو TOPICS ماشي مربوط بالـ Worker."
+    };
+
     window.__lesenPremiumFetch = async function (themaId) {
         if (cache.has(themaId)) return cache.get(themaId);
 
         const token = await idToken();
-        if (!token) return null;
+        if (!token) return { ok: false, why: "ماشي داخل بحساب." };
 
-        let payload = null;
+        let result;
         try {
             const response = await fetch(ENDPOINT, {
                 method: "POST",
@@ -44,16 +57,22 @@
             });
 
             if (!response.ok) {
-                /* 401 ماشي داخل · 403 ماشي مشترك · 404 ما زال ماكاينش */
-                return null;
+                result = {
+                    ok: false,
+                    status: response.status,
+                    why: WHY[response.status] || ("الـ Worker رجع HTTP " + response.status)
+                };
+            } else {
+                result = { ok: true, data: await response.json() };
             }
-            payload = await response.json();
         } catch (error) {
-            console.debug("LESEN PREMIUM:", error && error.message);
-            return null;
+            result = {
+                ok: false,
+                why: "ما وصلناش للـ Worker. شوف الأنترنت، ولا مانع الإعلانات."
+            };
         }
 
-        cache.set(themaId, payload);
-        return payload;
+        if (result.ok) cache.set(themaId, result);
+        return result;
     };
 })();
