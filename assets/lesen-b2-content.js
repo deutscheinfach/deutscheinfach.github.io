@@ -223,7 +223,7 @@
 
         /* ================================================================
            Der Fluch des Informationszeitalters — Leseverstehen Teil 2
-           الأساسي: B · C · C · C · B
+           الأساسي: B · C · C · C · B  ·  المعدل 1: B · A · A · A · B
            ================================================================ */
         "t2-informationszeitalter": (function () {
             const QUESTIONS = [
@@ -325,7 +325,78 @@
                         }
                     ],
                     variants: [
-                        { label: "الأساسي", questions: QUESTIONS }
+                        { label: "الأساسي", questions: QUESTIONS },
+                        {
+                            label: "المعدل 1",
+                            title: "Alles schon vergessen",
+                            questions: [
+                                {
+                                    num: 6, text: "Die Zielgruppe von Frau Winklers Seminaren besteht", ar: "تتكون الفئة المستهدفة من ندوات السيدة وينكلر", changed: true,
+                                    options: [
+                                        { text: "überwiegend aus Senioren.",
+                                          ar: "بشكل رئيسي من كبار السن." },
+                                        { text: "sowohl aus jungen als auch aus alten Menschen.",
+                                          ar: "من الشباب وكبار السن على حد سواء." },
+                                        { text: "hauptsächlich aus berufstätigen Frauen.",
+                                          ar: "أساسًا من النساء العاملات." }
+                                    ],
+                                    answer: 1,
+                                    why: "حيت النص كيقول بلي هاد المشكل كيعانيو منو الناس فجميع الفئات العمرية (quer durch alle Altersstufen) من التلميذ الصغير حتى للمتقاعد، وهما لي كيحضرو لهاد الدورات."
+                                },
+                                {
+                                    num: 7, text: "Die Teilnehmer besuchen Frau Hoffmanns Seminar, weil sie", ar: "يشارك المشاركون في ندوة السيدة هوفمان لأنهم",
+                                    options: [
+                                        { text: "sich von den vielen Informationen überfordert fühlen.",
+                                          ar: "يشعرون بالارتباك من المعلومات الكثيرة." },
+                                        { text: "sich alles bewusst merken wollen.",
+                                          ar: "يريدون أن يتذكروا كل شيء بوعي." },
+                                        { text: "das Gefühl haben, dass ihr Gedächtnis nachlässt.",
+                                          ar: "لديهم شعور بأن ذاكرتهم تتراجع." }
+                                    ],
+                                    answer: 0,
+                                    why: "حيت النص كيوضح بلي المشاركين كيجيهم هاد الكم الهائل ديال المعلومات (Informationsflut) صعيب يتحكمو فيه، وكيحسو بلي ما بقاوش قادين يسايرو متطلبات الذاكرة ديالهم، وهادشي هو المعنى ديال (überfordert)."
+                                },
+                                {
+                                    num: 8, text: "Jeder Mensch", ar: "كل إنسان",
+                                    options: [
+                                        { text: "vergisst die meisten Informationen innerhalb kürzester Zeit.",
+                                          ar: "ينسى معظم المعلومات في غضون وقت قصير." },
+                                        { text: "kann über einen Zeitraum von 20 Minuten alles behalten.",
+                                          ar: "يمكنه الاحتفاظ بكل شيء لمدة 20 دقيقة." },
+                                        { text: "kann sich alle erdenklichen Geräusche und Gerüche merken.",
+                                          ar: "يمكنه تذكر جميع الأصوات والروائح الممكنة." }
+                                    ],
+                                    answer: 0,
+                                    why: "حيت النص كيأكد بلي الإنسان كينسى تقريبا كاع المعلومات فظرف قصير لي هو 20 ثانية (innerhalb der nächsten 20 Sekunden) باش الدماغ ما يعمرش ويخلي بلاصة لمعلومات جديدة."
+                                },
+                                {
+                                    num: 9, text: "Besonders gut kann man sich", ar: "يمكن للمرء أن يتذكر بشكل خاص", changed: true,
+                                    options: [
+                                        { text: "intensive Gefühle merken.",
+                                          ar: "المشاعر القوية." },
+                                        { text: "an Daten und Begriffe erinnern.",
+                                          ar: "البيانات والمصطلحات." },
+                                        { text: "als Kind etwas merken.",
+                                          ar: "شيئًا ما عندما يكون طفلًا." }
+                                    ],
+                                    answer: 0,
+                                    why: "حيت المدربة قالت بلي الانطباعات القوية لي كتكون مرتبطة بالعواطف والمشاعر (die mit Emotionen behaftet sind) لي هي المرادف ديال (intensive Gefühle) كتبقى لاصقة فالذاكرة مزيان وما كتنساش بسهولة."
+                                },
+                                {
+                                    num: 10, text: "Jenny Helfer", ar: "جيني هيلفر", changed: true,
+                                    options: [
+                                        { text: "verwendet für ihre Aktenablage nur Tiersymbole.",
+                                          ar: "تستخدم فقط رموز الحيوانات في تنظيم ملفاتها." },
+                                        { text: "verbindet Informationen mit Bildern.",
+                                          ar: "تربط المعلومات بالصور." },
+                                        { text: "lehrt andere, wie man sich „Eselsbrücken“ ausdenkt.",
+                                          ar: "تعلّم الآخرين كيف يبتكرون \"جسور الحمار\" (حيل للحفظ)." }
+                                    ],
+                                    answer: 1,
+                                    why: "حيت المشاركة كتشرح بلي ولات كتربط المعلومات الجديدة بصور خيالية (bildlich verknüpfe)، بحال ملي كترد رقم واحد شمعة ورقم جوج بجعة باش تعقل على المسائل ديالها مزيان."
+                                }
+                            ]
+                        }
                     ]
                 }
             };
