@@ -759,6 +759,120 @@
         })(),
 
         /* ================================================================
+           Die ganze Welt auf dem eigenen PC — Leseverstehen Teil 2
+           الأساسي: B · B · B · B · C
+           ================================================================ */
+        "t2-weltpc": (function () {
+            const QUESTIONS = [
+                {
+                    num: 6, text: "Das Besondere an der neuen Version von „Google Earth“ ist, dass es", ar: "ما يميّز النسخة الجديدة من «غوغل إيرث» هو أنها",
+                    options: [
+                        { text: "von der gesamten Erde ein genaues Abbild bietet.",
+                          ar: "تقدّم صورة دقيقة عن الكرة الأرضية بأكملها." },
+                        { text: "von einigen Ländern ein genaueres Abbild bietet als früher.",
+                          ar: "تقدّم صورة أدق من قبل عن بعض البلدان." },
+                        { text: "zunächst nur in deutscher Sprache bedient werden kann.",
+                          ar: "لا يمكن استعمالها في البداية إلا باللغة الألمانية." }
+                    ],
+                    answer: 1,
+                    why: "حيت النص كيقول بلي النسخة الجديدة فيها بيانات كتر بربعة د المرات (viermal mehr Daten als bisher)، وبلي غير بعض المناطق لي ولات فيها دقة عالية، بحال ألمانيا لي عطات صور بجودة كبيرة (komplett hochauflösendes Material). هادشي كيعني بلي غير بعض البلدان لي ولات كتبان بدقة كبر من شحال هادي، ماشي الكرة الأرضية كاملة."
+                },
+                {
+                    num: 7, text: "Die Bilder von „Google Earth“", ar: "صور «غوغل إيرث»",
+                    options: [
+                        { text: "sind aktuell, d. h., ich kann mich selbst im Garten sitzen sehen.",
+                          ar: "حديثة، أي يمكنني أن أرى نفسي جالسًا في الحديقة." },
+                        { text: "sind alle nicht ganz neu.",
+                          ar: "ليست كلها جديدة تمامًا." },
+                        { text: "werden bald als aktuelle Bilder zur Verfügung stehen.",
+                          ar: "ستكون متاحة قريبًا كصور حديثة." }
+                    ],
+                    answer: 1,
+                    why: "حيت النص كيأكد بلي \"جوجل إيرث\" ما كيعطيش صور مباشرة فديك اللحظة (bietet keine Livebilder)، والصور كتقدر تكون قديمة بشهور (können viele Monate alt sein). داكشي علاش عطاو مثال بالملعب لي بان بلا عشب حيت الصورة تخادت وقت الإصلاح. يعني الصور كاملين ماشي جداد مية فالمية."
+                },
+                {
+                    num: 8, text: "Für „Google Earth“ interessieren sich heute", ar: "يهتم اليوم بـ«غوغل إيرث»",
+                    options: [
+                        { text: "insbesondere Militärs und Immobilienhändler.",
+                          ar: "خاصةً العسكريون وتجار العقارات." },
+                        { text: "Menschen aus vielen Berufsgruppen.",
+                          ar: "أشخاص من مهن كثيرة." },
+                        { text: "vorwiegend die Nutzer der Enzyklopädie „Wikipedia“.",
+                          ar: "في الغالب مستخدمو موسوعة «ويكيبيديا»." }
+                    ],
+                    answer: 1,
+                    why: "حيت النص كيشرح بلي فالبدية كانو غير العسكر ومالين العقارات (Militär und Immobilien) لي مهتمين، ولكن دابا كبرات العائلة ديال المستخدمين (immer größer werdende Familie von Anwendern) وولاو كيستعملوه بزاف د الفئات المهنية، بحال القنوات التلفزية، المحلات التجارية (Kaufhof)، ووكالات الأسفار (Reisebüro)."
+                },
+                {
+                    num: 9, text: "Negativ an „Google Earth“ ist laut Text, dass", ar: "السلبي في «غوغل إيرث» حسب النص هو أن",
+                    options: [
+                        { text: "die Daten kommerziell genutzt werden.",
+                          ar: "البيانات تُستعمل لأغراض تجارية." },
+                        { text: "persönliche Daten öffentlich verfügbar sind.",
+                          ar: "البيانات الشخصية متاحة للجميع." },
+                        { text: "Verbrecher es nutzen.",
+                          ar: "المجرمين يستعملونه." }
+                    ],
+                    answer: 1,
+                    why: "حيت النص ذكر فالمسائل السلبية أنه كيقدر يبين عناوين وأسماء وتصاور ديال المجرمين ففلوريدا للعموم. الكاتب قال بلي فهاد الحالة ما بقاتش شي حاجة سميتها حماية البيانات الشخصية (Vom Datenschutz kann da also nicht die Rede sein)."
+                },
+                {
+                    num: 10, text: "Positiv an „Google Earth“ ist laut Text, dass", ar: "الإيجابي في «غوغل إيرث» حسب النص هو أن",
+                    options: [
+                        { text: "Gebäude in Deutschland wirklichkeitsnah abgebildet werden.",
+                          ar: "المباني في ألمانيا تُعرض بشكل قريب من الواقع." },
+                        { text: "man damit Lokale suchen kann.",
+                          ar: "يمكن البحث به عن المطاعم والمقاهي." },
+                        { text: "man sich damit orientieren kann.",
+                          ar: "يمكن التوجّه به (معرفة الطريق)." }
+                    ],
+                    answer: 2,
+                    why: "حيت فالفقرة اللخرة النص كيهضر على كيفاش \"جوجل إيرث\" كيفتح باب جديد فتخطيط مسارات السفر (Routenplanung bei Reisen)، وهادشي هو المعنى ديال أن الواحد يقدر يوجه راسو ويعرف طريقو مزيان (sich orientieren)."
+                }
+            ];
+
+            return {
+                teil2: {
+                    title: "Die ganze Welt auf dem eigenen PC",
+                    kind: "mc",
+                    texts: [
+                        {
+                            body: "„Google Earth“ – das digitale Abbild der Erde mit Satelliten- und Luftbildern – ist seit 2006 im Internet. Und es gibt auch eine deutsche Version. Ohne langes Training, gewissermaßen von einer Sekunde zur anderen, wird man mit „Google Earth“ zum Weltraumfahrer und Astronauten. Der Computer ersetzt das Weltraumschiff, die Computermaus den Steuerknüppel. Nutzer können sich auf einen Kontinent, ein Land, eine Stadt, sogar aufs eigene Haus oder in die Fußballstadien des Landes zoomen: Inzwischen gibt es „Google Earth“ in einer völlig neuen Version – mit viermal mehr Daten als bisher und erstmals auch in deutscher Sprache.",
+                            ar: "«غوغل إيرث» – النسخة الرقمية من الأرض بصور الأقمار الصناعية والصور الجوية – موجود على الإنترنت منذ 2006. وهناك أيضًا نسخة ألمانية. دون تدريب طويل، ومن ثانية إلى أخرى تقريبًا، يصبح المرء مع «غوغل إيرث» رائد فضاء. الحاسوب يعوّض مركبة الفضاء، والفأرة تعوّض عصا القيادة. يمكن للمستخدمين التقريب نحو قارة أو بلد أو مدينة، بل وحتى نحو منزلهم أو ملاعب كرة القدم في البلد: وقد صدرت الآن نسخة جديدة كليًا من «غوغل إيرث» – ببيانات أكثر بأربع مرات من السابق، ولأول مرة باللغة الألمانية أيضًا."
+                        },
+                        {
+                            body: "„Deutschland ist unser wichtigster Standort“, sagte John Hanke, Leiter von Googles Keyhole-Gruppe. Keyhole, dessen Chef Hanke bis zur Übernahme durch Google im Oktober 2004 war, hat die Software für „Google Earth“ entwickelt. „Rund ein Fünftel der Erde – auf dieser Fläche wohnt fast die Hälfte der Weltbevölkerung – haben wir jetzt dargestellt. Viermal so viele Daten wie bisher.“ Deutschland sei weltweit das einzige Land, das komplett hochauflösendes, also besonders genau abbildendes Material zur Verfügung stellt, erklärt Hanke. Ein Bildpunkt (Pixel) entspricht dabei 15 Metern auf der Erde. Größere deutsche Städte beispielsweise werden in der höchstmöglichen Auflösung sogar mit zehn Zentimetern pro Pixel dargestellt. Kleinere Städte jedoch, wie etwa Hameln, sind nach wie vor sehr grob dargestellt.",
+                            ar: "«ألمانيا هي أهم موقع لنا»، قال جون هانكه، رئيس مجموعة «كيهول» التابعة لغوغل. شركة كيهول، التي كان هانكه رئيسها حتى استحواذ غوغل عليها في أكتوبر 2004، هي التي طوّرت برنامج «غوغل إيرث». «لقد عرضنا الآن حوالي خُمس الأرض – وعلى هذه المساحة يعيش ما يقارب نصف سكان العالم. أي بيانات أكثر بأربع مرات من السابق.» ويوضح هانكه أن ألمانيا هي البلد الوحيد في العالم الذي يوفّر موادّ عالية الدقة بالكامل، أي تُظهر الأشياء بدقة كبيرة. وتقابل فيها النقطة الواحدة من الصورة (بكسل) 15 مترًا على الأرض. أما المدن الألمانية الكبرى مثلًا فتُعرض بأعلى دقة ممكنة، بعشرة سنتيمترات لكل بكسل. لكن المدن الصغيرة، مثل هاملن، لا تزال تُعرض بشكل تقريبي جدًا."
+                        },
+                        {
+                            body: "Neugierige Reporter, die über den Gartenzaun von Nachbarn oder bekannten Persönlichkeiten sehen wollten, haben Pech: „Google Earth“ bietet keine Livebilder. Die Daten stammen von Flugzeugen und drei Satelliten und können viele Monate alt sein. So kommt es, dass etwa ein Sportstadion in Hannover lange Zeit ohne Rasen zu sehen war – die Aufnahme stammt aus der Zeit der Renovierung.",
+                            ar: "الصحفيون الفضوليون الذين أرادوا النظر من فوق سياج حديقة الجيران أو الشخصيات المعروفة لا حظّ لهم: فـ«غوغل إيرث» لا يقدّم صورًا مباشرة. البيانات تأتي من طائرات ومن ثلاثة أقمار صناعية، ويمكن أن يكون عمرها شهورًا كثيرة. ولهذا ظهر مثلًا ملعب رياضي في هانوفر مدة طويلة بلا عشب – لأن الصورة التُقطت في فترة الترميم."
+                        },
+                        {
+                            body: "Ursprünglich waren es nur Kunden aus dem Bereich Militär und Immobilien, die sich für die verrückte Idee interessierten, die Erde im Internet nachzubilden. Doch aus Hankes „fixer Idee“ wurde ein Renner. Da es sich bei „Google Earth“ um einen offenen Standard handelt und nur die professionellen Produkte Geld kosten, entwickelt sich rundherum eine immer größer werdende Familie von Anwendern, die Möglichkeiten zur Nutzung der Bilder suchen. Künftig soll das Programm nach dem Prinzip der freien Enzyklopädie Wikipedia durch die Informationen und Beiträge aller Nutzer wachsen, sagt Hanke.",
+                            ar: "في الأصل كان الزبائن من المجال العسكري والعقاري فقط هم من اهتمّوا بالفكرة المجنونة المتمثلة في إعادة إنشاء الأرض على الإنترنت. لكن «فكرة هانكه الثابتة» تحوّلت إلى نجاح كبير. وبما أن «غوغل إيرث» معيار مفتوح ولا تكلّف المال إلا المنتجات الاحترافية، فإن عائلة متزايدة من المستخدمين تتكوّن حوله، يبحثون عن إمكانيات لاستعمال الصور. ومستقبلًا يُفترض أن ينمو البرنامج بمعلومات ومساهمات جميع المستخدمين، على مبدأ الموسوعة الحرة ويكيبيديا، كما يقول هانكه."
+                        },
+                        {
+                            body: "„Google Earth“ zählt inzwischen zu den weltweit am häufigsten angeklickten Internetseiten. Wenn TV-Stationen in den USA ihre Nachrichten beginnen, fliegen sie mit „Google Earth“ zum Ort des Geschehens. Wegen dieses riesigen Erfolges sind auch die Mitstreiter Yahoo und Microsoft auf den Zug gesprungen und bieten mit eigenen „Google Earth“-Versionen Konkurrenz.",
+                            ar: "أصبح «غوغل إيرث» الآن من أكثر المواقع زيارة في العالم. وعندما تبدأ القنوات التلفزيونية في الولايات المتحدة نشرات أخبارها، «تطير» بواسطة «غوغل إيرث» إلى مكان الحدث. وبسبب هذا النجاح الكبير، ركب المنافسان ياهو ومايكروسوفت القطار أيضًا، ويقدّمان منافسة بنسخ خاصة بهما من «غوغل إيرث»."
+                        },
+                        {
+                            body: "Das Spektrum neuer Anwendungen von „Google Earth“ reicht von nützlich bis negativ. So kann man sich die Standorte aller Tankstellen weltmeisterschafts- oder fußballspielbezogen anzeigen lassen, ebenso aber die Wohnorte aller in Florida erfassten Verbrecher, Namen, Adressen und Fotos inklusive. Vom Datenschutz kann da also nicht die Rede sein. Die Kaufhauskette „Kaufhof“ und das Internet-Reisebüro „Reisebär“ sind die ersten deutschen Unternehmen, die sich die neue Technik zunutze machen.",
+                            ar: "تتراوح التطبيقات الجديدة لـ«غوغل إيرث» بين المفيد والسلبي. فيمكن مثلًا إظهار مواقع كل محطات الوقود بحسب كأس العالم أو مباريات كرة القدم، لكن يمكن أيضًا إظهار أماكن سكن كل المجرمين المسجّلين في فلوريدا، مع الأسماء والعناوين والصور. إذن لا يمكن الحديث هنا عن حماية البيانات. سلسلة المتاجر «كاوفهوف» ووكالة السفر الإلكترونية «رايزه بير» هما أول شركتين ألمانيتين تستفيدان من هذه التقنية الجديدة."
+                        },
+                        {
+                            body: "Mit jeder neuen Version von „Google Earth“ richten sich Hoffnungen auf ein völlig neues Kapitel der Routenplanung bei Reisen. Je mehr Informationen gesammelt und dargestellt werden, desto besser werden die Ergebnisse ausfallen: Lokale Schwerpunkte lassen sich – wie vor allem in den USA – ganz realistisch darstellen. In Deutschland dauert es jedoch noch etwas.",
+                            ar: "مع كل نسخة جديدة من «غوغل إيرث» تتّجه الآمال نحو فصل جديد كليًا في تخطيط مسارات السفر. فكلما جُمعت وعُرضت معلومات أكثر، كانت النتائج أفضل: إذ يمكن عرض الأماكن المحلية المهمة بشكل واقعي تمامًا – كما هو الحال خاصة في الولايات المتحدة. لكن في ألمانيا سيستغرق الأمر بعض الوقت."
+                        }
+                    ],
+                    variants: [
+                        { label: "الأساسي", questions: QUESTIONS }
+                    ]
+                }
+            };
+        })(),
+
+        /* ================================================================
            Autos — Leseverstehen Teil 3
            12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (12 و 15)
            ================================================================ */
