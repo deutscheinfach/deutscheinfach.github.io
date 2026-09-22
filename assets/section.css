@@ -522,7 +522,7 @@
     .lesen-detail-title { font-size: var(--step-1); flex: 1 1 100%; }
 }
 
-/* ===== مبدّل المستوى + العداد (بحال زertify) ===== */
+/* ===== مبدّل المستوى + العداد ===== */
 .lesen-head-row {
     display: flex;
     align-items: flex-start;
