@@ -64,7 +64,7 @@ window.LESEN_B2_TOPICS = [
     { id: "t3-dokumentarfilm",      title: "Dokumentarfilm",              ar: "الأفلام الوثائقية",   parts: ["teil3"], locked: true },
     { id: "t3-austauschjahr",       title: "Ein Austauschjahr",           ar: "سنة التبادل",         parts: ["teil3"], locked: true },
     { id: "t3-berlin",              title: "Ein paar Tage in Berlin",     ar: "أيام في برلين",       parts: ["teil3"], locked: true },
-    { id: "t3-ganztagsausflug",     title: "Ganztagsausflug",             ar: "رحلة ليوم كامل",      parts: ["teil3"], locked: true },
+    { id: "t3-ganztagsausflug",     title: "Ganztagesausflug",             ar: "رحلة ليوم كامل",      parts: ["teil3"], locked: true },
     { id: "t3-gartenbau",           title: "Gartenbau",                   ar: "البستنة",             parts: ["teil3"], locked: true },
     { id: "t3-geschaeftsreisen",    title: "Geschäftsreisen",             ar: "رحلات العمل",         parts: ["teil3"], locked: true },
     { id: "t3-geschenk",            title: "Geschenk für den Neffen",     ar: "هدية لابن الأخ",      parts: ["teil3"], locked: true },
