@@ -11,7 +11,7 @@
    {
      title: "…",
      kind: "mc",
-     texts: [ { body: "…", ar: "…" }, … ],       // مشتركين بين النسخ
+     texts: [ { title: "…", body: "…", ar: "…" }, … ],  // title اختياري · مشتركين بين النسخ
      variants: [
        {
          label: "الأساسي",
@@ -122,6 +122,8 @@
 
             variant.texts.forEach(function (text) {
                 const box = el("article", "t1-text");
+                /* عنوان فرعي فوق الفقرة (اختياري) */
+                if (text.title) box.appendChild(el("h3", "t2-sub", text.title));
                 box.appendChild(el("p", "t1-body", text.body || ""));
                 if (text.ar) {
                     const tr = document.createElement("details");

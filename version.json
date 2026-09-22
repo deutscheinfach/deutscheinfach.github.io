@@ -1,5 +1,5 @@
 {
-  "build": "007268673deb",
+  "build": "18b847f7e2d0",
   "assets": {
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b2-content.js": "5ab8cd9f",
@@ -8,7 +8,7 @@
     "assets/lesen-hub.js": "be5389c4",
     "assets/lesen-premium.js": "ee2cef79",
     "assets/lesen-teil1.js": "d331d367",
-    "assets/lesen-teil2.js": "7295a00d",
+    "assets/lesen-teil2.js": "3c109eb9",
     "assets/lesen-teil3.js": "ec58ac10",
     "assets/premium-gate.js": "6e86f042",
     "assets/schreiben-auth.js": "eb302ca1",
@@ -16,7 +16,7 @@
     "assets/schreiben-hub.js": "5c6b51aa",
     "assets/schreiben-style.css": "9bc9027e",
     "assets/schreiben-topics-b2.js": "4b0aa04a",
-    "assets/section.css": "c22b9ea2",
+    "assets/section.css": "49a51a11",
     "assets/session-guard.js": "d6dfc66e",
     "assets/site-header.css": "c9280005",
     "assets/site-header.js": "f1150aa1",
