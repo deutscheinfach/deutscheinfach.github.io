@@ -73,12 +73,49 @@
         '<a class="site-btn site-btn-primary" href="signup.html">إنشاء حساب</a>';
     actions.appendChild(guest);
 
-    const user = document.createElement("a");
+    /* ---- الحساب: زر + قائمة ----
+       كان غير رابط. ولا زر كيحل قائمة فيها تبديل الاسم
+       وتسجيل الخروج، حيت ماكانتش شي بلاصة يدير فيها المستعمل
+       هاد الحوايج. */
+    const account = document.createElement("div");
+    account.className = "site-account";
+    account.hidden = true;
+
+    const user = document.createElement("button");
+    user.type = "button";
     user.className = "site-user";
     user.id = "site-user";
-    user.href = "index.html";
-    user.hidden = true;
-    actions.appendChild(user);
+    user.setAttribute("aria-haspopup", "menu");
+    user.setAttribute("aria-expanded", "false");
+
+    const caret = document.createElement("span");
+    caret.className = "site-user-caret";
+    caret.setAttribute("aria-hidden", "true");
+
+    const menu = document.createElement("div");
+    menu.className = "site-menu";
+    menu.setAttribute("role", "menu");
+    menu.hidden = true;
+
+    account.append(user, menu);
+    actions.appendChild(account);
+
+    function openMenu(open) {
+        menu.hidden = !open;
+        account.classList.toggle("is-open", open);
+        user.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    user.addEventListener("click", function (event) {
+        event.stopPropagation();
+        openMenu(menu.hidden);
+    });
+    document.addEventListener("click", function (event) {
+        if (!account.contains(event.target)) openMenu(false);
+    });
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") openMenu(false);
+    });
 
     inner.appendChild(actions);
     header.appendChild(inner);
@@ -145,24 +182,25 @@
                Firebase من جديد. */
             window.__deutschEinfachAuth = auth;
 
-            authMod.onAuthStateChanged(auth, async function (account) {
-                if (!account) {
+            authMod.onAuthStateChanged(auth, async function (person) {
+                if (!person) {
                     guest.hidden = false;
-                    user.hidden = true;
+                    account.hidden = true;
+                    openMenu(false);
                     window.__deutschEinfachIsPremium = false;
                     return;
                 }
 
                 guest.hidden = true;
-                user.hidden = false;
+                account.hidden = false;
 
-                let name = account.displayName
-                    || (account.email || "").split("@")[0]
+                let name = person.displayName
+                    || (person.email || "").split("@")[0]
                     || "Student";
                 let premium = false;
 
                 try {
-                    const snap = await fsMod.getDoc(fsMod.doc(db, "users", account.uid));
+                    const snap = await fsMod.getDoc(fsMod.doc(db, "users", person.uid));
                     if (snap.exists()) {
                         const data = snap.data();
                         if (data.name) name = data.name;
@@ -177,22 +215,198 @@
 
                 window.__deutschEinfachIsPremium = premium;
 
-                user.textContent = "";
-                const avatar = document.createElement("span");
-                avatar.className = "site-avatar";
-                avatar.textContent = name.trim().charAt(0).toUpperCase();
-                user.appendChild(avatar);
-                user.appendChild(document.createTextNode(name));
-
-                if (premium) {
-                    const badge = document.createElement("span");
-                    badge.className = "site-premium";
-                    badge.textContent = "PREMIUM";
-                    user.appendChild(badge);
-                }
+                paint(name, premium);
+                buildMenu(person, name, premium);
 
                 /* صفحات فيها محتوى مقفول كتسنى هاد الخبر */
                 document.dispatchEvent(new CustomEvent("de-premium", { detail: premium }));
+
+                /* ---- رسم الزر ---- */
+                function paint(label, isPremium) {
+                    user.textContent = "";
+
+                    const avatar = document.createElement("span");
+                    avatar.className = "site-avatar";
+                    avatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
+                    user.appendChild(avatar);
+
+                    const text = document.createElement("span");
+                    text.className = "site-user-name";
+                    text.textContent = label;
+                    user.appendChild(text);
+
+                    if (isPremium) {
+                        const badge = document.createElement("span");
+                        badge.className = "site-premium";
+                        badge.textContent = "PREMIUM";
+                        user.appendChild(badge);
+                    }
+
+                    user.appendChild(caret);
+                }
+
+                /* ---- القائمة ---- */
+                function buildMenu(who, label, isPremium) {
+                    menu.textContent = "";
+
+                    /* الرأس: الاسم والإيميل */
+                    const head = document.createElement("div");
+                    head.className = "site-menu-head";
+
+                    const big = document.createElement("span");
+                    big.className = "site-avatar site-avatar-lg";
+                    big.textContent = label.trim().charAt(0).toUpperCase() || "?";
+
+                    const who2 = document.createElement("span");
+                    who2.className = "site-menu-who";
+
+                    const nameEl = document.createElement("strong");
+                    nameEl.textContent = label;
+                    const mailEl = document.createElement("span");
+                    mailEl.textContent = who.email || "";
+                    who2.append(nameEl, mailEl);
+
+                    head.append(big, who2);
+                    menu.appendChild(head);
+
+                    if (!isPremium) {
+                        const up = document.createElement("a");
+                        up.className = "site-menu-item site-menu-up";
+                        up.href = "payment.html";
+                        up.append(icon("star"),
+                                  document.createTextNode("ترقّى لـ Premium"));
+                        menu.appendChild(up);
+                    }
+
+                    /* تبديل الاسم والنسب */
+                    const rename = item("user", "بدّل الاسم والنسب");
+                    menu.appendChild(rename);
+
+                    const form = document.createElement("form");
+                    form.className = "site-menu-form";
+                    form.hidden = true;
+
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.className = "site-menu-input";
+                    input.value = label;
+                    input.maxLength = 60;
+                    input.autocomplete = "name";
+                    input.setAttribute("aria-label", "الاسم والنسب");
+
+                    const save = document.createElement("button");
+                    save.type = "submit";
+                    save.className = "site-menu-save";
+                    save.textContent = "حفظ";
+
+                    const note = document.createElement("p");
+                    note.className = "site-menu-note";
+                    note.hidden = true;
+
+                    form.append(input, save, note);
+                    menu.appendChild(form);
+
+                    rename.addEventListener("click", function () {
+                        form.hidden = !form.hidden;
+                        rename.classList.toggle("is-open", !form.hidden);
+                        if (!form.hidden) { input.focus(); input.select(); }
+                    });
+
+                    form.addEventListener("submit", async function (event) {
+                        event.preventDefault();
+
+                        const next = input.value.trim().replace(/\s+/g, " ");
+                        if (!next) {
+                            say("عافاك كتب الاسم ديالك.", true);
+                            return;
+                        }
+                        if (next === label) { form.hidden = true; return; }
+
+                        save.disabled = true;
+                        save.textContent = "…";
+
+                        try {
+                            await fsMod.setDoc(
+                                fsMod.doc(db, "users", who.uid),
+                                { name: next },
+                                { merge: true });
+                            try {
+                                await authMod.updateProfile(who, { displayName: next });
+                            } catch (error) { /* Firestore هو المرجع */ }
+
+                            paint(next, isPremium);
+                            nameEl.textContent = next;
+                            big.textContent = next.charAt(0).toUpperCase();
+                            say("تبدل الاسم ديالك.", false);
+                            setTimeout(function () {
+                                form.hidden = true;
+                                rename.classList.remove("is-open");
+                                note.hidden = true;
+                            }, 1200);
+                        } catch (error) {
+                            console.warn("Header: ما تبدلش الاسم", error);
+                            say("ما قدرناش نحفظو. عاود جرب.", true);
+                        }
+
+                        save.disabled = false;
+                        save.textContent = "حفظ";
+                    });
+
+                    function say(text, bad) {
+                        note.textContent = text;
+                        note.hidden = false;
+                        note.classList.toggle("is-bad", !!bad);
+                    }
+
+                    /* تسجيل الخروج */
+                    const out = item("out", "تسجيل الخروج");
+                    out.classList.add("site-menu-out");
+                    out.addEventListener("click", async function () {
+                        out.disabled = true;
+                        try {
+                            await authMod.signOut(auth);
+                            location.href = "index.html";
+                        } catch (error) {
+                            console.warn("Header: ما خرجناش", error);
+                            out.disabled = false;
+                        }
+                    });
+                    menu.appendChild(out);
+                }
+
+                function item(kind, label) {
+                    const node = document.createElement("button");
+                    node.type = "button";
+                    node.className = "site-menu-item";
+                    node.setAttribute("role", "menuitem");
+                    node.append(icon(kind), document.createTextNode(label));
+                    return node;
+                }
+
+                function icon(kind) {
+                    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                    svg.setAttribute("viewBox", "0 0 24 24");
+                    svg.setAttribute("class", "site-menu-icon");
+                    svg.setAttribute("aria-hidden", "true");
+                    svg.setAttribute("fill", "none");
+                    svg.setAttribute("stroke", "currentColor");
+                    svg.setAttribute("stroke-width", "1.8");
+                    svg.setAttribute("stroke-linecap", "round");
+                    svg.setAttribute("stroke-linejoin", "round");
+
+                    const paths = {
+                        user: ["M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z", "M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"],
+                        out:  ["M15 17l5-5-5-5", "M20 12H9", "M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"],
+                        star: ["M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9L12 3.5Z"]
+                    };
+
+                    (paths[kind] || []).forEach(function (d) {
+                        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                        path.setAttribute("d", d);
+                        svg.appendChild(path);
+                    });
+                    return svg;
+                }
             });
         } catch (error) {
             console.warn("Header: Firebase ما تحملش", error);

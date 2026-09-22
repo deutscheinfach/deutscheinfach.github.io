@@ -1,8 +1,8 @@
 {
-  "build": "bbfc5da7ffb3",
+  "build": "94a2ac758b7a",
   "assets": {
     "assets/lesen-b2-content.js": "b19235d4",
-    "assets/lesen-b2-topics.js": "d7387958",
+    "assets/lesen-b2-topics.js": "06729e6d",
     "assets/lesen-engine.js": "9a34516f",
     "assets/lesen-hub.js": "73844af1",
     "assets/lesen-premium.js": "7e90b98e",
@@ -15,8 +15,8 @@
     "assets/schreiben-topics-b2.js": "59a5d043",
     "assets/section.css": "134e4a74",
     "assets/session-guard.js": "d6dfc66e",
-    "assets/site-header.css": "43b2c394",
-    "assets/site-header.js": "27e9c8f7",
+    "assets/site-header.css": "c3f9ce0c",
+    "assets/site-header.js": "fd087def",
     "assets/sprechen-b2-content.js": "308095e2",
     "assets/sprechen-b2-topics.js": "886351ae",
     "assets/sprechen-engine.js": "45ed2a28",
