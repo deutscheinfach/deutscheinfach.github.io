@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
 <link rel="stylesheet" href="assets/theme.css?v=43cd561b">
-<link rel="stylesheet" href="assets/site-header.css?v=8f1f0fd2">
+<link rel="stylesheet" href="assets/site-header.css?v=c9280005">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Hören: Teil1</title>
@@ -286,6 +286,20 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   .native-quiz-wrap { padding: 16px 18px 20px; background: #08090c; }
   html.dark .native-quiz-wrap { background: #111214; }
   .nq-intro { margin: 0 0 14px; font-size: 13px; color: var(--muted); }
+  /* موضوع ما زال ماعندوش الحل: كنقولوها بصريح العبارة بدل ما
+     نحسبو ليه 0/10 ونوريوه "Falsch" على كل جملة. */
+  .nq-nokey {
+    margin: 0 0 14px;
+    padding: 11px 13px;
+    border: 1px solid #f0d0d0;
+    border-radius: 12px;
+    background: #fff6f6;
+    color: #8a3b3b;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+  html.dark .nq-nokey { background: #2a1c1c; border-color: #4a2f2f; color: #f0b9b9; }
   html.dark .nq-intro { color: var(--muted); }
   .nq-question-row {
     display: grid;
@@ -818,7 +832,7 @@ html.dark .premium-theme-open:hover{background: var(--gold) !important;color: #f
 </head>
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <div id="site-header" data-active="hoeren"></div>
-<script src="assets/site-header.js?v=ff0c0e13"></script>
+<script src="assets/site-header.js?v=f1150aa1"></script>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
   <a class="hoeren-nav-btn hoeren-nav-back" href="b2-hoeren.html">
@@ -840,7 +854,6 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 })();
 </script>
 
-<audio id="success-sound" src="" preload="none" style="display:none;" oncontextmenu="return false;"></audio>
 
 <div id="warningBox">Tu vas être déconnecté dans <span id="countdown">30</span> secondes d'inactivité</div>
 
@@ -942,7 +955,7 @@ window.__deutschEinfachPremiumReady = (async function () {
       { text: "In der Europäischen Union verzeichnet man weniger jugendliche Arbeitslose.", answer: "richtig" },
       { text: "Das Bundesarbeitsministerium bemüht sich um ausländische Arbeitnehmer bestimmter       Berufsgruppen.", answer: "richtig" },
       { text: "Die „Lange Nacht der Musik“ findet am Odeonsplatz in München statt.", answer: "falsch" },
-      { text: "Im „Tal der goldenen Mumien“ würden bisher fast 10,000 Tote gefunden.", answer: "falsch" },
+      { text: "Im „Tal der goldenen Mumien“ wurden bisher fast 10.000 Tote gefunden.", answer: "falsch" },
       { text: "Die Gefahr schwerer Unwetter ist nun vorbei.", answer: "falsch" }
      ] },
     { href: "die-tschechische-stadt-pilsen.html", title: "Die tschechische Stadt Pilsen" , quizId: "Die tschechische Stadt Pilsen", questions: [
@@ -953,7 +966,7 @@ window.__deutschEinfachPremiumReady = (async function () {
       { text: "Wassermänner haben in dieser Woche rundum Glück in Beruf, Gesundheit und Liebe.", answer: "falsch" }
     ] },
     { href: "die-wahlbeteiligung.html", title: "Die Wahlbeteiligung", quizId: "Die Wahlbeteiligungen", questions: [
-     { text: "Die Wahlbeteiligungen in Deutschland nimmt wieder zu.", answer: "richtig" },
+     { text: "Die Wahlbeteiligung in Deutschland nimmt wieder zu.", answer: "richtig" },
      { text: "150 Bauarbeiter müssen entlassen werden.", answer: "falsch" },
      { text: " Bei der Sportveranstaltung wurden neue Bestzeiten aufgestellt.", answer: "richtig" },
      { text: "Die Sicherheitslücke beim Online-Banking wurde noch nicht gefunden.", answer: "falsch" },
@@ -968,12 +981,12 @@ window.__deutschEinfachPremiumReady = (async function () {
      { text: "In Hagen gab es ein Sprengstoffunglück.", answer: "falsch" }
    ]
  },
-    { href: "vier-tage-pro.html", title: "Die Bundesländer", quizId: "", questions: [
+    { href: "vier-tage-pro.html", title: "Die Bundesländer", quizId: "die-bundeslaender", questions: [
      { text: "Die Bundesländer sollen in Zukunft Geld für alternative Energien bekommen.", answer: "richtig" },
-     { text: "Wenn man im Internet etwa kaufen möchte, sollte man seine Identität nachweisen müssen.", answer: "richtig" },
+     { text: "Wenn man im Internet etwas kaufen möchte, sollte man seine Identität nachweisen müssen.", answer: "richtig" },
      { text: "Bei einem Überfall wurde ein Schiff gezwungen, Richtung Küste zu fahren.", answer: "falsch" },
-     { text: "Laut Tourismus Minister soll man einen Geparden Urlaub auf Gran Carina absagen.", answer: "falsch" },
-     { text: "Es ist der Zeit noch nicht entschieden, wie lange der Streck dauern soll.", answer: "richtig" }
+     { text: "Laut Tourismusminister soll man einen geplanten Urlaub auf Gran Canaria absagen.", answer: "falsch" },
+     { text: "Es ist zurzeit noch nicht entschieden, wie lange der Streik dauern soll.", answer: "richtig" }
    ]
  },
     { href: "unwetterschaeden.html", title: "Unwetterschäden", quizId: "Unwetterschäden", questions: [
@@ -995,7 +1008,7 @@ window.__deutschEinfachPremiumReady = (async function () {
     { href: "es-ist-unklar.html", title: "Es ist unklar", quizId: "Es ist unklar", questions: [
      { text: "Es ist unklar, ob das Problem noch einmal auftreten kann.", answer: "richtig" },
      { text: "Hamburgs Politiker befürworteten den Bau des Einkaufszentrums nicht.", answer: "falsch" },
-     { text: "Zwischen Frankreich und Deutschland wurde ein neuer Hochgeschwindigkeitszug genommen.", answer: "falsch" },
+     { text: "Zwischen Frankreich und Deutschland wurde ein neuer Hochgeschwindigkeitszug in Betrieb genommen.", answer: "falsch" },
      { text: "Die Produkte von TipTop sind in Deutschland nicht mehr so gefragt.", answer: "richtig" },
      { text: "Ingrid Thieme wird sich an der kommenden WM beteiligen.", answer: "falsch" }
    ]
@@ -1096,7 +1109,7 @@ window.__deutschEinfachPremiumReady = (async function () {
      { text: "Die leopoldina soll internationale Akademie werden.", answer: "falsch" }
    ]
  },
-    { href: "bierkonsum-2.html", title: "Bier (المعدل)", quizId: "bierkonsum", questions: [
+    { href: "bierkonsum-2.html", title: "Bier (المعدل)", quizId: "bierkonsum-2", questions: [
      { text: "Der Verbrauch von Bier steigt um 10 %.", answer: "falsch" },
      { text: "Deutsche Einkommen liegen im europäischen Vergleich nur im Mittelfeld.", answer: "richtig" },
      { text: "Es ist ein Ende des Bahnstreiks in Sicht.", answer: "falsch" },
@@ -1202,10 +1215,10 @@ window.__deutschEinfachPremiumReady = (async function () {
  },
     { href: "die-bundeslaender.html", title: "Die Bundesländer", quizId: "Die Bundesländer", questions: [
      { text: "Die Bundesländer sollen in Zukunft Geld für alternative Energien bekommen.", answer: "richtig" },
-     { text: "Wenn man im Internet etwa kaufen möchte, sollte man seine Identität nachweisen müssen.", answer: "richtig" },
+     { text: "Wenn man im Internet etwas kaufen möchte, sollte man seine Identität nachweisen müssen.", answer: "richtig" },
      { text: "Bei einem Überfall wurde ein Schiff gezwungen, Richtung Küste zu fahren.", answer: "falsch" },
-     { text: "Laut Tourismus Minister soll man einen Geparden Urlaub auf Gran Carina absagen.", answer: "falsch" },
-     { text: "Es ist der Zeit noch nicht entschieden, wie lange der Streck dauern soll.", answer: "richtig" }
+     { text: "Laut Tourismusminister soll man einen geplanten Urlaub auf Gran Canaria absagen.", answer: "falsch" },
+     { text: "Es ist zurzeit noch nicht entschieden, wie lange der Streik dauern soll.", answer: "richtig" }
    ]
  },
     { href: "das-schladminger.html", title: "Das Schladminger", quizId: "Das Schladminger", questions: [
@@ -1274,7 +1287,7 @@ window.__deutschEinfachPremiumReady = (async function () {
    ]
  },
     { href: "voegel.html", title: "Viele Kunden / Vögel", quizId: "Viele Kunden", questions: [
-     { text: "Viele Kunden würden für bessere Service Leistungen der Paketdienst höhere geboren.", answer: "falsch" },
+     { text: "Viele Kunden würden für bessere Serviceleistungen der Paketdienste höhere Gebühren zahlen.", answer: "falsch" },
      { text: "Nach dem Unfall konnten beide Schiffe nicht fortsetzen.", answer: "falsch" },
      { text: "Europaweit gibt es immer weniger Vögel.", answer: "richtig" },
      { text: "Die Polizei hat auf der Autobahn ein dort verbotenes Fahrzeug entdeckt.", answer: "richtig" },
@@ -1792,6 +1805,41 @@ window.__deutschEinfachPremiumReady = (async function () {
       resultBox.innerHTML = "";
     });
 
+    /* ⚠ الحل ديال هاد الموضوع ما زال ماكاينش (answer خاوي).
+       بلا هاد الفحص، "Antworten prüfen" كيحسب كل جواب غالط
+       وكيقول بلي الصح هو "Falsch" ف كل جملة — الطالب كيتعلم
+       غلط وكيظن بلي الموقع خدام. أحسن نقولو ليه الحقيقة
+       ونخليو غير "Nochmal versuchen". */
+    var hasKey = theme.questions.every(function (q) {
+      return q.answer === "richtig" || q.answer === "falsch";
+    });
+
+    if (!hasKey) {
+      var noKey = document.createElement("p");
+      noKey.className = "nq-nokey";
+      noKey.innerHTML =
+        '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+        'Die Lösungen zu diesem Thema werden noch vorbereitet.' +
+        '<span style="direction:rtl;display:block;margin-top:6px">' +
+        'الحل ديال هاد الموضوع ما زال كنوجدوه. تقدر تقرا الجمل وتتمرن، ' +
+        'ولكن التصحيح ما زال ماكاينش — باش ما نعطيوكش نتيجة غالطة. 🙏' +
+        '</span>';
+      wrap.insertBefore(noKey, wrap.firstChild.nextSibling);
+
+      actions.appendChild(btnRetry);
+      wrap.appendChild(actions);
+      wrap.appendChild(resultBox);
+
+      /* btnRetry كيمسح finalSummary — خاصو يتخلق حتى فهاد الطريق،
+         وإلا البركة عليه كترمي TypeError. */
+      finalSummary = document.createElement("div");
+      finalSummary.className = "nq-final-summary";
+      finalSummary.hidden = true;
+      wrap.appendChild(finalSummary);
+
+      return wrap;
+    }
+
     actions.appendChild(btnCheck);
     actions.appendChild(btnShow);
     actions.appendChild(btnRetry);
@@ -2260,8 +2308,12 @@ html[data-theme="light"] .nq-radio-option.nq-selected-wrong{ color: #c62828 !imp
 
 <style id="hoeren-with-site-header">
 /* الهيدر المشترك ولا هو اللي فوق. الـ nav ديال Hören كان
-   fixed فوقو — دابا كيولي شريط عادي تحتو. */
-body{ padding-top: 0 !important; }
+   fixed فوقو — دابا كيولي شريط عادي تحتو.
+
+   البار ولات fixed (ماشي sticky)، إذن خرجات من التدفق وخاص
+   الصفحة تخلي ليها بلاصة من فوق. --site-header-h كيقيسو
+   site-header.js. */
+body{ padding-top: var(--site-header-h, 72px) !important; }
 
 .hoeren-sticky-nav{
   position: static !important;
@@ -2273,7 +2325,7 @@ body{ padding-top: 0 !important; }
 }
 
 @media (max-width: 760px){
-  body{ padding-top: 0 !important; }
+  body{ padding-top: var(--site-header-h, 72px) !important; }
   .hoeren-sticky-nav{ width: calc(100% - 16px) !important; }
 }
 

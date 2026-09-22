@@ -25,32 +25,127 @@
 
     if (!grid || !detail) return;
 
-    /* الانتقال بين Teil 1 و Teil 2/3: كنطفيو اللوحة بشوية قبل ما
-       نمشيو باش ما يبقاش القطع خشين. الصفحة الجديدة كتطلع بوحدها
-       (الحركة ديال الدخول ف site-header.css). */
-    (function tabTransitions() {
-        const shell = document.querySelector(".lesen-shell");
-        const nav = document.querySelector(".lesen-shell > .lesen-tabs");
-        if (!shell || !nav) return;
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    /* ===== نسخة قديمة؟ =====
 
-        nav.addEventListener("click", function (event) {
+       ملي كيتبدل القسم بلا تحميل صفحة، هاد الملف كيتعاود
+       يتنفذ على DOM جديد. النسخة القديمة كتبقى معلقة ف
+       listeners ديال window/document وكتخدم على عناصر تحيدو
+       من الصفحة. هاد الفحص كيسكتها: إلا ماكانش الـgrid ديالي
+       ما زال فالصفحة، إذن أنا النسخة القديمة. */
+    function stale() { return !document.body.contains(grid); }
+
+    /* ===== التنقل بين Teil 1/2/3 بلا تحميل صفحة جديدة =====
+
+       ست الصفحات (b2-lesen، teil1…sprach2) كيحمّلو نفس الملفات
+       ونفس الداتا — الفرق الوحيد بيناتهم هو data-teil. إذن ماكاين
+       حتى سبب باش نعاودو نحمّلو كلشي من الصفر: كنبدلو غير الفلتر
+       والرابط، والبار ديال فوق ما كتهزّ حتى.
+
+       الصفحات بوحدهم كيبقاو خدامين ديريكت (رابط محفوظ، بحث Google…)
+       — غير البركة من داخل الموقع هي اللي ولات فورية. */
+
+    const SHELL = document.querySelector(".lesen-shell");
+
+    /* الرأس ديال كل جزء: العنوان والسطر الصغير تحتيه. */
+    const HEADS = {
+        "":        { h1: "Leseverstehen",     lead: "اختار موضوع وبدا التمرين فنفس الصفحة.",
+                     title: "Deutsch Einfach – B2 Lesen Leseverstehen" },
+        "teil1":   { h1: "Teil 1",            lead: "Überschriften zuordnen",
+                     title: "Deutsch Einfach – B2 Lesen Teil 1" },
+        "teil2":   { h1: "Teil 2",            lead: "Multiple Choice",
+                     title: "Deutsch Einfach – B2 Lesen Teil 2" },
+        "teil3":   { h1: "Teil 3",            lead: "Anzeigen zuordnen",
+                     title: "Deutsch Einfach – B2 Lesen Teil 3" },
+        "sprach1": { h1: "Sprachbausteine 1", lead: "Grammatik im Text",
+                     title: "Deutsch Einfach – B2 Lesen Sprachbausteine 1" },
+        "sprach2": { h1: "Sprachbausteine 2", lead: "Wortschatz im Text",
+                     title: "Deutsch Einfach – B2 Lesen Sprachbausteine 2" }
+    };
+
+    /* b2-lesen-teil2.html → "teil2" · b2-lesen.html → "" */
+    function partOfFile(name) {
+        const match = /b2-lesen-(teil[123]|sprach[12])\.html$/.exec(name || "");
+        if (match) return match[1];
+        return /b2-lesen\.html$/.test(name || "") ? "" : null;
+    }
+
+    function paintHead(part) {
+        const head = HEADS[part];
+        if (!head) return;
+        const h1 = SHELL && SHELL.querySelector(".lesen-hero h1");
+        const lead = SHELL && SHELL.querySelector(".lesen-hero .lead");
+        if (h1) h1.textContent = head.h1;
+        if (lead) lead.textContent = head.lead;
+        document.title = head.title;
+    }
+
+    /* كنبدلو الجزء فنفس الصفحة: الفلتر، الرابط، الرأس، واللائحة. */
+    function switchPart(part, href, push) {
+        pagePart = part;
+        grid.dataset.teil = part;
+
+        if (tabsNav) {
+            Array.prototype.forEach.call(tabsNav.querySelectorAll("a.lesen-tab"), function (tab) {
+                const mine = partOfFile(tab.getAttribute("href")) === part;
+                tab.classList.toggle("active", mine);
+                if (mine) tab.setAttribute("aria-current", "page");
+                else tab.removeAttribute("aria-current");
+            });
+        }
+
+        if (push) history.pushState({ teil: part }, "", href);
+        paintHead(part);
+        renderList(true);
+    }
+
+    if (SHELL && tabsNav) {
+        tabsNav.addEventListener("click", function (event) {
             const tab = event.target.closest("a.lesen-tab");
             if (!tab || tab.classList.contains("active")) return;
-            if (event.metaKey || event.ctrlKey || event.shiftKey || event.button) return;
+            if (event.defaultPrevented || event.button
+                || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+            const part = partOfFile(tab.getAttribute("href"));
+            /* تبويب ماشي ديال Lesen؟ نخليوه يمشي عادي. */
+            if (part === null) return;
 
             event.preventDefault();
-            shell.classList.add("lt-leaving");
-            const go = function () { location.href = tab.href; };
-            const guard = setTimeout(go, 220);
-            shell.addEventListener("transitionend", function once(e) {
-                if (e.target !== shell) return;
+
+            const still = window.matchMedia
+                && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+            if (still) {
+                switchPart(part, tab.href, true);
+                return;
+            }
+
+            /* المحتوى كيطفا، كيتبدل، وكيرجع. التبويبات والبار
+               ما كيتحركوش — هوما ديما مرسومين. */
+            SHELL.classList.add("lt-leaving");
+            let done = false;
+            const swap = function () {
+                if (done) return;
+                done = true;
+                switchPart(part, tab.href, true);
+                SHELL.classList.remove("lt-leaving");
+                /* اللائحة الجديدة كتبدا من فوق */
+                const tabsTop = tabsNav.getBoundingClientRect().top + window.scrollY;
+                const barH = parseInt(
+                    getComputedStyle(document.documentElement)
+                        .getPropertyValue("--site-header-h"), 10) || 72;
+                if (window.scrollY > tabsTop - barH) {
+                    window.scrollTo({ top: Math.max(0, tabsTop - barH) });
+                }
+            };
+            const guard = setTimeout(swap, 200);
+            SHELL.addEventListener("transitionend", function once(e) {
+                if (e.target !== grid) return;
                 clearTimeout(guard);
-                shell.removeEventListener("transitionend", once);
-                go();
+                SHELL.removeEventListener("transitionend", once);
+                swap();
             });
         });
-    }());
+    }
 
 
 
@@ -64,8 +159,9 @@
     const PART_LABEL = {};
     PARTS.forEach(function (p) { PART_LABEL[p.key] = p.label; });
 
-    /* الجزء ديال هاد الصفحة: teil1 مثلا. فارغ = صفحة Prüfungen. */
-    const pagePart = grid.dataset.teil || "";
+    /* الجزء ديال هاد الصفحة: teil1 مثلا. فارغ = صفحة Prüfungen.
+       كيتبدل ملي تبرك على تبويب آخر — بلا ما تتحمل صفحة جديدة. */
+    let pagePart = grid.dataset.teil || "";
 
     const topics = Array.isArray(window.LESEN_B2_TOPICS)
         ? window.LESEN_B2_TOPICS.slice()
@@ -123,9 +219,14 @@
         if (!list.length) {
             const empty = document.createElement("div");
             empty.className = "lesen-empty";
-            empty.textContent = topics.length
+            /* فرق مهم: "ماكاين حتى موضوع بهاد الاسم" كتقال غير ملي
+               كاين بحث. إلا كان الجزء خاوي أصلا (Teil 2، Sprach 1/2
+               ما زال ماكاينش فيهم نماذج)، الطالب خاصو يفهم بلي هاد
+               القسم كنوجدوه، ماشي بلي البحث ديالو خايب. */
+            const searching = (search ? search.value : "").trim() !== "";
+            empty.textContent = searching
                 ? "ماكاين حتى موضوع بهاد الاسم."
-                : "ما زال ماكاينش مواضيع.";
+                : "ما زال ماكاينش نماذج ف هاد الجزء. قريبا 🙏";
             grid.appendChild(empty);
             return;
         }
@@ -396,8 +497,15 @@
         grid.hidden = false;
     }
 
-    /* زر الرجوع ديال الـ navigateur */
+    /* زر الرجوع ديال الـ navigateur.
+
+       دابا الرابط كيقدر يتبدل فجوج حالات: موضوع محلول (?thema=)
+       ولا جزء آخر (المسار نفسو). خاصنا نتبعو بجوج. */
     window.addEventListener("popstate", function () {
+        if (stale()) return;
+        const wanted = partOfFile(location.pathname.split("/").pop());
+        if (wanted !== null && wanted !== pagePart) switchPart(wanted, null, false);
+
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
         if (thema) open(thema, params.get("teil") || pagePart || "teil1", false);
@@ -418,6 +526,7 @@
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase.
        إلا كان التمرين محلول وهو Premium، كنعاودو نرسموه. */
     document.addEventListener("de-premium", function () {
+        if (stale()) return;
         /* اللائحة خاصها تتعاود: الأقفال كيطيحو ملي يبان الاشتراك */
         renderList();
 

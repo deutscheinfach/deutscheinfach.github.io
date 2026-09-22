@@ -23,7 +23,7 @@
         { key: "chat",      href: "chat.html",         label: "Community" }
     ];
 
-    const active = mount.dataset.active || "";
+    let active = mount.dataset.active || "";
 
     const header = document.createElement("header");
     header.className = "site-header";
@@ -48,10 +48,24 @@
     nav.className = "site-nav";
     nav.setAttribute("aria-label", "Bereiche");
 
+    /* المستوى ديال الصفحة الحالية: b1-lesen.html → "b1" */
+    const pageLevel =
+        (location.pathname.split("/").pop() || "").indexOf("b1-") === 0 ? "b1" : "b2";
+
     NAV.forEach(function (item) {
         const link = document.createElement("a");
-        link.href = item.href;
+        /* كانت الروابط ديما b2-*، حتى ملي تكون ف صفحة B1 — إذن
+           من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
+           رابط كيتبع المستوى ديال الصفحة اللي راك فيها.
+           Community ماعندهاش مستوى. */
+        link.href = item.key === "chat"
+            ? item.href
+            : pageLevel + "-" + item.key + ".html";
         link.textContent = item.label;
+        /* الراوتر كيقارن بالمفتاح ماشي بالرابط: الروابط هنا ديما
+           b2-*، حتى ملي تكون ف صفحة B1 (مبدّل المستوى هو اللي
+           كيتكلف بالمستوى). */
+        link.dataset.key = item.key;
         if (item.key === active) {
             link.classList.add("active");
             link.setAttribute("aria-current", "page");
@@ -95,6 +109,23 @@
     const still = window.matchMedia
         && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    /* ---- واش المتصفح كيدير View Transitions بين الصفحات؟ ----
+
+       إلا كان كيديرها، هو اللي خاصو يسوق الانتقال: كياخد صورة
+       ديال البار قبل ما يمشي وكيلصقها مع البار ديال الصفحة
+       الجديدة، إذن كتبان واقفة بلا ما تغمض. وخاصنا نحيدو
+       الـfade ديالنا، وإلا كنطفيو المحتوى قبل ما ياخد المتصفح
+       الصورة — وكيخرج انتقال ديال صفحة خاوية.
+
+       onpagereveal هو العلامة ديال الانتقال بين الصفحات
+       (ماشي غير داخل نفس الصفحة بحال startViewTransition). */
+    const crossDocVT = "onpagereveal" in window
+        && typeof CSS !== "undefined"
+        && CSS.supports
+        && CSS.supports("view-transition-name", "none");
+
+    if (crossDocVT) document.documentElement.classList.add("de-vt");
+
     /* بركة عادية على رابط ماشي نشيط؟ */
     function plain(event) {
         const link = event.target.closest("a");
@@ -126,7 +157,10 @@
     }
 
     nav.addEventListener("click", function (event) {
-        if (still) return;
+        /* المتصفح كيسوق الانتقال بوحدو — ماخاصناش نوقفو الرابط.
+           المؤشر ديال القسم الجديد كيكون ديجا فبلاصتو ف الصفحة
+           الجاية، إذن حتى هو ماخاصوش تحريك بالـJS. */
+        if (still || crossDocVT) return;
         const link = plain(event);
         if (!link) return;
         event.preventDefault();
@@ -218,9 +252,15 @@
     const guest = document.createElement("span");
     guest.className = "site-actions";
     guest.id = "site-guest";
+    /* البار ولات fixed، إذن كل سطر زائد فيها كياكل من الشاشة
+       ديال التيليفون. الكلمة الطويلة كتغيب تحت 560px
+       (.site-btn-label-long) وكيبقى «الدخول» و«حساب» — وهكا
+       العلامة والأزرار كيدخلو ف سطر واحد بدل جوج. */
     guest.innerHTML =
-        '<a class="site-btn" href="login.html">تسجيل الدخول</a>' +
-        '<a class="site-btn site-btn-primary" href="signup.html">إنشاء حساب</a>';
+        '<a class="site-btn" href="login.html">'
+        + '<span class="site-btn-label-long">تسجيل </span>الدخول</a>'
+        + '<a class="site-btn site-btn-primary" href="signup.html">'
+        + '<span class="site-btn-label-long">إنشاء </span>حساب</a>';
     actions.appendChild(guest);
 
     /* ---- الحساب: زر + قائمة ----
@@ -250,6 +290,73 @@
     account.append(user, menu);
     actions.appendChild(account);
 
+    /* ---- الحساب ديال آخر مرة ----
+
+       Firebase كياخد نص ثانية باش يجاوب. حتى دوك اللحظات،
+       البار كتبين «تسجيل الدخول / إنشاء حساب» حتى للمشترك،
+       ومن بعد كتقلب للاسم ديالو. يعني ف كل برْكة على Lesen ولا
+       Hören، البار كتبدل الشكل ديالها قدام عينيه.
+
+       الحل: كنحتافظو بآخر حالة معروفة، وكنرسموها دغيا. ملي
+       يجاوب Firebase كنصلحو إلا تبدل شي حاجة. هادي زينة
+       برك — الاشتراك الحقيقي كيتحقق منو الـWorker، ماشي هنا. */
+    const LAST = "deutschEinfachLastAccount";
+
+    function remember(data) {
+        try {
+            if (data) localStorage.setItem(LAST, JSON.stringify(data));
+            else localStorage.removeItem(LAST);
+        } catch (error) { /* تصفح خاص: ماشي مشكل */ }
+    }
+
+    function recall() {
+        try {
+            const raw = localStorage.getItem(LAST);
+            if (!raw) return null;
+            const data = JSON.parse(raw);
+            return (data && typeof data.name === "string") ? data : null;
+        } catch (error) { return null; }
+    }
+
+    /* ---- رسم الزر ديال الحساب ---- */
+    function paint(label, isPremium) {
+        user.textContent = "";
+
+        const avatar = document.createElement("span");
+        avatar.className = "site-avatar";
+        avatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
+        user.appendChild(avatar);
+
+        const text = document.createElement("span");
+        text.className = "site-user-name";
+        text.textContent = label;
+        user.appendChild(text);
+
+        if (isPremium) {
+            const badge = document.createElement("span");
+            badge.className = "site-premium";
+            badge.textContent = "PREMIUM";
+            user.appendChild(badge);
+        }
+
+        user.appendChild(caret);
+    }
+
+    /* كنرسمو آخر حالة معروفة دغيا — بلا ما نستناو Firebase.
+       القائمة ما كتتبناش دابا: ماكاينش لعجلة، وهي محتاجة
+       الإيميل الحقيقي. كتوجد ملي يجاوب Firebase. */
+    const last = recall();
+    if (last) {
+        guest.hidden = true;
+        account.hidden = false;
+        paint(last.name, last.premium === true);
+        /* الأقفال ديال الصفحة كيتسناو هاد الخبر. كنعطيوهم
+           التخمين ديال دابا باش البطائق ما يبانوش مقفولين
+           ومن بعد يتحلو — والـWorker على كل حال ماكيعطي حتى
+           كلمة بلا ما يتحقق من token حقيقي. */
+        if (last.premium === true) window.__deutschEinfachIsPremium = true;
+    }
+
     function openMenu(open) {
         menu.hidden = !open;
         account.classList.toggle("is-open", open);
@@ -273,7 +380,14 @@
     /* ---- مبدّل المستوى ----
        بدل صفحات b1.html و b2.html اللي كانو كيجمعو كلشي،
        المستوى كيتبدل جوا القسم نفسو: Lesen B1 ↔ Lesen B2.
-       كنعرفو المستوى الحالي من اسم الصفحة. */
+       كنعرفو المستوى الحالي من اسم الصفحة.
+
+       ⚠ ماكيدخلش ف <header>: البار ولات fixed، وإلا زدنا
+       هاد المبدّل معاها كتولي 154px واقفين فوق الشاشة (238
+       فالتيليفون — تلت الشاشة كاملة على واحد الزر كتستعملو
+       مرة فالعام). إذن كيبقى ف التدفق العادي تحت البار. */
+    let levelWrap = null;
+
     if (active) {
         const file = (location.pathname.split("/").pop() || "").toLowerCase();
         const level = file.indexOf("b1-") === 0 ? "b1" : "b2";
@@ -288,6 +402,7 @@
             const link = document.createElement("a");
             link.href = pair[0] + "-" + active + ".html";
             link.textContent = pair[1];
+            link.dataset.level = pair[0];
             if (pair[0] === level) {
                 link.classList.add("active");
                 link.setAttribute("aria-current", "page");
@@ -297,7 +412,7 @@
 
         /* مبدّل المستوى كيمشي بنفس الانتقال ديال الأقسام */
         box.addEventListener("click", function (event) {
-            if (still) return;
+            if (still || crossDocVT) return;
             const link = plain(event);
             if (!link) return;
             event.preventDefault();
@@ -305,15 +420,341 @@
         });
 
         wrap.appendChild(box);
-        header.appendChild(wrap);
+        levelWrap = wrap;
     }
 
-    mount.replaceWith(header);
+    /* ---- الهيدر كيتعلق ف <body> مباشرة ----
+
+       قبل، كان كيتحط ف بلاصة #site-header. فـ index.html داك
+       الـ mount كان داخل .container، و:
+
+         · .container كياخد حركة الدخول/الخروج ديال الصفحة
+           (transform) — والعنصر اللي عندو جد متحرك بـ transform
+           ماكيبقاش position:fixed كيخدم بالنسبة للشاشة؛
+         · وحتى overflow ديال شي جد كيقدر يقطع sticky.
+
+       ملي كيكون ولد مباشر ديال <body>، البار كتبقى واقفة
+       حقيقة وما كتهزّ حتى مع الصفحة. */
+    mount.remove();
+    document.body.insertBefore(header, document.body.firstChild);
+    if (levelWrap) header.insertAdjacentElement("afterend", levelWrap);
+
+
+    /* ===================================================================
+       تبديل القسم بلا ما تتحمل الصفحة
+       ===================================================================
+
+       المشكل: Lesen و Hören و Schreiben و Sprechen هوما أربع صفحات
+       HTML. ملي تبرك على وحدة، المتصفح كيهدم الصفحة الحالية — والبار
+       معاها — وكيعاود يبني كلشي من الصفر. مهما نكتبو `position: fixed`،
+       البار كتغيب ف داك الوقت. هادا هو الـ"refresh" اللي كيبان.
+
+       الحل: كنجيبو الصفحة الجاية بـ fetch، وكنبدلو غير المحتوى ديال
+       <body>. البار ما كنمسوهاش — هي نفس العنصر من أول ما تحلّ الموقع
+       حتى تسدّو. ماكاينش تحميل، ماكاينش وميض، والحالة ديال الحساب
+       كتبقى كيف ما هي.
+
+       علاش هادشي آمن هنا: أربع الصفحات ماعندهمش inline scripts، وكل
+       ملفات assets/*.js مكتوبين ف IIFE بلا تعريفات ف الجذر — إذن
+       كيتعاودو يتنفذو على DOM جديد بلا تصادم. والنسخة القديمة ديال كل
+       hub كتسكت بوحدها (stale()).
+
+       إلا طاح شي حاجة (نت مقطوع، صفحة ماشي ف اللائحة…) كنرجعو للتنقل
+       العادي ديال المتصفح — ماكاين حتى طريق مسدود.
+       =================================================================== */
+    const routerOn = (function () {
+        /* الأقسام + صفحات الأجزاء ديال Lesen (نفس الملفات بالضبط،
+           غير data-teil كيتبدل).
+
+           ماشي داخلين:
+             · chat.html — module كبير و WebRTC، إعادة تنفيذه
+               كتخلق مستمعين مكررين ومكالمات مزدوجة؛
+             · b2-hoeren-teil*.html — فيهم inline scripts فيهم
+               `const` ف الجذر، و`const` مرتين ف نفس الصفحة =
+               SyntaxError.
+           هادو كيتنقلو عادي، وهادشي ماشي مشكل: البار كتعاود
+           تتبنى غير تما، ماشي ف كل برْكة. */
+        const ROUTABLE =
+            /^(b1|b2)-(lesen|hoeren|schreiben|sprechen)\.html$|^b2-lesen-(teil[123]|sprach[12])\.html$/;
+
+        /* عائلة Lesen: lesen-hub.js كيتكلف بتبديل الأجزاء فنفس
+           الصفحة، إذن ملي يكون التنقل جوا هاد العائلة الراوتر
+           خاصو يبعد وما يعاودش يجيب الصفحة. */
+        function lesenFamily(file) {
+            return /^b2-lesen(-(teil[123]|sprach[12]))?\.html$/.test(file || "");
+        }
+
+        /* هادو كيخدمو ف كل الأقسام: كيتحملو مرة وحدة وكيبقاو.
+           إعادة تحميلهم = بار ثانية وحارس جلسة ثاني. */
+        const PERSIST = /\/(site-header|session-guard)\.js/;
+
+        if (!window.fetch || !window.DOMParser
+            || !history.pushState || !window.Promise) return false;
+
+        function fileOf(url) {
+            try {
+                const u = new URL(url, location.href);
+                if (u.origin !== location.origin) return null;
+                return u.pathname.split("/").pop() || "index.html";
+            } catch (error) { return null; }
+        }
+
+        function routable(url) {
+            const file = fileOf(url);
+            return !!file && ROUTABLE.test(file);
+        }
+
+        /* الستايلات: كنزيدو غير اللي ناقص. ماكنحيدو والو — ملفات
+           الأقسام مشتركين، وحيدان وحدة كتخلي الصفحة عريانة للحظة. */
+        function addStyles(doc) {
+            const have = {};
+            Array.prototype.forEach.call(
+                document.querySelectorAll('link[rel="stylesheet"]'),
+                function (link) { have[fileOf(link.href) || link.href] = true; });
+
+            const waits = [];
+            Array.prototype.forEach.call(
+                doc.querySelectorAll('link[rel="stylesheet"]'),
+                function (link) {
+                    const href = link.getAttribute("href");
+                    const key = fileOf(href) || href;
+                    if (!href || have[key]) return;
+                    have[key] = true;
+
+                    const tag = document.createElement("link");
+                    tag.rel = "stylesheet";
+                    tag.href = href;
+                    waits.push(new Promise(function (done) {
+                        tag.onload = tag.onerror = done;
+                        /* ما نوقفوش التبديل على ستايل بطيء */
+                        setTimeout(done, 1500);
+                    }));
+                    document.head.appendChild(tag);
+                });
+            return Promise.all(waits);
+        }
+
+        /* <script> اللي كيجي من innerHTML ماكيتنفذش — خاصنا نعاودو
+           نبنيوه. وكيخصهم يتنفذو واحد من بعد واحد: lesen-hub.js
+           محتاج الداتا اللي قبلو. */
+        function runScripts(nodes) {
+            return nodes.reduce(function (chain, node) {
+                return chain.then(function () {
+                    return new Promise(function (done) {
+                        const tag = document.createElement("script");
+                        Array.prototype.forEach.call(node.attributes, function (a) {
+                            tag.setAttribute(a.name, a.value);
+                        });
+                        if (node.src) {
+                            tag.onload = tag.onerror = done;
+                        } else {
+                            tag.textContent = node.textContent;
+                        }
+                        document.body.appendChild(tag);
+                        if (!node.src) done();
+                    });
+                });
+            }, Promise.resolve());
+        }
+
+        /* البار: القسم النشيط، المؤشر، وروابط المستوى */
+        function setActive(key) {
+            active = key;
+
+            const lvl = (fileOf(location.pathname) || "").indexOf("b1-") === 0 ? "b1" : "b2";
+
+            Array.prototype.forEach.call(nav.querySelectorAll("a"), function (link) {
+                const mine = link.dataset.key === key;
+                /* بدلنا المستوى؟ الروابط خاصها تتبع */
+                if (link.dataset.key !== "chat") {
+                    link.href = lvl + "-" + link.dataset.key + ".html";
+                }
+                link.classList.toggle("active", mine);
+                if (mine) link.setAttribute("aria-current", "page");
+                else link.removeAttribute("aria-current");
+            });
+            placePill();
+
+            /* مبدّل المستوى كيبقى على نفس القسم: Lesen B1 ↔ Lesen B2 */
+            if (levelWrap) {
+                Array.prototype.forEach.call(levelWrap.querySelectorAll("a"), function (link) {
+                    const mine = link.dataset.level === lvl;
+                    link.href = link.dataset.level + "-" + key + ".html";
+                    link.classList.toggle("active", mine);
+                    if (mine) link.setAttribute("aria-current", "page");
+                    else link.removeAttribute("aria-current");
+                });
+            }
+        }
+
+        let busy = false;
+        let herefile = fileOf(location.pathname);
+
+        function swap(doc) {
+            /* كنحيدو المحتوى القديم — غير البار وشريط المستوى
+               كيبقاو. هوما نفس العناصر، ماكيتبناوش من جديد. */
+            const keep = [header, levelWrap];
+            Array.prototype.slice.call(document.body.childNodes).forEach(function (node) {
+                if (keep.indexOf(node) === -1) node.remove();
+            });
+
+            const scripts = [];
+            Array.prototype.slice.call(doc.body.children).forEach(function (node) {
+                if (node.tagName === "SCRIPT") {
+                    if (!PERSIST.test(node.getAttribute("src") || "")) scripts.push(node);
+                    return;
+                }
+                /* الـmount ديال البار: عندنا وحدة حية، ماخاصناش ثانية */
+                if (node.id === "site-header") {
+                    active = node.dataset.active || active;
+                    return;
+                }
+                document.body.appendChild(document.importNode(node, true));
+            });
+
+            document.title = doc.title || document.title;
+            setActive(active);
+            return scripts;
+        }
+
+        function go(url, push) {
+            if (busy) return;
+            busy = true;
+            herefile = fileOf(url);
+
+            const bail = function () { location.href = url; };
+
+            fetch(url, { credentials: "same-origin" })
+                .then(function (res) {
+                    if (!res.ok) throw new Error("HTTP " + res.status);
+                    return res.text();
+                })
+                .then(function (html) {
+                    const doc = new DOMParser().parseFromString(html, "text/html");
+                    if (!doc || !doc.body) throw new Error("ما تقراش");
+
+                    return addStyles(doc).then(function () {
+                        if (push) history.pushState({ de: url }, "", url);
+
+                        const paint = function () {
+                            const scripts = swap(doc);
+                            window.scrollTo(0, 0);
+                            return runScripts(scripts);
+                        };
+
+                        /* المتصفح كياخد صورة قبل وبعد وكيمزج بيناتهم.
+                           البار عندها view-transition-name ديالها، إذن
+                           ما كتدخلش فالحركة — كتبقى واقفة. */
+                        if (document.startViewTransition
+                            && !(window.matchMedia
+                                 && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+                            return document.startViewTransition(paint).finished
+                                .catch(function () {});
+                        }
+                        return paint();
+                    });
+                })
+                .then(function () { busy = false; })
+                .catch(function (error) {
+                    console.warn("Router: رجعنا للتنقل العادي", error);
+                    busy = false;
+                    bail();
+                });
+        }
+
+        /* برْكة على صفحة راك فيها = ماشي تنقل. بلا هادشي،
+           المتصفح كيعاود يحمل نفس الصفحة — وهادا بالضبط
+           الـ"refresh" اللي ماكانش خاصو يكون. */
+        function here(link) {
+            const target = link.getAttribute("href");
+            if (!target) return false;
+            const u = new URL(target, location.href);
+            return u.pathname === location.pathname && u.search === location.search;
+        }
+
+        /* البار */
+        nav.addEventListener("click", function (event) {
+            const link = event.target.closest("a");
+            if (!link) return;
+            if (event.button || event.metaKey || event.ctrlKey
+                || event.shiftKey || event.altKey) return;
+            if (link.classList.contains("active") || here(link)) {
+                event.preventDefault();
+                return;
+            }
+            if (event.defaultPrevented || event.button
+                || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            if (!routable(link.getAttribute("href"))) return;
+            event.preventDefault();
+            go(link.href, true);
+        }, true);
+
+        /* مبدّل المستوى */
+        if (levelWrap) {
+            levelWrap.addEventListener("click", function (event) {
+                const link = event.target.closest("a");
+                if (!link) return;
+                if (event.button || event.metaKey || event.ctrlKey
+                    || event.shiftKey || event.altKey) return;
+                if (link.classList.contains("active") || here(link)) {
+                    event.preventDefault();
+                    return;
+                }
+                if (event.defaultPrevented || event.button
+                    || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                if (!routable(link.getAttribute("href"))) return;
+                event.preventDefault();
+                go(link.href, true);
+            }, true);
+        }
+
+        /* زر الرجوع: إلا تبدل اسم الصفحة كنعاودو نجيبوها.
+           إلا تبدل غير ?thema= ولا ?teil=، كنخليو hub ديال
+           القسم يتكلف بيه — ماشي شغلنا. */
+        window.addEventListener("popstate", function () {
+            const now = fileOf(location.pathname);
+            if (now === herefile) return;
+
+            /* Teil 1 ↔ Teil 3 مثلا: hub ديال Lesen كيتكلف */
+            if (lesenFamily(now) && lesenFamily(herefile)) {
+                herefile = now;
+                return;
+            }
+
+            if (routable(location.pathname)) { go(location.href, false); return; }
+
+            /* صفحة ماشي ف اللائحة (chat، Hören Teil…): الرابط ديجا
+               تبدل، إذن reload كيحمل الصفحة الصحيحة. */
+            herefile = now;
+            location.reload();
+        });
+
+        return true;
+    }());
 
     /* الزر العايم ديال الوضع ماعندوش معنى وهاد الزر كاين */
     const floating = document.querySelector(".de-theme-btn");
     if (floating) floating.remove();
     document.documentElement.classList.add("has-site-header");
+
+    /* ---- الطول ديال البار ----
+
+       البار ولات fixed، إذن كتخرج من التدفق. خاص الصفحة
+       تعرف شحال تخلي ليها من فوق — و التبويبات (Teil 1/2/3)
+       خاصها تعرف فين تلصق تحتيها. الطول كيتبدل مع العرض
+       ديال الشاشة، إذن كنقيسوه بدل ما نكتبو رقم ثابت. */
+    function measure() {
+        const h = Math.round(header.getBoundingClientRect().height);
+        if (h > 0) {
+            document.documentElement.style.setProperty("--site-header-h", h + "px");
+        }
+    }
+
+    measure();
+    requestAnimationFrame(measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    window.addEventListener("resize", measure);
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(header);
 
     /* ---- حالة الحساب ---- */
     (async function () {
@@ -343,10 +784,14 @@
 
             authMod.onAuthStateChanged(auth, async function (person) {
                 if (!person) {
+                    /* خرج بصح — كنمسحو الذاكرة باش المرة الجاية
+                       ما نرسموش ليه حساب ماكاينش. */
+                    remember(null);
                     guest.hidden = false;
                     account.hidden = true;
                     openMenu(false);
                     window.__deutschEinfachIsPremium = false;
+                    document.dispatchEvent(new CustomEvent("de-premium", { detail: false }));
                     return;
                 }
 
@@ -374,35 +819,14 @@
 
                 window.__deutschEinfachIsPremium = premium;
 
+                /* باش المرة الجاية البار تبان صحيحة من أول رسمة */
+                remember({ name: name, premium: premium });
+
                 paint(name, premium);
                 buildMenu(person, name, premium);
 
                 /* صفحات فيها محتوى مقفول كتسنى هاد الخبر */
                 document.dispatchEvent(new CustomEvent("de-premium", { detail: premium }));
-
-                /* ---- رسم الزر ---- */
-                function paint(label, isPremium) {
-                    user.textContent = "";
-
-                    const avatar = document.createElement("span");
-                    avatar.className = "site-avatar";
-                    avatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
-                    user.appendChild(avatar);
-
-                    const text = document.createElement("span");
-                    text.className = "site-user-name";
-                    text.textContent = label;
-                    user.appendChild(text);
-
-                    if (isPremium) {
-                        const badge = document.createElement("span");
-                        badge.className = "site-premium";
-                        badge.textContent = "PREMIUM";
-                        user.appendChild(badge);
-                    }
-
-                    user.appendChild(caret);
-                }
 
                 /* ---- القائمة ---- */
                 function buildMenu(who, label, isPremium) {
@@ -523,6 +947,9 @@
                     out.addEventListener("click", async function () {
                         out.disabled = true;
                         try {
+                            /* نمسحو الذاكرة قبل ما نمشيو — وإلا
+                               index.html كتبدا برسم حساب خارج. */
+                            remember(null);
                             await authMod.signOut(auth);
                             location.href = "index.html";
                         } catch (error) {
@@ -569,7 +996,21 @@
             });
         } catch (error) {
             console.warn("Header: Firebase ما تحملش", error);
-            guest.hidden = false;
+
+            /* كان هنا غير `guest.hidden = false` — بلا ما يخبي
+               الحساب. النتيجة: البار كتبين الزوج ف نفس الوقت،
+               الاسم ديال المستعمل *و* «تسجيل الدخول».
+
+               وزيادة: ماقدرناش نتحققو من شكون داخل، إذن إلا
+               كانت عندنا آخر حالة معروفة كنخليوها — أحسن من
+               نوريو «تسجيل الدخول» لواحد داخل ومشترك. */
+            if (recall()) {
+                guest.hidden = true;
+                account.hidden = false;
+            } else {
+                guest.hidden = false;
+                account.hidden = true;
+            }
         }
     })();
 })();

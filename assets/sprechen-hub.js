@@ -22,6 +22,15 @@
 
     if (!grid || !detail) return;
 
+    /* ===== نسخة قديمة؟ =====
+
+       ملي كيتبدل القسم بلا تحميل صفحة، هاد الملف كيتعاود
+       يتنفذ على DOM جديد. النسخة القديمة كتبقى معلقة ف
+       listeners ديال window/document وكتخدم على عناصر تحيدو
+       من الصفحة. هاد الفحص كيسكتها: إلا ماكانش الـgrid ديالي
+       ما زال فالصفحة، إذن أنا النسخة القديمة. */
+    function stale() { return !document.body.contains(grid); }
+
     const PARTS = [
         { key: "teil1", label: "Teil 1", name: "Präsentation" },
         { key: "teil2", label: "Teil 2", name: "Diskussion" },
@@ -300,6 +309,7 @@
 
     /* زر الرجوع ديال الـ navigateur */
     window.addEventListener("popstate", function () {
+        if (stale()) return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
         if (thema) { open(thema, params.get("teil") || "teil1", false); return; }
@@ -321,6 +331,7 @@
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase. */
     document.addEventListener("de-premium", function () {
+        if (stale()) return;
         renderList();
         if (detail.hidden) return;
         const params = new URLSearchParams(location.search);

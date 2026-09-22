@@ -5,7 +5,8 @@
 // GEMINI_API_KEY
 //
 // Optional environment variables:
-// ALLOWED_ORIGIN = https://deutscheinfach.github.io
+// ALLOWED_ORIGIN = https://deutsch-einfach.online,https://deutscheinfach.github.io
+//                  (يقدر يكون أكثر من واحد، مفصولين بفاصلة)
 // GEMINI_MODEL   = gemini-3.6-flash
 
 // gemini-2.5-flash بقا محجور على الحسابات الجداد، و Gemini نفسها
@@ -15,8 +16,27 @@ const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash";
 
 export default {
   async fetch(request, env) {
-    const allowedOrigin =
-      env.ALLOWED_ORIGIN || "https://deutscheinfach.github.io";
+    /* ===== شكون مسموح ليه يعيّط =====
+
+       كان هنا دومين واحد. ملي تزاد دومين جديد، الدومين القديم
+       كيوقف — ولا العكس. والزائر اللي جاي من www كيتسد حتى هو،
+       حيت المتصفح كيشوف www.x.com و x.com بحال جوج مواقع.
+
+       دابا كنقبلو لائحة. كنرجعو بالضبط الدومين اللي جا منو
+       الطلب (إلا كان فاللائحة) — CORS ماكيقبلش لائحة فالجواب،
+       كيقبل واحد برك.
+
+       ALLOWED_ORIGIN فالـdashboard: دومينات مفصولين بفاصلة. */
+    const ALLOWED = (env.ALLOWED_ORIGIN
+        || "https://deutsch-einfach.online,"
+         + "https://www.deutsch-einfach.online,"
+         + "https://deutscheinfach.github.io")
+      .split(",")
+      .map((one) => one.trim())
+      .filter(Boolean);
+
+    const asked = request.headers.get("Origin") || "";
+    const allowedOrigin = ALLOWED.includes(asked) ? asked : ALLOWED[0];
 
     // CORS
     if (request.method === "OPTIONS") {
@@ -638,6 +658,10 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
 function corsHeaders(origin) {
   return {
     "Access-Control-Allow-Origin": origin,
+    /* الجواب كيتبدل حسب الـOrigin ديال الطلب. بلا Vary، شي كاش
+       فالطريق كيقدر يعطي جواب محفوظ لدومين آخر — والمتصفح
+       كيرفضو. */
+    "Vary": "Origin",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Content-Type": "application/json; charset=utf-8",

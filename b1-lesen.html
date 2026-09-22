@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/theme.css?v=43cd561b">
-<link rel="stylesheet" href="assets/site-header.css?v=8f1f0fd2">
+<link rel="stylesheet" href="assets/site-header.css?v=c9280005">
     <style>
 
         * {
@@ -255,7 +255,7 @@
 
 <body>
 <div id="site-header" data-active="lesen"></div>
-<script src="assets/site-header.js?v=ff0c0e13"></script>
+<script src="assets/site-header.js?v=f1150aa1"></script>
 
 
 
@@ -380,7 +380,9 @@
 ========================= */
 
 import {
-    initializeApp
+    initializeApp,
+    getApp,
+    getApps
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
@@ -420,10 +422,15 @@ const firebaseConfig = {
 
 
 
+/* البار ديجا دارت initializeApp — وبـconfig بلا measurementId.
+   إلا عاودنا بـconfig مختلف، Firebase كيرمي app/duplicate-app
+   وهاد الملف كامل كيوقف (يعني حتى الحارس ديال الدخول). */
 const app =
-    initializeApp(
-        firebaseConfig
-    );
+    getApps().length
+        ? getApp()
+        : initializeApp(
+            firebaseConfig
+        );
 
 
 const auth =
