@@ -1529,3 +1529,15 @@
     background: var(--brand-tint);
     border: 1px solid var(--line-gold);
 }
+.t2-note {
+    margin: 0;
+    padding: 9px 12px;
+    border-radius: 12px;
+    background: var(--brand-tint);
+    border: 1px solid var(--line-gold);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.7;
+    direction: rtl;
+    text-align: right;
+}
