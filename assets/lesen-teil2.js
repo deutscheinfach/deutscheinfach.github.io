@@ -16,6 +16,7 @@
        {
          label: "الأساسي",
          title: "…",                             // اختياري — عنوان خاص بهاد النسخة
+         note: "…",                              // اختياري — ملاحظة فوق الأسئلة
          texts: [ … ],                           // اختياري — كيعوض المشتركين
          questions: [
            { num: 6, text: "…", ar: "…",
@@ -141,6 +142,9 @@
             const progress = el("span", "t1-progress");
             panelHead.appendChild(progress);
             panel.appendChild(panelHead);
+
+            /* ملاحظة قصيرة على النسخة (شنو تبدل فيها) */
+            if (variant.note) panel.appendChild(el("p", "t2-note", variant.note));
 
             const rows = variant.questions.map(function (question, qi) {
                 const box = el("div", "t2-q");

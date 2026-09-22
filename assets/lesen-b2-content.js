@@ -475,7 +475,7 @@
 
         /* ================================================================
            Der Puppenmacher — Leseverstehen Teil 2
-           الأساسي: C · A · B · B · A
+           الأساسي: C · A · B · B · A  ·  المعدل 1: A · C · B · B · C
            ================================================================ */
         "t2-puppenmacher": (function () {
             const QUESTIONS = [
@@ -585,7 +585,78 @@
                         }
                     ],
                     variants: [
-                        { label: "الأساسي", questions: QUESTIONS }
+                        { label: "الأساسي", questions: QUESTIONS },
+                        {
+                            label: "المعدل 1",
+                            note: "التعديل لي كاين هو أنهم غير خربقو الترتيب ديال الأجوبة، ولكن الأجوبة الصحيحة راه كتبقى هي النيت ماتبدلاتش.",
+                            questions: [
+                                {
+                                    num: 6, text: "Die erste Schaufensterpuppe wurde", ar: "أول دمية عرض",
+                                    options: [
+                                        { text: "von einem französischen Schneider erfunden.",
+                                          ar: "اخترعها خياط فرنسي." },
+                                        { text: "für die ersten großen Kaufhäuser produziert.",
+                                          ar: "صُنعت لأول المتاجر الكبرى." },
+                                        { text: "Anfang des 20. Jahrhunderts von einem Puppenmacher erschaffen.",
+                                          ar: "صنعها صانع دمى في بداية القرن العشرين." }
+                                    ],
+                                    answer: 0,
+                                    why: QUESTIONS[0].why
+                                },
+                                {
+                                    num: 7, text: "Bei der Restaurierung der Schaufensterpuppen", ar: "عند ترميم دمى العرض",
+                                    options: [
+                                        { text: "verwendet Herr Bauernfeind billige Produkte.",
+                                          ar: "يستخدم السيد باورنفايند منتجات رخيصة." },
+                                        { text: "können keine Luxusmarken eingesetzt werden.",
+                                          ar: "لا يمكن استخدام علامات تجارية فاخرة." },
+                                        { text: "darf Herr Bauernfeind keinen normalen Nagellack auftragen.",
+                                          ar: "لا يُسمح للسيد باورنفايند بوضع طلاء أظافر عادي." }
+                                    ],
+                                    answer: 2,
+                                    why: QUESTIONS[1].why
+                                },
+                                {
+                                    num: 8, text: "Der Puppenmacher", ar: "صانع الدمى",
+                                    options: [
+                                        { text: "organisierte eine Ausstellung mit Schaufensterpuppen.",
+                                          ar: "نظم معرضًا لدمى العرض." },
+                                        { text: "konnte seine erste Schaufensterpuppe nicht auf einmal zahlen.",
+                                          ar: "لم يستطع دفع ثمن دميته الأولى دفعة واحدة." },
+                                        { text: "hat schon als Kind gerne mit Puppen gespielt.",
+                                          ar: "كان يحب اللعب بالدمى منذ طفولته." }
+                                    ],
+                                    answer: 1,
+                                    why: QUESTIONS[2].why
+                                },
+                                {
+                                    num: 9, text: "Herr Bauernfeind", ar: "السيد باورنفايند",
+                                    options: [
+                                        { text: "stellt heute keine Schaufensterpuppen mehr her.",
+                                          ar: "لم يعد يصنع دمى العرض اليوم." },
+                                        { text: "handelt mit Schaufensterpuppen anderer Produzenten.",
+                                          ar: "يتاجر بدمى العرض من منتجين آخرين." },
+                                        { text: "eröffnete die erste Linzer Firma für Schaufensterpuppen.",
+                                          ar: "افتتح أول شركة لدمى العرض في لينتس." }
+                                    ],
+                                    answer: 1,
+                                    why: QUESTIONS[3].why
+                                },
+                                {
+                                    num: 10, text: "Schaufensterpuppen", ar: "دمى العرض",
+                                    options: [
+                                        { text: "sollen immer dieselbe Kleidergröße haben.",
+                                          ar: "يجب أن يكون لها دائمًا نفس مقاس الملابس." },
+                                        { text: "sind nicht von Tendenzen der Mode abhängig.",
+                                          ar: "لا تتأثر باتجاهات الموضة." },
+                                        { text: "können mit umweltfreundlichen Farben bemalt werden.",
+                                          ar: "يمكن أن تُلوَّن بألوان صديقة للبيئة." }
+                                    ],
+                                    answer: 2,
+                                    why: QUESTIONS[4].why
+                                }
+                            ]
+                        }
                     ]
                 }
             };
