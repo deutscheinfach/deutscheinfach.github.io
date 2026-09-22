@@ -474,6 +474,124 @@
         })(),
 
         /* ================================================================
+           Der Puppenmacher — Leseverstehen Teil 2
+           الأساسي: C · A · B · B · A
+           ================================================================ */
+        "t2-puppenmacher": (function () {
+            const QUESTIONS = [
+                {
+                    num: 6, text: "Die erste Schaufensterpuppe wurde", ar: "أول دمية عرض",
+                    options: [
+                        { text: "Anfang des 20. Jahrhunderts von einem Puppenmacher erschaffen.",
+                          ar: "صنعها صانع دمى في بداية القرن العشرين." },
+                        { text: "für die ersten großen Kaufhäuser produziert.",
+                          ar: "صُنعت لأول المتاجر الكبرى." },
+                        { text: "von einem französischen Schneider erfunden.",
+                          ar: "اخترعها خياط فرنسي." }
+                    ],
+                    answer: 2,
+                    why: "حيت النص كيقول فالسطر اللول بلي الخياط الفرنسي Alexis Lavigne هو لي كيتعتابر المخترع ديال المانكان (gilt als ihr Erfinder) ف 1849."
+                },
+                {
+                    num: 7, text: "Bei der Restaurierung der Schaufensterpuppen", ar: "عند ترميم دمى العرض",
+                    options: [
+                        { text: "darf Herr Bauernfeind keinen normalen Nagellack auftragen.",
+                          ar: "لا يُسمح للسيد باورنفايند بوضع طلاء أظافر عادي." },
+                        { text: "können keine Luxusmarken eingesetzt werden.",
+                          ar: "لا يمكن استخدام علامات تجارية فاخرة." },
+                        { text: "verwendet er nur billige Produkte.",
+                          ar: "يستخدم فقط منتجات رخيصة." }
+                    ],
+                    answer: 0,
+                    why: "حيت النص كيقول بلي هو ما يقدرش يستعمل الصباغة ديال الضفار العادية (Nur herkömmlicher Nagellack kann... nicht verwendet werden) حيت كتأثر وكتخسر السطح ديال المانكان (weil dieser die Oberfläche angreift)."
+                },
+                {
+                    num: 8, text: "Der Puppenmacher", ar: "صانع الدمى",
+                    options: [
+                        { text: "hat schon als Kind gerne mit Puppen gespielt.",
+                          ar: "كان يحب اللعب بالدمى منذ طفولته." },
+                        { text: "konnte seine erste Schaufensterpuppe nicht auf einmal zahlen.",
+                          ar: "لم يستطع دفع ثمن دميته الأولى دفعة واحدة." },
+                        { text: "organisierte eine Ausstellung mit Schaufensterpuppen.",
+                          ar: "نظم معرضًا لدمى العرض." }
+                    ],
+                    answer: 1,
+                    why: "حيت النص كيوضح بلي فاش شرا المانكان اللولة ديالو، اقترح على مولاها يخلصها بالتقسيط (bot dem Besitzer Ratenzahlungen an)، وبقى كيخلص فيها عام كامل حيت ما قدرش يخلصها دقة وحدة."
+                },
+                {
+                    num: 9, text: "Herr Bauernfeind", ar: "السيد باورنفايند",
+                    options: [
+                        { text: "eröffnete die erste Linzer Firma für Schaufensterpuppen.",
+                          ar: "افتتح أول شركة لدمى العرض في لينتس." },
+                        { text: "handelt mit Schaufensterpuppen anderer Produzenten.",
+                          ar: "يتاجر بدمى العرض من منتجين آخرين." },
+                        { text: "stellt heute keine Schaufensterpuppen mehr her.",
+                          ar: "لم يعد يصنع دمى العرض اليوم." }
+                    ],
+                    answer: 1,
+                    why: "حيت النص كيقول بلي هو كيبيع مانكانات حتى ديال شركات خرى مصنعة (verkauft auch für andere Hersteller) وعندو وكالة تجارية حصرية لشركة بلجيكية."
+                },
+                {
+                    num: 10, text: "Schaufensterpuppen", ar: "دمى العرض",
+                    options: [
+                        { text: "können mit umweltfreundlichen Farben bemalt werden.",
+                          ar: "يمكن أن تُلوَّن بألوان صديقة للبيئة." },
+                        { text: "sind nicht von Tendenzen der Mode abhängig.",
+                          ar: "لا تتأثر باتجاهات الموضة." },
+                        { text: "sollen immer gleich aussehen.",
+                          ar: "يجب أن تبدو دائمًا متشابهة." }
+                    ],
+                    answer: 0,
+                    why: "حيت النص كيقول بلي طور صباغة للمانكانات لي إيكولوجية وصديقة للبيئة (ökologisch unbedenklich) وآمنة حتى على الإنسان لدرجة يقدر ياكلها."
+                }
+            ];
+
+            return {
+                teil2: {
+                    title: "Der Puppenmacher",
+                    kind: "mc",
+                    texts: [
+                        {
+                            body: "Die Schaufensterpuppe ist eine Pariserin und hatte erstmals 1849 in der Hauptstadt der Mode ihren Auftritt. Der französische Schneider Alexis Lavigne gilt als ihr Erfinder, auch wenn er damals seine Kleiderkreationen noch auf einer Schneiderpuppe vorführte. Bald schon taten ihm andere Pariser gleich: Sie begannen, ihre Modelle in den Schaufenstern aufzustellen, um die Passanten in die Verkaufsräume zu locken.",
+                            ar: "دمية العرض (المانكان) باريسية الأصل، وظهرت لأول مرة سنة 1849 في عاصمة الموضة. يُعتبر الخياط الفرنسي ألكسيس لافين مخترعها، حتى وإن كان في ذلك الوقت يعرض تصاميم ملابسه على دمية خياطة. وسرعان ما قلّده باريسيون آخرون: بدأوا يضعون تصاميمهم في واجهات المحلات لجذب المارّة إلى داخل المتاجر."
+                        },
+                        {
+                            body: "Als Anfang des 20. Jahrhunderts die ersten großen Kaufhäuser öffneten, erlebte die Schaufensterpuppe ihren Durchbruch. Der Puppenmacher Lester Gaba entwickelte in den 1930er Jahren das erste lebensecht wirkende Modell Cynthia. Sie durfte sogar mit auf Veranstaltungen, was beide berühmt machte. Fortan spiegelte die Schaufensterpuppe Zeitgeist und Schönheitsideale.",
+                            ar: "عندما افتُتحت أولى المتاجر الكبرى في بداية القرن العشرين، عرفت دمية العرض انطلاقتها الكبرى. طوّر صانع الدمى ليستر غابا في ثلاثينيات القرن الماضي أول نموذج يبدو حقيقيًا، اسمه «سينثيا». بل كان يُسمح لها بمرافقته إلى المناسبات، وهو ما جعل الاثنين مشهورين. ومنذ ذلك الحين أصبحت دمية العرض تعكس روح العصر ومعايير الجمال."
+                        },
+                        {
+                            body: "Der Linzer Puppenmacher Andreas Bauernfeind hat mit dem Sammeln begonnen; mittlerweile sind Schaufensterpuppen sein Beruf. Der 37-Jährige besitzt mehr als 100 Modelle und ist österreichweit der Einzige, bei dem man sie reparieren lassen und auch mieten kann. Wer ihn an seinem Arbeitsplatz aufsucht, muss in den Keller. Die Eisentüren öffnen sich zu einem großen Atelier voller Schaufensterpuppen: Kinder, Frauen und Männer, mit Perücke, geschminkt oder farblos, sitzend oder liegend. Oder mal in Klarsicht verpackt oder in Einzelteilen von der Decke hängend. Während sich die Puppen in der Welt draußen perfekt präsentieren, wird hier in der Werkstatt mitunter ordentlich an ihrer Oberfläche gekratzt.",
+                            ar: "بدأ صانع الدمى أندرياس باورنفايند من مدينة لينتس بالجمع؛ وأصبحت دمى العرض الآن مهنته. يملك هذا الرجل البالغ 37 عامًا أكثر من 100 نموذج، وهو الوحيد في النمسا كلها الذي يمكن عنده إصلاحها وكرائها أيضًا. من يزوره في مكان عمله عليه أن ينزل إلى القبو. تنفتح الأبواب الحديدية على ورشة كبيرة مليئة بدمى العرض: أطفال ونساء ورجال، بشعر مستعار، بمكياج أو بلا لون، جالسين أو مستلقين. أو أحيانًا ملفوفين في غلاف شفاف أو معلّقين من السقف قطعًا منفصلة. وبينما تظهر الدمى في العالم الخارجي بشكل مثالي، يتم هنا في الورشة أحيانًا حكّ سطحها بقوة."
+                        },
+                        {
+                            body: "Der 37-Jährige ist so etwas wie ein Schönheitschirurg für Schaufensterpuppen. Er macht sie wieder heil, verpasst ihnen aber auch Ganzkörper-Liftings, wenn gewünscht. Die bestehende Farbe wird dann entfernt, anschließend eine Grundierung und Farbe aufgetragen. Ersatzteile kommen aus dem Ausland; die nächste Lieferung aus China kommt in ein paar Wochen. Kosmetikprodukte kommen meistens aus der Drogerie, tragen aber manchmal auch Luxusnamen wie Armani oder Dior. Nur herkömmlicher Nagellack kann bei der Bearbeitung nicht verwendet werden, weil dieser die Oberfläche angreift.",
+                            ar: "هذا الرجل البالغ 37 عامًا هو بمثابة جرّاح تجميل لدمى العرض. يصلحها، لكنه أيضًا يجري لها «شدّ الجسم كاملًا» إذا طُلب ذلك. عندها يُزال اللون الموجود، ثم يوضع طلاء أساسي ولون جديد. قطع الغيار تأتي من الخارج؛ والشحنة القادمة من الصين ستصل بعد بضعة أسابيع. أما مواد التجميل فتأتي غالبًا من الصيدلية/محل المواد الاستهلاكية، لكنها تحمل أحيانًا أسماء فاخرة مثل أرماني أو ديور. فقط طلاء الأظافر العادي لا يمكن استعماله أثناء العمل، لأنه يُتلف السطح."
+                        },
+                        {
+                            body: "Nicht selten fehlt den Puppen ein Finger, ein Ohr oder eine Nase. Dann greift der Linzer zur Modelliermasse, deren Zusammensetzung streng geheim ist. Weniger geheim sind die Preise: für 45 Euro fertigt er eine neue Nase, rekonstruiert ein Ohr oder auch ein Kinn. Wer allerdings einen Kopf modellieren lassen möchte, muss mit 250 Euro und acht Wochen rechnen; für einen ganzen Körper mit 1.500 Euro, und es dauert Monate.",
+                            ar: "ليس نادرًا أن ينقص الدمى إصبع أو أذن أو أنف. عندها يلجأ الرجل من لينتس إلى عجينة التشكيل التي تبقى تركيبتها سرًّا تامًّا. أما الأسعار فليست سرًّا: مقابل 45 يورو يصنع أنفًا جديدًا، أو يعيد تشكيل أذن أو ذقن. لكن من يريد تشكيل رأس كامل فعليه أن يحسب 250 يورو وثمانية أسابيع؛ وللجسم كاملًا 1500 يورو، ويستغرق ذلك شهورًا."
+                        },
+                        {
+                            body: "Obgleich er als Kind am liebsten mit Autos spielte, faszinierten ihn schon früh diese Mannequins in den Schaufenstern. Heute kommt er an keinem Schaufenster vorbei, ohne einen Blick hineinzuwerfen: „Ich erkenne sehr schnell, ob ein Schaufenster neu eingerichtet oder falsch behandelt wird“, sagt der gelernte Dekorateur. Sein erstes Exemplar kaufte er während seiner Ausbildung für 3.500 Schilling und bot dem Besitzer Ratenzahlungen an; ein Jahr lang hat er es abbezahlt. Die Puppe aus der Serie Ragazza mit der Nummer 990 bekam bald Gesellschaft, die Sammlung vergrößerte sich sukzessive und zählte schon bald mehr als 100 Exponate. Aus dem Hobby wurde später ein Beruf.",
+                            ar: "رغم أنه كان يفضّل اللعب بالسيارات في طفولته، إلا أن دمى العرض في الواجهات سحرته منذ وقت مبكر. واليوم لا يمرّ بأي واجهة دون أن يلقي نظرة بداخلها: «أعرف بسرعة كبيرة إن كانت الواجهة قد رُتّبت من جديد أو عوملت بشكل خاطئ»، يقول المزيّن (الديكوراتور) المتخرّج. اشترى أول دمية له خلال فترة تكوينه بـ 3500 شلن، واقترح على صاحبها الدفع بالتقسيط؛ وظلّ يسدّد ثمنها لمدة عام كامل. الدمية من سلسلة «راغاتسا» رقم 990 سرعان ما وجدت رفقة، وكبرت المجموعة تدريجيًا حتى تجاوزت بسرعة 100 قطعة. وتحوّلت الهواية لاحقًا إلى مهنة."
+                        },
+                        {
+                            body: "Bauernfeind vereinte sein Handwerk und unternehmerisches Geschick und gründete schließlich ein eigenes Schaufensterpuppen-Unternehmen in Linz. Heute ist er Besitzer von 1.200 Puppen, vermietet und repariert sie, stellt Sonderanfertigungen her und verkauft auch für andere Hersteller. Er besitzt exklusiv die Handelsvertretung für eine belgische Schaufensterpuppen-Firma. Alle anderen renommierten Hersteller aus Europa haben irgendwann ihre Produktion nach Asien verlagert. Qualität und Nachhaltigkeit sind ihm wichtig. Gemeinsam mit einem Farblieferanten hat er deshalb eine Farbe für Puppen entwickelt, die nicht nur ökologisch unbedenklich, sondern auch für den Menschen unbedenklich ist. Schließlich dringen die Farbstoffe in die Textilien ein: „Die Farbe könnte man sogar essen, und es würde nichts passieren.“",
+                            ar: "جمع باورنفايند بين حرفته ومهارته في التجارة، وأسّس في النهاية شركته الخاصة لدمى العرض في لينتس. اليوم يملك 1200 دمية، يكريها ويصلحها، ويصنع طلبات خاصة، ويبيع أيضًا لحساب مصنّعين آخرين. وهو يملك حصريًا الوكالة التجارية لشركة بلجيكية لدمى العرض. أما كل المصنّعين الأوروبيين المعروفين الآخرين فقد نقلوا إنتاجهم في وقت ما إلى آسيا. الجودة والاستدامة مهمّتان بالنسبة له. لذلك طوّر مع مورّد ألوان لونًا للدمى لا يضرّ البيئة ولا الإنسان أيضًا. ففي النهاية تتسرّب المواد الملوّنة إلى الملابس: «يمكن حتى أكل هذا اللون ولن يحدث شيء.»"
+                        },
+                        {
+                            body: "Weltweit gibt es etwa 100 Hersteller von Schaufensterpuppen, die zweimal im Jahr eine neue Kollektion herausbringen. Denn wie die Mode sind auch die Puppen Trends unterworfen. In Frankreich, England und den USA werden natürliche Modelle immer beliebter, während bei uns noch abstrakte Modelle dominieren. „Es lässt sich aber beobachten, dass man von einer Einheit wegkommt und dass immer häufiger vielfältige Figurtypen gewünscht werden“, sagt der Puppenmacher.",
+                            ar: "يوجد في العالم حوالي 100 مصنّع لدمى العرض، يطرحون مجموعة جديدة مرتين في السنة. فمثل الموضة، تخضع الدمى أيضًا للصيحات. في فرنسا وإنجلترا والولايات المتحدة تزداد شعبية النماذج الطبيعية، بينما لا تزال النماذج التجريدية هي الغالبة عندنا. «لكن يمكن ملاحظة أن الناس يبتعدون عن الشكل الموحّد، وأنه يُطلب أكثر فأكثر أنواع مختلفة من الأجسام»، يقول صانع الدمى."
+                        }
+                    ],
+                    variants: [
+                        { label: "الأساسي", questions: QUESTIONS }
+                    ]
+                }
+            };
+        })(),
+
+        /* ================================================================
            Autos — Leseverstehen Teil 3
            12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (12 و 15)
            ================================================================ */
