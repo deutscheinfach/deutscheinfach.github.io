@@ -181,7 +181,34 @@
 
                 variants: [
                     { label: "الأساسي",
-                      answers: ["K", "E", "X", "A", "C", "H", "F", "J", "B", "G"] }
+                      answers: ["K", "E", "X", "A", "C", "H", "F", "J", "B", "G"] },
+
+                    /* نفس الإعلانات ونفس الحلول — سبعة ديال الوضعيات
+                       (11 · 12 · 13 · 15 · 17 · 18 · 19) تعاودات صياغتها. */
+                    { label: "المعدل",
+                      answers: ["K", "E", "X", "A", "C", "H", "F", "J", "B", "G"],
+                      situations: [
+                          { no: 11, de: "Ein Bekannter hat seine Arbeitsstelle verloren. Er möchte sich von einem Anwalt beraten lassen.",
+                                   ar: "واحد صاحبك تلف ليه الخدمة وباغي يتشاور مع شي محامي." },
+                          { no: 12, de: "Ihr Bekannter ist beruflich oft unterwegs und sucht eine Alternative zu Hotels. Auf Frühstück und Internet möchte er aber nicht verzichten.",
+                                   ar: "واحد صاحبك كيسافر بزاف على قبل الخدمة وكيقلب على بديل للفنادق، ولكن ما باغيش يتخلى على الفطور والأنترنيت." },
+                          { no: 13, de: "Sie verreisen oft und möchten daher Informationen zu einer guten Reiseversicherung.",
+                                   ar: "كتسافر بزاف وباغي معلومات على شي تأمين سفر مزيان." },
+                          { no: 14, de: "Sie möchten durch Europa reisen und privat übernachten.",
+                                   ar: "باغي تسافر ف أوروبا وتبات عند ناس ف ديورهم." },
+                          { no: 15, de: "Eine Bekannte malt sehr gut und sucht eine Gelegenheit, ihre Bilder zu vermarkten.",
+                                   ar: "وحدة صاحبتك كترسم مزيان وكتقلب على فرصة باش تسوّق اللوحات ديالها." },
+                          { no: 16, de: "Sie möchten im Urlaub zwar nicht verreisen, aber trotzdem etwas unternehmen.",
+                                   ar: "فالعطلة ما باغيش تسافر، ولكن باغي دير شي حاجة." },
+                          { no: 17, de: "Sie haben Streit mit Ihrem Vermieter wegen der Nebenkosten und brauchen eine Auskunft.",
+                                   ar: "عندك مشكل مع مول الدار على قبل مصاريف الشارج ومحتاج شي معلومة." },
+                          { no: 18, de: "Sie möchten ausprobieren, ob Sie kreativ mit Stiften, Pinseln und Farben umgehen können.",
+                                   ar: "باغي تجرب واش عندك موهبة فالرسم بالقلوما والبنسل والألوان." },
+                          { no: 19, de: "Ihre Wohnungseinrichtung sieht nicht mehr so gut aus. Daran möchten Sie etwas ändern.",
+                                   ar: "الأثاث ديال دارك ما بقاش شكلو مزيان وباغي تبدل شي حاجة." },
+                          { no: 20, de: "Sie möchten mit Freunden durch Deutschland reisen und dabei günstig übernachten.",
+                                   ar: "باغي تسافر مع صحابك ف ألمانيا وتبات بثمن رخيص." }
+                      ] }
                 ]
             }
         },
