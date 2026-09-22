@@ -17,12 +17,25 @@
         return node;
     }
 
-    const PERKS = [
-        "45 موضوع ف Leseverstehen Teil 1",
-        "3 نسخ لكل موضوع — نفس النص بترويسات مختلفة",
-        "ملخص بالدارجة لكل نص",
-        "تصحيح فوري مع الحلول"
-    ];
+    /* عدد المواضيع كيتحسب من اللائحة، والجزء كيتبدل مع الصفحة —
+       باش ما نبقاوش نكتبو "Teil 1" ف بلاصة كيهضر فيها على Teil 3. */
+    function perks() {
+        const part = (new URLSearchParams(location.search).get("teil"))
+            || (location.pathname.match(/-(teil\d|sprach\d)\.html$/) || [])[1]
+            || "teil1";
+        const label = "Teil " + part.replace(/\D+/g, "");
+        const topics = window.LESEN_B2_TOPICS || window.LESEN_B1_TOPICS || [];
+        const count = topics.filter(function (t) {
+            return !t.parts || t.parts.indexOf(part) !== -1;
+        }).length;
+
+        return [
+            (count || "") + " موضوع ف Leseverstehen " + label,
+            "نسخ متعددة لكل موضوع — نفس النص بترويسات مختلفة",
+            "ملخص بالدارجة لكل نص",
+            "تصحيح فوري مع الحلول"
+        ];
+    }
 
     window.__premiumGate = function (into, options) {
         const config = options || {};
@@ -54,7 +67,7 @@
 
         /* ---- شنو كيربح ---- */
         const list = el("ul", "pg-perks");
-        PERKS.forEach(function (perk) {
+        perks().forEach(function (perk) {
             const row = el("li", "");
             row.appendChild(el("span", "pg-tick", "✓"));
             row.appendChild(document.createTextNode(perk));

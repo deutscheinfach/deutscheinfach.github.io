@@ -13,6 +13,7 @@
     const grid = document.getElementById("lesen-grid");
     const toolbar = document.querySelector(".lesen-toolbar");
     const countEl = document.getElementById("lesen-count");
+    const statEl  = document.getElementById("lesen-stat-count");
     /* الهيدر ديال القسم كامل (العنوان + العداد) والتبويبات ديال فوق —
        خاصهم يتخباو ملي يتحل التمرين، وإلا كيبقاو معلقين فوقو. */
     const heroEl = document.querySelector(".lesen-head-row")
@@ -85,6 +86,8 @@
         grid.textContent = "";
 
         if (countEl) countEl.textContent = list.length ? list.length + " موضوع" : "";
+        /* الرقم ديال فوق كيتبع التبويب الحالي، ماشي رقم ثابت. */
+        if (statEl) statEl.textContent = String(list.length);
 
         if (!list.length) {
             const empty = document.createElement("div");
