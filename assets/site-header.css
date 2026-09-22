@@ -2,16 +2,21 @@
    كيتزاد ف أي صفحة بـ <div id="site-header"></div>.
    الألوان كلها من assets/theme.css، إذن الوضع الفاتح كيخدم بوحدو. */
 
-/* البار واقفة بحق: fixed ماشي sticky.
+/* ===== البار واقفة بحق: fixed ماشي sticky =====
 
    sticky كيتكسر بسهولة — يكفي شي جد عندو overflow ولا
    transform (حركة الدخول ديال الصفحة مثلا) باش يرجع البار
    كتمشي مع السكرول. fixed ماعندوش هاد المشكل، بشرط أن البار
    تكون ولد مباشر ديال <body> — وهادشي كيديرو site-header.js.
 
-   --site-header-h كيقيسو الـJS ملي يرسم البار. الاحتياطي
-   (72px) خدّام حتى قبل ما يوصل الـJS. */
-:root { --site-header-h: 72px; }
+   --site-header-h: الـJS كيقيسو بالضبط ملي يرسم البار، ولكن
+   القيمة هنا خاصها تكون قريبة من الحقيقة *قبل* ما يوصل الـJS.
+   إلا كانت بعيدة (72 والحقيقة 92)، المحتوى كينقز لتحت ملي
+   يوصل الرقم الصحيح. الأرقام مقيسة، ماشي مخمّنة. */
+:root { --site-header-h: 92px; }
+
+@media (max-width: 1000px) { :root { --site-header-h: 122px; } }
+@media (max-width: 1000px) and (pointer: coarse) { :root { --site-header-h: 134px; } }
 
 .site-header {
     position: fixed;
@@ -24,11 +29,58 @@
     -webkit-backdrop-filter: blur(16px) saturate(140%);
 }
 
-/* البار خارجة من التدفق — خاص المحتوى ما يدخلش تحتيها */
-html.has-site-header body { padding-top: var(--site-header-h); }
+/* البار خارجة من التدفق — خاص المحتوى ما يدخلش تحتيها.
+
+   هاد الملف كيتحمّل غير ف الصفحات اللي فيهم البار، إذن
+   ماخاصناش نستناو شي class من الـJS. بلا هادشي، الصفحة
+   كتبان أول 200ms بلا بار وبلا فراغ، ومن بعد كلشي كينقز
+   92px لتحت — وهادا هو "الرعشة" اللي كتبان ف كل برْكة. */
+body { padding-top: var(--site-header-h); }
 
 /* رابط داخلي (#…) ماخاصوش يوقف تحت البار */
-html.has-site-header :target { scroll-margin-top: calc(var(--site-header-h) + 12px); }
+:target { scroll-margin-top: calc(var(--site-header-h) + 12px); }
+
+
+/* ===== الانتقال بين الأقسام: البار ما كتغيبش =====
+
+   Lesen ← Hören هوما جوج صفحات مختلفين، إذن المتصفح كيهدم
+   الصفحة القديمة والبار معاها وكيعاود يبنيها. مهما دار
+   الـCSS، البار كتغمض فداك الوقت.
+
+   View Transitions ديال المتصفح كتحل هادشي: كياخد صورة ديال
+   البار قبل ما يمشي، وكيربطها بالبار ديال الصفحة الجديدة
+   (بنفس view-transition-name). النتيجة: البار كتبقى واقفة
+   فبلاصتها والمحتوى برك هو اللي كيتبدل.
+
+   Chrome/Edge 126+ و Safari 18+ كيدعموها. Firefox ما زال —
+   تما كلشي كيبقى خدام بحال قبل، غير بلا هاد النعومة. */
+@view-transition { navigation: auto; }
+
+.site-header { view-transition-name: de-bar; }
+.site-level-wrap { view-transition-name: de-level; }
+
+/* المحتوى (root) كيخرج لفوق وكيدخل من تحت. البار عندها اسم
+   ديالها، إذن ماشي جزء من root — ما كتشاركش فهاد الحركة
+   وكتبقى واقفة فبلاصتها. المؤشر الأحمر كيزلق بوحدو من Lesen
+   ل Hören حيت المتصفح كيربط الجوج بنفس الاسم. */
+::view-transition-old(root) {
+    animation: de-vt-out .18s cubic-bezier(.4, 0, 1, 1) both;
+}
+::view-transition-new(root) {
+    animation: de-vt-in .26s cubic-bezier(.22, .8, .3, 1) both;
+}
+@keyframes de-vt-out { to   { opacity: 0; transform: translateY(-7px); } }
+@keyframes de-vt-in  { from { opacity: 0; transform: translateY(9px);  } }
+
+/* البار: بدل ما تغمض وتشعل، كتدوز بنعومة قصيرة */
+::view-transition-old(de-bar),
+::view-transition-new(de-bar) { animation-duration: .2s; }
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) { animation: none !important; }
+}
 
 .site-header-inner {
     /* الصفحة الرئيسية RTL والباقي LTR. بلا هادشي الهيدر
@@ -182,7 +234,10 @@ html.has-site-header :target { scroll-margin-top: calc(var(--site-header-h) + 12
     .site-nav { order: 3; width: 100%; margin: 4px 0 0; justify-content: flex-start; }
     .site-actions { margin-inline-start: auto; }
 }
-@media (max-width: 560px) {
+/* من 1000px لتحت البار كتولي سطرين. كانت هاد القواعد كتبدا
+   غير من 560px — النتيجة: بين 561 و1000 (tablet، تيليفون
+   مقلوب) البار كانت 152px واقفين فوق الشاشة. */
+@media (max-width: 1000px) {
     .site-header { padding: 8px 10px; }
     .site-brand-sub { display: none; }
     .site-brand img { width: 34px; height: 34px; }
@@ -203,7 +258,7 @@ html.has-site-header :target { scroll-margin-top: calc(var(--site-header-h) + 12
    ولات fixed وكتبقى واقفة ديما، إذن كل بيكسل زائد فيها هو
    بيكسل ناقص من المحتوى. كنخليوها ف سطرين: (العلامة +
    الحساب) فوق، والتنقل تحت. */
-@media (max-width: 560px) {
+@media (max-width: 1000px) {
     .site-header { padding: 6px 10px; }
     .site-header-inner { gap: 6px; padding: 6px 8px; }
     .site-brand-name { font-size: 14px; }
@@ -215,6 +270,13 @@ html.has-site-header :target { scroll-margin-top: calc(var(--site-header-h) + 12
     /* العلامة كتصغر قبل ما الأزرار تنزل لسطر ديالها */
     .site-brand { flex: 0 1 auto; overflow: hidden; }
     .site-brand-name { overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* شاشة صغيرة بزاف (320px): الاسم + الزرين ما كيدخلوش ف سطر،
+   وكيولّيو تلات سطورة. كنخليو غير الشعار. */
+@media (max-width: 380px) {
+    .site-brand-text { display: none; }
+    .site-user-name { max-width: 7ch; }
 }
 
 /* ===== مبدّل المستوى (Telc B1 / Telc B2) ===== */
@@ -469,6 +531,15 @@ body > *:not(#site-header):not(.site-header):not(script):not(style) {
 }
 html.de-leaving body > *:not(#site-header):not(.site-header):not(script):not(style) {
     animation: de-page-out .26s cubic-bezier(.4, 0, 1, 1) both;
+}
+
+/* المتصفح كيدعم View Transitions؟ إذن هو اللي كيدير الحركة،
+   وهادي كتوقف — وإلا المحتوى كيغمض مرتين. site-header.js
+   كيزيد .de-vt دغيا (سكريبت عادي فوق الصفحة)، قبل ما يتلوّن
+   المحتوى ديال تحت. */
+html.de-vt body > *:not(#site-header):not(.site-header):not(script):not(style),
+html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):not(style) {
+    animation: none;
 }
 
 @keyframes de-page-in  { from { opacity: 0; transform: translateY(9px); } }

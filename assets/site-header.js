@@ -95,6 +95,23 @@
     const still = window.matchMedia
         && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    /* ---- واش المتصفح كيدير View Transitions بين الصفحات؟ ----
+
+       إلا كان كيديرها، هو اللي خاصو يسوق الانتقال: كياخد صورة
+       ديال البار قبل ما يمشي وكيلصقها مع البار ديال الصفحة
+       الجديدة، إذن كتبان واقفة بلا ما تغمض. وخاصنا نحيدو
+       الـfade ديالنا، وإلا كنطفيو المحتوى قبل ما ياخد المتصفح
+       الصورة — وكيخرج انتقال ديال صفحة خاوية.
+
+       onpagereveal هو العلامة ديال الانتقال بين الصفحات
+       (ماشي غير داخل نفس الصفحة بحال startViewTransition). */
+    const crossDocVT = "onpagereveal" in window
+        && typeof CSS !== "undefined"
+        && CSS.supports
+        && CSS.supports("view-transition-name", "none");
+
+    if (crossDocVT) document.documentElement.classList.add("de-vt");
+
     /* بركة عادية على رابط ماشي نشيط؟ */
     function plain(event) {
         const link = event.target.closest("a");
@@ -126,7 +143,10 @@
     }
 
     nav.addEventListener("click", function (event) {
-        if (still) return;
+        /* المتصفح كيسوق الانتقال بوحدو — ماخاصناش نوقفو الرابط.
+           المؤشر ديال القسم الجديد كيكون ديجا فبلاصتو ف الصفحة
+           الجاية، إذن حتى هو ماخاصوش تحريك بالـJS. */
+        if (still || crossDocVT) return;
         const link = plain(event);
         if (!link) return;
         event.preventDefault();
@@ -310,7 +330,7 @@
 
         /* مبدّل المستوى كيمشي بنفس الانتقال ديال الأقسام */
         box.addEventListener("click", function (event) {
-            if (still) return;
+            if (still || crossDocVT) return;
             const link = plain(event);
             if (!link) return;
             event.preventDefault();
