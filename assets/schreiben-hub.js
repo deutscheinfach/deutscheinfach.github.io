@@ -117,7 +117,10 @@
         if (!list.length) {
             const empty = document.createElement("div");
             empty.className = "lesen-empty";
-            empty.textContent = "ماكاين حتى موضوع بهاد الاسم.";
+            const searching = (search ? search.value : "").trim() !== "";
+            empty.textContent = searching
+                ? "ماكاين حتى موضوع بهاد الاسم."
+                : "ما زال ماكاينش مواضيع. قريبا 🙏";
             grid.appendChild(empty);
             return;
         }

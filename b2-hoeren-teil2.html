@@ -286,6 +286,20 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   .native-quiz-wrap { padding: 16px 18px 20px; background: #08090c; }
   html.dark .native-quiz-wrap { background: #111214; }
   .nq-intro { margin: 0 0 14px; font-size: 13px; color: var(--muted); }
+  /* موضوع ما زال ماعندوش الحل: كنقولوها بصريح العبارة بدل ما
+     نحسبو ليه 0/10 ونوريوه "Falsch" على كل جملة. */
+  .nq-nokey {
+    margin: 0 0 14px;
+    padding: 11px 13px;
+    border: 1px solid #f0d0d0;
+    border-radius: 12px;
+    background: #fff6f6;
+    color: #8a3b3b;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+  html.dark .nq-nokey { background: #2a1c1c; border-color: #4a2f2f; color: #f0b9b9; }
   html.dark .nq-intro { color: var(--muted); }
   .nq-question-row {
     display: grid;
@@ -994,7 +1008,6 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 })();
 </script>
 
-<audio id="success-sound" src="" preload="none" style="display:none;" oncontextmenu="return false;"></audio>
 
 <div id="warningBox">Tu vas être déconnecté dans <span id="countdown">30</span> secondes d'inactivité</div>
 
@@ -1099,15 +1112,15 @@ window.__deutschEinfachPremiumReady = (async function () {
   ]
 },
 { href: "", title: "Mallorca-Urlaub (المعدل)", quizId: "Mallorca-Urlaub (المعدل)", questions: [
-    { text: "Die Zahl der deutschen Mallorca-Urlaub hat nur leicht abgenommen.", answer: "" },
+    { text: "Die Zahl der deutschen Mallorca-Urlauber hat nur leicht abgenommen.", answer: "" },
     { text: "Nach Professor Kirsch achten die Deutschen bei der Wahl ihrer Urlaubsreisen nicht besonders auf die Kosten.", answer: "" },
     { text: "Einige Einheimische in Mallorca haben begonnen, sich gegen das Vordringen der deutschen Sprache zu wehren.", answer: "" },
-    { text: "Für den Einbruch des Tourismus auf Mallorca sind verschiedene Faktoren. verantwortlich.", answer: "" },
+    { text: "Für den Einbruch des Tourismus auf Mallorca sind verschiedene Faktoren verantwortlich.", answer: "" },
     { text: "Viele Deutsche haben jetzt Rumänien und Ungarn als Reiseziel entdeckt.", answer: "" },
     { text: "Professor Kirsch weist auf günstige Angebote für Golfspieler am Plattensee hin.", answer: "" },
     { text: "Bulgarien hat sich als Urlaubsland sehr positiv entwickelt.", answer: "" },
     { text: "Viele Westdeutsche meiden Bulgarien, weil die Einreisemodalitäten abschreckend sind.", answer: "" },
-    { text: "Seit Ende der neunziger Jahre geben die Deutschen mehr Geld für den Urlaub aus", answer: "" },
+    { text: "Seit Ende der neunziger Jahre geben die Deutschen mehr Geld für den Urlaub aus.", answer: "" },
     { text: "Durch die Vielzahl aktiver Senioren entsteht eine höhere Nachfrage nach Abenteuerreisen in ferne Länder.", answer: "" }
   ]
 },
@@ -1326,7 +1339,7 @@ window.__deutschEinfachPremiumReady = (async function () {
     { text: "Die Sicherheit, die eine feste Stelle bietet, bedeutet Vanessa nicht viel.", answer: "" },
     { text: "Vanessa ist sich sicher, dass sie nie mehr als Angestellte arbeiten möchte.", answer: "" },
     { text: "Dass sie immer wieder neue Auftraggeber suchen muss, hat für Vanessa auch Vorteile.", answer: "" },
-    { text: "Vanessa Eltern würden auch gerne öfter verreisen.", answer: "" },
+    { text: "Vanessas Eltern würden auch gerne öfter verreisen.", answer: "" },
     { text: "Es fiel Vanessa leicht, sich von persönlichen Gegenständen zu trennen.", answer: "" },
     { text: "Vanessa glaubt, dass man in Zukunft in mehr Berufen ortsunabhängig arbeiten kann.", answer: "" },
     { text: "Auch wer ortsunabhängig arbeitet, sollte nicht zu oft den Ort wechseln.", answer: "" }
@@ -2360,6 +2373,41 @@ window.__deutschEinfachPremiumReady = (async function () {
       clearReveal();
       resultBox.innerHTML = "";
     });
+
+    /* ⚠ الحل ديال هاد الموضوع ما زال ماكاينش (answer خاوي).
+       بلا هاد الفحص، "Antworten prüfen" كيحسب كل جواب غالط
+       وكيقول بلي الصح هو "Falsch" ف كل جملة — الطالب كيتعلم
+       غلط وكيظن بلي الموقع خدام. أحسن نقولو ليه الحقيقة
+       ونخليو غير "Nochmal versuchen". */
+    var hasKey = theme.questions.every(function (q) {
+      return q.answer === "richtig" || q.answer === "falsch";
+    });
+
+    if (!hasKey) {
+      var noKey = document.createElement("p");
+      noKey.className = "nq-nokey";
+      noKey.innerHTML =
+        '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+        'Die Lösungen zu diesem Thema werden noch vorbereitet.' +
+        '<span style="direction:rtl;display:block;margin-top:6px">' +
+        'الحل ديال هاد الموضوع ما زال كنوجدوه. تقدر تقرا الجمل وتتمرن، ' +
+        'ولكن التصحيح ما زال ماكاينش — باش ما نعطيوكش نتيجة غالطة. 🙏' +
+        '</span>';
+      wrap.insertBefore(noKey, wrap.firstChild.nextSibling);
+
+      actions.appendChild(btnRetry);
+      wrap.appendChild(actions);
+      wrap.appendChild(resultBox);
+
+      /* btnRetry كيمسح finalSummary — خاصو يتخلق حتى فهاد الطريق،
+         وإلا البركة عليه كترمي TypeError. */
+      finalSummary = document.createElement("div");
+      finalSummary.className = "nq-final-summary";
+      finalSummary.hidden = true;
+      wrap.appendChild(finalSummary);
+
+      return wrap;
+    }
 
     actions.appendChild(btnCheck);
     actions.appendChild(btnShow);

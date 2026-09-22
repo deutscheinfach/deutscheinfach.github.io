@@ -286,6 +286,20 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   .native-quiz-wrap { padding: 16px 18px 20px; background: #08090c; }
   html.dark .native-quiz-wrap { background: #111214; }
   .nq-intro { margin: 0 0 14px; font-size: 13px; color: var(--muted); }
+  /* موضوع ما زال ماعندوش الحل: كنقولوها بصريح العبارة بدل ما
+     نحسبو ليه 0/10 ونوريوه "Falsch" على كل جملة. */
+  .nq-nokey {
+    margin: 0 0 14px;
+    padding: 11px 13px;
+    border: 1px solid #f0d0d0;
+    border-radius: 12px;
+    background: #fff6f6;
+    color: #8a3b3b;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.7;
+  }
+  html.dark .nq-nokey { background: #2a1c1c; border-color: #4a2f2f; color: #f0b9b9; }
   html.dark .nq-intro { color: var(--muted); }
   .nq-question-row {
     display: grid;
@@ -872,7 +886,6 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='index.html';};
 })();
 </script>
 
-<audio id="success-sound" src="" preload="none" style="display:none;" oncontextmenu="return false;"></audio>
 
 <div id="warningBox">Tu vas être déconnecté dans <span id="countdown">30</span> secondes d'inactivité</div>
 
@@ -1776,6 +1789,41 @@ window.__deutschEinfachPremiumReady = (async function () {
       clearReveal();
       resultBox.innerHTML = "";
     });
+
+    /* ⚠ الحل ديال هاد الموضوع ما زال ماكاينش (answer خاوي).
+       بلا هاد الفحص، "Antworten prüfen" كيحسب كل جواب غالط
+       وكيقول بلي الصح هو "Falsch" ف كل جملة — الطالب كيتعلم
+       غلط وكيظن بلي الموقع خدام. أحسن نقولو ليه الحقيقة
+       ونخليو غير "Nochmal versuchen". */
+    var hasKey = theme.questions.every(function (q) {
+      return q.answer === "richtig" || q.answer === "falsch";
+    });
+
+    if (!hasKey) {
+      var noKey = document.createElement("p");
+      noKey.className = "nq-nokey";
+      noKey.innerHTML =
+        '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+        'Die Lösungen zu diesem Thema werden noch vorbereitet.' +
+        '<span style="direction:rtl;display:block;margin-top:6px">' +
+        'الحل ديال هاد الموضوع ما زال كنوجدوه. تقدر تقرا الجمل وتتمرن، ' +
+        'ولكن التصحيح ما زال ماكاينش — باش ما نعطيوكش نتيجة غالطة. 🙏' +
+        '</span>';
+      wrap.insertBefore(noKey, wrap.firstChild.nextSibling);
+
+      actions.appendChild(btnRetry);
+      wrap.appendChild(actions);
+      wrap.appendChild(resultBox);
+
+      /* btnRetry كيمسح finalSummary — خاصو يتخلق حتى فهاد الطريق،
+         وإلا البركة عليه كترمي TypeError. */
+      finalSummary = document.createElement("div");
+      finalSummary.className = "nq-final-summary";
+      finalSummary.hidden = true;
+      wrap.appendChild(finalSummary);
+
+      return wrap;
+    }
 
     actions.appendChild(btnCheck);
     actions.appendChild(btnShow);

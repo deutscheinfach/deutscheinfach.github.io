@@ -694,13 +694,30 @@ const allowedPages = [
 
     "b2-hoeren.html",
 
+    "b2-hoeren-teil1.html",
+
     "b2-hoeren-teil2.html",
 
     "b2-hoeren-teil3.html",
 
     "b2-schreiben.html",
 
-    "b2-sprechen.html"
+    "b2-sprechen.html",
+
+    "payment.html"
+
+];
+
+
+/*
+ * صفحات التمرين ديال Schreiben هوما 41 (b2-schreiben-01.html …).
+ * ماكنكتبوهمش وحدة بوحدة — نمط واحد كافي، وكيبقى مسدود
+ * على أي اسم آخر.
+ */
+
+const allowedPagePatterns = [
+
+    /^b2-schreiben-\d{2}\.html$/
 
 ];
 
@@ -748,8 +765,23 @@ function isAllowedReturnPage(value) {
                 .pop();
 
 
-        return allowedPages.includes(
-            page
+        if (
+            allowedPages.includes(
+                page
+            )
+        ) {
+
+            return true;
+
+        }
+
+
+        return allowedPagePatterns.some(
+            function(pattern) {
+
+                return pattern.test(page);
+
+            }
         );
 
     }

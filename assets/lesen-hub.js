@@ -123,9 +123,14 @@
         if (!list.length) {
             const empty = document.createElement("div");
             empty.className = "lesen-empty";
-            empty.textContent = topics.length
+            /* فرق مهم: "ماكاين حتى موضوع بهاد الاسم" كتقال غير ملي
+               كاين بحث. إلا كان الجزء خاوي أصلا (Teil 2، Sprach 1/2
+               ما زال ماكاينش فيهم نماذج)، الطالب خاصو يفهم بلي هاد
+               القسم كنوجدوه، ماشي بلي البحث ديالو خايب. */
+            const searching = (search ? search.value : "").trim() !== "";
+            empty.textContent = searching
                 ? "ماكاين حتى موضوع بهاد الاسم."
-                : "ما زال ماكاينش مواضيع.";
+                : "ما زال ماكاينش نماذج ف هاد الجزء. قريبا 🙏";
             grid.appendChild(empty);
             return;
         }
