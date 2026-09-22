@@ -1,27 +1,27 @@
 {
-  "build": "23c8ce2ed088",
+  "build": "c41d46186cd1",
   "assets": {
     "assets/lesen-b2-content.js": "b19235d4",
     "assets/lesen-b2-topics.js": "06729e6d",
     "assets/lesen-engine.js": "9a34516f",
-    "assets/lesen-hub.js": "57b97179",
+    "assets/lesen-hub.js": "865dff1f",
     "assets/lesen-premium.js": "7e90b98e",
     "assets/lesen-teil1.js": "d331d367",
     "assets/lesen-teil3.js": "ec58ac10",
     "assets/premium-gate.js": "6e86f042",
     "assets/schreiben-auth.js": "eb302ca1",
     "assets/schreiben-engine.js": "4e757555",
-    "assets/schreiben-hub.js": "1cbe1724",
+    "assets/schreiben-hub.js": "5c6b51aa",
     "assets/schreiben-style.css": "9bc9027e",
-    "assets/schreiben-topics-b2.js": "59a5d043",
+    "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/section.css": "d6ed94a9",
     "assets/session-guard.js": "d6dfc66e",
     "assets/site-header.css": "c9280005",
-    "assets/site-header.js": "49bc179e",
+    "assets/site-header.js": "f1150aa1",
     "assets/sprechen-b2-content.js": "308095e2",
     "assets/sprechen-b2-topics.js": "886351ae",
     "assets/sprechen-engine.js": "45ed2a28",
-    "assets/sprechen-hub.js": "7e9f5ceb",
+    "assets/sprechen-hub.js": "49a8b701",
     "assets/theme.css": "43cd561b"
   }
 }

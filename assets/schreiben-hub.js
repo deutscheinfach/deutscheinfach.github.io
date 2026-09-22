@@ -17,6 +17,15 @@
 
     if (!grid || !source) return;
 
+    /* ===== نسخة قديمة؟ =====
+
+       ملي كيتبدل القسم بلا تحميل صفحة، هاد الملف كيتعاود
+       يتنفذ على DOM جديد. النسخة القديمة كتبقى معلقة ف
+       listeners ديال window/document وكتخدم على عناصر تحيدو
+       من الصفحة. هاد الفحص كيسكتها: إلا ماكانش الـgrid ديالي
+       ما زال فالصفحة، إذن أنا النسخة القديمة. */
+    function stale() { return !document.body.contains(grid); }
+
     const topics = Object.keys(source)
         .sort()
         .map(function (id) {
@@ -141,5 +150,8 @@
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase —
        اللائحة خاصها تتعاود باش الأقفال يطيحو. */
-    document.addEventListener("de-premium", render);
+    document.addEventListener("de-premium", function () {
+        if (stale()) return;
+        render();
+    });
 })();

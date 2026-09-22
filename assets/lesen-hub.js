@@ -25,6 +25,15 @@
 
     if (!grid || !detail) return;
 
+    /* ===== نسخة قديمة؟ =====
+
+       ملي كيتبدل القسم بلا تحميل صفحة، هاد الملف كيتعاود
+       يتنفذ على DOM جديد. النسخة القديمة كتبقى معلقة ف
+       listeners ديال window/document وكتخدم على عناصر تحيدو
+       من الصفحة. هاد الفحص كيسكتها: إلا ماكانش الـgrid ديالي
+       ما زال فالصفحة، إذن أنا النسخة القديمة. */
+    function stale() { return !document.body.contains(grid); }
+
     /* ===== التنقل بين Teil 1/2/3 بلا تحميل صفحة جديدة =====
 
        ست الصفحات (b2-lesen، teil1…sprach2) كيحمّلو نفس الملفات
@@ -493,6 +502,7 @@
        دابا الرابط كيقدر يتبدل فجوج حالات: موضوع محلول (?thema=)
        ولا جزء آخر (المسار نفسو). خاصنا نتبعو بجوج. */
     window.addEventListener("popstate", function () {
+        if (stale()) return;
         const wanted = partOfFile(location.pathname.split("/").pop());
         if (wanted !== null && wanted !== pagePart) switchPart(wanted, null, false);
 
@@ -516,6 +526,7 @@
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase.
        إلا كان التمرين محلول وهو Premium، كنعاودو نرسموه. */
     document.addEventListener("de-premium", function () {
+        if (stale()) return;
         /* اللائحة خاصها تتعاود: الأقفال كيطيحو ملي يبان الاشتراك */
         renderList();
 

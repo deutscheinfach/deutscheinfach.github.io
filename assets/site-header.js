@@ -23,7 +23,7 @@
         { key: "chat",      href: "chat.html",         label: "Community" }
     ];
 
-    const active = mount.dataset.active || "";
+    let active = mount.dataset.active || "";
 
     const header = document.createElement("header");
     header.className = "site-header";
@@ -48,10 +48,24 @@
     nav.className = "site-nav";
     nav.setAttribute("aria-label", "Bereiche");
 
+    /* المستوى ديال الصفحة الحالية: b1-lesen.html → "b1" */
+    const pageLevel =
+        (location.pathname.split("/").pop() || "").indexOf("b1-") === 0 ? "b1" : "b2";
+
     NAV.forEach(function (item) {
         const link = document.createElement("a");
-        link.href = item.href;
+        /* كانت الروابط ديما b2-*، حتى ملي تكون ف صفحة B1 — إذن
+           من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
+           رابط كيتبع المستوى ديال الصفحة اللي راك فيها.
+           Community ماعندهاش مستوى. */
+        link.href = item.key === "chat"
+            ? item.href
+            : pageLevel + "-" + item.key + ".html";
         link.textContent = item.label;
+        /* الراوتر كيقارن بالمفتاح ماشي بالرابط: الروابط هنا ديما
+           b2-*، حتى ملي تكون ف صفحة B1 (مبدّل المستوى هو اللي
+           كيتكلف بالمستوى). */
+        link.dataset.key = item.key;
         if (item.key === active) {
             link.classList.add("active");
             link.setAttribute("aria-current", "page");
@@ -388,6 +402,7 @@
             const link = document.createElement("a");
             link.href = pair[0] + "-" + active + ".html";
             link.textContent = pair[1];
+            link.dataset.level = pair[0];
             if (pair[0] === level) {
                 link.classList.add("active");
                 link.setAttribute("aria-current", "page");
@@ -423,6 +438,299 @@
     mount.remove();
     document.body.insertBefore(header, document.body.firstChild);
     if (levelWrap) header.insertAdjacentElement("afterend", levelWrap);
+
+
+    /* ===================================================================
+       تبديل القسم بلا ما تتحمل الصفحة
+       ===================================================================
+
+       المشكل: Lesen و Hören و Schreiben و Sprechen هوما أربع صفحات
+       HTML. ملي تبرك على وحدة، المتصفح كيهدم الصفحة الحالية — والبار
+       معاها — وكيعاود يبني كلشي من الصفر. مهما نكتبو `position: fixed`،
+       البار كتغيب ف داك الوقت. هادا هو الـ"refresh" اللي كيبان.
+
+       الحل: كنجيبو الصفحة الجاية بـ fetch، وكنبدلو غير المحتوى ديال
+       <body>. البار ما كنمسوهاش — هي نفس العنصر من أول ما تحلّ الموقع
+       حتى تسدّو. ماكاينش تحميل، ماكاينش وميض، والحالة ديال الحساب
+       كتبقى كيف ما هي.
+
+       علاش هادشي آمن هنا: أربع الصفحات ماعندهمش inline scripts، وكل
+       ملفات assets/*.js مكتوبين ف IIFE بلا تعريفات ف الجذر — إذن
+       كيتعاودو يتنفذو على DOM جديد بلا تصادم. والنسخة القديمة ديال كل
+       hub كتسكت بوحدها (stale()).
+
+       إلا طاح شي حاجة (نت مقطوع، صفحة ماشي ف اللائحة…) كنرجعو للتنقل
+       العادي ديال المتصفح — ماكاين حتى طريق مسدود.
+       =================================================================== */
+    const routerOn = (function () {
+        /* الأقسام + صفحات الأجزاء ديال Lesen (نفس الملفات بالضبط،
+           غير data-teil كيتبدل).
+
+           ماشي داخلين:
+             · chat.html — module كبير و WebRTC، إعادة تنفيذه
+               كتخلق مستمعين مكررين ومكالمات مزدوجة؛
+             · b2-hoeren-teil*.html — فيهم inline scripts فيهم
+               `const` ف الجذر، و`const` مرتين ف نفس الصفحة =
+               SyntaxError.
+           هادو كيتنقلو عادي، وهادشي ماشي مشكل: البار كتعاود
+           تتبنى غير تما، ماشي ف كل برْكة. */
+        const ROUTABLE =
+            /^(b1|b2)-(lesen|hoeren|schreiben|sprechen)\.html$|^b2-lesen-(teil[123]|sprach[12])\.html$/;
+
+        /* عائلة Lesen: lesen-hub.js كيتكلف بتبديل الأجزاء فنفس
+           الصفحة، إذن ملي يكون التنقل جوا هاد العائلة الراوتر
+           خاصو يبعد وما يعاودش يجيب الصفحة. */
+        function lesenFamily(file) {
+            return /^b2-lesen(-(teil[123]|sprach[12]))?\.html$/.test(file || "");
+        }
+
+        /* هادو كيخدمو ف كل الأقسام: كيتحملو مرة وحدة وكيبقاو.
+           إعادة تحميلهم = بار ثانية وحارس جلسة ثاني. */
+        const PERSIST = /\/(site-header|session-guard)\.js/;
+
+        if (!window.fetch || !window.DOMParser
+            || !history.pushState || !window.Promise) return false;
+
+        function fileOf(url) {
+            try {
+                const u = new URL(url, location.href);
+                if (u.origin !== location.origin) return null;
+                return u.pathname.split("/").pop() || "index.html";
+            } catch (error) { return null; }
+        }
+
+        function routable(url) {
+            const file = fileOf(url);
+            return !!file && ROUTABLE.test(file);
+        }
+
+        /* الستايلات: كنزيدو غير اللي ناقص. ماكنحيدو والو — ملفات
+           الأقسام مشتركين، وحيدان وحدة كتخلي الصفحة عريانة للحظة. */
+        function addStyles(doc) {
+            const have = {};
+            Array.prototype.forEach.call(
+                document.querySelectorAll('link[rel="stylesheet"]'),
+                function (link) { have[fileOf(link.href) || link.href] = true; });
+
+            const waits = [];
+            Array.prototype.forEach.call(
+                doc.querySelectorAll('link[rel="stylesheet"]'),
+                function (link) {
+                    const href = link.getAttribute("href");
+                    const key = fileOf(href) || href;
+                    if (!href || have[key]) return;
+                    have[key] = true;
+
+                    const tag = document.createElement("link");
+                    tag.rel = "stylesheet";
+                    tag.href = href;
+                    waits.push(new Promise(function (done) {
+                        tag.onload = tag.onerror = done;
+                        /* ما نوقفوش التبديل على ستايل بطيء */
+                        setTimeout(done, 1500);
+                    }));
+                    document.head.appendChild(tag);
+                });
+            return Promise.all(waits);
+        }
+
+        /* <script> اللي كيجي من innerHTML ماكيتنفذش — خاصنا نعاودو
+           نبنيوه. وكيخصهم يتنفذو واحد من بعد واحد: lesen-hub.js
+           محتاج الداتا اللي قبلو. */
+        function runScripts(nodes) {
+            return nodes.reduce(function (chain, node) {
+                return chain.then(function () {
+                    return new Promise(function (done) {
+                        const tag = document.createElement("script");
+                        Array.prototype.forEach.call(node.attributes, function (a) {
+                            tag.setAttribute(a.name, a.value);
+                        });
+                        if (node.src) {
+                            tag.onload = tag.onerror = done;
+                        } else {
+                            tag.textContent = node.textContent;
+                        }
+                        document.body.appendChild(tag);
+                        if (!node.src) done();
+                    });
+                });
+            }, Promise.resolve());
+        }
+
+        /* البار: القسم النشيط، المؤشر، وروابط المستوى */
+        function setActive(key) {
+            active = key;
+
+            const lvl = (fileOf(location.pathname) || "").indexOf("b1-") === 0 ? "b1" : "b2";
+
+            Array.prototype.forEach.call(nav.querySelectorAll("a"), function (link) {
+                const mine = link.dataset.key === key;
+                /* بدلنا المستوى؟ الروابط خاصها تتبع */
+                if (link.dataset.key !== "chat") {
+                    link.href = lvl + "-" + link.dataset.key + ".html";
+                }
+                link.classList.toggle("active", mine);
+                if (mine) link.setAttribute("aria-current", "page");
+                else link.removeAttribute("aria-current");
+            });
+            placePill();
+
+            /* مبدّل المستوى كيبقى على نفس القسم: Lesen B1 ↔ Lesen B2 */
+            if (levelWrap) {
+                Array.prototype.forEach.call(levelWrap.querySelectorAll("a"), function (link) {
+                    const mine = link.dataset.level === lvl;
+                    link.href = link.dataset.level + "-" + key + ".html";
+                    link.classList.toggle("active", mine);
+                    if (mine) link.setAttribute("aria-current", "page");
+                    else link.removeAttribute("aria-current");
+                });
+            }
+        }
+
+        let busy = false;
+        let herefile = fileOf(location.pathname);
+
+        function swap(doc) {
+            /* كنحيدو المحتوى القديم — غير البار وشريط المستوى
+               كيبقاو. هوما نفس العناصر، ماكيتبناوش من جديد. */
+            const keep = [header, levelWrap];
+            Array.prototype.slice.call(document.body.childNodes).forEach(function (node) {
+                if (keep.indexOf(node) === -1) node.remove();
+            });
+
+            const scripts = [];
+            Array.prototype.slice.call(doc.body.children).forEach(function (node) {
+                if (node.tagName === "SCRIPT") {
+                    if (!PERSIST.test(node.getAttribute("src") || "")) scripts.push(node);
+                    return;
+                }
+                /* الـmount ديال البار: عندنا وحدة حية، ماخاصناش ثانية */
+                if (node.id === "site-header") {
+                    active = node.dataset.active || active;
+                    return;
+                }
+                document.body.appendChild(document.importNode(node, true));
+            });
+
+            document.title = doc.title || document.title;
+            setActive(active);
+            return scripts;
+        }
+
+        function go(url, push) {
+            if (busy) return;
+            busy = true;
+            herefile = fileOf(url);
+
+            const bail = function () { location.href = url; };
+
+            fetch(url, { credentials: "same-origin" })
+                .then(function (res) {
+                    if (!res.ok) throw new Error("HTTP " + res.status);
+                    return res.text();
+                })
+                .then(function (html) {
+                    const doc = new DOMParser().parseFromString(html, "text/html");
+                    if (!doc || !doc.body) throw new Error("ما تقراش");
+
+                    return addStyles(doc).then(function () {
+                        if (push) history.pushState({ de: url }, "", url);
+
+                        const paint = function () {
+                            const scripts = swap(doc);
+                            window.scrollTo(0, 0);
+                            return runScripts(scripts);
+                        };
+
+                        /* المتصفح كياخد صورة قبل وبعد وكيمزج بيناتهم.
+                           البار عندها view-transition-name ديالها، إذن
+                           ما كتدخلش فالحركة — كتبقى واقفة. */
+                        if (document.startViewTransition
+                            && !(window.matchMedia
+                                 && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+                            return document.startViewTransition(paint).finished
+                                .catch(function () {});
+                        }
+                        return paint();
+                    });
+                })
+                .then(function () { busy = false; })
+                .catch(function (error) {
+                    console.warn("Router: رجعنا للتنقل العادي", error);
+                    busy = false;
+                    bail();
+                });
+        }
+
+        /* برْكة على صفحة راك فيها = ماشي تنقل. بلا هادشي،
+           المتصفح كيعاود يحمل نفس الصفحة — وهادا بالضبط
+           الـ"refresh" اللي ماكانش خاصو يكون. */
+        function here(link) {
+            const target = link.getAttribute("href");
+            if (!target) return false;
+            const u = new URL(target, location.href);
+            return u.pathname === location.pathname && u.search === location.search;
+        }
+
+        /* البار */
+        nav.addEventListener("click", function (event) {
+            const link = event.target.closest("a");
+            if (!link) return;
+            if (event.button || event.metaKey || event.ctrlKey
+                || event.shiftKey || event.altKey) return;
+            if (link.classList.contains("active") || here(link)) {
+                event.preventDefault();
+                return;
+            }
+            if (event.defaultPrevented || event.button
+                || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            if (!routable(link.getAttribute("href"))) return;
+            event.preventDefault();
+            go(link.href, true);
+        }, true);
+
+        /* مبدّل المستوى */
+        if (levelWrap) {
+            levelWrap.addEventListener("click", function (event) {
+                const link = event.target.closest("a");
+                if (!link) return;
+                if (event.button || event.metaKey || event.ctrlKey
+                    || event.shiftKey || event.altKey) return;
+                if (link.classList.contains("active") || here(link)) {
+                    event.preventDefault();
+                    return;
+                }
+                if (event.defaultPrevented || event.button
+                    || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                if (!routable(link.getAttribute("href"))) return;
+                event.preventDefault();
+                go(link.href, true);
+            }, true);
+        }
+
+        /* زر الرجوع: إلا تبدل اسم الصفحة كنعاودو نجيبوها.
+           إلا تبدل غير ?thema= ولا ?teil=، كنخليو hub ديال
+           القسم يتكلف بيه — ماشي شغلنا. */
+        window.addEventListener("popstate", function () {
+            const now = fileOf(location.pathname);
+            if (now === herefile) return;
+
+            /* Teil 1 ↔ Teil 3 مثلا: hub ديال Lesen كيتكلف */
+            if (lesenFamily(now) && lesenFamily(herefile)) {
+                herefile = now;
+                return;
+            }
+
+            if (routable(location.pathname)) { go(location.href, false); return; }
+
+            /* صفحة ماشي ف اللائحة (chat، Hören Teil…): الرابط ديجا
+               تبدل، إذن reload كيحمل الصفحة الصحيحة. */
+            herefile = now;
+            location.reload();
+        });
+
+        return true;
+    }());
 
     /* الزر العايم ديال الوضع ماعندوش معنى وهاد الزر كاين */
     const floating = document.querySelector(".de-theme-btn");

@@ -1,6 +1,10 @@
 /* Deutsch Einfach — B2 Schreiben (Beschwerde) — Themendaten
    Jedes Objekt: title, type, level, time, locked, ad, situation, points[4] */
-const SCHREIBEN_B2_TOPICS = {
+/* window.X وماشي const: ملي تبدل القسم بلا تحميل صفحة، هاد
+   الملف كيتعاود يتنفذ. `const` مرتين ف نفس الصفحة = SyntaxError
+   وكلشي كيوقف. window.X كيتكتب فوق القديم بلا مشاكل، واللي
+   كيقرا `SCHREIBEN_B2_TOPICS` نيشان كيبقى خدام. */
+window.SCHREIBEN_B2_TOPICS = {
   "10": {
     "title": "Appartement-Haus",
     "type": "Beschwerde",

@@ -255,7 +255,7 @@
 
 <body>
 <div id="site-header" data-active="lesen"></div>
-<script src="assets/site-header.js?v=49bc179e"></script>
+<script src="assets/site-header.js?v=f1150aa1"></script>
 
 
 
@@ -380,7 +380,9 @@
 ========================= */
 
 import {
-    initializeApp
+    initializeApp,
+    getApp,
+    getApps
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
@@ -420,10 +422,15 @@ const firebaseConfig = {
 
 
 
+/* البار ديجا دارت initializeApp — وبـconfig بلا measurementId.
+   إلا عاودنا بـconfig مختلف، Firebase كيرمي app/duplicate-app
+   وهاد الملف كامل كيوقف (يعني حتى الحارس ديال الدخول). */
 const app =
-    initializeApp(
-        firebaseConfig
-    );
+    getApps().length
+        ? getApp()
+        : initializeApp(
+            firebaseConfig
+        );
 
 
 const auth =
