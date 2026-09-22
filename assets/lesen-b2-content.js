@@ -663,6 +663,102 @@
         })(),
 
         /* ================================================================
+           Die Deutschen und ihre Ernährung — Leseverstehen Teil 2
+           النص اللي وصل كان مخربق (بحال تفريغ صوتي) — تصاوب.
+           الأساسي: B · C · C · C · A
+           ================================================================ */
+        "t2-ernaehrung": (function () {
+            const QUESTIONS = [
+                {
+                    num: 6, text: "Die meisten Befragten finden, dass das Essen", ar: "يرى معظم المستطلَعين أن الطعام",
+                    options: [
+                        { text: "früher besser war.", ar: "كان أفضل في السابق." },
+                        { text: "gesund sein sollte.", ar: "يجب أن يكون صحيًا." },
+                        { text: "vor allem gut schmecken muss.", ar: "يجب قبل كل شيء أن يكون لذيذًا." }
+                    ],
+                    answer: 1,
+                    why: "النص كيقول بلي 45% من الناس اللي شاركوا فالدراسة جابوا بلي كيبغيو الماكلة ديالهم تكون بالأساس صحية (gesund essen möchten). وزاد أكد بلي معيار الصحة ولى كيسبق البنة والمذاق (gesund vor lecker). هادشي كيطابق تماما الجواب بلي الأغلبية كتشوف أن الماكلة خاصها تكون صحية (gesund sein sollte)."
+                },
+                {
+                    num: 7, text: "Das Kriterium „kalorienarm“", ar: "معيار «قليل السعرات الحرارية»",
+                    options: [
+                        { text: "ist für die Hälfte der Befragten wichtig.", ar: "مهم لنصف المستطلَعين." },
+                        { text: "steht bei Übergewichtigen an erster Stelle.", ar: "يأتي في المرتبة الأولى لدى أصحاب الوزن الزائد." },
+                        { text: "war früher wichtiger.", ar: "كان أكثر أهمية في السابق." }
+                    ],
+                    answer: 2,
+                    why: "النص كيشرح بلي معيار الماكلة اللي فيها سعرات حرارية قليلة (kalorienarm) فقد الأهمية ديالو، وحاليا غير 5% اللي كيهتمو بيه مقارنة بـ 9% فالدراسة القديمة (Voruntersuchung). هادشي كيعني بلي هاد المعيار كان مهم كتر شحال هادي (war früher wichtiger)."
+                },
+                {
+                    num: 8, text: "Experten glauben, dass Menschen ungesund essen, weil", ar: "يعتقد الخبراء أن الناس يأكلون بشكل غير صحي، لأن",
+                    options: [
+                        { text: "ihnen Fett und Zucker gut schmecken.", ar: "الدهون والسكر تعجبهم." },
+                        { text: "sie sich nicht genug informieren.", ar: "لا يبحثون عن معلومات كافية." },
+                        { text: "zu viele ungesunde Lebensmittel auf dem Markt sind.", ar: "هناك الكثير من الأطعمة غير الصحية في السوق." }
+                    ],
+                    answer: 2,
+                    why: "الخبراء فالنص كيقولو بلي المشكل ماشي قلة الوعي، ولكن المشكل هو داكشي اللي كتعرض علينا الشركات فالسوق (ein Problem des Angebotes). وكيأكدو بلي الاختيار الصحي ولا صعيب حيت كاين بزاف دالمشروبات والماكلة عامرين سكر. هادشي كيطابق تماما الجواب بلي السوق فيه بزاف ديال الماكلة اللي ماشي صحية (zu viele ungesunde Lebensmittel auf dem Markt sind)."
+                },
+                {
+                    num: 9, text: "Das Wegwerfen von Lebensmitteln", ar: "رمي الطعام",
+                    options: [
+                        { text: "findet ein Drittel der Befragten in Ordnung.", ar: "يعتبره ثلث المستطلَعين أمرًا عاديًا." },
+                        { text: "lehnen jüngere Menschen vollkommen ab.", ar: "يرفضه الشباب تمامًا." },
+                        { text: "passiert bei älteren Menschen fast nie.", ar: "لا يحدث تقريبًا أبدًا لدى كبار السن." }
+                    ],
+                    answer: 2,
+                    why: "النص كيوضح بلي الناس الكبار (من منتصف الستينات لفوق) قليل بزاف فين كيرميو الماكلة، بحيث 86% منهم كيرميوها \"نادرا أو أبدا\" (selten oder nie). هادشي كيطابق تماما الاختيار بلي رميان الماكلة ماكيوقعش تقريبا عند الناس الكبار (passiert bei älteren Menschen fast nie)."
+                },
+                {
+                    num: 10, text: "Der Fleischkonsum", ar: "استهلاك اللحوم",
+                    options: [
+                        { text: "ist nicht in allen Altersgruppen gleich.", ar: "ليس متساويًا في جميع الفئات العمرية." },
+                        { text: "kommt für dreizehn Prozent der Jugendlichen nicht in Frage.", ar: "غير وارد بالنسبة لثلاثة عشر بالمئة من الشباب." },
+                        { text: "nimmt mit dem Alter zu.", ar: "يزداد مع التقدم في العمر." }
+                    ],
+                    answer: 0,
+                    why: "النص كيقول صراحة بلي استهلاك اللحم كيختلف على حساب الفئة العمرية (unterscheidet sich je nach Altersgruppe)، وعطى مثال بلي الشباب (بين 18 و 39 عام) كيتخلاو على اللحم بنسبة كبر من المعدل العام. هادشي كيطابق تماما الاختيار بلي استهلاك اللحم ماشي بحال بحال عند كاع الأعمار (ist nicht in allen Altersgruppen gleich)."
+                }
+            ];
+
+            return {
+                teil2: {
+                    title: "Die Deutschen und ihre Ernährung",
+                    kind: "mc",
+                    texts: [
+                        {
+                            body: "Bei den Deutschen wächst das Bewusstsein für eine gesunde Ernährung. Das geht aus einer kürzlich veröffentlichten Studie hervor, bei der 1.000 Erwachsene in Deutschland zu ihrem Essverhalten befragt wurden. In dieser Untersuchung antworteten 45 % der Befragten auf die Frage, worauf es ihnen bei ihrer Ernährung ankommt, dass sie vor allem gesund essen möchten. Damit steht laut der Studie erstmals das Kriterium „gesund“ vor „lecker“. In der vorhergehenden Umfrage war das Kriterium „lecker“ den Befragten noch am wichtigsten. Dennoch bleibt der Geschmack ein wichtiges Kriterium: Für immerhin 41 % aller Befragten kommt es beim Essen auf den Genuss an.",
+                            ar: "يتزايد وعي الألمان بأهمية التغذية الصحية. هذا ما يتبيّن من دراسة نُشرت مؤخرًا، سُئل فيها 1000 شخص بالغ في ألمانيا عن عاداتهم الغذائية. في هذا البحث أجاب 45% من المستطلَعين، عن سؤال ما هو المهم بالنسبة لهم في تغذيتهم، بأنهم يريدون قبل كل شيء أن يأكلوا بشكل صحي. وبهذا يتقدّم معيار «صحي» لأول مرة على معيار «لذيذ» حسب الدراسة. ففي الاستطلاع السابق كان معيار «لذيذ» هو الأهم لدى المستطلَعين. ومع ذلك يبقى المذاق معيارًا مهمًا: فبالنسبة لـ 41% من كل المستطلَعين، المهم في الأكل هو المتعة."
+                        },
+                        {
+                            body: "Im Vergleich zur Voruntersuchung sind die beiden Kriterien „Hauptsache schnell“ und „Hauptsache günstig“ weniger wichtig geworden: Die Deutschen nehmen sich demnach etwas mehr Zeit für ihre Ernährung und sind auch eher bereit, mehr Geld für gute Lebensmittel auszugeben. Allerdings hat auch das Kriterium „kalorienarm“ an Bedeutung verloren. Nur noch 5 % gegenüber 9 % in der Voruntersuchung denken bei der Wahl von Lebensmitteln an die schlanke Linie. Dazu passt, dass knapp die Hälfte der Befragten selbst angibt, Übergewicht zu haben; manche bezeichnen sich sogar als stark übergewichtig. Gesundheitspsychologen führen das darauf zurück, dass häufig die Zeit für den Einkauf und die Zubereitung von frischen Lebensmitteln fehle. Die Menschen griffen dann aus Bequemlichkeit zu Fertiggerichten oder Snacks, die häufig zu viel Fett, Salz oder Zucker enthielten. Dabei ließen sich durch die Ernährung viele Risikofaktoren reduzieren, betonten die Experten.",
+                            ar: "مقارنة بالدراسة السابقة، أصبح المعياران «المهم أن يكون سريعًا» و«المهم أن يكون رخيصًا» أقل أهمية: أي أن الألمان صاروا يخصّصون وقتًا أكثر قليلًا لتغذيتهم، وأصبحوا أكثر استعدادًا لدفع مال أكثر مقابل أطعمة جيدة. لكن معيار «قليل السعرات الحرارية» فقد هو الآخر من أهميته. فلم يعد يفكّر في الرشاقة عند اختيار الأطعمة سوى 5% مقابل 9% في الدراسة السابقة. ويتماشى مع هذا أن ما يقارب نصف المستطلَعين يقولون بأنفسهم إن لديهم وزنًا زائدًا؛ بل إن بعضهم يصف نفسه بأنه يعاني من وزن زائد كبير. ويُرجع علماء النفس الصحي ذلك إلى أنه غالبًا ما ينقص الوقت لشراء الأطعمة الطازجة وتحضيرها. فيلجأ الناس بدافع الراحة إلى الوجبات الجاهزة أو الوجبات الخفيفة التي تحتوي غالبًا على الكثير من الدهون أو الملح أو السكر. مع أنه يمكن تقليل الكثير من عوامل الخطر عن طريق التغذية، كما أكّد الخبراء."
+                        },
+                        {
+                            body: "An mangelndem Wissen scheint das nicht zu liegen: Nur ein Viertel der Befragten gab an, nicht genug über gesunde Ernährung zu wissen. Dennoch forderten einige Fachleute bessere Verbraucherinformationen. Sie warfen der Bundesregierung vor, es fehle offensichtlich am politischen Willen, sich mit der Branche anzulegen. Die gesunde Wahl werde unnötig schwer gemacht. Ein Großteil der Erfrischungsgetränke sei überzuckert, die Kennzeichnung von Fett, Zucker und Salz sei eine Zumutung, und selbst Süßigkeiten würden wie gesunde Produkte beworben. „Das ist kein Bildungsproblem, sondern ein Problem des Angebotes, das uns die Lebensmittelwirtschaft vorsetzt.“ Deshalb sehen diese Fachleute Industrie und Politik in der Pflicht. „Wenn ich Licht und Lupe brauche, um die Zutatenliste lesen zu können, läuft etwas falsch“, bringt einer von ihnen die Kritik auf den Punkt. Ihr Argument lautet: Das Problem ist nicht, ob vegetarische Produkte „Wurst“ oder „Frikadelle“ heißen dürfen, sondern ob der Verbraucher weiß, welche Zutaten und Stoffe in seiner vermeintlich gesunden Alternative stecken.",
+                            ar: "ولا يبدو أن السبب هو نقص المعرفة: فربع المستطلَعين فقط قالوا إنهم لا يعرفون ما يكفي عن التغذية الصحية. ومع ذلك طالب بعض المختصين بمعلومات أفضل للمستهلكين. واتّهموا الحكومة الاتحادية بأنه من الواضح أنها تفتقر إلى الإرادة السياسية للدخول في مواجهة مع هذا القطاع. فالاختيار الصحي صار صعبًا بلا داعٍ. معظم المشروبات المنعشة مليئة بالسكر، وطريقة الإشارة إلى الدهون والسكر والملح غير مقبولة، بل إن الحلويات نفسها يُعلن عنها كأنها منتجات صحية. «هذه ليست مشكلة تعليم، بل مشكلة العرض الذي تقدّمه لنا صناعة الأغذية.» ولهذا يرى هؤلاء المختصون أن المسؤولية تقع على الصناعة والسياسة. «عندما أحتاج إلى ضوء وعدسة مكبّرة لأتمكّن من قراءة قائمة المكوّنات، فهناك خلل ما»، هكذا يلخّص أحدهم الانتقاد. وحجّتهم هي: المشكلة ليست هل يحقّ للمنتجات النباتية أن تُسمّى «نقانق» أو «كفتة»، بل هل يعرف المستهلك ما هي المكوّنات والمواد الموجودة في بديله الذي يظنّه صحيًا."
+                        },
+                        {
+                            body: "Die Studienergebnisse zeigen, dass es im Umgang mit Lebensmitteln erhebliche Unterschiede zwischen den Altersgruppen gibt. So herrscht bei Jüngeren eine vergleichsweise starke Wegwerfmentalität. Bei 14 % der 18- bis 25-Jährigen landet häufig oder sogar sehr häufig Essen im Müll. Nur jedem Zweiten aus dieser Altersgruppe passiert das selten oder nie. Bei den Älteren ab Mitte 60 entsorgen dagegen 86 % selten oder nie Lebensmittel im Müll. Insgesamt wirft mehr als jeder dritte Deutsche regelmäßig Lebensmittel weg.",
+                            ar: "تُظهر نتائج الدراسة أن هناك فروقًا كبيرة بين الفئات العمرية في التعامل مع الأطعمة. فعند الشباب تسود عقلية رمي قوية نسبيًا. لدى 14% من الذين تتراوح أعمارهم بين 18 و25 عامًا ينتهي الطعام في القمامة غالبًا أو حتى في كثير من الأحيان. ولا يحدث ذلك نادرًا أو أبدًا إلا لواحد من كل اثنين في هذه الفئة العمرية. أما لدى كبار السن من منتصف الستينات فما فوق، فإن 86% منهم نادرًا ما يرمون الأطعمة في القمامة أو لا يرمونها أبدًا. وإجمالًا، يرمي أكثر من ألماني واحد من كل ثلاثة الطعام بانتظام."
+                        },
+                        {
+                            body: "Auch der Fleischkonsum unterscheidet sich je nach Altersgruppe: Unter den 18- bis 39-Jährigen ist der Anteil jener, die auf Fleisch verzichten, höher als in der Gesamtbevölkerung. Insgesamt bezeichnen sich 3 % der Befragten als Vegetarier und 2 % als Veganer. 13 % der Menschen in Deutschland bezeichnen sich als Flexitarier. Flexitarier kaufen meist selbst weder Fleisch noch Wurst, lehnen es aber auch nicht vollständig ab, wenn es ihnen angeboten wird.",
+                            ar: "ويختلف استهلاك اللحوم أيضًا حسب الفئة العمرية: فبين الذين تتراوح أعمارهم بين 18 و39 عامًا، تكون نسبة من يستغنون عن اللحم أعلى منها لدى مجموع السكان. وإجمالًا يصف 3% من المستطلَعين أنفسهم بأنهم نباتيون و2% بأنهم نباتيون صرف (فيغان). و13% من الناس في ألمانيا يصفون أنفسهم بأنهم «مرنون» (فليكسيتاريون). هؤلاء لا يشترون في الغالب بأنفسهم لحمًا ولا نقانق، لكنهم لا يرفضونه تمامًا إذا قُدّم لهم."
+                        },
+                        {
+                            body: "Bioprodukte spielen mittlerweile eine große Rolle. Von den Befragten gaben 40 % an, bevorzugt Lebensmittel mit Bio-Siegel zu kaufen. Vor einigen Jahren gab nur ein Drittel der Befragten an, im Geschäft zu biologisch hergestellten Lebensmitteln zu greifen.",
+                            ar: "أصبحت المنتجات العضوية (البيو) تلعب اليوم دورًا كبيرًا. فقد قال 40% من المستطلَعين إنهم يفضّلون شراء الأطعمة التي تحمل ختم «بيو». وقبل بضع سنوات، كان ثلث المستطلَعين فقط يقولون إنهم يختارون في المتجر الأطعمة المنتَجة بطريقة عضوية."
+                        }
+                    ],
+                    variants: [
+                        { label: "الأساسي", questions: QUESTIONS }
+                    ]
+                }
+            };
+        })(),
+
+        /* ================================================================
            Autos — Leseverstehen Teil 3
            12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (12 و 15)
            ================================================================ */
