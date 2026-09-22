@@ -88,9 +88,21 @@
     window.addEventListener("resize", placePill);
     setTimeout(function () { pill.classList.remove("is-first"); }, 60);
 
-    /* ---- الانتقال ديال الصفحة ---- */
+    /* ---- الانتقال ديال الصفحة ----
+
+       المؤشر كيزلق، المحتوى كيتلاشى، ومنين تسالي الحركة كنمشيو
+       للصفحة الجاية. الهيدر ماشي داخل — كيبقى واقف. */
     const still = window.matchMedia
         && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* بركة عادية على رابط ماشي نشيط؟ */
+    function plain(event) {
+        const link = event.target.closest("a");
+        if (!link || link.classList.contains("active")) return null;
+        if (event.defaultPrevented || event.button
+            || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return null;
+        return link;
+    }
 
     /* كنطفيو المحتوى، ومنين تسالي الحركة كنمشيو. */
     function leaveTo(href) {
@@ -113,34 +125,84 @@
         });
     }
 
-    /* بركة عادية على رابط ماشي نشيط؟ */
-    function plain(event) {
-        const link = event.target.closest("a");
-        if (!link || link.classList.contains("active")) return null;
-        if (event.defaultPrevented || event.button
-            || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return null;
-        return still ? null : link;
-    }
-
     nav.addEventListener("click", function (event) {
+        if (still) return;
         const link = plain(event);
         if (!link) return;
         event.preventDefault();
 
-        /* الصفة "active" خاصها تمشي مع المؤشر. إلا بقات فبلاصتها،
-           الكلمة القديمة كتبقى بلون البياض اللي كان فوق المؤشر —
-           وكتغيب على العينين حتى تبدل الصفحة. */
+        /* اللون ديال الكلمات خاصو يمشي مع المؤشر:
+
+           - القديمة: كانت بيضا حيت المؤشر كان تحتيها. ملي
+             يمشي، خاصها ترجع رمادية *دغيا* — إلا خليناها
+             تتبدل بشوية، كتدوز على بياض فوق بياض وكتغيب.
+
+           - الجديدة: ما تولّيش بيضا حتى يوصل ليها المؤشر،
+             وإلا تبقى بيضا فوق بياض حتى يجي. */
         Array.prototype.forEach.call(nav.querySelectorAll("a.active"), function (old) {
+            old.style.transition = "none";
             old.classList.remove("active");
             old.removeAttribute("aria-current");
+            /* قراءة اللون كتجبر المتصفح يحسب الستايل دابا —
+               إذن التبديل كيوقع بلا انتقال. */
+            getComputedStyle(old).getPropertyValue("color");
+            old.style.transition = "";
         });
+
+        link.style.transition = "color .12s ease .18s";
         link.classList.add("active");
         link.setAttribute("aria-current", "page");
 
-        /* المؤشر كيزلق والمحتوى كيتلاشى ف نفس الوقت */
         movePill(link);
         leaveTo(link.href);
     });
+
+    /* ---- نوجدو الصفحة الجاية قبل ما تبرك ----
+
+       هادي هي اللي كتخلي البار ما يغمضش: المتصفح كيحمل
+       وكيرسم الصفحة الجاية بالخفية ملي تحط الماوس على
+       التبويب. منين تبرك، كيبدلها ف 0 ثانية — الهيدر ديال
+       الصفحة الجديدة كيكون ديجا مرسوم ف نفس البلاصة.
+
+       اللي ماعندوش Speculation Rules (Safari/Firefox) كيتجاهل
+       هاد السطور وكلشي كيبقى خدام عادي. */
+    (function prerender() {
+        if (still) return;
+
+        const file = (location.pathname.split("/").pop() || "").toLowerCase();
+        const level = file.indexOf("b1-") === 0 ? "b1" : "b2";
+
+        const urls = [];
+        NAV.forEach(function (item) {
+            if (item.key === active || item.key === "chat") return;
+            urls.push(level + "-" + item.key + ".html");
+        });
+        /* والمستوى الآخر ديال نفس القسم */
+        if (active) urls.push((level === "b1" ? "b2" : "b1") + "-" + active + ".html");
+
+        if (!urls.length) return;
+
+        /* prefetch: كيجيب غير الـHTML، وكيخدم ف بزاف د المتصفحات.
+           prerender: كيرسمها كاملة، وكيخدم غير ف Chrome الجديد.
+           اللي ماعندوش لا هاد لا هاك، كلشي كيبقى خدام عادي. */
+        urls.forEach(function (url) {
+            const tag = document.createElement("link");
+            tag.rel = "prefetch";
+            tag.href = url;
+            tag.as = "document";
+            document.head.appendChild(tag);
+        });
+
+        if (!HTMLScriptElement.supports
+            || !HTMLScriptElement.supports("speculationrules")) return;
+
+        const rules = document.createElement("script");
+        rules.type = "speculationrules";
+        rules.textContent = JSON.stringify({
+            prerender: [{ source: "list", urls: urls, eagerness: "moderate" }]
+        });
+        document.head.appendChild(rules);
+    }());
 
     /* رجعتي لور؟ الصفحة كانت مطفية فالكاش — نرجعوها */
     window.addEventListener("pageshow", function () {
@@ -235,6 +297,7 @@
 
         /* مبدّل المستوى كيمشي بنفس الانتقال ديال الأقسام */
         box.addEventListener("click", function (event) {
+            if (still) return;
             const link = plain(event);
             if (!link) return;
             event.preventDefault();
