@@ -276,6 +276,73 @@
     account.append(user, menu);
     actions.appendChild(account);
 
+    /* ---- الحساب ديال آخر مرة ----
+
+       Firebase كياخد نص ثانية باش يجاوب. حتى دوك اللحظات،
+       البار كتبين «تسجيل الدخول / إنشاء حساب» حتى للمشترك،
+       ومن بعد كتقلب للاسم ديالو. يعني ف كل برْكة على Lesen ولا
+       Hören، البار كتبدل الشكل ديالها قدام عينيه.
+
+       الحل: كنحتافظو بآخر حالة معروفة، وكنرسموها دغيا. ملي
+       يجاوب Firebase كنصلحو إلا تبدل شي حاجة. هادي زينة
+       برك — الاشتراك الحقيقي كيتحقق منو الـWorker، ماشي هنا. */
+    const LAST = "deutschEinfachLastAccount";
+
+    function remember(data) {
+        try {
+            if (data) localStorage.setItem(LAST, JSON.stringify(data));
+            else localStorage.removeItem(LAST);
+        } catch (error) { /* تصفح خاص: ماشي مشكل */ }
+    }
+
+    function recall() {
+        try {
+            const raw = localStorage.getItem(LAST);
+            if (!raw) return null;
+            const data = JSON.parse(raw);
+            return (data && typeof data.name === "string") ? data : null;
+        } catch (error) { return null; }
+    }
+
+    /* ---- رسم الزر ديال الحساب ---- */
+    function paint(label, isPremium) {
+        user.textContent = "";
+
+        const avatar = document.createElement("span");
+        avatar.className = "site-avatar";
+        avatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
+        user.appendChild(avatar);
+
+        const text = document.createElement("span");
+        text.className = "site-user-name";
+        text.textContent = label;
+        user.appendChild(text);
+
+        if (isPremium) {
+            const badge = document.createElement("span");
+            badge.className = "site-premium";
+            badge.textContent = "PREMIUM";
+            user.appendChild(badge);
+        }
+
+        user.appendChild(caret);
+    }
+
+    /* كنرسمو آخر حالة معروفة دغيا — بلا ما نستناو Firebase.
+       القائمة ما كتتبناش دابا: ماكاينش لعجلة، وهي محتاجة
+       الإيميل الحقيقي. كتوجد ملي يجاوب Firebase. */
+    const last = recall();
+    if (last) {
+        guest.hidden = true;
+        account.hidden = false;
+        paint(last.name, last.premium === true);
+        /* الأقفال ديال الصفحة كيتسناو هاد الخبر. كنعطيوهم
+           التخمين ديال دابا باش البطائق ما يبانوش مقفولين
+           ومن بعد يتحلو — والـWorker على كل حال ماكيعطي حتى
+           كلمة بلا ما يتحقق من token حقيقي. */
+        if (last.premium === true) window.__deutschEinfachIsPremium = true;
+    }
+
     function openMenu(open) {
         menu.hidden = !open;
         account.classList.toggle("is-open", open);
@@ -409,10 +476,14 @@
 
             authMod.onAuthStateChanged(auth, async function (person) {
                 if (!person) {
+                    /* خرج بصح — كنمسحو الذاكرة باش المرة الجاية
+                       ما نرسموش ليه حساب ماكاينش. */
+                    remember(null);
                     guest.hidden = false;
                     account.hidden = true;
                     openMenu(false);
                     window.__deutschEinfachIsPremium = false;
+                    document.dispatchEvent(new CustomEvent("de-premium", { detail: false }));
                     return;
                 }
 
@@ -440,35 +511,14 @@
 
                 window.__deutschEinfachIsPremium = premium;
 
+                /* باش المرة الجاية البار تبان صحيحة من أول رسمة */
+                remember({ name: name, premium: premium });
+
                 paint(name, premium);
                 buildMenu(person, name, premium);
 
                 /* صفحات فيها محتوى مقفول كتسنى هاد الخبر */
                 document.dispatchEvent(new CustomEvent("de-premium", { detail: premium }));
-
-                /* ---- رسم الزر ---- */
-                function paint(label, isPremium) {
-                    user.textContent = "";
-
-                    const avatar = document.createElement("span");
-                    avatar.className = "site-avatar";
-                    avatar.textContent = label.trim().charAt(0).toUpperCase() || "?";
-                    user.appendChild(avatar);
-
-                    const text = document.createElement("span");
-                    text.className = "site-user-name";
-                    text.textContent = label;
-                    user.appendChild(text);
-
-                    if (isPremium) {
-                        const badge = document.createElement("span");
-                        badge.className = "site-premium";
-                        badge.textContent = "PREMIUM";
-                        user.appendChild(badge);
-                    }
-
-                    user.appendChild(caret);
-                }
 
                 /* ---- القائمة ---- */
                 function buildMenu(who, label, isPremium) {
@@ -589,6 +639,9 @@
                     out.addEventListener("click", async function () {
                         out.disabled = true;
                         try {
+                            /* نمسحو الذاكرة قبل ما نمشيو — وإلا
+                               index.html كتبدا برسم حساب خارج. */
+                            remember(null);
                             await authMod.signOut(auth);
                             location.href = "index.html";
                         } catch (error) {
@@ -635,7 +688,21 @@
             });
         } catch (error) {
             console.warn("Header: Firebase ما تحملش", error);
-            guest.hidden = false;
+
+            /* كان هنا غير `guest.hidden = false` — بلا ما يخبي
+               الحساب. النتيجة: البار كتبين الزوج ف نفس الوقت،
+               الاسم ديال المستعمل *و* «تسجيل الدخول».
+
+               وزيادة: ماقدرناش نتحققو من شكون داخل، إذن إلا
+               كانت عندنا آخر حالة معروفة كنخليوها — أحسن من
+               نوريو «تسجيل الدخول» لواحد داخل ومشترك. */
+            if (recall()) {
+                guest.hidden = true;
+                account.hidden = false;
+            } else {
+                guest.hidden = false;
+                account.hidden = true;
+            }
         }
     })();
 })();
