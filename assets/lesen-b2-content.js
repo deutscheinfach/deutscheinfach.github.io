@@ -30,7 +30,11 @@
    ar ديال الترويسة = الترجمة اللي كتبان فاللوحة ديال اليمين.
    ---------------------------------------------------------------
 
-   "teil2" و "sprach1" و "sprach2" (اختيار من متعدد):
+   "teil2" (اختيار من متعدد) — الشكل الجديد: kind "mc"، النص فقرات
+   مع الترجمة، والأسئلة فيهم A/B/C بالعربية والشرح.
+   الشكل كامل مكتوب فوق assets/lesen-teil2.js.
+
+   "sprach1" و "sprach2" (اختيار من متعدد):
      {
        title: "…",
        kind: "choice",
@@ -91,6 +95,111 @@
     }
 
     window.LESEN_B2_CONTENT = {
+
+        /* ================================================================
+           Der Ein-Personen-Karneval von Unna — Leseverstehen Teil 2
+           4 فقرات · 5 أسئلة (6–10) · الحلول A · C · A · B · A
+           ================================================================ */
+        "t2-karneval": {
+            teil2: {
+                title: "Der Ein-Personen-Karneval von Unna",
+                kind: "mc",
+                texts: [
+                    {
+                        body: "Als Helmut Scherer vor genau 50 Jahren zum ersten Mal mit seinem Bollerwagen durch die westfälische Kleinstadt Unna zog, wurde er von den Leuten ausgelacht. Heute aber ist er eine städtische Berühmtheit und sogar weit über die Grenzen seiner Heimatstadt hinaus bekannt.",
+                        ar: "عندما جرّ هيلموت شيرر عربته اليدوية لأول مرة قبل 50 عامًا بالضبط عبر مدينة أونا الصغيرة في منطقة وستفاليا، ضحك عليه الناس. أما اليوم فهو شخصية مشهورة في المدينة، بل ومعروف أيضًا خارج حدود مدينته بكثير."
+                    },
+                    {
+                        body: "Der 71-Jährige ist der einzige Teilnehmer des weltweit kleinsten Karnevalsumzugs. An Weiberfastnacht, dem letzten Donnerstag der Karnevalsperiode eines Jahres, zieht er mit seinem Handwagen los: Er selbst ist dann – dieses Jahr als blondes Schlumpfmädchen – verkleidet und auf seinem Bollerwagen hat er aus Pappe und Gips Figuren aufgebaut, die humoristisch ein aktuelles gesellschaftliches Thema – diesmal die Schulreform – aufgreifen. So macht er sich nach alter karnevalistischer Tradition über Missstände lustig. Helmut Scherer legt natürlich Wert darauf, dass er von Karnevalsmusik begleitet wird, die jedoch nicht von einer Musikgruppe, sondern von einem Radiorekorder gespielt wird.",
+                        ar: "هذا الرجل البالغ من العمر 71 عامًا هو المشارك الوحيد في أصغر موكب كرنفال في العالم. في يوم «فايبرفاستناخت»، وهو آخر خميس من موسم الكرنفال كل عام، ينطلق بعربته اليدوية: يكون هو نفسه متنكّرًا – هذا العام في زيّ فتاة سنفور شقراء – وقد بنى على عربته مجسّمات من الكرتون والجبس تتناول بطريقة فكاهية موضوعًا اجتماعيًا راهنًا – هذه المرة إصلاح التعليم. وهكذا يسخر من السلبيات وفق التقاليد القديمة للكرنفال. وبالطبع يحرص هيلموت شيرر على أن ترافقه موسيقى الكرنفال، لكنها لا تُعزف من فرقة موسيقية، بل من جهاز راديو كاسيت."
+                    },
+                    {
+                        body: "Vor 50 Jahren kam Helmut Scherer aus dem katholisch geprägten Paderborn, wo er seine Kindheit und Jugend verbracht hatte, nach Unna, dessen überwiegend evangelische Bevölkerung sich recht kühl und nüchtern gibt und deshalb anfangs auch wenig Verständnis für den katholischen Karnevalsbrauch zeigte. „Die Leute haben mir einen Vogel gezeigt und den Kopf geschüttelt“, beschreibt der „Narr aus Überzeugung“ die Anfänge. Auch bei der Stadtverwaltung, wo Scherer für Weiberfastnacht seinen Umzug ordnungsgemäß anmeldete, stieß er zunächst auf Unverständnis. Aber da sein Karnevalszug niemanden behinderte und auch nicht zu befürchten war, dass Unnas öffentliche Ordnung gestört würde, bekam er die Erlaubnis, mit seinem humoristischen Handwagen loszumarschieren.",
+                        ar: "قبل 50 عامًا جاء هيلموت شيرر من مدينة بادربورن ذات الطابع الكاثوليكي، حيث قضى طفولته وشبابه، إلى أونا التي يتصرّف سكانها – ومعظمهم بروتستانت – ببرود وجدّية، ولهذا لم يُبدوا في البداية تفهّمًا كبيرًا لعادة الكرنفال الكاثوليكية. «كان الناس يشيرون إلى رؤوسهم (كأنني مجنون) ويهزّون رؤوسهم»، هكذا يصف «المهرّج عن قناعة» البدايات. وحتى في إدارة المدينة، حيث سجّل شيرر موكبه بشكل قانوني ليوم فايبرفاستناخت، قوبل في البداية بعدم الفهم. لكن بما أن موكبه لم يكن يعرقل أحدًا، ولم يكن هناك خوف من الإخلال بالنظام العام في أونا، حصل على الإذن بالانطلاق بعربته الفكاهية."
+                    },
+                    {
+                        body: "Über 10 Jahre lang zog Scherer einsam, belächelt und verspottet durch Unna, weder eisige Kälte noch Schnee konnten ihn davon abhalten. Doch der Karneval blieb für lange Zeit sein Privatvergnügen. Als dann die lokale Presse anfing, ihn zu unterstützen, wandelte sich die Meinung der Öffentlichkeit. Der einst verspottete Karnevalist stieg langsam zum närrischen Wahrzeichen einer Stadt ohne Karneval auf. Für die Stadtoberen ist heute die „Ein-Mann-Show“ die beste Werbung für Unna. Scherers Beharrlichkeit hat sich also ausgezahlt: Anlässlich seines fünfzigsten Karnevalsjubiläums wurde er sogar offiziell im Rathaus empfangen, um ihm – so wie es auch in den Karnevalshochburgen Köln, Düsseldorf und Mainz üblich ist – den goldenen Schlüssel des Rathauses zu übergeben.",
+                        ar: "لأكثر من 10 سنوات كان شيرر يجوب أونا وحيدًا، يُبتسم له باستخفاف ويُسخر منه، ولم يمنعه لا البرد القارس ولا الثلج. لكن الكرنفال ظلّ لفترة طويلة متعته الخاصة. ثم عندما بدأت الصحافة المحلية تدعمه، تغيّر رأي الناس. وشيئًا فشيئًا أصبح الكرنفالي الذي كان يُسخر منه رمزًا فكاهيًا لمدينة بلا كرنفال. واليوم يرى مسؤولو المدينة أن «عرض الرجل الواحد» هو أفضل دعاية لأونا. إذن فقد أثمر إصرار شيرر: فبمناسبة الذكرى الخمسين لكرنفاله استُقبل رسميًا في دار البلدية ليُسلَّم المفتاح الذهبي لدار البلدية – كما هو معتاد في معاقل الكرنفال كولونيا ودوسلدورف وماينتس."
+                    },
+                    {
+                        body: "Obwohl er keinem Karnevalsverein angehört, wurde ihm die Ehre zuteil, als Karnevalsprinz in den Bund Deutscher Karneval aufgenommen zu werden; somit wurde es ihm möglich, auch bei den Rosenmontagszügen in den närrischen Hochburgen im Rheinland mitzuwirken. Weit über hundert Fans des standhaften Narren haben sich zu einem Fan-Club zusammengeschlossen, und etliche stehen beim jährlichen Umzug in Unna am Straßenrand und rufen statt „Spinnen“ den rheinischen Karnevalsgruß „Helau“. Bei allem Fortschritt soll aber eines so bleiben, wie es immer war – einen weiteren Teilnehmer am Zug duldet der Karnevalsprinz nicht: „Die Tradition soll aufrechterhalten bleiben“, sagt er schmunzelnd. „Aber nur solange mich die Füße tragen!“",
+                        ar: "رغم أنه لا ينتمي إلى أي جمعية كرنفال، فقد نال شرف قبوله «أميرًا للكرنفال» في الاتحاد الألماني للكرنفال؛ وبذلك أصبح بإمكانه المشاركة أيضًا في مواكب «روزنمونتاغ» في معاقل الكرنفال بمنطقة الراين. وقد اجتمع أكثر من مئة معجب بهذا المهرّج الصامد في نادٍ للمعجبين، ويقف كثيرون منهم على جانب الطريق خلال الموكب السنوي في أونا، ويهتفون بتحية الكرنفال الراينية «هيلاو» بدلًا من «مجنون». لكن رغم كل هذا التقدّم، يجب أن يبقى شيء واحد كما كان دائمًا – فأمير الكرنفال لا يقبل مشاركًا آخر في الموكب: «يجب الحفاظ على التقليد»، يقول مبتسمًا. «لكن فقط ما دامت قدماي تحملانني!»"
+                    }
+                ],
+                variants: [
+                    {
+                        label: "الأساسي",
+                        questions: [
+                            {
+                                num: 6, text: "Helmut Scherer", ar: "هيلمت شيرر",
+                                options: [
+                                    { text: "führt in Unna einen kleinen Karnevalsumzug durch.",
+                                      ar: "يُجري في أونا موكبًا كرنفاليًا صغيرًا." },
+                                    { text: "ist in Unna seit 50 Jahren eine gefeierte Persönlichkeit.",
+                                      ar: "هو في أونا منذ 50 عامًا شخصية مشهورة." },
+                                    { text: "veranstaltet den einzigen Karnevalsumzug der Welt.",
+                                      ar: "ينظم الموكب الكرنفالي الوحيد في العالم." }
+                                ],
+                                answer: 0,
+                                why: "حيت النص كيبدا وكيركز على أن هلموت داير \"أصغر موكب كرنفال فالعالم\" فمدينة Unna. هو المشارك الوحيد فهاد الموكب (Der 71-Jährige ist der einzige Teilnehmer). هادشي كيعني أنه كينظم موكب صغير ديالو بوحدو وكيدور بيه."
+                            },
+                            {
+                                num: 7, text: "Auf seinem Handwagen", ar: "على عربة يده",
+                                options: [
+                                    { text: "fährt traditionell ein blondes Schulmädchen mit.",
+                                      ar: "تركب معه تقليديًا تلميذة شقراء." },
+                                    { text: "präsentiert er kleine Szenen, die auf den Alltag Bezug nehmen.",
+                                      ar: "يقدم مشاهد صغيرة تتعلق بالحياة اليومية." },
+                                    { text: "stellt er sozialkritische Themen auf witzige Art und Weise dar.",
+                                      ar: "يعرض مواضيع اجتماعية نقدية بطريقة فكاهية." }
+                                ],
+                                answer: 2,
+                                why: "النص كيقول بلي هلموت كيبني مجسمات فوق الكروسة ديالو كتعالج مواضيع ديال المجتمع (gesellschaftliches Thema) بحال إصلاح التعليم هاد العام، وكيدير هادشي بطريقة فكاهية وساخرة باش ينتاقد المشاكل (macht er sich über Missstände lustig). هادشي كيطابق تماما فكرة \"طرح مواضيع النقد الاجتماعي بطريقة مضحكة\"."
+                            },
+                            {
+                                num: 8, text: "Die Bevölkerung von Unna", ar: "سكان أونا",
+                                options: [
+                                    { text: "hatte zunächst wenig Verständnis für Helmut Scherer.",
+                                      ar: "كان لديهم في البداية فهم قليل لهيلمت شيرر." },
+                                    { text: "hielt anfangs Helmut Scherer für kühl und nüchtern.",
+                                      ar: "اعتبروا في البداية هيلمت شيرر باردًا وعقلانيًا." },
+                                    { text: "verhinderte Helmut Scherers ersten Karnevalsumzug.",
+                                      ar: "منعوا أول موكب كرنفالي لهيلمت شيرر." }
+                                ],
+                                answer: 0,
+                                why: "فالفقرة الثالثة، النص كيوضح بلي سكان مدينة Unna معروفين بالجدية والبرودة (kühl und nüchtern). عليها فالبداية ما تقبلوش وما فهموش هاد العادة ديال الكرنفال (wenig Verständnis zeigte)، وكانو كيشوفو فيه بحال شي واحد حمق وكيضحكو عليه قبل ما تتبدل النظرة ديالهم من بعد."
+                            },
+                            {
+                                num: 9, text: "Der kleinste Karnevalsumzug der Welt", ar: "أصغر موكب كرنفالي في العالم",
+                                options: [
+                                    { text: "hat Helmut Scherer sogar Geld eingebracht.",
+                                      ar: "جلب لهيلموت شيرر حتى المال." },
+                                    { text: "ist heute eine gute Reklame für die Stadt Unna.",
+                                      ar: "هو اليوم دعاية جيدة لمدينة أونا." },
+                                    { text: "wird in Zukunft von einer ganzen Gruppe von Leuten durchgeführt.",
+                                      ar: "سيتم تنظيمه في المستقبل من قبل مجموعة كاملة من الناس." }
+                                ],
+                                answer: 1,
+                                why: "مع مرور الوقت، الصحافة والسلطات ديال المدينة تبدلات نظرتهم. النص كيقول حرفيا بلي بالنسبة لمسؤولي المدينة، هاد العرض الفردي ولا هو أحسن إشهار ودعاية لمدينة Unna (die beste Werbung für Unna). كلمة Werbung فالنص كتعني تماما كلمة Reklame لي عطاوك فالسؤال."
+                            },
+                            {
+                                num: 10, text: "Helmut Scherer", ar: "هيلمت شيرر",
+                                options: [
+                                    { text: "hat an Karnevalsumzügen in mehreren Städten teilgenommen.",
+                                      ar: "شارك في مواكب الكرنفال في عدة مدن." },
+                                    { text: "hat inzwischen in ganz Deutschland Fan-Clubs.",
+                                      ar: "لديه الآن أندية مشجعين في جميع أنحاء ألمانيا." },
+                                    { text: "sucht einen Nachfolger.",
+                                      ar: "يبحث عن خليفة." }
+                                ],
+                                answer: 0,
+                                why: "فالفقرة اللخرة تذكر بلي هلموت تعطاتو العضوية الشرفية فـ \"اتحاد الكرنفال الألماني\". هادشي خلاه يقدر يشارك حتى فمواكب ديال مدن أخرى لي معروفة بالكرنفالات فمنطقة الراين (auch bei den Rosenmontagszügen... im Rheinland mitzuwirken) من غير مدينتو Unna."
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
 
         /* ================================================================
            Autos — Leseverstehen Teil 3
