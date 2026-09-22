@@ -222,6 +222,116 @@
         })(),
 
         /* ================================================================
+           Der Fluch des Informationszeitalters — Leseverstehen Teil 2
+           الأساسي: B · C · C · C · B
+           ================================================================ */
+        "t2-informationszeitalter": (function () {
+            const QUESTIONS = [
+                {
+                    num: 6, text: "Melanie Hoffmanns Seminare besuchen", ar: "يحضر ندوات ميلاني هوفمان",
+                    options: [
+                        { text: "ausschließlich Frauen, die im Büro arbeiten.",
+                          ar: "نساء فقط يعملن في المكتب." },
+                        { text: "junge und alte Menschen gleichermaßen.",
+                          ar: "شباب وكبار في السن على حد سواء." },
+                        { text: "überwiegend alte Menschen.",
+                          ar: "في الغالب كبار في السن." }
+                    ],
+                    answer: 1,
+                    why: "حيت النص كيقول بلي هاد المشكل كيعانيو منو الناس فجميع الفئات العمرية (quer durch alle Altersstufen) من التلميذ الصغير حتى للمتقاعد، وهما لي كيحضرو لهاد الدورات ديال الذاكرة."
+                },
+                {
+                    num: 7, text: "Die Teilnehmer besuchen Frau Hoffmanns Seminar, weil sie", ar: "يشارك المشاركون في ندوة السيدة هوفمان لأنهم",
+                    options: [
+                        { text: "das Gefühl haben, dass ihr Gedächtnis schlechter wird.",
+                          ar: "يشعرون أن ذاكرتهم تزداد سوءًا." },
+                        { text: "immer mehr vergessen.",
+                          ar: "ينسون أكثر فأكثر." },
+                        { text: "sich von den vielen Informationen überfordert fühlen.",
+                          ar: "يشعرون بالارتباك من كثرة المعلومات." }
+                    ],
+                    answer: 2,
+                    why: "حيت النص كيوضح بلي المشاركين كيجيهم هاد الكم الهائل والفيضان ديال المعلومات (Informationsflut) صعيب يتحكمو فيه، وكيحسو بلي ما بقاوش قادين ومؤهلين لمتطلبات الذاكرة ديالهم (fühlen sich den Anforderungen an ihr Gedächtnis nicht mehr gewachsen)."
+                },
+                {
+                    num: 8, text: "Jeder Mensch", ar: "كل إنسان",
+                    options: [
+                        { text: "kann sich alle erdenklichen Geräusche und Gerüche merken.",
+                          ar: "يمكنه تذكر جميع الأصوات والروائح الممكنة." },
+                        { text: "kann über einen Zeitraum von 20 Minuten alles behalten.",
+                          ar: "يمكنه الاحتفاظ بكل شيء لمدة 20 دقيقة." },
+                        { text: "vergisst die meisten Informationen innerhalb kürzester Zeit.",
+                          ar: "ينسى معظم المعلومات في أقصر وقت." }
+                    ],
+                    answer: 2,
+                    why: "حيت النص كيأكد بلي باش الدماغ ما يعمرش، الإنسان كينسى تقريبا كاع المعلومات فظرف قصير لي هو 20 ثانية (vergisst man fast alle Informationseinheiten innerhalb der nächsten 20 Sekunden) باش يخلي بلاصة لمعلومات جديدة."
+                },
+                {
+                    num: 9, text: "Besonders gut kann man sich", ar: "يمكن للمرء أن يتذكر بشكل خاص",
+                    options: [
+                        { text: "als Kind etwas merken.",
+                          ar: "شيئًا ما عندما يكون طفلًا." },
+                        { text: "an Daten und Begriffe erinnern.",
+                          ar: "البيانات والمصطلحات." },
+                        { text: "emotional aufgeladene Situationen merken.",
+                          ar: "المواقف المشحونة عاطفيًا." }
+                    ],
+                    answer: 2,
+                    why: "حيت المدربة قالت بلي الانطباعات القوية لي كتكون مرتبطة بالعواطف والمشاعر (die mit Emotionen behaftet sind) كتبقى لاصقة فالذاكرة مزيان وما كتنساش، وعطات مثال بأحداث 11 سبتمبر."
+                },
+                {
+                    num: 10, text: "Suma Hartmann", ar: "سوما هارتمان",
+                    options: [
+                        { text: "lehrt andere, wie man sich „Eselsbrücken“ ausdenkt.",
+                          ar: "تعلّم الآخرين كيف يبتكرون \"جسور الحمار\" (حيل للحفظ)." },
+                        { text: "verbindet Informationen mit Bildern.",
+                          ar: "تربط المعلومات بالصور." },
+                        { text: "verwendet für ihre Aktenablage nur Tiersymbole.",
+                          ar: "تستخدم في تنظيم ملفاتها رموز الحيوانات فقط." }
+                    ],
+                    answer: 1,
+                    why: "حيت سوما كتشرح بلي ولات كتربط المعلومات الجديدة بصور خيالية (bildlich verknüpfe)، بحال ملي كترد رقم واحد شمعة ورقم جوج بجعة باش تعقل على المواعيد والملفات ديالها مزيان."
+                }
+            ];
+
+            return {
+                teil2: {
+                    title: "Der Fluch des Informationszeitalters",
+                    kind: "mc",
+                    texts: [
+                        {
+                            body: "Melanie Hoffmann ist Gedächtnistrainerin. Seit fast zehn Jahren bietet sie nun schon Seminare an Volkshochschulen, in Altenheimen, in Banken und Industriebetrieben an, in denen die Seminarteilnehmer lernen sollen, wie sie Informationen besser im Gedächtnis behalten. Suma Hartmann ist 30 Jahre alt, Bürofachfrau und eine von Melanie Hoffmanns Seminarteilnehmerinnen. „An meinem Arbeitsplatz bekomme ich ständig Massen von neuen Informationen: Texte, die zu lesen sind, Termine, Anrufe, Anfragen von Kunden, Kurzinfos von Kollegen: Diese Informationsflut zu bewältigen und möglichst nichts zu vergessen, ist fast ausgeschlossen“, so Hartmann. Wie ihr geht es vielen Menschen in unserer Informationsgesellschaft – und das quer durch alle Altersstufen: vom Schüler bis zum Rentner. Sie fühlen sich den Anforderungen an ihr Gedächtnis nicht mehr gewachsen, und daher besuchen sie Trainingskurse wie die von Melanie Hoffmann.",
+                            ar: "ميلاني هوفمان مدرّبة ذاكرة. منذ ما يقارب عشر سنوات وهي تقدّم ندوات في الجامعات الشعبية ودور المسنين والبنوك والمؤسسات الصناعية، يتعلّم فيها المشاركون كيف يحتفظون بالمعلومات في ذاكرتهم بشكل أفضل. سوما هارتمان عمرها 30 عامًا، موظفة مكتب وإحدى المشاركات في ندوات ميلاني هوفمان. «في مكان عملي أتلقّى باستمرار كمًّا هائلًا من المعلومات الجديدة: نصوص يجب قراءتها، مواعيد، مكالمات، استفسارات من الزبائن، معلومات قصيرة من الزملاء: التحكّم في هذا الفيض من المعلومات وعدم نسيان أي شيء تقريبًا أمر شبه مستحيل»، تقول هارتمان. وكثير من الناس في مجتمع المعلومات لدينا يعيشون الوضع نفسه – وذلك في جميع الفئات العمرية: من التلميذ إلى المتقاعد. يشعرون بأنهم لم يعودوا قادرين على تلبية المتطلبات المفروضة على ذاكرتهم، ولهذا يحضرون دورات تدريبية مثل دورات ميلاني هوفمان."
+                        },
+                        {
+                            body: "Während jeder Sekunde, die Suma Hartmann im Trainingsseminar, am Arbeitsplatz oder zu Hause verbringt, nimmt sie über ihre „Eingangskanäle“ – die Augen, die Ohren, die Nase, den Mund, die Haut – um die zwei Millionen kleinste Informationen unbewusst auf. Jede kleinste Schwankung in der Licht- oder Farbenintensität, Formen und Farben, Licht und Schatten, alle erdenklichen Geräusche von der Stimme der Seminarleiterin bis zu dem draußen vorbeifahrenden Motorrad, verschiedenste Gerüche vom Schweiß bis zum teuren Parfüm, das Kratzen des Pullovers auf der Haut: All das nimmt sie unbewusst wahr. Würde sie sich all diese Informationen bewusst merken wollen, wäre – wenn man die Sprache der Computerwelt zu Hilfe nimmt – „innerhalb kürzester Zeit der Speicher voll“.",
+                            ar: "في كل ثانية تقضيها سوما هارتمان في الندوة التدريبية أو في العمل أو في البيت، تستقبل دون وعي عبر «قنوات الاستقبال» لديها – العينين والأذنين والأنف والفم والجلد – حوالي مليوني معلومة صغيرة جدًا. كل تغيّر بسيط في شدة الضوء أو الألوان، الأشكال والألوان، الضوء والظل، كل الأصوات الممكنة من صوت مدرّبة الندوة إلى الدراجة النارية المارّة في الخارج، أنواع الروائح من العرق إلى العطر الغالي، حكّة الكنزة على الجلد: كل هذا تدركه دون وعي. ولو أرادت أن تحفظ كل هذه المعلومات بوعي، لكانت – إذا استعرنا لغة عالم الحاسوب – «الذاكرة ممتلئة في وقت قصير جدًا»."
+                        },
+                        {
+                            body: "Damit dies nicht passiert, vergisst man fast alle Informationseinheiten innerhalb der nächsten 20 Sekunden wieder – und schafft damit Platz für neue Informationen. Erst nach etwa 20 Minuten behalten wir etwas auf lange Zeit. Dann haben die Nervenzellen im Gehirn eine neue Verbindung hergestellt, eine Synapse gebildet – und wir behalten etwas, statt es gleich wieder zu vergessen.",
+                            ar: "ولكي لا يحدث ذلك، ينسى الإنسان تقريبًا كل وحدات المعلومات خلال العشرين ثانية التالية – وبذلك يفسح المجال لمعلومات جديدة. ولا نحتفظ بشيء لمدة طويلة إلا بعد حوالي 20 دقيقة. عندها تكون الخلايا العصبية في الدماغ قد أنشأت اتصالًا جديدًا، أي كوّنت مشبكًا عصبيًا – فنحتفظ بالشيء بدل أن ننساه فورًا."
+                        },
+                        {
+                            body: "Die Trainerin Melanie Hoffmann sagt: „Starke Sinneseindrücke, die mit Emotionen behaftet sind, behält man ebenso wie das, was interessant ist oder lebensnotwendig. Ein Kind, das einmal eine heiße Herdplatte angefasst hat, vergisst nie mehr, was ‚heiß‘ bedeutet. Ein Hobbyastronom, dem seine Freizeitbeschäftigung großen Spaß bereitet, kennt nun all die möglichen Namen von Sternen. Und ich habe noch keinen Seminarteilnehmer gehabt, der sich nicht mehr daran erinnern könnte, was am 11. September 2001 in New York passiert ist.“",
+                            ar: "تقول المدرّبة ميلاني هوفمان: «الانطباعات الحسية القوية المرتبطة بالعواطف يحتفظ بها المرء، تمامًا مثل ما هو مثير للاهتمام أو ضروري للحياة. الطفل الذي لمس مرة صفيحة موقد ساخنة لا ينسى أبدًا ما معنى ‹ساخن›. وهاوي الفلك الذي يستمتع كثيرًا بهوايته يعرف كل أسماء النجوم الممكنة. ولم يسبق أن كان عندي مشارك في الندوة لا يتذكر ما حدث في 11 سبتمبر 2001 في نيويورك.»"
+                        },
+                        {
+                            body: "In unserer heutigen Informationsgesellschaft ist es wichtig, die auf uns einströmende Informationsflut zu bündeln. Daten und Begriffe zu gruppieren oder an Bildern oder Gegenständen festzumachen und sich so „Eselsbrücken“ zu bauen, die dabei helfen, mehr im Gedächtnis zu behalten.",
+                            ar: "في مجتمع المعلومات اليوم من المهم تجميع فيض المعلومات الذي يتدفق علينا: تصنيف البيانات والمصطلحات في مجموعات أو ربطها بصور أو أشياء، وبناء «جسور الحمار» (حيل للحفظ) بهذه الطريقة، تساعد على الاحتفاظ بالمزيد في الذاكرة."
+                        },
+                        {
+                            body: "Suma Hartmann „sortiert“ jetzt im Geiste alle wichtigen Informationen in bestimmte Schubladen ihres Aktenschrankes in ihrem Büro: „Ich habe mir Zahlensymbole ausgedacht, mit denen ich die neuen Informationen bildlich verknüpfe: Die Eins wird zur Kerze, die Zwei zum Schwan usw. Wenn ich nicht vergessen möchte, um wie viel Uhr ich eine bestimmte Konferenz vorzubereiten habe, denke ich mir eine Konferenzmappe im Schnabel des Schwans. Und es funktioniert: Ich vergesse viel weniger.“",
+                            ar: "سوما هارتمان «ترتّب» الآن في ذهنها كل المعلومات المهمة في أدراج معيّنة من خزانة الملفات في مكتبها: «ابتكرت رموزًا للأرقام أربط بها المعلومات الجديدة بصريًا: الواحد يصبح شمعة، والاثنان بجعة، وهكذا. عندما لا أريد أن أنسى في أي ساعة يجب أن أحضّر اجتماعًا معيّنًا، أتخيّل ملف الاجتماع في منقار البجعة. وهذا ينجح: أصبحت أنسى أقل بكثير.»"
+                        }
+                    ],
+                    variants: [
+                        { label: "الأساسي", questions: QUESTIONS }
+                    ]
+                }
+            };
+        })(),
+
+        /* ================================================================
            Autos — Leseverstehen Teil 3
            12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (12 و 15)
            ================================================================ */
