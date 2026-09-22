@@ -93,6 +93,101 @@
     window.LESEN_B2_CONTENT = {
 
         /* ================================================================
+           Au-pair-Mädchen — Leseverstehen Teil 3
+           12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (11 و 13)
+           ================================================================ */
+        "t3-aupair": {
+            teil3: {
+                title: "Au-pair-Mädchen",
+                kind: "ads",
+                intro: "Lesen Sie die Situationen 11–20 und die Anzeigen A–L. "
+                     + "Welche Anzeige passt zu welcher Situation? "
+                     + "Jede Anzeige können Sie nur einmal verwenden. "
+                     + "Gibt es zu einer Situation keine passende Anzeige, "
+                     + "markieren Sie X.",
+
+                ads: [
+                    { key: "A", head: "Infos zur Auslandsüberweisung",
+                      body: "Bitte verwenden Sie die Funktion Auslandsüberweisung für Zahlungen in Länder, die nicht zum SEPA-Zahlungsraum gehören. Zu diesem Raum zählen die Mitgliedsstaaten der Europäischen Union sowie Island, Norwegen, Liechtenstein, die Schweiz und Monaco; hier gilt die Inlandsüberweisung, mit der Bürgerinnen und Bürger günstiger überweisen können. Für alle anderen Länder gilt die Auslandsüberweisung. Bitte beachten Sie, dass bei Auslandsüberweisungen in der Regel Spesen zu zahlen sind. Für nähere Auskünfte über deren Höhe wenden Sie sich bitte direkt an die Kundenbetreuung.",
+                      ar: "باش تصيفط لفلوس للبلدان اللي خارجة على منطقة «SEPA»، خاصك تستعمل التحويل الدولي. التحويل لوسط بلدان SEPA (الاتحاد الأوروبي + إيسلندا، النرويج، ليختنشتاين، سويسرا وموناكو) كيكون رخيص بحال إلا كتصيفط لفلوس غير فوسط لبلاد. رد لبال بلي التحويلات الدولية لبلدان خرى غالبا كيكونوا عليها مصاريف زايدة. باش تعرف شحال هي، تواصل ديريكت مع مصلحة الزبناء." },
+
+                    { key: "B", head: "Übersetzungen Deutsch–Französisch / Englisch–Französisch",
+                      body: "Französische Muttersprachler bieten Übersetzungen Deutsch–Französisch und Englisch–Französisch von Schulzeugnissen, Lebensläufen, Bewerbungen (Anschreiben und Motivationsschreiben, Arbeitszeugnisse usw.), Arbeitsverträgen und Versicherungsverträgen. Auf Wunsch erstellen wir Ihre Anzeigen für den französischsprachigen Raum, angepasst an die jeweils landesübliche Anzeigengestaltung. Einwandfreie Qualität, schnell, garantiert termingerecht und zu einem fairen Preis. Kostenvoranschläge innerhalb von zwei Tagen. Standort Wien, Lieferungen innerhalb der EU. Nutzen Sie zur Kontaktaufnahme bitte das Online-Formular am Ende dieser Seite.",
+                      ar: "هاد الناس لي لغتهم الأصلية هي الفرانسوية كيقدمو خدمات ديال الترجمة من الألمانية والإنجليزية للفرانسوية. كيترجمو بزاف ديال الوريقات بحال الشواهد ديال القراية، السيرة الذاتية، وعقود الخدمة والتأمين بجودة عالية وأثمنة مناسبة. كيعطيوك شحال غاتخلص فظرف يومين، وكيوصلو الخدمة فكاع دول الاتحاد الأوروبي. باش تواصل معاهم، عمّر الاستمارة الإلكترونية لي كاينة لتحت فهاد الصفحة." },
+
+                    { key: "C", head: "Ein Schuljahr im Ausland",
+                      body: "Als Austauschschüler/in verbringst du einige Monate oder ein ganzes Jahr im Ausland. Du kannst ein Land in Europa wählen, aber auch Länder auf einem anderen Kontinent, wie zum Beispiel Amerika oder Australien. In dem Land deiner Wahl wohnst du bei einer Gastfamilie. Du besuchst die reguläre Schule, gemeinsam mit Schülerinnen und Schülern aus deinem Gastland. So lernst du die Lebensweise und die Traditionen anderer Menschen kennen. Natürlich lernst du auch die Sprache deines Gastlandes. Wir bieten Informationsveranstaltungen in allen Bundesländern an. Dort beantworten wir alle deine Fragen. Schau doch einfach bei uns vorbei! Wir freuen uns auf dich.",
+                      ar: "تقدر تمشي تقرا برا كتلميذ متبادل لواحد الشهور ولا عام كامل في أوروبا ولا فبلايص خرين بحال ميريكان وأستراليا. غادي تسكن مع عائلة تما وتمشي للمدرسة مع الدراري ديال داك لبلاد باش تعلم لغتهم وتعرف كيفاش كيعيشوا وتقاليدهم. كينظمو لقاءات إخبارية فكاع الولايات باش يجاوبو على كاع لأسئلة ديالك." },
+
+                    { key: "D", head: "Übersetzungen Deutsch–Englisch",
+                      body: "Als gebürtige Engländerin mit einem Studienabschluss in Englisch lebe ich seit vielen Jahren in Österreich. Ich biete Übersetzungen vom Deutschen ins Englische an: Lebensläufe, Ausbildungsunterlagen, Präsentationen, Websites, Produktbeschreibungen, Firmenflyer usw. Ich habe 20 Jahre Erfahrung mit Übersetzungen. Zu meinen zufriedenen Kunden zählen namhafte Unternehmen aus dem In- und Ausland. Auf Wunsch schicke ich Ihnen gerne eine Liste mit Referenzen zu. Wenn es einmal besonders schnell gehen muss, übernehme ich Expressarbeiten auch an Wochenenden. Effizient und zu einem angemessenen Preis. susan@language.at · www.susanlanguage.at",
+                      ar: "هاد السيدة أصلها بريطانية وساكنة ف النمسا، كتقدم خدمة ديال الترجمة من اللغة الألمانية للغة الإنجليزية. عندها خبرة ديال عشرين عام وكترجم كاع الوثائق بحال السيرة الذاتية، المواقع الإلكترونية، والمنشورات ديال الشركات. كدير حتى الخدمة السريعة ف أيام العطلة وبأثمنة مناسبة." },
+
+                    { key: "E", head: "Ein Konto bei der RUFA",
+                      body: "Mit einem Konto bei der RUFA profitieren Sie von attraktiven Angeboten und von persönlicher Beratung. Wir haben das passende Konto für Sie – vom Girokonto bis zum Gratiskonto für Jugendliche. Jetzt aktuell: GRATIS Studentenkonto! Ihnen steht ein persönlicher Berater zur Seite, wenn Sie Auskunft oder Hilfe brauchen. Zusätzlich bietet Ihnen das Konto einige Vorteile, z. B. eine gratis Unfallversicherung bis 24 Jahre. Mit Ihrer RUFA-Clubkarte bekommen Sie außerdem Ermäßigungen in ausgewählten Shops und bei bestimmten Veranstaltungen.",
+                      ar: "بنك «روفا» كيقدم عروض زوينة وأنواع مختلفة ديال الحسابات البنكية مع مواكبة شخصية لكل كليان. كاين دابا عرض خاص للطلبة باش يحلوا حساب فابور. هاد الحساب كيعطي للشباب اللي قل من 24 عام تأمين على الحوادث بلا خلاص، وكارط كتوفر ليك تخفيضات فبزاف ديال المحلات والحفلات." },
+
+                    { key: "F", head: "Gastfamilie werden",
+                      body: "Wir laden Sie dazu ein, internationale Schülerinnen und Schüler bei Ihnen zu Hause aufzunehmen. Dabei bieten Sie einem jungen Menschen mehr als nur einen Platz zum Schlafen und etwas zu essen. Sie helfen ihm, sich in einer fremden Umgebung zurechtzufinden, andere Sitten und Gebräuche und eine fremde Sprache kennenzulernen. Eine Gastschülerin oder einen Gastschüler aufzunehmen ist eine wunderbare Möglichkeit, selbst eine andere Kultur kennenzulernen und gleichzeitig die eigene Kultur zu teilen. Im Alltag können Sie gemeinsam kulturelle Unterschiede entdecken und schätzen lernen. Egal, ob Sie selbst Kinder haben, allein oder in einem klassischen Familienhaushalt leben: Wir freuen uns auf Ihre Bewerbung.",
+                      ar: "هاد الإعلان كيعرض على الناس يستقبلو تلاميذ من بلدان خرى عندهم في الدار. المهمة هي تعاونوهم يوالفو العيشة هنا ويتعلمو اللغة والتقاليد، ماشي غير الماكلة والنعاس. هادي فرصة باش تكتشفو ثقافة جديدة وتشاركو معاهم حتى نتوما التقاليد ديالكم. يقدر أي واحد يقدم الطلب ديالو، سواء كان ساكن بوحدو ولا مع عائلتو ووليداتو." },
+
+                    { key: "G", head: "Freie Mitarbeit: Übersetzungen ins Französische",
+                      body: "Französisch ist Ihre Muttersprache? Wir suchen eine freie Mitarbeiterin oder einen freien Mitarbeiter für Übersetzungen vom Deutschen ins Französische. Sie arbeiten fallweise und von zu Hause aus (keine feste Anstellung). Ihr Aufgabenbereich: Übersetzung von einfachen, kurzen Texten (Anfragen, Beantwortung von Anfragen, Reaktion auf Beschwerden usw.). Wenn nötig, führen Sie auch kurze Telefonate mit französischen Kundinnen oder Kunden. Sie werden von uns eingearbeitet. Sie lernen unsere Produkte und das Fachvokabular anhand zweisprachiger Unterlagen kennen. Bei Fragen stehen Ihnen unsere Mitarbeiter gerne zur Verfügung. Interessiert? Wir freuen uns auf Ihre Online-Bewerbung.",
+                      ar: "كايقلبو على شي حد لغتو الأم هي الفرانساوية باش يخدم معاهم فالترجمة من الألمانية. الخدمة حرة ومن الدار (ماشي عقد قار)، وفيها غير نصوص قصيرة وشي مكالمات مع الكليان. غادي يعاونوك فالبداية باش تعلم السلعة والمصطلحات اللي كايخدمو بيها. إلا عجبك العرض، تقدر تدفع الطلب ديالك فالأنترنت." },
+
+                    { key: "H", head: "Ein Tag im Zeichen der guten Nachbarschaft",
+                      body: "Im Rahmen des europäischen Nachbarschaftstages wurde auch heuer wieder in unserem Bezirk zu gemeinsamem Kochen und Genießen eingeladen. Solche Veranstaltungen dienen dazu, andere Menschen und Kulturen besser kennenzulernen. Wie auch in den vergangenen Jahren wurde das Fest wieder sehr gut aufgenommen; die Veranstalter erhielten begeisterte Mails. Da viele Leute die zahlreichen Spezialitäten aus aller Welt nachkochen möchten, finden Sie hier unser Online-Rezeptbuch mit allen Gerichten des Tages.",
+                      ar: "هاد الإعلان كيهضر على واحد النشاط داروه فالحومة بمناسبة يوم الجيران الأوروبي، فين تجمعات الناس باش يطيبو وياكلو مع بعضياتهم. هاد المناسبة كتعاون الناس باش يتعرفو على بعضياتهم وعلى ثقافات جديدة. الحفلة نجحات بزاف والناس عجباتهم الفكرة. وباش الناس يقدرو يطيبو دوك الشهيوات فديورهم، حطو ليهم كتاب الوصفات فالموقع ديالهم." },
+
+                    { key: "I", head: "Konto-Neuheiten",
+                      body: "Mit der neuen BaZa-App erledigen Sie Ihre Bankgeschäfte, wann und wo Sie wollen. Für die schnelle Überweisung unterwegs, mit ein paar Klicks: Geben Sie einfach den Namen Ihres BaZa-Kontaktes an, alles andere erledigt die App für Sie. Oder per Smartphone-Kamera: Sie fotografieren einen Zahlschein, und die App erfasst die Daten automatisch. Mit der App können Sie auch direkt mit Ihrer Kundenbetreuerin oder Ihrem Kundenbetreuer Kontakt aufnehmen – eine Nachricht schicken, einen Termin vereinbaren oder um einen Rückruf bitten. Für alle, die schon ein BaZa-Konto haben: jetzt die neue App herunterladen.",
+                      ar: "هاد الإعلان كيهضر على تطبيق «باَزا» الجديد اللي كايخليك تدير الأمور البنكية ديالك فينما كنتي وفوقتما بغيتي. تقدر تصيفط الفلوس بسرعة غير بالسمية ديال الشخص، ولا تصوّر ورقة الخلاص بالكاميرا والتطبيق كيقيد المعلومات بوحدو. كيمكن لك كذلك تتواصل مباشرة مع المستشار البنكي ديالك باش تصيفط ليه رسالة ولا تاخد موعد." },
+
+                    { key: "J", head: "Laiendolmetscher an der Volkshochschule",
+                      body: "Seit einigen Jahren bietet die Volkshochschule Laiendolmetscherinnen und Laiendolmetscher an, die fremdsprachigen Eltern den Kontakt mit der Schule erleichtern sollen. Das Angebot soll dazu beitragen, die Beziehungen zwischen Eltern, Lehrerinnen und Lehrern sowie der Schulleitung zu verbessern. Das Ziel ist ein besseres Miteinander und mehr Verständnis füreinander. Die Laiendolmetscher werden von der VHS auf ihre Aufgabe vorbereitet. Momentan bietet die VHS Laiendolmetscher in den Sprachen Albanisch, Bosnisch, Kroatisch, Serbisch, Slowakisch, Rumänisch, Türkisch, Spanisch und Italienisch an. In Zukunft soll das Angebot um weitere Sprachen erweitert werden.",
+                      ar: "مؤسسة التعليم الشعبي (VHS) كتقدم خدمة ديال المترجمين المتطوعين باش يعاونو الوالدين الأجانب يتواصلو بسهولة مع المدرسة د ولادهم. الهدف هو تحسين التفاهم بين الوالدين، الأساتذة، وإدارة المدرسة. هاد المترجمين كيتدربو فـالمؤسسة وحالياً متوفرين بـ 9 د اللغات منها التركية، الإسبانية والإيطالية، وفي المستقبل غادي يزادو لغات أخرين." },
+
+                    { key: "K", head: "Spezialitäten aus der Küche",
+                      body: "Viele klassische Gerichte, die in Österreich auf den Tisch kommen, stammen aus den ehemaligen Kronländern: So kommt das Schnitzel aus Italien, die Palatschinke aus Ungarn, Golatschen und Knödel kommen aus dem heutigen Tschechien. Dazu kommen zahlreiche regionale Spezialitäten wie Kasnudeln aus Kärnten, steirisches Wurzelfleisch oder Salzburger Nockerl. Dies und vieles mehr können Sie bei einem unserer Kochkurse kennenlernen. Besonders willkommen sind Menschen, die aus anderen Ländern zu uns gekommen sind. Die Liste der Veranstaltungen finden Sie weiter unten.",
+                      ar: "هاد الإعلان كيهضر على دورات ديال الطبخ فالنمسا فين يمكن لك تتعلم تطيب أطباق نمساوية تقليدية. بزاف من هاد الأطباق أصلها من بلدان مجاورة بحال إيطاليا والمجر وجمهورية التشيك. هاد الدورات كترحب بالخصوص بالناس اللي جايين من دول أخرين. قائمة الأنشطة والمواعيد كاينة لتحت." },
+
+                    { key: "L", head: "Am Weltspartag zur Bank",
+                      body: "Der Weltspartag wurde am 1. internationalen Sparkassenkongress in Mailand im Oktober 1924 ins Leben gerufen, um die Bevölkerung zum Sparen zu bringen. Offiziell wird der Weltspartag am 31. Oktober gefeiert, in Österreich manchmal auch am letzten Werktag vor dem 31. Oktober. Denn an diesem speziellen Tag sollen die Banken für Kunden geöffnet haben. Besonders bei Kindern ist der Weltspartag sehr beliebt. Sie erhalten nämlich kleine Geschenke, wenn sie an diesem Tag mit ihrem Sparschwein zur Bank kommen. Aber auch für Erwachsene gibt es am Weltspartag oft besondere Angebote.",
+                      ar: "اليوم العالمي للتوفير بدا ف سنة 1924 باش يشجّع الناس يجمعو الفلوس. كيتحتفلو بيه رسمياً نهار 31 أكتوبر، وهاد النهار كيكونو الأبناك حلّين للزبناء. الدراري الصغار كيعجبهم هاد النهار بزاف حيت كياخدو هدايا صغار فاش كيجيبو الحصّالة ديالهم للبنك. وحتى الكبار كيكونو عندهم عروض خاصة." }
+                ],
+
+                situations: [
+                    { no: 11, de: "Sie suchen ein Au-pair-Mädchen, das im Haushalt helfen und mit Ihren Kindern Englisch sprechen soll.",
+                             ar: "كتقلب على بنت أوبير تعاونك فالدار وتهضر مع وليداتك بالإنجليزية." },
+                    { no: 12, de: "Ihre 14-jährige Nichte möchte sich über einen Auslandsaufenthalt informieren.",
+                             ar: "بنت ختك اللي عندها 14 عام باغة تعرف على الإقامة فالخارج." },
+                    { no: 13, de: "Ihr Sohn möchte als Koch im Ausland arbeiten. Er sucht nach einer passenden Stelle.",
+                             ar: "ولدك باغي يخدم كطباخ فالخارج وكيقلب على شي بلاصة مناسبة." },
+                    { no: 14, de: "Eine französische Bekannte ist Übersetzerin und möchte gelegentlich arbeiten.",
+                             ar: "وحدة صاحبتك فرنسية مترجمة وباغة تخدم مرة مرة." },
+                    { no: 15, de: "Ihre kinderlose Nachbarsfamilie möchte für einige Zeit einen jungen Menschen aufnehmen.",
+                             ar: "الجيران ديالك اللي ما عندهمش دراري باغين يستقبلو شي شاب لواحد المدة." },
+                    { no: 16, de: "Sie sollen die neue Webseite Ihrer Firma ins Englische übersetzen lassen.",
+                             ar: "خاصك تترجم الموقع الجديد ديال الشركة ديالك للإنجليزية." },
+                    { no: 17, de: "Sie kochen gerne und suchen nach Rezepten aus anderen Ländern.",
+                             ar: "كيعجبك الطياب وكتقلب على وصفات من بلدان أخرى." },
+                    { no: 18, de: "Im Herbst beginnt Ihre Tochter ein Studium. Sie möchte ein Bankkonto eröffnen.",
+                             ar: "بنتك غادي تبدا القراية فالخريف وباغة تحل حساب بنكي." },
+                    { no: 19, de: "Sie wollen Geld nach Kanada überweisen. Sie möchten wissen, wie viel Sie für die Überweisung bezahlen müssen.",
+                             ar: "باغي تصيفط فلوس لكندا وباغي تعرف شحال غاتخلص على التحويل." },
+                    { no: 20, de: "Ein Freund aus Salzburg will sich in Frankreich bewerben. Er möchte seine Zeugnisse übersetzen lassen.",
+                             ar: "واحد صاحبك من سالزبورغ باغي يقدم طلب خدمة ف فرنسا وباغي يترجم الشواهد ديالو." }
+                ],
+
+                variants: [
+                    { label: "الأساسي",
+                      answers: ["X", "C", "X", "G", "F", "D", "H", "E", "A", "B"] }
+                ]
+            }
+        },
+
+
+        /* ================================================================
            Anwalt — Leseverstehen Teil 3
            12 إعلان A–L · 10 وضعيات 11–20 · X = ماكاين حتى واحد مناسب
            ================================================================ */
