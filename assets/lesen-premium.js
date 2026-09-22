@@ -66,9 +66,15 @@
                 result = { ok: true, data: await response.json() };
             }
         } catch (error) {
+            /* الـ Worker ماكيقبل غير https://. إلا تحلات الصفحة بـ http://
+               المتصفح كيبلوكي الجواب (CORS) وكيبان بحال إلا ماكاينش أنترنت. */
             result = {
                 ok: false,
-                why: "ما وصلناش للـ Worker. شوف الأنترنت، ولا مانع الإعلانات."
+                why: location.protocol === "http:"
+                    ? "الصفحة محلولة بـ http:// والـ Worker ماكيقبل غير https://. " +
+                      "حلها بـ https://" + location.host + " — " +
+                      "ولا فعّل Enforce HTTPS ف GitHub Pages."
+                    : "ما وصلناش للـ Worker. شوف الأنترنت، ولا مانع الإعلانات."
             };
         }
 
