@@ -1518,3 +1518,14 @@
 .t2-q .lesen-mark { margin-top: 2px; }
 .t2-actions { flex-wrap: wrap; margin-top: 4px; }
 .t2 .t1-body { margin: 0; }
+.t2-q-stem { flex: 1 1 auto; }
+.t2-q-changed {
+    flex: none;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--brand);
+    background: var(--brand-tint);
+    border: 1px solid var(--line-gold);
+}
