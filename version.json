@@ -1,13 +1,13 @@
 {
-  "build": "bffe60814ebb",
+  "build": "bc90328b6460",
   "assets": {
-    "assets/lesen-b2-content.js": "37079daf",
+    "assets/lesen-b2-content.js": "06cec4d1",
     "assets/lesen-b2-topics.js": "b57d81f7",
     "assets/lesen-engine.js": "9a34516f",
     "assets/lesen-hub.js": "be5389c4",
     "assets/lesen-premium.js": "7e90b98e",
     "assets/lesen-teil1.js": "d331d367",
-    "assets/lesen-teil2.js": "b47ced0b",
+    "assets/lesen-teil2.js": "59fcdc99",
     "assets/lesen-teil3.js": "ec58ac10",
     "assets/premium-gate.js": "6e86f042",
     "assets/schreiben-auth.js": "eb302ca1",

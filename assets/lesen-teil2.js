@@ -15,6 +15,7 @@
      variants: [
        {
          label: "الأساسي",
+         title: "…",                             // اختياري — عنوان خاص بهاد النسخة
          texts: [ … ],                           // اختياري — كيعوض المشتركين
          questions: [
            { num: 6, text: "…", ar: "…",
@@ -95,7 +96,8 @@
         }
 
         const head = el("div", "t1-head");
-        head.appendChild(el("h2", "t1-title", task.title || "Leseverstehen"));
+        const titleEl = el("h2", "t1-title");
+        head.appendChild(titleEl);
         head.appendChild(el("div", "t1-kicker", "LESEVERSTEHEN TEIL 2"));
         wrap.appendChild(head);
 
@@ -110,6 +112,8 @@
         function paint() {
             const variant = variants[index];
             board.textContent = "";
+            /* شي نسخ عندهم عنوان ديالهم */
+            titleEl.textContent = variant.title || task.title || "Leseverstehen";
 
             /* ---- النص ---- */
             const column = el("div", "t1-texts");
