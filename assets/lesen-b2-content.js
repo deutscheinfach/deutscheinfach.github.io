@@ -93,6 +93,101 @@
     window.LESEN_B2_CONTENT = {
 
         /* ================================================================
+           Autos — Leseverstehen Teil 3
+           12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (12 و 15)
+           ================================================================ */
+        "t3-autos": {
+            teil3: {
+                title: "Autos",
+                kind: "ads",
+                intro: "Lesen Sie die Situationen 11–20 und die Anzeigen A–L. "
+                     + "Welche Anzeige passt zu welcher Situation? "
+                     + "Jede Anzeige können Sie nur einmal verwenden. "
+                     + "Gibt es zu einer Situation keine passende Anzeige, "
+                     + "markieren Sie X.",
+
+                ads: [
+                    { key: "A", head: "Alles rund um das Thema Geld – Workshop für Verbraucherinnen und Verbraucher",
+                      body: "Samstag, 07.07.: Möglichkeiten der Budgetplanung · Einnahmen und Ausgaben erfassen und analysieren · Einsparpotenziale erkennen · Schuldenfallen vermeiden. Samstag, 14.07.: finanzieller Blick in die Zukunft · Finanzentscheidungen planen und umsetzen · Sparen und Anlegen · Kreditentscheidungen treffen · Schulden aktiv angehen. Referent: Diplom-Ökonom Martin Herges. Uhrzeit: jeweils 10 bis 15 Uhr. Teilnahmegebühr: 50 €. Akademie der DPV-Bank, Gustavstr. 12, 33659 Bielefeld",
+                      ar: "هاد الإعلان كيهضر على دورة تدريبية ف «أكاديمية بنك DPV» بمدينة بيلفيلد، باش يتعلمو الناس كيفاش يسيرو فلوسهم وميزانيتهم. نهار 7 و 14 يوليوز، غادي يشرح الخبير مارتن هيرغس كيفاش تنظم المصاريف، توفر الفلوس، وتجنب المشاكل ديال الكريديات والديون. الحصص من العشرة دالصباح حتى لتلاتة دالعشية، والثمن ديال المشاركة 50 أورو." },
+
+                    { key: "B", head: "Die Geldschule: Sparen – Steuern – Altersvorsorge",
+                      body: "Nehmen Sie Ihre Finanzen selbst in die Hand: Ob Sie für Ihre Rente vorsorgen oder einfach mehr sparen möchten – das neue Buch des Finanzexperten Kai Mueggenburg liefert Ihnen wertvolle Informationen. Es stellt Ihnen ein umfangreiches Basiswissen zum Thema Geld zur Verfügung. Außerdem bekommen Sie Tipps, wie Sie sich Ihre eigene Spar- und Investitionsstrategie erarbeiten können. Das Buch zeigt auf leicht verständliche Weise, wie man sein Geld einfach und gut anlegen kann. Es enthält außerdem Checklisten, eine Liste mit wichtigen Adressen und ein umfangreiches Glossar. Taschenbuch, 14,80 €",
+                      ar: "هاد الكتاب الجديد ديال الخبير كاي ميغنبرغ كيعاونك باش تسير فلوسك بوحدك، سواء بغيتي تجمع للتقاعد ولا غير توفر. كيعطيك معلومات أساسية على لفلوس وكيوريك كيفاش تصاوب خطة ديالك باش تستثمر بطريقة سهلة. الكتاب فيه حتى لوائح للمراجعة وعناوين مهمة وشرح للمصطلحات. الثمن 14,80 أورو." },
+
+                    { key: "C", head: "Energiesparen im Haushalt",
+                      body: "Keine Frage: Die Energiekosten werden weiter steigen und das Haushaltsbudget strapazieren. Erfahren Sie, wie Sie Ihren Energieverbrauch senken können. Energieberater Jörg Schneid gibt Ihnen Tipps und steht für Fragen zur Verfügung. In dem Vortrag werden Grundlagen zum Stromsparen sowie zum richtigen Heizen und Lüften angesprochen. Eine kostenlose Veranstaltung in Kooperation mit der Verbraucherzentrale Schleswig-Holstein. Freitag, 18.09., 18.30 bis 20 Uhr, Volkshochschule Rendsburg, Alsenstr. 12, 24768 Rendsburg",
+                      ar: "ثمن الضو والطاقة غادي وكيزيد، وهاد الإعلان كيهضر على لقاء باش تتعلم كيفاش تنقص من المصاريف ديال الدار. الخبير يورغ شنايد غادي يعطي نصائح على كيفاش توفر الضو وتسخن وتهوّي الدار بطريقة صحيحة. هاد اللقاء فابور نهار الجمعة 18.09 من 18:30 حتال 20:00 ف «فولكسهوخشوله ريندسبورغ»." },
+
+                    { key: "D", head: "Energiesparen leicht gemacht",
+                      body: "Hohe Strompreise sind für viele eine Belastung. Wenn ein neues Gerät angeschafft werden muss, sollte man vor allem auf die Energiekosten achten: Denn ein billiges Gerät, das viel Strom verbraucht, wird mit der Zeit ziemlich teuer! Mit sparsamen Wäschetrocknern, Geschirrspülern etc. kann man dagegen die Kosten senken. Doch wie findet man die passenden Geräte? Wir haben die Besten für Sie ausgewählt: Auf unserer Website finden Sie eine Liste und weiterführende Tipps. Dort können Sie kostenlos nach Geräten mit bestimmter Bauart, Größe oder Effizienz suchen. www.tech-check.net",
+                      ar: "غلاء الضو كايشكل عبء كبير على بزاف ديال الناس، داكشي علاش خاص الواحد يرد البال ملي يبغي يشري تجهيزات منزلية جديدة. الماكينات الرخيصة اللي كاتستهلك الضو بزاف كاتولي غالية مع الوقت. هاد الموقع كايقدم ليك قائمة ديال أحسن الماكينات، وتقدر تقلب بالمجان على الجهاز اللي كيناسبك من ناحية الحجم والكفاءة." },
+
+                    { key: "E", head: "Entspannt unterwegs in der Stadt und auf dem Land",
+                      body: "Ohne Auto lebt man einfacher und glücklicher – und zwar nicht nur als Großstadt-Single, sondern auch als Familie auf dem Land. Davon ist Susanne Sonnental jedenfalls überzeugt. Seit fünf Jahren lebt sie mit ihrer Familie auf dem Dorf, und zwar ohne Auto. In dem Buch erzählt sie, wie ihr Alltag aussieht, und liefert viele nützliche Informationen. Sie zeigt jede Menge leicht umsetzbare Alternativen. Taschenbuch, 12,90 €",
+                      ar: "هاد الإعلان كيهضر على واحد السيدة سميتها سوزان اللي عايشة مع عائلتها فالبادية بلا طوموبيل هادي خمس سنين. خرجات كتاب كتعاود فيه على تجربتها وكتعطي نصائح وحلول عملية للناس باش يعيشو بلا سيارة. الثمن ديالو 12,90 أورو." },
+
+                    { key: "F", head: "Entdeckungsreise in die Welt der Technik – Technikmuseum Walldorf",
+                      body: "Begeben Sie sich auf eine Zeitreise und entdecken Sie die Meilensteine der Technikgeschichte. Unsere Hauptattraktionen sind die beiden Überschallflugzeuge Concorde und Tupolew Tu-144. Außerdem: weitere Flugzeuge, Oldtimer, historische Luxusautomobile und Rennwagen, Motorräder, nostalgische Rennräder und Dampfloks. Mehr als 3.000 Exponate auf einer Fläche von über 50.000 m². Für Kinder: Spielplatz, Fahrsimulatoren und Spieleparadies mit fahrbaren Mini-Autos. Öffnungszeiten: täglich von 9 bis 18 Uhr. Technikmuseum Walldorf, Schwetzinger Str. 23, 69190 Walldorf",
+                      ar: "هاد الإعلان كيهضر على متحف التكنولوجيا فمدينة فالدورف، فين تقدر تشوف طيارات مشهورة بحال كونكورد وطوموبيلات قديمة وفاخرة وطرانات. المتحف فيه كثر من 3000 قطعة معروضة، وفيه حتى بلايص خاصة للدراري الصغار باش يلعبو ويسوݣو طوموبيلات صغار. كيحل كل نهار من 9 د الصباح تال 6 د العشية." },
+
+                    { key: "G", head: "Mobilität in der Stadt von morgen",
+                      body: "Erstmals in der Weltgeschichte leben mehr Menschen in Städten als auf dem Land. Welche Auswirkungen wird dieser Trend auf die Mobilität der Zukunft haben? Und welche Rolle wird das Auto dabei spielen? Über diese Fragen spricht Mobilitätsexperte Dr. Hans-Peter Grafemeyer: Fußgängerzonen, Fahrradfahren, öffentlicher Personennahverkehr, Bahn, Carsharing-Modelle – dies alles wird den Verkehr von morgen bestimmen. Der Vortrag bietet Informationen über innovative Technologien und neue Mobilitätsformen. Mittwoch, 08.09., 19 Uhr, Eintritt frei, Bürgerhaus Michelstadt, Freiburgstr. 3, 64720 Michelstadt",
+                      ar: "هاد العرض كيهضر على المستقبل ديال التنقل فالمدن وكيفاش غادي يولي السير وسط المدينة بالبشكليطات، الطوبيسات، وتقنيات جديدة. الخبير هانس-بيتر غرافماير غادي يشرح التطورات والدور ديال الطوموبيل من هنا للقدام. الموعد نهار الأربعاء 08.09 مع السبعة د العشية والدخول فابور." },
+
+                    { key: "H", head: "Ohne Versicherung geht es nicht …",
+                      body: "Auf Versicherungen kann niemand verzichten. Die Versicherungsbranche bietet Arbeitsplätze mit Zukunft und hervorragende Jobaussichten! Wir suchen eine/n Auszubildende/n zum Versicherungskaufmann bzw. zur Versicherungskauffrau. Sind Sie aufgeschlossen gegenüber Kunden und gut im Umgang mit dem Computer? Arbeiten Sie gerne im Büro wie auch im Außendienst? Sind Sie fit in Mathe und bringen Verständnis für Zahlen mit? Dann bewerben Sie sich bei uns! Weitere Informationen: Liga-Versicherung Deutschland AG, www.liga-versicherung.de/auszubildende",
+                      ar: "هاد الإعلان كيهضر على فرصة ديال التكوين والخدمة فمجال التأمين، حيت هاد القطاع فيه مستقبل زوين. كيقلبو على متدرب اللي يكون كيعرف يتعامل مع الناس، مجهد فالحساب، وكيعرف يخدم بالحاسوب. الخدمة فيها لبيرو وحتى الخروج برا باش يتلاقى مع لكليان." },
+
+                    { key: "I", head: "Rasantes Abenteuer für Autofans",
+                      body: "Sie interessieren sich für Rennwagen und würden gerne selbst einmal mit Vollgas fahren? Unser Ferrari-Fahrtraining auf der Rollbahn eines Flugplatzes macht dies möglich. Vor dem Fahrtraining erläutern wir Ihnen die Sicherheitsregeln und geben Ihnen Hinweise für die Fahrt. Danach können Sie sich direkt ans Steuer setzen. Fahren Sie ein Traumauto ohne Geschwindigkeitsbegrenzung! Freuen Sie sich auf grenzenlosen Fahrspaß! Mindestalter 18 Jahre, gültiger Führerschein der Klasse B. Mehr Informationen: www.fahrtraining-flugplatz.net",
+                      ar: "واش كتعجبك السرعة وباغي تسوݣ طوموبيل د السباق؟ هاد العرض كيعطيك فرصة باش تسوݣ فيراري ف مدرج ديال مطار بلا حدود ديال السرعة. ف اللول غادي يشرحو ليك قواعد السلامة، ومن بعد تشد الفولان. خاص يكون عندك على الأقل 18 عام وبيرمي B." },
+
+                    { key: "J", head: "Unkompliziert und spontan unterwegs sein?",
+                      body: "Wir haben die Lösung für Sie: Mieten Sie einfach ein Fahrzeug in Ihrer Nähe. Ob Kleinwagen, Kombi, Cabrio, E-Auto, Bus oder Transporter – wir haben die größte Auswahl an Carsharing-Autos in Nürnberg. Ihre Vorteile: günstiger als ein eigenes Fahrzeug · rund um die Uhr verfügbar · Kraftstoff, Wartung und Vollkasko inklusive · passendes Fahrzeug jederzeit an Stationen in Ihrer Nähe verfügbar · einfache Online-Buchung · keine Grundkosten oder Mindestlaufzeit. Registrieren Sie sich einfach über unsere Smartphone-App und fahren Sie los. www.auto-to-go.net",
+                      ar: "هاد الإعلان كيقدم خدمة ديال كرا الطوموبيلات (Carsharing) فمدينة نورنبرغ، وهي رخص من أنك تشري طوموبيل ديالك. كاينين بزاف ديال الأنواع موجودين 24 ساعة، والثمن داخل فيه حتى المازوط والتأمين الشامل. كتقيد عن طريق التطبيق فالتلفون بلا مصاريف قارة ولا مدة دنيا." },
+
+                    { key: "K", head: "Versteckte Kosten?",
+                      body: "Wollen Sie wissen, wie viel Strom Kühlschrank, Wasserkocher und Staubsauger benötigen? Haben Sie Stromfresser in Ihrer Wohnung, die die Kosten hochtreiben? Das Strommessgerät Smart-Check 365 findet sie. Smart-Check 365 misst zuverlässig den Verbrauch Ihrer Geräte und berechnet automatisch die Stromkosten. Auf dem hochauflösenden LCD-Display lassen sich alle Ergebnisse leicht ablesen. Einfach und sicher zu bedienen, aus sicherem und umweltfreundlichem Material. Ideal zur Überwachung des Stromverbrauchs in Ihrem Zuhause. 100 Prozent Zufriedenheitsgarantie! Smart-Check 365, Preis: 17,99 €",
+                      ar: "بغيتي تعرف شحال ديال الضو كياكلو ليك الأجهزة د الدار بحال الثلاجة؟ هاد الجهاز سمارت-تشيك 365 كيعاونك تكتشف الأجهزة اللي كتغلي عليك الفاتورة وكيحسب ليك شحال كتخلص عليها. فيه شاشة واضحة وهو ساهل ف الخدمة. الثمن 17,99 أورو مع ضمانة ديال الرضا 100 ف المية." },
+
+                    { key: "L", head: "Warum noch länger warten?",
+                      body: "Eine neue Küche, eine berufliche Weiterbildung oder ein modernes Heimkino: Wenn keine Rücklagen da sind, hilft ein Verbraucherkredit der Vergobank weiter. Finanzieren Sie Ihre Wünsche einfach in festen monatlichen Raten. Flexibel von 1.000 € bis 50.000 €, schnell und sicher. Ihre Vorteile: keine Anzahlung · günstige Zinssätze · individuelle Laufzeit und Raten nach Ihren Bedürfnissen, schon ab 50 € im Monat · schnelle Online-Kreditentscheidung und Auszahlung. Der günstigste Weg, wie Sie sich Ihre Wünsche schnell erfüllen können. Sie haben Fragen? Vereinbaren Sie einen Beratungstermin. Tel.: 0800 772930304, E-Mail: autokredit@vergobank.de",
+                      ar: "بانكة Vergobank كتقدم ليك سلف باش تحقق داكشي اللي تمنيتي، بحال كوزينة جديدة ولا تكوين، بمبالغ من 1.000 حتال 50.000 يورو. هاد السلف ما فيهش التسبيق، والفوائد قليلة، وتقدر تخلص بشوية عليك كل شهر (من 50 أورو فالشهر). كيعطيوك الجواب دغيا فلانترنيت وكيدوزو ليك الفلوس بسرعة." }
+                ],
+
+                situations: [
+                    { no: 11, de: "Ein Bekannter interessiert sich für wertvolle alte Fahrzeuge.",
+                             ar: "واحد صاحبك مهتم بالطوموبيلات القدام اللي عندها قيمة." },
+                    { no: 12, de: "Eine Nachbarin möchte für ihr neues Auto eine Versicherung abschließen.",
+                             ar: "وحدة الجارة باغة دير تأمين للطوموبيل الجديدة ديالها." },
+                    { no: 13, de: "Ihr Bruder möchte in einem Kurs sein Wissen über Finanzen erweitern.",
+                             ar: "خوك باغي يزيد معرفتو فالمالية عن طريق شي دورة." },
+                    { no: 14, de: "Ihr Cousin würde gerne mal mit einem schnellen Sportwagen fahren.",
+                             ar: "ولد عمك باغي يجرب يسوݣ طوموبيل رياضية سريعة." },
+                    { no: 15, de: "Ihr Sohn interessiert sich für schnelle Autos. Sie suchen für ihn ein Buch mit Bildern.",
+                             ar: "ولدك مهتم بالطوموبيلات السريعة وكتقلب ليه على كتاب فيه تصاور." },
+                    { no: 16, de: "Ihr Nachbar braucht einen neuen Kühlschrank und möchte sich über verschiedene Modelle informieren.",
+                             ar: "جارك محتاج ثلاجة جديدة وباغي يعرف على الموديلات المختلفة." },
+                    { no: 17, de: "Ihre Schwester hat kein Auto. Für gelegentliche Fahrten sucht sie eine Alternative zu öffentlichen Verkehrsmitteln.",
+                             ar: "ختك ما عندهاش طوموبيل، وكتقلب على بديل للنقل العمومي للخرجات مرة مرة." },
+                    { no: 18, de: "Sie brauchen bald neue Haushaltsgeräte, haben aber noch nicht genug Geld gespart.",
+                             ar: "قريب غادي تحتاج أجهزة منزلية جديدة، ولكن ما زال ما جمعتيش الفلوس الكافية." },
+                    { no: 19, de: "Sie möchten auf Ihren Pkw verzichten und suchen Tipps.",
+                             ar: "باغي تتخلى على الطوموبيل ديالك وكتقلب على نصائح." },
+                    { no: 20, de: "Sie hatten eine hohe Stromrechnung und möchten wissen, wie viel Energie die Geräte in Ihrem Haushalt verbrauchen.",
+                             ar: "جاتك فاتورة الضو غالية وباغي تعرف شحال كياكلو الأجهزة د دارك." }
+                ],
+
+                variants: [
+                    { label: "الأساسي",
+                      answers: ["F", "X", "A", "I", "X", "D", "J", "L", "E", "K"] }
+                ]
+            }
+        },
+
+
+        /* ================================================================
            Auf dem Weg — Leseverstehen Teil 3 (إعلانات الدورات)
            12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (11 و 19)
            ================================================================ */
