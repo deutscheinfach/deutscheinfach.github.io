@@ -1,5 +1,5 @@
 {
-  "build": "56dc9e7b40b7",
+  "build": "f4cf92080cd6",
   "assets": {
     "assets/lesen-b2-content.js": "b19235d4",
     "assets/lesen-b2-topics.js": "06729e6d",
@@ -16,7 +16,7 @@
     "assets/section.css": "4b64473e",
     "assets/session-guard.js": "d6dfc66e",
     "assets/site-header.css": "8c9b8a00",
-    "assets/site-header.js": "0474b4f5",
+    "assets/site-header.js": "b8226a37",
     "assets/sprechen-b2-content.js": "308095e2",
     "assets/sprechen-b2-topics.js": "886351ae",
     "assets/sprechen-engine.js": "45ed2a28",

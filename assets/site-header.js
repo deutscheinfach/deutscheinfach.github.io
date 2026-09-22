@@ -127,6 +127,16 @@
         if (!link) return;
         event.preventDefault();
 
+        /* الصفة "active" خاصها تمشي مع المؤشر. إلا بقات فبلاصتها،
+           الكلمة القديمة كتبقى بلون البياض اللي كان فوق المؤشر —
+           وكتغيب على العينين حتى تبدل الصفحة. */
+        Array.prototype.forEach.call(nav.querySelectorAll("a.active"), function (old) {
+            old.classList.remove("active");
+            old.removeAttribute("aria-current");
+        });
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+
         /* المؤشر كيزلق والمحتوى كيتلاشى ف نفس الوقت */
         movePill(link);
         leaveTo(link.href);
