@@ -20,7 +20,8 @@
            { num: 6, text: "…", ar: "…",
              options: [ { text: "…", ar: "…" }, … ],
              answer: 0,                          // فهرس: 0 = A
-             why: "…" },                         // الشرح بالدارجة
+             why: "…",                           // الشرح بالدارجة
+             changed: true },                    // اختياري: شارة "معدل"
            …
          ]
        }
@@ -147,6 +148,8 @@
                 stem.appendChild(el("p", "t2-q-de", question.text || ""));
                 if (question.ar) stem.appendChild(el("p", "t2-q-ar", question.ar));
                 top.appendChild(stem);
+                /* السؤال اللي تبدل فهاد النسخة */
+                if (question.changed) top.appendChild(el("span", "t2-q-changed", "معدل"));
                 box.appendChild(top);
 
                 const row = { box: box, question: question, picked: -1, buttons: [] };
