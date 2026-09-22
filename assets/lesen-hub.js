@@ -25,14 +25,13 @@
 
     if (!grid || !detail) return;
 
-    /* الانتقال بين Teil 1 و Teil 2/3: المتصفحات الجديدة كتديرو بوحدها
-       (@view-transition ف الـCSS). اللي ما عندوش، كنطفيو الصفحة بشوية
-       قبل ما نمشيو باش ما يبقاش القطع خشين. */
+    /* الانتقال بين Teil 1 و Teil 2/3: كنطفيو اللوحة بشوية قبل ما
+       نمشيو باش ما يبقاش القطع خشين. الصفحة الجديدة كتطلع بوحدها
+       (الحركة ديال الدخول ف site-header.css). */
     (function tabTransitions() {
         const shell = document.querySelector(".lesen-shell");
         const nav = document.querySelector(".lesen-shell > .lesen-tabs");
         if (!shell || !nav) return;
-        if (document.startViewTransition) return;
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
         nav.addEventListener("click", function (event) {

@@ -60,6 +60,84 @@
     });
     inner.appendChild(nav);
 
+    /* ---- المؤشر اللي كيزلق بين الأقسام ----
+
+       ملي تبرك على قسم آخر، المؤشر كيزلق ليه والمحتوى كيتلاشى،
+       ومن بعد كتمشي الصفحة. */
+    const pill = document.createElement("span");
+    pill.className = "site-nav-pill is-first";
+    pill.setAttribute("aria-hidden", "true");
+    nav.insertBefore(pill, nav.firstChild);
+    nav.classList.add("has-pill");
+
+    function movePill(target) {
+        if (!target) { pill.style.opacity = "0"; return; }
+        pill.style.opacity = "1";
+        pill.style.width = target.offsetWidth + "px";
+        pill.style.height = target.offsetHeight + "px";
+        pill.style.transform =
+            "translate(" + target.offsetLeft + "px," + target.offsetTop + "px)";
+    }
+
+    function placePill() { movePill(nav.querySelector("a.active")); }
+
+    /* الخطوط ما زال ما تحملوش — العرض ديال الروابط كيتبدل من بعد */
+    placePill();
+    requestAnimationFrame(placePill);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placePill);
+    window.addEventListener("resize", placePill);
+    setTimeout(function () { pill.classList.remove("is-first"); }, 60);
+
+    /* ---- الانتقال ديال الصفحة ---- */
+    const still = window.matchMedia
+        && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* كنطفيو المحتوى، ومنين تسالي الحركة كنمشيو. */
+    function leaveTo(href) {
+        document.documentElement.classList.add("de-leaving");
+
+        let gone = false;
+        const go = function () {
+            if (gone) return;
+            gone = true;
+            location.href = href;
+        };
+
+        /* إلا ما وصلاتش نهاية الحركة (تبويب مخبي مثلا) ما نبقاوش واقفين */
+        const guard = setTimeout(go, 320);
+        document.addEventListener("animationend", function once(e) {
+            if (e.animationName !== "de-page-out") return;
+            clearTimeout(guard);
+            document.removeEventListener("animationend", once);
+            go();
+        });
+    }
+
+    /* بركة عادية على رابط ماشي نشيط؟ */
+    function plain(event) {
+        const link = event.target.closest("a");
+        if (!link || link.classList.contains("active")) return null;
+        if (event.defaultPrevented || event.button
+            || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return null;
+        return still ? null : link;
+    }
+
+    nav.addEventListener("click", function (event) {
+        const link = plain(event);
+        if (!link) return;
+        event.preventDefault();
+
+        /* المؤشر كيزلق والمحتوى كيتلاشى ف نفس الوقت */
+        movePill(link);
+        leaveTo(link.href);
+    });
+
+    /* رجعتي لور؟ الصفحة كانت مطفية فالكاش — نرجعوها */
+    window.addEventListener("pageshow", function () {
+        document.documentElement.classList.remove("de-leaving");
+        placePill();
+    });
+
     /* ---- اليمين ---- */
     const actions = document.createElement("div");
     actions.className = "site-actions";
@@ -143,6 +221,14 @@
                 link.setAttribute("aria-current", "page");
             }
             box.appendChild(link);
+        });
+
+        /* مبدّل المستوى كيمشي بنفس الانتقال ديال الأقسام */
+        box.addEventListener("click", function (event) {
+            const link = plain(event);
+            if (!link) return;
+            event.preventDefault();
+            leaveTo(link.href);
         });
 
         wrap.appendChild(box);

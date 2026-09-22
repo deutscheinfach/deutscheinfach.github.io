@@ -390,3 +390,63 @@
     .site-user-name { max-width: 9ch; }
     .site-menu-item { min-height: 44px; }
 }
+
+/* ===== الانتقال بين الأقسام (Lesen ↔ Hören ↔ …) =====
+
+   ملي تبرك على قسم آخر: المؤشر كيزلق ليه والمحتوى كيتلاشى،
+   ومن بعد الصفحة الجديدة كتطلع. الهيدر ما كيتحركش — هاكا
+   البركة كتبان حاجة وحدة ماشي قطعة.
+
+   كلشي بـ CSS/JS ديالنا. ماكنعتامدوش على View Transitions
+   حيت بزاف د المتصفحات ما زال ماعندهومش الانتقال بين
+   الصفحات، وكانت النتيجة: شي ناس كيشوفو الحركة وشي لا. */
+
+/* ---- المؤشر ديال التبويب ---- */
+.site-nav { position: relative; }
+.site-nav a { position: relative; z-index: 1; }
+
+/* ملي كاين المؤشر، خلفية الرابط النشيط كتمشي ليه */
+.site-nav.has-pill a.active { background: transparent; }
+
+.site-nav-pill {
+    position: absolute;
+    z-index: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--gold) 32%, transparent);
+    pointer-events: none;
+    transition: transform .3s cubic-bezier(.34, 1.2, .5, 1),
+                width .3s cubic-bezier(.34, 1.2, .5, 1);
+}
+/* أول رسمة ما تزلقش — كتوقف مباشرة تحت النشيط */
+.site-nav-pill.is-first { transition: none; }
+
+/* ---- المحتوى: كيخرج وكيدخل ----
+
+   الدخول كيتكتب فالـCSS نيت (ماشي من الجافاسكريبت) حيت
+   site-header.js كيتحمل ف اللخر ديال الصفحة — لو زدنا الكلاس
+   من تما، الصفحة تكون ديجا مرسومة وتعاود تتلاشى قدام العينين.
+
+   backwards: الحركة كتخدم غير قبل ما تبدا. ما كتخليش transform
+   واقف من بعد، باش ما يتكسرش position: fixed اللي داخل. */
+body > *:not(#site-header):not(.site-header):not(script):not(style) {
+    animation: de-page-in .34s cubic-bezier(.22, .8, .3, 1) backwards;
+}
+html.de-leaving body > *:not(#site-header):not(.site-header):not(script):not(style) {
+    animation: de-page-out .26s cubic-bezier(.4, 0, 1, 1) both;
+}
+
+@keyframes de-page-in  { from { opacity: 0; transform: translateY(9px); } }
+@keyframes de-page-out { to   { opacity: 0; transform: translateY(-7px); } }
+
+@media (prefers-reduced-motion: reduce) {
+    .site-nav-pill { transition: none; }
+    /* نفس المحدِّد ديال فوق بالضبط — إلا نقصنا :not(#site-header)
+       تنقص القوة ديالو وما كيغلبش. */
+    body > *:not(#site-header):not(.site-header):not(script):not(style),
+    html.de-leaving body > *:not(#site-header):not(.site-header):not(script):not(style) {
+        animation: none;
+    }
+}
