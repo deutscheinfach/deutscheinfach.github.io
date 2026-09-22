@@ -472,6 +472,13 @@
                 return;
             }
 
+            /* Teil 2 عندو شكل ديالو: النص على اليسار، الأسئلة A/B/C على اليمين. */
+            if (task.kind === "mc"
+                && typeof window.__lesenTeil2Render === "function") {
+                window.__lesenTeil2Render(stack, task);
+                return;
+            }
+
             /* Teil 3 عندو شكل ديالو: إعلانات على اليسار، وضعيات على اليمين. */
             if (task.kind === "ads"
                 && typeof window.__lesenTeil3Render === "function") {

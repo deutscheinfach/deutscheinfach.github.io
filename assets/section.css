@@ -1473,3 +1473,48 @@
 @media (max-width: 720px) {
     .t3-ad-head { flex-basis: 100%; }
 }
+
+/* ===== Lesen Teil 2 — Multiple Choice ===== */
+.t2-panel { gap: .6rem; }
+
+.t2-q {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: border-color .18s ease, background .18s ease;
+}
+.t2-q.correct { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 6%, transparent); }
+.t2-q.wrong   { border-color: var(--danger); background: color-mix(in srgb, var(--danger) 6%, transparent); }
+
+.t2-q-top { display: flex; align-items: flex-start; gap: .5rem; margin-bottom: 2px; }
+.t2-q-stem { min-width: 0; }
+.t2-q-de { margin: 0; font-weight: 800; font-size: 14px; line-height: 1.45; }
+.t2-q-ar { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); direction: rtl; text-align: right; }
+
+.t2-option { min-height: 40px; padding: 8px 10px; }
+.t2-option.is-picked {
+    border-color: color-mix(in srgb, var(--brand) 55%, transparent);
+    background: color-mix(in srgb, var(--brand) 7%, transparent);
+}
+.t2-option.is-picked .t1-option-key {
+    background: var(--brand); border-color: var(--brand); color: #fff;
+}
+.t2-option.is-right {
+    border-color: var(--ok);
+    background: color-mix(in srgb, var(--ok) 12%, transparent);
+}
+.t2-option.is-right .t1-option-key { background: var(--ok); border-color: var(--ok); color: #fff; }
+.t2-option.is-wrong {
+    border-color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+.t2-option.is-wrong .t1-option-key { background: var(--danger); border-color: var(--danger); color: #fff; }
+.t2-q.is-done .t2-option { cursor: default; }
+
+.t2-why { margin-top: 4px; }
+.t2-q .lesen-mark { margin-top: 2px; }
+.t2-actions { flex-wrap: wrap; margin-top: 4px; }
+.t2 .t1-body { margin: 0; }
