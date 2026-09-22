@@ -2,15 +2,33 @@
    كيتزاد ف أي صفحة بـ <div id="site-header"></div>.
    الألوان كلها من assets/theme.css، إذن الوضع الفاتح كيخدم بوحدو. */
 
+/* البار واقفة بحق: fixed ماشي sticky.
+
+   sticky كيتكسر بسهولة — يكفي شي جد عندو overflow ولا
+   transform (حركة الدخول ديال الصفحة مثلا) باش يرجع البار
+   كتمشي مع السكرول. fixed ماعندوش هاد المشكل، بشرط أن البار
+   تكون ولد مباشر ديال <body> — وهادشي كيديرو site-header.js.
+
+   --site-header-h كيقيسو الـJS ملي يرسم البار. الاحتياطي
+   (72px) خدّام حتى قبل ما يوصل الـJS. */
+:root { --site-header-h: 72px; }
+
 .site-header {
-    position: sticky;
+    position: fixed;
     top: 0;
+    inset-inline: 0;
     z-index: 60;
     padding: 12px var(--gutter);
     background: color-mix(in srgb, var(--ink) 86%, transparent);
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
 }
+
+/* البار خارجة من التدفق — خاص المحتوى ما يدخلش تحتيها */
+html.has-site-header body { padding-top: var(--site-header-h); }
+
+/* رابط داخلي (#…) ماخاصوش يوقف تحت البار */
+html.has-site-header :target { scroll-margin-top: calc(var(--site-header-h) + 12px); }
 
 .site-header-inner {
     /* الصفحة الرئيسية RTL والباقي LTR. بلا هادشي الهيدر
@@ -181,20 +199,33 @@
 .site-nav { max-width: 100%; min-width: 0; }
 .site-actions { min-width: 0; flex-wrap: wrap; }
 
+/* ===== البار ف التيليفون =====
+   ولات fixed وكتبقى واقفة ديما، إذن كل بيكسل زائد فيها هو
+   بيكسل ناقص من المحتوى. كنخليوها ف سطرين: (العلامة +
+   الحساب) فوق، والتنقل تحت. */
 @media (max-width: 560px) {
-    .site-header-inner { gap: 8px; padding: 8px 10px; }
+    .site-header { padding: 6px 10px; }
+    .site-header-inner { gap: 6px; padding: 6px 8px; }
     .site-brand-name { font-size: 14px; }
     .site-btn { min-height: 38px; padding: 0 11px; font-size: 12px; }
     .site-btn-icon { width: 38px; }
     .site-user { font-size: 12px; padding: 0 10px 0 5px; }
+    .site-user-name { max-width: 9ch; }
+    .site-nav { padding: 3px; }
+    /* العلامة كتصغر قبل ما الأزرار تنزل لسطر ديالها */
+    .site-brand { flex: 0 1 auto; overflow: hidden; }
+    .site-brand-name { overflow: hidden; text-overflow: ellipsis; }
 }
 
 /* ===== مبدّل المستوى (Telc B1 / Telc B2) ===== */
+/* المبدّل خرج من البار (البار ولات fixed وخاصها تبقى خفيفة).
+   دابا هو شريط عادي تحتها وكيمشي مع السكرول. */
 .site-level-wrap {
     direction: ltr;
     display: flex;
     justify-content: center;
-    margin-top: 12px;
+    margin: 12px auto 0;
+    padding: 0 var(--gutter);
 }
 .site-level {
     display: inline-flex;

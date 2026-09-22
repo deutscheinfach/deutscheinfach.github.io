@@ -218,9 +218,15 @@
     const guest = document.createElement("span");
     guest.className = "site-actions";
     guest.id = "site-guest";
+    /* البار ولات fixed، إذن كل سطر زائد فيها كياكل من الشاشة
+       ديال التيليفون. الكلمة الطويلة كتغيب تحت 560px
+       (.site-btn-label-long) وكيبقى «الدخول» و«حساب» — وهكا
+       العلامة والأزرار كيدخلو ف سطر واحد بدل جوج. */
     guest.innerHTML =
-        '<a class="site-btn" href="login.html">تسجيل الدخول</a>' +
-        '<a class="site-btn site-btn-primary" href="signup.html">إنشاء حساب</a>';
+        '<a class="site-btn" href="login.html">'
+        + '<span class="site-btn-label-long">تسجيل </span>الدخول</a>'
+        + '<a class="site-btn site-btn-primary" href="signup.html">'
+        + '<span class="site-btn-label-long">إنشاء </span>حساب</a>';
     actions.appendChild(guest);
 
     /* ---- الحساب: زر + قائمة ----
@@ -273,7 +279,14 @@
     /* ---- مبدّل المستوى ----
        بدل صفحات b1.html و b2.html اللي كانو كيجمعو كلشي،
        المستوى كيتبدل جوا القسم نفسو: Lesen B1 ↔ Lesen B2.
-       كنعرفو المستوى الحالي من اسم الصفحة. */
+       كنعرفو المستوى الحالي من اسم الصفحة.
+
+       ⚠ ماكيدخلش ف <header>: البار ولات fixed، وإلا زدنا
+       هاد المبدّل معاها كتولي 154px واقفين فوق الشاشة (238
+       فالتيليفون — تلت الشاشة كاملة على واحد الزر كتستعملو
+       مرة فالعام). إذن كيبقى ف التدفق العادي تحت البار. */
+    let levelWrap = null;
+
     if (active) {
         const file = (location.pathname.split("/").pop() || "").toLowerCase();
         const level = file.indexOf("b1-") === 0 ? "b1" : "b2";
@@ -305,15 +318,48 @@
         });
 
         wrap.appendChild(box);
-        header.appendChild(wrap);
+        levelWrap = wrap;
     }
 
-    mount.replaceWith(header);
+    /* ---- الهيدر كيتعلق ف <body> مباشرة ----
+
+       قبل، كان كيتحط ف بلاصة #site-header. فـ index.html داك
+       الـ mount كان داخل .container، و:
+
+         · .container كياخد حركة الدخول/الخروج ديال الصفحة
+           (transform) — والعنصر اللي عندو جد متحرك بـ transform
+           ماكيبقاش position:fixed كيخدم بالنسبة للشاشة؛
+         · وحتى overflow ديال شي جد كيقدر يقطع sticky.
+
+       ملي كيكون ولد مباشر ديال <body>، البار كتبقى واقفة
+       حقيقة وما كتهزّ حتى مع الصفحة. */
+    mount.remove();
+    document.body.insertBefore(header, document.body.firstChild);
+    if (levelWrap) header.insertAdjacentElement("afterend", levelWrap);
 
     /* الزر العايم ديال الوضع ماعندوش معنى وهاد الزر كاين */
     const floating = document.querySelector(".de-theme-btn");
     if (floating) floating.remove();
     document.documentElement.classList.add("has-site-header");
+
+    /* ---- الطول ديال البار ----
+
+       البار ولات fixed، إذن كتخرج من التدفق. خاص الصفحة
+       تعرف شحال تخلي ليها من فوق — و التبويبات (Teil 1/2/3)
+       خاصها تعرف فين تلصق تحتيها. الطول كيتبدل مع العرض
+       ديال الشاشة، إذن كنقيسوه بدل ما نكتبو رقم ثابت. */
+    function measure() {
+        const h = Math.round(header.getBoundingClientRect().height);
+        if (h > 0) {
+            document.documentElement.style.setProperty("--site-header-h", h + "px");
+        }
+    }
+
+    measure();
+    requestAnimationFrame(measure);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+    window.addEventListener("resize", measure);
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(header);
 
     /* ---- حالة الحساب ---- */
     (async function () {

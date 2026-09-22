@@ -290,6 +290,22 @@
 }
 .lesen-tabs::-webkit-scrollbar { display: none; }
 
+/* شريط Teil 1/2/3 كيلصق تحت البار ديال فوق.
+
+   البار الكبيرة fixed، إذن هادي كتوقف مباشرة تحتيها ملي
+   تسكرولي — الطالب كيبقى ديما شايف فين هو وقادر يبدل
+   الجزء بلا ما يطلع لفوق.
+
+   غير التبويبات ديال فوق (ولد مباشر ديال .lesen-shell).
+   تبويبات الأجزاء داخل تمرين (.lesen-part-tabs) ماشي هي. */
+.lesen-shell > .lesen-tabs {
+    position: sticky;
+    /* ملصوق مباشرة ف قاع البار — بلا حتى فرجة. إلا خلينا
+       ولو 8px، البطائق كيبانو كيزلقو ف داك الخيط. */
+    top: var(--site-header-h, 72px);
+    z-index: 30;
+}
+
 .lesen-tab {
     /* التبويبات ديال صفحة الموضوع هوما <button>، والـ navigateur
        كيعطيهم خلفية رمادية ديالو. خاصنا نمسحوها هنا. */
@@ -1344,10 +1360,28 @@
 .pg-note span { color: var(--muted); overflow-wrap: anywhere; }
 
 /* ===== الانتقال بين تبويبات Teil ===== */
-/* كنطفيو اللوحة بشوية قبل ما نمشيو للتبويب الآخر. الدخول
-   ديال الصفحة الجديدة كيتكلف بيه site-header.css. */
-.lesen-shell { transition: opacity .17s ease, transform .17s ease; }
-.lesen-shell.lt-leaving { opacity: 0; transform: translateY(-8px); }
+/* ماكاينش تنقل لصفحة أخرى: التبويبات كيتبدلو فنفس الصفحة
+   (شوف lesen-hub.js). هنا غير الحركة ديال التبديل.
+
+   قبل، كانت .lesen-shell كاملة كتطفا — بما فيها العنوان
+   وشريط التبويبات. النتيجة: كل مرة تبدل Teil، كلشي كيغمض
+   وكيرجع، وكتحس بلي البار كتعاود تتبنى.
+
+   دابا غير المحتوى (اللائحة/العداد/البحث/الرأس) هو اللي
+   كيتبدل. شريط التبويبات والبار ما كيتحركوش. */
+.lesen-shell > .lesen-head-row,
+.lesen-shell > .lesen-toolbar,
+.lesen-shell > .lesen-count,
+.lesen-shell > .lesen-grid {
+    transition: opacity .16s ease, transform .16s ease;
+}
+.lesen-shell.lt-leaving > .lesen-head-row,
+.lesen-shell.lt-leaving > .lesen-toolbar,
+.lesen-shell.lt-leaving > .lesen-count,
+.lesen-shell.lt-leaving > .lesen-grid {
+    opacity: 0;
+    transform: translateY(-8px);
+}
 
 /* البطائق كيطلعو وحدة من بعد وحدة ملي تحل اللائحة */
 @keyframes lt-card-rise {
@@ -1363,8 +1397,18 @@
 .lesen-shell > .lesen-tabs .lesen-tab.active { animation: t1-pop .3s cubic-bezier(.34, 1.56, .64, 1); }
 
 @media (prefers-reduced-motion: reduce) {
-    .lesen-shell,
-    .lesen-shell.lt-leaving { transition: none; opacity: 1; transform: none; }
+    .lesen-shell > .lesen-head-row,
+    .lesen-shell > .lesen-toolbar,
+    .lesen-shell > .lesen-count,
+    .lesen-shell > .lesen-grid,
+    .lesen-shell.lt-leaving > .lesen-head-row,
+    .lesen-shell.lt-leaving > .lesen-toolbar,
+    .lesen-shell.lt-leaving > .lesen-count,
+    .lesen-shell.lt-leaving > .lesen-grid {
+        transition: none;
+        opacity: 1;
+        transform: none;
+    }
     .lesen-grid.lt-enter > .lesen-card,
     .lesen-shell > .lesen-tabs .lesen-tab.active { animation: none; }
 }
