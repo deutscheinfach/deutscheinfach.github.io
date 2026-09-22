@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
-<link rel="stylesheet" href="assets/site-header.css?v=c9280005">
+<link rel="stylesheet" href="assets/theme.css?v=ebedceaa">
+<link rel="stylesheet" href="assets/site-header.css?v=70b9f82b">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Hören: Teil3</title>
@@ -105,7 +105,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     position: absolute;
     left: 0; top: 0; bottom: 0;
     width: 3px;
-    background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+    background: linear-gradient(180deg, var(--gold), var(--brand-light));
     border-radius: 3px 0 0 3px;
     opacity: 0;
     transition: opacity .2s;
@@ -449,7 +449,7 @@ body{
   top: 0 !important;
   bottom: 0 !important;
   width: 5px !important;
-  background: linear-gradient(180deg,var(--gold) 0%,var(--gold) 55%,var(--gold-soft) 100%) !important;
+  background: linear-gradient(180deg,var(--gold) 0%,var(--gold) 55%,var(--brand-light) 100%) !important;
   z-index: 2 !important;
 }
 
@@ -457,16 +457,16 @@ body{
 #hoeren-teil3-stack .theme-item-header{
   background: linear-gradient(135deg,#ffffff 0%,#fdf2f4 70%,var(--brand-soft) 100%) !important;
   border-bottom: 0 !important;
-  color: #fff !important;
+  color: var(--text) !important;
   padding: 17px 21px !important;
 }
 #hoeren-teil3-stack .theme-item-title{
-  color: #fff !important;
+  color: var(--text) !important;
   font-weight: 800 !important;
   letter-spacing: .1px !important;
 }
 #hoeren-teil3-stack .theme-item-chevron{
-  color: var(--gold-soft) !important;
+  color: var(--brand) !important;
 }
 #hoeren-teil3-stack .theme-item-index{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
@@ -556,7 +556,7 @@ body{
 #hoeren-hub-grid a.ex-btn::before,
 #hoeren-teil1-grid a.ex-btn::before{
   opacity: 1 !important;
-  background: linear-gradient(180deg,var(--gold),var(--gold-soft)) !important;
+  background: linear-gradient(180deg,var(--gold),var(--brand-light)) !important;
   width: 4px !important;
 }
 #hoeren-hub-grid a.ex-btn .ex-label,
@@ -637,7 +637,7 @@ body{
   box-sizing: border-box !important;
   border: 1px solid var(--border) !important;
   border-radius: 17px !important;
-  background: rgba(18,20,25,.92) !important;
+  background: rgba(255,255,255,.9) !important;
   backdrop-filter: blur(16px) saturate(150%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
   box-shadow: 0 12px 34px rgba(23,23,23,.15),0 2px 0 rgba(225,29,51,.75) inset !important;
@@ -666,7 +666,8 @@ body{
 }
 .hoeren-sticky-nav .hoeren-nav-back:hover,
 .hoeren-sticky-nav .hoeren-nav-start:hover{
-  background: #22262f !important;
+  background: #fff !important;
+  color: var(--brand) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -691,7 +692,7 @@ body{
 .hoeren-sticky-nav .hoeren-nav-divider{
   width: 1px !important;
   height: 28px !important;
-  background: var(--surface-2) !important;
+  background: var(--line) !important;
   margin: 0 2px !important;
 }
 
@@ -825,12 +826,12 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
 }
 .premium-theme-icon{
   background: var(--surface-2) !important;
-  color: var(--gold-soft) !important;
+  color: var(--brand) !important;
   box-shadow: 0 6px 14px rgba(23,23,23,.18) !important;
 }
 .premium-theme-open{
   background: var(--surface-2) !important;
-  color: var(--gold-soft) !important;
+  color: var(--brand) !important;
   border: 1px solid var(--border) !important;
 }
 .premium-theme-open:hover{
@@ -841,7 +842,7 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
 html.dark .premium-theme-body{background: #1b1b1b !important;}
 html.dark .premium-theme-open{
   background: #111318 !important;
-  color: var(--gold-soft) !important;
+  color: var(--brand) !important;
   border-color: #343842 !important;
 }
 html.dark .premium-theme-open:hover{
@@ -2228,7 +2229,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
   border-color: var(--gold);
 }
 .de-premium-offer strong{font-size: 15px;}
-.de-premium-offer span{font-size: 20px;font-weight: 900;color: var(--gold-soft);}
+.de-premium-offer span{font-size: 20px;font-weight: 900;color: var(--brand);}
 .de-premium-offer small{font-size: 11px;opacity: .82;}
 .de-premium-whatsapp{
   margin-top: 14px;

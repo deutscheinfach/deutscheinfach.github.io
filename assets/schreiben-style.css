@@ -80,7 +80,7 @@ body {
 }
 .task-title-block .sub {
     font-size: 12px;
-    color: var(--yellow);
+    color: var(--brand);
     letter-spacing: .3px;
     margin-top: 2px;
 }
@@ -334,7 +334,7 @@ body {
     overflow: hidden;
     margin-bottom: 18px;
 }
-.result-bar-fill { height: 100%; background: linear-gradient(90deg, var(--red), var(--yellow)); }
+.result-bar-fill { height: 100%; background: linear-gradient(90deg, var(--red), var(--brand-light)); }
 .result-section { margin-bottom: 16px; }
 .result-section h3 { font-size: 14px; margin-bottom: 8px; }
 .result-section p, .result-section li { font-size: 14px; line-height: 1.7; color: var(--ink); }
@@ -446,7 +446,7 @@ body {
     font-size: 27px;
     font-weight: 900;
     margin: 0 0 12px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+    background: linear-gradient(135deg, var(--gold), var(--brand-light));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -479,7 +479,7 @@ body {
 }
 
 .premium-btn.gold {
-    background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+    background: linear-gradient(135deg, var(--gold), var(--brand-light));
     color: #fff;
 }
 .premium-btn.gold:hover {
@@ -537,7 +537,7 @@ body {
     margin-bottom: 10px;
     padding: 4px 13px;
     border-radius: 999px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+    background: linear-gradient(135deg, var(--gold), var(--brand-light));
     color: #fff;
     font-size: 12px;
     font-weight: 800;

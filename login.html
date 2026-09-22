@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
+<link rel="stylesheet" href="assets/theme.css?v=ebedceaa">
 <style>
 /* ============================================
    Deutsch Einfach — Thème Noir & Or
@@ -25,7 +25,7 @@
   --border: rgba(20,22,31,.10);
   --border-strong: rgba(225,29,51, 0.35);
   --gold: var(--brand);
-  --gold-light: var(--brand-soft);
+  --gold-light: var(--brand-light);
   --gold-dark: var(--brand-dark);
   --text: #14161f;
   --text-dim: #5b6172;
@@ -78,7 +78,7 @@ body::before {
   background:
     radial-gradient(circle at 15% 10%, rgba(225,29,51, 0.10), transparent 40%),
     radial-gradient(circle at 85% 30%, rgba(225,29,51, 0.06), transparent 45%),
-    linear-gradient(180deg, #fdfdff 0%, #0a0b10 100%);
+    linear-gradient(180deg, #fdfdff 0%, var(--paper, #faf9f7) 100%);
 }
 
 .bg-grid {
@@ -131,7 +131,7 @@ h1 {
   font-size: clamp(22px, 3vw, 27px);
   font-weight: 900;
   margin: 4px 0 6px;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  background: linear-gradient(135deg, var(--brand-light), var(--gold));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -186,8 +186,8 @@ input:focus {
   border: none;
   padding: 14px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
-  color: #1a1400;
+  background: linear-gradient(135deg, var(--brand-light), var(--gold) 55%, var(--gold-dark));
+  color: #fff;
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;

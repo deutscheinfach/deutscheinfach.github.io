@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
-<link rel="stylesheet" href="assets/site-header.css?v=c9280005">
+<link rel="stylesheet" href="assets/theme.css?v=ebedceaa">
+<link rel="stylesheet" href="assets/site-header.css?v=70b9f82b">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Hören: Teil1</title>
@@ -105,7 +105,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     position: absolute;
     left: 0; top: 0; bottom: 0;
     width: 3px;
-    background: linear-gradient(180deg, var(--gold), var(--gold-soft));
+    background: linear-gradient(180deg, var(--gold), var(--brand-light));
     border-radius: 3px 0 0 3px;
     opacity: 0;
     transition: opacity .2s;
@@ -449,7 +449,7 @@ body{
   top: 0 !important;
   bottom: 0 !important;
   width: 5px !important;
-  background: linear-gradient(180deg,var(--gold) 0%,var(--gold) 55%,var(--gold-soft) 100%) !important;
+  background: linear-gradient(180deg,var(--gold) 0%,var(--gold) 55%,var(--brand-light) 100%) !important;
   z-index: 2 !important;
 }
 
@@ -557,7 +557,7 @@ body{
 #hoeren-hub-grid a.ex-btn::before,
 #hoeren-teil1-grid a.ex-btn::before{
   opacity: 1 !important;
-  background: linear-gradient(180deg,var(--gold),var(--gold-soft)) !important;
+  background: linear-gradient(180deg,var(--gold),var(--brand-light)) !important;
   width: 4px !important;
 }
 #hoeren-hub-grid a.ex-btn .ex-label,
@@ -638,7 +638,7 @@ body{
   box-sizing: border-box !important;
   border: 1px solid var(--border) !important;
   border-radius: 17px !important;
-  background: rgba(18,20,25,.92) !important;
+  background: rgba(255,255,255,.9) !important;
   backdrop-filter: blur(16px) saturate(150%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
   box-shadow: 0 12px 34px rgba(23,23,23,.15),0 2px 0 rgba(225,29,51,.75) inset !important;
@@ -667,7 +667,8 @@ body{
 }
 .hoeren-sticky-nav .hoeren-nav-back:hover,
 .hoeren-sticky-nav .hoeren-nav-start:hover{
-  background: #22262f !important;
+  background: #fff !important;
+  color: var(--brand) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -692,7 +693,7 @@ body{
 .hoeren-sticky-nav .hoeren-nav-divider{
   width: 1px !important;
   height: 28px !important;
-  background: var(--surface-2) !important;
+  background: var(--line) !important;
   margin: 0 2px !important;
 }
 
@@ -822,11 +823,11 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
 
 <style id="hoeren-premium-lock">
 .premium-theme-body{background: var(--surface) !important;min-height: 100px;}
-.premium-theme-icon{background: var(--surface-2) !important;color: var(--gold-soft) !important;box-shadow: 0 6px 14px rgba(23,23,23,.18) !important;}
-.premium-theme-open{background: var(--surface-2) !important;color: var(--gold-soft) !important;border: 1px solid var(--border) !important;}
+.premium-theme-icon{background: var(--surface-2) !important;color: var(--brand) !important;box-shadow: 0 6px 14px rgba(23,23,23,.18) !important;}
+.premium-theme-open{background: var(--surface-2) !important;color: var(--brand) !important;border: 1px solid var(--border) !important;}
 .premium-theme-open:hover{background: var(--gold) !important;color: #fff !important;border-color: var(--gold) !important;}
 html.dark .premium-theme-body{background: #1b1b1b !important;}
-html.dark .premium-theme-open{background: #111318 !important;color: var(--gold-soft) !important;border-color: #343842 !important;}
+html.dark .premium-theme-open{background: #111318 !important;color: #fff !important;border-color: #343842 !important;}
 html.dark .premium-theme-open:hover{background: var(--gold) !important;color: #fff !important;border-color: var(--gold) !important;}
 </style>
 
@@ -2143,7 +2144,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 .hoeren-premium-head h3{margin-bottom: 7px;font-size: 24px;}
 .hoeren-premium-head p{line-height: 1.6;color: #eee;}
 .hoeren-premium-close{position: absolute;top: 12px;right: 14px;width: 38px;height: 38px;border: none;border-radius: 50%;background: var(--gold);color: #fff;font-size: 24px;cursor: pointer;z-index: 5;}
-.hoeren-premium-close:hover{background: #111;color: var(--gold-soft);}
+.hoeren-premium-close:hover{background: #111;color: #fff;}
 .hoeren-premium-body{padding: 22px;}
 .hoeren-premium-intro{background: var(--surface-2);border-radius: 12px;padding: 15px;margin-bottom: 20px;color: var(--text);line-height: 1.7;text-align: center;}
 .hp-de{direction: ltr;text-align: center;display: block;}
@@ -2156,10 +2157,10 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 .hoeren-offer-description{color: var(--muted);font-size: 13px;line-height: 1.8;min-height: 62px;text-align: center;display: flex;flex-direction: column;justify-content: center;}
 .hp-ar-small{direction: rtl;display: block;font-size: 13px;}
 .hoeren-offer-btn{display: block;margin-top: 12px;text-decoration: none;background: var(--gold);color: #fff;padding: 10px 8px;border-radius: 8px;font-weight: bold;font-size: 13px;transition: .2s;}
-.hoeren-offer-btn:hover{background: #111;color: var(--gold-soft);}
+.hoeren-offer-btn:hover{background: #111;color: #fff;}
 .hoeren-whatsapp-area{margin-top: 20px;padding-top: 18px;border-top: 1px solid var(--line);text-align: center;}
 .hoeren-whatsapp-area p{margin-bottom: 11px;color: var(--muted);line-height: 1.7;}
-.hoeren-whatsapp-main{display: block;width: 100%;background: #171717;color: var(--gold-soft);text-decoration: none;padding: 13px 15px;border-radius: 9px;font-weight: bold;transition: .2s;}
+.hoeren-whatsapp-main{display: block;width: 100%;background: #171717;color: #fff;text-decoration: none;padding: 13px 15px;border-radius: 9px;font-weight: bold;transition: .2s;}
 .hoeren-whatsapp-main:hover{background: var(--gold);color: #fff;}
 html.dark .hoeren-premium-box{background: #1b1b1b;color: #f1f1f1;}
 html.dark .hoeren-premium-intro{background: #2b2818;color: #f1f1f1;}
