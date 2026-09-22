@@ -1,5 +1,5 @@
 {
-  "build": "18b847f7e2d0",
+  "build": "2beb2b75a4c1",
   "assets": {
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b2-content.js": "5ab8cd9f",
@@ -14,16 +14,16 @@
     "assets/schreiben-auth.js": "eb302ca1",
     "assets/schreiben-engine.js": "4e757555",
     "assets/schreiben-hub.js": "5c6b51aa",
-    "assets/schreiben-style.css": "9bc9027e",
+    "assets/schreiben-style.css": "aca422f2",
     "assets/schreiben-topics-b2.js": "4b0aa04a",
-    "assets/section.css": "49a51a11",
+    "assets/section.css": "dcef709d",
     "assets/session-guard.js": "d6dfc66e",
-    "assets/site-header.css": "c9280005",
+    "assets/site-header.css": "70b9f82b",
     "assets/site-header.js": "f1150aa1",
     "assets/sprechen-b2-content.js": "308095e2",
     "assets/sprechen-b2-topics.js": "886351ae",
     "assets/sprechen-engine.js": "45ed2a28",
     "assets/sprechen-hub.js": "49a8b701",
-    "assets/theme.css": "43cd561b"
+    "assets/theme.css": "ebedceaa"
   }
 }

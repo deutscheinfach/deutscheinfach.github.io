@@ -19,16 +19,29 @@
 
     --brand: #e11d33;
     --brand-dark: #b4142a;
+    --brand-deep: #8e0f22;
+    /* الطرف الفاتح ديال التدرجات — أحمر حي، ماشي وردي باهت.
+       قبل، التدرجات كانو كيبداو من --brand-soft (شبه أبيض)
+       والعناوين والأزرار كانو كيختفيو فالنص ديالهم. */
+    --brand-light: #ff4f64;
     --brand-soft: #ffe1e5;
     --brand-tint: rgba(225,29,51,.08);
+
+    /* لمسة ذهبية صغيرة (العلم الألماني) — كتستعمل بقلة */
+    --flag-gold: #f2b705;
+    --flag-black: #14161f;
+
+    --grad-brand: linear-gradient(135deg, var(--brand-light) 0%, var(--brand) 45%, var(--brand-dark) 100%);
+    --grad-ink: linear-gradient(135deg, #1b1f2e 0%, #0f121b 100%);
 
     --gold: var(--brand);
     --gold-dark: var(--brand-dark);
     --gold-soft: var(--brand-soft);
 
     --ink: #ffffff;
+    --paper: #faf9f7;
     --surface: #ffffff;
-    --surface-2: #f7f8fc;
+    --surface-2: #f6f5f3;
 
     --text: #14161f;
     --muted: #5b6172;
@@ -44,6 +57,7 @@
     --red: var(--gold);
     --red-dark: var(--gold-dark);
     --yellow: var(--gold-soft);
+    --gold-light: var(--brand-light);
     --bg: var(--ink);
     --card: var(--surface);
     --light: var(--surface-2);
@@ -52,7 +66,11 @@
     --gray: var(--muted);
     --border: var(--line);
     --border-strong: var(--line-gold);
-    --shadow: 0 10px 28px rgba(20,22,31,.08);
+    --shadow: 0 1px 2px rgba(20,22,31,.04), 0 8px 24px -6px rgba(20,22,31,.10);
+    --shadow-lg: 0 2px 4px rgba(20,22,31,.04), 0 24px 48px -12px rgba(20,22,31,.18);
+    --shadow-brand: 0 10px 26px -8px rgba(225,29,51,.55);
+    --ring: 0 0 0 4px rgba(225,29,51,.16);
+    --ease: cubic-bezier(.22, 1, .36, 1);
 
     /* الأحجام — كتكبر مع الشاشة */
     --step-0: clamp(14px, .5vw + 12.5px, 19px);
@@ -62,7 +80,8 @@
     --step-4: clamp(28px, 2.6vw + 21px, 56px);
 
     --gutter: clamp(14px, 2.5vw, 34px);
-    --radius: 16px;
+    --radius: 18px;
+    --radius-sm: 12px;
     --shell: 1200px;
 }
 
@@ -80,26 +99,53 @@ body {
     font-size: var(--step-0);
     line-height: 1.7;
     color: var(--text);
-    /* شبكة مربعات خفيفة + لمستين ديال الأحمر فالزوايا.
-       المربعات كيعطيو إحساس "منصة" بلا ما يشوشو على
-       القراية — الخطوط رقاق بزاف عمداً. */
-    background-color: #fdfdff;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* ورق دافي + نقط رقاق + ضو أحمر خفيف فوق.
+       هادي هي الهوية ديالنا: ماشي شبكة مربعات، نقط بحال
+       دفتر ديال الألمانية. */
+    background-color: var(--paper);
     background-image:
-        radial-gradient(760px 420px at 6% -8%, rgba(225,29,51,.07), transparent 60%),
-        radial-gradient(700px 420px at 96% 2%, rgba(225,29,51,.05), transparent 58%),
-        linear-gradient(rgba(20,22,31,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(20,22,31,.045) 1px, transparent 1px);
-    background-size: auto, auto, 34px 34px, 34px 34px;
-    background-attachment: fixed, fixed, fixed, fixed;
+        radial-gradient(900px 480px at 50% -220px, rgba(225,29,51,.10), transparent 70%),
+        radial-gradient(rgba(20,22,31,.10) 1px, transparent 1.2px);
+    background-size: auto, 22px 22px;
+    background-attachment: fixed, fixed;
     min-height: 100vh;
 }
+
+/* الإمضاء: خيط رقيق بألوان العلم فوق الصفحة */
+html::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 2147483000;
+    pointer-events: none;
+    background: linear-gradient(90deg,
+        var(--flag-black) 0 33.33%, var(--brand) 33.33% 66.66%, var(--flag-gold) 66.66% 100%);
+}
+
+h1, h2, h3 { letter-spacing: -.015em; }
+
+::selection { background: rgba(225,29,51,.18); color: inherit; }
+
+/* شريط التمرير رقيق ومتناسق */
+* { scrollbar-width: thin; scrollbar-color: rgba(20,22,31,.22) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+    background: rgba(20,22,31,.18);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: rgba(225,29,51,.45); }
 
 /* ما نخليو حتى صفحة تخرج على العرض فالهاتف */
 img, video, canvas, svg { max-width: 100%; height: auto; }
 
 /* النص الذهبي المتدرج */
 .gold-text {
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

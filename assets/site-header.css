@@ -552,3 +552,46 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
         animation: none;
     }
 }
+
+/* =====================================================
+   v2 — لمسة نهائية على البار
+   ===================================================== */
+.site-header {
+    background: color-mix(in srgb, var(--paper, #faf9f7) 78%, transparent);
+    padding-top: 14px;
+}
+.site-header-inner {
+    border: 1px solid rgba(20,22,31,.08);
+    box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, var(--shadow-lg, 0 18px 40px -16px rgba(20,22,31,.2));
+    background: rgba(255,255,255,.92);
+}
+.site-brand-name { letter-spacing: -.01em; }
+.site-brand img { box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(225,29,51,.35); }
+.site-nav { background: #f3f2ef; border-color: rgba(20,22,31,.06); }
+.site-nav a { transition: color .18s var(--ease, ease), background .18s var(--ease, ease); }
+.site-nav a.active,
+.site-level a.active,
+.site-nav-pill {
+    background: var(--grad-brand, linear-gradient(135deg, #ff4f64, #e11d33 45%, #b4142a)) !important;
+    color: #fff;
+    box-shadow: var(--shadow-brand, 0 10px 26px -8px rgba(225,29,51,.55));
+}
+.site-nav.has-pill a.active { background: transparent !important; box-shadow: none; color: #fff; }
+.site-level { background: rgba(255,255,255,.9); box-shadow: var(--shadow); }
+
+/* التيليفون: الخمسة ديال الأقسام كيتقاسمو العرض — ما يبقاش
+   "Community" مقطوع فالطرف. */
+@media (max-width: 560px) {
+    .site-nav { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; }
+    .site-nav a {
+        justify-content: center;
+        padding: 0 4px;
+        font-size: 12px;
+        letter-spacing: -.01em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+@media (max-width: 380px) {
+    .site-nav a { font-size: 11px; padding: 0 2px; }
+}

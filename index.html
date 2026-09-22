@@ -18,8 +18,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
-<link rel="stylesheet" href="assets/site-header.css?v=c9280005">
+<link rel="stylesheet" href="assets/theme.css?v=ebedceaa">
+<link rel="stylesheet" href="assets/site-header.css?v=70b9f82b">
     <style>
 
         * {
@@ -55,7 +55,7 @@
             background:
                 radial-gradient(circle at 10% 10%, rgba(225,29,51,0.08), transparent 25%),
                 radial-gradient(circle at 90% 20%, rgba(225,29,51,0.06), transparent 25%),
-                linear-gradient(180deg, #fdfdff 0%, #0a0b10 100%);
+                linear-gradient(180deg, #fdfdff 0%, var(--paper, #faf9f7) 100%);
             overflow-x: hidden;
         }
 
@@ -189,8 +189,8 @@
         }
 
         .login {
-            background: linear-gradient(135deg, var(--yellow), var(--red) 55%, var(--red-dark));
-            color: #1a1400;
+            background: linear-gradient(135deg, var(--brand-light), var(--red) 55%, var(--red-dark));
+            color: #fff;
         }
 
         .login:hover {
@@ -353,7 +353,7 @@
         }
 
         .hero h1 .red {
-            background: linear-gradient(135deg, var(--yellow), var(--red));
+            background: linear-gradient(135deg, var(--brand-light), var(--red));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -391,8 +391,8 @@
         }
 
         .hero-primary {
-            background: linear-gradient(135deg, var(--yellow), var(--red) 55%, var(--red-dark));
-            color: #1a1400;
+            background: linear-gradient(135deg, var(--brand-light), var(--red) 55%, var(--red-dark));
+            color: #fff;
             box-shadow: 0 10px 25px -6px rgba(225,29,51,0.4);
         }
 
@@ -1104,24 +1104,25 @@
             background:
                 linear-gradient(
                     135deg,
-                    var(--yellow),
+                    var(--brand-light),
                     var(--red) 55%,
                     var(--red-dark)
                 );
 
             border-radius: 30px;
-            color: #1a1400;
+            color: #fff;
 
             box-shadow: 0 20px 50px -10px rgba(225,29,51,0.35);
         }
 
         .cta h2 {
+            color: #fff;
             font-size: 32px;
             margin-bottom: 12px;
         }
 
         .cta p {
-            color: rgba(26,20,0,0.75);
+            color: rgba(255,255,255,0.88);
             margin-bottom: 23px;
             font-size: 16px;
         }
@@ -1134,8 +1135,9 @@
             padding: 14px 25px;
             border-radius: 14px;
 
-            background: #14110a;
+            background: #fff;
             color: var(--red-dark);
+            box-shadow: 0 12px 28px -10px rgba(20,22,31,.45);
 
             text-decoration: none;
             font-weight: 900;

@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css?v=43cd561b">
+<link rel="stylesheet" href="assets/theme.css?v=ebedceaa">
 <style>
 
 :root{
@@ -28,7 +28,7 @@
     --sidebar-hover: #f2f4fa;
     --accent: var(--brand);
     --accent-dark: var(--brand-dark);
-    --gold: var(--brand-soft);
+    --gold: var(--brand);
     --bg: #fdfdff;
     --surface: #ffffff;
     --border: rgba(20,22,31,.10);
@@ -1333,7 +1333,7 @@ button:disabled{
 
 /* الروابط داخل الرسائل */
 .message-text a {
-    color: var(--gold-soft);
+    color: var(--brand);
     text-decoration: underline;
     text-underline-offset: 2px;
     word-break: break-word;
@@ -1428,7 +1428,7 @@ button:disabled{
     border: 1px solid var(--line-gold);
     border-radius: 50%;
     background: var(--surface);
-    color: var(--gold-soft);
+    color: var(--brand);
     font-size: 17px;
     cursor: pointer;
     box-shadow: 0 10px 26px rgba(0,0,0,.45);
@@ -1482,7 +1482,7 @@ button:disabled{
     border-radius: 10px;
     background: var(--surface-2);
     border: 1px solid var(--line-gold);
-    color: var(--gold-soft);
+    color: var(--brand);
     font-size: 13px;
 }
 .upload-bar.show { display: block; }
@@ -1533,7 +1533,7 @@ button:disabled{
     cursor: pointer;
     transition: .18s;
 }
-.composer-btn:hover { background: rgba(225,29,51,.14); color: var(--gold-soft); }
+.composer-btn:hover { background: rgba(225,29,51,.14); color: var(--brand); }
 .composer-btn:active { transform: scale(.92); }
 .composer-btn svg {
     width: 20px; height: 20px;
@@ -1569,7 +1569,7 @@ button:disabled{
     transition: opacity .2s;
 }
 .char-count.show { opacity: 1; }
-.char-count.warn { color: var(--gold-soft); }
+.char-count.warn { color: var(--brand); }
 
 /* زر الإرسال دائري */
 .send-btn {
@@ -1579,8 +1579,8 @@ button:disabled{
     display: flex; align-items: center; justify-content: center;
     border: none;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    color: #17130a;
+    background: var(--grad-brand);
+    color: #fff;
     cursor: pointer;
     transition: .2s;
 }
@@ -1682,8 +1682,8 @@ button:disabled{
     width: 104px; height: 104px;
     display: flex; align-items: center; justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold-soft), var(--gold));
-    color: #17130a;
+    background: var(--grad-brand);
+    color: #fff;
     font-size: 40px; font-weight: 900;
     overflow: hidden;
 }
@@ -1993,7 +1993,7 @@ Gruppe erstellen
 <section class="tab-panel" id="tab-calls" hidden>
 
 <div class="panel-head">
-<h2>Appels</h2>
+<h2>Anrufe</h2>
 </div>
 
 <div id="callList"></div>
@@ -2009,7 +2009,7 @@ Gruppe erstellen
 <section class="tab-panel" id="tab-profile" hidden>
 
 <div class="panel-head">
-<h2>Vous</h2>
+<h2>Profil</h2>
 </div>
 
 <div class="me-card">
@@ -2176,9 +2176,6 @@ placeholder="Nachricht schreiben..."
 <button
 id="sendBtn"
 class="send-btn"
-<button
-id="sendBtn"
-class="send-btn"
 onclick="sendMessage()">
 <span id="sendBtnLabel">Senden</span>
 <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;stroke-width:2.4"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -2192,7 +2189,7 @@ onclick="sendMessage()">
 
 <button type="button" data-tab="chats" class="active" onclick="openChatTab('chats')">
 <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.2A8.5 8.5 0 0 1 12 3a8.38 8.38 0 0 1 9 8.5z"></path></svg>
-Discussions
+Chats
 <span class="tab-badge" id="tabBadgeChats" hidden>0</span>
 </button>
 
@@ -2203,13 +2200,13 @@ Community
 
 <button type="button" data-tab="calls" onclick="openChatTab('calls')">
 <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.9 2z"></path></svg>
-Appels
+Anrufe
 <span class="tab-badge" id="tabBadgeCalls" hidden>0</span>
 </button>
 
 <button type="button" data-tab="profile" onclick="openChatTab('profile')">
 <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-Vous
+Profil
 </button>
 
 </nav>
@@ -10565,6 +10562,141 @@ location.replace("login.html");
         cursor: pointer;
     }
     .mobile-back .icon { width: 22px; height: 22px; }
+}
+</style>
+
+<style>
+/* =====================================================
+   v2 — الشات بالهوية الجديدة
+   ===================================================== */
+
+/* زر الرجوع كيبان غير فالتيليفون — فالـ PC اللائحة ديما بايْنة.
+   قبل كان كيبان فالـ PC بشكل ديال المتصفح (زر رمادي). */
+.mobile-back { display: none; }
+
+/* الشريط الجانبي */
+.logo-area { border-bottom: 1px solid var(--border); }
+.logo { box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(225,29,51,.35); }
+.logo-text { font-weight: 800; letter-spacing: -.02em; }
+.search-box input { border: 1px solid transparent; transition: border-color .2s, box-shadow .2s, background .2s; }
+.search-box input:focus { background: #fff; border-color: var(--brand); box-shadow: var(--ring); }
+.nav button { border-radius: 12px; }
+.nav button.active {
+    background: var(--grad-brand);
+    color: #fff;
+    box-shadow: var(--shadow-brand);
+}
+.section-title { font-size: 11px; font-weight: 800; letter-spacing: .12em; color: var(--muted); }
+.create-group { background: var(--grad-brand); box-shadow: var(--shadow-brand); border-radius: 14px; }
+
+/* رأس المحادثة: زجاجي */
+.chat-header {
+    background: rgba(255,255,255,.86);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: 0 1px 0 var(--border), 0 8px 24px -18px rgba(20,22,31,.35);
+    border-bottom: none;
+}
+.header-avatar { background: var(--grad-brand); color: #fff; box-shadow: var(--shadow-brand); }
+.header-name { font-weight: 800; letter-spacing: -.01em; }
+.header-btn {
+    border-radius: 12px;
+    transition: background .2s, color .2s, transform .2s;
+}
+.header-btn:hover { background: var(--brand-tint); color: var(--brand); }
+#callAudioBtn, #callVideoBtn { color: var(--brand); }
+
+/* المحادثة: نفس الورق المنقّط ديال الموقع */
+.messages {
+    background-color: var(--paper, #faf9f7);
+    background-image: radial-gradient(rgba(20,22,31,.08) 1px, transparent 1.2px);
+    background-size: 22px 22px;
+}
+.message-content { border-radius: 16px 16px 16px 6px; box-shadow: 0 1px 2px rgba(20,22,31,.06), 0 4px 14px -8px rgba(20,22,31,.18); }
+.message.mine .message-content {
+    background: linear-gradient(135deg, #ffecee, #ffe0e4);
+    border-radius: 16px 16px 6px 16px;
+}
+.empty h2 { font-weight: 900; letter-spacing: -.02em; }
+.empty h2::after {
+    content: "";
+    display: block;
+    width: 56px; height: 5px;
+    margin: 14px auto 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--flag-black, #14161f) 0 33%, var(--brand) 33% 66%, var(--flag-gold, #f2b705) 66% 100%);
+}
+
+/* الكتابة */
+.input-area { background: rgba(255,255,255,.9); backdrop-filter: blur(12px); border-top: 1px solid var(--border); }
+.composer { background: #fff; border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(20,22,31,.04); }
+.composer:focus-within { border-color: var(--brand); box-shadow: var(--ring); }
+.send-btn { box-shadow: var(--shadow-brand); }
+.send-btn:disabled { opacity: .45; box-shadow: none; }
+
+/* شريط التبويبات تحت (التيليفون) */
+@media (max-width: 750px) {
+    .tabbar {
+        background: rgba(255,255,255,.9) !important;
+        backdrop-filter: blur(16px) saturate(150%);
+        -webkit-backdrop-filter: blur(16px) saturate(150%);
+        border-top: 1px solid var(--border) !important;
+        box-shadow: 0 -10px 30px -20px rgba(20,22,31,.35);
+    }
+    .tabbar button { position: relative; font-weight: 700; }
+    .tabbar button.active { color: var(--brand) !important; }
+    .tabbar button.active::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 50%;
+        width: 28px; height: 3px;
+        margin-left: -14px;
+        border-radius: 0 0 4px 4px;
+        background: var(--grad-brand);
+    }
+    .mobile-back:hover { background: var(--brand-tint) !important; color: var(--brand) !important; }
+}
+
+/* ===== شاشة المكالمة =====
+   قبل: الصندوق كان أبيض والأزرار والكتابة بيض → ما كيبانوش
+   فالمكالمة الصوتية. دابا شاشة غامقة بحال التطبيقات الكبار. */
+.call-overlay { background: rgba(8,10,16,.78); backdrop-filter: blur(14px); }
+.call-box {
+    background:
+        radial-gradient(520px 360px at 50% 30%, rgba(225,29,51,.30), transparent 70%),
+        radial-gradient(420px 300px at 85% 110%, rgba(242,183,5,.10), transparent 70%),
+        linear-gradient(160deg, #1a1e2c 0%, #0c0e15 100%);
+    border: 1px solid rgba(255,255,255,.08);
+    box-shadow: 0 40px 90px -20px rgba(0,0,0,.7);
+}
+.call-name { color: #fff; font-size: 26px; font-weight: 900; letter-spacing: -.02em; }
+.call-status { color: rgba(255,255,255,.72); font-size: 15px; }
+.call-kind { color: #ff8a98; }
+.call-avatar {
+    width: 128px; height: 128px;
+    font-size: 48px;
+    box-shadow: 0 0 0 6px rgba(255,255,255,.06), 0 20px 50px -10px rgba(225,29,51,.6);
+}
+.call-local { border: 2px solid rgba(255,255,255,.18); border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.45); }
+.call-actions {
+    left: 50%; right: auto;
+    transform: translateX(-50%);
+    width: max-content;
+    padding: 14px 22px 10px;
+    border-radius: 28px;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(12px);
+}
+.call-btn { background: rgba(255,255,255,.12); }
+.call-btn:hover { background: rgba(255,255,255,.2); }
+.call-btn.off { background: #fff; color: #14161f; }
+.call-btn.hangup { background: linear-gradient(135deg, #ff5a5f, #d7263d); box-shadow: 0 10px 24px -8px rgba(229,72,77,.7); }
+.call-btn.accept { background: linear-gradient(135deg, #34e27a, #1fb85a); }
+.call-action span { color: rgba(255,255,255,.78); font-weight: 600; }
+@media (max-width: 650px) {
+    .call-box { border: none; }
+    .call-actions { bottom: calc(24px + env(safe-area-inset-bottom)); padding: 12px 16px 8px; }
 }
 </style>
 </body>
