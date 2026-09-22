@@ -93,6 +93,101 @@
     window.LESEN_B2_CONTENT = {
 
         /* ================================================================
+           Auf dem Weg — Leseverstehen Teil 3 (إعلانات الدورات)
+           12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (11 و 19)
+           ================================================================ */
+        "t3-aufdemweg": {
+            teil3: {
+                title: "Auf dem Weg",
+                kind: "ads",
+                intro: "Lesen Sie die Situationen 11–20 und die Anzeigen A–L. "
+                     + "Welche Anzeige passt zu welcher Situation? "
+                     + "Jede Anzeige können Sie nur einmal verwenden. "
+                     + "Gibt es zu einer Situation keine passende Anzeige, "
+                     + "markieren Sie X.",
+
+                ads: [
+                    { key: "A", head: "Didgeridoo – der klingende Stock Australiens (Samstag, 9.30–19.30 Uhr)",
+                      body: "Erlernt werden die Herstellung und das Spiel auf diesem wahrscheinlich ältesten Blasinstrument der Welt. Von den Aborigines – den Ureinwohnern Australiens – zur Begleitung von Tanz und Gesang und bei Heilungsritualen verwendet, wird es heute als Musikinstrument in der Therapie sowie in Musikgruppen und Orchestern auf der ganzen Welt eingesetzt. Die heilende Wirkung des Didgeridoo-Spiels beruht darauf, dass durch die besondere Klangcharakteristik und die Zirkuläratmung, die es ermöglicht, den Ton beliebig lange ohne Unterbrechung zu halten, der Zugang zu einer gesteigerten Wahrnehmung erleichtert wird und man so einen Zustand tiefer Entspannung erreicht.",
+                      ar: "هاد الإعلان كيهضر على واحد الدورة نهار السبت من 9:30 تال 19:30 باش تتعلم تصاوب وتلعب بآلة «الديدجيريدو». هاد الآلة هي من أقدم الآلات الموسيقية فالعالم، جاو بها السكان الأصليين ديال أستراليا وكانو كيخدموها فالرقص والعلاج. اليوم ولات كتستعمل بزاف فالموسيقى وحتى فالعلاج، حيت الطريقة ديال التنفس فاش كتعزف كتعاون الواحد يوصل لحالة ديال الاسترخاء العميق." },
+
+                    { key: "B", head: "Deutsch im Beruf (Samstag, 9.00–17.30 Uhr)",
+                      body: "Wie schreibt man heute richtig? Welche Regeln sind beim Telefonieren zu beachten? Worauf muss ich beim Schreiben von E-Mails achten? Wie gestalte ich Briefe am besten? Und wo hole ich mir Hilfe, wenn ich mir nicht sicher bin? Der Tageskurs soll kurz und bündig das Wichtigste bieten, worauf man aufpassen muss. Damit lassen sich sicher 80–90 % der häufigsten Fehler vermeiden, was den Eindruck Ihrer Firma nach außen wesentlich verbessert. Ihr Chef wird bemerken, dass Sie hinzugelernt haben.",
+                      ar: "هاد الدورة غاتكون نهار السبت، والهدف منها هو تعلم كيفاش تكتب وتواصل فالتليفون بطريقة صحيحة. غادي تعرف كيفاش تقاد الإيميلات والبروات وتجنب كاع الأغلاط اللي كيتعاودو ديما ف الخدمة. هاد الشي كايحسن الصورة ديال الشركة ديالك قدام الكليان، وحتى المسؤول ديالك غادي يلاحظ باللي وليتي ضابط أمورك كتر." },
+
+                    { key: "C", head: "Xpert – Europäischer Computerpass (Dienstag, 18.15–21.15 Uhr, Dauer: 10 Wochen)",
+                      body: "In diesem Semester bietet die FAFA zum Einstieg in das Lehrgangssystem von Xpert das neue Pflichtmodul Win@internet 1 an. Im nächsten Halbjahr werden dann das Pflichtmodul Textverarbeitung Basics und das Wahlmodul Präsentation folgen. Wenn Sie sich prüfen lassen, wissen Sie, woraus ein einfaches Computersystem besteht, können Sie Windows bedienen und Ordner verwalten und haben Sie die Fähigkeit, die wichtigsten Internet- und E-Mail-Dienste anzuwenden; außerdem haben Sie Einblick in die Gefahren, die sich aus der Nutzung ergeben.",
+                      ar: "هاد الدورة كتعلمك الساس ديال الكومبيوتر والأنترنيت. الحصص كل نهار تلات فالعشية والمدة عشرة د السيمانات. فهاد الموديل Win@internet 1 غاتعلم كيفاش تخدم بويندوز وتقاد الملفات وتستعمل الإيميل بطريقة آمنة. ومن بعد، ف السداسي الجاي، غايكونو موديلات خرين ديال الكتابة والعروض (Präsentation)." },
+
+                    { key: "D", head: "Grundlagen der Pressearbeit für Vereine (Samstag, 10.00–12.00 Uhr)",
+                      body: "Nach welchen Kriterien haben Themen eine Chance, in die Medien zu gelangen? In diesem Seminar lernen Sie Grundlagen effektiver Pressearbeit kennen. Es wird aber nicht nur theoretisches Wissen vermittelt. Sie haben Gelegenheit zu praktischen Übungen und können lernen, eine aktuelle Pressemitteilung für Ihren Verein zu formulieren. Das Angebot richtet sich vor allem an Aktive in Vereinen und Initiativen, die neu in die Pressearbeit einsteigen wollen. Den Teilnehmenden wird ein zusätzliches späteres Treffen angeboten, um die Erfahrungen aus der ersten Anwendung der im Seminar erworbenen Kenntnisse auszutauschen.",
+                      ar: "هاد السيمينار نهار السبت من العشرة ل طناش، وهو موجه للناس اللي خدامين فالجمعيات وباغيين يبداو يتواصلو مع الصحافة. غادي تتعلمو فيه كيفاش تكتبو بلاغ صحفي على الأنشطة ديالكم وتعرفو كيفاش كايخدم الإعلام. البرنامج فيه تمارين تطبيقية، وغادي يكون لقاء آخر من بعد باش تشاركو التجارب ديالكم." },
+
+                    { key: "E", head: "Glücklich miteinander – wie Partnerschaft gelingt (Dienstag, 19.30–21.00 Uhr)",
+                      body: "Am Anfang der Partnerschaft sind wir verliebt und glücklich. Sehr bald allerdings gerät die Liebe in Gefahr – sowohl durch die Belastungen des Alltags als auch durch die beiderseitigen Fehler. Der Vortrag zeigt, worauf es in einer guten Partnerschaft ankommt, und stellt dazu die neuesten Forschungsergebnisse aus der Paarforschung vor. Außerdem berichtet die Referentin aus ihrer Praxis als Paar- und Familientherapeutin und gibt Hinweise, was die Partner selbst aktiv für ihre Liebe tun können. Die Veranstaltung findet in Kooperation mit dem Psychologischen Institut der Universität statt.",
+                      ar: "كاين واحد العرض نهار الثلاث مع السبعة ونص د العشية كيهضر على العلاقة بين الشريكين وكيفاش نحافظو على الحب. هاد المحاضرة كتشرح المشاكل اللي كتقدر تواجه الكوبل فالحياة اليومية، وكتورينا شنو كتقول الأبحاث الجديدة. واحد الأخصائية غادية تعطي نصائح عملية، واللقاء منظم بتعاون مع معهد علم النفس فالجامعة." },
+
+                    { key: "F", head: "Entscheidungen leichter fällen (Samstag, 10.00–13.00 Uhr)",
+                      body: "„Diese oder jene Wohnung nehmen – und nach welchen Kriterien entscheiden?“, „Trotz schlechter Arbeitsmarktlage den Job wechseln oder lieber auf Nummer sicher gehen?“ Oder einfach nur: „Was soll ich heute kochen?“ Entscheidungen müssen wir täglich treffen – einige fallen uns leichter, andere schwerer. Nicht selten ist man aber hinterher mit der Entscheidung unzufrieden und fragt sich, ob man nicht alles hätte anders machen sollen. Das muss nicht sein. Eine optimale Entscheidung zu treffen lässt sich lernen. Unterschiedliche Techniken werden vorgestellt und gezielt geübt, und man lernt, diese auf die individuelle Situation anzuwenden, sodass man in Zukunft jede Entscheidung leichter fällen kann.",
+                      ar: "هاد الحصة كاينة نهار السبت من العشرة د الصباح حتى للوحدة. غادي تعلمك كيفاش تاخد قرارات صحيحة فحياتك اليومية بلا ما تبقى تتردد ولا تندم من بعد. غادي يوريوك بزاف د الطرق والتقنيات اللي كتعاونك تختار أحسن حاجة فالسكنى، فالخدمة، وحتى فشنو غادي تطيب، وتولي تطبقهم على الحالة ديالك." },
+
+                    { key: "G", head: "Physiotherapie (Beginn: 1. September, 9.00 Uhr, Dauer: 4 Semester)",
+                      body: "Physiotherapie ist ein wichtiger Bestandteil der modernen Medizin. Die Physiotherapeutin, der Physiotherapeut kann mit vielen Behandlungskonzepten und Techniken zum Erhalt oder zur Wiederherstellung aller Funktionen der Patienten beitragen. Die Ausbildung endet mit einer staatlichen Prüfung. Nach bestandener Prüfung wird gemäß § 2 des „Gesetzes über die Berufe in der Physiotherapie“ die Erlaubnis zur Führung der Berufsbezeichnung „Physiotherapeut/in“ von den zuständigen Behörden erteilt. Um an der Ausbildung teilnehmen zu können, müssen Sie mindestens einen Realschulabschluss haben. Außerdem müssen Sie einen Eingangstest bei uns machen.",
+                      ar: "هاد الإعلان كيهضر على تكوين فالترويض الطبي غيبدا ف فاتح شتنبر وغيدوم ربعة ديال السداسيات. فاش كتسالي وتنجح فامتحان الدولة، كتاخد رخصة باش تخدم مروّض طبي بشكل رسمي. باش تشارك، خاص يكون عندك على الأقل ديبلوم «الريالشول» وتدوز امتحان ديال الدخول. هاد القراية كتعلمك تقنيات باش تعاون المرضى يرجعو الحركة والصحة ديالهم." },
+
+                    { key: "H", head: "Außenwirtschafts- und länderkundliche Beraterin (täglich, 8.00–12.10 Uhr, Dauer: 10 Monate)",
+                      body: "Ziel ist es, an einer Tätigkeit im kaufmännischen Bereich interessierte Frauen mit Migrationshintergrund und zumindest guten Grundkenntnissen der deutschen Sprache auf eine Tätigkeit im Import-/Exportbereich vorzubereiten und in eine feste Anstellung zu vermitteln. Durch die Aneignung der dafür erforderlichen sprachlichen und fachlichen Kompetenzen ist es möglich, den Migrantinnen einen beruflichen Einstieg in den Bereich Außenwirtschaft, eine Anknüpfung an eine bereits im Herkunftsland ausgeübte oder erlernte Tätigkeit, eine anschließende Regelausbildung im Außenhandel oder Import-Export-Bereich sowie eine Existenzgründung im Consultingbereich (als länderkundliche Beraterin) zu ermöglichen.",
+                      ar: "هاد الدورة مخصصة للعيالات المهاجرات اللي باغين يخدمو فمجال التجارة وعندهم شوية د الألمانية. التكوين كيدوم عشر شهور، كل صباح من التمنية ل طناش وعشرة. الهدف هو يوجدوهم باش يخدمو فالتصدير والاستيراد ويلقاو خدمة قارة، ولا يكملو تكوين فهاد المجال، ولا يبداو مشروعهم الخاص فالاستشارات." },
+
+                    { key: "I", head: "Referate und Hausarbeiten erfolgreich meistern (Mittwoch und Freitag, 18.30–21.00 Uhr, Dauer: 10 Wochen)",
+                      body: "Wie kann ich mich optimal an Lehrveranstaltungen beteiligen? Wie halte ich mündliche Referate? Was erwartet mich in einer mündlichen Prüfung? Wie soll eine E-Mail an Dozentinnen und Dozenten aussehen? Wie fertige ich Mitschriften und Exzerpte an? Wie schreibe ich eine Hausarbeit, wie zitiere ich? Wie schreibe ich schriftliche Klausuren? – Besonders in den ersten Semestern haben Anfänger ihre liebe Not mit den universitären Textsorten und Aufgabenstellungen. Mit den Schwerpunkten Referat und Hausarbeit bietet der Kurs Übungen, um Routine für schriftliche und mündliche Leistungsnachweise zu entwickeln. Das Lehrmaterial wird zu Kursbeginn bekannt gegeben. Kopierkosten werden mit dem Dozenten abgerechnet.",
+                      ar: "هاد الدورة موجهة للطلبة الجداد فالجامعة باش تعاونهم يتأقلمو مع السيستيم ديال القراية. غادي يتعلمو كيفاش يديرو العروض، يكتبو البحوث، ويوجدو للامتحانات الشفوية والكتابية. الكور كل نهار أربعاء وجمعة مع 18:30 ويدوم عشرة ديال السيمانات." },
+
+                    { key: "J", head: "Souverän in Vorstellungsgesprächen (Freitag–Sonntag, 10.30–17.00 Uhr)",
+                      body: "Im Vorstellungsgespräch müssen Sie Ihren zukünftigen Arbeitgeber von Ihren Fähigkeiten und Ihrer Persönlichkeit überzeugen. Dieses Seminar vermittelt Ihnen, was im Vorstellungsgespräch von Ihnen erwartet wird, was Sie sagen oder nicht sagen sollten und wie Sie Ihr Profil darstellen. Mithilfe von Rollenspielen und Videoaufzeichnungen sehen Sie ein Bild von sich selbst. Sofort-Tipps und Feedback unterstützen eine Verhaltensänderung, die den Erfolg Ihres Vorstellungsgesprächs unterstützt. Nachdem Sie viel geübt haben, werden Sie in Zukunft ohne Bauchschmerzen zum Vorstellungsgespräch gehen können.",
+                      ar: "هاد التدريب للناس اللي باغين يتعلمو كيفاش ينجحو فالمقابلات ديال الخدمة ويقنعو المشغل بالمهارات ديالهم. الورشة من الجمعة حتى للأحد، وغادي تتعلم شنو خاصك تقول وشنو خاصك تجنب وكيفاش تقدم راسك. غادي تخدمو بتمثيل الأدوار وتصويرة ديال الفيديو باش تاخدو ملاحظات، وفالأخير تمشي للمقابلة وأنت واثق من راسك." },
+
+                    { key: "K", head: "Zeichnen für Anfänger (Samstag und Sonntag, 10.30–17.00 Uhr)",
+                      body: "Sind Sie auch der Meinung, dass Sie nicht zeichnen können? Dann sind Sie in diesem Kurs genau richtig! An verschiedenen Alltagsgegenständen schulen wir unsere Wahrnehmung und lernen, Proportionen, Licht und Schatten richtig zu erfassen und zeichnerisch wiederzugeben. Ihnen schwirrt der Kopf, wenn Sie Begriffe wie Horizontlinie oder Fluchtpunkt hören, und leichte Verzweiflung erfasst Sie? Was es damit auf sich hat, erfahren Sie in zeichnerischen Übungen; Sie lernen, eckige Gegenstände, Innenräume und Hausansichten perspektivisch richtig darzustellen. Wir arbeiten mit Bleistift. Bitte mitbringen: Bleistifte HB, 2B, 4B, 6B, 8B, Radiergummi, Spitzer und Zeichenblock DIN A3.",
+                      ar: "هاد الدورة ديال الرسم نهار السبت والأحد من العشرة ونص حتى لخمسة، وهي مزيانة حتى للناس اللي كيصحابلهم ما كيعرفوش يرسمو. غادي تتعلمو كيفاش ترسمو حوايج من الحياة اليومية وتضبطو الضو، الظل، والقياسات. الأستاذ غادي يشرح ليكم قواعد «المنظور» باش ترسمو الديور والبيوت من الداخل بطريقة صحيحة. جيبو معاكم أقلام الرصاص، جومة، مقراطة، ودفتر A3." },
+
+                    { key: "L", head: "Traditionelle thailändische Speisen (Samstag und Sonntag, 10.30–17.00 Uhr)",
+                      body: "Thailändische Gerichte sind dafür berühmt, viel Geschmack, gleichzeitig jedoch weniger Kalorien zu liefern. Die thailändische Küche bietet genussvolle und köstliche Speisen. Vorspeisen, Hauptgerichte und die berühmten Suppen und Salate werden gemeinsam zubereitet. Der Kurs soll ein Einstieg in die Feinheiten der thailändischen Küche sein. An jedem Kurstag wird ein vielseitiges und köstliches Menü zusammengestellt und anschließend gemeinsam gegessen. Abgerundet wird der Kurs durch landestypische Dekorationsideen. Bitte bringen Sie zwei Geschirrtücher, Vorratsdosen für Reste und Ihr eigenes Getränk mit. Die Lebensmittelkosten in Höhe von ca. 8 EUR pro Tag werden direkt mit dem Dozenten abgerechnet.",
+                      ar: "هاد الإعلان كيهضر على دورة ديال الطياب التايلاندي نهار السبت والأحد، من العشرة ونص حتى لخمسة. غادي تعلمو تصوبو ماكلة بنينة وصحية، بحال الشلاظة، الصوبا، والطباق الرئيسية، ومن بعد كتاكلوها مجموعين. جيبو معاكم جوج زياف د الماعن، طاسات فين تديرو الماكلة اللي بقات، والمشروب ديالكم. ثمن المكونات تقريبا 8 يورو فالنهار." }
+                ],
+
+                situations: [
+                    { no: 11, de: "Ein Freund interessiert sich für Musikinstrumente des europäischen Mittelalters.",
+                             ar: "واحد صاحبك مهتم بالآلات الموسيقية ديال العصور الوسطى الأوروبية." },
+                    { no: 12, de: "An Ihrem Arbeitsplatz müssen Sie viele deutsche Geschäftsbriefe schreiben, sind aber oft unsicher und suchen einen entsprechenden Kurs.",
+                             ar: "ف الخدمة خاصك تكتب بزاف د البروات التجارية بالألمانية، ولكن ما متأكدش وكتقلب على شي دورة." },
+                    { no: 13, de: "Ihr Freund ist Vorsitzender eines Golfclubs und muss immer wieder Informationen an die Medien geben. Er möchte diese Aufgabe professionell erledigen.",
+                             ar: "صاحبك رئيس نادي د الݣولف وخاصو ديما يعطي معلومات للإعلام، وباغي يدير هاد الخدمة باحترافية." },
+                    { no: 14, de: "Eine Bekannte wird zur Erzieherin ausgebildet. Sie sucht einen Kurs, in dem sie die Fähigkeit zur bildlichen Darstellung entwickeln kann.",
+                             ar: "وحدة صاحبتك كتقرا باش تولي مربية، وكتقلب على دورة تطور فيها القدرة ديالها على الرسم والتعبير بالصورة." },
+                    { no: 15, de: "Sie suchen eine Berufsausbildung, bei der Sie viel mit Menschen zu tun haben. Und Sie interessieren sich für alles, was mit Gesundheit zu tun hat.",
+                             ar: "كتقلب على تكوين مهني فيه تعامل بزاف مع الناس، وكيهمك كلشي اللي ليه علاقة بالصحة." },
+                    { no: 16, de: "Ihre Freundin zögert häufig, sich auf eine Sache festzulegen. Hat sie schließlich einen Entschluss gefasst, bereut sie diesen bisweilen.",
+                             ar: "صاحبتك ديما كتتردد فاش خاصها تقرر، ومنين كتاخد القرار كتندم عليه مرات." },
+                    { no: 17, de: "Sie wollen Rezepte aus der fernöstlichen Küche kennenlernen.",
+                             ar: "باغي تتعرف على وصفات من مطبخ الشرق الأقصى." },
+                    { no: 18, de: "Sie beginnen gerade mit Ihrem Studium und beherrschen die wissenschaftlichen Arbeitstechniken noch nicht.",
+                             ar: "عاد بديتي القراية فالجامعة وما زال ما تعلمتيش تقنيات العمل الأكاديمي." },
+                    { no: 19, de: "Sie sollen in Kürze eine PowerPoint-Präsentation machen und suchen einen geeigneten Kurs.",
+                             ar: "قريب خاصك دير عرض بـ PowerPoint وكتقلب على دورة مناسبة." },
+                    { no: 20, de: "Sie haben sich auf eine Arbeitsstelle beworben und wollen sich gut vorbereiten, falls man Sie persönlich kennenlernen möchte.",
+                             ar: "دفعتي طلب خدمة وباغي توجد راسك مزيان إلا بغاو يتعرفو عليك شخصياً." }
+                ],
+
+                variants: [
+                    { label: "الأساسي",
+                      answers: ["X", "B", "D", "K", "G", "F", "L", "I", "X", "J"] }
+                ]
+            }
+        },
+
+
+        /* ================================================================
            Au-pair-Mädchen — Leseverstehen Teil 3
            12 إعلان A–L · 10 وضعيات 11–20 · X مرتين (11 و 13)
            ================================================================ */
