@@ -25,6 +25,36 @@
 
     if (!grid || !detail) return;
 
+    /* الانتقال بين Teil 1 و Teil 2/3: المتصفحات الجديدة كتديرو بوحدها
+       (@view-transition ف الـCSS). اللي ما عندوش، كنطفيو الصفحة بشوية
+       قبل ما نمشيو باش ما يبقاش القطع خشين. */
+    (function tabTransitions() {
+        const shell = document.querySelector(".lesen-shell");
+        const nav = document.querySelector(".lesen-shell > .lesen-tabs");
+        if (!shell || !nav) return;
+        if (document.startViewTransition) return;
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        nav.addEventListener("click", function (event) {
+            const tab = event.target.closest("a.lesen-tab");
+            if (!tab || tab.classList.contains("active")) return;
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.button) return;
+
+            event.preventDefault();
+            shell.classList.add("lt-leaving");
+            const go = function () { location.href = tab.href; };
+            const guard = setTimeout(go, 220);
+            shell.addEventListener("transitionend", function once(e) {
+                if (e.target !== shell) return;
+                clearTimeout(guard);
+                shell.removeEventListener("transitionend", once);
+                go();
+            });
+        });
+    }());
+
+
+
     const PARTS = [
         { key: "teil1",   label: "Teil 1" },
         { key: "teil2",   label: "Teil 2" },
@@ -81,7 +111,9 @@
         return list;
     }
 
-    function renderList() {
+    /* الحركة ديال البطائق كتبان ملي تحل اللائحة ولا تبدل الترتيب،
+       ماشي مع كل حرف كيتكتب ف البحث. */
+    function renderList(animate) {
         const list = listed();
         grid.textContent = "";
 
@@ -99,7 +131,17 @@
             return;
         }
 
-        list.forEach(function (topic) { grid.appendChild(card(topic)); });
+        grid.classList.remove("lt-enter");
+        if (animate) void grid.offsetWidth;
+
+        list.forEach(function (topic, i) {
+            const node = card(topic);
+            /* رقم لكل بطاقة باش يطلعو وحدة من بعد وحدة */
+            node.style.setProperty("--lt-i", Math.min(i, 14));
+            grid.appendChild(node);
+        });
+
+        if (animate) grid.classList.add("lt-enter");
     }
 
     function card(topic) {
@@ -356,16 +398,16 @@
         else close(false);
     });
 
-    if (search) search.addEventListener("input", renderList);
+    if (search) search.addEventListener("input", function () { renderList(false); });
     if (sortBtn) {
         sortBtn.addEventListener("click", function () {
             sortIndex = (sortIndex + 1) % SORTS.length;
             sortBtn.querySelector(".label").textContent = SORTS[sortIndex].label;
-            renderList();
+            renderList(true);
         });
     }
 
-    renderList();
+    renderList(true);
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase.
        إلا كان التمرين محلول وهو Premium، كنعاودو نرسموه. */

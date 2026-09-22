@@ -1340,3 +1340,39 @@
 }
 .pg-note b { display: block; margin-bottom: 3px; color: var(--danger); font-size: 12px; }
 .pg-note span { color: var(--muted); overflow-wrap: anywhere; }
+
+/* ===== الانتقال بين تبويبات Teil ===== */
+/* المتصفحات الجديدة كتدير الانتقال بوحدها بين الصفحات. */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) { animation: lt-fade-out .18s ease both; }
+::view-transition-new(root) { animation: lt-fade-in  .26s cubic-bezier(.4, 0, .2, 1) both; }
+
+@keyframes lt-fade-out { to   { opacity: 0; transform: translateY(-8px); } }
+@keyframes lt-fade-in  { from { opacity: 0; transform: translateY(10px); } }
+
+/* وللي ماكاينش عندو View Transitions: كنطفيو الصفحة قبل ما نمشيو. */
+.lesen-shell { transition: opacity .17s ease, transform .17s ease; }
+.lesen-shell.lt-leaving { opacity: 0; transform: translateY(-8px); }
+
+/* البطائق كيطلعو وحدة من بعد وحدة ملي تحل اللائحة */
+@keyframes lt-card-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+}
+.lesen-grid.lt-enter > .lesen-card {
+    animation: lt-card-rise .32s cubic-bezier(.4, 0, .2, 1) both;
+    animation-delay: calc(var(--lt-i, 0) * 22ms);
+}
+
+/* المؤشر ديال التبويب الخدام كينط شوية بحال ديال النسخ */
+.lesen-shell > .lesen-tabs .lesen-tab.active { animation: t1-pop .3s cubic-bezier(.34, 1.56, .64, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+    .lesen-shell,
+    .lesen-shell.lt-leaving { transition: none; opacity: 1; transform: none; }
+    .lesen-grid.lt-enter > .lesen-card,
+    .lesen-shell > .lesen-tabs .lesen-tab.active { animation: none; }
+    ::view-transition-old(root),
+    ::view-transition-new(root) { animation: none; }
+}
