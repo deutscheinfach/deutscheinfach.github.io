@@ -55,11 +55,11 @@ window.LESEN_B2_TOPICS = [
     { id: "wohnen",       title: "Wohnen",                  ar: "السكن",                      parts: ["teil1"], locked: true },
 
     /* ===== Teil 3 — الإعلانات ===== */
-    { id: "t3-aflam",               title: "Aflam",                       ar: "الأفلام",             parts: ["teil3"], locked: true },
-    { id: "t3-anwalt",              title: "Anwalt",                      ar: "المحامي",             parts: ["teil3"], locked: true },
-    { id: "t3-aupair",              title: "Au-pair-Mädchen",             ar: "فتاة الأوبير",        parts: ["teil3"], locked: true },
-    { id: "t3-aufdemweg",           title: "Auf dem Weg",                 ar: "في الطريق",           parts: ["teil3"], locked: true },
-    { id: "t3-autos",               title: "Autos",                       ar: "السيارات",            parts: ["teil3"], locked: true },
+    { id: "t3-aflam",               title: "Aflam",                       ar: "الأفلام",             parts: ["teil3"], locked: false },
+    { id: "t3-anwalt",              title: "Anwalt",                      ar: "المحامي",             parts: ["teil3"], locked: false },
+    { id: "t3-aupair",              title: "Au-pair-Mädchen",             ar: "فتاة الأوبير",        parts: ["teil3"], locked: false },
+    { id: "t3-aufdemweg",           title: "Auf dem Weg",                 ar: "في الطريق",           parts: ["teil3"], locked: false },
+    { id: "t3-autos",               title: "Autos",                       ar: "السيارات",            parts: ["teil3"], locked: false },
     { id: "t3-bonbon",              title: "Bonbon",                      ar: "الحلوى",              parts: ["teil3"], locked: true },
     { id: "t3-dokumentarfilm",      title: "Dokumentarfilm",              ar: "الأفلام الوثائقية",   parts: ["teil3"], locked: true },
     { id: "t3-austauschjahr",       title: "Ein Austauschjahr",           ar: "سنة التبادل",         parts: ["teil3"], locked: true },
