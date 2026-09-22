@@ -93,6 +93,101 @@
     window.LESEN_B2_CONTENT = {
 
         /* ================================================================
+           Anwalt — Leseverstehen Teil 3
+           12 إعلان A–L · 10 وضعيات 11–20 · X = ماكاين حتى واحد مناسب
+           ================================================================ */
+        "t3-anwalt": {
+            teil3: {
+                title: "Anwalt",
+                kind: "ads",
+                intro: "Lesen Sie die Situationen 11–20 und die Anzeigen A–L. "
+                     + "Welche Anzeige passt zu welcher Situation? "
+                     + "Jede Anzeige können Sie nur einmal verwenden. "
+                     + "Gibt es zu einer Situation keine passende Anzeige, "
+                     + "markieren Sie X.",
+
+                ads: [
+                    { key: "A", head: "Urlaub auf dem Sofa",
+                      body: "Im Urlaub zu Hause bleiben und sich auf dem Sofa ausruhen? Das fanden wir zu langweilig! Sofa ja, aber nicht das eigene – so lässt sich unsere Urlaubsidee zusammenfassen. Wenn Sie durch Deutschland, Frankreich, England oder andere europäische Länder reisen und dabei nicht nur Hotelzimmer, sondern ganz normale Leute kennenlernen wollen, dann buchen Sie jetzt bei uns. In unserer Datenbank bieten Menschen aus ganz Europa einen Schlafplatz für eine Person in ihrer Wohnung an – manchmal ein Zimmer, manchmal ein Sofa. Gegen eine geringe Gebühr kann man dort übernachten, und das Frühstück ist auch mit dabei. So lernen Sie Länder, Städte und Menschen mal von einer ganz anderen Seite kennen! Infos und Buchung unter: www.schlafplaetze-in-europa.eu",
+                      ar: "هاد الإعلان كيهضر على طريقة جديدة للسفر ف أوروبا بلا ما تبيت ف لوطيل. كيمكن ليك تخلص ثمن رخيص وتنعس عند ناس ف ديورهم، إما ف بيت بوحدك ولا غير فوق السوفا، ومعاها حتى لفطور. هاد الفكرة غاتخليك تكتشف بلدان والناس ديالها بطريقة مختلفة على لعادة." },
+
+                    { key: "B", head: "Alte Möbel aufarbeiten",
+                      body: "Viele Menschen hängen an ihren alten Möbeln und möchten sie nicht gegen andere tauschen, obwohl diese ihre besten Tage schon hinter sich haben. Wir bieten Ihnen für wenig Geld die Restauration Ihrer Möbel an. Mit einer anderen Farbe wirken viele Stücke wieder wie neu! Und falls ein Anstrich nicht reicht, zeigt Ihnen unsere Werkstatt, was noch möglich ist: z. B. neue Türen an Schränken oder neue Bezüge für Ihre Sessel und Sofas. Wir kommen gern zu Ihnen nach Hause und machen Ihnen ein kostenloses Angebot! www.schreiner.de",
+                      ar: "هاد الشركة كترجع المّابل القديم اللي عزيز عليك بحال الجديد بثمن رخيص. كيقدروا يصبغوه، يبدلو ليه البيبان، ولا يغلفو الكراسي والفوطويات. كيجيو حتى لعندك للدار وكيعطيوك ثمن الخدمة فابور بلا ما تخلص والو." },
+
+                    { key: "C", head: "Kunstmarkt",
+                      body: "In unseren Ausstellungsräumen am Platanenhof bieten wir an jedem ersten Samstag im Monat jungen Künstlerinnen und Künstlern die Möglichkeit, sich und einige ihrer Werke vorzustellen. Wenn Sie an einer Ausstellung interessiert sind, melden Sie sich bitte spätestens sechs Wochen vor dem gewünschten Termin bei uns an. Aber auch Besucher sind herzlich willkommen! Gegen einen geringen Eintritt erwartet Sie nicht nur neue Kunst, auch Kaffee und Tee werden serviert, und natürlich haben Sie auch die Gelegenheit, ein Werk gleich zu kaufen und mitzunehmen. Weitere Informationen und Anmeldung unter: www.galeria.de",
+                      ar: "هاد البلاصة ف «بلاتانِنهوف» كتدير معرض كل أول سبت ف الشهر باش تعاون الفنانين الشباب يوريو الخدمة ديالهم. إلا كنتي فنان وبغيتي تشارك، خاصك تسجل ستة د السيمانات قبل الموعد. حتى الزوار يقدرو يجيو يشوفو الفن، يشربو القهوة وأتاي ويشريو اللوحات لي عجباتهم مقابل ثمن بسيط للدخول." },
+
+                    { key: "D", head: "Die eigene Wohnung",
+                      body: "Für viele ist die eigene Wohnung ein Traum – aber es gibt auch Fragen und Probleme. Wir bieten extra für alle, die zum ersten Mal die eigenen vier Wände beziehen, Infoabende an, in denen Sie alles Wichtige zur Haushaltsführung erfahren: Wie bewahrt man Lebensmittel richtig auf? Wie viele Vorräte braucht man? Wie putzt man richtig und welches Mittel ist am besten geeignet? Wie spart man Strom und Heizkosten? Erfahren Sie alles, was wichtig ist, von Omas Spar-Rezepten bis hin zu moderner Küchentechnik. Die Teilnahme ist kostenlos, um Anmeldung wird aber gebeten. AWO Kirchhellen, Tel. 0800 / 61619012",
+                      ar: "هاد الإعلان كيقدم أمسيات توعوية مجانية للناس اللي غادي يسكنو بوحدهم لمرة الأولى. غايعلموكم فيها كلشي على تنظيم الدار، بحال تخزين الماكلة، التنظيف الصحيح، وكيفاش تقتصدو فمصاريف الضو والتدفئة. غاتستافدو من نصائح قديمة ومن تقنيات الكوزينة الحديثة. الحضور فابور ولكن خاص التسجيل مسبقاً." },
+
+                    { key: "E", head: "Unser neues Wohnkonzept",
+                      body: "Unser Angebot: 1-Zimmer-Wohnungen mit kompletter Ausstattung, auch Telefon und Internet, außerdem morgens kostenlose Tageszeitung nach Wunsch sowie ein komplettes Frühstück. Alle Wohnungen verfügen über großzügige Arbeitsplätze sowie Drucker, Fax etc. In über 25 Städten buchbar. Außerdem auf Wunsch persönlicher Service (Kurierdienst, Abholung vom Bahnhof/Flughafen etc.). Wir gestalten Ihre Geschäftsreise so angenehm wie möglich – für alle, denen Hotels zu unpersönlich sind. Informationen unter: www.wohnkonzept.de",
+                      ar: "هاد الإعلان كيقدم كرا ديال شقق صغيرة مجهزة بالكامل للناس اللي مسافرين على قبل الخدمة ف أكثر من 25 مدينة. هاد الشقق فيهم كاع داكشي اللي كتحتاج بحال لانتيرنيت، الفطور، وبلاصة مخصصة للخدمة فيها الطباعة والفاكس. كيقدمو حتى خدمات زايدة بحال التوصيل من المطار ولا المحطة. هاد العرض مناسب للناس اللي ما كيعجبهمش يبقاو فالفنادق." },
+
+                    { key: "F", head: "Ihr gutes Recht",
+                      body: "Wenn es um Rechtsfragen geht, kann es schnell teuer werden. Anwalts- und vielleicht auch Gerichtskosten werden fällig – von den Nerven, die man verliert, ganz zu schweigen. Wir bieten eine günstige und zuverlässige Alternative in allen Fragen rund um das Mietrecht: Ihre Miete wurde erhöht oder Ihr Vermieter repariert Schäden in der Wohnung nicht? Oder haben Sie eine Kündigung von Ihrem Vermieter erhalten, obwohl Sie immer pünktlich die Miete überwiesen haben und auch sonst alles in Ordnung war? Dann vereinbaren Sie einen kostenlosen Beratungstermin bei uns! Wenn wir Sie von unserem Angebot überzeugt haben, können Sie anschließend Mitglied in unserem Verein werden – für nur 75,00 Euro pro Jahr! Mieterschutzbund Brandenburg",
+                      ar: "هاد الإعلان من جمعية «Mieterschutzbund Brandenburg» اللي كتعاون الناس اللي كاريين فاش كيكون عندهم مشاكل قانونية مع موالين الديور. إلا تزادت عليك سومة الكرا، ولا مول الدار مابغاش يصلح الصداع اللي فدارك، ولا صيفط ليك لوراق باش تخوي الدار بلا سباب، هوما كيدافعو عليك. كيقدمو ليك موعد ديال استشارة أولى فابور. وإلا عجباتك الخدمة ديالهم، تقدر تولي عضو غير بـ 75 يورو فالعام." },
+
+                    { key: "G", head: "Günstig wohnen in über 70 Städten in Deutschland",
+                      body: "Wir bieten Ihnen die preiswerte Alternative zum teuren Hotelzimmer: Erleben Sie Deutschland und wohnen Sie in über 70 Städten von Flensburg bis Konstanz in einer unserer neuen Pensionen. Wir bieten gemütliche Mehrbettzimmer, einige auch mit Bad. Unsere Häuser sind jeweils zentral gelegen und somit gut zu erreichen. Wir bieten Ihnen auch kleine warme Mahlzeiten an, aber fast überall in der Nähe unserer Pensionen finden Sie kleine Cafés. Ideal für alle, die günstig reisen möchten! Weitere Informationen und Buchung unter: www.pensionen.de",
+                      ar: "هاد الإعلان كيقدم بديل رخيص للأوتيلات الغاليين ف كتر من 70 مدينة ف ألمانيا. عندهم بيتات مريحين كيهزو بزاف د الناس وموقعهم فوسط لمدينة باش يسهال توصل ليهم. كيقدمو وجبات سخونة خفيفة، وكاينين حتى قهاوي صغار قراب ليهم. هاد العرض مزيان للناس اللي بغاو يسافرو بثمن قليل." },
+
+                    { key: "H", head: "Zuhause bleiben und trotzdem was erleben",
+                      body: "Urlaub zu Hause – für viele das schönste Urlaubserlebnis! Wir haben Tipps, wie Sie Ihren Urlaub noch schöner machen können: Veranstaltungstipps (Konzerte, Theater …), Kurse (Kochkurse, Singen, Musikinstrumente …), Sport- und Ausflugstipps für Ihre Region. Ob allein, zu zweit oder mit der ganzen Familie – bei uns finden Sie das Passende! Registrieren Sie sich jetzt, und Sie können auswählen, welche Tipps wir Ihnen zuschicken sollen. Natürlich kostenlos! Infos und Registrierung unter: www.urlaubzuhause.info",
+                      ar: "هاد السيت كيقدم نصائح للناس اللي بغاو يدوزو عطلة زوينة فمدينتهم بلا ما يسافرو بعيد. كاينين بزاف د الأنشطة بحال الحفلات، دروس الطياب، والرياضة اللي كاتناسب العائلات ولا الناس اللي بوحدهم. التسجيل فابور وتقدر تختار غير الحوايج اللي مهتم بيهم باش يوصلوك." },
+
+                    { key: "I", head: "Guter Rat ist nicht teuer",
+                      body: "Probleme mit Arbeitgeber oder Vermieter? Hatten Sie einen Unfall und niemand will die Kosten für Ihren Krankenhausaufenthalt zahlen? In solchen Fragen ist es gut, wenn man einen Anwalt an seiner Seite hat – und ihn auch bezahlen kann. Schließen Sie deshalb unsere kostengünstige Rechtsschutzversicherung ab. Wir zahlen den Anwalt und die Gerichtskosten – je nach Tarif komplett oder zum Teil. Informieren Sie sich auch über unsere günstigen Familientarife! Rufen Sie an: Thüringer Versicherungen, Tel. 08074 55339. Wichtig: Sie können die Leistungen erst 6 Monate nach Vertragsabschluss in Anspruch nehmen!",
+                      ar: "إلا كانوا عندك مشاكل مع الخدمة ولا مع مول الكرا، ولا درتي حادثة وما بغاوْش يخلصو ليك السبيطار، هاد الإعلان كايقدم ليك تأمين قانوني رخيص. هاد التأمين كايخلص عليك المحامي ومصاريف المحكمة كاملة ولا غير جزء منها على حسب العرض، وكاينين حتى عروض مزيانة للعائلات. حاجة مهمة: كتقدر تستافد من هاد الخدمة غير من بعد ستة د الشهور ملي تسني العقدة." },
+
+                    { key: "J", head: "Kunst und Kultur für Einsteiger",
+                      body: "Nicht nur im Urlaub möchten viele Menschen in der Freizeit Neues ausprobieren. Wir bieten Schnupperkurse zu verschiedenen Freizeitaktivitäten an: Malen war schon immer Ihre Leidenschaft? Sie wollten schon lange probieren, welches Instrument zu Ihnen passt? Dann besuchen Sie einfach unsere Schnupperkurse „Kunst und Kultur für Einsteiger“! Nur 60 Minuten pro Kurs, danach können Sie entscheiden, ob Sie einen anderen Kurs ausprobieren möchten oder sich gleich für einen „richtigen“ Kurs anmelden wollen. Malerei, Musik, Literatur und Geschichte stehen auf dem Programm. Informieren Sie sich jetzt: Kunstschule Heckmann, Tel. 0800 444509434",
+                      ar: "مدرسة «هيكمان» للفنون كتقدم دروس تجريبية قصيرة للناس اللي بغاو يجربوا هوايات جديدة بحال الرسم ولا الموسيقى. كل حصة مدتها غير 60 دقيقة، ومن بعد تقدر تقرر واش بغيتي تسجل في دورة كاملة ولا تجرب شي حاجة أخرى. هاد البرنامج فيه بزاف ديال المجالات بحال الرسم، الموسيقى، الأدب، والتاريخ." },
+
+                    { key: "K", head: "Ihr kompetenter Partner für Rechtsberatung seit über 20 Jahren",
+                      body: "Ihr kompetenter Rechtsberater in ganz Deutschland! Unsere Anwälte vertreten Ihre Interessen zügig und zuverlässig im Bereich „Arbeit“. Vom Arbeitsvertrag über Probleme am Arbeitsplatz bis hin zu Kündigungen oder auch Problemen bei der Zahlung des Arbeitslosengeldes unterstützen wir Sie sowohl vor Gericht als auch außerhalb. Unsere Erfahrung ist Ihr Vorteil. Natürlich ist eine Abrechnung über Ihre Rechtsschutzversicherung möglich; sprechen Sie uns einfach an und vereinbaren Sie einen Beratungstermin! Kanzlei Hummel und Schröder, Torstraße 21, 80121 München, Tel. 089 1234567",
+                      ar: "هاد مكتب المحاماة «هومل وشرويدر» كاين ف ألمانيا وكيساعد الناس ف كاع اللي كيتعلق بمشاكل الخدمة. كيدافعو عليك ف أمور بحال عقد العمل، ولا إلى جراو عليك، وحتى ف لمشاكل ديال لفلوس ديال الشوماج. عندهم تجربة كبيرة وكيقدرو يمثلوك قدام المحكمة، وتقدر تخلصهم عن طريق التأمين القانوني ديالك." },
+
+                    { key: "L", head: "Immer das richtige Möbel – ob Büro oder Wohnzimmer",
+                      body: "Egal, ob Sie beruflich oft unterwegs sind oder viel Wert auf ein gemütliches Zuhause legen: Sie wissen, dass es bei Möbeln und weiterer Ausstattung auf die Details ankommt. Wir bieten für jeden Bedarf das Richtige an: Schreibtische mit integrierten Kabeln für Telefon- oder Internetverbindungen, Sofas mit praktischer Bettfunktion und farblich passenden Leuchten. Wir bieten auch gebrauchte Möbel günstig an, natürlich nur in bestem Zustand. Schauen Sie sich unsere Ausstellung an! Möbel Weber GmbH, Am Langen Hahn 24, 42188 Dortmund",
+                      ar: "هاد الإعلان ديال شركة الأثاث «Möbel Weber» كايقدم تجهيزات ممتازة للدار وللخدمة ومهتمة بزاف بالتفاصيل. عندهم مكاتب فيهم كابلات ديال التلفون والأنترنيت، وسوفيات كايتحلو يرجعو ناموسية مع إضاءة مناسبة. كايبيعو حتى الأثاث المستعمل بثمن رخيص وفي حالة ممتازة." }
+                ],
+
+                situations: [
+                    { no: 11, de: "Einem Bekannten wurde die Arbeitsstelle gekündigt. Er möchte bei einem Anwalt um Rat fragen.",
+                             ar: "واحد صاحبك جراو عليه من الخدمة وباغي يشاور شي محامي." },
+                    { no: 12, de: "Ihr Bekannter ist beruflich oft unterwegs und sucht eine Alternative zu Hotels. Es soll dort aber Internetzugang und Frühstück geben.",
+                             ar: "واحد صاحبك كيسافر بزاف على قبل الخدمة وكيقلب على بديل للفنادق، ولكن خاص يكون فيه أنترنيت وفطور." },
+                    { no: 13, de: "Sie reisen gerne und oft und möchten nun Informationen zu einer Reiseversicherung.",
+                             ar: "كتسافر بزاف وباغي معلومات على تأمين السفر." },
+                    { no: 14, de: "Sie möchten durch Europa reisen und privat übernachten.",
+                             ar: "باغي تسافر ف أوروبا وتبات عند ناس ف ديورهم." },
+                    { no: 15, de: "Eine Bekannte malt sehr gut und sucht eine Gelegenheit, anderen ihre Bilder zu zeigen oder sie zu verkaufen.",
+                             ar: "وحدة صاحبتك كترسم مزيان وكتقلب على فرصة باش توري اللوحات ديالها ولا تبيعهم." },
+                    { no: 16, de: "Sie möchten im Urlaub zwar nicht verreisen, aber trotzdem etwas unternehmen.",
+                             ar: "فالعطلة ما باغيش تسافر، ولكن باغي دير شي حاجة." },
+                    { no: 17, de: "Sie haben Streit mit Ihrem Vermieter wegen der Nebenkosten und möchten sich beraten lassen.",
+                             ar: "عندك مشكل مع مول الدار على قبل مصاريف الشارج وباغي شي استشارة." },
+                    { no: 18, de: "Sie möchten ausprobieren, ob Ihnen Zeichnen Spaß macht.",
+                             ar: "باغي تجرب واش الرسم غايعجبك." },
+                    { no: 19, de: "Ihre Möbel sehen nicht mehr so gut aus. Daran möchten Sie etwas ändern.",
+                             ar: "المّابل ديالك ما بقاش شكلو مزيان وباغي تبدل شي حاجة." },
+                    { no: 20, de: "Sie möchten mit Freunden durch Deutschland reisen und dabei günstig übernachten.",
+                             ar: "باغي تسافر مع صحابك ف ألمانيا وتبات بثمن رخيص." }
+                ],
+
+                variants: [
+                    { label: "الأساسي",
+                      answers: ["K", "E", "X", "A", "C", "H", "F", "J", "B", "G"] }
+                ]
+            }
+        },
+
+
+        /* ================================================================
            Aflam — Leseverstehen Teil 3 (إعلانات البرامج ديال التلفزة)
            12 إعلان A–L · 10 وضعيات 11–20 · X = ماكاين حتى واحد مناسب
            ================================================================ */
