@@ -181,7 +181,34 @@
 
                 variants: [
                     { label: "الأساسي",
-                      answers: ["L", "I", "B", "H", "X", "E", "A", "D", "F", "G"] }
+                      answers: ["L", "I", "B", "H", "X", "E", "A", "D", "F", "G"] },
+
+                    /* نفس الإعلانات ونفس الحلول — تلاتة ديال الوضعيات
+                       (12 · 13 · 17) تعاودات صياغتها. */
+                    { label: "المعدل",
+                      answers: ["L", "I", "B", "H", "X", "E", "A", "D", "F", "G"],
+                      situations: [
+                          { no: 11, de: "Ein Bekannter möchte einen Film sehen, der nach dem Werk eines Schriftstellers gedreht wurde.",
+                                   ar: "واحد صاحبك باغي يشوف فيلم مقتبس من عمل ديال كاتب." },
+                          { no: 12, de: "Ihre Bekannten verfolgen gern sportliche Wettkämpfe.",
+                                   ar: "صحابك كيعجبهم يتبعو المنافسات الرياضية." },
+                          { no: 13, de: "Sie suchen eine abwechslungsreiche Musiksendung mit Klaviermusik.",
+                                   ar: "كتقلب على برنامج موسيقي متنوع فيه موسيقى البيانو." },
+                          { no: 14, de: "Sie mögen Filme mit viel Action und viel Spaß. Ihre Lieblingshelden können auch mal zuschlagen.",
+                                   ar: "كتبغي أفلام فيها بزاف د الأكشن والضحك، وأبطالك المفضلين ما كيخافوش من المضاربة." },
+                          { no: 15, de: "Ein Bekannter interessiert sich für korsische Geschichte.",
+                                   ar: "واحد صاحبك مهتم بتاريخ جزيرة كورسيكا." },
+                          { no: 16, de: "Sie mögen Familienkomödien, besonders mit frechen Kindern.",
+                                   ar: "كتبغي الكوميديا العائلية، خصوصاً اللي فيها دراري مشاغبين." },
+                          { no: 17, de: "Eine Bekannte interessiert sich für informative Beiträge zur neueren Geschichte.",
+                                   ar: "وحدة صاحبتك مهتمة بالبرامج اللي كتعطي معلومات على التاريخ الحديث." },
+                          { no: 18, de: "Sie sehen gern spannende, aber auch spaßige Agentenfilme.",
+                                   ar: "كيعجبك تشوف أفلام الجواسيس المثيرة واللي فيها ضحك تاني." },
+                          { no: 19, de: "Sie würden gern etwas über Großstadtjugendliche erfahren, die am Rand der Gesellschaft leben.",
+                                   ar: "بغيتي تعرف شي حاجة على شباب المدن الكبار اللي عايشين على هامش المجتمع." },
+                          { no: 20, de: "Sie möchten im nächsten Urlaub bergsteigen und sich über die Risiken informieren.",
+                                   ar: "باغي تطلع للجبال فالعطلة الجاية وباغي تعرف المخاطر." }
+                      ] }
                 ]
             }
         },
