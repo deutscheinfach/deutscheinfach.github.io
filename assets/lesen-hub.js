@@ -372,6 +372,13 @@
                 return;
             }
 
+            /* Teil 3 عندو شكل ديالو: إعلانات على اليسار، وضعيات على اليمين. */
+            if (task.kind === "ads"
+                && typeof window.__lesenTeil3Render === "function") {
+                window.__lesenTeil3Render(stack, task);
+                return;
+            }
+
             window.LESEN_TOPICS = [Object.assign({ id: themaId + "-" + current }, task)];
             if (typeof window.__lesenRenderInto === "function") {
                 window.__lesenRenderInto(stack);

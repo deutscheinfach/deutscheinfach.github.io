@@ -93,6 +93,101 @@
     window.LESEN_B2_CONTENT = {
 
         /* ================================================================
+           Aflam — Leseverstehen Teil 3 (إعلانات البرامج ديال التلفزة)
+           12 إعلان A–L · 10 وضعيات 11–20 · X = ماكاين حتى واحد مناسب
+           ================================================================ */
+        "t3-aflam": {
+            teil3: {
+                title: "Aflam",
+                kind: "ads",
+                intro: "Lesen Sie die Situationen 11–20 und die Anzeigen A–L. "
+                     + "Welche Anzeige passt zu welcher Situation? "
+                     + "Jede Anzeige können Sie nur einmal verwenden. "
+                     + "Gibt es zu einer Situation keine passende Anzeige, "
+                     + "markieren Sie X.",
+
+                ads: [
+                    { key: "A", head: "23.15 3SAT — Es geschah im August",
+                      body: "Ulrich Kasten und Hans-Hermann Hertle schildern in ihrer hervorragenden Dokumentation anhand von Archivmaterial minutiös sämtliche Stationen des Mauerbaus. Sie erzählen die Vorgeschichte der Berlin-Krise und beleuchten die Hintergründe der Teilung Deutschlands. Ferner haben sie Zeitzeugen nach ihren Reaktionen auf das einschneidende Ereignis befragt. Zu Wort kommen in dem Film nicht nur namhafte Vertreter der internationalen Politik, sondern auch Grenzsoldaten, Flüchtlinge und Angehörige von Maueropfern.",
+                      ar: "هاد الفيلم الوثائقي كيهضر بدقة على كاع المراحل ديال بناء حيط برلين وكيفاش بدات الأزمة اللي قسمات ألمانيا. المخرجين استعملو فيديوهات وتصاور قديمة من الأرشيف باش يبينو الحقيقة ديال داكشي اللي طرا. وجابو بزاف ديال الناس عاودو على التجربة ديالهم، بحال سياسيين كبار، عسكر، وحتى عائلات الضحايا اللي تضررو من هاد الحيط. هاد العمل كيعاونا باش نفهمو مزيان هاد الحدث التاريخي والمشاكل اللي كانت موراه." },
+
+                    { key: "B", head: "21.00 NDR — Joja Wendt",
+                      body: "Ob Klassik, Rock’n’Roll oder Jazz: Joja Wendt, Hamburger Pianist mit enormen Entertainer-Qualitäten, variiert bekannte Songs und stellt seine Fingerfertigkeit auch in eigenen Kompositionen unter Beweis. Stargast in dem heutigen Fernseh-Special ist die Schlagersängerin Michelle mit dem Titel „Ich schicke dir jetzt einen Engel“.",
+                      ar: "هاد الإعلان كيهضر على واحد العازف د البيانو ألماني مشهور سميتو جوجا ويندت، اللي كيعزف أنواع كثيرة د الموسيقى. هو فنان كيعرف ينشط الجمهور مزيان وكيعزف أغاني معروفة ومقطوعات ديالو بمهارة كبيرة. اليوم غادي يكون فواحد البرنامج تلفزيوني خاص وغادي يقدم فيه العزف ديالو. وغادي تحضر معاه المغنية ميشيل كضيفة شرف باش تغني وحدة من الأغاني ديالها المعروفة." },
+
+                    { key: "C", head: "20.15 SAT.1 — Einfach unwiderstehlich",
+                      body: "Gut kochen kann Amanda nicht. Folglich steht ihr kleines, von der Mutter geerbtes Restaurant in Manhattan kurz vor dem Aus. Da entflieht plötzlich ein Krebs aus ihrem Einkaufskorb und sorgt mit seinen Zauberkünsten für lukullische Sensationen. Tom, Manager eines Gourmet-Restaurants an der Fifth Avenue, kommt als einer der Ersten in deren Genuss. Amanda hat sich in ihn verliebt, als der schon bekannte Krebs unter Toms Hosenbein flüchtet. Seine Zauberkräfte werden dringend gebraucht, denn Tom gehört zu den Männern, die ziemlich viel Angst vor Liebesbeziehungen haben.",
+                      ar: "أماندا عندها مطعم صغير فنيويورك ورثاتو على ماماها، ولكن ما كتعرفش تطيب مزيان وداكشي علاش المحل ديالها كان غايسد. واحد النهار، بان واحد السرطان سحري بدا كيوجد ماكلة لذيذة بزاف خلات كاع الناس يعجبهم الحال. طوم، اللي هو مدير ديال مطعم مشهور، داق الماكلة وعجباتو بزاف، وأماندا طاحت فحبّو. هاد السرطان غايستعمل السحر ديالو باش يقرّب بيناتهم، حيت طوم راجل كيخاف بزاف من العلاقات والارتباط." },
+
+                    { key: "D", head: "22.00 HR — New York Express",
+                      body: "Aus Sorge um die nationale Sicherheit versteckt der amerikanische Geheimdienst den genialen, aber vermeintlich psychisch kranken Physiker Arthur Vincenti. Der völlig verrückte New Yorker Psychiater Dr. Snow erhält den Auftrag, ihn zu heilen. Immer nachts wird er mit verbundenen Augen zu dem Versteck gebracht. Aber auch einige Gangster sind nicht untätig. Sie haben es auf das Wissen des Geheimnisträgers Vincenti abgesehen, das sie fremden Spionen verkaufen möchten.",
+                      ar: "المخابرات الميريكانية مخبية واحد الفيزيائي واعر سميتو آرثر فينسينتي حيت خايفين على الأمن ديال البلاد. جابو واحد الطبيب نفساني مسطي سميتو الدكتور سنو باش يعالجو، وكيصيفطوه للبلاصة فين مخبي ديما بالليل وهو مغمضين ليه عينيه. وفنفس الوقت، كاينين شي مجرمين باغيين يديو هاد الفيزيائي باش يسرقو الأسرار لي فدماغو ويبيعوها لجواسيس برانيين." },
+
+                    { key: "E", head: "20.15 PRO 7 — Kein Vater von gestern",
+                      body: "Er schreit wie am Spieß, wenn er lange Hosen tragen soll, und lacht sich kaputt, wenn er die Katze in eine Mülltüte gesteckt hat. Alles ist einfacher, als sich um den fünfjährigen Calvin zu kümmern. Doch sein liebevoller Vater Russell, der den Jungen allein erzieht, meistert sämtliche Katastrophen mit Bravour und Geduld. Weil sich Kind und Karriere nicht unter einen Hut bringen ließen, verlor der Jurist einen tollen Job in einer renommierten Chicagoer Anwaltskanzlei. Jetzt sitzt er mit seinem Sohn in einem Dorf in Kansas und arbeitet in der Kanzlei eines Freundes. Die Bekanntschaft mit der attraktiven Beth bringt neuen Schwung in sein Leben. Doch da taucht Russells Ex-Ehefrau wieder auf.",
+                      ar: "راسل واحد المحامي كيربي ولدو كالفن بوحدو، وهاد الدري الصغير اللي عندو خمس سنين صعيب بزاف فالتصرفات ديالو. بسباب ولدو، راسل ضحى بخدمتو المهمة فمدينة شيكاغو ومشا يسكن فقرية صغيرة باش يقدر يوازن بين الخدمة والتربية. حياتو بدات كتحسن مِلي تلاقى مع واحد السيدة سميتها بيث، ولكن فجأة بانت طليقتو ورجعات حياتو تخربقات من جديد." },
+
+                    { key: "F", head: "22.45 SAT.1 — Nur nich’ nach Hause",
+                      body: "„Hier in Berlin bei meinen Freunden habe ich mein Zuhause hinter mir gelassen. Hier geht’s mir gut. Ich bin endlich frei“, sagt Sascha. Der 16-Jährige ist einer der Jugendlichen, die hierzulande auf der Straße leben. Sie schlafen in Notunterkünften, Treppenhäusern und U-Bahn-Stationen und betteln tagsüber Passanten um Kleingeld an. Peter Schmidt hat Sascha mehrere Wochen lang begleitet und ihn nach seinen Wünschen und Hoffnungen gefragt. Zudem beleuchtet der Filmautor die individuelle Geschichte des Jugendlichen.",
+                      ar: "هاد النص كيهضر على ساشا، دري فعمرو 16 عام وعايش ف الزنقة ف مدينة برلين. هو واحد من الشباب اللي كينعسو ف المحطات وكيطلبو الفلوس من الناس باش يدبّرو على راسهم. بيتر شميت، اللي هو صانع أفلام، تبع ساشا لواحد المدة باش يصور القصة ديالو ويسمع للأحلام ديالو. هاد العمل كيوضح كيفاش كيعيشو هاد المراهقين اللي هربو من ديورهم وشنو كيتمنّاو فالمستقبل." },
+
+                    { key: "G", head: "21.15 ARD — Großer Kick auf schmalem Grat",
+                      body: "Mit Sandalen und T-Shirt hängen sie in den Felswänden, ihr Handy halten sie für eine Lebensversicherung, die Alpen für einen Freizeitpark. Vierzig Menschen verunglücken jedes Jahr tödlich am Montblanc, bis zu eintausend Einsätze fliegt die Bergwacht Chamonix pro Saison. Filmer Oliver Baumgart begleitet die Retter zwei Wochen lang.",
+                      ar: "بزاف د الناس كيمشيو لجبال «مون بلان» بلا ما يوجدو ليهم مزيان، وكيسحاب ليهم واش الجبل غير منتزه ديال اللعب. هاد التهاون كيتسبب فبزاف د الحوادث والموت كل عام، والمنقذين كيديرو مئات التدخلات باش يعتقوهم. المخرج أوليفر بومغارت بقا مع هاد الفرقة د الإنقاذ جوج سيمانات باش يصور الخدمة الصعيبة اللي كيديرو." },
+
+                    { key: "H", head: "20.15 RTL — Zwei Engel mit vier Fäusten: Schwere Jungs",
+                      body: "„Schwere Jungs“ bildet den Auftakt zu einer sechsteiligen Reihe mit Actionkomödien: Hau-drauf-Filme, wie sie schon unzählige Male mit dem Schläger-Duo Terence Hill und Bud Spencer über den Bildschirm flimmerten. Die beiden Gauner Joe und Bob fliehen aus dem Gefängnis und finden als Mönche getarnt Unterschlupf in einer Missionsstation.",
+                      ar: "هاد الفيلم سميتو «شويري يونغس» وهو البداية ديال واحد السلسلة فيها ستة د الأفلام د الأكشن والضحك. هاد النوع د الأفلام كيشبه لدوك اللي فيهم بزاف د الصداع والمضاربة بحال اللي كيديرو تيرانس هيل وباد سبينسر. القصة كتهضر على جوج ديال الشفارة، جو وبوب، هربو من الحبس. باش يتخباو وما يحصلوش، تنكرو فلبسة ديال الرهبان ومشاو تخباو فواحد المركز ديال الدين." },
+
+                    { key: "I", head: "17.30 ZDF — Olympia-Highlights",
+                      body: "Nach den Weltcup-Siegen in Willingen und Sapporo stehen die Chancen für das österreichische Team gut, beim Skispringen ganz weit vorn zu landen. Überflieger Gregor Schlierenzauer und sein Mannschaftskollege Thomas Morgenstern sind jedenfalls in blendender Verfassung. Die deutschen Springer Martin Schmitt und Jörg Ritzerfeld werden sich anstrengen müssen. Übertragung von der 120-Meter-Skisprungschanze im Utah Olympic Park.",
+                      ar: "هاد الإعلان كيهضر على واحد المسابقة ديال القفز على التلج اللي غادي تنقل مباشرة من «يوتا أولمبيك بارك». الفريق ديال النمسا عندو حظوظ كبيرة باش يربح حيت اللعابة ديالو واجدين وففورمة مزيانة بزاف. أما اللعابة ديال ألمانيا فخاصهم يتقاتلو ويديرو مجهود كبير باش يقدرو يوصلو ليهم. هاد المنافسة غادي تكون فواحد البلاصة ديال القفز الطول ديالها مية وعشرين ميترو." },
+
+                    { key: "J", head: "14.15 DRS — Basler Fasnacht",
+                      body: "Man darf gespannt sein, wie viel Spott die für ihre spitzen Zungen bekannten Basler Fasnächtler für das vergangene Jahr übrig haben. DRS überträgt die Straßenfasnacht, den Umzug der Pfeifen- und Trommlergruppen, die ihre Themen präsentieren, live. Die fachkundigen Kommentare zum Karneval am Oberrhein liefern Robert Pichler und der Basler Fasnachtsjournalist Roger Thiriet.",
+                      ar: "هاد الإعلان كيهضر على الكرنفال ديال مدينة بازل اللي غادي تنقلو قناة دي آر إس مباشرة. غادي يكون استعراض كبير فيه المزمار والطبل، والناس كيتسناو يشوفو السخرية والانتقادات ديال المشاركين على داكشي اللي وقع ف العام اللي فات. الخبير روبيرت پيشلر والصحفي روجي تيري هما اللي غادي يعلقو ويشرحو هاد الاحتفالات للمشاهدين." },
+
+                    { key: "K", head: "0.05 BR — Rockpalast",
+                      body: "Dreizehn Alben hat die vielköpfige korsische Gruppe „I Muvrini“ um die Brüder Jean-François und Alain Bernardini bereits veröffentlicht. Hierzulande galten die „wilden Schafe“ noch bis vor Kurzem als Geheimtipp. Inzwischen sind die Musiker mit ihrer Mischung aus korsischer Folklore, afrikanischen und keltischen Elementen, aber auch aus Jazz, Pop und Cajun bei uns bekannt.",
+                      ar: "هاد النص كيهضر على واحد المجموعة موسيقية من جزيرة كورسيكا سميتها «إي موفريني» اللي أسسوها جوج خوت. هاد الفرقة خرجات حتال دابا تلطاشر ألبوم، وفالبداية ما كانتش معروفة بزاف عند الناس. دابا ولاو مشهورين حيت كيديرو واحد النوع ديال الموسيقى كايخلط بين الفولكلور الكورسيكي، وألحان إفريقية، وكالتية، وحتى الجاز والبوب. هاد التنوع هو اللي خلاهم يوليو معروفين بزاف ف ألمانيا." },
+
+                    { key: "L", head: "20.15 PHOENIX — Mephisto",
+                      body: "Man sollte meinen, Schauspieler Hendrik Höfgen wäre gegen unmoralische Angebote gefeit. Schließlich feierte er zur Zeit der Weimarer Republik große Erfolge in der Rolle des Mephisto. Der Mann müsste also wissen, wie schnell es gehen kann, dass man seine Seele verkauft. Als die Nazis die Macht ergreifen, stellt Höfgen seine Kunst ganz in den Dienst der neuen Herrscher. Und bald wird er zum Intendanten des Staatstheaters ernannt. Das Drama um Kunst und Politik entstand nach dem gleichnamigen Roman von Klaus Mann.",
+                      ar: "هاد النص كيهضر على واحد الممثل سميتو هندريك هوفغن اللي كان مشهور بزاف فالدور ديال ميفيستو. ملي جاو النازيين للحكم، قرر يتعاون معاهم ويستغل الفن ديالو باش يرضيهم ويطلع فالمناصب. بسباب هاد الشي، رجع هو المدير ديال المسرح الوطني ولكن راه بحال إلا باع الروح ديالو على قبل الشهرة. هاد القصة مأخوذة من رواية ديال كلاوس مان وكتورينا الصراع اللي كيكون بين الفن والسياسة." }
+                ],
+
+                situations: [
+                    { no: 11, de: "Ein Bekannter möchte einen Film sehen, der nach dem Werk eines Schriftstellers gedreht wurde.",
+                             ar: "واحد صاحبك باغي يشوف فيلم مقتبس من عمل ديال كاتب." },
+                    { no: 12, de: "Bekannte interessieren sich für Wintersportveranstaltungen.",
+                             ar: "شي معارف مهتمين بتظاهرات الرياضات الشتوية." },
+                    { no: 13, de: "Sie suchen eine Musiksendung. Sie mögen besonders Klaviermusik.",
+                             ar: "كتقلب على برنامج موسيقي، وكتبغي بالخصوص موسيقى البيانو." },
+                    { no: 14, de: "Sie mögen Filme mit viel Action und viel Spaß. Ihre Lieblingshelden können auch mal zuschlagen.",
+                             ar: "كتبغي أفلام فيها بزاف د الأكشن والضحك، وأبطالك المفضلين ما كيخافوش من المضاربة." },
+                    { no: 15, de: "Ein Bekannter interessiert sich für korsische Geschichte.",
+                             ar: "واحد صاحبك مهتم بتاريخ جزيرة كورسيكا." },
+                    { no: 16, de: "Sie mögen Familienkomödien, besonders mit frechen Kindern.",
+                             ar: "كتبغي الكوميديا العائلية، خصوصاً اللي فيها دراري مشاغبين." },
+                    { no: 17, de: "Eine Bekannte interessiert sich für die Geschichte des bis 1989 geteilten Berlins.",
+                             ar: "وحدة صاحبتك مهتمة بتاريخ برلين المقسمة حتى 1989." },
+                    { no: 18, de: "Sie sehen gern spannende, aber auch spaßige Agentenfilme.",
+                             ar: "كيعجبك تشوف أفلام الجواسيس المثيرة واللي فيها ضحك تاني." },
+                    { no: 19, de: "Sie würden gern etwas über Großstadtjugendliche erfahren, die am Rand der Gesellschaft leben.",
+                             ar: "بغيتي تعرف شي حاجة على شباب المدن الكبار اللي عايشين على هامش المجتمع." },
+                    { no: 20, de: "Sie möchten im nächsten Urlaub bergsteigen und sich über die Risiken informieren.",
+                             ar: "باغي تطلع للجبال فالعطلة الجاية وباغي تعرف المخاطر." }
+                ],
+
+                variants: [
+                    { label: "الأساسي",
+                      answers: ["L", "I", "B", "H", "X", "E", "A", "D", "F", "G"] }
+                ]
+            }
+        },
+
+
+        /* ================================================================
            Sport ist gesund
            النصوص والترويسات والحلول كما صيفطهم صاحب الموقع.
 

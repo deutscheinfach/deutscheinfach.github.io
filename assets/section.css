@@ -1015,7 +1015,9 @@
 }
 
 /* ---- لوحة الترويسات ---- */
-.t1-side { min-width: 0; }
+/* العمود خاصو يمد على طول اللوحة، وإلا ملي تهبط بزاف
+   (Teil 3 فيه 12 إعلان) اللوحة اللاصقة كتغيب. */
+.t1-side { min-width: 0; align-self: stretch; }
 .t1-panel {
     position: sticky;
     top: 92px;
@@ -1375,4 +1377,65 @@
     .lesen-shell > .lesen-tabs .lesen-tab.active { animation: none; }
     ::view-transition-old(root),
     ::view-transition-new(root) { animation: none; }
+}
+
+/* ===== Lesen Teil 3 — الإعلانات ===== */
+.t3-ad { cursor: pointer; }
+.t3-ad.is-used { border-color: color-mix(in srgb, var(--de-red) 45%, transparent); }
+
+.t3-ad-top {
+    display: flex; align-items: center; gap: .6rem;
+    flex-wrap: wrap; margin-bottom: .55rem;
+}
+.t3-ad-key {
+    flex: none;
+    display: grid; place-items: center;
+    width: 2rem; height: 2rem;
+    border-radius: .7rem;
+    background: color-mix(in srgb, var(--de-red) 12%, transparent);
+    color: var(--de-red);
+    font-weight: 800;
+}
+.t3-ad-head { font-weight: 700; direction: ltr; text-align: left; flex: 1 1 12rem; }
+.t3-ad-slot {
+    flex: none;
+    padding: .18rem .55rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--de-red) 10%, transparent);
+    color: var(--de-red);
+    font-size: .78rem; font-weight: 700;
+}
+
+/* ---- لوحة الوضعيات ---- */
+.t3-panel { gap: .5rem; }
+
+.t3-sit {
+    border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+    border-radius: .85rem;
+    padding: .6rem .7rem;
+    transition: border-color .18s ease, background .18s ease;
+}
+.t3-sit.is-active {
+    border-color: color-mix(in srgb, var(--de-red) 55%, transparent);
+    background: color-mix(in srgb, var(--de-red) 6%, transparent);
+}
+.t3-sit.correct { border-color: #16a34a; background: color-mix(in srgb, #16a34a 8%, transparent); }
+.t3-sit.wrong   { border-color: #dc2626; background: color-mix(in srgb, #dc2626 8%, transparent); }
+
+.t3-sit-top { display: flex; align-items: center; gap: .5rem; margin-bottom: .35rem; }
+.t3-sit-num {
+    flex: none;
+    display: grid; place-items: center;
+    min-width: 1.9rem; height: 1.9rem;
+    border-radius: .6rem;
+    background: color-mix(in srgb, currentColor 8%, transparent);
+    font-weight: 800; font-size: .9rem;
+}
+.t3-select { flex: 1 1 auto; min-width: 0; }
+
+.t3-sit-de { direction: ltr; text-align: left; margin: 0 0 .25rem; font-size: .93rem; }
+.t3-sit-ar { margin: 0; font-size: .86rem; opacity: .75; }
+
+@media (max-width: 720px) {
+    .t3-ad-head { flex-basis: 100%; }
 }
