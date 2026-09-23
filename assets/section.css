@@ -1795,3 +1795,4 @@
 }
 .sp2-row-value.is-filled { border-style: solid; color: var(--text); }
 .sp2-row.is-active { border-color: var(--brand); }
+.sp2-changed { margin-left: auto; font-size: 10px; padding: 1px 6px; }

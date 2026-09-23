@@ -2060,6 +2060,88 @@
                                 "why": "\"DENN\" هي أداة ربط كتجي باش تشرح السبب ديال الجملة اللي قبل منها. الجملة الأولى كتقول الصفوف ديال الطوموبيلات كيطوالو فالشتا، و\"DENN\" كتفسر علاش هادشي كيوقع: حيت المحلات مازال ماكايقدموش واقي عملي من الشتا للدراجات."
                             }
                         ]
+                    },
+                    {
+                        "label": "المعدل",
+                        "texts": [
+                            {
+                                "body": "Welches Fortbewegungsmittel, denken Sie, wird in Deutschland am häufigsten benutzt? Natürlich das Automobil. Volkswagen, Porsche, Mercedes Benz, BMW, Audi: In [31] einem anderen Land gibt es so viele Automobilfabriken wie in Deutschland, spielt die Automobilindustrie eine so große Rolle. Nahezu jeder Haushalt verfügt über mindestens ein Auto, das Auto spielt im Leben der Deutschen eine große Rolle, sowohl als Fortbewegungsmittel zum Arbeitsplatz oder in den Urlaub als auch als Statussymbol: Zeig mir dein Auto und ich weiß, wer du bist. Doch hat das Autofahren auch Schattenseiten. Mangelnde Bewegungsmöglichkeiten, gesundheitliche Probleme und Stress bringen zumindest in den Großstädten immer mehr Autofahrer dazu, sich vom Automobil freizumachen und [32] ein anderes Verkehrsmittel umzusteigen, das in dem Ruf steht, gesünder zu sein als das Auto: das Fahrrad. Nicht nur in der Freizeit, sondern auch auf dem Weg zum Arbeitsplatz wird das Rad benutzt. \"Ich habe keine Lust, Morgen für Morgen im Stau zu stehen und Zeit zu verlieren\", sagt Bettina Meier (25): \"Da ist es viel entspannender, auf den [33] gut ausgebauten Fahrradwegen an den im Stau wartenden Fahrzeugen vorbeizufahren und ausgeruht am Arbeitsplatz anzukommen.\"\nDass Fahrradfahren um einiges gesünder ist, als hinter dem Lenkrad zu sitzen, bestätigen auch die Mediziner. Wer Fahrrad fährt [34] zu sitzen, bringt seinen Blutkreislauf in Schwung, stärkt die Abwehrkräfte des Körpers und trainiert seinen Körper. Auch die Bewegung an der frischen Luft tut Menschen gut, die sich sonst die meiste Zeit [35] geschlossener Räume in Büros, Schulen oder Fabriken aufhalten [36]. Auch die Geschäftswelt hat die Fahrradfahrer als Kunden entdeckt. Ein breites Angebot [37] Zubehör für Fahrräder von schicken Radfelgen über sportliche Mehrganggetriebe, mit denen Berge kein Problem mehr darstellen, bis zur Designer-Trinkflasche machen aus dem einfachen Fahrrad ein exklusives Fahrzeug. Und natürlich darf bei keinem Fahrradfahrer eine aufwändige Sicherheitsausstattung mehr fehlen: Schutzhelme, Ellenbogen- und Knieschützer, die das Fahrrad im Falle eines Unfalls fast so sicher wie einen Panzer machen [38]. Nur wenn es regnet – und das passiert in Deutschland leider nicht so selten –, [39] sind die Autoschlangen wieder länger. [40] einen praktischen Wetterschutz für Radfahrer haben die Geschäfte noch nicht im Angebot."
+                            }
+                        ],
+                        "words": [
+                            "AN",
+                            "AUF",
+                            "BEINAHE",
+                            "DAFÜR",
+                            "DANN",
+                            "DENN",
+                            "DÜRFEN",
+                            "FAST",
+                            "INNERHALB",
+                            "KAUM",
+                            "MÜSSEN",
+                            "SOLLEN",
+                            "STATT",
+                            "VOR",
+                            "ZUMEIST"
+                        ],
+                        "questions": [
+                            {
+                                "num": 31,
+                                "answer": "J",
+                                "why": "الكلمة \"KAUM\" كتعني \"بالكاد\" أو \"تقريباً والو\". كنستعملوها هنا باش نبينو بلي تقريباً حتى شي بلاد أخرى مافيها داك العدد ديال المصانع د الطوموبيلات بحال ألمانيا. هاد التركيبة (in kaum einem anderen Land) هي لي كاتأكد على الأهمية الكبيرة ديال الصناعة الألمانية في العالم."
+                            },
+                            {
+                                "num": 32,
+                                "answer": "B",
+                                "why": "الفعل \"umsteigen\" (أي يغيّر وسيلة النقل) دائماً كيطلب حرف الجر \"auf\" باش يحدد الوسيلة الجديدة. هاد الحرف كيعبر على الانتقال نحو شي حاجة أخرى، وكيجي معاه الاسم في حالة الأكوزاتيف (النصب)."
+                            },
+                            {
+                                "num": 33,
+                                "answer": "O",
+                                "why": "الكلمة \"ZUMEIST\" كتعني \"فالأغلب\" ولا \"فالغالب\"، وهي كتوصف لينا باللي هاد الطرقان ديال البكليتات فتقريبا كاع البلايص مصايبين ومقادين مزيان. استعملناها هنا باش نبينو باللي هاد الحالة ديال الطرقان هي اللي كاينة بزاف وموجودة، داكشي علاش جات هي الاختيار الصحيح وسط الجملة.",
+                                "changed": true
+                            },
+                            {
+                                "num": 34,
+                                "answer": "M",
+                                "why": "هنا خاصنا كلمة كاتبين البدل ديال شي فعل بفعل آخر. كلمة \"STATT\" في الألمانية كتعني \"عْوَضْ ما\" أو \"فْلاصْتْ\". فالسياق ديال هاد الجملة، المعنى كيولي: اللي كيسوق البيكالا \"عْوَضْ ما يبقى جالس\" كيحرك الدورة الدموية ديالو."
+                            },
+                            {
+                                "num": 35,
+                                "answer": "I",
+                                "why": "\"INNERHALB\" كتعني \"الداخل\" أو \"في حدود\". في هاد الجملة، خاصنا كلمة تبين أن الناس كايدوزو بزاف ديال الوقت ديالهم داخل الأماكن المغلقة بحال المكاتب والمدارس. هاد الكلمة كاتأكد المكان لي كايقضاو فيه الوقت."
+                            },
+                            {
+                                "num": 36,
+                                "answer": "K",
+                                "why": "هنا خاصنا نستعملو فعل كيعبر على الضرورة أو الإلزام، وهو \"MÜSSEN\". النص كيهضر على الناس اللي مضطرين يقضيو أغلب الوقت ديالهم داخل المكاتب أو المصانع بسبب الخدمة. \"MÜSSEN\" كيشرح بلي هاد الإقامة داخل الأماكن المغلقة هي إجبارية ماشي اختيارية."
+                            },
+                            {
+                                "num": 37,
+                                "answer": "A",
+                                "why": "الكلمة \"Angebot\" (اللي كتعني العرض أو التشكيلة) كتحتاج ديما حرف الجر \"an\" باش نحددو شنو هما الأشياء اللي معروضة. هاد التركيبة الألمانية \"Angebot an Zubehör\" كتعطي معنى \"مجموعة واسعة من الملحقات\". لذلك، \"AN\" هو الإختيار الصحيح باش يكمل المعنى بشكل مضبوط."
+                            },
+                            {
+                                "num": 38,
+                                "answer": "L",
+                                "why": "هاد 'sollen' هنا كاتشرح الهدف أو الغرض من هادوك الأدوات ديال الحماية. المعنى هو أنهم مصممين و خاصهم يخليو البِيكالة آمنة بزاف، بحال شي دبابة صغيرة. هاد الكلمة هي لي كاتوضح الدور لي مفروض على الواقيات يلعبوه ف حالة وقعات شي حادثة."
+                            },
+                            {
+                                "num": 39,
+                                "answer": "E",
+                                "why": "هاد الفراغ محتاج كلمة اللي كاتربط الشرط بالنتيجة ديالو. الجملة كاتبدأ بالشرط \"إلا طاحت الشتا\" (Wenn es regnet)، وكلمة \"DANN\" كتعني \"عاد\" ولا \"ديك الساعة\" باش تبين شنو كيوقع من بعد. داكشي علاش هي الكلمة الصحيحة اللي كاتدخل النتيجة المنطقية اللي هي كثرة الطوابير ديال الطوموبيلات."
+                            },
+                            {
+                                "num": 40,
+                                "answer": "F",
+                                "why": "\"DENN\" هي أداة ربط كتجي باش تشرح السبب ديال الجملة اللي قبل منها. الجملة الأولى كتقول الصفوف ديال الطوموبيلات كيطوالو فالشتا، و\"DENN\" كتفسر علاش هادشي كيوقع: حيت المحلات مازال ماكايقدموش واقي عملي من الشتا للدراجات."
+                            }
+                        ],
+                        "title": "Sollte man nicht doch besser aufs Fahrrad umsteigen? (المعدل)",
+                        "changedWords": [
+                            "O"
+                        ]
                     }
                 ]
             }

@@ -18,6 +18,7 @@
          note: "…",                                   // اختياري
          texts: [ { body: "… [31] …" } ],             // \n = فقرة جديدة
          words: ["AUSWAHL", "CHANCE", …],             // A, B, C… بالترتيب
+         changedWords: ["O"],                         // اختياري: شارة "معدل"
          questions: [ { num: 31, answer: "E", why: "…" }, … ]
        }
      ]
@@ -157,6 +158,10 @@
                 const item = btn("sp2-word", "");
                 item.appendChild(el("span", "sp2-key", w.key));
                 item.appendChild(el("span", "sp2-text", w.text));
+                /* الكلمة اللي تبدلات فهاد النسخة */
+                if ((variant.changedWords || []).indexOf(w.key) !== -1) {
+                    item.appendChild(el("span", "t2-q-changed sp2-changed", "معدل"));
+                }
                 const used = el("span", "sp2-used");
                 item.appendChild(used);
                 item.addEventListener("click", function () {
