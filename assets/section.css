@@ -1633,3 +1633,61 @@
 @media (prefers-reduced-motion: reduce) {
     .lesen-card:hover, .part-card:hover { transform: none; }
 }
+
+/* ===== Lesen Sprachbausteine — نص بفراغات ===== */
+.sp-text { direction: ltr; text-align: left; }
+.sp-line { margin: 0 0 .7em; }
+.sp-line:last-child { margin-bottom: 0; }
+.sp-blank { margin: 0; height: .4em; }
+
+.sp-gap {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0 2px;
+    padding: 1px 10px 1px 3px;
+    min-width: 58px;
+    vertical-align: baseline;
+    border: 1.5px dashed color-mix(in srgb, var(--brand) 45%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--brand) 5%, var(--surface));
+    color: var(--text);
+    font: inherit;
+    font-weight: 700;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+.sp-gap:hover { transform: translateY(-1px); border-color: var(--brand); }
+.sp-gap-num {
+    display: grid; place-items: center;
+    min-width: 1.45rem; height: 1.45rem;
+    border-radius: 999px;
+    background: var(--brand);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+}
+.sp-gap-word { color: var(--muted); }
+.sp-gap.is-filled { border-style: solid; }
+.sp-gap.is-filled .sp-gap-word { color: var(--text); }
+.sp-gap.is-right {
+    border-color: var(--ok);
+    background: color-mix(in srgb, var(--ok) 10%, var(--surface));
+}
+.sp-gap.is-right .sp-gap-num { background: var(--ok); }
+.sp-gap.is-wrong {
+    border-color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 9%, var(--surface));
+}
+.sp-gap.is-wrong .sp-gap-num { background: var(--danger); }
+
+.sp-choices { display: grid; grid-template-columns: 1fr; gap: 6px; }
+.sp-option { justify-content: flex-start; direction: ltr; text-align: left; }
+.sp-option .t1-option-de { overflow-wrap: normal; word-break: normal; hyphens: none; }
+
+.sp-q.sp-flash { animation: sp-flash 1.1s ease; }
+@keyframes sp-flash {
+    0%, 100% { box-shadow: none; }
+    30% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand) 28%, transparent); }
+}

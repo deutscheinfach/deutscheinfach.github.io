@@ -479,6 +479,13 @@
                 return;
             }
 
+            /* Sprachbausteine: الرسالة بفراغات على اليسار، Lücke 21–30 على اليمين. */
+            if (task.kind === "gaps"
+                && typeof window.__lesenSprachRender === "function") {
+                window.__lesenSprachRender(stack, task);
+                return;
+            }
+
             /* Teil 3 عندو شكل ديالو: إعلانات على اليسار، وضعيات على اليمين. */
             if (task.kind === "ads"
                 && typeof window.__lesenTeil3Render === "function") {
