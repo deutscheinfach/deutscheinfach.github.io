@@ -2145,6 +2145,92 @@
                     }
                 ]
             }
+        },
+
+        "s2-das-schicksal-des-braunbaernen": {
+            sprach2: {
+                "title": "Das Schicksal des Braunbärnen",
+                "kind": "bank",
+                "variants": [
+                    {
+                        "label": "الأساسي",
+                        "texts": [
+                            {
+                                "body": "Klimatische Veränderungen seit der letzten Kaltzeit könnten für den stetigen Rückgang der Braunbärenzahl in Europa verantwortlich sein. Wie eine aktuelle Studie nahelegt, haben vor allem steigende Wintertemperaturen [31] der vergangenen 12000 Jahre die Fortpflanzungsrate der Tiere verringert, was entscheidend zu deren Verschwinden beigetragen hat. Zudem wurden durch die Klimaveränderung größere Flächen für den Ackerbau nutzbar. [32] wurde der Lebensraum der Tiere verkleinert. Es ist längst unumstritten, [33] das Verschwinden der Braunbären mit der Landnutzung durch den Menschen zusammenhängt.\nEin internationales Expertenteam untersuchte nun die Rolle des Klimas beim Rückgang der Bärenzahl. In den letzten 12000 Jahren ist die Wintertemperatur in weiten Teilen Europas [34] zwei bis vier Grad angestiegen. In der Folge bekamen die Braunbären weniger [35], und ihre Zahl schrumpfte.\nDer Grund [36] ist, dass Braunbären bei steigenden Wintertemperaturen mehr Energie für ihre Winterruhe verbrauchen. Braunbärenweibchen benötigen ihre Energiereserven auch für die Fortpflanzung, [37] sie bringen im Winter ihre Jungen zur Welt. Wird mehr Energie für die Winterruhe verbraucht, bleibt nicht so viel für die Fortpflanzung übrig, und es gibt weniger Nachwuchs.\nSteigende Wintertemperaturen könnten auch indirekt für das Schicksal des Braunbären verantwortlich gewesen sein. Wärmere Winter begünstigten nämlich auch die menschlichen [38] in die Naturlandschaften und damit in den Lebensraum der Braunbären.\nAm Ende der letzten Eiszeit war der Braunbär [39] überall in Europa heimisch. Ein großes Aussterben gab es in Südwesteuropa vor 7000 bis 5000 Jahren. Richtig bergab [40] es mit dem Braunbären aber vor etwa 2000 Jahren, als sich sein Lebensraum verringerte."
+                            }
+                        ],
+                        "words": [
+                            "BEGRIFFE",
+                            "DADURCH",
+                            "DAFÜR",
+                            "DASS",
+                            "DENN",
+                            "EINGRIFFE",
+                            "GING",
+                            "KAM",
+                            "NACHKOMMEN",
+                            "NOCH",
+                            "SODASS",
+                            "SOWIE",
+                            "UM",
+                            "VORKOMMEN",
+                            "WÄHREND"
+                        ],
+                        "questions": [
+                            {
+                                "num": 31,
+                                "answer": "O",
+                                "why": "\"Während\" كتوصف المدة الزمنية اللي وقع فيها الفعل. فهاد السياق، كنهدرو على الارتفاع ديال الحرارة اللي وقع 'طيلة' 12000 سنة الماضية. هاد الكلمة هي الأنسب باش نربطو بين التغيرات و ديك الفترة الطويلة اللي دازت."
+                            },
+                            {
+                                "num": 32,
+                                "answer": "B",
+                                "why": "\"DADURCH\" كتعني \"بهاد الشي\" أو \"بسبب هاد النتيجة\". الجملة لي قبل عطاتنا السبب: أن الأراضي ولات صالحة للزراعة بفضل التغير المناخي. كنستعملو \"DADURCH\" باش نبينو النتيجة المباشرة ديال هادشي، وهي أن المكان فين كيعيشو هاد الدببة ولى صغير."
+                            },
+                            {
+                                "num": 33,
+                                "answer": "D",
+                                "why": "هاد البلاصة خاصها \"رابط\" (konjunktion) باش تربط لينا الجملة الرئيسية بالمعلومة اللي جات موراها. \"DASS\" كاتجي فالمعنى ديال \"أنَّ\"، وكاتدخل لينا الجملة الفرعية اللي كاتوضح شنو هو الشيء المتفق عليه (\"unumstritten\"). هاد الكلمة ضرورية باش تكون بنية الجملة صحيحة في اللغة الألمانية."
+                            },
+                            {
+                                "num": 34,
+                                "answer": "M",
+                                "why": "\"أم\" (UM) فهاد الجملة كاتعني التقريب ديال شحال تزادت درجة الحرارة. كانستعملوها مع الأرقام باش نورّيو التغيّر فشي قياس (بحال هنا الارتفاع ديال جوج حتى لربع درجات)، وكاتعطي معنى \"حوالي\" أو \"بمقدار\"."
+                            },
+                            {
+                                "num": 35,
+                                "answer": "I",
+                                "why": "الكلمة \"NACHKOMMEN\" كتعني النسل أو الصغار، وهي مناسبة للسياق لأن النص كيهضر على التوالد ونقصان العدد ديال الدببة. ملي كتنقص الطاقة المخصصة للإنجاب، كتكون النتيجة هي نقصان عدد الصغار (NACHKOMMEN) اللي كيولدوهم الدببة. هادشي اللي خلى العدد الإجمالي ديالهم يبدا يتقلص."
+                            },
+                            {
+                                "num": 36,
+                                "answer": "C",
+                                "why": "هاد الكلمة ديال \"Dafür\" ضرورية هنا حيت كاتعوض وكاتلخّص السبب ديال الظاهرة لي دازت (نقصان عدد الدببة). الجملة كاتعني \"السبب في ذلك\" أو \"السبب ديال هادشي\". هكا كنربطو بين النتيجة لي سبقات والتفسير ديالها."
+                            },
+                            {
+                                "num": 37,
+                                "answer": "E",
+                                "why": "هاد الكلمة ديال \"DENN\" كنستعملوها باش نعطيو السبب أو التبرير للحاجة لي دوينا عليها فالجملة الأولى. هنايا، الجملة لي مورا الفراغ كتشرح علاش الدبة خاصها تخبي الطاقة ديالها: حيت كتولد الصغار ديالها فالشتا."
+                            },
+                            {
+                                "num": 38,
+                                "answer": "F",
+                                "why": "كنختارو هاد الكلمة حيت النص كيهضر على التدخّلات ديال البشر في الطبيعة، واللي ولّات ساهلة بسباب ارتفاع درجة الحرارة ديال فصل الشتا. \"EINGRIFFE\" هنا كتعني الأعمال اللي كيقوم بيها الإنسان وكتأثر سلبياً على الأراضي الطبيعية، وكتقلل من المساحة اللي كيعيشو فيها الدببة."
+                            },
+                            {
+                                "num": 39,
+                                "answer": "J",
+                                "why": "هنا خاصنا كلمة كتعني \"مازال\" أو \"باقي\"، باش نبينو بلي فـ نهاية العصر الجليدي، الدببة البنية كانت باقة منتشرة فـ أوروبا كاملة. هاد الكلمة ديال الاستمرارية \"NOCH\" كاتأكد الحالة ديال الانتشار الواسع قبل ما يبدا الانقراض والنقصان الكبير فـ العدد ديالها."
+                            },
+                            {
+                                "num": 40,
+                                "answer": "G",
+                                "why": "\"GING\" هو الفعل فالماضي اللي كانحتاجوه فهاد البلاصة. هاد الجملة كاتستعمل التعبير \"bergab gehen\"، اللي كايعني بالدارجة \"الوضعية تدهورات بزاف\" أو \"ولّات غادية وكاتنقص\". إذن، الفعل كايناسب السياق ديال بدايات الانقراض فواحد الفترة محددة فالماضي."
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     };
 })();
