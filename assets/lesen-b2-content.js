@@ -2479,6 +2479,85 @@
                                 "why": "هاد الكلمة (sondern) ضرورية حيت كتكمل التركيبة الثابتة ديال العبارة \"nicht nur... sondern auch\". هاد التركيبة كنستعملوها باش نربطو بين جوج صفات زوينين. هنا، كتربط بين أن الكلب حنين وأنه ذكي أيضاً."
                             }
                         ]
+                    },
+                    {
+                        "label": "المعدل",
+                        "texts": [
+                            {
+                                "body": "[31] gilt der Hund seit jeher als treuer Begleiter des Menschen, besondere Leistungen auf dem Gebiet der Intelligenz wurden ihm jedoch sehr viel seltener zugesprochen. Jetzt beweisen aber Untersuchungen, die etwa zeitgleich an der Eötvös-Loránd-Universität in Budapest, an der Harvard Universität und am Max-Planck-Institut für evolutionäre Anthropologie in Leipzig durchgeführt [32], dass die beliebten Vierbeiner offenbar mehr verstehen und leisten können, als man bislang glaubte.\nIn speziell ausgearbeiteten Lerntests mit Hunden, Schimpansen und Gorillas wurde die Kommunikationsfähigkeit der Tiere getestet. In allen Tests schnitten die Hunde besser ab als die Affen. Hunde lesen kommunikative Informationen besonders an den Augen [33], aber sie reagieren auch [34] die Stimme und die Körpersprache eines Menschen.\nGanz besonders der Blickkontakt [35] für Hunde ein wichtiges Instrument, um Informationen über den „Gesprächspartner“ zu erhalten. Diese Fähigkeit habe sich im Verlaufe der Domestizierung der Hunde durch den Menschen immer weiter ausgebildet und sei jetzt in den Genen der Hunde fest verankert, so die Aussage der Forscher.\nHunden wird jetzt auch bescheinigt, dass sie ein Verständnis für Objekte entwickelt haben. Die Forscher versteckten vor den Augen ihrer Probanden Spielzeuge entweder hinter einer Wand oder in einem Behälter. [36] der Behälter nach dem Öffnen leer, suchten die Hunde auch hinter der Wand nach dem Spielzeug.\nHundetrainer, die in anerkannten Hundeschulen arbeiten, wissen schon lange Erstaunliches über die Fähigkeiten ihrer Schüler zu berichten. Ein Beispiel für die erstaunlichen Leistungen, die ein Hund zustande zu bringen vermag, ist der Blindenhund. Er kann nach den entsprechenden Trainings blinden Menschen sicher den Weg zeigen, er achtet auf den Straßenverkehr, er leitet sie [37] Hindernisse herum.\nNach neuesten Erkenntnissen wurden die ersten Hunde vor etwa 15.000 Jahren in Ostasien domestiziert. Nach umfangreichen Erbgutuntersuchungen geht man [38] aus, dass alle heute bekannten Hunderassen von weiblichen Wölfen abstammen. Als Ursprungsland der heutigen Hunderassen nimmt man China an.\nHundebesitzer von heute können also stolz [39] sein, nicht nur einen anhänglichen, [40] auch einen intelligenten Begleiter bei sich zu haben."
+                            }
+                        ],
+                        "words": [
+                            "AB",
+                            "ABER",
+                            "AN",
+                            "AUF",
+                            "DARAUF",
+                            "DARÜBER",
+                            "DAVON",
+                            "SEI",
+                            "SEIEN",
+                            "SONDERN",
+                            "ÜBER",
+                            "UM",
+                            "WAR",
+                            "WURDEN",
+                            "ZWAR"
+                        ],
+                        "questions": [
+                            {
+                                "num": 31,
+                                "answer": "O",
+                                "why": "خاصنا كلمة \"ZWAR\" حيت هي اللي كتحدد الفكرة الأولى (أن الكلب رفيق وفي) واللي كتكون عادةً متلازمة مع \"JEDOCH\". هاد الزوج ديال الكلمات كيخدم باش يدير تناقض بين فكرة سابقة وفكرة لاحقة. المعنى كيولي \"صحيح أن الكلب وفي، لكن...\"."
+                            },
+                            {
+                                "num": 32,
+                                "answer": "N",
+                                "why": "الكلمة اللي قبل الفراغ هي \"Untersuchungen\" وهي فصيغة الجمع. الجملة هنا مبنية للمجهول (Passive)، يعني هاد الدراسات \"تدارت\" أو \"تنفذت\". لهذا كنحتاجو الفعل المساعد \"werden\" ف الماضي و فالجمع، اللي هو \"wurden\"."
+                            },
+                            {
+                                "num": 33,
+                                "answer": "A",
+                                "why": "الجواب الصحيح هو \"AB\" باش نكملو الفعل \"ablesen\" اللي كيعني يفك الشفرة أو يقرا. هاد التركيبة كتشرح كيفاش الكلاب كيقدروا يفهموا المعلومات ديال التواصل مباشرة من عينين الإنسان. هذا جزء أساسي من الطريقة باش كيتواصَلُو مع مولاهم."
+                            },
+                            {
+                                "num": 34,
+                                "answer": "D",
+                                "why": "كنختارو \"Auf\" حيت الفعل \"reagieren\" (يتفاعل) في اللغة الألمانية ديما كيجي معاه حرف الجر \"Auf\". هاد التركيبة هي اللي كنستعملوها باش نبينو علاش الكلب كيتجاوب، وهنا كتعني أنهم كيتفاعلو مع صوت الإنسان."
+                            },
+                            {
+                                "num": 35,
+                                "answer": "H",
+                                "why": "نستعملو \"sei\" حيت هاد الجزء من النص كيعاود لينا الأقوال ديال الباحثين على شكل نقل غير مباشر. الفعل \"sei\" هو الصيغة الصحيحة ديال \"يكون\" (sein) فالحالة ديال Konjunktiv I. هو اللي كيوصف \"Blickkontakt\" حيت هو الفاعل المفرد المذكر."
+                            },
+                            {
+                                "num": 36,
+                                "answer": "M",
+                                "why": "هاد البلاصة خاصها الفعل ديال \"كان\" (sein) في الماضي البسيط، حيت كنوصفو واحد الحالة وقعات قبل ما يقلبو الكلاب. خاصنا \"war\" باش نكملو المعنى ديال \"العلبة كانت خاوية\" (der Behälter war leer). هاد الاستعمال ديال الماضي كيتواتى مع الفعل لي تابعو \"suchten\" (قلبو)."
+                            },
+                            {
+                                "num": 37,
+                                "answer": "L",
+                                "why": "كنستعملو حرف الجر \"um\" حيت كيكمل التركيبة ديال الفعل المنفصل \"herumleiten\". هاد التركيبة ديال \"um... herum\" كتعني \"يدوز من الجنب\" أو \"حول\" العوائق، وهي ضرورية باش يولي المعنى صحيح. إذن، الكلب كيوجه الناس باش يدورو على العقبات."
+                            },
+                            {
+                                "num": 38,
+                                "answer": "G",
+                                "why": "هنا خاصنا \"davon\" حيث هي جزء من التعبير الثابت \"ausgehen von\". هاد \"davon\" كتعوض المعلومة اللي ذكرناها قبل (التحليلات الجينية) وكاتربط الفعل بالأساس اللي بناو عليه الإستنتاج. يعني، كنقولوا \"كيفترضوا بناءً على تلك الأبحاث\"."
+                            },
+                            {
+                                "num": 39,
+                                "answer": "E",
+                                "why": "الفعل \"stolz sein\" (بمعنى الافتخار) ديما كايحتاج حرف الجر \"auf\". وحيت السبب اللي كايخلي الملاك ديال الكلب يفتخر جاي من بعد في الجملة، خاصنا نستعملو \"darauf\" باش نشيرو ليه مقدمًا. هاد الكلمة كاتمثل القاعدة ديال الظروف الضميرية (Präpositionaladverb) اللي كاتجي مع \"auf\"."
+                            },
+                            {
+                                "num": 40,
+                                "answer": "J",
+                                "why": "هاد الكلمة (sondern) ضرورية حيت كتكمل التركيبة الثابتة ديال العبارة \"nicht nur... sondern auch\". هاد التركيبة كنستعملوها باش نربطو بين جوج صفات زوينين. هنا، كتربط بين أن الكلب حنين وأنه ذكي أيضاً."
+                            }
+                        ],
+                        "title": "Der klügste Freund des Menschen. Wissenschaftliche Studie bescheinigt Hunden hohe Intelligenz (المعدل)",
+                        "note": "التعديل كاين غير فالفراغ رقم (31)؛ هزو الفراغ من وسط الجملة وجابوه كأول كلمة فالنص. الأجوبة كاملة كيبقاو هما نيتهم ماتبدلوش."
                     }
                 ]
             }
