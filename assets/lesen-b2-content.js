@@ -1940,6 +1940,43 @@
                     }
                 ]
             }
+        },
+
+        /* ===== Sprachbausteine 2 — النص كيف ما صيفطو صاحب الموقع ===== */
+        "s2-ausbildung-mit-ueber-30": {
+            sprach2: {
+                title: "Ausbildung mit über 30",
+                kind: "bank",
+                variants: [
+                    {
+                        label: "الأساسي",
+                        texts: [ { body: "Die gelernte Krankenschwester Jaqueline Delgado drückt mit 38 Jahren noch einmal die Schulbank. [31] sie hat sich für einen beruflichen Neustart entschieden. Da ihr früherer Beruf ihr keinen Spaß mehr machte, begann sie eine Berufsausbildung bei der Polizei. Ihr Ziel: Sie [32] in den Streifendienst gehen.\nMit über 30 noch einmal ganz neu einen Job zu erlernen – lange Zeit war das kaum möglich. Arbeitgeber suchten nur junge Berufseinsteiger. [33] es heute in vielen Branchen aber an Nachwuchs fehlt, geben sie öfter auch Älteren eine [34].\nThomas Neuendorfer, der stellvertretende Sprecher der Polizei Berlin, erklärt, [35] sein Arbeitgeber gerne Ältere ausbildet: „Sie haben in ihrem Berufsleben Erfahrungen gesammelt, die der Polizei und auch den Bürgern der Stadt zu Gute kommen“. Sie seien häufig emotional reifer, außerdem bereit, Verantwortung zu [36], und motiviert, die Ausbildung erfolgreich abzuschließen. Zudem [37] sie die Jüngeren unterstützen und ihnen als Vorbild dienen. Davon profitieren dann auch die Arbeitgeber. Gegen die Einstellung von Älteren sprechen nur, dass sie dem Unternehmen kürzer zu [38] stehen. [39] haben aber Azubis in vielen Bereichen Möglichkeiten: in kaufmännischen oder in gewerblich-technischen Berufen, im Gesundheitswesen oder vor allem in der Gastronomie.\nWenn das Azubi-Gehalt nicht für den Lebensunterhalt reicht, hilft die Arbeitsagentur. Der Betrag wird dabei nicht nach dem Alter festgelegt, [40] wird der individuelle, konkrete Bedarf ermittelt. Im August schließt Delgado ihre Ausbildung ab. In dem künftigen Polizei-Job wird sie ihr medizinisches Wissen, ihre Menschenkenntnis sowie ihre spanischen und englischen Sprachkenntnisse wohl gut gebrauchen können." } ],
+                        words: ["AUSWAHL", "CHANCE", "DA", "DAGEGEN", "DENN", "DURFTEN", "KÖNNTEN", "MÖCHTE", "SOLLTE", "SONDERN", "TROTZDEM", "ÜBERNEHMEN", "VERFÜGUNG", "WARUM", "ZIEHEN"],
+                        questions: [
+                            { num: 31, answer: "E",
+                              why: "كنستعملو \"DENN\" فهاد السياق حيت الجملة الثانية كاتوضح لينا السبب ديال الجملة الأولى. هي رجعات تقرا (دَفْعات الكرسي ديال المدرسة) \"لأنها\" قررت تبدا مسار مهني جديد. \"DENN\" هنا كتعطي معنى ديال التبرير والسبب." },
+                            { num: 32, answer: "H",
+                              why: "هاد الكلمة \"MÖCHTE\" كتعبر على الرغبة والهدف المستقبلي ديال جاكلين. بما أن الجملة بدات بـ \"Ihr Ziel\" (الهدف ديالها)، خاصنا فعل كيوضح لينا شنو باغا تحقق. داكشي علاش \"MÖCHTE\" هي الأنسب حيت كتعني أنها باغا تدخل لخدمة ديال الدوريات." },
+                            { num: 33, answer: "C",
+                              why: "الكلمة \"دا\" كاتعني \"حيت\" أو \"بما أن\"، وهي ضرورية باش تبين السبب. الجملة اللي مورا الفراغ كاتقدم التفسير علاش المشغلين كيعطيو فرصة للناس الكبار: وهو النقص في الشباب. هاد الكلمة هي أحسن رابط باش المعنى ديال الجملة يجي مفهوم." },
+                            { num: 34, answer: "B",
+                              why: "الكلمة الصحيحة هي \"فرصة\" (Chance). الجملة كتشرح بلي حيت الشركات ناقصها شباب، ولاو كيعطيو للناس الكبار في السن إمكانية جديدة (فرصة) باش يخدمو ويتعلمو حرفة. التعبير \"يعطي فرصة\" هو الأنسب في هذا السياق ديال إعطاء شخص بداية جديدة في العمل." },
+                            { num: 35, answer: "N",
+                              why: "الكلمة \"WARUM\" كتعني \"علاش\"، وكنحتاجوها باش نبينو السبب اللي خلا هاد الشرطي يشرح وجهة النظر ديالو. المتحدث كيشرح للقارئ \"علاش\" (السبب) المؤسسة ديالو كتبغي تدرب الناس اللي كبار في السن، حيث الجملة اللي من بعد مباشرة كتعطي التفسير." },
+                            { num: 36, answer: "L",
+                              why: "الكلمة \"ÜBERNEHMEN\" كتعني 'يتحمل' أو 'يتولى' شي حاجة. في هاد الجملة، مطلوب فعل كيمشي مع كلمة \"المسؤولية\" (Verantwortung). الناس الكبار اللي عندهم خبرة كيكونوا مستعدين باش يتحملوا المسؤولية ديال الخدمة." },
+                            { num: 37, answer: "G",
+                              why: "\"KÖNNTEN\" كانستعملوها فهاد الجملة باش نبينو الإمكانية ديال شي فايدة إضافية. المعنى هو أن المتدربين الكبار عندهم القدرة باش يعاونو لي صغر منهم ويقدمو ليهم مثال مزيان." },
+                            { num: 38, answer: "M",
+                              why: "هنا خاصنا كلمة \"VERFÜGUNG\" باش نكملوا التعبير الثابت \"zu Verfügung stehen\". هذا التعبير كا يعني تكون \"موجود ومُتاح\" للشركة أو العمل. في هاد الجملة، كايهضرو على المدة القصيرة لي غيكونو فيها هاد الناس الكبار متوفرين للخدمة قبل ما يتقاعدوا." },
+                            { num: 39, answer: "K",
+                              why: "الكلمة \"TROTZDEM\" كاتعني \"بالرغم من ذلك\" وكاتخدم باش تربط فكرتين متناقضتين. الجملة اللي قبلها كاتذكر واحد العيب وهو مدة الخدمة القصيرة، و \"TROTZDEM\" كاتقدم الفكرة المعاكسة وهي أن الفرص باقة متاحة بزاف للمتدرّبين." },
+                            { num: 40, answer: "J",
+                              why: "هاد الرابط \"sondern\" كنستعملوه ملي كتكون عندنا جملة منفية (فيها \"nicht\")، وكنقدمو من بعدها تصحيح أو بديل لهاد النفي. في هاد النص، كيقولو أن المبلغ \"ما كيتحددش\" بالسن، والجزء الثاني كيقدم الطريقة الصحيحة لي كيعتامدوها (بالحاجة الفردية). إذن، \"sondern\" هي الأداة المناسبة اللي كتوضح هاد التباين وكتأكد على المعلومة الصحيحة." }
+                        ]
+                    }
+                ]
+            }
         }
     };
 })();
