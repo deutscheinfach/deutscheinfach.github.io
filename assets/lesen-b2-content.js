@@ -2310,6 +2310,178 @@
                     }
                 ]
             }
+        },
+
+        "s2-der-hund-als-intelligentes-wesen": {
+            sprach2: {
+                "title": "Der Hund als intelligentes Wesen",
+                "kind": "bank",
+                "variants": [
+                    {
+                        "label": "الأساسي",
+                        "texts": [
+                            {
+                                "body": "Hunde sind beliebte Begleiter vieler Menschen. Gerade in den Großstädten Deutschlands und Österreichs gibt es eine große Anzahl an Hundebesitzern, die das Tier als Freund, manchmal sogar als Helfer schätzen. Bislang galt die Auffassung, Hunde seien zwar treu, aber [31] ihre Intelligenz betrifft, eher mit geringen Begabungen ausgestattet. Doch [32] haben wissenschaftliche Experimente [33] der Universität Wien und am Max–Planck–Institut in Leipzig die Hundeherde gerettet und bewiesen: Der Hund ist ein außerordentlich intelligentes Lebewesen und kommt in einer Vielzahl von Strategien, die er anwendet, an menschliche Denkmuster durchaus heran.\nFriederike Range von der Universität Wien setzte ihren Hund vor einen Computer. Der Hund sollte [34] verschiedenen Bildern, von denen jeweils zwei auf dem Monitor zu sehen waren, das richtige auswählen und [35] entweder einen Menschen oder eine Landschaft erkennen. Der Monitor war mit einem Touchscreen ausgestattet, [36] der Hund mit der Schnauze auf das jeweils richtige Bild tippen konnte. Lag er richtig, bekam er ein Stück Trockenfutter als Belohnung, lag er falsch, wurde der Bildschirm kurz rot und zeigte gleich im Anschluss das nächste Bilderpaar.\nDas Ergebnis war verblüffend. Der Hund hing [37] mit einer ähnlichen Begeisterung und Ausdauer am Bildschirm wir manch Jugendlicher an der Playstation, sondern er war auch bei seinen Entscheidungen äußerst treffsicher. Die Leipziger Forscherin Juliane Kaminski setzte ihren Hund vor zwei Gefäße, von [38] eins Futter enthielt, das andere nicht. Danach schaute sie in die Richtung des Behälters, in dem das Fleischstück lag. Der Hund beobachtete sie dabei und interpretierte die menschliche Mimik richtig.\nDasselbe Experiment mit dem gleichen Ergebnis mit Hundebabys wiederholt. Daraus schließen die Forscher in Leipzig, [39] bestimmte Muster menschlicher Gestik und Mimik von den Hunden sehr treffsicher interpretiert werden können und diese Fähigkeiten bereits seit langem bei Hunden vorhanden sein müssen. Man kann heute mit Recht annehmen, dass die Interpretationsfähigkeit menschlicher Mimik und Gestik bei den Hunden genetisch verankert ist.\nÄhnliche Experimente mit Wölfen, die als die Vorfahren des Haushundes gelten, brachten [40] vergleichbaren Resultate. Ein weiteres Indiz also dafür, dass der Hund diese Fähigkeiten gelernt und verinnerlicht haben muss."
+                            }
+                        ],
+                        "words": [
+                            "AN",
+                            "AUS",
+                            "DARAUF",
+                            "DAS",
+                            "DASS",
+                            "DEM",
+                            "DENEN",
+                            "JETZT",
+                            "KEINE",
+                            "NICHT NUR",
+                            "SO DASS",
+                            "ÜBRIGENS",
+                            "WAS",
+                            "WELCHE",
+                            "ZU"
+                        ],
+                        "questions": [
+                            {
+                                "num": 31,
+                                "answer": "M",
+                                "why": "\"Was\" هنا ضرورية حيت كتدخل فالتركيبة اللغوية المعروفة \"was... betrifft\"، واللي كتعني \"فيما يخص\" أو \"بخصوص\" الموضوع اللي كنهضرو عليه. هاد الكلمة هي اللي ربطات الفكرة ديال الذكاء ديال الكلاب بالرأي اللي كيقول بلي قدراتهم قليلة."
+                            },
+                            {
+                                "num": 32,
+                                "answer": "H",
+                                "why": "هنا خاصنا ظرف ديال الزمان باش نبينو التحول من الفكرة القديمة اللي كانت سائدة للنتائج الجديدة. \"JETZT\" كتعني \"دابا\" أو \"مؤخراً\"، وكاتوضح بلي هاد التجارب العلمية اللي هضرو عليها وقعات فالوقت الحالي. هي اللي بدلات الرأي العام على الذكاء ديال الكلاب."
+                            },
+                            {
+                                "num": 33,
+                                "answer": "A",
+                                "why": "كنختارو \"AN\" حيت هاد الحرف كيتربط بالمكان (الجامعة) اللي تدارت فيه الأبحاث العلمية. ملي كنهضرو على تجارب ولا أبحاث تخدمات فشي مؤسسة بحال جامعة ولا معهد، كنستعملو هاد الكلمة باش نبينو المصدر والموضع ديالها."
+                            },
+                            {
+                                "num": 34,
+                                "answer": "B",
+                                "why": "الكلمة \"Aus\" هي الصحيحة حيت الفعل \"auswählen\" (يختار) كيطلب هاد الحرف باش نعبرو على الاختيار \"من بين\" مجموعة ديال الأشياء. فهاد السياق، الكلب خاصو يختار الصورة الصحيحة من وسط الصور الأخرى، و \"Aus\" كتأدي الدور ديال \"من\" أو \"من بين\"."
+                            },
+                            {
+                                "num": 35,
+                                "answer": "C",
+                                "why": "\"darauf\" هنا كتخدم كرابط ضروري باش تشير للصورة لي الكلب اختارها قبل (\"das richtige auswählen\"). المعنى ديالها هو \"بناءً على ذلك\"، وهي كتدخل باش تقدم الهدف ديال المهمة لي هو التعرف على الشخص أو المنظر (\"erkennen\"). هاد الرابط كيوري بلي هاد المرحلة ديال التعرف جاية مباشرة ومرتبطة بالاختيار الأول ديالو."
+                            },
+                            {
+                                "num": 36,
+                                "answer": "K",
+                                "why": "هنا كنحتاجو أداة ربط كتوضح لينا النتيجة ديال الجملة الأولى. كلمة \"So dass\" كتعني \"النتيجة هي أن\" أو \"باش\"، وكتشرح لينا كيفاش الكلب قدر يستعمل النيف ديالو باش يختار الصورة. الجملة لي قبل قالت أن الشاشة كانت مجهزة بواحد التقنية، وهادي هي النتيجة ديال هاد التجهيز."
+                            },
+                            {
+                                "num": 37,
+                                "answer": "J",
+                                "why": "هاد الفراغ خاصو يتعمر بـ \"NICHT NUR\" حيت الجملة فيها واحد التركيبة لغوية مشتركة سميتها \"nicht nur... sondern auch...\". هاد التركيبة كتعني \"مشي غير... و لكن حتى...\"، وكتستعمل باش تبين أن جوج د الحوايج كاينين ف نفس الوقت. بما أن الجزء الثاني ديال الجملة هو \"sondern er war auch\", فالجزء الأول خاص يكون \"NICHT NUR\" باش تكون الجملة صحيحة."
+                            },
+                            {
+                                "num": 38,
+                                "answer": "G",
+                                "why": "\"DENEN\" هي لي خاصنا هنا حيت كاتربط الجملة بـ \"zwei Gefäße\" لي هما زوج ديال الأواني، يعني اسم جمع. هاد الضمير النسبي خاصو يكون في حالة الجر (Dativ) حيت كاين حرف الجر \"von\" قبل منو، وجمع الـ Dativ هو \"DENEN\"."
+                            },
+                            {
+                                "num": 39,
+                                "answer": "E",
+                                "why": "كلمة \"Dass\" ضرورية هنا حيت الفعل \"schließen\" (يستنتج/يخلص لواحد النتيجة) كيطلب جملة فرعية. \"Dass\" هي الرابط لي كيدخل الجملة وكيشرح لينا شنو هي النتيجة لي وصلو ليها الباحثين في لايبزيغ."
+                            },
+                            {
+                                "num": 40,
+                                "answer": "I",
+                                "why": "خاصنا هنا كلمة ديال النفي (KEINE) باش المعنى يجي صحيح. حيت التجارب اللي دارو على الذئاب، اللي هما الأجداد ديال الكلاب، ما جابتش نفس النتائج الإيجابية. هادشي هو اللي كيأكد أن الكلاب اكتسبات هاد المهارات مع الوقت وماشي ورثاتها من الأجداد ديالها."
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+
+        "s2-der-kluegste-freund-des-menschen-wiss": {
+            sprach2: {
+                "title": "Der klügste Freund des Menschen. Wissenschaftliche Studie bescheinigt Hunden hohe Intelligenz",
+                "kind": "bank",
+                "variants": [
+                    {
+                        "label": "الأساسي",
+                        "texts": [
+                            {
+                                "body": "Seit jeher gilt der Hund [31] als treuer Begleiter des Menschen, besondere Leistungen auf dem Gebiet der Intelligenz wurden ihm jedoch sehr viel seltener zugesprochen. Jetzt beweisen aber Untersuchungen, die etwa zeitgleich an der Eötvös-Loránd-Universität in Budapest, an der Harvard Universität und am Max-Planck-Institut für evolutionäre Anthropologie in Leipzig durchgeführt [32], dass die beliebten Vierbeiner offenbar mehr verstehen und leisten können, als man bislang glaubte.\nIn speziell ausgearbeiteten Lerntests mit Hunden, Schimpansen und Gorillas wurde die Kommunikationsfähigkeit der Tiere getestet. In allen Tests schnitten die Hunde besser ab als die Affen. Hunde lesen kommunikative Informationen besonders an den Augen [33], aber sie reagieren auch [34] die Stimme und die Körpersprache eines Menschen.\nGanz besonders der Blickkontakt [35] für Hunde ein wichtiges Instrument, um Informationen über den „Gesprächspartner“ zu erhalten. Diese Fähigkeit habe sich im Verlaufe der Domestizierung der Hunde durch den Menschen immer weiter ausgebildet und sei jetzt in den Genen der Hunde fest verankert, so die Aussage der Forscher.\nHunden wird jetzt auch bescheinigt, dass sie ein Verständnis für Objekte entwickelt haben. Die Forscher versteckten vor den Augen ihrer Probanden Spielzeuge entweder hinter einer Wand oder in einem Behälter. [36] der Behälter nach dem Öffnen leer, suchten die Hunde auch hinter der Wand nach dem Spielzeug.\nHundetrainer, die in anerkannten Hundeschulen arbeiten, wissen schon lange Erstaunliches über die Fähigkeiten ihrer Schüler zu berichten. Ein Beispiel für die erstaunlichen Leistungen, die ein Hund zustande zu bringen vermag, ist der Blindenhund. Er kann nach den entsprechenden Trainings blinden Menschen sicher den Weg zeigen, er achtet auf den Straßenverkehr, er leitet sie [37] Hindernisse herum.\nNach neuesten Erkenntnissen wurden die ersten Hunde vor etwa 15.000 Jahren in Ostasien domestiziert. Nach umfangreichen Erbgutuntersuchungen geht man [38] aus, dass alle heute bekannten Hunderassen von weiblichen Wölfen abstammen. Als Ursprungsland der heutigen Hunderassen nimmt man China an.\nHundebesitzer von heute können also stolz [39] sein, nicht nur einen anhänglichen, [40] auch einen intelligenten Begleiter bei sich zu haben."
+                            }
+                        ],
+                        "words": [
+                            "AB",
+                            "ABER",
+                            "AN",
+                            "AUF",
+                            "DARAUF",
+                            "DARÜBER",
+                            "DAVON",
+                            "SEI",
+                            "SEIEN",
+                            "SONDERN",
+                            "ÜBER",
+                            "UM",
+                            "WAR",
+                            "WURDEN",
+                            "ZWAR"
+                        ],
+                        "questions": [
+                            {
+                                "num": 31,
+                                "answer": "O",
+                                "why": "خاصنا كلمة \"ZWAR\" حيت هي اللي كتحدد الفكرة الأولى (أن الكلب رفيق وفي) واللي كتكون عادةً متلازمة مع \"JEDOCH\". هاد الزوج ديال الكلمات كيخدم باش يدير تناقض بين فكرة سابقة وفكرة لاحقة. المعنى كيولي \"صحيح أن الكلب وفي، لكن...\"."
+                            },
+                            {
+                                "num": 32,
+                                "answer": "N",
+                                "why": "الكلمة اللي قبل الفراغ هي \"Untersuchungen\" وهي فصيغة الجمع. الجملة هنا مبنية للمجهول (Passive)، يعني هاد الدراسات \"تدارت\" أو \"تنفذت\". لهذا كنحتاجو الفعل المساعد \"werden\" ف الماضي و فالجمع، اللي هو \"wurden\"."
+                            },
+                            {
+                                "num": 33,
+                                "answer": "A",
+                                "why": "الجواب الصحيح هو \"AB\" باش نكملو الفعل \"ablesen\" اللي كيعني يفك الشفرة أو يقرا. هاد التركيبة كتشرح كيفاش الكلاب كيقدروا يفهموا المعلومات ديال التواصل مباشرة من عينين الإنسان. هذا جزء أساسي من الطريقة باش كيتواصَلُو مع مولاهم."
+                            },
+                            {
+                                "num": 34,
+                                "answer": "D",
+                                "why": "كنختارو \"Auf\" حيت الفعل \"reagieren\" (يتفاعل) في اللغة الألمانية ديما كيجي معاه حرف الجر \"Auf\". هاد التركيبة هي اللي كنستعملوها باش نبينو علاش الكلب كيتجاوب، وهنا كتعني أنهم كيتفاعلو مع صوت الإنسان."
+                            },
+                            {
+                                "num": 35,
+                                "answer": "H",
+                                "why": "نستعملو \"sei\" حيت هاد الجزء من النص كيعاود لينا الأقوال ديال الباحثين على شكل نقل غير مباشر. الفعل \"sei\" هو الصيغة الصحيحة ديال \"يكون\" (sein) فالحالة ديال Konjunktiv I. هو اللي كيوصف \"Blickkontakt\" حيت هو الفاعل المفرد المذكر."
+                            },
+                            {
+                                "num": 36,
+                                "answer": "M",
+                                "why": "هاد البلاصة خاصها الفعل ديال \"كان\" (sein) في الماضي البسيط، حيت كنوصفو واحد الحالة وقعات قبل ما يقلبو الكلاب. خاصنا \"war\" باش نكملو المعنى ديال \"العلبة كانت خاوية\" (der Behälter war leer). هاد الاستعمال ديال الماضي كيتواتى مع الفعل لي تابعو \"suchten\" (قلبو)."
+                            },
+                            {
+                                "num": 37,
+                                "answer": "L",
+                                "why": "كنستعملو حرف الجر \"um\" حيت كيكمل التركيبة ديال الفعل المنفصل \"herumleiten\". هاد التركيبة ديال \"um... herum\" كتعني \"يدوز من الجنب\" أو \"حول\" العوائق، وهي ضرورية باش يولي المعنى صحيح. إذن، الكلب كيوجه الناس باش يدورو على العقبات."
+                            },
+                            {
+                                "num": 38,
+                                "answer": "G",
+                                "why": "هنا خاصنا \"davon\" حيث هي جزء من التعبير الثابت \"ausgehen von\". هاد \"davon\" كتعوض المعلومة اللي ذكرناها قبل (التحليلات الجينية) وكاتربط الفعل بالأساس اللي بناو عليه الإستنتاج. يعني، كنقولوا \"كيفترضوا بناءً على تلك الأبحاث\"."
+                            },
+                            {
+                                "num": 39,
+                                "answer": "E",
+                                "why": "الفعل \"stolz sein\" (بمعنى الافتخار) ديما كايحتاج حرف الجر \"auf\". وحيت السبب اللي كايخلي الملاك ديال الكلب يفتخر جاي من بعد في الجملة، خاصنا نستعملو \"darauf\" باش نشيرو ليه مقدمًا. هاد الكلمة كاتمثل القاعدة ديال الظروف الضميرية (Präpositionaladverb) اللي كاتجي مع \"auf\"."
+                            },
+                            {
+                                "num": 40,
+                                "answer": "J",
+                                "why": "هاد الكلمة (sondern) ضرورية حيت كتكمل التركيبة الثابتة ديال العبارة \"nicht nur... sondern auch\". هاد التركيبة كنستعملوها باش نربطو بين جوج صفات زوينين. هنا، كتربط بين أن الكلب حنين وأنه ذكي أيضاً."
+                            }
+                        ]
+                    }
+                ]
+            }
         }
     };
 })();
