@@ -125,6 +125,41 @@ html::before {
         var(--flag-black) 0 33.33%, var(--brand) 33.33% 66.66%, var(--flag-gold) 66.66% 100%);
 }
 
+/* الخلفية الحية: أضواء بألوان العلم كيتحركو بشوية ورا الصفحة
+   (أورورا). طبقة وحدة فيها transform فقط → خفيفة على الهاتف.
+   z-index:-1 → ديما تحت المحتوى وفوق لون الورق. */
+html::after {
+    content: "";
+    position: fixed;
+    inset: -25vmax;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(38vmax 30vmax at 18% 22%, rgba(225,29,51,.17), transparent 62%),
+        radial-gradient(32vmax 26vmax at 82% 18%, rgba(242,183,5,.14), transparent 62%),
+        radial-gradient(44vmax 34vmax at 72% 82%, rgba(255,79,100,.13), transparent 64%),
+        radial-gradient(36vmax 28vmax at 22% 86%, rgba(20,22,31,.07), transparent 62%),
+        conic-gradient(from 210deg at 50% 50%, rgba(225,29,51,.05), rgba(242,183,5,.05), rgba(20,22,31,.03), rgba(225,29,51,.05));
+    filter: saturate(1.15);
+    will-change: transform;
+    animation: de-aurora 34s ease-in-out infinite alternate;
+}
+
+@keyframes de-aurora {
+    0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    33%  { transform: translate3d(5vmax, -4vmax, 0) rotate(10deg) scale(1.08); }
+    66%  { transform: translate3d(-4vmax, 3vmax, 0) rotate(-8deg) scale(1.04); }
+    100% { transform: translate3d(3vmax, 5vmax, 0) rotate(6deg) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html::after { animation: none; }
+}
+
+@media print {
+    html::before, html::after { display: none; }
+}
+
 h1, h2, h3 { letter-spacing: -.015em; }
 
 ::selection { background: rgba(225,29,51,.18); color: inherit; }

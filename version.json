@@ -1,5 +1,5 @@
 {
-  "build": "2beb2b75a4c1",
+  "build": "a7ad0c0481ed",
   "assets": {
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b2-content.js": "5ab8cd9f",
@@ -24,6 +24,6 @@
     "assets/sprechen-b2-topics.js": "886351ae",
     "assets/sprechen-engine.js": "45ed2a28",
     "assets/sprechen-hub.js": "49a8b701",
-    "assets/theme.css": "ebedceaa"
+    "assets/theme.css": "70c1b456"
   }
 }
