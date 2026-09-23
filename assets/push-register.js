@@ -64,7 +64,8 @@ window.__deutschEinfachPush = (async function () {
                   projectId: "deutsch-einfach-4c81f",
                   storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
                   messagingSenderId: "152448766933",
-                  appId: "1:152448766933:web:f7824c4db8ab3caccbe35c"
+                  appId: "1:152448766933:web:f7824c4db8ab3caccbe35c",
+                      measurementId: "G-9QV234Z0KZ"
               });
 
         if (!(await msgMod.isSupported())) {
