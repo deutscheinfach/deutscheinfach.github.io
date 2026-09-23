@@ -35,7 +35,7 @@ code { direction: ltr; display: inline-block; background: var(--surface-2);
 </head>
 <body>
 <div id="site-header"></div>
-<script src="assets/site-header.js?v=f1150aa1"></script>
+<script src="assets/site-header.js?v=99fb79c3"></script>
 
 <main class="chk">
     <h1>فحص الاشتراك</h1>
@@ -70,7 +70,7 @@ try {
     const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
     const fsMod   = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
 
-    const app = appMod.initializeApp({
+    const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
         apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
         authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
         projectId: "deutsch-einfach-4c81f",

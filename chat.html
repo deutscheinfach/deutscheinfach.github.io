@@ -2946,7 +2946,7 @@ class="toast">
    FIREBASE IMPORTS
    ===================================================== */
 
-import {initializeApp}
+import {initializeApp, getApps, getApp}
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 import {
@@ -3004,7 +3004,7 @@ measurementId:
 
 };
 
-const app=initializeApp(firebaseConfig);
+const app=getApps().length?getApp():initializeApp(firebaseConfig);
 
 const auth=getAuth(app);
 

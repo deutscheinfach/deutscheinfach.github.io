@@ -392,7 +392,9 @@ input:focus {
     // =========================
 
     import {
-        initializeApp
+        initializeApp,
+        getApps,
+        getApp
     } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 
 
@@ -441,7 +443,7 @@ input:focus {
     // =========================
 
     const app =
-        initializeApp(firebaseConfig);
+        getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 
     const auth =

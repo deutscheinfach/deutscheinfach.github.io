@@ -134,7 +134,8 @@
                         const word = el("span", "sp-gap-word", "…");
                         gap.appendChild(word);
                         gap.setAttribute("aria-label", "Lücke " + num);
-                        gaps[num] = { node: gap, word: word };
+                        /* نفس الرقم يقدر يتكرر (entweder … oder) */
+                        (gaps[num] = gaps[num] || []).push({ node: gap, word: word });
                         p.appendChild(gap);
                         last = at + match.length;
                         return match;
@@ -182,6 +183,7 @@
 
                 const row = { box: box, question: question, picked: -1, buttons: [],
                               gap: gaps[num] || null };
+                row.fill = function (text) { fill(row, text); };
 
                 (question.options || []).forEach(function (option, oi) {
                     const label = typeof option === "string" ? option : (option.text || "");
@@ -195,10 +197,7 @@
                         row.buttons.forEach(function (other, i) {
                             other.classList.toggle("is-picked", i === oi);
                         });
-                        if (row.gap) {
-                            row.gap.word.textContent = label;
-                            row.gap.node.classList.add("is-filled");
-                        }
+                        row.fill(label);
                         paintProgress();
                     });
 
@@ -207,14 +206,14 @@
                 });
 
                 /* الضغط على الفراغ فالنص كيدّيك للسؤال ديالو */
-                if (row.gap) {
-                    row.gap.node.addEventListener("click", function () {
+                (row.gap || []).forEach(function (gap) {
+                    gap.node.addEventListener("click", function () {
                         box.scrollIntoView({ behavior: "smooth", block: "center" });
                         box.classList.remove("sp-flash");
                         void box.offsetWidth;
                         box.classList.add("sp-flash");
                     });
-                }
+                });
 
                 if (question.why) {
                     const why = document.createElement("details");
@@ -250,6 +249,16 @@
             board.append(column, side);
             paintProgress();
 
+            /* "entweder ... oder" → كل جزء فالفراغ ديالو */
+            function fill(row, text) {
+                const gapsOf = row.gap || [];
+                const parts = gapsOf.length > 1 ? String(text).split(/\s*(?:\.\.\.|…)\s*/) : [text];
+                gapsOf.forEach(function (gap, i) {
+                    gap.word.textContent = text === null ? "…" : (parts[i] !== undefined ? parts[i] : text);
+                    gap.node.classList.toggle("is-filled", text !== null);
+                });
+            }
+
             function optionText(row, i) {
                 const option = (row.question.options || [])[i];
                 return typeof option === "string" ? option : ((option || {}).text || "");
@@ -278,13 +287,10 @@
                         if (i === expected && (ok || reveal)) item.classList.add("is-right");
                     });
 
-                    if (row.gap) {
-                        row.gap.node.classList.add(ok ? "is-right" : "is-wrong");
-                        if (reveal) {
-                            row.gap.word.textContent = optionText(row, expected);
-                            row.gap.node.classList.add("is-filled");
-                        }
-                    }
+                    (row.gap || []).forEach(function (gap) {
+                        gap.node.classList.add(ok ? "is-right" : "is-wrong");
+                    });
+                    if (reveal) row.fill(optionText(row, expected));
 
                     row.box.appendChild(el("div", "lesen-mark " + (ok ? "ok" : "no"),
                         ok ? "✓ Richtig"
@@ -310,11 +316,10 @@
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
                 if (row.why) { row.why.hidden = true; row.why.open = false; }
-                if (row.gap) {
-                    row.gap.node.classList.remove("is-right", "is-wrong");
-                    row.gap.word.textContent = row.picked === -1 ? "…" : optionText(row, row.picked);
-                    row.gap.node.classList.toggle("is-filled", row.picked !== -1);
-                }
+                (row.gap || []).forEach(function (gap) {
+                    gap.node.classList.remove("is-right", "is-wrong");
+                });
+                row.fill(row.picked === -1 ? null : optionText(row, row.picked));
             }
 
             function reset() {

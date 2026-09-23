@@ -10,7 +10,7 @@ window.__deutschEinfachPremiumReady = (async function () {
     const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
     const fsMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
 
-    const app = appMod.initializeApp({
+    const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
       apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
       authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
       projectId: "deutsch-einfach-4c81f",
