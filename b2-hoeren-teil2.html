@@ -13,7 +13,8 @@
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
 <link rel="stylesheet" href="assets/theme.css?v=70c1b456">
 <link rel="stylesheet" href="assets/site-header.css?v=70b9f82b">
-<style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
+<style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}.nq-question-ar{display:block;margin-top:6px;font-size:.92em;color:var(--text-muted,#5b6070);line-height:1.7;font-family:"Cairo","IBM Plex Sans Arabic",sans-serif}
+</style>
 
   <title>Hören: Teil2</title>
   <style>
@@ -530,8 +531,9 @@ body{
   box-shadow: 0 8px 19px rgba(225,29,51,.23) !important;
 }
 #hoeren-teil2-stack .nq-btn-show{
-  background: var(--surface-2) !important;
-  color: #fff !important;
+  background: var(--surface) !important;
+  color: var(--brand-dark, #b3122a) !important;
+  border: 1.5px solid rgba(225,29,51,.35) !important;
 }
 #hoeren-teil2-stack .nq-btn-retry{
   background: var(--gold-soft) !important;
@@ -2010,6 +2012,19 @@ window.__deutschEinfachPremiumReady = (async function () {
     { text: "Tarek Hesse kann sich eine internationale Ausweitung vorstellen.", answer: "" }
   ]
 },
+{ href: "", title: "Dorothea", quizId: "Dorothea", questions: [
+    { text: "Dorothea Eichhorn hat sich mit einem Lieferdienst für regionale Produkte selbstständig gemacht.", answer: "richtig", ar: "دوروثيا إيشهورن قامت بتأسيس خدمة توصيل للمنتجات الإقليمية." },
+    { text: "Es war für Dorothea Eichhorn nicht schwierig, Kunden zu finden.", answer: "falsch" },
+    { text: "Dorothea Eichhorns Vater hat einen eigenen Stand auf dem Wochenmarkt.", answer: "falsch" },
+    { text: "Dorothea Eichhorns Kunden achten mehr auf die Qualität als auf den Preis der Produkte.", answer: "richtig", ar: "تولي عملاء دوروثيا إيشهورن اهتمامًا أكبر بالجودة مقارنةً بسعر المنتجات." },
+    { text: "Die Ware wird samstags auch am Abend geliefert.", answer: "falsch" },
+    { text: "Bei der Auslieferung werden teilweise Mehrwegverpackungen benutzt.", answer: "falsch" },
+    { text: "Dorothea Eichhorn arbeitet nicht mit Großbetrieben zusammen.", answer: "richtig", ar: "دوروثيا إيخهورن لا تعمل مع الشركات الكبرى." },
+    { text: "Die regionalen Produzenten konnten zahlreiche neue Kunden gewinnen.", answer: "richtig", ar: "تمكن المنتجون الإقليميون من جذب عدد كبير من العملاء الجدد." },
+    { text: "Mit ihrem Konzept konnte Dorothea Eichhorn sofort Betriebe für die Zusammenarbeit gewinnen.", answer: "falsch" },
+    { text: "Dorothea Eichhorn möchte ihr Angebot vorerst nicht auf andere Städte ausweiten.", answer: "richtig", ar: "لا ترغب دوروثيا إيشهورن في توسيع عرضها في الوقت الحالي إلى مدن أخرى." }
+  ]
+},
 ] 
 
   var stack = document.getElementById("hoeren-teil2-stack");
@@ -2193,6 +2208,14 @@ window.__deutschEinfachPremiumReady = (async function () {
       numEl.textContent = (i + 1);
       textEl.appendChild(numEl);
       textEl.appendChild(document.createTextNode(q.text));
+      /* الترجمة العربية (اختيارية) تحت الجملة */
+      if (q.ar) {
+        var arEl = document.createElement("span");
+        arEl.className = "nq-question-ar";
+        arEl.dir = "rtl";
+        arEl.textContent = q.ar;
+        textEl.appendChild(arEl);
+      }
       row.appendChild(textEl);
 
       var answers = document.createElement("div");
