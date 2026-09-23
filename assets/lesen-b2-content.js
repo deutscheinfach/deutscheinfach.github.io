@@ -1870,6 +1870,41 @@
                     }
                 ]
             }
+        },
+
+        "s1-hallo-leon": {
+            sprach1: {
+                title: "Hallo leon",
+                kind: "gaps",
+                variants: [
+                    {
+                        label: "الأساسي",
+                        texts: [ { body: "Betreff: Grüße [21] Berlin\nHallo Leon,\nvielen Dank für deine letzte Mail aus Peking! Du arbeitest ja jetzt schon seit einem halben Jahr in China – unglaublich, wie schnell die Zeit vergeht.\nLeider hatte ich in den letzten drei Wochen keine Zeit, dir zu antworten, weil ich viel zu tun hatte. Aber jetzt berichte ich dir, [22] alles los war.\nAlso, im Büro haben wir derzeit viel Stress, [23] drei Kollegen im Urlaub sind und eine weitere Kollegin seit zwei Wochen krank ist. Jetzt müssen wir mit fünf Leuten die Arbeit erledigen, die sonst neun Leute machen. Ich weiß wirklich nicht, wer diese Urlaubsplanung gemacht hat. Hoffentlich [24] das in Zukunft besser organisiert.\nAbends waren Carmen und ich dann ein paarmal aus. Wir waren zum Beispiel bei einem Konzert von \"Belasco\". Kennst du die Band? Eigentlich war ich an dem Abend ganz schön kaputt und [25] am liebsten zuhause geblieben, aber ich hatte Carmen die Karten zum Geburtstag geschenkt. Da [26] ich ja schlecht auf dem Sofa sitzen bleiben! Im Nachhinein muss ich sagen: Ein Glück, dass wir zu dem Konzert gegangen sind, [27] es war einfach nur super!\nAn den letzten beiden Wochenenden hatten wir dann auch noch Familienfeiern: Erst hatte meine ältere Schwester Geburtstag und hat groß gefeiert, dann hat ein Cousin geheiratet und uns eingeladen, [28] war zwar schön, aber auch ganz anstrengend. Ich bin froh, dass wir für die kommenden Wochenenden [29] keine Pläne haben.\nDas war’s erst mal von mir. Melde dich doch wieder, ich freue mich [30] deine nächste E-Mail!\nViele Grüße sendet dir\nFabian" } ],
+                        questions: [
+                            { num: 21, options: ["ab", "aus", "von"], answer: 1,
+                              why: "هنا خاصنا \"aus\" حيت كتعني \"من\" و كاتحدد المصدر. هاد التعبير \"Grüße aus Berlin\" كيعني \"تحية من برلين\"، و هي عبارة ديما كنستعملوها فاش كنهضرو على سْلامات جايين من شي بلاصة معينة." },
+                            { num: 22, options: ["wann", "was", "wie"], answer: 1,
+                              why: "ف هاد الجملة استعملنا \"was\" حيت الفعل \"berichten\" كيحتاج رابط باش يشرح داكشي لي طرا. هي كتعوض الكلمة ديال \"شنو\" باش فابيان يعاود لصاحبو على كاع الأحداث لي وقعات ليه." },
+                            { num: 23, options: ["da", "indem", "obwohl"], answer: 0,
+                              why: "هنا كنحتاجو كلمة باش نعطيو السبب ديال الضغط (Stress) في الخدمة. \"Da\" عندها نفس المعنى ديال \"weil\" (حيث أو لأن)، وكنستعملوها باش نشرحو الوضع. أهم قاعدة هي أن \"da\" كتدخل فعل الجملة الفرعية (Nebensatz) حتى للآخر." },
+                            { num: 24, options: ["ist", "wird", "würde"], answer: 1,
+                              why: "هاد الكلمة ديال \"wird\" ضرورية هنا حيت الجملة كتهضر على شي حاجة غادية توقع \"في المستقبل\" (in Zukunft). كنستعملوه باش نركبو \"الزمن ديال المستقبل\" مع المبني للمجهول (Passiv)، حيت \"das\" هي اللي غادية تنظم ماشي هي اللي غادية تقوم بالتنظيم." },
+                            { num: 25, options: ["bin", "war", "wäre"], answer: 2,
+                              why: "هنا استعملنا \"wäre\" حيت الكاتب كيهضر على واحد التمني فالمضي، يعني شي حاجة كان باغي يديرها ولكن مدارهاش فالحقيقة. وبما أن الفعل هو \"geblieben\"، خاصنا ضروري نخدمو بـ \"wäre\" باش نعبرو على هاد الحالة ديال التمني اللي ما وقعاتش فديك الوقيتة." },
+                            { num: 26, options: ["konnte", "musste", "sollte"], answer: 0,
+                              why: "هنا كنختارو \"konnte\" حيت كنهضرو على شي حاجة ماكانتش ممكنة في الماضي، أو بالمعنى الاجتماعي ماكانش عندو الحق يديرها. \"Konnte\" هو الماضي ديال الفعل \"können\" وكيشرح لينا بلي ماكانش عندو الإختيار باش يبقى جالس حيت كان شرى التذاكر. هاد الفعل هو الأنسب لهاد الموقف اللي كيفرض عليه يخرج." },
+                            { num: 27, options: ["aber", "denn", "sondern"], answer: 1,
+                              why: "هنا خاصنا أداة ربط باش نشرحو السبب ديال الجملة اللي قبلها (\"Ein Glück...\"). \"Denn\" كاتخدم باش تعطي التبرير للجملة اللي قبلها، يعني علاش فرحانين حيت مشاو. الميزة ديالها هي أنها ماكاتديش الفعل لآخر الجملة، الترتيب كيبقى عادي (الفاعل عاد الفعل)." },
+                            { num: 28, options: ["Beide", "Beiden", "Beides"], answer: 2,
+                              why: "الكلمة \"Beides\" كتعني \"الزوج\" أو \"بجوج بهم\". كنحتاجوها هنا باش نشيرو لدوك جوج ديال المناسبات لي دازو (عيد الميلاد ديال الأخت والعرس ديال ولد العم) فجملة وحدة. هاد الكلمة هي الفاعل لي كيشير لهاد الأحداث بجوج." },
+                            { num: 29, options: ["erst", "noch", "schon"], answer: 1,
+                              why: "\"noch\" هنا جات باش تبين بلي مازال ماكاينين حتى شي بلانات لي جايين في الويكاندات الجاية. كاتستعمل هاد الكلمة بزاف مع النفي (بحال \"keine\") باش تأكد أن هاد الحالة ديال الراحة باقا مستمرة من بعد داك الشي لي داز." },
+                            { num: 30, options: ["auf", "für", "über"], answer: 0,
+                              why: "هنا خاصنا حرف الجر \"auf\" حيت الفعل \"sich freuen\" كيطلب هاد الحرف ملي كنهضرو على شي حاجة مستقبلية (deine nächste E-Mail). هادي قاعدة ثابتة في الألمانية: \"sich freuen auf\" كنستعملوها ملي كنكونو كنتسناو شي حاجة جاية." }
+                        ]
+                    }
+                ]
+            }
         }
     };
 })();
