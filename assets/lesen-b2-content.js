@@ -1905,6 +1905,41 @@
                     }
                 ]
             }
+        },
+
+        "s1-hallo-maria": {
+            sprach1: {
+                title: "Hallo Maria",
+                kind: "gaps",
+                variants: [
+                    {
+                        label: "الأساسي",
+                        texts: [ { body: "Bevor Wieder der Arbeitsalltag beginnt. schicke ich dir [21] rasch einige Zeilen.\num dir von unserem Wochenende zu erzählen. Es ist so schade, dass du [22] deiner Grippe nicht dabei sein konntest! Wir haben dich alle sehr vermisst.\n[23] auf Mikro sind Alle mit dem Zug angereist und wir haben uns schon am Bahnhof getroffen.\nVon dort sind wir dann los in die Ferienwohnung ,die Lilo für uns reserviert hatte.\nNachdem wir unser Gepäck abgestellt [24]. haben wir gleich einen rundgang durch den ort gemacht. Lilo wusste viel Interessantes zu erzählen. Sie lebt ja schon einige Jahre dort und hat sich [25] ausgezeichnete Fremdenführerin erwiesen. Besonders beeindruckt hat uns der Wunderschöne Park, in dem gerade die rhododendren blühten . Eine Wahre Pracht. Das hätte dir auch gefallen! später sind wir zum Ammersee gewandert, den man in kurzer Zeit vom ort aus erreicht. Dort haben wir eine Bootsfahrt über den See gemacht. vom Boot aus hat man einen Wunderbaren Blick auf die beeindruckende Felsenlandschaft. Am Abend stand dann die Felsenbühne [26] dem Programm.\nDie Wanderung am nächsten Tag war [27] schön anstrengend. aber Wunderbar.\n[28] alle ziemlich erschöpft waren. haben wir nach dem Abendessen noch lange zusammen gegessen. Und über alte Zeiten geplaudert. Am nächsten morgen nach unserem gemeinsam frühstück waren uns einig, dass wir bald wieder zusammen einen Ausflug machen [29]. Und nächste Mal musst du unbedingt dabei sein. Im Anhang schicke ich dir einige. Wie du siehst , war unser treffen wirklich lustig !. Ich hoffe , dass es dir [30] schon wieder besser geht.\n\nLiebe Grüße von uns allem\nCem" } ],
+                        questions: [
+                            { num: 21, options: ["momentan", "noch", "weiterhin"], answer: 1,
+                              why: "استعملنا الكلمة \"noch\" هنا باش نبينو بلي الكاتب بغا يصيفط هاد الأسطر دغيا قبل ما يرجع وقت الخدمة والزحام. هاد الكلمة كتعطي معنى ديال \"مازال\" فداك الشوية د الوقت اللي بقى ليه خاوي قبل ما يبدا نهار جديد." },
+                            { num: 22, options: ["deswegen", "wegen", "weil"], answer: 1,
+                              why: "استعملنا \"wegen\" حيت كتعبر على السبب لي خلا ماريا ما تجيش، وهي ديما كيتبعها \"Genitiv\" بحال \"deiner Grippe\". فهاد السياق كتعني \"بسباب\" الرواح لي كان فيها، داكشي علاش ما قدراتش تحضر معاهم في الخرجة." },
+                            { num: 23, options: ["abgesehen", "außer", "bis"], answer: 2,
+                              why: "هاد الجملة كتحتاج التعبير \"bis auf\" اللي كيعني \"من غير\" ولا \"باستثناء\" شي حد. استعملنا \"bis\" حيت الكاتب بغا يوضح بلي كاع الناس جاو فالتران إلا ميكرو هو اللي بوحدو حالة خاصة." },
+                            { num: 24, options: ["haben", "hatten", "hätten"], answer: 1,
+                              why: "استعملنا \"hatten\" حيت الجملة كاتبدا بـ \"Nachdem\"، اللي كاتوصف فعل طرا وكمل قبل فعل آخور فالماضي. وبما أن الجزء التاني ديال الجملة فيه \"Perfekt\"، خاص ضروري الجزء الأول يكون فـ \"Plusquamperfekt\" باش نبينو هاد الترتيب ديال الأحداث." },
+                            { num: 25, options: ["als", "für", "zur"], answer: 0,
+                              why: "هنا استعملنا \"als\" حيت هي اللي كتمشي مع الفعل \"sich erweisen\" باش تعبر على الصفة اللي بانت بها ليلو. هاد التعبير كيتستعمل ملي شي واحد كيتبت راسو فشي دور أو مهمة، بحال ليلو اللي بانت باللي هي مرشدة سياحية ممتازة." },
+                            { num: 26, options: ["auf", "in", "zu"], answer: 0,
+                              why: "فالألمانية ملي كنهضرو على شي حاجة مبرمجة فشي جدول، كنستعملو ديما حرف الجر \"auf\" مع كلمة \"Programm\". هادي عبارة ثابتة \"auf dem Programm stehen\" ومعناها باللي هاد النشاط كاين فالخطة ديال داك النهار، داكشي علاش \"auf\" هي اللي صحيحة." },
+                            { num: 27, options: ["absolut", "ganz", "vollkommen"], answer: 1,
+                              why: "هنا استعملنا \"ganz\" مع \"schön\" حيت هاد التعبير كيجي ككتلة وحدة باش يزيد يقوي المعنى ديال الصفة اللي تابعة ليه. فهاد الجملة، \"ganz schön\" كتعني بلي ديك التحويسة كانت \"نيت\" عيانة وبزاف، وهادي طريقة معروفة فلالمانية باش نأكدو على الدرجة ديال شي حاجة." },
+                            { num: 28, options: ["obwohl", "trotzdem", "ungeachtet"], answer: 0,
+                              why: "استعملنا \"obwohl\" حيت كاين تناقض بين جوج أحداث، كتعني \"وخا\" كاع الدراري كانوا عيانين ومسخسخين، بقاو مجموعين كياكلو ويجمعو مورا العشا. هاد الكلمة كتربط بين جملة فيها سبب وجملة فيها نتيجة عكس داكشي اللي متوقع، وكتخلي الفعل يجي فآخر الجملة ديالها." },
+                            { num: 29, options: ["durften", "konnten", "sollten"], answer: 2,
+                              why: "استعملنا \"sollten\" هنا حيت كتعبر على اقتراح ولا نية ديال الجماعة باش يديرو شي حاجة فالمستقبل. هاد الفعل كيجي مناسب مع التعبير \"waren uns einig\" باش يبين بلي من الأحسن يعاودوا يتجمعوا فخرجة خرى." },
+                            { num: 30, options: ["inzwischen", "während", "zwischen"], answer: 0,
+                              why: "استعملنا \"inzwischen\" حيت كتعني \"دابا\" ولا \"فالوقت اللي داز\" بين فاش كانت ماريا مريضة والوقت اللي كيتكتب فيه الميساج. هي أنسب كلمة باش توصف باللي دازت فترة زمنية ومن موراها كنتمناو يكون وقع تحسن فالحالة ديالها." }
+                        ]
+                    }
+                ]
+            }
         }
     };
 })();
