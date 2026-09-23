@@ -1735,8 +1735,42 @@
                     ]
                 }
             };
-        })()
+        })(),
 
-
+        /* ===== Sprachbausteine 1 — النص كيف ما صيفطو صاحب الموقع ===== */
+        "s1-hallo-ferdinand": {
+            sprach1: {
+                title: "Hallo Ferdinand",
+                kind: "gaps",
+                variants: [
+                    {
+                        label: "الأساسي",
+                        texts: [ { body: "nun habe ich mich schon so lange nicht bei dir gemeldet – das tut mir wirklich leid! Ich hatte in den vergangenen Monaten viel Stress, weil ich ja nun studiere und nebenbei noch arbeiten muss, [21] meine Miete und alles andere bezahlen zu können. Zum Glück macht mir mein Nebenjob wenigstens Spaß. Ich weiß nicht, [22] ich das sonst durchhalten würde. Vielleicht habe ich dir schon erzählt, dass ich abends und am Wochenende in einer Kneipe in der Küche helfe. Das ist zwar oft sehr anstrengend, [23] andererseits ist dauernd was los, es wird nicht langweilig, und meine Kollegen sind total nett. Erinnerst du dich noch an unsere Zeit in der Grundschule? Mit acht Jahren wollte ich ja [24] Kellnerin werden, weil man da Trinkgeld bekommt. Naja, jetzt bin ich in der Küche gelandet, knapp daneben ist auch vorbei ;)\nWas macht denn deine Ausbildung? Wenn ich [25] nicht täusche, bist du ja in einem halben Jahr schon fertig, oder? Das ist ja nicht mehr lang!\nNeulich habe ich übrigens Tina und Kevin hier in der Nähe der Uni getroffen – die waren ja schon ein Paar, [26] wir noch in der Schule gegangen sind, und jetzt will sie tatsächlich verheiratet!\nWie sehen denn deine Pläne für die [27] Wochenenden aus? Wir könnten uns ja vielleicht mal wieder treffen und in Ruhe quatschen – hättest du Lust [28]?\nIn meiner Straße hat vor einem Monat ein nettes kleines Café aufgemacht, die haben nicht nur sehr leckere Kuchen, [29] auch einige kleine Gerichte zu wirklich günstigen Preisen. Wäre das was [30] dich? Mail mir doch einfach, wenn du magst, ich würde mich freuen.\n\nViele Grüße,\nNadine" } ],
+                        questions: [
+                            { num: 21, options: ["anstatt", "ohne", "um"], answer: 2,
+                              why: "um هنا جزء من تركيبة um ... zu لي كتعني \"باش\" أو \"من أجل\". ديما كتستعمل باش تبين الهدف من شي حاجة. المعنى: \"خاصني نخدم باش نقدر نخلص الكرا ديالي\"." },
+                            { num: 22, options: ["dass", "ob", "während"], answer: 1,
+                              why: "ob كتعني \"واش\". كتستعمل فاش كتبغي تطرح سؤال بطريقة غير مباشرة، والجواب ديالو كيكون \"آه\" أو \"لا\". المعنى: \"ما عرفتش واش كنت غادي نقدر نكمل لولا هادشي\"." },
+                            { num: 23, options: ["aber", "denn", "und"], answer: 0,
+                              why: "aber كتعني \"ولكن\". كتستعمل باش تعطي فكرة مضادة للفكرة الأولى. هنا جات فالتركيبة zwar ..., aber ... لي كتعني \"وخا..., ولكن...\". المعنى: \"وخا الخدمة مرهقة، ولكن من جهة أخرى ديما كاينا الحركة\"." },
+                            { num: 24, options: ["bestimmt", "unbedingt", "völlig"], answer: 1,
+                              why: "unbedingt كتعني \"بالضرورة\" أو \"بأي ثمن\". كتأكد على أن الرغبة كانت قوية بزاف. المعنى: \"فاش كانت عندي 8 سنين، كنت باغية بالضرورة نولي نادلة (سرباية)\"." },
+                            { num: 25, options: ["dich", "mich", "sich"], answer: 1,
+                              why: "mich هنا هي الإنعكاس ديال الفعل sich täuschen (يغلط). ملي كتكون ich (أنا) هي الفاعل، الفعل كيرجع عليها بـmich. العبارة \"Wenn ich mich nicht täusche\" كتعني \"إلى ما غلطتش\" أو \"إلى ما كذبتش\"." },
+                            { num: 26, options: ["als", "wenn", "wie"], answer: 0,
+                              why: "als كتعني \"ملي\" أو \"فالوقت لي\". كتستعمل فاش كنهضرو على شي حدث معين وقع مرة وحدة فالماضي. المعنى: \"...راه كانوا ديجا مرتبطين ملي كنا مزال كنمشيو للمدرسة\"." },
+                            { num: 27, options: ["baldigen", "kommenden", "vergangenen"], answer: 1,
+                              why: "kommenden هي صفة كتعني \"الجايين\" أو \"المقبلين\". هنا كتوصّف \"Wochenenden\" (نهايات الأسبوع). المعنى: \"كيف دايرين برامجك لنهايات الأسبوع الجايين؟\"." },
+                            { num: 28, options: ["danach", "darüber", "dazu"], answer: 2,
+                              why: "dazu كترجع على الفكرة لي تقالت قبل (نتلاقاو ونهضرو). هي اختصار ديال \"zu das\" (لداكشي). العبارة \"Lust dazu haben\" كتعني \"يكون عندك الخاطر لشي حاجة\". السؤال هو: \"واش عندك الخاطر لهادشي؟\"." },
+                            { num: 29, options: ["aber", "oder", "sondern"], answer: 2,
+                              why: "sondern كتجي ديما فاش كيكون نفي قبل منها، وكتعطي فكرة إضافية أو تصحيحية. هنا جات فالتركيبة nicht nur ..., sondern auch لي كتعني \"ماشي غير..., ولكن تا...\". المعنى: \"ما عندهمش غير الحلوة زوينة، ولكن تا شي أطباق صغار...\"." },
+                            { num: 30, options: ["für", "gegen", "ohne"], answer: 0,
+                              why: "für هنا كتعني \"ليك\" أو \"ديالك\". العبارة etwas für dich كتعني \"شي حاجة مناسباك\" أو \"شي حاجة على ذوقك\". السؤال \"Wäre das was für dich?\" كيعني \"واش هادشي مناسبك؟\" أو \"واش هاد الپلان ليك؟\"." }
+                        ]
+                    }
+                ]
+            }
+        }
     };
 })();
