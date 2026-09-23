@@ -1834,6 +1834,42 @@
                     }
                 ]
             }
+        },
+
+        "s1-hallo-judith-oder-lina-oder-liebe-nurguel-oder-lieber-bea": {
+            sprach1: {
+                title: "Hallo Judith,oder Lina, oder liebe Nurgül ,oder lieber Bea.",
+                kind: "gaps",
+                variants: [
+                    {
+                        label: "الأساسي",
+                        note: "هذا الشبراخ عندو اربع اسماء , Nurgül , Bea , Judith, Lina كايتبدل غير الاسم ولكن كاتبقى الاجابات نفسها.",
+                        texts: [ { body: "wir haben uns ja lange nicht gesehen. Ich hoffe, du hattest einen richtig schönen Urlaub in Kroatien! Danke auch für deine Urlaubskarte! Die hat mich echt neidisch gemacht; ich habe ja erst im September Urlaub.\n[21] rufst du heute schon deine E-Mails ab und liest diese Nachricht von mir!\nWir, als das gesamte Team, möchten [22] unserer Kollegin Elena zu ihrer Pensionierung gerne gemeinsam etwas zum Abschied schenken. Ihre Abschiedsfeier ist ja [23] übermorgen abends im großen Konferenzraum unserer Firma. Bist du [24] einverstanden, dass wir ihr zusammen einen Gutschein und einen Blumenstrauß schenken? Jeder zahlt etwa 10 € dazu. Ich denke, das ist angemessen. Du erinnerst dich: [25] wir das letzte Mal gesammelt hatten, gab es Beschwerden wegen der Höhe des Betrags. Aber möglicherweise hast du eine bessere Idee.\nMichael und ich gehen dann nachmittags [26] in der Stadt einkaufen. Die Glückwunschkarte für Elena könntest du dann übermorgen noch [27] vor der Feier unterschreiben. Wir treffen uns ja alle vorher und gehen gemeinsam hin.\nIn der Firma war heute nicht viel los. Aber in den letzten 14 Tagen hatten viele Kollegen Urlaub, [28] ich sehr viel zu tun hatte. Es gibt übrigens auch [29] neue Entwicklungen in der Firma, von denen ich dir dann übermorgen erzählen kann. Wahrscheinlich bist du nach der langen Fahrt sehr müde. Schlaf dich morgen gut aus; wir sehen uns dann auf Elenas Feier! Ich wünsche dir heute einen [30] Tag…\n\nLiebe Grüße,\nCosima" } ],
+                        questions: [
+                            { num: 21, options: ["Zuversichtlich", "Möglichst", "Hoffentlich"], answer: 2,
+                              why: "Hoffentlich كتعني \"كنتمنى\". كتستعمل باش تعبر على الأمل ديالك فأن شي حاجة توقع. هنا، كوسِيما كتقول \"كنتمنى تكوني اليوم قريتي الإيميلات ديالك\"." },
+                            { num: 22, options: ["vermutlich", "nämlich", "bestimmt"], answer: 1,
+                              why: "nämlich كتجي باش تفسر وتعطي السبب. بحال يلا كتقول \"للإشارة\" أو \"حيت\". الجملة كتشرح السبب علاش كوسِيما كتعاود ليها هادشي: \"حيت بغينا كفريق نعطيو كادو لزميلتنا إيلينا\"." },
+                            { num: 23, options: ["schon", "fast", "beinahe"], answer: 0,
+                              why: "schon هنا كتستعمل باش تأكد على أن الوقت قريب بزاف، وكتقرب الحدث. كتعني \"صافي\" أو \"ديجا\". المعنى هو \"الحفلة راها صافي بعد غدا فالليل\"، ماشي حتى وقت آخر." },
+                            { num: 24, options: ["damit", "dafür", "dadurch"], answer: 0,
+                              why: "damit كترجع على الفكرة لي تقالت قبل (شراء قسيمة و ورد). كتعني \"بهادشي\" أو \"مع هاد الفكرة\". السؤال هو: \"واش نتي موافقة على هادشي؟\"." },
+                            { num: 25, options: ["Wenn", "Wann", "Als"], answer: 2,
+                              why: "als كتعني \"ملي\" أو \"فاش\". كتستعمل فاش كنهضرو على شي حدث معين وقع مرة وحدة فالماضي. هنا كتقصد ديك المرة الأخيرة بالضبط: \"واش عقلتي ملي آخر مرة جمعنا الفلوس...\"." },
+                            { num: 26, options: ["zueinander", "voneinander", "miteinander"], answer: 2,
+                              why: "miteinander كتعني \"مع بعضياتنا\" أو \"بجوج\". كتأكد على أن جوج ديال الناس أو أكتر غايديرو نفس الحاجة مجموعين. \"أنا ومايكل غانمشيو بجوج نتقداو\"." },
+                            { num: 27, options: ["vor Kurzem", "kürzlich", "kurz"], answer: 2,
+                              why: "kurz كتعني \"شي شوية\" أو \"لفترة قصيرة\". هنا كتقصد \"تسنيي دغيا قبل الحفلة\" أو \"وخا غي شوية قبل الحفلة\"." },
+                            { num: 28, options: ["weshalb", "insofern", "deshalb"], answer: 0,
+                              why: "weshalb كتعني \"داكشي علاش\" أو \"لهاد السبب\". هي كتربط ما بين السبب (بزاف ديال الزملاء كانو فكونجي) والنتيجة (كان عندها بزاف ديال الخدمة)." },
+                            { num: 29, options: ["vollkommen", "sämtlich", "erschöpfend"], answer: 0,
+                              why: "vollkommen هي كلمة كتزيد تأكد وكتعني \"بشكل كامل\" أو \"تماماً\". كتزيد القوة للصفة لي موراها. \"كاينين تطورات جديدة بشكل كامل\"." },
+                            { num: 30, options: ["passenden", "bequemen", "angenehmen"], answer: 2,
+                              why: "angenehmen هي صفة (adjective) كتعني \"زوين\" أو \"ممتع\". حيث \"Tag\" (نهار) كلمة مذكرة (der)، وبعد \"einen\"، الصفة خاصها تاخد النهاية en. الجملة كتعني: \"كنتمنى ليك نهار زوين\"." }
+                        ]
+                    }
+                ]
+            }
         }
     };
 })();
