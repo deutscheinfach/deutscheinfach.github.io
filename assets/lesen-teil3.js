@@ -101,6 +101,7 @@
         const head = el("div", "t1-head");
         head.appendChild(el("h2", "t1-title", task.title || "Leseverstehen"));
         head.appendChild(el("div", "t1-kicker", "LESEVERSTEHEN TEIL 3"));
+        if (window.__lesenArToggle) window.__lesenArToggle(head, wrap, task);
         wrap.appendChild(head);
 
         const board = el("div", "t1-board");
@@ -179,19 +180,11 @@
 
                 box.appendChild(el("p", "t1-body", ad.body || ""));
 
-                if (ad.ar) {
-                    const sum = document.createElement("details");
-                    sum.className = "t1-summary";
-                    const s = document.createElement("summary");
-                    s.textContent = "ملخص الإعلان";
-                    sum.appendChild(s);
-                    sum.appendChild(el("p", "", ad.ar));
-                    box.appendChild(sum);
-                }
+                if (ad.ar) box.appendChild(window.__lesenArBlock(ad.ar, "ملخص الإعلان"));
 
                 /* تبرك على الإعلان = كيتحط فالوضعية الخدامة */
                 box.addEventListener("click", function (event) {
-                    if (event.target.closest("details")) return;   /* فتح الملخص */
+                    if (event.target.closest(".ar-block")) return;   /* قراية الملخص */
                     assign(ad.key);
                 });
 

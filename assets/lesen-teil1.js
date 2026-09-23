@@ -112,6 +112,7 @@
         const head = el("div", "t1-head");
         head.appendChild(el("h2", "t1-title", task.title || "Leseverstehen"));
         head.appendChild(el("div", "t1-kicker", "LESEVERSTEHEN TEIL 1"));
+        if (window.__lesenArToggle) window.__lesenArToggle(head, wrap, task);
         wrap.appendChild(head);
 
         const board = el("div", "t1-board");
@@ -202,15 +203,7 @@
 
                 box.appendChild(el("p", "t1-body", text.body || ""));
 
-                if (text.ar) {
-                    const sum = document.createElement("details");
-                    sum.className = "t1-summary";
-                    const s = document.createElement("summary");
-                    s.textContent = "ملخص النص";
-                    sum.appendChild(s);
-                    sum.appendChild(el("p", "", text.ar));
-                    box.appendChild(sum);
-                }
+                if (text.ar) box.appendChild(window.__lesenArBlock(text.ar, "ملخص النص"));
 
                 const row = { select: select, box: box, text: text };
                 rows.push(row);

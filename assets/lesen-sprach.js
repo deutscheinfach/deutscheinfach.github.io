@@ -97,6 +97,7 @@
         const titleEl = el("h2", "t1-title");
         head.appendChild(titleEl);
         head.appendChild(el("div", "t1-kicker", task.kicker || "SPRACHBAUSTEINE TEIL 1"));
+        if (window.__lesenArToggle) window.__lesenArToggle(head, wrap, task);
         wrap.appendChild(head);
 
         const board = el("div", "t1-board t1-stagger");
@@ -144,13 +145,7 @@
                     box.appendChild(p);
                 });
 
-                if (text.ar) {
-                    const tr = document.createElement("details");
-                    tr.className = "t1-summary";
-                    tr.appendChild(el("summary", "", "الترجمة العربية"));
-                    tr.appendChild(el("p", "", text.ar));
-                    box.appendChild(tr);
-                }
+                if (text.ar) box.appendChild(window.__lesenArBlock(text.ar));
                 column.appendChild(box);
             });
 
