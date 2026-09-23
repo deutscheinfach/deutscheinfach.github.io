@@ -479,6 +479,13 @@
                 return;
             }
 
+            /* Sprachbausteine 2: نص + لائحة ديال 15 كلمة (A–O). */
+            if (task.kind === "bank"
+                && typeof window.__lesenSprach2Render === "function") {
+                window.__lesenSprach2Render(stack, task);
+                return;
+            }
+
             /* Sprachbausteine: الرسالة بفراغات على اليسار، Lücke 21–30 على اليمين. */
             if (task.kind === "gaps"
                 && typeof window.__lesenSprachRender === "function") {
