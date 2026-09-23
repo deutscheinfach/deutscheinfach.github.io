@@ -1799,6 +1799,41 @@
                     }
                 ]
             }
+        },
+
+        "s1-hallo-jakob": {
+            sprach1: {
+                title: "Hallo Jakob",
+                kind: "gaps",
+                variants: [
+                    {
+                        label: "الأساسي",
+                        texts: [ { body: "Endlich melde ich mich [21] bei dir – es tut mir leid, dass es so lange gedauert hat! Ich bin jetzt seit zwei Monaten in Deutschland und es ist richtig viel passiert. In dieser Zeit habe ich im Krankenhaus eine Stelle [22] Krankenpfleger bekommen. Die Arbeit gefällt mir gut. Unser Team ist international, und ich arbeite mit Leuten aus ganz [23] Ländern zusammen, zum Beispiel aus Vietnam und von den Philippinen. Mit ein paar von ihnen habe ich mich schon nach der Arbeit und am Wochenende getroffen, sie kennen sich in Hamburg gut aus und haben [24] ein paar schöne Orte in der Stadt gezeigt.\n\nEine kleine Wohnung habe ich auch bereits gefunden, sie ist sogar in der Nähe des Krankenhauses. Die Miete ist [25] ein bisschen teuer, aber ehrlich gesagt bin ich froh, dass ich überhaupt etwas gefunden habe. Wie du siehst, läuft es also ganz gut. Das Einzige, [26] mir manchmal fehlt, ist die spanische Sprache. Ich habe bisher nur sehr wenige Leute getroffen, [27] Spanisch sprechen. [28] auch in meiner Freizeit. Das ist einerseits anstrengend, aber andererseits merke ich, dass mein Deutsch jeden Tag besser wird.\n\nIch [29] es übrigens schön, wenn wir uns mal wieder sehen würden. Hast du Lust, mich mal in Hamburg zu besuchen? [30] das nicht geht, könnte ich an Ostern auch zu dir nach Salzburg kommen.\n\nViele Grüße, Antonio" } ],
+                        questions: [
+                            { num: 21, options: ["halt", "ja", "mal"], answer: 2,
+                              why: "الجواب هو \"mal\" حيت كتستعمل هنا كأداة (Modalpartikel) لي كتجي بزاف مع التعبير \"sich mal melden\". هاد الكلمة كتعطي معنى طبيعي وخفيف للجملة، وبحال إلا كيقول \"أخيراً ها أنا كنتواصل معاك من بعد هاد الغيبة كاملة\"." },
+                            { num: 22, options: ["als", "für", "von"], answer: 0,
+                              why: "فهاد الجملة استعملنا «als» حيت كنهضرو على الخدمة ولا المنصب اللي كيديرو الشخص، بحال إلا قلتي \"خدام كـممرض\". كاين تعبير مضبوط فالألمانية هو «eine Stelle als...» كيعني منصب فمهنة معينة. ديما فاش كنبغيو نحددو المهنة مورا كلمة «Stelle» كنستعملو حرف الجر «als»." },
+                            { num: 23, options: ["verschiedenen", "viele", "Vielerlei"], answer: 0,
+                              why: "ختارينا «verschiedenen» حيت حرف الجر «aus» كايطلب الداتيف (Dativ)، والاسم اللي موراه «Ländern» راه فصيغة الجمع. والقاعدة كاتقول بلي الصفة فاش كاتجي قبل اسم جمع فالداتيف وبلا أداة تعريف، ضروري كاتسالي بالنهاية «-en»." },
+                            { num: 24, options: ["mich", "mir", "sich"], answer: 1,
+                              why: "الفعل \"zeigen\" كيحتاج جوج ديال الحوايج: الشخص اللي كنورّيوه كيكون فـ الداتيف، والشيء اللي كنورّيوه كيكون فـ الأكوزاتيف. هنا أنطونيو كيهضر على راسو باللي هما ورّاو ليه أماكن زوينة، والضمير \"ich\" كيتحول لـ \"mir\" فـ الداتيف. داكشي علاش الجواب الصحيح هو \"mir\" باش تعني \"ورّاوني أنا\"." },
+                            { num: 25, options: ["aber", "sehr", "zwar"], answer: 2,
+                              why: "الجواب الصحيح هو \"zwar\" حيت عندنا الرابط المزدوج \"zwar ... aber\" اللي كيعني \"صحيح أن... ولكن\" ولا \"واخا... ولكن\". ف هاد الجملة، كيعترف بلي الكرا صحيح غالي شوية، ولكن ف نفس الوقت فرحان حيت لقى فين يسكن. داكشي علاش فاش كتكون عندنا \"aber\" ف الشطر الثاني، ضروري كنستعملو معاها \"zwar\" ف الشطر اللول." },
+                            { num: 26, options: ["dass", "die", "was"], answer: 2,
+                              why: "استعملنا \"was\" حيت ضمير الوصل كيرجع هنا على عبارة \"Das Einzige\" (يعني الحاجة الوحيدة). فالقواعد ديال الألمانية، فاش كيرجع الضمير على اسم محايد مشتق من صفة بحال \"das Einzige\" أولا كلمات بحال \"alles\" و\"nichts\"، ديما كنستعملو \"was\" وماشي \"das\"." },
+                            { num: 27, options: ["Denn", "Deshalb", "Sodass"], answer: 1,
+                              why: "كنستعملو «دِزْهالبْ» باش نبيّنو النتيجة المنطقية لشي حاجة تذكرات قبل، والمعنى ديالها هو \"داكشي علاش\" ولا \"لهذا السبب\". فالقواعد ديال الألمانية، هاد الكلمة كتربط بين السبب والنتيجة وكتعبر على ترتّب الأحداث. داكشي علاش هي الاختيار المناسب اللي كيكمل معنى الجملة والسياق مزيان." },
+                            { num: 28, options: ["aber", "als", "sondern"], answer: 2,
+                              why: "الجواب الصحيح هو \"sondern\" حيت كتمشي ديما مع \"auch\" فهاد التعبير التابث باش تعطي معنى \"بل أيضاً\" ولا \"بل حتى\". هاد الرابط كيتستعمل باش يكمل الفكرة ويأكدها من بعد النفي، بحال فالقاعدة المعروفة ديال (nicht nur ... sondern auch). داكشي علاش مع وجود \"auch\" فهاد السياق، \"sondern\" هي الاختيار الصحيح والوحيد اللي كيجي معاها." },
+                            { num: 29, options: ["fand", "fände", "finde"], answer: 1,
+                              why: "هنا استعملنا \"fände\" حيت الجملة كتعبر على أمنية وافتراض، وهاد العبارة معروفة بزاف فاش كتقول \"...Ich fände es schön, wenn\". هاد الصيغة كتسمى الكونجونكتيف جوج ديال الفعل \"finden\" مع الضمير \"ich\"، وكتتماشى نيشان مع \"sehen würden\" اللي كاينة فالنص الثاني ديال الجملة." },
+                            { num: 30, options: ["Als", "Da", "Wenn"], answer: 2,
+                              why: "الجواب الصحيح هو \"Wenn\" حيت كنحتاجو رابط ديال الشرط كيعني \"إيلا\" (إيلا كان هادشي ما ممكنش). هاد الكلمة كتستعمل فجملة الشرط وكتخلي الفعل \"geht\" يجي هو اللخر فالجملة التابعة، باش تبدا الجملة التانية مباشرة بالفعل \"könnte\"." }
+                        ]
+                    }
+                ]
+            }
         }
     };
 })();
