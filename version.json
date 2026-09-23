@@ -1,9 +1,9 @@
 {
-  "build": "60866d776580",
+  "build": "b745c63a2e7a",
   "assets": {
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b2-content.js": "4b55117f",
-    "assets/lesen-b2-topics.js": "45d0a87e",
+    "assets/lesen-b2-topics.js": "940fb40d",
     "assets/lesen-engine.js": "9a34516f",
     "assets/lesen-hub.js": "8d8b9f96",
     "assets/lesen-premium.js": "ee2cef79",
