@@ -1049,6 +1049,8 @@
     background: var(--surface);
     box-shadow: var(--shadow);
 }
+/* اللوحة عندها max-height: بلا هادي العناصر كيتزيرو وكيتقطع النص ديالهم */
+.t1-panel > * { flex-shrink: 0; }
 @media (max-width: 1000px) {
     .t1-panel { position: static; max-height: none; }
 }
@@ -1116,13 +1118,6 @@
     font-weight: 700;
     line-height: 1.45;
     color: var(--text);
-    overflow-wrap: anywhere;
-}
-.t1-option-ar {
-    font-size: 12.5px;
-    color: var(--muted);
-    direction: rtl;
-    line-height: 1.6;
     overflow-wrap: anywhere;
 }
 
@@ -1468,7 +1463,6 @@
 .t3-select { flex: 1 1 auto; min-width: 0; }
 
 .t3-sit-de { direction: ltr; text-align: left; margin: 0 0 .25rem; font-size: .93rem; }
-.t3-sit-ar { margin: 0; font-size: .86rem; opacity: .75; }
 
 @media (max-width: 720px) {
     .t3-ad-head { flex-basis: 100%; }
@@ -1492,7 +1486,6 @@
 .t2-q-top { display: flex; align-items: flex-start; gap: .5rem; margin-bottom: 2px; }
 .t2-q-stem { min-width: 0; }
 .t2-q-de { margin: 0; font-weight: 800; font-size: 14px; line-height: 1.45; }
-.t2-q-ar { margin: 2px 0 0; font-size: 12.5px; color: var(--muted); direction: rtl; text-align: right; }
 
 .t2-option { min-height: 40px; padding: 8px 10px; }
 .t2-option.is-picked {
@@ -1620,7 +1613,7 @@
    بلي كاين المزيد (تلاشي فالطرف). */
 @media (max-width: 700px) {
     .lesen-toolbar { flex-wrap: nowrap; }
-    .lesen-search { flex: 1 1 auto; }
+    .lesen-search { flex: 1 1 auto; min-width: 0; }
     .lesen-sort { flex: 0 0 auto; padding: 0 14px; }
     .lesen-sort .label { display: none; }
     .lesen-shell > .lesen-tabs {

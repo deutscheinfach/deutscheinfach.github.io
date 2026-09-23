@@ -58,6 +58,57 @@
     window.__lesenRender = render;
     window.__lesenRenderInto = render;
 
+    /* ---- زر الترجمة العربية ----
+       الترجمة مخبية فالبداية. كل تمرين فيه ترجمة كياخد زر
+       فالعنوان ديالو، والضغطة كتزيد "show-ar" للحاوية كاملة
+       (كتبقى حتى ملي كيتبدل التبويب ديال النسخة). */
+    function hasArabic(task) {
+        try { return /"ar":"[^"]/.test(JSON.stringify(task)); }
+        catch (e) { return false; }
+    }
+
+    window.__lesenArToggle = function (head, wrap, task) {
+        if (task && !hasArabic(task)) return null;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "ar-toggle";
+        button.setAttribute("aria-pressed", "false");
+        const icon = document.createElement("span");
+        icon.className = "ar-toggle-icon";
+        icon.textContent = "ع";
+        icon.setAttribute("aria-hidden", "true");
+        const label = document.createElement("span");
+        button.append(icon, label);
+
+        function paint(on) {
+            wrap.classList.toggle("show-ar", on);
+            button.classList.toggle("is-on", on);
+            button.setAttribute("aria-pressed", on ? "true" : "false");
+            label.textContent = on ? "خبي الترجمة" : "بين الترجمة العربية";
+        }
+        paint(false);
+        button.addEventListener("click", function () {
+            paint(!wrap.classList.contains("show-ar"));
+        });
+        head.appendChild(button);
+        return button;
+    };
+
+    /* بلوك ديال الترجمة تحت النص (كيبان غير مع show-ar) */
+    window.__lesenArBlock = function (text, label) {
+        const box = document.createElement("div");
+        box.className = "ar-block";
+        box.dir = "rtl";
+        box.lang = "ar";
+        const tag = document.createElement("span");
+        tag.className = "ar-block-label";
+        tag.textContent = label || "الترجمة العربية";
+        const p = document.createElement("p");
+        p.textContent = text;
+        box.append(tag, p);
+        return box;
+    };
+
     /* الصفحات العادية كترسم دغيا. الصفحات اللي كتبدل
        التمرين بوحدها كتحط data-manual. */
     const initial = document.getElementById("lesen-stack");

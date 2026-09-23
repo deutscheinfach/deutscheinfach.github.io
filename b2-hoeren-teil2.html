@@ -11,9 +11,9 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=70c1b456">
-<link rel="stylesheet" href="assets/site-header.css?v=70b9f82b">
-<style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}.nq-question-ar{display:block;margin-top:6px;font-size:.92em;color:var(--text-muted,#5b6070);line-height:1.7;font-family:"Cairo","IBM Plex Sans Arabic",sans-serif}
+<link rel="stylesheet" href="assets/theme.css?v=f26e4e44">
+<link rel="stylesheet" href="assets/site-header.css?v=2de2f285">
+<style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}
 </style>
 
   <title>Hören: Teil2</title>
@@ -2196,6 +2196,32 @@ window.__deutschEinfachPremiumReady = (async function () {
     intro.className = "nq-intro";
     intro.textContent = "Höre die Informationen aufmerksam und entscheide: Richtig oder Falsch?";
     wrap.appendChild(intro);
+
+    /* زر الترجمة العربية: الترجمة مخبية حتى يبرك عليه المستخدم */
+    if (theme.questions.some(function (q) { return q.ar; })) {
+      var arBtn = document.createElement("button");
+      arBtn.type = "button";
+      arBtn.className = "ar-toggle";
+      var arIcon = document.createElement("span");
+      arIcon.className = "ar-toggle-icon";
+      arIcon.setAttribute("aria-hidden", "true");
+      arIcon.textContent = "ع";
+      var arLabel = document.createElement("span");
+      arBtn.appendChild(arIcon);
+      arBtn.appendChild(arLabel);
+      var paintAr = function (on) {
+        wrap.classList.toggle("show-ar", on);
+        arBtn.classList.toggle("is-on", on);
+        arBtn.setAttribute("aria-pressed", on ? "true" : "false");
+        arLabel.textContent = on ? "خبي الترجمة" : "بين الترجمة العربية";
+      };
+      paintAr(false);
+      arBtn.addEventListener("click", function () {
+        paintAr(!wrap.classList.contains("show-ar"));
+      });
+      arBtn.style.margin = "0 0 14px";
+      wrap.appendChild(arBtn);
+    }
 
     var rows = [];
 
