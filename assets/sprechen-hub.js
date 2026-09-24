@@ -86,6 +86,8 @@
     }
 
     function renderList() {
+        /* تبويب Prüfungen: امتحانات كاملة (Teil 1 + 2 + 3) */
+        if (!activePart) { renderExams(); return; }
         const list = listed();
         grid.textContent = "";
 
@@ -158,6 +160,207 @@
         node.className = "lesen-chip " + className;
         node.textContent = text;
         return node;
+    }
+
+    /* ================= Prüfungen: امتحان كامل =================
+       Prüfung n = الموضوع رقم n من Teil 1 و Teil 2 و Teil 3. */
+    function examList() {
+        const lists = PARTS.map(function (p) {
+            return topics.filter(function (t) { return (t.parts || []).indexOf(p.key) !== -1; });
+        });
+        const count = Math.min.apply(null, lists.map(function (l) { return l.length; }));
+        const out = [];
+        for (let i = 0; i < count; i++) {
+            const parts = {};
+            PARTS.forEach(function (p, j) { parts[p.key] = lists[j][i]; });
+            out.push({ n: i + 1, parts: parts,
+                       locked: PARTS.some(function (p) { return parts[p.key].locked; }) });
+        }
+        return out;
+    }
+
+    function renderExams() {
+        const term = (search ? search.value : "").trim().toLowerCase();
+        let list = examList().filter(function (exam) {
+            if (!term) return true;
+            if (("prüfung " + exam.n).indexOf(term) !== -1 || String(exam.n) === term) return true;
+            return PARTS.some(function (p) {
+                const t = exam.parts[p.key];
+                return (t.title || "").toLowerCase().includes(term) || (t.ar || "").includes(term);
+            });
+        });
+        if (SORTS[sortIndex].key === "free") {
+            list = list.slice().sort(function (a, b) { return (a.locked === b.locked) ? 0 : (a.locked ? 1 : -1); });
+        }
+        grid.textContent = "";
+        if (countEl) countEl.textContent = list.length ? list.length + " Prüfungen" : "";
+        if (!list.length) {
+            const empty = document.createElement("div");
+            empty.className = "lesen-empty";
+            empty.textContent = "ماكاين حتى امتحان بهاد الاسم.";
+            grid.appendChild(empty);
+            return;
+        }
+        list.forEach(function (exam) { grid.appendChild(examCard(exam)); });
+    }
+
+    function examCard(exam) {
+        const shut = exam.locked && !window.__deutschEinfachIsPremium;
+        const node = document.createElement("a");
+        node.className = "lesen-card exam-card" + (shut ? " locked" : "");
+        node.href = examUrl(exam.n, "teil1");
+
+        const title = document.createElement("div");
+        title.className = "lesen-card-title";
+        title.appendChild(document.createTextNode("Prüfung " + exam.n));
+        const sub = document.createElement("span");
+        sub.className = "lesen-card-ar";
+        sub.textContent = "(امتحان كامل)";
+        title.appendChild(sub);
+        node.appendChild(title);
+
+        const ul = document.createElement("ul");
+        ul.className = "exam-card-parts";
+        PARTS.forEach(function (p) {
+            const li = document.createElement("li");
+            const b = document.createElement("b");
+            b.textContent = p.label;
+            li.appendChild(b);
+            li.appendChild(document.createTextNode(exam.parts[p.key].title || ""));
+            ul.appendChild(li);
+        });
+        node.appendChild(ul);
+
+        const foot = document.createElement("div");
+        foot.className = "lesen-card-foot";
+        foot.appendChild(chip("lesen-chip-level", "B2"));
+        foot.appendChild(chip("lesen-chip-parts", PARTS.length + " Teile"));
+        if (!exam.locked) foot.appendChild(chip("lesen-chip-free", "مجاني"));
+        const go = document.createElement("span");
+        go.className = "lesen-card-go";
+        go.textContent = shut ? "🔒" : "›";
+        go.setAttribute("aria-hidden", "true");
+        foot.appendChild(go);
+        node.appendChild(foot);
+
+        node.addEventListener("click", function (event) {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+            event.preventDefault();
+            openExam(exam.n, "teil1", true);
+        });
+        return node;
+    }
+
+    function examUrl(n, part) {
+        const params = new URLSearchParams();
+        params.set("pruefung", String(n));
+        if (part) params.set("teil", part);
+        return location.pathname + "?" + params.toString();
+    }
+
+    function openExam(n, part, push) {
+        const exam = examList()[n - 1];
+        if (!exam) { close(push); return; }
+        let current = PART_LABEL[part] ? part : "teil1";
+        if (push) history.pushState({ pruefung: n, teil: current }, "", examUrl(n, current));
+
+        if (heroEl) heroEl.hidden = true;
+        if (tabsNav) tabsNav.hidden = true;
+        if (toolbar) toolbar.hidden = true;
+        if (countEl) countEl.hidden = true;
+        grid.hidden = true;
+        detail.hidden = false;
+        detail.textContent = "";
+
+        const head = document.createElement("div");
+        head.className = "lesen-detail-head";
+        const back = document.createElement("button");
+        back.type = "button";
+        back.className = "lesen-back";
+        back.textContent = "← اللائحة";
+        back.addEventListener("click", function () { close(true); });
+        head.appendChild(back);
+        const h1 = document.createElement("h1");
+        h1.className = "lesen-detail-title";
+        h1.appendChild(document.createTextNode("Prüfung " + n));
+        const ar = document.createElement("span");
+        ar.className = "lesen-card-ar";
+        ar.textContent = "(Sprechen B2 · امتحان كامل)";
+        h1.appendChild(ar);
+        head.appendChild(h1);
+        detail.appendChild(head);
+
+        const tabs = document.createElement("nav");
+        tabs.className = "lesen-tabs lesen-part-tabs exam-tabs";
+        PARTS.forEach(function (p) {
+            const tab = document.createElement("button");
+            tab.type = "button";
+            tab.className = "lesen-tab exam-tab" + (p.key === current ? " active" : "");
+            const nr = document.createElement("span");
+            nr.className = "exam-tab-nr";
+            nr.textContent = p.label + " · " + p.name;
+            const nm = document.createElement("span");
+            nm.className = "exam-tab-topic";
+            nm.textContent = exam.parts[p.key].title || "";
+            tab.append(nr, nm);
+            if (exam.parts[p.key].locked && !window.__deutschEinfachIsPremium) tab.classList.add("is-locked");
+            tab.addEventListener("click", function () { go(p.key); });
+            tabs.appendChild(tab);
+        });
+        detail.appendChild(tabs);
+
+        const stack = document.createElement("div");
+        stack.id = "sprechen-stack";
+        detail.appendChild(stack);
+        const next = document.createElement("div");
+        next.className = "exam-next";
+        detail.appendChild(next);
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        paint();
+
+        function go(key) {
+            current = key;
+            Array.from(tabs.children).forEach(function (tab, i) {
+                tab.classList.toggle("active", PARTS[i].key === current);
+            });
+            history.replaceState({ pruefung: n, teil: current }, "", examUrl(n, current));
+            paint();
+            tabs.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function paint() {
+            const topic = exam.parts[current];
+            stack.textContent = "";
+            if (topic.locked && !window.__deutschEinfachIsPremium) {
+                if (typeof window.__premiumGate === "function") {
+                    window.__premiumGate(stack, { title: topic.title });
+                } else {
+                    const box = document.createElement("div");
+                    box.className = "lesen-empty";
+                    box.textContent = "🔒 هاد الموضوع ديال Premium.";
+                    stack.appendChild(box);
+                }
+            } else if (typeof window.__sprechenRender === "function") {
+                const content = (window.SPRECHEN_B2_CONTENT || {})[topic.id] || {};
+                window.__sprechenRender(stack, current, content[current], topic.id);
+            }
+
+            next.textContent = "";
+            const at = PARTS.findIndex(function (p) { return p.key === current; });
+            const after = PARTS[at + 1];
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "exam-next-btn";
+            if (after) {
+                b.textContent = "الجزء اللي من بعد: " + after.label + " · " + after.name + " ←";
+                b.addEventListener("click", function () { go(after.key); });
+            } else {
+                b.textContent = "✓ ساليتي الامتحان — رجع للائحة";
+                b.addEventListener("click", function () { close(true); });
+            }
+            next.appendChild(b);
+        }
     }
 
     /* ================= التمرين ================= */
@@ -312,6 +515,8 @@
         if (stale()) return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
+        const exam = parseInt(params.get("pruefung"), 10);
+        if (exam) { openExam(exam, params.get("teil") || "teil1", false); return; }
         if (thema) { open(thema, params.get("teil") || "teil1", false); return; }
         close(false);
         setPart(params.get("teil") || "", false);
@@ -327,7 +532,7 @@
         });
     }
 
-    if (totalEl) totalEl.textContent = String(topics.length);
+    if (totalEl) totalEl.textContent = String(examList().length);
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase. */
     document.addEventListener("de-premium", function () {
@@ -336,7 +541,9 @@
         if (detail.hidden) return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
-        if (thema) open(thema, params.get("teil") || "teil1", false);
+        const exam = parseInt(params.get("pruefung"), 10);
+        if (exam) openExam(exam, params.get("teil") || "teil1", false);
+        else if (thema) open(thema, params.get("teil") || "teil1", false);
     });
 
     /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
@@ -344,7 +551,12 @@
     const startThema = startParams.get("thema");
     const startTeil = startParams.get("teil") || "";
 
-    if (startThema) {
+    const startExam = parseInt(startParams.get("pruefung"), 10);
+
+    if (startExam) {
+        setPart("", false);
+        openExam(startExam, startTeil || "teil1", false);
+    } else if (startThema) {
         setPart(PART_LABEL[startTeil] ? startTeil : "", false);
         open(startThema, startTeil || "teil1", false);
     } else {
