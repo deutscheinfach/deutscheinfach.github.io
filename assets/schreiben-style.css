@@ -420,8 +420,8 @@ body {
     font-family: "Cairo", "IBM Plex Sans Arabic", "Segoe UI", Arial, sans-serif;
     color: var(--text);
     background:
-        radial-gradient(circle at 15% 10%, rgba(225,29,51,.08), transparent 42%),
-        radial-gradient(circle at 85% 30%, rgba(225,29,51,.05), transparent 46%),
+        radial-gradient(circle at 15% 10%, rgba(214,178,94,.08), transparent 42%),
+        radial-gradient(circle at 85% 30%, rgba(214,178,94,.05), transparent 46%),
         var(--ink-900);
 }
 
@@ -484,7 +484,7 @@ body {
 }
 .premium-btn.gold:hover {
     transform: translateY(-2px);
-    box-shadow: 0 14px 30px -8px rgba(225,29,51,.5);
+    box-shadow: 0 14px 30px -8px rgba(214,178,94,.5);
 }
 
 .premium-btn.whatsapp { background: #25d366; color: #fff; }
@@ -498,7 +498,7 @@ body {
     border-color: var(--line);
     color: var(--muted);
 }
-.premium-btn.ghost:hover { border-color: rgba(225,29,51,.35); color: var(--red); }
+.premium-btn.ghost:hover { border-color: rgba(214,178,94,.35); color: var(--red); }
 
 /* ===== OFFERS ===== */
 .offers-sheet {
@@ -526,11 +526,11 @@ body {
 }
 .offer-box:hover {
     transform: translateY(-6px);
-    border-color: rgba(225,29,51,.35);
-    box-shadow: 0 20px 45px -12px rgba(225,29,51,.3);
+    border-color: rgba(214,178,94,.35);
+    box-shadow: 0 20px 45px -12px rgba(214,178,94,.3);
 }
 
-.offer-box.best { border-color: rgba(225,29,51,.5); }
+.offer-box.best { border-color: rgba(214,178,94,.5); }
 
 .offer-tag {
     align-self: center;
@@ -681,7 +681,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     border-color: rgba(20,22,31,.12);
     color: var(--bar-text);
 }
-.timer-pill.low { background: rgba(225,29,51,.12); border-color: var(--red); color: var(--red-dark); }
+.timer-pill.low { background: rgba(214,178,94,.12); border-color: var(--red); color: var(--red-dark); }
 .icon-btn { background: rgba(20,22,31,.05); color: var(--bar-text); }
 .icon-btn:hover { background: rgba(20,22,31,.10); }
 .task-title-block .sub { color: var(--red-dark); }
@@ -707,7 +707,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .task-header .task-title-block h1 { color: #fff; }
 .task-header .task-title-block .sub { color: #ff8aa0; }
 .task-header .timer-pill { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #fff; }
-.task-header .timer-pill.low { background: rgba(227,22,63,.3); border-color: var(--red); color: #fff; }
+.task-header .timer-pill.low { background: rgba(214,178,94,.3); border-color: var(--red); color: #fff; }
 .task-header .icon-btn { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); color: #fff; }
 .task-header .icon-btn:hover { background: rgba(255,255,255,.18); }
 .correct-btn {
@@ -717,7 +717,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     font-weight: 800;
     background: var(--grad-brand, linear-gradient(135deg, #ff4a6b, #e3163f 45%, #b30e30));
     color: #fff;
-    box-shadow: 0 10px 24px -10px rgba(227,22,63,.7);
+    box-shadow: 0 10px 24px -10px rgba(214,178,94,.7);
 }
 .correct-btn:hover { background: var(--grad-brand); filter: brightness(1.06); }
 .translate-btn {
@@ -735,3 +735,34 @@ html, body { max-width: 100%; overflow-x: hidden; }
     font-weight: 800;
 }
 .umlaut-btns button:hover { background: var(--navy, #0f1b3d); color: #fff; }
+
+/* ===== v4 — ذهبي وأسود ===== */
+:root {
+    --ink: #ece7dc;
+    --paper: #0e0e11;
+    --card: #16161b;
+    --bar: #16161b;
+    --bar-text: #ece7dc;
+    --border: rgba(255,255,255,.08);
+    --muted: #a39d90;
+    --yellow: rgba(214,178,94,.14);
+}
+body { background: var(--paper); color: var(--ink); }
+.task-header {
+    background: linear-gradient(145deg, #202027 0%, #141418 55%, #0d0d10 100%);
+    border-bottom: 1px solid rgba(214,178,94,.35);
+    box-shadow: 0 12px 30px -16px rgba(0,0,0,.9);
+}
+.task-header .task-title-block .sub { color: var(--brand); }
+.correct-btn { background: var(--grad-brand); color: var(--on-brand); box-shadow: var(--shadow-brand); }
+.correct-btn:hover { background: var(--grad-brand); color: var(--on-brand); }
+.translate-btn,
+.umlaut-btns button {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid rgba(214,178,94,.4);
+}
+.translate-btn:hover,
+.umlaut-btns button:hover { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+.point-num { background: var(--grad-brand); color: var(--on-brand); }
+textarea, input { background: transparent; color: var(--ink); }

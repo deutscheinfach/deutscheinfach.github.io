@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=db8497ff">
+<link rel="stylesheet" href="assets/theme.css?v=a2e7fb2b">
     <style>
 
         * {
@@ -29,7 +29,7 @@
             --light: #f7f8fc;
             --white: #ffffff;
             --border: rgba(20,22,31,.10);
-            --border-strong: rgba(225,29,51,0.35);
+            --border-strong: rgba(214,178,94,0.35);
             --bg: #fdfdff;
         }
 
@@ -37,8 +37,8 @@
             margin: 0;
             font-family: "Cairo", "IBM Plex Sans Arabic", Arial, sans-serif;
             background:
-                radial-gradient(circle at 15% 10%, rgba(225,29,51,0.08), transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(225,29,51,0.06), transparent 45%),
+                radial-gradient(circle at 15% 10%, rgba(214,178,94,0.08), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(214,178,94,0.06), transparent 45%),
                 var(--bg);
             color: var(--dark);
         }
@@ -124,7 +124,7 @@
         .offer:hover {
             transform: translateY(-7px);
             border-color: var(--border-strong);
-            box-shadow: 0 20px 45px -10px rgba(225,29,51,0.3);
+            box-shadow: 0 20px 45px -10px rgba(214,178,94,0.3);
         }
 
         /* =========================
@@ -334,6 +334,16 @@
 
     </style>
 
+<style id="v4">
+/* v4 — ذهبي وأسود */
+:root { --dark: #ece7dc; --gray: #a39d90; --light: #1e1e24; --white: #16161b; --border: rgba(255,255,255,.10); --border-strong: rgba(214,178,94,.4); --bg: #0e0e11; }
+body { background: radial-gradient(circle at 15% 10%, rgba(214,178,94,.12), transparent 40%), linear-gradient(180deg, #111115 0%, #0b0b0e 100%) !important; color: var(--dark); }
+.offer { background: linear-gradient(160deg, #1b1b21, #131317); border: 1px solid rgba(214,178,94,.22); box-shadow: 0 30px 60px -34px rgba(0,0,0,.9); }
+.offer:hover { border-color: rgba(214,178,94,.55); }
+.offer-title { color: var(--brand-light); }
+.check { color: var(--brand); }
+.back-button { background: transparent; color: var(--dark); border-color: rgba(214,178,94,.4); }
+</style>
 </head>
 
 
