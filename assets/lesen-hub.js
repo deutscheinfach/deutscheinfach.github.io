@@ -48,7 +48,7 @@
 
     /* الرأس ديال كل جزء: العنوان والسطر الصغير تحتيه. */
     const HEADS = {
-        "":        { h1: "Leseverstehen",     lead: "امتحانات كاملة: كل Prüfung فيها Teil 1، 2، 3 و Sprachbausteine 1 و 2.",
+        "":        { h1: "Leseverstehen",     lead: "امتحانات كاملة — كل امتحان فيه الأجزاء الخمسة ديال Lesen.",
                      title: "Deutsch Einfach – B2 Lesen Leseverstehen" },
         "teil1":   { h1: "Teil 1",            lead: "Überschriften zuordnen",
                      title: "Deutsch Einfach – B2 Lesen Teil 1" },
