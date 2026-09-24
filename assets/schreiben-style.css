@@ -688,3 +688,50 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .correct-btn { background: var(--red); color: #fff; }
 .correct-btn:hover { background: var(--red-dark); }
 .point-num { background: var(--red); color: #fff; }
+
+/* ===== v3 — نفس الهوية ديال الموقع: بار أزرق ليلي + أزرار واضحين ===== */
+:root {
+    --ink: #101a36;
+    --paper: #f2f4f9;
+    --border: rgba(16,26,54,.11);
+    --muted: #56607a;
+}
+.task-header {
+    background: var(--grad-navy, linear-gradient(135deg, #1c2c5e, #0f1b3d 55%, #0a1330));
+    color: #fff;
+    border-bottom: 3px solid var(--red);
+    box-shadow: 0 10px 30px -14px rgba(10,19,48,.6);
+}
+.task-header .back-btn { color: #fff; }
+.task-header .back-btn:hover { background: rgba(255,255,255,.12); }
+.task-header .task-title-block h1 { color: #fff; }
+.task-header .task-title-block .sub { color: #ff8aa0; }
+.task-header .timer-pill { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #fff; }
+.task-header .timer-pill.low { background: rgba(227,22,63,.3); border-color: var(--red); color: #fff; }
+.task-header .icon-btn { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); color: #fff; }
+.task-header .icon-btn:hover { background: rgba(255,255,255,.18); }
+.correct-btn {
+    min-height: 42px;
+    padding: 0 20px;
+    border-radius: 12px;
+    font-weight: 800;
+    background: var(--grad-brand, linear-gradient(135deg, #ff4a6b, #e3163f 45%, #b30e30));
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgba(227,22,63,.7);
+}
+.correct-btn:hover { background: var(--grad-brand); filter: brightness(1.06); }
+.translate-btn {
+    min-height: 34px;
+    border: 1.5px solid var(--navy, #0f1b3d);
+    color: var(--navy, #0f1b3d);
+    background: #fff;
+    font-weight: 800;
+}
+.translate-btn:hover { background: var(--navy, #0f1b3d); color: #fff; border-color: var(--navy, #0f1b3d); }
+.umlaut-btns button {
+    border: 1.5px solid var(--navy, #0f1b3d);
+    color: var(--navy, #0f1b3d);
+    background: #fff;
+    font-weight: 800;
+}
+.umlaut-btns button:hover { background: var(--navy, #0f1b3d); color: #fff; }

@@ -17,13 +17,20 @@
        الأسماء الجديدة --brand* هي اللي خاص يتستعملو
        ف أي كود جديد. */
 
-    --brand: #e11d33;
-    --brand-dark: #b4142a;
-    --brand-deep: #8e0f22;
+    --brand: #e3163f;
+    --brand-dark: #b30e30;
+    --brand-deep: #8a0b25;
+
+    /* v3: الأزرق الليلي — لون البنية (البار، الرؤوس، الأزرار الثانوية) */
+    --navy: #0f1b3d;
+    --navy-2: #1c2c5e;
+    --navy-3: #2b3f7c;
+    --grad-navy: linear-gradient(135deg, #1c2c5e 0%, #0f1b3d 55%, #0a1330 100%);
+    --sun: #ffb703;
     /* الطرف الفاتح ديال التدرجات — أحمر حي، ماشي وردي باهت.
        قبل، التدرجات كانو كيبداو من --brand-soft (شبه أبيض)
        والعناوين والأزرار كانو كيختفيو فالنص ديالهم. */
-    --brand-light: #ff4f64;
+    --brand-light: #ff4a6b;
     --brand-soft: #ffe1e5;
     --brand-tint: rgba(225,29,51,.08);
 
@@ -39,15 +46,15 @@
     --gold-soft: var(--brand-soft);
 
     --ink: #ffffff;
-    --paper: #faf9f7;
+    --paper: #f2f4f9;
     --surface: #ffffff;
-    --surface-2: #f6f5f3;
+    --surface-2: #f4f6fb;
 
-    --text: #14161f;
-    --muted: #5b6172;
+    --text: #101a36;
+    --muted: #56607a;
 
-    --line: rgba(20,22,31,.10);
-    --line-gold: rgba(225,29,51,.28);
+    --line: rgba(16,26,54,.11);
+    --line-gold: rgba(227,22,63,.30);
     --line-brand: var(--line-gold);
 
     --ok: #0f9d58;
@@ -66,10 +73,11 @@
     --gray: var(--muted);
     --border: var(--line);
     --border-strong: var(--line-gold);
-    --shadow: 0 1px 2px rgba(20,22,31,.04), 0 8px 24px -6px rgba(20,22,31,.10);
-    --shadow-lg: 0 2px 4px rgba(20,22,31,.04), 0 24px 48px -12px rgba(20,22,31,.18);
-    --shadow-brand: 0 10px 26px -8px rgba(225,29,51,.55);
-    --ring: 0 0 0 4px rgba(225,29,51,.16);
+    --shadow: 0 1px 2px rgba(16,26,54,.05), 0 10px 28px -10px rgba(16,26,54,.16);
+    --shadow-lg: 0 2px 4px rgba(16,26,54,.05), 0 28px 56px -18px rgba(16,26,54,.28);
+    --shadow-brand: 0 12px 28px -10px rgba(227,22,63,.6);
+    --shadow-navy: 0 12px 28px -12px rgba(15,27,61,.55);
+    --ring: 0 0 0 4px rgba(227,22,63,.18);
     --ease: cubic-bezier(.22, 1, .36, 1);
 
     /* الأحجام — كتكبر مع الشاشة */
@@ -80,7 +88,7 @@
     --step-4: clamp(28px, 2.6vw + 21px, 56px);
 
     --gutter: clamp(14px, 2.5vw, 34px);
-    --radius: 18px;
+    --radius: 20px;
     --radius-sm: 12px;
     --shell: 1200px;
 }
@@ -106,9 +114,9 @@ body {
        دفتر ديال الألمانية. */
     background-color: var(--paper);
     background-image:
-        radial-gradient(900px 480px at 50% -220px, rgba(225,29,51,.10), transparent 70%),
-        radial-gradient(rgba(20,22,31,.10) 1px, transparent 1.2px);
-    background-size: auto, 22px 22px;
+        radial-gradient(1100px 520px at 50% -260px, rgba(28,44,94,.16), transparent 70%),
+        radial-gradient(rgba(16,26,54,.07) 1px, transparent 1.2px);
+    background-size: auto, 24px 24px;
     background-attachment: fixed, fixed;
     min-height: 100vh;
 }
@@ -140,7 +148,8 @@ html::after {
         radial-gradient(44vmax 34vmax at 72% 82%, rgba(255,79,100,.13), transparent 64%),
         radial-gradient(36vmax 28vmax at 22% 86%, rgba(20,22,31,.07), transparent 62%),
         conic-gradient(from 210deg at 50% 50%, rgba(225,29,51,.05), rgba(242,183,5,.05), rgba(20,22,31,.03), rgba(225,29,51,.05));
-    filter: saturate(1.15);
+    filter: saturate(1.1);
+    opacity: .55;
     will-change: transform;
     animation: de-aurora 34s ease-in-out infinite alternate;
 }
@@ -162,7 +171,7 @@ html::after {
 
 h1, h2, h3 { letter-spacing: -.015em; }
 
-::selection { background: rgba(225,29,51,.18); color: inherit; }
+::selection { background: rgba(227,22,63,.18); color: inherit; }
 
 /* شريط التمرير رقيق ومتناسق */
 * { scrollbar-width: thin; scrollbar-color: rgba(20,22,31,.22) transparent; }
@@ -406,3 +415,51 @@ table { display: block; max-width: 100%; overflow-x: auto; }
     .show-ar .t3-sit-ar, .show-ar .nq-question-ar { animation: none; }
     .ar-toggle:hover { transform: none; }
 }
+
+/* =====================================================
+   v3 — نظام الأزرار: كيبانو فأي صفحة
+   =====================================================
+   تلاتة ديال الأنواع بس، بتباين قوي على أي خلفية:
+     1) الأساسي  — أحمر عامر، كتابة بيضا   (تحقق، بدا، إرسال…)
+     2) الثانوي  — أزرق ليلي، كتابة بيضا    (شوف الحلول…)
+     3) الخفيف   — أبيض بإطار أزرق واضح     (عاود، رجوع…)
+   الصفحات القديمة ديال Hören فيهم قواعد بـ#id و!important،
+   داكشي علاش كاين :is(#…) هنا. */
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn, .quiz-btn, .btn-check, .check-btn, .hoeren-nav-btn, .auto-nav-btn) {
+    min-height: 46px !important;
+    padding: 0 22px !important;
+    border-radius: 12px !important;
+    font-family: inherit !important;
+    font-weight: 800 !important;
+    font-size: 14.5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer;
+    text-decoration: none !important;
+    transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s ease !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-check, .quiz-btn.btn-check, .btn-check, .check-btn, .auto-nav-btn.auto-nav-secondary, .hoeren-nav-btn.active) {
+    background: var(--grad-brand) !important;
+    color: #fff !important;
+    border: 1.5px solid transparent !important;
+    box-shadow: var(--shadow-brand) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    background: var(--grad-navy) !important;
+    color: #fff !important;
+    border: 1.5px solid transparent !important;
+    box-shadow: var(--shadow-navy) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
+    background: #fff !important;
+    color: var(--navy) !important;
+    border: 1.5px solid var(--navy) !important;
+    box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn, .quiz-btn, .btn-check, .check-btn, .hoeren-nav-btn, .auto-nav-btn):hover {
+    transform: translateY(-2px) !important;
+}
+html body :is(.nq-btn, .quiz-btn, .hoeren-nav-btn, .auto-nav-btn) i { color: inherit !important; }
+

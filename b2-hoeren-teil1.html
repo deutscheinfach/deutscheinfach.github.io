@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=f26e4e44">
-<link rel="stylesheet" href="assets/site-header.css?v=2de2f285">
+<link rel="stylesheet" href="assets/theme.css?v=db8497ff">
+<link rel="stylesheet" href="assets/site-header.css?v=10ef34bf">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Hören: Teil1</title>
@@ -384,10 +384,11 @@ img, svg, video, canvas { display: block; max-width: 100%; }
 }
 
 body{
-  background: radial-gradient(900px 420px at -8% -8%, rgba(225,29,51,.14), transparent 62%),
-    radial-gradient(760px 360px at 108% -5%, rgba(225,29,51,.16), transparent 60%),
-    radial-gradient(600px 420px at 50% 110%, rgba(225,29,51,.055), transparent 65%),
-    linear-gradient(135deg,var(--surface-2) 0%,#121419 43%,var(--surface-2) 100%) !important;
+  /* v3: نفس الخلفية ديال الموقع (قبل كان فيها رمادي غامق فالوسط) */
+  background-color: var(--paper) !important;
+  background-image: radial-gradient(1100px 520px at 50% -260px, rgba(28,44,94,.16), transparent 70%), radial-gradient(rgba(16,26,54,.07) 1px, transparent 1.2px) !important;
+  background-size: auto, 24px 24px !important;
+  background-attachment: fixed, fixed !important;
   color: var(--text) !important;
 }
 
