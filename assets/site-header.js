@@ -613,6 +613,14 @@
             });
 
             document.title = doc.title || document.title;
+            /* الاتجاه واللغة ديال الصفحة الجديدة (rtl/ltr). بلا هادي،
+               الدخول من صفحة rtl كان كيخلي Lesen/Sprechen مقلوبين حتى
+               يدير المستخدم refresh. */
+            ["dir", "lang"].forEach(function (name) {
+                const value = doc.documentElement.getAttribute(name);
+                if (value) document.documentElement.setAttribute(name, value);
+                else document.documentElement.removeAttribute(name);
+            });
             setActive(active);
             return scripts;
         }
