@@ -32,7 +32,7 @@
        والعناوين والأزرار كانو كيختفيو فالنص ديالهم. */
     --brand-light: #ff4a6b;
     --brand-soft: #ffe1e5;
-    --brand-tint: rgba(225,29,51,.08);
+    --brand-tint: rgba(214,178,94,.08);
 
     /* لمسة ذهبية صغيرة (العلم الألماني) — كتستعمل بقلة */
     --flag-gold: #f2b705;
@@ -54,7 +54,7 @@
     --muted: #56607a;
 
     --line: rgba(16,26,54,.11);
-    --line-gold: rgba(227,22,63,.30);
+    --line-gold: rgba(214,178,94,.30);
     --line-brand: var(--line-gold);
 
     --ok: #0f9d58;
@@ -75,9 +75,9 @@
     --border-strong: var(--line-gold);
     --shadow: 0 1px 2px rgba(16,26,54,.05), 0 10px 28px -10px rgba(16,26,54,.16);
     --shadow-lg: 0 2px 4px rgba(16,26,54,.05), 0 28px 56px -18px rgba(16,26,54,.28);
-    --shadow-brand: 0 12px 28px -10px rgba(227,22,63,.6);
+    --shadow-brand: 0 12px 28px -10px rgba(214,178,94,.6);
     --shadow-navy: 0 12px 28px -12px rgba(15,27,61,.55);
-    --ring: 0 0 0 4px rgba(227,22,63,.18);
+    --ring: 0 0 0 4px rgba(214,178,94,.18);
     --ease: cubic-bezier(.22, 1, .36, 1);
 
     /* الأحجام — كتكبر مع الشاشة */
@@ -143,11 +143,11 @@ html::after {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(38vmax 30vmax at 18% 22%, rgba(225,29,51,.17), transparent 62%),
+        radial-gradient(38vmax 30vmax at 18% 22%, rgba(214,178,94,.17), transparent 62%),
         radial-gradient(32vmax 26vmax at 82% 18%, rgba(242,183,5,.14), transparent 62%),
         radial-gradient(44vmax 34vmax at 72% 82%, rgba(255,79,100,.13), transparent 64%),
         radial-gradient(36vmax 28vmax at 22% 86%, rgba(20,22,31,.07), transparent 62%),
-        conic-gradient(from 210deg at 50% 50%, rgba(225,29,51,.05), rgba(242,183,5,.05), rgba(20,22,31,.03), rgba(225,29,51,.05));
+        conic-gradient(from 210deg at 50% 50%, rgba(214,178,94,.05), rgba(242,183,5,.05), rgba(20,22,31,.03), rgba(214,178,94,.05));
     filter: saturate(1.1);
     opacity: .55;
     will-change: transform;
@@ -171,7 +171,7 @@ html::after {
 
 h1, h2, h3 { letter-spacing: -.015em; }
 
-::selection { background: rgba(227,22,63,.18); color: inherit; }
+::selection { background: rgba(214,178,94,.18); color: inherit; }
 
 /* شريط التمرير رقيق ومتناسق */
 * { scrollbar-width: thin; scrollbar-color: rgba(20,22,31,.22) transparent; }
@@ -182,7 +182,7 @@ h1, h2, h3 { letter-spacing: -.015em; }
     border: 3px solid transparent;
     background-clip: padding-box;
 }
-::-webkit-scrollbar-thumb:hover { background-color: rgba(225,29,51,.45); }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(214,178,94,.45); }
 
 /* ما نخليو حتى صفحة تخرج على العرض فالهاتف */
 img, video, canvas, svg { max-width: 100%; height: auto; }
@@ -463,3 +463,117 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 html body :is(.nq-btn, .quiz-btn, .hoeren-nav-btn, .auto-nav-btn) i { color: inherit !important; }
 
+
+/* =====================================================================
+   v4 — ذهبي وأسود (Gold & Black)
+   =====================================================================
+   الهوية النهائية: أسود دافي (ماشي أسود قاسح) + ذهبي معدني هادي.
+   مصممة باش ما تعيّيش العين:
+     · الخلفية #0e0e11 (ماشي #000) والنص #ece7dc (ماشي أبيض قاسح)
+     · الذهبي #d6b25e مطفي شوية — كيلمع بلا ما يحرق
+     · التباين ديال النص ≥ 12:1، والنص الثانوي ≥ 6:1
+   الأسماء القديمة (--brand، --navy…) كتبقى، غير القيم اللي كتبدل —
+   إذن كل صفحة كتورث الهوية الجديدة بوحدها. */
+:root {
+    color-scheme: dark;
+
+    --brand: #d6b25e;
+    --brand-dark: #a8863a;
+    --brand-deep: #7d6326;
+    --brand-light: #f0d58c;
+    --brand-soft: rgba(214,178,94,.14);
+    --brand-tint: rgba(214,178,94,.10);
+    --on-brand: #17130a;
+
+    --navy: #1d1d23;
+    --navy-2: #26262e;
+    --navy-3: #32323c;
+    --grad-navy: linear-gradient(145deg, #202027 0%, #141418 55%, #0d0d10 100%);
+    --sun: #d6b25e;
+
+    --flag-gold: #d6b25e;
+    --flag-black: #0e0e11;
+
+    --grad-brand: linear-gradient(135deg, #f3dc9a 0%, #d6b25e 45%, #a8863a 100%);
+    --grad-ink: linear-gradient(145deg, #202027 0%, #0d0d10 100%);
+
+    --ink: #17130a;
+    --paper: #0e0e11;
+    --surface: #16161b;
+    --surface-2: #1e1e24;
+
+    --text: #ece7dc;
+    --muted: #a39d90;
+
+    --line: rgba(255,255,255,.08);
+    --line-gold: rgba(214,178,94,.34);
+
+    --ok: #3ecf8e;
+    --danger: #ef5b5b;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 30px -12px rgba(0,0,0,.6);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,.45), 0 30px 60px -22px rgba(0,0,0,.75);
+    --shadow-brand: 0 12px 28px -12px rgba(214,178,94,.45);
+    --shadow-navy: 0 12px 28px -14px rgba(0,0,0,.8);
+    --ring: 0 0 0 4px rgba(214,178,94,.22);
+}
+
+body {
+    background-color: var(--paper);
+    background-image:
+        radial-gradient(1100px 520px at 50% -280px, rgba(214,178,94,.13), transparent 70%),
+        radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.2px);
+    background-size: auto, 24px 24px;
+    color: var(--text);
+}
+/* خيط ذهبي رقيق فوق الصفحة */
+html::before {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #a8863a 15%, #f0d58c 50%, #a8863a 85%, transparent);
+}
+/* الأضواء ديال الخلفية: ذهبي هادي بزاف */
+html::after {
+    opacity: .35;
+    background:
+        radial-gradient(38vmax 30vmax at 16% 20%, rgba(214,178,94,.16), transparent 62%),
+        radial-gradient(32vmax 26vmax at 84% 16%, rgba(168,134,58,.12), transparent 62%),
+        radial-gradient(44vmax 34vmax at 70% 84%, rgba(214,178,94,.08), transparent 64%);
+}
+::selection { background: rgba(214,178,94,.35); color: #fff; }
+* { scrollbar-color: rgba(214,178,94,.35) transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,.14); }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(214,178,94,.55); }
+:focus-visible { outline-color: var(--brand); }
+
+/* الروابط العادية */
+a { color: inherit; }
+
+/* الحقول: خلفية داكنة ونص فاتح فكل بلاصة */
+input, textarea, select { color-scheme: dark; }
+
+/* ---- الأزرار ديال Hören (فيهم #id و!important) ---- */
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-check, .quiz-btn.btn-check, .btn-check, .check-btn, .auto-nav-btn.auto-nav-secondary, .hoeren-nav-btn.active) {
+    color: var(--on-brand) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    background: #26262e !important;
+    color: var(--brand-light) !important;
+    border: 1.5px solid var(--line-gold) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
+    background: transparent !important;
+    color: var(--text) !important;
+    border: 1.5px solid rgba(255,255,255,.28) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)):hover {
+    border-color: var(--brand) !important;
+    color: var(--brand-light) !important;
+}
+
+/* زر الترجمة */
+.ar-toggle { background: var(--surface) !important; color: var(--text) !important; border: 1.5px solid var(--line-gold) !important; }
+.ar-toggle-icon { background: var(--grad-brand) !important; color: var(--on-brand) !important; }
+.ar-toggle.is-on { background: var(--grad-brand) !important; color: var(--on-brand) !important; border-color: transparent !important; }
+.ar-toggle.is-on .ar-toggle-icon { background: rgba(0,0,0,.18) !important; color: var(--on-brand) !important; }
+.ar-block { background: var(--surface-2); border-color: var(--line); }
+.ar-block p { color: var(--text); }
