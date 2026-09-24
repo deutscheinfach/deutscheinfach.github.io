@@ -599,3 +599,78 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 @media (max-width: 380px) {
     .site-nav a { font-size: 11px; padding: 0 3px; letter-spacing: -.02em; }
 }
+
+/* =====================================================
+   v3 — بار أزرق ليلي
+   =====================================================
+   البار ولات داكنة: كتبان كهوية واضحة فوق أي صفحة، والأقسام
+   كيبانو بالأبيض، والقسم النشيط بالأحمر ديال العلامة.
+   القائمة ديال الحساب (.site-menu) كتبقى بيضا — ماتدخلش هنا. */
+.site-header { background: transparent; }
+.site-header-inner {
+    position: relative;
+    border: 1px solid rgba(255,255,255,.08);
+    background: var(--grad-navy, linear-gradient(135deg, #1c2c5e, #0f1b3d 55%, #0a1330));
+    box-shadow: 0 18px 40px -18px rgba(10,19,48,.65), inset 0 1px 0 rgba(255,255,255,.08);
+    color: #fff;
+}
+/* خيط رقيق بألوان العلم تحت البار */
+.site-header-inner::after {
+    content: "";
+    position: absolute;
+    inset-inline: 22px;
+    bottom: -1px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #111 0 33.33%, var(--brand) 33.33% 66.66%, var(--sun, #ffb703) 66.66% 100%);
+    opacity: .9;
+    pointer-events: none;
+}
+.site-brand { color: #fff; }
+.site-brand-name span { color: var(--brand-light, #ff4a6b); }
+.site-brand-sub { color: rgba(255,255,255,.62); }
+.site-brand img { box-shadow: 0 0 0 2px rgba(255,255,255,.9), 0 0 0 4px rgba(227,22,63,.55); }
+
+.site-nav {
+    background: rgba(255,255,255,.07);
+    border-color: rgba(255,255,255,.10);
+}
+.site-nav a { color: rgba(255,255,255,.78); }
+.site-nav a:hover { color: #fff; background: rgba(255,255,255,.10); }
+.site-nav a.active { color: #fff; }
+
+.site-header-inner .site-actions a.site-btn:not(.site-btn-primary) {
+    color: #fff;
+    border-color: rgba(255,255,255,.38);
+    background: rgba(255,255,255,.06);
+}
+.site-header-inner .site-actions a.site-btn:not(.site-btn-primary):hover {
+    color: var(--navy, #0f1b3d);
+    background: #fff;
+    border-color: #fff;
+}
+.site-btn-primary {
+    background: var(--grad-brand) !important;
+    color: #fff !important;
+    box-shadow: var(--shadow-brand);
+}
+.site-account > .site-user {
+    color: #fff;
+    border-color: rgba(255,255,255,.22);
+    background: rgba(255,255,255,.08);
+}
+.site-account > .site-user:hover { border-color: rgba(255,255,255,.55); }
+.site-account > .site-user .site-premium {
+    background: var(--sun, #ffb703);
+    color: #1b1400;
+    border-color: transparent;
+}
+
+/* شريط المستوى B1/B2 تحت البار */
+.site-level {
+    background: #fff;
+    border-color: var(--line);
+    box-shadow: var(--shadow);
+}
+.site-level a { color: var(--muted); }
+.site-level a:hover { color: var(--navy, #0f1b3d); }

@@ -18,8 +18,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=f26e4e44">
-<link rel="stylesheet" href="assets/site-header.css?v=2de2f285">
+<link rel="stylesheet" href="assets/theme.css?v=db8497ff">
+<link rel="stylesheet" href="assets/site-header.css?v=10ef34bf">
     <style>
 
         * {
@@ -1486,6 +1486,52 @@
 
         }
 
+
+        /* =========================================
+           v3 — الواجهة: بطاقة زرقاء ليلية + أزرار واضحين
+        ========================================= */
+        .hero {
+            background: var(--grad-navy);
+            border: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 40px 80px -40px rgba(10,19,48,.75);
+            color: #fff;
+        }
+        .hero::before {
+            width: 520px; height: 520px;
+            top: -260px; right: -160px;
+            background: radial-gradient(circle, rgba(227,22,63,.55), transparent 65%);
+        }
+        .hero::after {
+            width: 380px; height: 380px;
+            bottom: -220px; left: -140px;
+            background: radial-gradient(circle, rgba(255,183,3,.28), transparent 65%);
+        }
+        .hero h1 { color: #fff; }
+        .hero h1 .red { background: linear-gradient(135deg, #ff8aa0, var(--brand-light) 45%, #ff2d55); -webkit-background-clip: text; background-clip: text; }
+        .hero-text { color: rgba(255,255,255,.8); }
+        .small-badge {
+            background: rgba(255,255,255,.10);
+            border-color: rgba(255,255,255,.2);
+            color: #fff;
+        }
+        .hero-secondary {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,.55);
+        }
+        .hero-secondary:hover {
+            background: #fff;
+            color: var(--navy);
+            border-color: #fff;
+        }
+        .hero .stat {
+            background: rgba(255,255,255,.07);
+            border-color: rgba(255,255,255,.14);
+            box-shadow: none;
+        }
+        .hero .stat strong { color: #fff; }
+        .hero .stat span { color: rgba(255,255,255,.7); }
+        .cta-button { color: var(--brand-dark); font-weight: 900; }
     </style>
 
 </head>

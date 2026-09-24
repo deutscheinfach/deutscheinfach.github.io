@@ -2636,3 +2636,158 @@
     .exam-summary-row { grid-template-columns: 1fr 64px; }
     .exam-summary-track { grid-column: 1 / -1; grid-row: 2; }
 }
+
+/* =====================================================
+   v3 — رأس الأقسام أزرق ليلي + بطائق + أزرار واضحين
+   ===================================================== */
+
+/* ---- الرأس: بطاقة داكنة فيها العنوان والعداد ---- */
+.lesen-head-row {
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+    margin: 18px 0 20px;
+    padding: clamp(22px, 3.2vw, 38px) clamp(20px, 3.4vw, 42px);
+    border-radius: 26px;
+    background: var(--grad-navy);
+    color: #fff;
+    box-shadow: 0 30px 60px -30px rgba(10,19,48,.7);
+    isolation: isolate;
+}
+/* دوائر ضوء بألوان العلم ورا النص */
+.lesen-head-row::before,
+.lesen-head-row::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.lesen-head-row::before {
+    width: 420px; height: 420px;
+    inset-inline-end: -120px; top: -200px;
+    background: radial-gradient(circle, rgba(227,22,63,.55), transparent 65%);
+}
+.lesen-head-row::after {
+    width: 300px; height: 300px;
+    inset-inline-start: -110px; bottom: -190px;
+    background: radial-gradient(circle, rgba(255,183,3,.22), transparent 65%);
+}
+.lesen-head-row .lesen-hero { padding: 0; }
+.lesen-head-row .lesen-hero h1 { color: #fff; margin: 10px 0 6px; font-size: clamp(30px, 4.2vw, 52px); }
+.lesen-head-row .lesen-hero .lead { color: rgba(255,255,255,.78); margin: 0; }
+.lesen-head-row .lesen-badge {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.18);
+    color: #fff;
+    box-shadow: none;
+}
+.lesen-head-row .lesen-hero h1::after { width: 72px; background: linear-gradient(90deg, #fff 0 33%, var(--brand-light) 33% 66%, var(--sun) 66% 100%); }
+.lesen-head-row .lesen-stats {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.14);
+    box-shadow: none;
+    backdrop-filter: blur(6px);
+}
+.lesen-head-row .lesen-stat b { color: #fff; }
+.lesen-head-row .lesen-stat span { color: rgba(255,255,255,.7); }
+.lesen-head-row .lesen-stat + .lesen-stat { border-color: rgba(255,255,255,.16); }
+
+/* ---- التبويبات ---- */
+.lesen-tabs { border: 1px solid var(--line); background: #fff; }
+.lesen-tab { color: var(--muted); font-weight: 800; }
+.lesen-tab:hover { color: var(--navy); background: var(--surface-2); }
+
+/* ---- البطائق ---- */
+.lesen-card { background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.lesen-card-title { color: var(--navy); }
+/* زر الدخول فالبطاقة: ديما باين (أزرق)، وكيولي أحمر ملي تقرب */
+.lesen-card .lesen-card-go {
+    width: 36px; height: 36px;
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+    font-weight: 900;
+}
+.lesen-card:hover .lesen-card-go { background: var(--brand); border-color: var(--brand); }
+.exam-card-parts b { color: var(--brand); }
+
+/* ---- الأزرار ديال التمارين ---- */
+.lesen-btn,
+.e1-btn,
+.sp-btn,
+.lesen-back,
+.exam-next-btn,
+.e1-cta {
+    min-height: 48px;
+    border-radius: 13px;
+    font-weight: 800;
+    letter-spacing: .01em;
+    transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s ease, color .18s ease;
+}
+.lesen-btn:hover:not(:disabled),
+.e1-btn:hover:not(:disabled),
+.sp-btn:hover,
+.lesen-back:hover,
+.exam-next-btn:hover,
+.e1-cta:hover { transform: translateY(-2px); }
+
+/* 1) الأساسي: أحمر */
+.lesen-btn-check,
+.e1-btn-main,
+.e1-cta,
+.exam-next-btn,
+.sp-btn-rec {
+    background: var(--grad-brand) !important;
+    color: #fff !important;
+    border: 1.5px solid transparent !important;
+    box-shadow: var(--shadow-brand) !important;
+}
+/* 2) الثانوي: أزرق ليلي */
+.lesen-btn-show,
+.e1-btn-soft {
+    background: var(--grad-navy) !important;
+    color: #fff !important;
+    border: 1.5px solid transparent !important;
+    box-shadow: var(--shadow-navy) !important;
+}
+/* 3) الخفيف: أبيض بإطار أزرق */
+.lesen-btn-retry,
+.e1-btn:not(.e1-btn-main):not(.e1-btn-soft),
+.sp-btn-ghost,
+.lesen-back {
+    background: #fff !important;
+    color: var(--navy) !important;
+    border: 1.5px solid var(--navy) !important;
+    box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
+}
+.lesen-back:hover,
+.lesen-btn-retry:hover,
+.sp-btn-ghost:hover,
+.e1-btn:not(.e1-btn-main):not(.e1-btn-soft):hover {
+    background: var(--navy) !important;
+    color: #fff !important;
+}
+.e1-btn-main.is-early {
+    background: #fff !important;
+    color: var(--navy) !important;
+    border: 1.5px solid var(--navy) !important;
+    box-shadow: none !important;
+}
+.lesen-btn { padding: 0 22px; }
+
+/* زر الترجمة */
+.ar-toggle { border: 1.5px solid var(--navy); color: var(--navy); background: #fff; }
+.ar-toggle-icon { background: var(--navy); color: #fff; }
+.ar-toggle.is-on { background: var(--grad-brand); color: #fff; border-color: transparent; }
+
+/* عناوين التمارين */
+.t1-title, .e1-stage-title, .lesen-detail-title { color: var(--navy); }
+.t1-kicker { color: var(--brand); }
+.t1-variant.active,
+.e1-step.active {
+    background: var(--grad-navy);
+    color: #fff;
+    box-shadow: var(--shadow-navy);
+}
+.e1-step.active .e1-step-n { background: var(--brand); border-color: var(--brand); color: #fff; }
