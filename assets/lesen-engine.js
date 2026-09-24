@@ -58,6 +58,45 @@
     window.__lesenRender = render;
     window.__lesenRenderInto = render;
 
+    /* ---- النقط ديال كل جزء (بحال telc) ----
+       Teil 1، 2، 3 = 25 نقطة · Sprachbausteine 1 و 2 = 15 نقطة.
+       كنرسمو النتيجة فالـscore، وكنصيفطو حدث "lesen-points"
+       باش الـPrüfung الكاملة تجمع المجموع. */
+    const MAX_POINTS = { teil1: 25, teil2: 25, teil3: 25, sprach1: 15, sprach2: 15 };
+
+    function fmt(n) {
+        return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(".", ",");
+    }
+
+    window.__lesenScore = function (box, part, right, total, reveal, missing) {
+        const max = MAX_POINTS[part] || 25;
+        const points = total ? Math.round(right / total * max * 2) / 2 : 0;
+        box.hidden = false;
+        box.textContent = "";
+        box.classList.add("lesen-score-points");
+        const pct = max ? points / max : 0;
+        box.dataset.tone = pct >= 0.8 ? "good" : pct >= 0.6 ? "mid" : "bad";
+
+        const big = document.createElement("b");
+        big.className = "lesen-points";
+        big.textContent = fmt(points) + " / " + max;
+        const unit = document.createElement("span");
+        unit.className = "lesen-points-unit";
+        unit.textContent = "Punkte";
+        const detail = document.createElement("span");
+        detail.className = "lesen-points-detail";
+        detail.textContent = reveal
+            ? "الحلول كاينة فوق · " + right + " من " + total + " كانو صحاح"
+            : right + " / " + total + " صحيحة" + (missing ? " · باقي " + missing + " بلا جواب" : "");
+        box.append(big, unit, detail);
+
+        try {
+            window.dispatchEvent(new CustomEvent("lesen-points",
+                { detail: { part: part, points: points, max: max, right: right, total: total } }));
+        } catch (e) { /* متصفح قديم */ }
+        return points;
+    };
+
     /* ---- زر الترجمة العربية ----
        الترجمة مخبية فالبداية. كل تمرين فيه ترجمة كياخد زر
        فالعنوان ديالو، والضغطة كتزيد "show-ar" للحاوية كاملة

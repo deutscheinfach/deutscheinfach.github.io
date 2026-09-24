@@ -245,12 +245,8 @@
                     if (row.why && (ok || reveal)) row.why.hidden = false;
                 });
 
-                score.hidden = false;
-                score.textContent = reveal
-                    ? "الحلول كاينة فوق. " + right + " من " + rows.length + " كانو صحاح."
-                    : right + " / " + rows.length + " صحيحة" +
-                      (answered < rows.length
-                          ? " · باقي " + (rows.length - answered) + " بلا جواب" : "");
+                window.__lesenScore(score, "teil2", right, rows.length, reveal,
+                    rows.length - answered);
             }
 
             function clear(row) {

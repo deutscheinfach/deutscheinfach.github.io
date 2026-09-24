@@ -2558,3 +2558,81 @@
     .exam-next-btn { width: 100%; }
     .exam-tab-topic { max-width: 11ch; }
 }
+
+/* =====================================================
+   النقط — Lesen (/25، /15) · Sprechen (/25) · مجموع الامتحان
+   ===================================================== */
+.lesen-score.lesen-score-points {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 4px 10px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    text-align: center;
+}
+.lesen-points { font-size: 30px; font-weight: 900; line-height: 1.1; direction: ltr; font-variant-numeric: tabular-nums; }
+.lesen-points-unit { font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.lesen-points-detail { flex: 1 1 100%; font-size: 13px; font-weight: 700; color: var(--muted); }
+.lesen-score-points[data-tone="good"] { border-color: color-mix(in srgb, var(--ok) 50%, transparent); background: color-mix(in srgb, var(--ok) 8%, var(--surface)); }
+.lesen-score-points[data-tone="good"] .lesen-points { color: var(--ok); }
+.lesen-score-points[data-tone="mid"] { border-color: color-mix(in srgb, #e0a100 50%, transparent); background: color-mix(in srgb, #e0a100 8%, var(--surface)); }
+.lesen-score-points[data-tone="mid"] .lesen-points { color: #b58200; }
+.lesen-score-points[data-tone="bad"] { border-color: color-mix(in srgb, var(--danger) 45%, transparent); background: color-mix(in srgb, var(--danger) 6%, var(--surface)); }
+.lesen-score-points[data-tone="bad"] .lesen-points { color: var(--danger); }
+
+.e1-points {
+    width: 100%; box-sizing: border-box;
+    padding: 16px 18px;
+    border-radius: 16px;
+    border: 1px solid var(--line-gold);
+    background: color-mix(in srgb, var(--gold) 6%, var(--surface));
+    text-align: left; direction: ltr;
+}
+.e1-points-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; font-weight: 900; }
+.e1-points-total { font-size: 28px; font-variant-numeric: tabular-nums; }
+.e1-points[data-tone="good"] .e1-points-total { color: var(--ok); }
+.e1-points[data-tone="mid"] .e1-points-total { color: #b58200; }
+.e1-points[data-tone="bad"] .e1-points-total { color: var(--danger); }
+.e1-points-rows { display: flex; flex-direction: column; gap: 7px; }
+.e1-points-note { margin: 10px 0 0; font-size: 12.5px; line-height: 1.7; color: var(--muted); direction: rtl; text-align: right; }
+
+.exam-tab-pts {
+    margin-top: 2px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-size: 11px; font-weight: 900;
+    background: color-mix(in srgb, var(--ok) 15%, transparent);
+    color: var(--ok);
+    direction: ltr;
+}
+.exam-tab.active .exam-tab-pts { background: rgba(255,255,255,.3); color: inherit; }
+
+.exam-summary {
+    max-width: 640px;
+    margin: 10px auto 24px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+.exam-summary-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 12px; font-weight: 900; direction: ltr; }
+.exam-summary-head b { font-size: 30px; font-variant-numeric: tabular-nums; }
+.exam-summary[data-tone="good"] { border-color: color-mix(in srgb, var(--ok) 50%, transparent); }
+.exam-summary[data-tone="good"] .exam-summary-head b { color: var(--ok); }
+.exam-summary[data-tone="bad"] .exam-summary-head b { color: var(--danger); }
+.exam-summary-rows { display: flex; flex-direction: column; gap: 8px; }
+.exam-summary-row {
+    display: grid; grid-template-columns: minmax(70px, auto) 1fr 64px; gap: 10px; align-items: center;
+    direction: ltr; text-align: left;
+    font-size: 13.5px; font-weight: 700;
+}
+.exam-summary-row b { text-align: right; font-variant-numeric: tabular-nums; }
+.exam-summary-row.is-open { color: var(--muted); }
+.exam-summary-track { height: 9px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.exam-summary-track > span { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); transition: width .5s ease; }
+.exam-summary-note { margin: 12px 0 0; line-height: 1.8; font-weight: 700; font-size: 14px; }
+@media (max-width: 600px) {
+    .exam-summary-row { grid-template-columns: 1fr 64px; }
+    .exam-summary-track { grid-column: 1 / -1; grid-row: 2; }
+}

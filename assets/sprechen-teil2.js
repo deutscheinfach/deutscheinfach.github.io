@@ -697,6 +697,21 @@
                     list.appendChild(label);
                 });
                 check.appendChild(list);
+
+                /* النقط: الوقت (8) + التلات أجزاء (3) + الأجوبة (4) + Selbstcheck (10) */
+                const partsPts = result.parts.filter(function (sec) { return sec >= 20; }).length;
+                const answerPts = K.half(result.answers.reduce(function (a, sec) {
+                    return a + (sec >= 15 ? 2 : sec >= 5 ? 1 : 0);
+                }, 0));
+                const pb = K.pointsBox("teil2", [
+                    { label: "Sprechzeit", pts: K.timePoints(result.total, MIN_SEC, MAX_SEC, 8), max: 8 },
+                    { label: "Inhalt · Meinung · Erfahrung", pts: partsPts, max: 3 },
+                    { label: "Fragen", pts: Math.min(4, answerPts), max: 4 }
+                ], 10);
+                list.addEventListener("change", function () {
+                    pb.update(list.querySelectorAll("input:checked").length / items.length);
+                });
+                stage.appendChild(pb.node);
                 stage.appendChild(check);
 
                 const row = el("div", "e1-row");
