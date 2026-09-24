@@ -73,17 +73,23 @@
 
     /* Chrome كيوقف النصوص الطوال من بعد ~15 ثانية، إذن كنقسمو
        النص لجمل وكنقراوهم وحدة بوحدة. */
-    function speak(text, onEnd) {
+    /* opts.alt = صوت ألماني آخر (للحوار ديال جوج) */
+    function speak(text, onEnd, opts) {
         if (!("speechSynthesis" in window)) return false;
         window.speechSynthesis.cancel();
         const parts = String(text).match(/[^.!?]+[.!?»“"]*\s*/g) || [String(text)];
-        const voice = germanVoice();
+        let voice = germanVoice();
+        if (opts && opts.alt) {
+            const all = (window.speechSynthesis.getVoices() || []).filter(function (v) { return /^de(-|_|$)/i.test(v.lang); });
+            if (all.length > 1) voice = all.find(function (v) { return v !== voice; }) || voice;
+        }
         let called = false;
         function end() { if (!called && onEnd) { called = true; onEnd(); } }
         parts.forEach(function (part, i) {
             const u = new SpeechSynthesisUtterance(part.trim());
             u.lang = "de-DE";
             u.rate = 0.95;
+            if (opts && opts.alt) u.pitch = 0.8;
             if (voice) u.voice = voice;
             if (i === parts.length - 1) u.onend = end;
             u.onerror = end;
@@ -775,4 +781,11 @@
     }
 
     window.__sprechenTeil1Render = render;
+
+    /* الأدوات المشتركة — Teil 2 و Teil 3 كيستعملوهم */
+    window.__sprechenKit = {
+        el: el, btn: btn, clock: clock, store: store, shuffle: shuffle,
+        speak: speak, hush: hush, arToggle: arToggle, arBlock: arBlock,
+        ring: ring, recorderSession: recorderSession
+    };
 })();

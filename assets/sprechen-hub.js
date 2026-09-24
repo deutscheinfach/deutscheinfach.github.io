@@ -33,8 +33,8 @@
 
     const PARTS = [
         { key: "teil1", label: "Teil 1", name: "Erfahrungen" },
-        { key: "teil2", label: "Teil 2", name: "Diskussion" },
-        { key: "teil3", label: "Teil 3", name: "Problemlösung" }
+        { key: "teil2", label: "Teil 2", name: "Text & Meinung" },
+        { key: "teil3", label: "Teil 3", name: "Gemeinsam planen" }
     ];
     const PART_LABEL = {};
     const PART_NAME = {};

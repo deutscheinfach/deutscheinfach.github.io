@@ -265,8 +265,12 @@
                 "ما زال ماكاينش تمرين ف هاد الجزء."));
             return;
         }
-        if (task.kind === "erfahrung" && typeof window.__sprechenTeil1Render === "function") {
-            window.__sprechenTeil1Render(into, task, topicId);
+        /* المحاكيات ديال Teil 1 / 2 / 3 (sprechen-teil1.js، teil2، teil3) */
+        const sim = { erfahrung: window.__sprechenTeil1Render,
+                      text: window.__sprechenTeil2Render,
+                      plan: window.__sprechenTeil3Render }[task.kind];
+        if (typeof sim === "function") {
+            sim(into, task, topicId);
             return;
         }
         into.appendChild(buildTask(part, task));
