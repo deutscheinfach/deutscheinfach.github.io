@@ -2506,3 +2506,55 @@
     .e3-cell.pop, .e3-partner, .e3-you, .e3-decide { animation: none; }
     .e2-phase.active { transform: none; }
 }
+
+/* =====================================================
+   Prüfungen — امتحان كامل (Lesen + Sprechen)
+   ===================================================== */
+.exam-card-parts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex; flex-direction: column; gap: 5px;
+    direction: ltr; text-align: left;
+}
+.exam-card-parts li {
+    display: flex; gap: 8px; align-items: baseline;
+    font-size: 13px; line-height: 1.4;
+    color: var(--muted);
+    min-width: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.exam-card-parts b {
+    flex: 0 0 auto;
+    min-width: 58px;
+    font-size: 11.5px; font-weight: 900;
+    color: var(--gold);
+}
+.exam-tabs { flex-wrap: nowrap; }
+.exam-tab {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+    min-width: 0;
+}
+.exam-tab-nr { font-weight: 900; white-space: nowrap; }
+.exam-tab-topic {
+    max-width: 16ch;
+    font-size: 11.5px; font-weight: 600; opacity: .8;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.exam-tab.is-locked .exam-tab-nr::after { content: " 🔒"; }
+.exam-next { display: flex; justify-content: center; margin: 22px 0 8px; }
+.exam-next-btn {
+    min-height: 52px;
+    padding: 0 26px;
+    border: 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    font: inherit; font-weight: 900; font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px color-mix(in srgb, var(--gold) 28%, transparent);
+}
+@media (max-width: 600px) {
+    .exam-next-btn { width: 100%; }
+    .exam-tab-topic { max-width: 11ch; }
+}
