@@ -16,20 +16,28 @@
        كتتعلم ف أي كتاب تحضير — ماشي محتوى امتحان. */
     const REDEMITTEL = {
         teil1: {
-            label: "Präsentation",
+            label: "Über Erfahrungen sprechen",
             groups: [
                 { head: "البداية", items: [
-                    "Ich möchte Ihnen heute das Thema … vorstellen.",
-                    "Mein Vortrag besteht aus drei Teilen.",
-                    "Zuerst … , danach … , und zum Schluss …" ] },
-                { head: "الوسط", items: [
-                    "Ein wichtiger Punkt ist, dass …",
-                    "Dazu möchte ich ein Beispiel nennen: …",
-                    "In meinem Heimatland ist es so, dass …" ] },
+                    "Ich möchte Ihnen heute von … erzählen.",
+                    "Das war im letzten Sommer / vor zwei Jahren.",
+                    "Ich erinnere mich noch genau an …" ] },
+                { head: "الحكاية بالترتيب", items: [
+                    "Zuerst … , danach … , schließlich …",
+                    "Am Anfang war ich … , aber dann …",
+                    "Ein Erlebnis werde ich nie vergessen: …" ] },
+                { head: "الإحساس والتقييم", items: [
+                    "Besonders beeindruckt hat mich, dass …",
+                    "Weniger gut fand ich, dass …",
+                    "Ich war total überrascht / begeistert / enttäuscht." ] },
                 { head: "الخاتمة", items: [
-                    "Zusammenfassend lässt sich sagen, dass …",
-                    "Meiner Meinung nach …",
-                    "Vielen Dank für Ihre Aufmerksamkeit." ] }
+                    "Im Nachhinein bin ich froh, dass …",
+                    "Ich würde es jedem empfehlen, der …",
+                    "Für mich war das wichtig, weil …" ] },
+                { head: "ملي كيسولك الـPrüfer", items: [
+                    "Das ist eine gute Frage. Ich denke, …",
+                    "Wenn ich ehrlich bin, …",
+                    "Darüber habe ich noch nicht nachgedacht, aber …" ] }
             ]
         },
         teil2: {
@@ -247,11 +255,18 @@
         return card;
     }
 
-    window.__sprechenRender = function (into, part, task) {
+    /* Teil 1 (Über Erfahrungen sprechen) عندو محاكي ديالو ف sprechen-teil1.js */
+    window.__sprechenRedemittel = REDEMITTEL;
+
+    window.__sprechenRender = function (into, part, task, topicId) {
         into.textContent = "";
         if (!task) {
             into.appendChild(el("div", "lesen-empty",
                 "ما زال ماكاينش تمرين ف هاد الجزء."));
+            return;
+        }
+        if (task.kind === "erfahrung" && typeof window.__sprechenTeil1Render === "function") {
+            window.__sprechenTeil1Render(into, task, topicId);
             return;
         }
         into.appendChild(buildTask(part, task));

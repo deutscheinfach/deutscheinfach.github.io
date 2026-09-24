@@ -2,10 +2,10 @@
 
    مرتب حسب الموضوع، ومن بعد حسب الجزء:
 
-     SPRECHEN_B2_CONTENT["sport-gesundheit"]["teil1"] = { … }
+     SPRECHEN_B2_CONTENT["sport-gesundheit"]["teil2"] = { … }
 
-   المفاتيح: teil1 (Präsentation) · teil2 (Diskussion) ·
-             teil3 (Problemlösung / gemeinsam planen)
+   المفاتيح: teil2 (Diskussion) · teil3 (Problemlösung / gemeinsam planen)
+   Teil 1 (Über Erfahrungen sprechen) عندو ملف ديالو: sprechen-b2-teil1.js
 
    شكل الجزء:
    {
@@ -23,24 +23,6 @@
 
 (function () {
     "use strict";
-
-    /* النقط ديال Teil 1 هي نفسها ف الامتحان — كيتبدل غير الموضوع. */
-    function praesentation(thema, erster, dritter) {
-        return {
-            title: "Präsentation: " + thema,
-            minutes: 3,
-            intro: "Präsentieren Sie das Thema »" + thema + "«. "
-                 + "Sprechen Sie etwa drei Minuten frei und gehen Sie auf alle fünf Punkte ein.",
-            points: [
-                "Einleitung: " + erster,
-                "Ihre eigenen Erfahrungen mit diesem Thema.",
-                dritter,
-                "Vorteile und Nachteile – nennen Sie mindestens je zwei.",
-                "Ihr Fazit: Was ist Ihre Meinung und was empfehlen Sie?"
-            ],
-            note: "٣ دقايق. ماتقراش من الورقة — غير نقط صغار ونتا كتهضر."
-        };
-    }
 
     function diskussion(these, punkte) {
         return {
@@ -66,9 +48,6 @@
     window.SPRECHEN_B2_CONTENT = {
 
         "sport-gesundheit": {
-            teil1: praesentation("Sport und Gesundheit",
-                "Warum sprechen heute so viele Menschen über Sport und Fitness?",
-                "Die Situation in Ihrem Heimatland: Wie sportlich leben die Menschen dort?"),
             teil2: diskussion(
                 "Jede Schule sollte täglich eine Stunde Sport verpflichtend anbieten.",
                 [
@@ -90,9 +69,6 @@
         },
 
         "smartphone-alltag": {
-            teil1: praesentation("Smartphones im Alltag",
-                "Wie hat das Smartphone unseren Alltag in den letzten Jahren verändert?",
-                "Die Situation in Ihrem Heimatland: Wofür benutzen die Menschen ihr Handy am meisten?"),
             teil2: diskussion(
                 "Handys sollten in der Schule komplett verboten werden.",
                 [
@@ -114,9 +90,6 @@
         },
 
         "umweltschutz": {
-            teil1: praesentation("Umweltschutz im Alltag",
-                "Warum ist Umweltschutz gerade jetzt ein so wichtiges Thema?",
-                "Die Situation in Ihrem Heimatland: Wie wird dort Müll getrennt oder Energie gespart?"),
             teil2: diskussion(
                 "Plastiktüten und Einwegverpackungen sollten überall verboten werden.",
                 [
@@ -138,9 +111,6 @@
         },
 
         "ernaehrung": {
-            teil1: praesentation("Gesunde Ernährung",
-                "Warum fällt es vielen Menschen schwer, sich gesund zu ernähren?",
-                "Die Situation in Ihrem Heimatland: Was isst man dort typischerweise?"),
             teil2: diskussion(
                 "Ungesunde Lebensmittel sollten höher besteuert werden.",
                 [
@@ -162,9 +132,6 @@
         },
 
         "stadt-land": {
-            teil1: praesentation("Stadt oder Land",
-                "Warum ziehen immer mehr junge Menschen in die großen Städte?",
-                "Die Situation in Ihrem Heimatland: Wo leben die meisten Menschen – und warum?"),
             teil2: diskussion(
                 "Familien mit Kindern sollten lieber auf dem Land wohnen.",
                 [
@@ -186,9 +153,6 @@
         },
 
         "fremdsprachen": {
-            teil1: praesentation("Fremdsprachen lernen",
-                "Warum lernen heute so viele Menschen mehr als eine Fremdsprache?",
-                "Die Situation in Ihrem Heimatland: Welche Sprachen lernt man dort in der Schule?"),
             teil2: diskussion(
                 "Eine Sprache lernt man am besten im Ausland, nicht im Kurs.",
                 [
@@ -210,9 +174,6 @@
         },
 
         "soziale-netzwerke": {
-            teil1: praesentation("Soziale Netzwerke",
-                "Welche Rolle spielen soziale Netzwerke heute im Leben der Menschen?",
-                "Die Situation in Ihrem Heimatland: Welche Netzwerke sind dort besonders beliebt?"),
             teil2: diskussion(
                 "Kinder unter 16 Jahren sollten keine sozialen Netzwerke benutzen dürfen.",
                 [
@@ -234,9 +195,6 @@
         },
 
         "beruf-familie": {
-            teil1: praesentation("Beruf und Familie",
-                "Warum ist es für viele Menschen schwierig, Beruf und Familie zu verbinden?",
-                "Die Situation in Ihrem Heimatland: Wie organisieren Familien dort die Kinderbetreuung?"),
             teil2: diskussion(
                 "Eltern von kleinen Kindern sollten nur in Teilzeit arbeiten.",
                 [
@@ -258,9 +216,6 @@
         },
 
         "online-shopping": {
-            teil1: praesentation("Online-Shopping",
-                "Warum kaufen immer mehr Menschen im Internet statt im Geschäft?",
-                "Die Situation in Ihrem Heimatland: Wie verbreitet ist dort das Einkaufen im Internet?"),
             teil2: diskussion(
                 "Das Einkaufen im Internet ruiniert die kleinen Geschäfte in den Städten.",
                 [
@@ -282,9 +237,6 @@
         },
 
         "verkehr": {
-            teil1: praesentation("Auto oder öffentliche Verkehrsmittel",
-                "Warum diskutiert man in vielen Städten über weniger Autoverkehr?",
-                "Die Situation in Ihrem Heimatland: Wie kommen die Menschen dort zur Arbeit?"),
             teil2: diskussion(
                 "In den Innenstädten sollte es gar keine Autos mehr geben.",
                 [
@@ -306,9 +258,6 @@
         },
 
         "ehrenamt": {
-            teil1: praesentation("Ehrenamtliche Arbeit",
-                "Warum engagieren sich Menschen freiwillig und ohne Bezahlung?",
-                "Die Situation in Ihrem Heimatland: Welche Formen von Hilfe gibt es dort?"),
             teil2: diskussion(
                 "Jeder junge Mensch sollte ein Jahr lang ehrenamtlich arbeiten müssen.",
                 [
@@ -330,9 +279,6 @@
         },
 
         "werbung": {
-            teil1: praesentation("Werbung und Konsum",
-                "Wie stark beeinflusst Werbung unsere Kaufentscheidungen?",
-                "Die Situation in Ihrem Heimatland: Wo begegnet man dort am meisten Werbung?"),
             teil2: diskussion(
                 "Werbung für Kinder sollte im Fernsehen und im Internet verboten werden.",
                 [
@@ -354,9 +300,6 @@
         },
 
         "bildung": {
-            teil1: praesentation("Schule und Bildung",
-                "Was sollte eine gute Schule den Kindern heute mitgeben?",
-                "Die Situation in Ihrem Heimatland: Wie ist das Schulsystem dort aufgebaut?"),
             teil2: diskussion(
                 "Noten in der Schule schaden mehr, als sie nützen.",
                 [
@@ -378,9 +321,6 @@
         },
 
         "reisen": {
-            teil1: praesentation("Reisen und Tourismus",
-                "Warum ist Reisen für viele Menschen so wichtig geworden?",
-                "Die Situation in Ihrem Heimatland: Welche Regionen besuchen Touristen dort?"),
             teil2: diskussion(
                 "Der Massentourismus zerstört die schönsten Orte der Welt.",
                 [
@@ -402,9 +342,6 @@
         },
 
         "medien": {
-            teil1: praesentation("Fernsehen und Medien",
-                "Woher bekommen die Menschen heute ihre Informationen?",
-                "Die Situation in Ihrem Heimatland: Welche Medien sind dort am wichtigsten?"),
             teil2: diskussion(
                 "Nachrichten im Internet sind weniger zuverlässig als im Fernsehen.",
                 [
@@ -426,9 +363,6 @@
         },
 
         "haustiere": {
-            teil1: praesentation("Haustiere",
-                "Warum leben in so vielen Haushalten Hunde, Katzen oder andere Tiere?",
-                "Die Situation in Ihrem Heimatland: Welche Tiere hält man dort und warum?"),
             teil2: diskussion(
                 "In einer kleinen Stadtwohnung sollte man keinen Hund halten.",
                 [
@@ -450,9 +384,6 @@
         },
 
         "gleichberechtigung": {
-            teil1: praesentation("Frauen und Männer im Beruf",
-                "Warum wird über Gleichberechtigung im Beruf immer noch diskutiert?",
-                "Die Situation in Ihrem Heimatland: In welchen Berufen arbeiten dort mehr Frauen, in welchen mehr Männer?"),
             teil2: diskussion(
                 "In Führungspositionen sollte es eine feste Quote für Frauen geben.",
                 [
@@ -474,9 +405,6 @@
         },
 
         "leben-im-ausland": {
-            teil1: praesentation("Leben im Ausland",
-                "Warum verlassen Menschen ihr Land, um woanders zu leben?",
-                "Die Situation in Ihrem Heimatland: Wohin gehen die Menschen von dort am häufigsten?"),
             teil2: diskussion(
                 "Wer im Ausland lebt, sollte sich vollständig an die neue Kultur anpassen.",
                 [
@@ -498,9 +426,6 @@
         },
 
         "homeoffice": {
-            teil1: praesentation("Arbeiten von zu Hause",
-                "Warum arbeiten seit einigen Jahren so viele Menschen von zu Hause aus?",
-                "Die Situation in Ihrem Heimatland: Ist Homeoffice dort üblich oder eher selten?"),
             teil2: diskussion(
                 "Wer von zu Hause arbeitet, arbeitet weniger konzentriert.",
                 [
@@ -522,9 +447,6 @@
         },
 
         "stress-freizeit": {
-            teil1: praesentation("Stress und Freizeit",
-                "Warum fühlen sich heute so viele Menschen gestresst?",
-                "Die Situation in Ihrem Heimatland: Wie entspannen sich die Menschen dort?"),
             teil2: diskussion(
                 "Erwachsene brauchen mehr Urlaubstage als heute üblich.",
                 [

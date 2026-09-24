@@ -32,7 +32,7 @@
     function stale() { return !document.body.contains(grid); }
 
     const PARTS = [
-        { key: "teil1", label: "Teil 1", name: "Präsentation" },
+        { key: "teil1", label: "Teil 1", name: "Erfahrungen" },
         { key: "teil2", label: "Teil 2", name: "Diskussion" },
         { key: "teil3", label: "Teil 3", name: "Problemlösung" }
     ];
@@ -269,7 +269,7 @@
             }
 
             if (typeof window.__sprechenRender === "function") {
-                window.__sprechenRender(stack, current, content[current]);
+                window.__sprechenRender(stack, current, content[current], themaId);
             }
         }
     }
