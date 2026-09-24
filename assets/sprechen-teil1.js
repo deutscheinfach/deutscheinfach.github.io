@@ -760,6 +760,19 @@
                     list.appendChild(label);
                 });
                 check.appendChild(list);
+
+                /* النقط: الوقت (10) + الأجوبة (5) + Selbstcheck (10) */
+                const answerPts = half(result.answers.reduce(function (a, sec) {
+                    return a + (sec >= 15 ? 2.5 : sec >= 5 ? 1 : 0);
+                }, 0));
+                const pb = pointsBox("teil1", [
+                    { label: "Sprechzeit", pts: timePoints(result.speak, MIN_SEC, MAX_SEC, 10), max: 10 },
+                    { label: "Fragen", pts: Math.min(5, answerPts), max: 5 }
+                ], 10);
+                list.addEventListener("change", function () {
+                    pb.update(list.querySelectorAll("input:checked").length / items.length);
+                });
+                stage.appendChild(pb.node);
                 stage.appendChild(check);
 
                 const row = el("div", "e1-row");
@@ -783,9 +796,69 @@
     window.__sprechenTeil1Render = render;
 
     /* الأدوات المشتركة — Teil 2 و Teil 3 كيستعملوهم */
+    /* ---- النقط (25 لكل جزء، بحال telc) ----
+       تقدير تقريبي: جزء كيتحسب أوتوماتيكياً (الوقت، الأجوبة…)
+       والباقي من الـSelbstcheck. كيتصيفط حدث "sprechen-points"
+       باش الـPrüfung الكاملة تجمع المجموع. */
+    function half(n) { return Math.round(n * 2) / 2; }
+    function fmtPts(n) { return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(".", ","); }
+
+    /* الوقت: كامل النقط فالمجال المطلوب، وشوية إلا كان قريب */
+    function timePoints(sec, min, max, full) {
+        if (sec >= min && sec <= max + 30) return full;
+        if (sec > max + 30) return half(full * 0.8);
+        if (sec >= min * 0.66) return half(full * 0.6);
+        if (sec >= min * 0.33) return half(full * 0.3);
+        return 0;
+    }
+
+    function pointsBox(part, fixed, selfMax) {
+        const MAX = 25;
+        const box = el("section", "e1-points");
+        const head = el("div", "e1-points-head");
+        head.appendChild(el("span", "", "Punkte · النقط"));
+        const big = el("b", "e1-points-total", "");
+        head.appendChild(big);
+        box.appendChild(head);
+        const rows = el("div", "e1-points-rows");
+        box.appendChild(rows);
+        box.appendChild(el("p", "e1-points-note",
+            "تقدير تقريبي: الوقت والأجوبة كيتحسبو بوحدهم، والباقي من الـSelbstcheck ديالك. فالامتحان الـPrüfer هو اللي كيصحح."));
+
+        function row(label, pts, max) {
+            const r = el("div", "exam-summary-row");
+            r.appendChild(el("span", "", label));
+            const track = el("span", "exam-summary-track");
+            const fill = el("span", "");
+            fill.style.width = (max ? pts / max * 100 : 0) + "%";
+            track.appendChild(fill);
+            r.appendChild(track);
+            r.appendChild(el("b", "", fmtPts(pts) + " / " + max));
+            return r;
+        }
+
+        function update(selfRatio) {
+            const selfPts = half(selfMax * (selfRatio || 0));
+            let total = selfPts;
+            rows.textContent = "";
+            fixed.forEach(function (f) { total += f.pts; rows.appendChild(row(f.label, f.pts, f.max)); });
+            rows.appendChild(row("Selbstcheck", selfPts, selfMax));
+            total = Math.min(MAX, half(total));
+            big.textContent = fmtPts(total) + " / " + MAX;
+            box.dataset.tone = total >= 20 ? "good" : total >= 15 ? "mid" : "bad";
+            try {
+                window.dispatchEvent(new CustomEvent("sprechen-points",
+                    { detail: { part: part, points: total, max: MAX } }));
+            } catch (e) { /* */ }
+        }
+        update(0);
+        return { node: box, update: update };
+    }
+
     window.__sprechenKit = {
         el: el, btn: btn, clock: clock, store: store, shuffle: shuffle,
         speak: speak, hush: hush, arToggle: arToggle, arBlock: arBlock,
-        ring: ring, recorderSession: recorderSession
+        ring: ring, recorderSession: recorderSession,
+        pointsBox: pointsBox, timePoints: timePoints, half: half
     };
 })();

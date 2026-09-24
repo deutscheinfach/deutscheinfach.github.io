@@ -258,9 +258,15 @@
         return location.pathname + "?" + params.toString();
     }
 
+    /* النقط ديال الامتحان (25 لكل جزء) — كتجي من الحدث sprechen-points */
+    let examListener = null;
+    const EXAM_MAX = 25;
+    function fmtPts(n) { return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(".", ","); }
+
     function openExam(n, part, push) {
         const exam = examList()[n - 1];
         if (!exam) { close(push); return; }
+        const scores = {};
         let current = PART_LABEL[part] ? part : "teil1";
         if (push) history.pushState({ pruefung: n, teil: current }, "", examUrl(n, current));
 
@@ -304,10 +310,28 @@
             nm.textContent = exam.parts[p.key].title || "";
             tab.append(nr, nm);
             if (exam.parts[p.key].locked && !window.__deutschEinfachIsPremium) tab.classList.add("is-locked");
+            const pts = document.createElement("span");
+            pts.className = "exam-tab-pts";
+            pts.hidden = true;
+            tab.appendChild(pts);
             tab.addEventListener("click", function () { go(p.key); });
             tabs.appendChild(tab);
         });
         detail.appendChild(tabs);
+
+        if (examListener) window.removeEventListener("sprechen-points", examListener);
+        examListener = function (event) {
+            if (detail.hidden || !document.body.contains(tabs)) {
+                window.removeEventListener("sprechen-points", examListener);
+                examListener = null;
+                return;
+            }
+            const d = event.detail || {};
+            if (d.part !== current) return;
+            scores[current] = d.points;
+            paintScores();
+        };
+        window.addEventListener("sprechen-points", examListener);
 
         const stack = document.createElement("div");
         stack.id = "sprechen-stack";
@@ -315,6 +339,62 @@
         const next = document.createElement("div");
         next.className = "exam-next";
         detail.appendChild(next);
+        const summary = document.createElement("div");
+        summary.className = "exam-summary";
+        summary.hidden = true;
+        detail.appendChild(summary);
+
+        function paintScores() {
+            Array.from(tabs.children).forEach(function (tab, i) {
+                const key = PARTS[i].key;
+                const badge = tab.querySelector(".exam-tab-pts");
+                if (scores[key] === undefined) { badge.hidden = true; return; }
+                badge.hidden = false;
+                badge.textContent = fmtPts(scores[key]) + "/" + EXAM_MAX;
+            });
+            const done = PARTS.filter(function (p) { return scores[p.key] !== undefined; });
+            summary.hidden = !done.length;
+            if (!done.length) return;
+            const total = done.reduce(function (a, p) { return a + scores[p.key]; }, 0);
+            const max = PARTS.length * EXAM_MAX;
+            const need = Math.ceil(max * 0.6);
+            summary.textContent = "";
+            summary.dataset.tone = done.length < PARTS.length ? "" : (total >= need ? "good" : "bad");
+            const head = document.createElement("div");
+            head.className = "exam-summary-head";
+            const t = document.createElement("span");
+            t.textContent = "Ergebnis · النتيجة";
+            const big = document.createElement("b");
+            big.textContent = fmtPts(total) + " / " + max;
+            head.append(t, big);
+            summary.appendChild(head);
+            const rows = document.createElement("div");
+            rows.className = "exam-summary-rows";
+            PARTS.forEach(function (p) {
+                const r = document.createElement("div");
+                r.className = "exam-summary-row" + (scores[p.key] === undefined ? " is-open" : "");
+                const a = document.createElement("span");
+                a.textContent = p.label + " · " + p.name;
+                const track = document.createElement("span");
+                track.className = "exam-summary-track";
+                const fill = document.createElement("span");
+                fill.style.width = scores[p.key] === undefined ? "0" : (scores[p.key] / EXAM_MAX * 100) + "%";
+                track.appendChild(fill);
+                const v = document.createElement("b");
+                v.textContent = (scores[p.key] === undefined ? "—" : fmtPts(scores[p.key])) + " / " + EXAM_MAX;
+                r.append(a, track, v);
+                rows.appendChild(r);
+            });
+            summary.appendChild(rows);
+            const note = document.createElement("p");
+            note.className = "exam-summary-note";
+            note.textContent = done.length < PARTS.length
+                ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء. سالي المحاكاة ديال كل جزء باش تبان النتيجة الكاملة."
+                : (total >= need
+                    ? "🎉 مزيان! جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة)."
+                    : "باقي شوية: جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة).");
+            summary.appendChild(note);
+        }
 
         window.scrollTo({ top: 0, behavior: "smooth" });
         paint();

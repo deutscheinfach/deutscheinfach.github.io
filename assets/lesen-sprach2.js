@@ -322,12 +322,8 @@
                     if (row.why && (ok || reveal)) row.why.hidden = false;
                 });
                 sync();
-                score.hidden = false;
-                score.textContent = reveal
-                    ? "الحلول كاينة فوق. " + right + " من " + rows.length + " كانو صحاح."
-                    : right + " / " + rows.length + " صحيحة" +
-                      (Object.keys(picked).length < rows.length
-                          ? " · باقي " + (rows.length - Object.keys(picked).length) + " بلا جواب" : "");
+                window.__lesenScore(score, "sprach2", right, rows.length, reveal,
+                    rows.length - Object.keys(picked).length);
             }
 
             function reset() {

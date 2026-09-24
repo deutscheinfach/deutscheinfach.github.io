@@ -347,12 +347,8 @@
                 });
 
                 paintUsed();
-                score.hidden = false;
-                score.textContent = reveal
-                    ? "الحلول كاينة فاللوحة. " + right + " من " + rows.length + " كانو صحاح."
-                    : right + " / " + rows.length + " صحيحة" +
-                      (answered < rows.length
-                          ? " · باقي " + (rows.length - answered) + " بلا جواب" : "");
+                window.__lesenScore(score, "teil3", right, rows.length, reveal,
+                    rows.length - answered);
             }
 
             function clear(row) {

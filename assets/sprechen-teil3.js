@@ -516,6 +516,19 @@
                     list.appendChild(label);
                 });
                 check.appendChild(list);
+
+                /* النقط: كل النقط تناقشو (5) + الردود (10) + Selbstcheck (10) */
+                const nPoints = (task.punkte || []).length || 1;
+                const decided = Object.keys(result.values).length;
+                const good = result.turns.filter(function (sec) { return sec >= 8; }).length;
+                const pb = K.pointsBox("teil3", [
+                    { label: "Alle Punkte besprochen", pts: K.half(5 * decided / nPoints), max: 5 },
+                    { label: "Vorschläge & Reaktionen", pts: K.half(10 * good / Math.max(1, result.turns.length)), max: 10 }
+                ], 10);
+                list.addEventListener("change", function () {
+                    pb.update(list.querySelectorAll("input:checked").length / items.length);
+                });
+                stage.appendChild(pb.node);
                 stage.appendChild(check);
 
                 const row = el("div", "e1-row");
