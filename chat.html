@@ -1066,7 +1066,7 @@ button:disabled{
 }
 
 .closed-banner{
-    background: #181b22;
+    background: var(--surface-2);
     color: var(--text-muted);
     padding: 10px;
     border-radius: 9px;
@@ -2295,7 +2295,201 @@ button:disabled{
 }
 </style>
 
+<style id="chat-v3">
+/* =====================================================
+   v3 — الشات بنفس هوية الموقع: جنب أزرق ليلي + فقاعات واضحين
+   ===================================================== */
+:root {
+    --sidebar: #0f1b3d;
+    --sidebar-hover: rgba(255,255,255,.07);
+    --bubble-mine: #1c2c5e;
+}
 
+/* ---- الجنب ---- */
+.sidebar {
+    background: var(--grad-navy, linear-gradient(160deg, #1c2c5e, #0f1b3d 55%, #0a1330));
+    color: #fff;
+    border-inline-end: 0;
+    box-shadow: 8px 0 30px -18px rgba(10,19,48,.6);
+}
+.sidebar .logo-area,
+.sidebar .search-box { background: #14224c; }
+.logo-area { border-bottom: 1px solid rgba(255,255,255,.08); }
+.logo-text { color: #fff; }
+.logo-sub { color: rgba(255,255,255,.6); }
+.logo { box-shadow: 0 0 0 2px rgba(255,255,255,.9), 0 0 0 4px rgba(227,22,63,.55); }
+.search-box input {
+    background: rgba(255,255,255,.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.14);
+}
+.search-box input::placeholder { color: rgba(255,255,255,.55); }
+.search-box input:focus { background: rgba(255,255,255,.14); border-color: var(--brand-light); box-shadow: 0 0 0 4px rgba(227,22,63,.25); color: #fff; }
+.search-results { color: var(--text); box-shadow: var(--shadow-lg); }
+
+.nav button { color: rgba(255,255,255,.8); }
+.nav button svg.icon { stroke: currentColor; }
+.nav button:hover { background: rgba(255,255,255,.08); color: #fff; }
+.nav button.active { background: var(--grad-brand); color: #fff; }
+.section-title { color: rgba(255,255,255,.5); }
+
+.person, .group-item { color: #fff; border-radius: 12px; }
+.person:hover, .group-item:hover { background: rgba(255,255,255,.07); }
+.person .person-email, .group-item .person-email,
+.conversation-preview, .conversation-time { color: rgba(255,255,255,.6); }
+.person.active, .group-item.active { background: var(--grad-brand) !important; color: #fff; }
+.person.active .person-email, .group-item.active .person-email,
+.person.active .conversation-preview, .person.active .conversation-time { color: rgba(255,255,255,.85); }
+.avatar { color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,.12); }
+
+.create-group { color: #fff; }
+.panel-head h2 { color: #fff; }
+.row-item { color: #fff; }
+.row-item:hover { background: rgba(255,255,255,.07); }
+.row-sub { color: rgba(255,255,255,.6); }
+.row-avatar { background: var(--grad-brand); color: #fff; }
+.empty-row { color: rgba(255,255,255,.65); }
+.me-card { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); color: #fff; }
+.me-mail { color: rgba(255,255,255,.6); }
+.settings-row { color: #fff; }
+.settings-row .ico { color: #ff8aa0; }
+.settings-row .val { color: rgba(255,255,255,.6); }
+.settings-row.danger { background: rgba(227,22,63,.16) !important; color: #ffb3c0 !important; }
+.settings-row.danger .ico { color: #ffb3c0; }
+.online-pill { background: rgba(25,164,99,.18); color: #7ef0b5; }
+.friend-limit-box, .closed-banner { background: var(--surface-2); color: var(--muted); border: 1px solid var(--border); }
+.sidebar .friend-limit-box { background: rgba(255,255,255,.06); color: rgba(255,255,255,.75); border-color: rgba(255,255,255,.12); }
+.sidebar .friend-limit-box strong { color: #ff8aa0; }
+.chats-skeleton-row { background: rgba(255,255,255,.06) !important; }
+
+/* ---- الأزرار: ما يبقاش شي زر كحل مخبّع ---- */
+.accept { background: #12915a; color: #fff; }
+.reject { background: #fff; color: var(--navy); border: 1.5px solid var(--navy) !important; }
+.member-remove { color: #fff; }
+.modal-btn { color: #fff; font-weight: 800; border-radius: 12px; }
+.modal-btn.secondary { background: #fff; color: var(--navy); border: 1.5px solid var(--navy); }
+.modal-btn.yellow { background: var(--sun); color: #1b1400; }
+.close-btn { background: var(--surface-2); color: var(--navy); border: 1px solid var(--border); }
+.close-btn:hover { background: var(--navy); color: #fff; }
+
+/* ---- رأس المحادثة ---- */
+.header-avatar { background: var(--grad-navy); box-shadow: var(--shadow-navy); }
+.header-name { color: var(--navy); }
+.header-btn { color: var(--navy); }
+#callAudioBtn, #callVideoBtn { background: var(--grad-brand); color: #fff; box-shadow: var(--shadow-brand); }
+#callAudioBtn:hover, #callVideoBtn:hover { color: #fff; transform: translateY(-1px); }
+
+/* ---- الفقاعات ---- */
+.message-content { background: #fff; border: 1px solid var(--border); }
+.message.mine .message-content {
+    background: var(--grad-navy);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 10px 22px -14px rgba(10,19,48,.8);
+}
+.message.mine .message-time { color: rgba(255,255,255,.7); }
+.message.mine .message-text a { color: #ffd166; }
+.message-name { color: var(--brand); }
+.message-avatar { color: #fff; font-weight: 800; }
+
+/* ---- الكتابة ---- */
+.composer-btn { color: var(--navy); }
+.composer-btn:hover { color: var(--brand); }
+.send-btn { background: var(--grad-brand); color: #fff; }
+
+/* ---- التيليفون: البار ديال التحت ---- */
+@media (max-width: 750px) {
+    .tabbar { background: var(--navy); border-top: 0; box-shadow: 0 -10px 30px -18px rgba(10,19,48,.7); }
+    .tabbar button { color: rgba(255,255,255,.65); }
+    .tabbar button.active { color: #fff; background: rgba(227,22,63,.22); }
+    .sidebar { box-shadow: none; }
+}
+
+/* ---- الإضافات: كلمة اليوم، حروف ä ö ü، وجمل باش تبدا الهضرة ---- */
+.dx-word {
+    margin: 6px 12px 14px;
+    padding: 14px 14px 12px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(227,22,63,.22), rgba(255,183,3,.12));
+    border: 1px solid rgba(255,255,255,.12);
+    color: #fff;
+}
+.dx-word-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.dx-word-label { font-size: 10.5px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: #ffd166; }
+.dx-word-next { border: 0; background: rgba(255,255,255,.12); color: #fff; border-radius: 8px; width: 30px; height: 30px; cursor: pointer; font-weight: 900; }
+.dx-word-next:hover { background: rgba(255,255,255,.22); }
+.dx-word-de { margin: 6px 0 0; font-size: 19px; font-weight: 900; letter-spacing: -.01em; direction: ltr; text-align: left; }
+.dx-word-ar { margin: 2px 0 6px; font-size: 13.5px; color: rgba(255,255,255,.8); direction: rtl; text-align: left; }
+.dx-word-ex { margin: 0; font-size: 12.5px; line-height: 1.6; color: rgba(255,255,255,.72); font-style: italic; direction: ltr; text-align: left; }
+.dx-word-use {
+    margin-top: 10px;
+    border: 0;
+    border-radius: 10px;
+    padding: 7px 12px;
+    background: #fff;
+    color: var(--navy);
+    font: inherit; font-size: 12.5px; font-weight: 800;
+    cursor: pointer;
+}
+.dx-word-use:hover { background: var(--sun); color: #1b1400; }
+
+.dx-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 0 2px 8px;
+    direction: ltr;
+}
+.dx-key {
+    min-width: 34px; height: 32px;
+    padding: 0 8px;
+    border-radius: 9px;
+    border: 1.5px solid var(--navy);
+    background: #fff;
+    color: var(--navy);
+    font: inherit; font-weight: 800; font-size: 14px;
+    cursor: pointer;
+}
+.dx-key:hover { background: var(--navy); color: #fff; }
+.dx-starters-btn {
+    margin-inline-start: auto;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 9px;
+    border: 0;
+    background: var(--grad-brand);
+    color: #fff;
+    font: inherit; font-weight: 800; font-size: 12.5px;
+    cursor: pointer;
+}
+.dx-starters { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 2px 8px; direction: ltr; }
+.dx-starters[hidden] { display: none; }
+.dx-starter {
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--navy);
+    font: inherit; font-size: 13px; font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+}
+.dx-starter:hover { border-color: var(--brand); color: var(--brand); }
+.empty .dx-starters { justify-content: center; margin-top: 18px; max-width: 620px; }
+/* الأدوات كتاخد سطر ديالها فوق الخانة */
+.input-area { flex-wrap: wrap; row-gap: 0; }
+.input-area > .dx-tools-wrap { order: -1; flex: 0 0 100%; }
+.input-area > .composer { flex: 1 1 0; min-width: 0; }
+@media (max-width: 750px) {
+    .dx-key { min-width: 38px; height: 36px; }
+}
+/* تيليفون صغير: غير ä ö ü ß + Ideen فسطر واحد (الحروف الكبار نادرين) */
+@media (max-width: 480px) {
+    .dx-tools { flex-wrap: nowrap; }
+    .dx-tools .dx-key:nth-child(n+5) { display: none; }
+}
+</style>
 </head>
 
 <body>
@@ -2694,12 +2888,8 @@ onclick="document.getElementById('profilePhotoInput').click()">
 <svg class="icon" viewBox="0 0 24 24" style="width:15px;height:15px;stroke-width:2.4"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
 </button>
 
-<input
-type="file"
-id="profilePhotoInput"
-accept="image/*"
-style="display:none"
-onchange="changeProfilePhoto(this.files[0])">
+<!-- كان هنا input ثاني بنفس id="profilePhotoInput" (id مكرر).
+     الزر ديال فوق كيحل الـinput اللي فالبروفيل، واللي كيحفظ الصورة. -->
 
 </div>
 
@@ -10701,6 +10891,7 @@ location.replace("login.html");
 
 </script>
 
+<script src="assets/chat-extras.js?v=54c6cba9"></script>
 <script src="assets/session-guard.js?v=d6dfc66e"></script>
 
 </body>
