@@ -380,6 +380,122 @@ window.LESEN_B1_CONTENT = {
                     ]
                 }
             ]
+        },
+        "sprach1": {
+            "title": "Alex und Cora",
+            "kind": "gaps",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, [1] ich seit zwei Monaten in einem Altersheim [2] der Nähe von Schaffhausen. Die Arbeit in [3] Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge [4] zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich [5] gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir [6] ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr [7] gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, [8] ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna [9] auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du [10] bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie"
+                        }
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "options": [
+                                "arbeite",
+                                "arbeiten",
+                                "arbeiteten"
+                            ],
+                            "answer": 0,
+                            "why": "بما أننا كنهضرو ف الحاضر (Präsens) ومع الضمير 'ich'، فالفعل كياخد النهاية المعروفة 'e' ف اللخر، داكشي علاش كنقولو 'arbeite'.\""
+                        },
+                        {
+                            "num": 2,
+                            "options": [
+                                "auf",
+                                "bei",
+                                "in"
+                            ],
+                            "answer": 2,
+                            "why": "العبارة 'in der Nähe von' تعبير محفوظ كيفما هو، كيتستعمل باش نقولو 'بالقرب من' ومكيبدلش الشكل ديالو"
+                        },
+                        {
+                            "num": 3,
+                            "options": [
+                                "diesem",
+                                "diesen",
+                                "dieses"
+                            ],
+                            "answer": 0,
+                            "why": "الكلمة هي 'das Haus' (محايدة)، وبما أن حرف الجر 'in' كيهضر هنا على الموقع (فين؟/ Wo?)، فراه كيحول لينا الاسم لـ Dativ. داكشي علاش 'dieses' كترجع 'diesem'"
+                        },
+                        {
+                            "num": 4,
+                            "options": [
+                                "Kontakt",
+                                "Kontakte",
+                                "Kontakten"
+                            ],
+                            "answer": 0,
+                            "why": "هنا كنختارو الاسم ف المفرد 'der Kontakt'، حيت الصفة اللي سابقة الجملة 'der enge...' حتى هي جات ف المفرد وماشي ف الجمع"
+                        },
+                        {
+                            "num": 5,
+                            "options": [
+                                "besondere",
+                                "besonderes",
+                                "besonders"
+                            ],
+                            "answer": 2,
+                            "why": "الكلمة 'besonders' جات هنا كـ ظرف (Adverb) باش توصف شحال عزيزة عليها شي حاجة (besonders gern). والقاعدة كتقول باللي الظروف مكيتحتاجوش نهايات إعرابية"
+                        },
+                        {
+                            "num": 6,
+                            "options": [
+                                "ihr",
+                                "ihre",
+                                "ihres"
+                            ],
+                            "answer": 0,
+                            "why": "الكلمة هي 'das Leben' (محايدة) وجات ف موقع مفعول به (Akkusativ). وباش ننسبو الملكية لـ 'هي' (sie)، كنستعملو 'ihr' بلا ما نزيدو ليها حتى نهاية حيت الأكوزاتيف المحايد مكيتبدلش"
+                        },
+                        {
+                            "num": 7,
+                            "options": [
+                                "hart",
+                                "harte",
+                                "härter"
+                            ],
+                            "answer": 0,
+                            "why": "الكلمة 'hart' جات هنا باش توصف 'الطريقة' باش تخدمات الخدمة (Adverb). وبما أنها كتوصف الفعل وماشي الاسم، فراه مكنزيدو ليها حتى نهاية"
+                        },
+                        {
+                            "num": 8,
+                            "options": [
+                                "daher",
+                                "deshalb",
+                                "weil"
+                            ],
+                            "answer": 2,
+                            "why": "فاش كنشوفو الفعل المساعد 'konnten' مشى حتى لآخر الجملة، كنفهمو بلي هادي Nebensatz. والرابط اللي كيشرح لينا 'السبب' فهاد الحالة هو 'weil"
+                        },
+                        {
+                            "num": 9,
+                            "options": [
+                                "aber",
+                                "als",
+                                "wie"
+                            ],
+                            "answer": 0,
+                            "why": "كنستعملو 'aber' هنا باش نبينو التناقض أو الاستدراك، والمعنى هو: 'ولكن' بالرغم من الصعوبات، مابغاتش تتخلى على الهدف ديالها."
+                        },
+                        {
+                            "num": 10,
+                            "options": [
+                                "bist",
+                                "hast",
+                                "wirst"
+                            ],
+                            "answer": 1,
+                            "why": "الفعل 'erleben' كيتحتاج معاه الفعل المساعد 'haben' ف الماضي. ومع الضمير 'du'، التصريف الصحيح هو 'hast' بطبيعة الحال."
+                        }
+                    ]
+                }
+            ]
         }
     },
     "b1-rita": {
@@ -832,6 +948,122 @@ window.LESEN_B1_CONTENT = {
                             "de": "Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.",
                             "ar": "ترغب معارفك في تعلم كيفية إجراء إصلاحات بسيطة على سيارتها بنفسها.",
                             "answer": "L"
+                        }
+                    ]
+                }
+            ]
+        },
+        "sprach1": {
+            "title": "Rita",
+            "kind": "gaps",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich [1] erzählen. Am Anfang [2] ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt [3] zwei Antworten bekommen habe. Aber zum Glück hat einer davon [4]: Ich werde nun zwei Nachmittage in der Woche als Babysitterin [5] einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und [6] sind sehr nett. Wir haben in der [7] Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und [8] Kindermuseum gegangen. [9] kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir [10] .\nLiebe Grüße\nDeine Tanja"
+                        }
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "options": [
+                                "dafür",
+                                "damit",
+                                "davon"
+                            ],
+                            "answer": 2,
+                            "why": "الفعل erzählen ديما كيجر معاه حرف الجر von. وباش ما نكرروش كلمة 'الخدمة' (Job) اللي هضرنا عليها، كنلصقو da مع von وكتولي davon، كأننا كنقولو 'كنعاود ليك عليها"
+                        },
+                        {
+                            "num": 2,
+                            "options": [
+                                "bin",
+                                "habe",
+                                "war"
+                            ],
+                            "answer": 2,
+                            "why": "فاش كنبغيو نوصفو كيفاش كنا (الحالة النفسية) ف البداية (Am Anfang)، كنستعملو فعل الكينونة sein ف الماضي. ومع الضمير ich، التصريف هو war (كنت)"
+                        },
+                        {
+                            "num": 3,
+                            "options": [
+                                "doch",
+                                "nur",
+                                "schon"
+                            ],
+                            "answer": 1,
+                            "why": "باش نبينو باللي العدد اللي جاوبونا قليل بزاف (إحباط)، كنستعملو nur (فقط). هاد الكلمة هي اللي كاتعطي المعنى ديال 'يا ربي غير جوج'"
+                        },
+                        {
+                            "num": 4,
+                            "options": [
+                                "gepasst",
+                                "passen",
+                                "passt"
+                            ],
+                            "answer": 0,
+                            "why": "الجملة فيها الفعل المساعد hat، إذن الفعل الأساسي خاصو يكون ف Partizip II. بالنسبة لـ passen، التصريف ديالو هو gepasst (بمعنى: العرض جاني لاصق/مناسب)."
+                        },
+                        {
+                            "num": 5,
+                            "options": [
+                                "an",
+                                "bei",
+                                "zu"
+                            ],
+                            "answer": 1,
+                            "why": "قاعدة ثابتة: فاش كتهضر على الخدمة عند شي حد (عائلة، شركة، أو شخص)، ديما استعمل حرف الجر bei"
+                        },
+                        {
+                            "num": 6,
+                            "options": [
+                                "beide",
+                                "beiden",
+                                "beides"
+                            ],
+                            "answer": 0,
+                            "why": "هنا كنهضرو على أشخاص (جوج دراري)، داكشي علاش كنختارو beide. أما beides فكنخليوها غير للأشياء أو الأفكار المجردة"
+                        },
+                        {
+                            "num": 7,
+                            "options": [
+                                "erster",
+                                "ersten",
+                                "erstes"
+                            ],
+                            "answer": 1,
+                            "why": "كلمة Woche مؤنث وجات ف حالة Dativ (من بعد in der). القاعدة كتقول باللي الصفة فاش كيكون قبل منها أداة تعريف ف الداتيف، كتاخد ديما النهاية en"
+                        },
+                        {
+                            "num": 8,
+                            "options": [
+                                "im",
+                                "in",
+                                "ins"
+                            ],
+                            "answer": 2,
+                            "why": "بما أن كاين فعل حركة (gegangen)، فراه حنا ف حالة Akkusativ. وباش نختصرو 'in + das Museum' (حيت المتاحف محايدة)، كنجمعوهم ف كلمة وحدة هي ins"
+                        },
+                        {
+                            "num": 9,
+                            "options": [
+                                "Am besten",
+                                "Besser",
+                                "Gut"
+                            ],
+                            "answer": 1,
+                            "why": "باش نقولو باللي شي حاجة 'أحسن' من حاجة أخرى، كنستعملو Besser. السياق هنا كينفي وجود شي طريقة أفضل لاكتشاف المدينة"
+                        },
+                        {
+                            "num": 10,
+                            "options": [
+                                "geht",
+                                "geht's",
+                                "ging"
+                            ],
+                            "answer": 0,
+                            "why": "التعبير الشهير 'wie es dir geht' كيبقى كيفما هو فاش كنسولو على الحال، والفعل gehen كيتصرف ف المضارع عادي."
                         }
                     ]
                 }
@@ -1438,6 +1670,122 @@ window.LESEN_B1_CONTENT = {
                     ]
                 }
             ]
+        },
+        "sprach1": {
+            "title": "Caroline",
+            "kind": "gaps",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz [1] habe, ist viel passiert. Ich kenne [2] Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. [3] in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist [4] mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und [5] man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch [6] sehr verwirrt, aber [7] verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige [8]: In der Schweiz sprechen die Lehrer viel und die Schüler [9] Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf [10] Computer.\nViele Grüße\nJack"
+                        }
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "options": [
+                                "erzähle",
+                                "erzählen",
+                                "erzählt"
+                            ],
+                            "answer": 2,
+                            "why": "بصح. الجملة هنا مصرف ف الماضي (Perfekt)، وعلاش؟ حيت استعملنا الفعل المساعد 'habe' وزدنا عليه الـ Partizip II ديال الفعل الأساسي اللي هو 'erzählt'"
+                        },
+                        {
+                            "num": 2,
+                            "options": [
+                                "diese",
+                                "diesen",
+                                "dieses"
+                            ],
+                            "answer": 2,
+                            "why": "تماماً. كلمة 'Land' النوع ديالها محايد (das)، وبما أنها جات ف موقع مفعول به (Akkusativ)، فراه أداة الإشارة مكاتبدلش وكنقولو 'dieses"
+                        },
+                        {
+                            "num": 3,
+                            "options": [
+                                "aber",
+                                "obwohl",
+                                "sondern"
+                            ],
+                            "answer": 0,
+                            "why": "هادشي اللي كاين. استعملنا 'aber' (ولكن) باش نبينو واحد الفرق كبير: بالرغم من أن مساحة سويسرا صغيرة، إلا أن التنوع اللغوي فيها كبير بزااف"
+                        },
+                        {
+                            "num": 4,
+                            "options": [
+                                "an",
+                                "für",
+                                "vor"
+                            ],
+                            "answer": 1,
+                            "why": "قاعدة ثابتة. باش تقول 'بالنسبة ليا'، الترجمة هي 'für mich'. ديما عقل باللي حرف الجر 'für' كيمشي معاه الـ Akkusativ"
+                        },
+                        {
+                            "num": 5,
+                            "options": [
+                                "als",
+                                "wann",
+                                "wenn"
+                            ],
+                            "answer": 2,
+                            "why": "صحيح. كنستعملو 'wenn' فاش كنهضرو على شي حالة عامة أو متكررة ف الحاضر (مثلاً: فاش كنسوق...)، ماشي شي حاجة طرات غير مرة وحدة ف الماضي وسالات"
+                        },
+                        {
+                            "num": 6,
+                            "options": [
+                                "wenn",
+                                "ganz",
+                                "schon"
+                            ],
+                            "answer": 2,
+                            "why": "هنا اللمسة الألمانية. كلمة 'schon' جات هنا غير باش تزيد تأكد (تفوكسي) على ديك الحيرة والدهشة اللي كانت عند جاك ف البداية."
+                        },
+                        {
+                            "num": 7,
+                            "options": [
+                                "früher",
+                                "jetzt",
+                                "seit"
+                            ],
+                            "answer": 1,
+                            "why": "بصح. الجملة كتحط الماضي (البداية) ف كفة، والحاضر ف كفة أخرى، داكشي علاش استعملنا 'jetzt' باش نبينو الوضع ديال 'دابا'"
+                        },
+                        {
+                            "num": 8,
+                            "options": [
+                                "Unterschied",
+                                "Unterschiede",
+                                "Unterschieden"
+                            ],
+                            "answer": 1,
+                            "why": "تماماً. الكلمة 'einige' (بعض) ديما كتحتاج الاسم اللي موراها يكون ف صيغة الجمع، داكشي علاش استعملنا 'Unterschiede' (اختلافات)"
+                        },
+                        {
+                            "num": 9,
+                            "options": [
+                                "brauchen",
+                                "haben",
+                                "müssen"
+                            ],
+                            "answer": 2,
+                            "why": "هادشي اللي كاين. فاش كنهضرو على القوانين أو الالتزامات اللي خاص تدار ف المدرسة، الفعل المناسب هو 'müssen' (لازم/ضروري)"
+                        },
+                        {
+                            "num": 10,
+                            "options": [
+                                "dem",
+                                "den",
+                                "der"
+                            ],
+                            "answer": 0,
+                            "why": "قاعدة الموقع. حرف الجر 'auf' هنا كيوصف 'فين' كاينة الحاجة (Dativ). وبما أن 'Computer' مذكر (der)، فراه ف حالة الداتيف كيرجع 'dem"
+                        }
+                    ]
+                }
+            ]
         }
     },
     "b1-vera": {
@@ -1805,6 +2153,122 @@ window.LESEN_B1_CONTENT = {
                             "de": "Sie studieren Fremdsprachen und suchen einen Job, bei dem Sie mit Kindern arbeiten können.",
                             "ar": "تدرس اللغات الأجنبية وتبحث عن وظيفة يمكنك فيها العمل مع الأطفال.",
                             "answer": "H"
+                        }
+                    ]
+                }
+            ]
+        },
+        "sprach1": {
+            "title": "Vera",
+            "kind": "gaps",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "Liebe Beatrice,\nwie du ja weißt, sind meine Eltern seit Anfang Mai in einem Haus [1] Mittelnehmer in Spanien. Zuerست wollen meine Eltern warten, bis ich mit dem Gymnasium fertig bin. Aber dann sind sie doch [2] früher gefahren.\nAls ich im Sommer 18 wurde, wollte ich mit [3] älteren Bruder zusammen eine kleine Wohnung mieten. Das hat aber nicht geklappt. Eine Freundin hat [4] dann ein Zimmer in ihrer Wohngemeinschaft angeboten. Ich wohne jetzt mit drei [5] zusammen in der Innenstadt. Ich bin sehr zufrieden, [6] mein Zimmer recht klein ist. In der Schule habe ich keine Probleme. Ich staune selbst über meine Noten, wenn ich [7] denke, wie [8] Zeit ich mir für Hausaufgaben nehme.\nManchmal schicken mir meine Eltern eine E-Mail. [9] sie rufen an. [10] jetzt habe ich jede Woche von ihnen gehört.\nDas war’s für heute, bis bald und liebe Grüße\nSaskia"
+                        }
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "options": [
+                                "am",
+                                "in",
+                                "zum"
+                            ],
+                            "answer": 0,
+                            "why": "كنستعملو 'am' فاش كنهضرو على الموقع الجغرافي حدا شي بحر (هنا المقصود Mittelmeer). التعبير هو 'am Mittelmeer'."
+                        },
+                        {
+                            "num": 2,
+                            "options": [
+                                "bloß",
+                                "erst",
+                                "schon"
+                            ],
+                            "answer": 2,
+                            "why": "هنا كنستعملو 'schon' باش نبينو أنهم سافرو 'ديجا' أو 'قبل' من الوقت اللي كان متوقع."
+                        },
+                        {
+                            "num": 3,
+                            "options": [
+                                "mein",
+                                "meinem",
+                                "meinen"
+                            ],
+                            "answer": 1,
+                            "why": "حرف الجر 'mit' ديما كيتبعو الـ Dativ. الأخ (Bruder) مذكر كياخد 'meinem' فالداتيف."
+                        },
+                        {
+                            "num": 4,
+                            "options": [
+                                "ihr",
+                                "mich",
+                                "mir"
+                            ],
+                            "answer": 2,
+                            "why": "الفعل 'anbieten' (عرض) كيحتاج Dativ للشخص اللي تعرض عليه. هي عرضات عليا 'أنا'، يعني 'mir'."
+                        },
+                        {
+                            "num": 5,
+                            "options": [
+                                "Freund",
+                                "Freundin",
+                                "Freundinnen"
+                            ],
+                            "answer": 2,
+                            "why": "بما أن كاين العدد 'drei' (ثلاثة)، خاصنا نستعملو الاسم فصيغة الجمع، اللي هو 'Freundinnen'."
+                        },
+                        {
+                            "num": 6,
+                            "options": [
+                                "aber",
+                                "obwohl",
+                                "trotz"
+                            ],
+                            "answer": 1,
+                            "why": "كنستعملو 'obwohl' (وخا) حيت هي راضية وسعيدة واخا البيت ديالها صغير بزاف."
+                        },
+                        {
+                            "num": 7,
+                            "options": [
+                                "daran",
+                                "darauf",
+                                "darüber"
+                            ],
+                            "answer": 0,
+                            "why": "الفعل 'denken' كيمشي مع حرف الجر 'an'. باش نعوضو الفكرة اللي فكرت فيها كنستعملو 'daran'."
+                        },
+                        {
+                            "num": 8,
+                            "options": [
+                                "wenig",
+                                "wenigen",
+                                "weniger"
+                            ],
+                            "answer": 0,
+                            "why": "هنا كنوصفو الكمية ديال الوقت (Zeit)، والتعبير 'شحال قليل ديال الوقت' هو 'wie wenig Zeit'."
+                        },
+                        {
+                            "num": 9,
+                            "options": [
+                                "Damit",
+                                "Oder",
+                                "Sondern"
+                            ],
+                            "answer": 1,
+                            "why": "هنا كاين اختيار بين جوج حاجات: إما كيصيفطو إيميل 'أو' (oder) كيعيطو فالتلفون."
+                        },
+                        {
+                            "num": 10,
+                            "options": [
+                                "Ab",
+                                "Bis",
+                                "Seit"
+                            ],
+                            "answer": 1,
+                            "why": "التعبير 'حتى لـ دابا' بالألمانية هو 'Bis jetzt'."
                         }
                     ]
                 }
