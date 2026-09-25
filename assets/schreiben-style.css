@@ -766,3 +766,42 @@ body { background: var(--paper); color: var(--ink); }
 .umlaut-btns button:hover { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
 .point-num { background: var(--grad-brand); color: var(--on-brand); }
 textarea, input { background: transparent; color: var(--ink); }
+
+/* =====================================================
+   v4.2 — ورقة بيضة: النص، المهام وخانة الكتابة فاتحين
+   بكتابة كحلة باش يركز المستخدم. الباقي أسود وذهبي.
+   ===================================================== */
+.block,
+.panel-right,
+.result-card {
+    --ink: #1c1a16;
+    --paper: #f5efe1;
+    --card: #fffdf8;
+    --border: rgba(28,26,22,.13);
+    --muted: #5e584c;
+    color: #1c1a16;
+}
+.block {
+    background: linear-gradient(180deg, #fffdf8, #faf6ec);
+    border: 1px solid rgba(214,178,94,.55);
+    box-shadow: 0 18px 40px -26px rgba(0,0,0,.9);
+}
+.block-head h2 { color: #1c1a16; }
+.block-head h2::before { background: var(--grad-brand); }
+.panel-right { background: #fffdf8; border-inline-start: 1px solid rgba(214,178,94,.45); }
+.editor-toolbar { background: #f5efe1; border-bottom-color: rgba(168,134,58,.35); }
+#answer-text { color: #1c1a16; caret-color: #a8863a; }
+#answer-text::selection, .block ::selection { background: rgba(214,178,94,.45); color: #000; }
+.point-row { background: #fff; border-color: rgba(28,26,22,.13); color: #1c1a16; }
+.translation { background: #f5efe1; color: #1c1a16; border-inline-start-color: #d6b25e; }
+:is(.block, .panel-right) :is(.translate-btn, .umlaut-btns button) {
+    background: #fff;
+    color: #1c1a16;
+    border: 1.5px solid rgba(168,134,58,.55);
+}
+:is(.block, .panel-right) :is(.translate-btn, .umlaut-btns button):hover {
+    background: var(--grad-brand);
+    color: var(--on-brand);
+    border-color: #d6b25e;
+}
+.result-card { background: #fffdf8; border: 1px solid rgba(214,178,94,.55); }

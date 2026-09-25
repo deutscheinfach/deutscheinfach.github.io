@@ -2939,6 +2939,8 @@
    ===================================================== */
 html body .t1-text,
 html body .t1-panel,
+html body .e1-box,
+html body .e1-task,
 html body .e2-text {
     --text: #1c1a16;
     --muted: #5e584c;
@@ -2998,3 +3000,13 @@ html body .t1-panel :is(.t2-option.is-right) { background: #e5f6ec; border-color
 html body .t1-panel :is(.t2-option.is-wrong) { background: #fbe7e7; border-color: #d64545; }
 html body .t1-panel :is(.t2-q.correct, .t3-sit.correct) { border-color: #1f9d63; box-shadow: 0 0 0 2px rgba(31,157,99,.2); }
 html body .t1-panel :is(.t2-q.wrong, .t3-sit.wrong) { border-color: #d64545; box-shadow: 0 0 0 2px rgba(214,69,69,.18); }
+
+/* Sprechen: البطائق ديال المحتوى فورقة بيضة (الساعة والمراحل كيبقاو داكنين) */
+html body :is(.e1-box, .e1-task) :is(h3, h4, p, li, .e1-box-title, .e1-task-de) { color: #1c1a16; }
+html body :is(.e1-box, .e1-task) :is(.e1-box-hint, .e1-task-label, .e1-guide-text, .e1-peek-label) { color: #5e584c; }
+html body :is(.e1-box, .e1-task) .e2-gl { background: rgba(214,178,94,.22); border-bottom-color: #a8863a; color: #1c1a16; }
+html body :is(.e1-box, .e1-task) .e2-gl-ar { background: #1c1a16; color: #f0d58c; }
+html body :is(.e1-box, .e1-task) :is(.e1-guide-btn, .e2-arg, .e1-word, .e1-opt, .e2-point, .e1-answer, .e1-clip):hover { border-color: #d6b25e; }
+html body :is(.e1-box, .e1-task) :is(.e1-notes, .t1-select, .e3-own-input) { background: #fff; color: #1c1a16; border-color: rgba(168,134,58,.5); }
+html body :is(.e1-box, .e1-task) :is(.sp-btn-ghost, .e1-btn) { color: #1c1a16; border-color: rgba(28,26,22,.3); }
+html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45); color: #000; }
