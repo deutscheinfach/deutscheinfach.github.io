@@ -96,6 +96,145 @@ window.LESEN_B1_CONTENT = {
                 }
             ]
         },
+        "teil2": {
+            "title": "Alex und Cora",
+            "kind": "mc",
+            "texts": [
+                {
+                    "body": "Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt . Markus Kleinoth aus der Freizeitredaktion hat sich mit diesem Thema beschäftigt."
+                },
+                {
+                    "body": "In deutschen Haushalten gibt es rund 34 Millionen Haustiere. Besonders Katzen sind sehr beliebt, denn davon leben 14 Millionen in Deutschland. Und das, obwohl Deutschland als Land der Hundefans gilt. Insgesamt gibt es aber etwa 10 Millionen Hunde."
+                },
+                {
+                    "body": "Für den Hund ist manchen Menschen nichts zu teuer. Eine Hundebesitzerin, die überdurchschnittlich viel Geld für ihren Liebling ausgibt, ist Bettina Schröther: Morgens vor der Arbeit bringe ich meinen Hund in eine sehr gute Tagesbetreuung, in der es auch eine Hundeschule gibt. Aber wenn ich frei habe, sind wir immer zusammen, auch im Urlaub. Ich war mit ihm sogar schon in einem Wellnesshotel für Hunde.\""
+                },
+                {
+                    "body": "Der Hundeexperte Marius Klotz kennt solche Fälle, sieht das aber kritisch: „Viele Besitzer meinen es gut und tun zu viel für ihre Hunde. Hier sollte man aufpassen. Für einen Hund ist es sehr wichtig, eine gute Erziehung zu bekommen. Wichtig sind klare Regeln, die er verstehen kann. Außerdem braucht er viel Bewegung und unbedingt passendes Futter. Frisches Futter ist nicht unbedingt das beste, da sollte man sich gut informieren, am besten Fachleute fragen.\""
+                },
+                {
+                    "body": "Viele Menschen sehen ihre Katzen und Hunde als Teil der Familie. So auch Ellie Herfried, Hunde- besitzerin aus Erfurt: Unsere Familie feiert jedes Jahr mit unserem kleinen Schatz Geburtstag Er bekommt einen Geburtstagshundekuchen, natürlich mit Kerzen, und auch ein Geschenk. Dieses Jahr haben wir außerdem seine Hundefreunde eingeladen.\""
+                },
+                {
+                    "body": "Auch in einigen Seniorenheimen sind mittlerweile Tiere erlaubt. Sandra Bärenweger ist Altenpflegerin in Hamburg: „Bei uns im Haus haben einige Seniorenbeinen Hund oder eine Katze.Dadurch haben sie eine Aufgabe, denn sie müssen sich ja um ihr Tier kümmern, es füttern, oder mit ihm rausgehen wenn er ein Hund ist. So haben sie jeden Tag eine sinnvolle Beschäftigung. Das tut den älteren Menschen gut; viele bleiben dadurch fit.\""
+                },
+                {
+                    "body": "Der tägliche Spaziergang mit dem Hund oder das Spielen mit der Katze bietet vielen Haustier besitzern Ruhe und Entspannung eine kleine Erholung vom Alltag. Das bestätigen auch Fachleute: Haustiere können gerade bei Stress für viele Menschen ein guter Ausgleich sein. Die tägliche Beschäftigung mit seinem Haustier wie beispielsweise das Spazieren mit dem Hund und die Zuneigung, die man von ihm bekommt, spielen dabei eine wichtige Rolle.\" Das Haustier ist dabei auch viel mehr als ein Hobby, da es ein Lebewesen ist, das schnell zum Familienmitglied wird und das Leben bereichert."
+                }
+            ],
+            "variants": [
+                {
+                    "label": "",
+                    "questions": [
+                        {
+                            "num": 1,
+                            "text": "Bettina Schröther …",
+                            "ar": "بيتينا شروثر ...",
+                            "options": [
+                                {
+                                    "text": "lässt ihren Hund in einer Hundeschule erziehen.",
+                                    "ar": "تقوم بتدريب كلبها في مدرسة لتدريب الكلاب."
+                                },
+                                {
+                                    "text": "macht mit ihrem Hund regelmäßig Wellnessurlaube.",
+                                    "ar": "تقضي عطلات استجمام منتظمة مع كلبها."
+                                },
+                                {
+                                    "text": "verbringt die ganze Freizeit mit ihrem Hund.",
+                                    "ar": "تقضي كل وقت فراغها مع كلبها."
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "صحيح، بيتينا وضحت باللي فوقما كيكون عندها وقت فراغ، كيدوزوه ديما مجموعين، وحتى فالعطلة مكاتفارقوش."
+                        },
+                        {
+                            "num": 2,
+                            "text": "Nach Meinung von Hundeexperte Marius Klotz sollte man",
+                            "ar": "وفقاً لخبير الكلاب ماريوس كلوتس، يجب على المرء",
+                            "options": [
+                                {
+                                    "text": "die Regeln bei der Hundeerziehung beachten.",
+                                    "ar": "الالتزام بالقواعد أثناء تدريب الكلاب."
+                                },
+                                {
+                                    "text": "seinen Hund immer gut behandeln.",
+                                    "ar": "معاملة كلبه دائماً بشكل جيد."
+                                },
+                                {
+                                    "text": "sich zur Ernährung des Tiers beraten lassen.",
+                                    "ar": "الحصول على استشارة حول تغذية الحيوان."
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "صحيح. الخبير كيوضح باللي الماكلة الطرية ماشي ديما هي الاختيار المثالي، ومن الأفضل الواحد يشاور المتخصصين (Fachleute fragen) باش يعرف التغذية اللي كاتناسب الحالة ديالو."
+                        },
+                        {
+                            "num": 3,
+                            "text": "Die Hundebesitzerin Elli Herfeld",
+                            "ar": "صاحبة الكلب إيلي هيرفيلد",
+                            "options": [
+                                {
+                                    "text": "backt ihrem Hund zum Geburtstag einen Kuchen.",
+                                    "ar": "تخبز لكلبها كعكة في عيد ميلاده."
+                                },
+                                {
+                                    "text": "feiert ihren Geburtstag immer mit ihrem Hund.",
+                                    "ar": "تحتفل بعيد ميلادها دائماً مع كلبها."
+                                },
+                                {
+                                    "text": "sieht ihren Hund als festes Familienmitglied.",
+                                    "ar": "تعتبر كلبها عضواً ثابتاً في العائلة."
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "تماماً. النص كيشير باللي بزاف ديال الناس، ومن بينهم Elli، مكيشوفوش الكلاب غير حيوانات وصافي، بل كيعتبروهم فرد من أفراد العائلة (Teil der Familie)."
+                        },
+                        {
+                            "num": 4,
+                            "text": "In Seniorenheimen gibt es oft Tiere, damit",
+                            "ar": "في دور رعاية المسنين، يوجد غالباً حيوانات لكي",
+                            "options": [
+                                {
+                                    "text": "die Senioren etwas tun, was gut für sie ist.",
+                                    "ar": "يقوم كبار السن بشيء مفيد لهم."
+                                },
+                                {
+                                    "text": "die Senioren mehr spazieren gehen.",
+                                    "ar": "يزداد عدد مرات خروج كبار السن للمشي."
+                                },
+                                {
+                                    "text": "sie auf die älteren Menschen aufpassen.",
+                                    "ar": "تعتني بالحيوانات بكبار السن."
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "هادشي نيت اللي كاين. وجود حيوان ف الدار كيخلي عند الشخص مسؤولية يومية (Aufgabe) وشغل كينفعو (sinnvolle Beschäftigung)، وهاد النشاط كيحسن الصحة وكيخلي الواحد ديما fit ونشيط."
+                        },
+                        {
+                            "num": 5,
+                            "text": "Fachleute meinen, dass",
+                            "ar": "يرى الخبراء أن",
+                            "options": [
+                                {
+                                    "text": "ein Haustier ein sinnvolles Hobby ist.",
+                                    "ar": "امتلاك حيوان أليف هو هواية ذات مغزى."
+                                },
+                                {
+                                    "text": "man mit seinem Hund täglich spazieren gehen sollte.",
+                                    "ar": "ينبغي على المرء المشي مع كلبه يومياً."
+                                },
+                                {
+                                    "text": "man sich durch sein Haustier erholen kann.",
+                                    "ar": "يمكن للمرء الاسترخاء بفضل حيوانه الأليف."
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "بصح. المتخصصين كيقارنو وجود الحيوانات بالراحة من ضغوطات الحياة، حيت كيعاونو بنادم ينقص من الستريس (Ausgleich bei Stress) وكيعطيوه إحساس بالهدوء والاسترخاء (Ruhe und Entspannung)"
+                        }
+                    ]
+                }
+            ]
+        },
         "teil3": {
             "title": "Alex und Cora",
             "kind": "ads",
@@ -418,6 +557,140 @@ window.LESEN_B1_CONTENT = {
                 }
             ]
         },
+        "teil2": {
+            "title": "Rita",
+            "kind": "mc",
+            "texts": [
+                {
+                    "title": "Von Antje Blinda Coz-Ausstoß: null. Geplante Strecke: einmal um die Welt. Endlich wird der Traum von Louis Palmer wahr: Der Schweizer startet mit seinem Auto, das mit Sonnenenergie fährt, zur Weltumrundung. Er will damit zeigen, dass Autofahren auch geht, ohne der Umwelt zu schaden",
+                    "body": "Entwickelt für mich ein Fahrzeug für eine Weltreise, die mit Sonnenenergie fährt, forderte Louis Palmer Studenten an Schweizer Universitäten auf. Das war vor drei Jahren. Heute ist das Auto fertig: ein dreirädriges Fahrzeug mit zwei Sitzplätzen. Und die Weltreise? Am 3. Juli starten er und sein 7-köpfiges Team in Luzern: Das Auto soll als erstes Solarfahrzeug die Welt umrunden"
+                },
+                {
+                    "body": "Die ganze Welt wartet auf revolutionäre Erfindungen für ein umweltbewusstes Auto, sagt der Schweizer, ich will darauf aufmerksam machen, dass die technischen Lösungen schon jetzt vorhanden sind. Mit 14 Jahren hatte Louis den Entschluss gefasst. Gegen die Veränderung des Klimas muss etwas getan werden. Die Lösung hatte er auch schon: Mit kräftigen Strichen zeichnete er ein Rennauto, verziert mit lachendem Sonnen. Der Rest war nur eine Frage der Organisation und der konsequenten Lebensplanung. Ich unterteile mein Leben in drei Phasen, sagt Palmer und lacht über sich selbst: zwischen 20 und 30 die Welt kennen lernen, zwischen 30 und 40 die Welt Aufmerksam machen und zwischen 40 und 50 die Welt verändern."
+                },
+                {
+                    "body": "Phase eins begann mit 23 Jahren: Er zog aus, um 50 Länder auf allen Kontinenten zu bereisen: Anstatt an die Uni zu gehen, habe ich die Welt studiert. Mit dem Fahrrad fuhr er von Kenia nach Kapstadt, mit einem Segelflugzeug überflog er Südamerika und als Fotograf reiste er mehrmals nach Afghanistan."
+                },
+                {
+                    "body": "Phase zwei startete vor drei Jahren: Palmer konnte Studenten von vier Universitäten gewinnen, die für ihn das Auto bauten. Schwierig war es aber, Firmen und private Sponsoren für die finanzielle Unterstützung zu finden, meint Palmer. Doch auch das hat dann schließlich geklappt."
+                },
+                {
+                    "body": "Nun ist Palmer bereit für die Tour. Ich habe keine Ahnung, was auf uns zukommt, sagt der erfahrene Globetrotter, der sechs Sprachen spricht. Ich habe schon etwas Angst, z.B. vor dem Straßenverkehr in Millionenstädten oder unvorhersehbaren Zwischenfällen. Das Schlimmste ist aber, wenn jeder Tag wie der andere ist. In den nächsten 16 Monaten wird es dazu nicht kommen."
+                }
+            ],
+            "variants": [
+                {
+                    "label": "",
+                    "questions": [
+                        {
+                            "num": 1,
+                            "text": "Mit 23 Jahren wollte Louis Palmer",
+                            "ar": "في سن الثالثة والعشرين، أراد لويس بالمر",
+                            "options": [
+                                {
+                                    "text": "für Studenten Reisen nach Südamerika organisieren",
+                                    "ar": "تنظيم رحلات إلى أمريكا الجنوبية للطلاب"
+                                },
+                                {
+                                    "text": "mit dem Fahrrad durch 50 verschiedene Länder fahren",
+                                    "ar": "السفر بالدراجة عبر 50 دولة مختلفة"
+                                },
+                                {
+                                    "text": "viele verschiedene Länder kennen lernen",
+                                    "ar": "التعرف على العديد من الدول المختلفة"
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "بصح. لويس ملي كمل 23 عام، قرر يخرج يشوف العالم وسافر لـ 50 دولة فكاع القارات. الهدف ديالو كان هو 'يدرس العالم' (die Welt studiert) ويتعرف عن قرب على بلدان وثقافات مختلفة."
+                        },
+                        {
+                            "num": 2,
+                            "text": "Sein Projekt konnte Palmer realisieren,",
+                            "ar": "تمكن بالمر من تحقيق مشروعه،",
+                            "options": [
+                                {
+                                    "text": "weil er einen Preis von einer Universität gewonnen hat",
+                                    "ar": "لأنه فاز بجائزة من جامعة"
+                                },
+                                {
+                                    "text": "weil er finanzielle Unterstützung von vier Universitäten erhalten hat.",
+                                    "ar": "لأنه حصل على دعم مالي من أربع جامعات"
+                                },
+                                {
+                                    "text": "weil ihn Firmen und Universitäten unterstützt haben",
+                                    "ar": "لأن الشركات والجامعات دعمته"
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "هادشي اللي كاين. المشروع نجح وخرج لأرض الواقع حيت تعاونوا فيه طلبة من 4 د الجامعات باش يصاوبوا الطوموبيل، وزيد عليها الدعم المادي اللي لقاه من عند شركات وممولين خواص (private Sponsoren)."
+                        },
+                        {
+                            "num": 3,
+                            "text": "Schon als Jugendlicher",
+                            "ar": "حتى عندما كان شابًا",
+                            "options": [
+                                {
+                                    "text": "baute Louis an einem umweltfreundlichen Auto",
+                                    "ar": "كان لويس يبني سيارة صديقة للبيئة"
+                                },
+                                {
+                                    "text": "wollte Louis etwas für die Umwelt tun.",
+                                    "ar": "أراد لويس أن يفعل شيئًا من أجل البيئة"
+                                },
+                                {
+                                    "text": "wusste Louis genau, wie er sein Leben einteilen will",
+                                    "ar": "كان لويس يعرف تمامًا كيف يريد تنظيم حياته"
+                                }
+                            ],
+                            "answer": 1,
+                            "why": "صحيح. النص كيشير باللي لويس من صغره (ملي كانت عندو 14 عام) وهو واعي بالخطر، وقرر باللي خاص ضروري تدار شي حاجة ضد التغير المناخي (Gegen die Veränderung des Klimas muss etwas getan werden)"
+                        },
+                        {
+                            "num": 4,
+                            "text": "Palmers Auto",
+                            "ar": "سيارة بالمر",
+                            "options": [
+                                {
+                                    "text": "fährt mit alternativer Energie",
+                                    "ar": "تعمل بالطاقة البديلة"
+                                },
+                                {
+                                    "text": "geht auf eine dreijährige Weltreise",
+                                    "ar": "تقوم برحلة حول العالم لمدة ثلاث سنوات"
+                                },
+                                {
+                                    "text": "hat genug Platz für sieben Personen",
+                                    "ar": "تحتوي على مساحة كافية لسبعة أشخاص"
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "تماماً. هاد الطوموبيل كتمشي غير بالطاقة الشمسية (Sonnenenergie)، وهي طاقة بديلة ونقية كتحافظ على البيئة وما كاتلوثهاش."
+                        },
+                        {
+                            "num": 5,
+                            "text": "Louis Palmer",
+                            "ar": "لويس بالمر",
+                            "options": [
+                                {
+                                    "text": "hat für die Weltreise sechs Sprachen gelernt",
+                                    "ar": "تعلم ست لغات من أجل الرحلة حول العالم"
+                                },
+                                {
+                                    "text": "möchte mit seinem Auto nicht durch Großstädte fahren",
+                                    "ar": "لا يرغب في القيادة بسيارته عبر المدن الكبرى"
+                                },
+                                {
+                                    "text": "wird sich in nächster Zeit nicht langweilen",
+                                    "ar": "لن يشعر بالملل في المستقبل القريب"
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "بصح. بالمر كيعتبر باللي أسوأ حاجة تقدر توقع للإنسان هي الملل ويعيش أيام كتشابه، وبما أنه غادي يدوز 16 شهر وهو مسافر كيكتشف، فراه أكيد ماديش يطيح ف هاد الروتين"
+                        }
+                    ]
+                }
+            ]
+        },
         "teil3": {
             "title": "Rita",
             "kind": "ads",
@@ -735,6 +1008,140 @@ window.LESEN_B1_CONTENT = {
                             "body": "Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch nächster Woche beginnen zwei Malkurse für Kinder. Zweieinhalb- bis vierjährige Kinder treffen sich um 15.30 Uhr, Kinder im Alter von fünf und sechs Jahren um 17.00 Uhr. Für Kinder im Alter zwischen eineinhalb und sechs Jahren und ihre Väter beginnt am Samstag um 10.00 Uhr eine feste Vater-Kind-Gruppe. Am darauf-folgenden Samstag gibt es dann auch ein Treffen für Väter und Kinder bis dreieinhalb Jahren. Etwas anderes ist die Kultur- und Kreativwerkstatt am Montag nächster Woche. Aus Ton und Erde sollen Figuren nach afrikanischen Beispielen gebastelt werden. Zur Vorbereitung treffen sich die Teilnehmer am kommenden Montag zuerst im Museum. Anmeldung spätestens morgen bis 15.00 Uhr.",
                             "ar": "تستعد مدرسة الشعب في دورنبيرن لإطلاق سلسلة من الدورات الجديدة تتنوع بين ورش عمل للرسم للأطفال بمختلف فئاتهم العمرية ومجموعات تفاعلية مخصصة للآباء وأبنائهم في عطلات نهاية الأسبوع بالإضافة إلى ورشة عمل ثقافية متميزة لصناعة تماثيل طينية مستوحاة من الفن الأفريقي تبدأ بلقاء تحضيري في المتحف ويُشترط على الراغبين في المشاركة استكمال إجراءات التسجيل في موعد أقصاه غداً الساعة الثالثة بعد الظهر لضمان مقاعدهم في هذه الأنشطة الإبداعية.",
                             "answer": "I"
+                        }
+                    ]
+                }
+            ]
+        },
+        "teil2": {
+            "title": "Caroline",
+            "kind": "mc",
+            "texts": [
+                {
+                    "title": "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite",
+                    "body": "Von Christiane Altenberger, Sie sind die Problemlöser im Kindergarten an der Munckerstraße. Wenn das Malprogram spinnt, plötzlich ein Spiel auftaucht, das keiner kennt, dann rufen die Erzieherinnen nach Anne und Melanie. Die sind zwar erst sechs Jahre alt, aber mit den Computerspielen kennen sie sich aus. Die Kinder wissen manchmal mehr als wir sagt Eva Schilling. Leiterin des Kindergartens. Gelernt haben die beiden ihr Know-how bei Multimedia - Landschaften für Kinder, einem Projekt, das das Schulamt zusammen mit dem Studio im Netz gestartet hat."
+                },
+                {
+                    "body": "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia- Computern und einem Farbdrucker installiert. Die Stationen wandern durch 14 Kindergärten, wo sie jeweils für vier Wochen installiert werden. Mit dabei in den Kindergärten: ein ganzer Satz von Spiel – Software. Vierjährige am Computer? In Pädagogen kreisen sind viele Berührungsängste da, weiß Edith llg, Fachberaterin für Kindergärten beim Schulamt, aber wir können uns aus dieser Entwicklung nicht ausklinken. Die Kinder wollen sich mit ihrer Umwelt auseinandersetzen. Angefangen hat diese Auseinandersetzung im Studio im Netz – 193 Kinder waren eingeladen, um erste Erfahrungen am Computer zu sammeln. Die Kinder waren absolut begeistert, haben immer wieder gefragt, wann gehen wir da wieder hin, so Frau llg."
+                },
+                {
+                    "body": "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus nach dem Motto: Mein fröhliches, gesundes Kind setzt sich vor den Computer und steht sechs Stunden später krank, sprachlos und einsam wieder auf."
+                },
+                {
+                    "body": "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend über flüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm."
+                },
+                {
+                    "body": "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte. Dabei entwickeln gerade Kinder, die sich sonst nur schwer auf etwas konzentrieren können, plötzlich ungeahnte Konzentrationszeiten. Eva Schilling kann sich deshalb die Computer als Dauereinrichtung im Kindergarten vorstellen."
+                }
+            ],
+            "variants": [
+                {
+                    "label": "",
+                    "questions": [
+                        {
+                            "num": 1,
+                            "text": "Das Schulamt hat ein Projekt gestartet, bei dem",
+                            "ar": "أطلقت إدارة التعليم مشروعًا حيث",
+                            "options": [
+                                {
+                                    "text": "Computer in Kindergärten aufgestellt werden.",
+                                    "ar": "يتم وضع أجهزة الكمبيوتر في رياض الأطفال."
+                                },
+                                {
+                                    "text": "Computerspiele für Vierjährige entwickelt werden sollen.",
+                                    "ar": "يتم تطوير ألعاب الكمبيوتر للأطفال في سن الرابعة."
+                                },
+                                {
+                                    "text": "Kinder neue Farbdrucker ausprobieren sollen.",
+                                    "ar": "يجب على الأطفال تجربة الطابعات الملونة الجديدة."
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "بصح. هاد المبادرة كتقوم على توفير وحدات كمبيوتر متنقلة (Wanderstationen) اللي كيدوروها على 14 روض ديال الأطفال، والهدف هو يقربوهم من التكنولوجيا من الصغر"
+                        },
+                        {
+                            "num": 2,
+                            "text": "Die Kinder",
+                            "ar": "الأطفال",
+                            "options": [
+                                {
+                                    "text": "hatten großen Spaß bei dem Projekt.",
+                                    "ar": "استمتعوا كثيرًا بالمشروع."
+                                },
+                                {
+                                    "text": "wollten lieber draußen im Freien spielen.",
+                                    "ar": "فضلوا اللعب في الهواء الطلق."
+                                },
+                                {
+                                    "text": "wussten nicht, wann sie ins Studio im Netz gehen sollten.",
+                                    "ar": "لم يعرفوا متى يجب عليهم الدخول إلى الاستوديو عبر الإنترنت."
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "تماماً. الدراري الصغار طاروا بالفرحة (absolut begeistert) وعجبهم الحال بزاف، لدرجة ولاو كيسولوا بإلحاح فوقاش غادي تجي نوبتهم عاوتاني باش يخدموا بالكمبيوتر."
+                        },
+                        {
+                            "num": 3,
+                            "text": "Eltern fürchten, dass",
+                            "ar": "يخشى الآباء أن",
+                            "options": [
+                                {
+                                    "text": "der Computer ihren Kindern schadet.",
+                                    "ar": "الكمبيوتر يضر بأطفالهم."
+                                },
+                                {
+                                    "text": "ihre Kinder nicht so früh aufstehen können.",
+                                    "ar": "أطفالهم لن يتمكنوا من الاستيقاظ مبكرًا."
+                                },
+                                {
+                                    "text": "ihre Kinder vor dem Computer Angst haben.",
+                                    "ar": "أطفالهم يخافون من الكمبيوتر."
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "صحيح. كاينين شي والدين اللي كان عندهم تحفظ، حيت خافوا باللي هاد الأجهزة تقدر تأثر على صحة ولادهم (krank) أو تخليهم يوليو منطويين ومعزولين (einsam) على الناس"
+                        },
+                        {
+                            "num": 4,
+                            "text": "Die Erzieherinnen",
+                            "ar": "المربيات",
+                            "options": [
+                                {
+                                    "text": "arbeiten jeden Tag 15 bis 20 Minuten am Computer.",
+                                    "ar": "يعملن كل يوم لمدة 15 إلى 20 دقيقة على الكمبيوتر."
+                                },
+                                {
+                                    "text": "spielen immer mit zwei oder drei Kindern am Computer.",
+                                    "ar": "يلعبن دائمًا مع طفلين أو ثلاثة على الكمبيوتر."
+                                },
+                                {
+                                    "text": "wählen für die Kinder die Software aus.",
+                                    "ar": "يخترن البرامج المناسبة للأطفال."
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "هادشي اللي كاين. المربيات هما اللي عندهم السيطرة، حيت هما اللي كينقيو ويختاروا برامج إبداعية ومفيدة (kreative Software) اللي كيتفرجوا فيها الدراري ف الشاشات"
+                        },
+                        {
+                            "num": 5,
+                            "text": "Wenn die Kinder am Computer sitzen, dann",
+                            "ar": "عندما يجلس الأطفال أمام الكمبيوتر، فإن",
+                            "options": [
+                                {
+                                    "text": "gibt es häufig Streit.",
+                                    "ar": "الخلافات تحدث بشكل متكرر."
+                                },
+                                {
+                                    "text": "hilft ein Kind dem anderen.",
+                                    "ar": "يساعد أحد الأطفال الآخر."
+                                },
+                                {
+                                    "text": "können sich die meisten nicht lange konzentrieren.",
+                                    "ar": "لا يستطيع معظمهم التركيز لفترة طويلة."
+                                }
+                            ],
+                            "answer": 1,
+                            "why": "بصح نيت. المديرة لاحظت باللي هاد التجربة خلات الدراري يوليو كيتعاملوا بسلام وبلا صداع، وبالعكس، ولاو كيتعاونوا بيناتهم (helfen sich gegenseitig) وبكل تلقائية"
                         }
                     ]
                 }
@@ -1118,6 +1525,140 @@ window.LESEN_B1_CONTENT = {
                             "body": "Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei zweifelhafter Witterung bzw. leichtem Regen auf der Seebühne abzuhalten, weshalb es zu Verzögerungen des Beginns oder zu Unterbrechungen kommen kann. Sollte die Seeaufführung nicht stattfinden können, wird eine halbszenische Version von Porgy and Bess im Festspielhaus gegeben. Wir empfehlen unseren Gästen , bei unsicherer Wetterlage regenfester Kleidung den Vorzug zu geben und auf Schirme zu verzichten, da diese die Sicht beeinträchtigen. Das Spiel auf dem See wird ohne Pause gespielt. Die Spieldauer beträgt ca.2 Std. 45 Min.",
                             "ar": "تبذل إدارة مهرجان بريغنتس قصارى جهدها لتقديم العروض على المسرح العائم حتى في حال تقلب الطقس أو هطول أمطار خفيفة مما قد يترتب عليه بعض التأخير أو التوقف المؤقت وفي حال استحالة العرض في الهواء الطلق يتم تقديم نسخة بديلة داخل دار المهرجان وتناشد الإدارة الزوار بضرورة ارتداء ملابس واقية من المطر مع الامتناع عن استخدام المظلات لعدم حجب الرؤية عن الآخرين علماً أن العرض يستمر لمدة ساعتين وخمس وأربعين دقيقة دون أي فواصل استراحة.",
                             "answer": "C"
+                        }
+                    ]
+                }
+            ]
+        },
+        "teil2": {
+            "title": "Vera",
+            "kind": "mc",
+            "texts": [
+                {
+                    "title": "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite",
+                    "body": "Von Christiane Altenberger, Sie sind die Problemlöser im Kindergarten an der Munckerstraße. Wenn das Malprogram spinnt, plötzlich ein Spiel auftaucht, das keiner kennt, dann rufen die Erzieherinnen nach Anne und Melanie. Die sind zwar erst sechs Jahre alt, aber mit den Computerspielen kennen sie sich aus. Die Kinder wissen manchmal mehr als wir sagt Eva Schilling. Leiterin des Kindergartens. Gelernt haben die beiden ihr Know-how bei Multimedia - Landschaften für Kinder, einem Projekt, das das Schulamt zusammen mit dem Studio im Netz gestartet hat."
+                },
+                {
+                    "body": "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia- Computern und einem Farbdrucker installiert. Die Stationen wandern durch 14 Kindergärten, wo sie jeweils für vier Wochen installiert werden. Mit dabei in den Kindergärten: ein ganzer Satz von Spiel – Software. Vierjährige am Computer? In Pädagogen kreisen sind viele Berührungsängste da, weiß Edith llg, Fachberaterin für Kindergärten beim Schulamt, aber wir können uns aus dieser Entwicklung nicht ausklinken. Die Kinder wollen sich mit ihrer Umwelt auseinandersetzen. Angefangen hat diese Auseinandersetzung im Studio im Netz – 193 Kinder waren eingeladen, um erste Erfahrungen am Computer zu sammeln. Die Kinder waren absolut begeistert, haben immer wieder gefragt, wann gehen wir da wieder hin, so Frau llg."
+                },
+                {
+                    "body": "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus nach dem Motto: Mein fröhliches, gesundes Kind setzt sich vor den Computer und steht sechs Stunden später krank, sprachlos und einsam wieder auf."
+                },
+                {
+                    "body": "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend über flüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm."
+                },
+                {
+                    "body": "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte. Dabei entwickeln gerade Kinder, die sich sonst nur schwer auf etwas konzentrieren können, plötzlich ungeahnte Konzentrationszeiten. Eva Schilling kann sich deshalb die Computer als Dauereinrichtung im Kindergarten vorstellen."
+                }
+            ],
+            "variants": [
+                {
+                    "label": "",
+                    "questions": [
+                        {
+                            "num": 1,
+                            "text": "Das Schulamt hat ein Projekt gestartet, bei dem",
+                            "ar": "أطلقت إدارة التعليم مشروعًا حيث",
+                            "options": [
+                                {
+                                    "text": "Computer in Kindergärten aufgestellt werden.",
+                                    "ar": "يتم وضع أجهزة الكمبيوتر في رياض الأطفال."
+                                },
+                                {
+                                    "text": "Computerspiele für Vierjährige entwickelt werden sollen.",
+                                    "ar": "يتم تطوير ألعاب الكمبيوتر للأطفال في سن الرابعة."
+                                },
+                                {
+                                    "text": "Kinder neue Farbdrucker ausprobieren sollen.",
+                                    "ar": "يجب على الأطفال تجربة الطابعات الملونة الجديدة."
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "الشرح: ← صح. النص كيقول أن المشروع كيتضمن وضع محطات كمبيوتر متنقلة (Wanderstationen) فـ 14 روض بلدي باش الدراري يستافدو."
+                        },
+                        {
+                            "num": 2,
+                            "text": "Die Kinder",
+                            "ar": "الأطفال",
+                            "options": [
+                                {
+                                    "text": "hatten großen Spaß bei dem Projekt.",
+                                    "ar": "استمتعوا كثيرًا بالمشروع."
+                                },
+                                {
+                                    "text": "wollten lieber draußen im Freien spielen.",
+                                    "ar": "فضلوا اللعب في الخارج."
+                                },
+                                {
+                                    "text": "wussten nicht, wann sie ins Studio im Netz gehen sollten.",
+                                    "ar": "لم يعرفوا متى يجب عليهم الذهاب إلى الاستوديو عبر الإنترنت."
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "الشرح: ← صح. الدراري عجبهم الحال بزاف (absolut begeistert) وكانوا ديما كيسولو المربيات فوقاش يقدروا يرجعوا يخدموا بالكمبيوتر."
+                        },
+                        {
+                            "num": 3,
+                            "text": "Eltern fürchten, dass",
+                            "ar": "يخشى الآباء أن",
+                            "options": [
+                                {
+                                    "text": "der Computer ihren Kindern schadet.",
+                                    "ar": "الكمبيوتر يضر بأطفالهم."
+                                },
+                                {
+                                    "text": "ihre Kinder nicht so früh aufstehen können.",
+                                    "ar": "أطفالهم لن يتمكنوا من الاستيقاظ مبكرًا."
+                                },
+                                {
+                                    "text": "ihre Kinder vor dem Computer Angst haben.",
+                                    "ar": "أطفالهم يخافون من الكمبيوتر."
+                                }
+                            ],
+                            "answer": 0,
+                            "why": "الشرح: ← صح. الوالدين فالبداية خافوا باللي ولادهم غادين يوليو مرضى ولا منعزلين، يعني خافوا من الضرر ديال الكمبيوتر على الصحة ديالهم."
+                        },
+                        {
+                            "num": 4,
+                            "text": "Die Erzieherinnen",
+                            "ar": "المربيات",
+                            "options": [
+                                {
+                                    "text": "arbeiten jeden Tag 15 bis 20 Minuten am Computer.",
+                                    "ar": "يعملن على الكمبيوتر لمدة 15 إلى 20 دقيقة كل يوم."
+                                },
+                                {
+                                    "text": "spielen immer mit zwei oder drei Kindern am Computer.",
+                                    "ar": "يلعبن دائمًا مع طفلين أو ثلاثة على الكمبيوتر."
+                                },
+                                {
+                                    "text": "wählen für die Kinder die Software aus.",
+                                    "ar": "يخترن البرامج للأطفال."
+                                }
+                            ],
+                            "answer": 2,
+                            "why": "الشرح: ← صح. المربيات هما اللي كيتحكموا فشنو كيبان ف الشاشة، وكيحرصوا باش يختاروا برامج إبداعية (kreative Software) للدراري."
+                        },
+                        {
+                            "num": 5,
+                            "text": "Wenn die Kinder am Computer sitzen, dann",
+                            "ar": "عندما يجلس الأطفال على الكمبيوتر، فإن",
+                            "options": [
+                                {
+                                    "text": "gibt es häufig Streit.",
+                                    "ar": "الشجار يحدث غالبًا."
+                                },
+                                {
+                                    "text": "hilft ein kind dem anderen.",
+                                    "ar": "يساعد طفل الآخر."
+                                },
+                                {
+                                    "text": "können sich die meisten nicht lange konzentrieren.",
+                                    "ar": "لا يستطيع معظمهم التركيز لفترة طويلة."
+                                }
+                            ],
+                            "answer": 1,
+                            "why": "الشرح: ← صح. المديرة لاحظت أن الدراري كيتعاونوا بيناتهم (helfen sich gegenseitig) وكيلعبوا ف هدوء بلا ما يكونوا مشاكل ولا صداع."
                         }
                     ]
                 }
