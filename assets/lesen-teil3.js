@@ -16,7 +16,8 @@
        {
          label: "الأساسي",
          intro: "…",                                   // اختياري
-         situations: [ { no: 11, de: "…", ar: "…" }, … ],
+         note: "…",                                    // اختياري: ملاحظة
+         situations: [ { no: 11, de: "…", ar: "…" }, … ],   // changed: true = معدلة
          answers: [ "L", "I", "B", … ]                  // ولا situations[].answer
        }, …
      ]
@@ -165,6 +166,7 @@
             /* ---- الإعلانات ---- */
             const column = el("div", "t1-texts");
             if (variant.intro) column.appendChild(el("p", "t1-intro", variant.intro));
+            if (variant.note) column.appendChild(el("p", "t1-note", variant.note));
 
             ads.forEach(function (ad) {
                 const box = el("article", "t1-text t3-ad");
@@ -220,6 +222,7 @@
                 top.appendChild(select);
                 box.appendChild(top);
 
+                if (sit.changed) box.appendChild(el("span", "t1-option-changed", "معدل"));
                 box.appendChild(el("p", "t3-sit-de", sit.de || ""));
                 if (sit.ar) box.appendChild(el("p", "t3-sit-ar", sit.ar));
 

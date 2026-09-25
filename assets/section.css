@@ -1126,6 +1126,8 @@
     background: color-mix(in srgb, var(--gold) 12%, transparent);
     color: var(--text);
 }
+.t3-ad .t1-body { white-space: pre-line; }
+.t3-sit .t1-option-changed { display: inline-block; margin-bottom: 4px; }
 .t1-option-changed {
     align-self: flex-start;
     font-size: 11px;
