@@ -1,8 +1,9 @@
 {
-  "build": "0096c93295d8",
+  "build": "55ab0820ece7",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
+    "assets/fortschritt.js": "659209db",
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b2-content.js": "99e34da2",
     "assets/lesen-b2-topics.js": "940fb40d",
@@ -14,16 +15,18 @@
     "assets/lesen-teil1.js": "961d409b",
     "assets/lesen-teil2.js": "5593ba4f",
     "assets/lesen-teil3.js": "b10a42c1",
+    "assets/modelltest.js": "d0e98e0d",
     "assets/premium-gate.js": "6e86f042",
+    "assets/progress.js": "e9be00ad",
     "assets/schreiben-auth.js": "c131e3c8",
-    "assets/schreiben-engine.js": "4e757555",
+    "assets/schreiben-engine.js": "ff52f8b3",
     "assets/schreiben-hub.js": "5c6b51aa",
     "assets/schreiben-style.css": "a4daaaf7",
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/section.css": "a353912f",
     "assets/session-guard.js": "d6dfc66e",
     "assets/site-header.css": "ca1258d9",
-    "assets/site-header.js": "b854d3fb",
+    "assets/site-header.js": "5c6ea2bc",
     "assets/sprechen-b2-content.js": "474d9d04",
     "assets/sprechen-b2-teil1.js": "c045e55d",
     "assets/sprechen-b2-teil23.js": "e30dd1f6",
@@ -33,7 +36,10 @@
     "assets/sprechen-teil1.js": "39194a12",
     "assets/sprechen-teil2.js": "3f8ea805",
     "assets/sprechen-teil3.js": "963c0915",
-    "assets/stars.js": "87c8bc6d",
-    "assets/theme.css": "ce5f39a8"
+    "assets/stars.js": "df3dede2",
+    "assets/theme.css": "0d2713fb",
+    "assets/training.css": "38f38ef1",
+    "assets/wortschatz-b2.js": "4a800723",
+    "assets/wortschatz.js": "cc9ef076"
   }
 }

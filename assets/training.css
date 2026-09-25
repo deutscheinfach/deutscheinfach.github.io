@@ -1,0 +1,211 @@
+/* ===== Training: Fortschritt، Modelltest، Wortschatz =====
+   كيتبع section.css (lesen-shell، lesen-hero، lesen-tabs…)
+   وكيزيد غير المكونات الجداد. أسود وذهبي بحال باقي الموقع. */
+
+.tr-grid { display: grid; gap: 16px; }
+.tr-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tr-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.tr-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 900px) { .tr-grid-3, .tr-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .tr-grid-2, .tr-grid-3 { grid-template-columns: minmax(0, 1fr); } }
+
+.tr-card {
+    background: linear-gradient(160deg, #1b1b21, #141418);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 18px 40px -28px rgba(0,0,0,.9);
+    min-width: 0;
+}
+.tr-card-gold { border-color: rgba(214,178,94,.35); }
+.tr-card h2 { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; font-size: 16px; font-weight: 800; color: var(--text); }
+.tr-card h2 .ico { width: 18px; height: 18px; color: var(--brand); flex: 0 0 auto; }
+.tr-muted { color: var(--muted); font-size: 13.5px; line-height: 1.7; }
+.tr-section { margin-top: 18px; }
+
+/* ---- الأرقام الكبار ---- */
+.tr-kpi { display: flex; align-items: center; gap: 14px; }
+.tr-kpi-ico { display: grid; place-items: center; width: 46px; height: 46px; flex: 0 0 46px; border-radius: 14px; background: rgba(214,178,94,.12); color: var(--brand-light); border: 1px solid rgba(214,178,94,.25); }
+.tr-kpi-ico svg { width: 22px; height: 22px; }
+.tr-kpi b { display: block; font-size: 24px; font-weight: 900; color: var(--text); line-height: 1.1; }
+.tr-kpi span { font-size: 12.5px; color: var(--muted); }
+
+/* ---- الأزرار ---- */
+.tr-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 18px; border-radius: 12px; border: 1.5px solid rgba(214,178,94,.45); background: transparent; color: var(--text); font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; text-decoration: none; transition: background .15s, color .15s, border-color .15s, transform .15s; }
+.tr-btn:hover { border-color: var(--brand); color: var(--brand-light); }
+.tr-btn svg { width: 17px; height: 17px; }
+.tr-btn-gold { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; box-shadow: var(--shadow-brand); }
+.tr-btn-gold:hover { color: var(--on-brand); transform: translateY(-1px); }
+.tr-btn-red { border-color: rgba(239,91,91,.5); color: #f2a3a3; }
+.tr-btn-red:hover { border-color: #ef5b5b; color: #ffc2c2; }
+.tr-btn[disabled] { opacity: .5; cursor: not-allowed; transform: none; }
+.tr-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+/* ---- العد التنازلي ---- */
+.tr-count { display: flex; align-items: center; gap: 18px; }
+.tr-ring { position: relative; width: 104px; height: 104px; flex: 0 0 104px; }
+.tr-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.tr-ring-track { stroke: rgba(255,255,255,.07); }
+.tr-ring-bar { stroke: var(--brand); transition: stroke-dashoffset .6s ease; }
+.tr-ring-in { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.tr-ring-in b { font-size: 28px; font-weight: 900; color: var(--brand-light); line-height: 1; }
+.tr-ring-in span { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.tr-date { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.tr-date input { min-height: 42px; padding: 0 12px; border-radius: 12px; border: 1px solid rgba(214,178,94,.35); background: #1e1e24; color: var(--text); font: inherit; color-scheme: dark; }
+
+/* ---- خطة اليوم ---- */
+.tr-plan { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.tr-plan li a { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); color: var(--text); text-decoration: none; transition: border-color .15s, background .15s; }
+.tr-plan li a:hover { border-color: rgba(214,178,94,.5); background: rgba(214,178,94,.06); }
+.tr-plan .tr-check { display: grid; place-items: center; width: 26px; height: 26px; flex: 0 0 26px; border-radius: 50%; border: 2px solid rgba(214,178,94,.5); color: transparent; }
+.tr-plan .is-done .tr-check { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.tr-plan .is-done .tr-plan-t { text-decoration: line-through; color: var(--muted); }
+.tr-plan .tr-check svg { width: 15px; height: 15px; }
+.tr-plan-t { font-weight: 700; font-size: 14px; }
+.tr-plan-s { display: block; font-size: 12.5px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+.tr-plan-go { margin-inline-start: auto; color: var(--brand); flex: 0 0 auto; }
+.tr-plan-go svg { width: 18px; height: 18px; }
+
+/* ---- المهارات ---- */
+.tr-skill { display: grid; grid-template-columns: 130px minmax(0, 1fr) 52px; gap: 12px; align-items: center; padding: 8px 0; }
+.tr-skill + .tr-skill { border-top: 1px solid rgba(255,255,255,.06); }
+.tr-skill-name { font-weight: 700; font-size: 14px; }
+.tr-skill-name small { display: block; color: var(--muted); font-weight: 500; font-size: 11.5px; }
+.tr-bar { height: 10px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
+.tr-bar i { display: block; height: 100%; border-radius: inherit; background: var(--grad-brand); transition: width .6s ease; }
+.tr-bar i.is-low { background: linear-gradient(90deg, #b44a4a, #ef5b5b); }
+.tr-bar i.is-mid { background: linear-gradient(90deg, #a8863a, #d6b25e); }
+.tr-bar i.is-good { background: linear-gradient(90deg, #1f9d63, #3ecf8e); }
+.tr-skill-pct { text-align: end; font-weight: 900; font-size: 14px; }
+.tr-skill-pct.is-none { color: var(--muted); font-weight: 600; font-size: 12px; }
+@media (max-width: 520px) { .tr-skill { grid-template-columns: 96px minmax(0, 1fr) 44px; } }
+
+/* ---- المنحنى ---- */
+.tr-chart { width: 100%; height: 190px; display: block; }
+.tr-chart .grid { stroke: rgba(255,255,255,.06); }
+.tr-chart .pass { stroke: rgba(62,207,142,.45); stroke-dasharray: 4 4; }
+.tr-chart .line { stroke: var(--brand); fill: none; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.tr-chart .area { fill: url(#trGrad); }
+.tr-chart .dot { fill: #16161b; stroke: var(--brand-light); stroke-width: 2; }
+.tr-chart text { fill: var(--muted); font-size: 10px; }
+
+/* ---- لائحة النتائج ---- */
+.tr-list { list-style: none; margin: 0; padding: 0; }
+.tr-list li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.06); }
+.tr-list li:first-child { border-top: 0; }
+.tr-tag { flex: 0 0 auto; padding: 3px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 800; background: rgba(214,178,94,.12); color: var(--brand-light); border: 1px solid rgba(214,178,94,.25); }
+.tr-list-main { min-width: 0; flex: 1; }
+.tr-list-main b { display: block; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tr-list-main span { font-size: 12px; color: var(--muted); }
+.tr-score { flex: 0 0 auto; font-weight: 900; font-size: 14px; }
+.tr-score.is-good { color: #3ecf8e; } .tr-score.is-mid { color: var(--brand-light); } .tr-score.is-low { color: #f2a3a3; }
+
+.tr-empty { text-align: center; padding: 30px 14px; }
+.tr-empty b { display: block; font-size: 17px; margin-bottom: 6px; }
+
+/* ---- بطاقات الروابط ---- */
+.tr-link { display: flex; gap: 14px; align-items: center; text-decoration: none; color: var(--text); }
+.tr-link:hover { border-color: rgba(214,178,94,.55); }
+.tr-link b { display: block; font-size: 16px; }
+.tr-link span { font-size: 13px; color: var(--muted); }
+
+/* ====================== Modelltest ====================== */
+.mt-card { display: flex; flex-direction: column; gap: 10px; }
+.mt-card h3 { margin: 0; font-size: 17px; font-weight: 900; }
+.mt-parts { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; }
+.mt-parts li { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); }
+.mt-parts li b { color: var(--text); font-weight: 700; }
+.mt-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 6px; }
+.mt-chip { padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 800; }
+.mt-chip.free { background: rgba(62,207,142,.12); color: #6fe3ae; border: 1px solid rgba(62,207,142,.3); }
+.mt-chip.prem { background: rgba(214,178,94,.12); color: var(--brand-light); border: 1px solid rgba(214,178,94,.3); }
+.mt-last { font-size: 12.5px; color: var(--muted); }
+
+.mt-bar { position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 10px 14px; margin: 0 0 12px; border-radius: 16px; background: rgba(18,18,22,.96); border: 1px solid rgba(214,178,94,.3); backdrop-filter: blur(10px); }
+.mt-title { font-weight: 900; font-size: 15px; }
+.mt-steps { display: flex; gap: 6px; flex-wrap: wrap; }
+.mt-step { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 800; border: 1px solid rgba(255,255,255,.1); color: var(--muted); background: transparent; }
+.mt-step.is-now { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; }
+.mt-step.is-done { color: #6fe3ae; border-color: rgba(62,207,142,.35); }
+.mt-timer { margin-inline-start: auto; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 12px; background: #1e1e24; border: 1px solid rgba(214,178,94,.35); font-weight: 900; font-variant-numeric: tabular-nums; font-size: 16px; color: var(--brand-light); }
+.mt-timer svg { width: 16px; height: 16px; }
+.mt-timer.is-low { color: #ffb3b3; border-color: rgba(239,91,91,.6); animation: mt-pulse 1s ease-in-out infinite; }
+@keyframes mt-pulse { 50% { box-shadow: 0 0 0 4px rgba(239,91,91,.15); } }
+.mt-sub { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+.mt-sub button { padding: 8px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,.1); background: transparent; color: var(--text); font: inherit; font-weight: 800; font-size: 13px; cursor: pointer; }
+.mt-sub button.is-on { border-color: var(--brand); color: var(--brand-light); background: rgba(214,178,94,.1); }
+.mt-sub button small { color: var(--muted); font-weight: 600; margin-inline-start: 6px; }
+.mt-frame { width: 100%; height: calc(100dvh - 190px); min-height: 520px; border: 1px solid rgba(214,178,94,.25); border-radius: 16px; background: #0e0e11; display: block; }
+.mt-frame[hidden] { display: none; }
+.mt-live { font-size: 12.5px; color: var(--muted); }
+.mt-live b { color: var(--brand-light); }
+.mt-next { margin-top: 12px; display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+
+.mt-result { text-align: center; padding: 26px 18px; }
+.mt-verdict { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 999px; font-weight: 900; font-size: 15px; margin-bottom: 10px; }
+.mt-verdict.pass { background: rgba(62,207,142,.14); color: #6fe3ae; border: 1px solid rgba(62,207,142,.4); }
+.mt-verdict.fail { background: rgba(239,91,91,.12); color: #ffb3b3; border: 1px solid rgba(239,91,91,.4); }
+.mt-total { font-size: 46px; font-weight: 900; color: var(--text); line-height: 1.1; }
+.mt-total small { font-size: 18px; color: var(--muted); font-weight: 700; }
+.mt-break { max-width: 560px; margin: 18px auto 0; text-align: start; }
+
+.tr-modal { position: fixed; inset: 0; z-index: 4000; display: grid; place-items: center; padding: 16px; background: rgba(0,0,0,.6); }
+.tr-modal > div { width: min(100%, 420px); text-align: center; }
+
+/* ====================== Wortschatz ====================== */
+.ws-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 16px; }
+.ws-chip { padding: 8px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.1); background: transparent; color: var(--text); font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.ws-chip span { color: var(--muted); font-weight: 600; margin-inline-start: 4px; }
+.ws-chip.is-on { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; }
+.ws-chip.is-on span { color: rgba(23,19,10,.7); }
+
+.ws-stage { max-width: 620px; margin: 0 auto; }
+.ws-progress { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+.ws-progress .tr-bar { flex: 1; height: 6px; }
+.ws-flash { perspective: 1200px; cursor: pointer; }
+.ws-flash-in { position: relative; min-height: 250px; transition: transform .5s cubic-bezier(.2,.7,.2,1); transform-style: preserve-3d; }
+.ws-flash.is-flipped .ws-flash-in { transform: rotateY(180deg); }
+.ws-face { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 26px 22px; text-align: center; border-radius: 22px; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.ws-front { background: linear-gradient(180deg, #fffdf8, #faf6ec); color: #1c1a16; border: 1px solid rgba(214,178,94,.6); box-shadow: 0 24px 50px -30px rgba(0,0,0,.95); }
+.ws-back { background: linear-gradient(160deg, #221e14, #16140f); color: var(--text); border: 1px solid rgba(214,178,94,.45); transform: rotateY(180deg); }
+.ws-deck { font-size: 11.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: #8a6a22; }
+.ws-word { font-size: clamp(24px, 5vw, 34px); font-weight: 900; line-height: 1.2; }
+.ws-hint { font-size: 12.5px; color: #7a7266; }
+.ws-ar { font-size: clamp(20px, 4vw, 26px); font-weight: 800; color: var(--brand-light); }
+.ws-ex { font-size: 14.5px; color: #cfc8b8; font-style: italic; line-height: 1.7; }
+.ws-speak { position: absolute; top: 12px; inset-inline-end: 12px; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; border: 1px solid rgba(168,134,58,.45); background: #fff; color: #6b4f14; cursor: pointer; }
+.ws-back .ws-speak { background: transparent; color: var(--brand-light); }
+.ws-speak svg { width: 18px; height: 18px; }
+.ws-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.ws-actions .tr-btn { min-height: 52px; font-size: 15px; }
+.ws-keys { text-align: center; font-size: 12px; color: var(--muted); margin-top: 8px; }
+.ws-done { text-align: center; padding: 34px 18px; }
+.ws-done b { display: block; font-size: 20px; margin-bottom: 6px; }
+
+.ws-form { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ws-form input { min-height: 44px; padding: 0 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.12); background: #1e1e24; color: var(--text); font: inherit; min-width: 0; }
+.ws-form input:focus { outline: none; border-color: var(--brand); box-shadow: var(--ring); }
+.ws-form .full { grid-column: 1 / -1; }
+@media (max-width: 520px) { .ws-form { grid-template-columns: 1fr; } }
+.ws-table { list-style: none; margin: 0; padding: 0; }
+.ws-table li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid rgba(255,255,255,.06); font-size: 13.5px; }
+.ws-table li:first-child { border-top: 0; }
+.ws-table .ar { color: var(--muted); text-align: end; }
+.ws-level { display: inline-flex; gap: 3px; }
+.ws-level i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.12); }
+.ws-level i.on { background: var(--brand); }
+.ws-del { border: 0; background: transparent; color: #f2a3a3; cursor: pointer; padding: 4px; display: grid; place-items: center; }
+.ws-del svg { width: 16px; height: 16px; }
+
+/* النصوص المخلطة (دارجة + ألمانية): الاتجاه كيتحدد من أول حرف،
+   باش ما تتقلبش الكلمات والنقط */
+.tr-muted, .tr-plan-s, .tr-list-main b, .mt-live, .ws-hint, .tr-empty b,
+.training-page .lesen-hero .lead { unicode-bidi: plaintext; text-align: start; }
+.tr-inline-ico { width: 16px; height: 16px; flex: 0 0 16px; color: var(--brand); }
+@media (max-width: 620px) {
+    .ws-chips { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+    .ws-chips::-webkit-scrollbar { display: none; }
+    .ws-chip { flex: 0 0 auto; }
+}
+body.mt-running .lesen-tabs { display: none; }
+.mt-result .tr-muted { text-align: center; }

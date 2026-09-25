@@ -586,3 +586,23 @@ body {
     background-size: auto;
 }
 @media print { .de-stars { display: none !important; } }
+
+/* =====================================================
+   ?embed=1 — الصفحة داخل Modelltest (progress.js كيزيد
+   html.is-embed): بلا البار، بلا التنقل وبلا النجوم.
+   ===================================================== */
+html.is-embed #site-header,
+html.is-embed .site-header,
+html.is-embed .site-level,
+html.is-embed .hoeren-sticky-nav,
+html.is-embed .telc-exercise-topbar,
+html.is-embed .auto-nav-wrap,
+html.is-embed .de-stars,
+html.is-embed footer,
+html.is-embed .lesen-tabs:not(.exam-tabs),
+html.is-embed .lesen-head-row,
+html.is-embed .lesen-toolbar,
+html.is-embed .lesen-count,
+html.is-embed .lesen-back { display: none !important; }
+html.is-embed body { padding-top: 0 !important; }
+html.is-embed::before, html.is-embed::after { display: none !important; }
