@@ -5,15 +5,14 @@
 
    - تفاعلات سريعة 👍 ❤️ 😂 😮 👏 🙏
    - ↩️ الرد على الرسالة (كتبان مقتطفة فوق الجواب)
-   - 🌐 الترجمة للدارجة (نفس الـWorker ديال Schreiben)
    - ✍️ Korrigieren: الـAI كيصحح الألمانية ويشرح بالدارجة
    - 📋 نسخ
    - 🗑 مسح (صاحب الرسالة، مول المجموعة، ولا الأدمين فـCommunity)
    - 🚩 تبليغ و ⛔ بلوك
 
    الكتابة فـFirestore كتدوز عبر window.__chatApi اللي
-   كيعرّفها chat.html (فيها db والمستخدم). الترجمة والتصحيح
-   كيبقاو غير عند اللي طلبهم — ما كيتسجلوش. */
+   كيعرّفها chat.html (فيها db والمستخدم). التصحيح
+   كيبقى غير عند اللي طلبو — ما كيتسجلش. */
 
 (function () {
     "use strict";
@@ -22,7 +21,7 @@
     const EMOJIS = ["👍", "❤️", "😂", "😮", "👏", "🙏"];
     const REASONS = ["Beleidigung / سب وشتم", "Spam / إشهار", "Unangemessen / محتوى ماشي مناسب", "Andere / شي حاجة أخرى"];
 
-    /* نتائج الترجمة والتصحيح: كترجع تتحط ملي الرسائل يتعاودو يترسمو */
+    /* نتائج التصحيح: كترجع تتحط ملي الرسائل يتعاودو يترسمو */
     const extras = new Map();
 
     function api() { return window.__chatApi; }
@@ -101,7 +100,6 @@
 
         item("↩️", "Antworten · جاوب", function () { startReply(message); });
         if (message.text) {
-            item("🌐", "Übersetzen · ترجم", function () { translate(message); });
             item("✍️", "Korrigieren · صحح الألمانية", function () { correct(message); });
             item("📋", "Kopieren · نسخ", function () {
                 (navigator.clipboard ? navigator.clipboard.writeText(message.text) : Promise.reject())
@@ -178,7 +176,7 @@
         node.classList.add("ca-flash");
     }
 
-    /* ---------- الترجمة والتصحيح ---------- */
+    /* ---------- التصحيح ---------- */
     function post(body) {
         return fetch(ENDPOINT, {
             method: "POST",
@@ -191,7 +189,7 @@
             });
         });
     }
-    /* كل رسالة تقدر يكون عندها ترجمة وتصحيح بجوج */
+    /* النتائج مرتبة حسب النوع تحت نص الرسالة */
     function setExtra(id, kind, box) {
         if (!extras.has(id)) extras.set(id, new Map());
         const old = extras.get(id).get(kind);
@@ -228,15 +226,6 @@
         const body = el("div", "ca-ai-body", "…");
         box.appendChild(body);
         return { box: box, body: body, close: x };
-    }
-    function translate(message) {
-        const ui = aiBox("tr", "🌐 الترجمة");
-        ui.body.dir = "rtl";
-        ui.close.addEventListener("click", function () { dropExtra(message.id, "tr"); });
-        setExtra(message.id, "tr", ui.box);
-        post({ translate: { text: message.text } })
-            .then(function (data) { ui.body.textContent = data.translation || "—"; })
-            .catch(function () { ui.body.textContent = "ما قدرناش نترجمو دابا. عاود من بعد."; ui.box.classList.add("is-error"); });
     }
     function correct(message) {
         const ui = aiBox("co", "✍️ Korrektur");
