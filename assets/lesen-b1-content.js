@@ -95,6 +95,152 @@ window.LESEN_B1_CONTENT = {
                     ]
                 }
             ]
+        },
+        "teil3": {
+            "title": "Alex und Cora",
+            "kind": "ads",
+            "variants": [
+                {
+                    "label": "",
+                    "intro": "Lesen Sie die Situationen 1–10 und die Anzeigen a–l. Welche Anzeige passt zu welcher Situation? Jede Anzeige können Sie nur einmal verwenden. Gibt es zu einer Situation keine passende Anzeige, markieren Sie X.",
+                    "ads": [
+                        {
+                            "key": "A",
+                            "head": "Café Simon",
+                            "body": "3 × in Passau Ihr Konditor\n1 = Rindermarkt 10\n2 = Ludwigsplatz 6\n3 = Donau-Passage\n• Hausgemachte Pralinen\n• Kuchen, Torten und Eis\n• Kleiner Mittagstisch",
+                            "ar": "يتواجد مقهى \"سايمون\" في ثلاثة مواقع مختلفة بمدينة باساو حيث يتخصص في صناعة الحلويات الفاخرة مثل البرالين والكعك والآيس كريم بالإضافة إلى تقديمه لقائمة طعام خفيفة لوجبة الغداء مما يجعله وجهة مثالية لمحبي الحلويات والوجبات السريعة."
+                        },
+                        {
+                            "key": "B",
+                            "head": "Tourismusschulen",
+                            "body": "4190 Bad Leonfelden\nHagauer Str. 17, Tel. 07213/6955\nHöhere Lehranstalt: 5 Jahre, Matura\nFV-Kolleg: 3 Semester – endet mit Matura\nHotelhandelsschule: 3 Jahre\nTourismufachschule: 3 Jahre",
+                            "ar": "تقدم مدارس السياحة في \"باد ليونفيلدن\" خيارات تعليمية متنوعة تشمل مدرسة عليا لمدة خمس سنوات تنتهي بشهادة \"الماتورا\" وكلية لثلاثة فصول دراسية بالإضافة إلى مدارس متخصصة في التجارة الفندقية والسياحة تمتد لثلاث سنوات لتأهيل الكوادر في هذا القطاع."
+                        },
+                        {
+                            "key": "C",
+                            "head": "Liederbühne Robinson",
+                            "body": "KLEINKUNST VOM FEINSTEN\n• Urgemütliche Gaststube\n• Idyllischer Biergarten\n• Preiswerte Schmankerl\n• Vegetarische Spezialitäten\nSeewog 2 • 93486 Runding-Vierau\nTel. 09971-4651\nan der B20 Cham–Furth i. W.\ngeöffnet von Mi bis Sa von 17:00–1:00 Uhr\nSonn- und Feiertage ab 11:00 Uhr",
+                            "ar": "يعتبر مسرح \"روبنسون\" مكاناً متميزاً للفنون الصغيرة حيث يضم صالة طعام ريفية وحديقة ومأكولات متنوعة تشمل أطباقاً نباتية بأسعار مناسبة ويفتح أبوابه من الأربعاء إلى السبت مساءً وفي أيام الأحد والعطلات بدءاً من الصباح الباكر."
+                        },
+                        {
+                            "key": "D",
+                            "head": "Interkulturelle Arbeit",
+                            "body": "Berufsbegleitende Fortbildung für Fachkräfte in pädagogischen, sozialen und Gesundheitsberufen.\nJan./Feb.\nParitätisches Bildungswerk.\nTel.: 0421 / 174720",
+                            "ar": "يعلن \"معهد باريتيتيشيس التعليمي\" عن تنظيم دورة تدريبية مهنية في مجال العمل بين الثقافات تستهدف المتخصصين في القطاعات التربوية والاجتماعية والصحية خلال شهري يناير وفبراير لتطوير مهاراتهم في التعامل مع التنوع الثقافي."
+                        },
+                        {
+                            "key": "E",
+                            "head": "Restaurantcafé Chesa W. Pressl",
+                            "body": "Schweizer und bayerische Küche,\nFischspezialitäten aus heimischen Gewässern\nRömerplatz 3 (Hängebrücke)\n94032 Passau\nTel. 0851 / 33331",
+                            "ar": "يتخصص مطعم ومقهى \"كيزا\" في تقديم مزيج من المطبخ السويسري والبافاري مع تركيز خاص على أطباق الأسماك الطازجة المستخرجة من المياه المحلية ويقع في ساحة \"رومر بلاتس\" بمدينة باساو ليوفر تجربة طعام تقليدية ومميزة."
+                        },
+                        {
+                            "key": "F",
+                            "head": "BIZ (Berufsinformationszentrum)",
+                            "body": "Sie stehen vor beruflichen Entscheidungen\nDann informieren Sie sich im\nB I Z\nBerufsinformationszentrum\nÖffnungszeiten:\nMo, Di, Mi: 8.00 bis 12.00 Uhr\n14.00 bis 15.30 Uhr\nDo: 8.00 bis 12.00 Uhr • 14.00 bis 18.00 Uhr\nFr: 8.00 bis 12.00 Uhr\nSie finden dort ein breitgefächertes Angebot an Medien zu den Themen:\nAUSBILDUNG • STUDIUM\nArbeitsamt Passau, Innstraße 30, Tel. 0851/590-390",
+                            "ar": "يوفر مركز معلومات التوظيف (BIZ) في باساو الدعم للأفراد الذين يواجهون قرارات مهنية صعبة من خلال تقديم مجموعة واسعة من الوسائط والمعلومات حول التدريب المهني والدراسة الجامعية ضمن ساعات عمل محددة طوال أيام الأسبوع."
+                        },
+                        {
+                            "key": "G",
+                            "head": "Abendkurs für Einsteiger",
+                            "body": "Keine Angst vor neuen Technologien\nDieser Kurs richtet sich an alle diejenigen, die sich bisher mit dem Computer noch gar nicht befasst haben. Neben theoretischen Grundwissen wird ein praktischer Einstieg in die Betriebssysteme Windows und Linux vermittelt.\nVHS Favoriten · Tel.: 01-785342",
+                            "ar": "تنظم مدرسة الشعب \"في إتش إس فافوريتن\" دورة مسائية مخصصة للمبتدئين الذين ليس لديهم خبرة سابقة في التكنولوجيا حيث تتناول الدورة المعارف النظرية الأساسية وتدريبات عملية على أنظمة التشغيل ويندوز ولينكس لكسر حاجز الخوف من التقنيات الجديدة."
+                        },
+                        {
+                            "key": "H",
+                            "head": "MortizCafé Unterer Sand 2 Passau",
+                            "body": "Aquarium\n• täglich bis 18 Uhr\n• Kaffee so viel du willst\neine Tasse Frische\neine Tasse Milch\neine Tasse Zucker\n• täglich von 18 Uhr bis 21 Uhr\nBeck’s\nJever\nBitburger\nBadeger\nBudweiser",
+                            "ar": "يتميز مقهى \"مورتس\" بوجود حوض أسماك (أكواريوم) ويقدم لزواره القهوة بكميات غير محدودة خلال النهار حتى الساعة السادسة مساءً بينما يخصص الفترة المسائية لتقديم أنواع مختلفة من المشروبات الشهيرة لزبائنه في جو اجتماعي مميز."
+                        },
+                        {
+                            "key": "I",
+                            "head": "Rathausekeller",
+                            "body": "Originelles Weinkolal mit österreichischen, italienischen und französischen Qualitätsweinen sowie großer Auswahl an kaltem und warmem Buffet.\nMontag und Dienstag – Ruhetage\nA 4785 Halbach/Freinberg\nTel.: 0043/7713/6104",
+                            "ar": "يعد \"رات هاوس كيلر\" مكاناً أصيلاً لمحبي النبيذ حيث يقدم أنواعاً فاخرة من النمسا وإيطاليا وفرنسا إلى جانب تشكيلة واسعة من بوفيهات الطعام البارد والساخن مع مراعاة أن يومي الاثنين والثلاثاء هما عطلة أسبوعية للمكان."
+                        },
+                        {
+                            "key": "J",
+                            "head": "Internationales Studium",
+                            "body": "Fremdsprachen +\nBetriebswirtschaft.\nStaatlicher Uni-Abschluss\nB.A. in European\nAdministration. 2 Jahre in\nKöln + 1 Jahr in England\noder Frankreich.\nInfos anfordern:\nEuro Akademie\nElsa-Brandström-Str. 8\n50668 Köln\n(0221) 736074",
+                            "ar": "تتيح \"يورو أكاديمية\" برنامجاً دراسياً دولياً يجمع بين اللغات الأجنبية وإدارة الأعمال للحصول على درجة البكالوريوس في الإدارة الأوروبية حيث يقضي الطالب سنتين في مدينة كولونيا الألمانية وسنة إضافية في إنجلترا أو فرنسا لاستكمال مؤهلاته."
+                        },
+                        {
+                            "key": "K",
+                            "head": "USA-Aufenthalt für Schüler",
+                            "body": "Ein Schuljahr an einer High School, sehr gute Gastfamilien, beste Betreuung, Prospekte und ausführliches Video kostenlos von:\nfee-Sprachreisen\nLeibnizstr. 3\n70193 Stuttgart\nTel. 0711 / 638048\nFax 6365378",
+                            "ar": "توفر مؤسسة \"في لرحلات اللغات\" فرصة لطلاب المدارس لقضاء عام دراسي كامل في إحدى المدارس الثانوية بالولايات المتحدة الأمريكية مع تأمين عائلات مستضيفة متميزة وإشراف دقيق وتوزيع منشورات وفيديوهات توضيحية مجانية للمهتمين."
+                        },
+                        {
+                            "key": "L",
+                            "head": "Bachls Kerzenstub’n",
+                            "body": "TANZEN + ESSEN Live-Musik mit TANZ\nGenießen Sie unsere herzhaft deftigen Fleischspezialitäten!\n93136 Keilberg Tel.: 08501 / 9111-0\nGeöffnet: Di–Sa ab 17.00 Uhr, Übernachtung für Reisende",
+                            "ar": "يجمع مطعم \"باخلس\" بين متعة الطعام والرقص حيث يقدم موسيقى حية وتخصصات من اللحوم الدسمة والمشهية ويفتح أبوابه من الثلاثاء إلى السبت مع توفير خيارات للإقامة والمبيت للمسافرين والزوار في منطقة كايلبرغ."
+                        }
+                    ],
+                    "situations": [
+                        {
+                            "no": 1,
+                            "de": "Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.",
+                            "ar": "تحب قضاء ساعات طويلة في المقهى، ولكنك لا ترغب في إنفاق الكثير من المال.",
+                            "answer": "H"
+                        },
+                        {
+                            "no": 2,
+                            "de": "Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Compurter.",
+                            "ar": "لقد غيرت مهنتك مؤخرًا وتحتاج إلى معرفة أساسية للعمل على الكمبيوتر من أجل المهمة الجديدة.",
+                            "answer": "G"
+                        },
+                        {
+                            "no": 3,
+                            "de": "Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualitiziert sein.",
+                            "ar": "تعمل في مستشفى وتتعامل غالبًا مع مرضى من جميع أنحاء العالم. ترغب في أن تكون أكثر تأهيلاً لهذه الوظيفة.",
+                            "answer": "D"
+                        },
+                        {
+                            "no": 4,
+                            "de": "Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit.",
+                            "ar": "ترغب في حضور دورة رقص للمبتدئين. لديك وقت فقط في المساء.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 5,
+                            "de": "Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studierem um später vielleicht auch dort zu arbeiten.",
+                            "ar": "ترغب في العمل في مجال يتعلق باللغات الأجنبية. لذلك تريد الدراسة في الخارج وربما العمل هناك لاحقًا.",
+                            "answer": "J"
+                        },
+                        {
+                            "no": 6,
+                            "de": "Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am Liebsten süße Sachen isst.",
+                            "ar": "تريد قضاء فترة بعد الظهر المريحة في المدينة مع أحد معارفك. تعلم أن صديقك يفضل تناول الأشياء الحلوة.",
+                            "answer": "A"
+                        },
+                        {
+                            "no": 7,
+                            "de": "Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren",
+                            "ar": "صديقك من الولايات المتحدة يزورك. هو خبير في النبيذ ويرغب في تذوق النبيذ الأوروبي.",
+                            "answer": "I"
+                        },
+                        {
+                            "no": 8,
+                            "de": "In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulteren und Traditionen beschäftigen",
+                            "ar": "في وقت فراغك، ترغب في التعرف على بلدان أخرى وثقافات وتقاليد مختلفة.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 9,
+                            "de": "Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung",
+                            "ar": "ابنة أصدقائك أنهت للتو الثانوية العامة وهي غير متأكدة مما تريد فعله لاحقًا. تحتاج إلى معلومات واستشارة.",
+                            "answer": "F"
+                        },
+                        {
+                            "no": 10,
+                            "de": "Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.",
+                            "ar": "ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاؤك لا يتناولون اللحوم أو الأسماك.",
+                            "answer": "C"
+                        }
+                    ]
+                }
+            ]
         }
     },
     "b1-rita": {
@@ -267,6 +413,152 @@ window.LESEN_B1_CONTENT = {
                             "body": "Du bist,was du isst hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Der Trend kommt aus den USA: Dort kaufen bereits viele Leute neue teure Lebensmittel mit wissenschaftlichen Inhaltsstoffen, die dem Kunden jüngeres und schöneres Aussehen versprechen. So bietet z.B. ein New Yorker Nobelhotel das Menü Gegen-Graue-Haare an, das gegen das Älterwerden wirken soll. Aber wer wird schon eine solche Mahlzeit bestellen? Millionen von Leuten, so die Trendforscher. Und zwar aus dem einfachen Grund, weil jeder jung und gut aussehen will, und das mit möglichst wenig Aufwand.",
                             "ar": "تجاوز المفهوم التقليدي \"أنت ما تأكله\" حدود الصحة ليصبح الشعار الجديد هو \"الجمال من خلال الغذاء\" حيث يشير النص إلى توجه عالمي انطلق من الولايات المتحدة يعتمد على استهلاك أطعمة باهظة الثمن ومعززة بمكونات علمية تهدف للحفاظ على الشباب والجمال ومثال ذلك تقديم أحد الفنادق الفاخرة في نيويورك قائمة طعام خاصة لمحاربة الشيب وعلامات الشيخوخة ويتوقع خبراء التوجهات المستقبلية إقبال الملايين على هذا النوع من الابتكارات لرغبة الناس القوية في تحسين مظهرهم الخارجي بأقل مجهود ممكن.",
                             "answer": "G"
+                        }
+                    ]
+                }
+            ]
+        },
+        "teil3": {
+            "title": "Rita",
+            "kind": "ads",
+            "variants": [
+                {
+                    "label": "",
+                    "intro": "Lesen Sie die Situationen 1–10 und die Anzeigen a–l. Welche Anzeige passt zu welcher Situation? Jede Anzeige können Sie nur einmal verwenden. Gibt es zu einer Situation keine passende Anzeige, markieren Sie X.",
+                    "ads": [
+                        {
+                            "key": "A",
+                            "head": "Surf & Travel",
+                            "body": "Kurztrips der Deutschen Bahn\nStädtereise oder ab in die See? Entdecken Sie die schönsten Ecken Deutschlands:\nBerlin\n• Entdecken Sie die neue kulturelle Mitte Berlins!\n• Übernachten und relaxen Sie im Hotel “Funkturm”!\n• 2.-Kl.-Bahn ab 178,- EUR.\nOktoberfest München\n• Erleben Sie das berühmte Oktoberfest.\n• Übernachten im Hotel “Wiener Hof”.\n• 2.-Kl.-Bahn, Wiesn-T-Shirt ab 289,- EUR.",
+                            "ar": "تقدم السكك الحديدية الألمانية رحلات سياحية منظمة إلى برلين لاستكشاف مركزها الثقافي الجديد مع الإقامة في فندق \"فونك تورم\" كما توفر عرضاً خاصاً لزيارة مهرجان \"أكتوبرفست\" في ميونيخ يشمل الإقامة في فندق \"فينر هوف\" والحصول على قميص المهرجان التذكاري بأسعار تنافسية تبدأ من مئة وثمانية وسبعين يورو."
+                        },
+                        {
+                            "key": "B",
+                            "head": "Für den Fernsehfilm",
+                            "body": "„Die Schönheit von Bitterfeld”\nsuchen wir für einige Nachdrehtermine Kleindarsteller und Statisten.\nDrehzeit: 18.03.–25.03.\nGage: 40 Euro/Tag\nCasting: Mi., 19.02., 10–20 Uhr im Hotel Lindner\nWir freuen uns über schriftl. Bewerbung mit Foto und Tel.-Nr. an:\nReinhart/Baum, c/o Hotel Lindner, Hans-Dresch-Str. 27, 04179 Leipzig",
+                            "ar": "يبحث طاقم إنتاج الفيلم التلفزيوني \"جمال بيترفيلد\" عن ممثلين إضافيين وكومبارس للمشاركة في أيام تصوير إضافية بمدينة لايبزيغ في النصف الثاني من شهر مارس مقابل أجر يومي قدره أربعون يورو حيث تُقدم الطلبات كتابياً مع صورة شخصية للمشاركة في تجربة الأداء المقامة بفندق ليندنر."
+                        },
+                        {
+                            "key": "C",
+                            "head": "Messejobs",
+                            "body": "Sie sind kontaktfreudig, hochmotiviert, zwischen 20 und 35 Jahre alt und möchten auf den Messen in Leipzig arbeiten?\nWir suchen GastgeberInnen, Messe-Hostessen und PromoterInnen.\nLuftfrachtbrief-identisches Formular bitte bis 01.03. an:\nmessejobs Leipzig\nPostfach 1010 85\n04010 Leipzig",
+                            "ar": "تعلن جهة تنظيم معارض لايبزيغ عن توفر فرص عمل للشباب المتحمسين واللبقين الذين تتراوح أعمارهم بين عشرين وخمسة وثلاثين عاماً للعمل كمضيفين ومروجين خلال الفعاليات القادمة ويشترط إرسال طلبات التقديم قبل الأول من مارس للحصول على هذه الفرص الوظيفية المؤقتة."
+                        },
+                        {
+                            "key": "D",
+                            "head": "Verkehrsmuseum Erfurt",
+                            "body": "• Wie funktioniert ein Ottomotor?\n• Was klingt wie ein Benzin-Motorgewirr?\n• Warum sind Autos auch Designobjekte?\nVon den ersten Schlittenkufen bis zum neuesten Formel-1-Fahrzeug präsentiert das Verkehrsmuseum unter dem Thema „Mobilität und Technik“ die Lust an der Fortbewegung und ihre Geschichte.\nTäglich 9–17 Uhr, Donnerstag 9–20 Uhr\nVerkehrsmuseum Erfurt\nAugust-Bebel-Str. 14a\n99084 Erfurt\nTel. 508006-14\n[www.verkehrsmuseumerfurt.de](https://www.verkehrsmuseumerfurt.de)",
+                            "ar": "يستعرض متحف النقل في إيرفورت تاريخ التنقل وتطور التقنيات الميكانيكية تحت شعار \"الحركة والتقنية\" حيث يقدم للزوار إجابات حول كيفية عمل محركات البنزين ويعرض قطعاً تاريخية نادرة تبدأ من الزلاجات الخشبية القديمة وصولاً إلى أحدث سيارات الفورمولا 1 مع فتح أبوابه يومياً للجمهور حتى ساعات المساء."
+                        },
+                        {
+                            "key": "E",
+                            "head": "ADAC Urlaub mobil",
+                            "body": "Bummeln und Genießen, Shoppen und Nightlife! 3 Tage lang liegt Ihnen Berlin zu Füßen. Anschließend starten Sie Ihre Autoreise durch die malerischen Landschaften von Nordseeküste bis Alpen.\n3 Nächte in Berlin plus 10 Übernachtungen unterwegs nach Wahl\nmit Frühstück, Parken im Hotel,\nindividueller ADAC-Planer.\nPro Person im Doppelzimmer 839,- €\ninkl. Tankservice 150,- €",
+                            "ar": "يقدم نادي السيارات الألماني باقة سياحية متكاملة تبدأ بقضاء ثلاثة أيام من التسوق والاستمتاع بالحياة الليلية في برلين تليها رحلة برية مخصصة عبر المناظر الطبيعية الألمانية من الساحل الشمالي حتى جبال الألب وتشمل الباقة إقامة لعشر ليالٍ إضافية مع وجبات الإفطار وخدمة تزويد الوقود وتخطيط مسار الرحلة بشكل فردي."
+                        },
+                        {
+                            "key": "F",
+                            "head": "Filmclub",
+                            "body": "Das Parfum – Die Geschichte eines Mörders\nRegie: Tom Tykwer\nMi., 16:30 Uhr & 21 Uhr\nFluch der Karibik 3\nSa., 14 Uhr\nHappy Feet\nSa., 17 Uhr\nThe Queen — englische Originalfassung\nSa., 19:30 Uhr – 20:30 Uhr\nBabel — englische Originalfassung\nSa.–So., 19:30 Uhr\nScarface\nSo., 21:15 Uhr",
+                            "ar": "يقدم نادي السينما جدولاً حافلاً بعروض الأفلام العالمية الشهيرة التي تتنوع بين أفلام الدراما مثل \"العطر\" وأفلام المغامرات مثل \"قراصنة الكاريبي\" والرسوم المتحركة بالإضافة إلى عرض أفلام حائزة على جوائز مثل \"الملكة\" و\"بابل\" بنسخها الإنجليزية الأصلية لضمان تجربة مشاهدة غنية لمختلف الأذواق طوال أيام الأسبوع."
+                        },
+                        {
+                            "key": "G",
+                            "head": "Ökomobil",
+                            "body": "Meisterbetrieb des Garten- und Landschaftsbaus\nWir qualifizieren, bilden aus und schaffen Berufsfelder im Garten- und Landschaftsbau um:\n• geistig Behinderte\n• benachteiligte Jugendliche\n• arbeitslose Menschen\ndurch berufliche Integration.\nIn Zusammenarbeit mit TELOS – berufliche Bildung im sozialen Betrieb – führen wir Ausbildungen zum Gärtner/Werker des Garten- und Landschaftsbaus durch.\nInformation: [www.galabau-oekonomobil.de](https://www.galabau-oekonomobil.de)",
+                            "ar": "تعمل مؤسسة \"أوكوموبيل\" كشركة متخصصة في الحدائق وتهدف إلى دمج الفئات الاجتماعية المختلفة مثل ذوي الاحتياجات الذهنية والشباب الأقل حظاً والعاطلين عن العمل في سوق العمل من خلال توفير برامج تدريبية مهنية بالتعاون مع معهد \"تيلوس\" للحصول على مؤهل معتمد كبستاني متخصص في تنسيق المناظر الطبيعية."
+                        },
+                        {
+                            "key": "H",
+                            "head": "Jung gebliebener Rentner, unkompliziert und gut aussehend, mit Verbundenheit zur Natur, sucht Freizeitpartnerin (bis 40) für gemeinsame Unternehmungen: Kultur, Kino, Wanderungen, Radtouren, Reisen.",
+                            "body": "Zuschriften unter LA 10/14-83/L3, Postf. 84, 04181 Leipzig.",
+                            "ar": "يبحث متقاعد يتمتع بصحة جيدة ومظهر لائق وروح شبابية عن شريكة لقضاء أوقات الفراغ لا يتجاوز عمرها الأربعين عاماً لمشاركته اهتماماته المتعددة التي تشمل الأنشطة الثقافية والذهاب إلى السينما وممارسة رياضة المشي وركوب الدراجات في الطبيعة بالإضافة إلى السفر واستكشاف أماكن جديدة."
+                        },
+                        {
+                            "key": "I",
+                            "head": "Feng Shui für den Garten",
+                            "body": "Wie sollen Wege im Garten geführt werden? In welchem Bereich können Teiche oder Brunnen angelegt werden? Wo ist der beste Platz für die Gartenbank?\nMit Feng Shui lässt sich die positive Energie des Hauses bis in den Garten hinein fortsetzen.\nÖkologisches Bildungszentrum Dresden\nVortragsabend\nMi., 25.02., 19–21 Uhr\nSa./So., 28./29.02., 10–17 Uhr\nInfo: 0351 254400",
+                            "ar": "ينظم المركز التعليمي البيئي في دريسدن أمسية إعلامية ودورة تدريبية خلال عطلة نهاية الأسبوع حول كيفية تطبيق مبادئ \"الفنغ شوي\" في تصميم الحدائق من خلال توجيه الممرات واختيار المواقع الأمثل للبرك المائية والمقاعد لضمان تدفق الطاقة الإيجابية من المنزل إلى الحديقة وتحقيق توازن بيئي مريح."
+                        },
+                        {
+                            "key": "J",
+                            "head": "Studentinnen/SchülerInnen gesucht",
+                            "body": "(ab 18 J.) für Betreuertätigkeit im Kinderferienlager Juli–August für Kinder zw. 6 und 12 J.\nWir bieten Fahrtkosten, Unterkunft, Verpflegung und Taschengeld 125,– € mtl.\nWeitere Infos: Jugendtours\nHebelstr. 32\n04177 Leipzig\n0341 / 4809194\n[www.jutou.de](https://www.jutou.de)",
+                            "ar": "مطلوب طالبات/طلاب (من سن 18 سنة فما فوق) للعمل كمشرفين في مخيم صيفي للأطفال خلال شهري يوليو وأغسطس، للأطفال الذين تتراوح أعمارهم بين 6 و12 سنة. نقدم تغطية تكاليف السفر والإقامة والطعام ومصروفًا شهريًا قدره 125 يورو. لمزيد من المعلومات: Jugendtours Hebelstr. 32 04177 Leipzig 0341 / 4809194 [www.jutou.de](https://www.jutou.de)"
+                        },
+                        {
+                            "key": "K",
+                            "head": "Gemeinsam schöne Dinge genießen",
+                            "body": "Akademikerin, 38 J., mit Phantasie und Leidenschaft für Musik u. Kunst, Italien und das Meer sucht sportlich eleganten Partner, mit dem sie Konzerte besuchen, ausgehen und ferne Länder genießen kann.\nZuschriften an: Neue Presse,\nChiffre CFR-107",
+                            "ar": "ترغب أكاديمية تبلغ من العمر ثمانية وثلاثين عاماً ولديها شغف بالموسيقى والفنون والحضارة الإيطالية في العثور على شريك يتميز بالأناقة والروح الرياضية لمشاركتها حضور الحفلات الموسيقية والخروج للأماكن العامة والسفر معاً للاستمتاع بجمال البلدان البعيدة وممارسة الأنشطة الثقافية المشتركة."
+                        },
+                        {
+                            "key": "L",
+                            "head": "Samstagswerkstatt",
+                            "body": "Kursinhalt: Aufbau des Autos, Störungen und Möglichkeiten zur Behebung, Wartungsarbeiten und Pflege, Tipps zum Gebrauchtswagenkauf.\nDie theoretischen Ausführungen werden in unserer Kfz-Werkstatt in die Praxis umgesetzt. Bitte Arbeitskleidung mitbringen.\nWinfried Mohr, A24 Autowerkstatt\nAdenbachstr. 36, 07743 Jena\nSa. 14.10., von 9–16 Uhr\nTel.: 34 10 44 14",
+                            "ar": "تقيم ورشة \"A24\" في مدينة يينا دورة تدريبية عملية يوم السبت تتناول هيكل السيارة وكيفية اكتشاف الأعطال وإصلاحها وإجراء أعمال الصيانة الدورية مع تقديم نصائح قيمة للراغبين في شراء سيارات مستعملة ويُطلب من المشاركين إحضار ملابس العمل لتطبيق الدروس النظرية بشكل مباشر داخل الورشة."
+                        }
+                    ],
+                    "situations": [
+                        {
+                            "no": 1,
+                            "de": "Ihre Bekannte ist Mitte dreißig und sucht einen Partner. mit dem sie regelmaßig ins Kino gehen kann.",
+                            "ar": "معرفتك في منتصف الثلاثينيات وتبحث عن شريك يمكنها الذهاب معه إلى السينما بانتظام.",
+                            "answer": "H"
+                        },
+                        {
+                            "no": 2,
+                            "de": "Sie wollen Ihren Garten verändern und suchen Beratung/Tipps",
+                            "ar": "ترغب في تغيير حديقتك وتبحث عن استشارات أو نصائح.",
+                            "answer": "I"
+                        },
+                        {
+                            "no": 3,
+                            "de": "Der Sohn Ihre Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job",
+                            "ar": "ابن أصدقائك قد أنهى للتو الثانوية العامة ويبحث عن عمل لمدة شهرين في الصيف.",
+                            "answer": "J"
+                        },
+                        {
+                            "no": 4,
+                            "de": "Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen",
+                            "ar": "يريد صديقك العمل في وظيفة جانبية تتعلق بأعمال الحدائق.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 5,
+                            "de": "Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann",
+                            "ar": "عمك البالغ من العمر 45 عامًا يبحث عن شريكة يمكنه السفر معها.",
+                            "answer": "K"
+                        },
+                        {
+                            "no": 6,
+                            "de": "Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen",
+                            "ar": "ترغب في المشاركة في فيلم وكسب بعض المال.",
+                            "answer": "B"
+                        },
+                        {
+                            "no": 7,
+                            "de": "Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen",
+                            "ar": "ابن أصدقائك مهتم بتاريخ السيارات، وتريد أن تقدم له شيئًا مثيرًا للاهتمام يوم الأحد.",
+                            "answer": "D"
+                        },
+                        {
+                            "no": 8,
+                            "de": "Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen",
+                            "ar": "تبحث عن وظيفة وتحتاج إلى نصائح لطلبات التوظيف الخاصة بك.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 9,
+                            "de": "Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot.",
+                            "ar": "في الإجازة، تريد القيام برحلة بالسيارة عبر ألمانيا وتبحث عن عرض مناسب.",
+                            "answer": "E"
+                        },
+                        {
+                            "no": 10,
+                            "de": "Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.",
+                            "ar": "ترغب معارفك في تعلم كيفية إجراء إصلاحات بسيطة على سيارتها بنفسها.",
+                            "answer": "L"
                         }
                     ]
                 }
@@ -447,6 +739,298 @@ window.LESEN_B1_CONTENT = {
                     ]
                 }
             ]
+        },
+        "teil3": {
+            "title": "Caroline",
+            "kind": "ads",
+            "variants": [
+                {
+                    "label": "الأساسي",
+                    "intro": "Lesen Sie die Situationen 1–10 und die Anzeigen a–l. Welche Anzeige passt zu welcher Situation? Jede Anzeige können Sie nur einmal verwenden. Gibt es zu einer Situation keine passende Anzeige, markieren Sie X.",
+                    "ads": [
+                        {
+                            "key": "A",
+                            "head": "MUSEUM DER STADT FÜSSEN",
+                            "body": "Lechhalde 3 · 87629 Füssen\nTel. (08362) 50 53 – 45 u. -43\nSTAATSGALERIE IM HOHEN SCHLOSS FÜSSEN\nMagnusplatz 10 · 87629 Füssen\nTel. (08362) 50 53 – 64\nÖffnungszeiten:\nApril bis Oktober:\nDi.–So. 11.00–16.00 Uhr\nMo. geschlossen\nNovember bis März:\nDi.–So. 14.00–16.00 Uhr\nMo. geschlossen",
+                            "ar": "يرحب متحف مدينة فوسن والمعرض الحكومي في القصر العالي بالزوار لاستكشاف كنوزهما الفنية والتاريخية حيث تختلف مواعيد العمل حسب فصول السنة ففي الفترة من أبريل إلى أكتوبر يفتح المتحف أبوابه من الثلاثاء إلى الأحد بين الحادية عشرة صباحاً والرابعة عصراً بينما تقتصر ساعات العمل في الشتاء من نوفمبر إلى مارس على ساعتين فقط في فترة بعد الظهر مع التأكيد على إغلاق الأبواب تماماً في أيام الاثنين طوال العام."
+                        },
+                        {
+                            "key": "B",
+                            "head": "Franziskaner Stüberl",
+                            "body": "87629 Füssen – Eingang Fußgängerzone\nKemptener Straße 1\nTelefon (08362) 37124\nInh. Bernd Zientek\nGutbürgerliche Allgäuer und Bayerische Küche\nDer beliebte Treffpunkt in gemütlicher Atmosphäre\nSonntag-Ruhetag\nAuf Ihren Besuch freut sich\nBernd Zientek mit Team",
+                            "ar": "يقدم مطعم \"فرانسيسكانر شتوبيرل\" في مدينة فوسن تجربة طعام تقليدية تعكس أصالة المطبخ البافاري ومنطقة ألغوي في أجواء دافئة ومريحة ويقع المطعم عند مدخل منطقة المشاة ويرحب صاحبه بيرند زينتك وفريقه بالضيوف طوال أيام الأسبوع باستثناء يوم الأحد الذي يعتبر عطلة رسمية للمكان."
+                        },
+                        {
+                            "key": "C",
+                            "head": "SENNEREI–GENOSSENSCHAFT BAYERN",
+                            "body": "Hochplateau – Lechlenfeld · Telefon (08362) 917214\nFrisch vom Erzeuger:\nAllgäuer Emmentaler\nAllgäuer Bergkäse\nTilsiter\nFrisch-Milch\neigene Butterherstellung\nÖFFNUNGSZEITEN:\nWochentags: 7.30–12.30 h, 16.30–18.30 h\nSa. u. Feiertag: 7.30–13.00 h, 16.30–17.00 h",
+                            "ar": "توفر تعاونية الألبان في بافاريا لزبائنها منتجات طازجة من المصدر مباشرة تشمل أنواعاً فاخرة من الجبن مثل الإيمنتال وجبن الجبال بالإضافة إلى الحليب الطازج والزبدة المصنعة يدوياً وتستقبل الجمعية المتسوقين في فترات صباحية ومسائية خلال أيام الأسبوع مع توفر مواعيد محددة في أيام السبت والعطلات لضمان وصول المنتجات الريفية للجميع."
+                        },
+                        {
+                            "key": "D",
+                            "head": "Sprachen lernen & Leute treffen",
+                            "body": "Bildungsurlaub für Erwachsene in\nEngland, Malta, Frankreich, Spanien, Italien und Kalifornien\nFordern Sie unsere für Sie kostenlose Broschüre an.\nSchicken Sie uns ein Kennwort Ihrer Wahl, und wir senden Ihnen die Broschüre samt Einstufungstest.\nSPRACHCAFFEE\nHolbeinstr. 16\n60596 Frankfurt\nTel.: 069-61 90 120\nFax: 069-63 13 95",
+                            "ar": "يدعو معهد \"شبراخ كافيه\" البالغين الراغبين في تعلم اللغات وتكوين صداقات جديدة للانضمام إلى برامجه التعليمية والسياحية في دول عدة مثل إنجلترا وفرنسا وإيطاليا وحتى كاليفورنيا حيث يوفر المعهد كتيبات مجانية واختبارات لتحديد المستوى لكل من يطلبها عبر مراسلة فرعهم الرئيسي في مدينة فرانكفورت."
+                        },
+                        {
+                            "key": "E",
+                            "head": "Jahreskonzert Füssen",
+                            "body": "Wolfgang Amadeus Mozart\nKlavierkonzert Nr. 21 in C-Dur\nPianist: Hanno Porter\nLeitung:\nStadtmusikdirektor Robert Maul\nKarten bei der Kurverwaltung Füssen",
+                            "ar": "تعد مدينة فوسن لإقامة حفلها الموسيقي السنوي الذي سيسلط الضوء على أعمال المؤلف العالمي موتسارت وتحديداً كونسيرت البيانو رقم واحد وعشرين بمشاركة عازف البيانو هانو بورتر وقيادة المايسترو روبرت ماول ويمكن للجمهور الراغب في الحضور الحصول على التذاكر عبر مكتب الإدارة السياحية في المدينة."
+                        },
+                        {
+                            "key": "F",
+                            "head": "Das Heimatmuseum Füssen lädt zum Besuch ein",
+                            "body": "Öffnungszeiten:\nMontag bis Freitag: 10.00–12.00 Uhr und 14.00–16.45 Uhr\nSamstag und Sonntag: 10.00–12.00 Uhr\nIn der Instrumentensammlung sind wertvolle Geigen von Mittenwalder Meistern ausgestellt. Außerdem kann man in einer besonders eingerichteten Werkstatt dem Geigenbauer bei der Arbeit zuschauen.\nAußerhalb der Öffnungszeiten sind Gruppen ab 20 Personen nach Voranmeldung willkommen.\nTelefon (0 83 62) 25 11",
+                            "ar": "متحف فوسن للتراث يدعوكم لزيارته أوقات العمل: من الاثنين إلى الجمعة: من الساعة 10:00 إلى 12:00 ومن الساعة 14:00 إلى 16:45 السبت والأحد: من الساعة 10:00 إلى 12:00 تضم مجموعة الآلات الموسيقية كمانات قيّمة من صنع أساتذة ميتنوالد. كما يمكن للزوار مشاهدة صانع الكمان أثناء عمله في ورشة مجهزة خصيصًا لهذا الغرض. خارج أوقات العمل، نرحب بالمجموعات المكونة من 20 شخصًا أو أكثر بعد الحجز المسبق. رقم الهاتف (0 83 62) 25 11"
+                        },
+                        {
+                            "key": "G",
+                            "head": "bonCas",
+                            "body": "Spezialitätenkäserei\nP. und U. Moser-Kolb\nHessenbohlstraße 14\nCH – 8512 Lustdorf\nSchweiz\nE-Mail: kieronkoelbi@bluewin.ch",
+                            "ar": "يتخصص مصنع \"بون كاس\" في سويسرا بإنتاج أصناف متميزة من الأجبان الفاخرة تحت إشراف عائلة موزر كولب حيث يقع المصنع في منطقة لوستدورف السويسرية ويوفر وسائل تواصل إلكترونية للراغبين في التعرف على منتجاتهم المتخصصة أو الحصول على معلومات إضافية حول طرق التصنيع."
+                        },
+                        {
+                            "key": "H",
+                            "head": "Alfa Sprachreisen",
+                            "body": "Crash-Kurse für Manager.\nSprachkurse und High-School-Programme für 12- bis 18-Jährige.\nEnglisch, Französisch, Spanisch, 17 Länder, mehr als 60 Kursorte.\nFordern Sie unsere kostenlose Broschüre an!\nAlfa-Sprachreisen GmbH\nRotebühlplatz 75 · 70178 Stuttgart\nTel. 0711-61 55 300 · Fax 0711-61 55 3010\nhttp://www.alfa-sprachreisen.de",
+                            "ar": "توفر شركة \"ألفا\" لرحلات اللغات برامج تعليمية مكثفة تستهدف المديرين والمهنيين بالإضافة إلى برامج مخصصة للطلاب اليافعين في سبعة عشر دولة مختلفة وتغطي هذه الدورات لغات أساسية مثل الإنجليزية والإسبانية في أكثر من ستين موقعاً حول العالم مع إمكانية طلب كتيبات توضيحية مجانية من مقر الشركة في شتوتغارت."
+                        },
+                        {
+                            "key": "I",
+                            "head": "6. APRIL „Deutsche Schlagernacht“",
+                            "body": "12. APRIL Donnerstag: 70er/80er Jahre Party\nNEU: Schnitzel-Woche\nCafe • Bistro\nAmadeus\nZirler Straße 19–21\n87450 FÜSSEN/ALLGÄU\nTel. 08362/93540",
+                            "ar": "ينظم مقهى \"أماديوس\" في فوسن فعاليات ترفيهية متنوعة تشمل ليلة للأغاني الألمانية التقليدية وأخرى لموسيقى السبعينات والثمانينات كما أعلن المقهى عن إطلاق أسبوع خاص لتقديم وجبات الشنيتزل الشهيرة لرواده ليكون بذلك وجهة تجمع بين الترفيه الموسيقي وتجارب الطعام المتجددة في منطقة ألغوي."
+                        },
+                        {
+                            "key": "J",
+                            "head": "Free-System",
+                            "body": "Englisch, Französisch, Italienisch, Spanisch, Deutsch für Ausländer\nMaschinenschreiben/Steno\nSie bestimmen die Unterrichtszeit\nSie lernen, so rasch Sie wollen\nIntensivkurse, Einzel-/Privat- und\nKleingruppen (2–3 Teilnehmer)\nIntensivkurse Crash Courses\nBrush up und Business\nSprachkurse für Manager\nEnglisch for Secretaries\nPrüfungen (intern/extern)\nFirst/Proficiency/TOEFL/MAT Alliance Française\nInstitut Grünberger\nRostock, direkt beim Hauptbahnhof",
+                            "ar": "يقدم معهد \"فري سيستم\" في روستوك نظاماً تعليمياً مرناً يتيح للطلاب تحديد أوقات دروسهم وسرعة تقدمهم في تعلم لغات مثل الإنجليزية والألمانية للأجانب بالإضافة إلى دورات في السكرتارية والرقن الآلي ويوفر المعهد خيارات للدراسة المكثفة أو الفردية مع التحضير للاختبارات الدولية المعتمدة مثل التوفل."
+                        },
+                        {
+                            "key": "K",
+                            "head": "Ritterstub’n",
+                            "body": "Fischspezialitäten\nDas Restaurant mit gepflegter Gastlichkeit im Herzen der Altstadt\n(geöffnet von 11–14½ Uhr und 17½–24 Uhr)\nMontag Ruhetag\nWarme Küche bis 22 Uhr\nRitterstraße 4, 87629 Füssen\nTel. 08362/7759\nFam. Roth-Winter freut sich auf Ihren Besuch",
+                            "ar": "يشتهر مطعم \"ريتر شتوبن\" الواقع في قلب المدينة القديمة بتقديم تخصصات الأسماك والمأكولات البحرية في أجواء تتسم بالرقي والضيافة الأصيلة حيث يفتح المطعم أبوابه للغداء والعشاء مع تقديم الوجبات الساخنة حتى وقت متأخر من الليل باستثناء يوم الاثنين الذي يتوقف فيه العمل بالكامل لقضاء عطلة الطاقم الأسبوعية."
+                        },
+                        {
+                            "key": "L",
+                            "head": "Wollen Sie fein essen gehen?",
+                            "body": "Hotel–Restaurant\nAlpenrösle\nFüssen-Bad Faulenbach\nTel. (08362) 4017\nAuf Ihren Besuch freut sich Familie Hummel\nHotel • Café • Pension",
+                            "ar": "يدعو فندق ومطعم \"ألبن روزله\" في منطقة فوسن باد فاولنباخ الزوار لتناول وجبات فاخرة في مطعمه المتميز حيث تدير عائلة هومل هذا الصرح الذي يجمع بين خدمات الفندق والمقهى ويوفر إقامة مريحة للمسافرين الراغبين في الجمع بين جودة الطعام وهدوء الإقامة في أحضان الطبيعة."
+                        }
+                    ],
+                    "situations": [
+                        {
+                            "no": 1,
+                            "de": "Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.",
+                            "ar": "ترغب في الذهاب إلى حفل بيانو في نهاية الأسبوع.",
+                            "answer": "E"
+                        },
+                        {
+                            "no": 2,
+                            "de": "Sie sind in Füssen und wollen am Montag ins Museum gehen.",
+                            "ar": "أنت في فوسين وترغب في زيارة المتحف يوم الاثنين.",
+                            "answer": "F"
+                        },
+                        {
+                            "no": 3,
+                            "de": "Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",
+                            "ar": "أنت في جنوب ألمانيا في إجازة وترغب في تذوق إحدى الأطباق البافارية.",
+                            "answer": "B"
+                        },
+                        {
+                            "no": 4,
+                            "de": "Sie haben sich mit Bekannten zu einem Fischessen verabredet.",
+                            "ar": "لقد قمت بترتيب لقاء مع معارفك لتناول وجبة سمك.",
+                            "answer": "K"
+                        },
+                        {
+                            "no": 5,
+                            "de": "Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",
+                            "ar": "أنت في بافاريا وترغب في شراء منتجات الجبن المتخصصة.",
+                            "answer": "C"
+                        },
+                        {
+                            "no": 6,
+                            "de": "Sie möchten einen Deutschkurs in Wien besuchen.",
+                            "ar": "ترغب في حضور دورة لتعلم اللغة الألمانية في فيينا.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 7,
+                            "de": "Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.",
+                            "ar": "ينبغي على ابنك البالغ من العمر 16 عاماً تعلم اللغة الإنجليزية في الخارج خلال العطلة.",
+                            "answer": "H"
+                        },
+                        {
+                            "no": 8,
+                            "de": "Sie interessieren sich für einen Sprachkurs auf CD.",
+                            "ar": "تهتم بدورة لتعلم اللغة على أقراص مدمجة.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 9,
+                            "de": "Sie wollen, dass Ihre 10- jährige Tochter in den Ferien eine Fremdsprache lernt.",
+                            "ar": "ترغب في أن تتعلم ابنتك البالغة من العمر 10 سنوات لغة أجنبية خلال العطلة.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 10,
+                            "de": "Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",
+                            "ar": "ترغب إحدى معارفك في الاحتفال بعيد ميلادها في مطعم والإقامة هناك أيضاً.",
+                            "answer": "L"
+                        }
+                    ]
+                },
+                {
+                    "label": "المعدل",
+                    "intro": "Lesen Sie die Situationen 1–10 und die Anzeigen a–l. Welche Anzeige passt zu welcher Situation? Jede Anzeige können Sie nur einmal verwenden. Gibt es zu einer Situation keine passende Anzeige, markieren Sie X.",
+                    "ads": [
+                        {
+                            "key": "A",
+                            "head": "",
+                            "body": "MUSEUM DER STADT FÜSSEN Lechhalde 3 · 87629 Füssen Tel. (08362) 50 53 – 45 u. -43 STAATSGALERIE IM HOHEN SCHLOSS FÜSSEN Magnusplatz 10 · 87629 Füssen Tel. (08362) 50 53 – 64 Öffnungszeiten: April bis Oktober: Di.–So. 11.00–16.00 Uhr Mo. geschlossen November bis März: Di.–So. 14.00–16.00 Uhr Mo. geschlossen",
+                            "ar": "متحف ومعرض فمدينة فوسن، حالين نهار الأحد فالعشية، وعندهم توقيت شتوي وصيفي."
+                        },
+                        {
+                            "key": "B",
+                            "head": "",
+                            "body": "Franziskaner Stüberl 87629 Füssen - Eingang Fußgängerzone Kemptener Straße 1 - Telefon (08362) 37124 Im Herzen der Stadt Inh. Bernd Zienteck Gutbürgerliche Allgäuer und Bayerische Küche Der beliebte Treffpunkt in gemütlicher Atmosphäre Sonntag Ruhetag Auf Ihren Besuch freut sich Bernd Zienteck mit Team",
+                            "ar": "مطعم كيقدم أطباق ألمانية وبافارية تقليدية فجو زوين."
+                        },
+                        {
+                            "key": "C",
+                            "head": "",
+                            "body": "SENNEREI-GENOSSENSCHAFT BAYERN Hopferau - Lehern 15 - Telefon (08362) 37124 Frisch vom Erzeuger: •Allgäuer Emmentaler •Allgäuer Bergkäse •Tilsiter •Frisch-Milch •eigene Butterherstellung ÖFFNUNGSZEITEN: Wochentags 7.30–12.00 u. 16.30–18.30 Uhr Sa. u. Feiertag 7.30–10.30 u. 17.00–18.30 Uhr",
+                            "ar": "تعاونية فبافاريا كتبيع منتجات الحليب والفرماج الطري بحال الإيمنتال من عند المنتج نيشان."
+                        },
+                        {
+                            "key": "D",
+                            "head": "",
+                            "body": "Sprachen lernen & Leute treffen Bildungsurlaub für Erwachsene in England, Malta, Frankreich, Spanien, Italien und Kalifornien Fordern Sie heute unseren 56-seitigen Katalog an; ein Exemplar des Sprachtests schicken wir Ihnen gleich mit, selbstverständlich kostenlos. Tel: 069-61 09 120 | Fax: 069-6 03 13 95 Morgensternstr. 180 60596 Frankfurt SPRACHCAFFE s p r a c h r e i s e n",
+                            "ar": "مدرسة ديال اللغات للكبار لي باغين يقراو فالخارج فبلدان بحال بريطانيا، إسبانيا وغيرها."
+                        },
+                        {
+                            "key": "E",
+                            "head": "",
+                            "body": "Jahreskonzert Füssen Wolfgang Amadeus Mozart Klavierkonzert Nr. 21 in C-Dur Pianist: Hanno Porter Leitung: Stadtmusikdirektor Robert Maul Karten bei der Kurverwaltung Füssen und an der Abendkasse",
+                            "ar": "حفلة موسيقية سنوية فمدينة فوسن فيها موسيقى كلاسيكية ديال موزارت وعزف على البيانو."
+                        },
+                        {
+                            "key": "F",
+                            "head": "",
+                            "body": "Das Heimatmuseum Füssen lädt zum Besuch ein Öffnungszeiten: Montag bis Freitag: 10.00–12.00 Uhr und 14.00–16.45 Uhr Samstag und Sonntag: 10.00–12.00 Uhr In der Instrumentensammlung sind wertvolle Geigen von Mittenwalder Meistern ausgestellt. Außerdem kann man in einer besonders eingerichteten Werkstatt dem Geigenbauer bei der Arbeit zuschauen. Außerhalb der Öffnungszeiten sind Gruppen ab 20 Personen nach Voranmeldung willkommen. Telefon (0 83 62) 25 11",
+                            "ar": "متحف محلي فيه آلات موسيقية بحال الكمان، ولكن كيسدو مع 12 نهار السبت والأحد."
+                        },
+                        {
+                            "key": "G",
+                            "head": "",
+                            "body": "bonCas Spezialitätenkäserei P. und U. Moser-Kolb Hessenbohlstraße 14 CH – 8512 Lustdorf Schweiz E-Mail: kieronkoelbi@bluewin.ch",
+                            "ar": "محل كيصايب الفرماج سبيسيال ولكن كاين فسويسرا ماشي فبافاريا."
+                        },
+                        {
+                            "key": "H",
+                            "head": "",
+                            "body": "Alfa Sprachreisen Crash-Kurse für Manager. Sprachkurse und High-School-Programme für 12- bis 18-Jährige. Englisch, Französisch, Spanisch, 17 Länder, mehr als 60 Kursorte. Fordern Sie unsere kostenlose Broschüre an! Alfa-Sprachreisen GmbH Rotebühlplatz 75 · 70178 Stuttgart Tel. 0711-61 55 300 · Fax 0711-61 55 3010 http://www.alfa-sprachreisen.de",
+                            "ar": "وكالة ديال السفر اللغوي كتقدم كورسات للشباب من 12 لـ 18 عام والمدراء."
+                        },
+                        {
+                            "key": "I",
+                            "head": "",
+                            "body": "4. APRIL „Deutsche Schlagernacht“ 12. APRIL Donnerstag: 70er/80er Jahre Party NEU: Schnitzel-Woche Cafe • Bistro Café · Bistro Amadeus Tiroler Straße 19 87459 PFRONTEN-DORF · Tel. 08363/474",
+                            "ar": "مقهى وببيسترو كيديرو حفلات ديال الموسيقى وأسابيع ديال الأكل بحال الشنيتزل."
+                        },
+                        {
+                            "key": "J",
+                            "head": "",
+                            "body": "Free-System Englisch, Französisch, Italienisch, Spanisch, Deutsch für Ausländer Maschinenschreiben/Steno •Sie bestimmen die Unterrichtszeit •Sie lernen, so rasch Sie wollen •Intensivkurse, Einzel-/Privat- und Kleingruppen (1-5 Teilnehmer) •Intensive Crash Courses •Brush up and Business •Sprachkurse für Manager •English for Secretaries •Firmenkurse (intern/extern) •First/Proficiency/TOEFL/GMAT Alliance Française Kursbeginn jetzt! Institut Grünberger Rostock, direkt beim Hauptbahnhof",
+                            "ar": "معهد ديال اللغات كيعطي حصص فأوقات مرنة كتعزلها نتا، وكاين دروس ألمانية للأجانب."
+                        },
+                        {
+                            "key": "K",
+                            "head": "",
+                            "body": "Ritterstub'n Fischspezialitäten Das Restaurant mit gepflegter Gastlichkeit im Herzen der Altstadt geöffnet von 11:00–14:00 Uhr und 17:00–24:00 Uhr Montag Ruhetag Warme Küche bis 22:00 Uhr Ritterstraße 4 · 87629 Füssen Tel. 08362 / 7759 Fam. Roth-Winter freut sich auf Ihren Besuch",
+                            "ar": "مطعم متخصص فأنواع الحوت وسط المدينة القديمة."
+                        },
+                        {
+                            "key": "L",
+                            "head": "",
+                            "body": "Wollen Sie fein essen gehen? Alpenschlössle Füssen-Bad Faulenbach Tel. (08362) 4017 Hotel-Restaurant Alpenschlössle Auf Ihren Besuch freut sich Familie Hummel Hotel · Café · Pension",
+                            "ar": "فندق ومطعم فنفس الوقت، مناسب للناس لي بغاو ياكلو ويباتو تما."
+                        }
+                    ],
+                    "situations": [
+                        {
+                            "no": 1,
+                            "de": "Sie lieben Klaviermusik und möchten am Wochenende eine Veranstaltung besuchen.",
+                            "ar": "أنت تحب الموسيقى الكلاسيكية للبيانو وترغب في حضور فعالية في عطلة نهاية الأسبوع.",
+                            "answer": "E",
+                            "changed": true
+                        },
+                        {
+                            "no": 2,
+                            "de": "Sie möchten am Sonntagnachmittag ins Museum gehen.",
+                            "ar": "ترغب في الذهاب إلى المتحف بعد ظهر يوم الأحد.",
+                            "answer": "A",
+                            "changed": true
+                        },
+                        {
+                            "no": 3,
+                            "de": "Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",
+                            "ar": "أنت في إجازة في جنوب ألمانيا وترغب في تناول وجبة من المأكولات البافارية.",
+                            "answer": "B"
+                        },
+                        {
+                            "no": 4,
+                            "de": "Sie wollen sich mit Bekannten zum Fischessen verabreden.",
+                            "ar": "تريد ترتيب موعد مع معارفك لتناول السمك.",
+                            "answer": "K",
+                            "changed": true
+                        },
+                        {
+                            "no": 5,
+                            "de": "Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",
+                            "ar": "أنت في بافاريا وتريد شراء منتجات الجبن المميزة.",
+                            "answer": "C"
+                        },
+                        {
+                            "no": 6,
+                            "de": "Ein Bekannter möchte abends nach der Arbeit einen Deutschkurs besuchen.",
+                            "ar": "يرغب أحد معارفك في حضور دورة لتعلم اللغة الألمانية مساءً بعد العمل.",
+                            "answer": "J",
+                            "changed": true
+                        },
+                        {
+                            "no": 7,
+                            "de": "Ihr Vater möchte im Ausland Englisch lernen.",
+                            "ar": "والدك يرغب في تعلم اللغة الإنجليزية في الخارج.",
+                            "answer": "D",
+                            "changed": true
+                        },
+                        {
+                            "no": 8,
+                            "de": "Sie interessieren sich für einen Online-Sprachkurs.",
+                            "ar": "أنت مهتم بدورة لتعلم اللغات عبر الإنترنت.",
+                            "answer": "X",
+                            "changed": true
+                        },
+                        {
+                            "no": 9,
+                            "de": "Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt.",
+                            "ar": "تريد أن تتعلم ابنتك البالغة من العمر 10 سنوات لغة أجنبية خلال العطلة.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 10,
+                            "de": "Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",
+                            "ar": "ترغب إحدى معارفك في الاحتفال بعيد ميلادها في مطعم والإقامة هناك أيضاً.",
+                            "answer": "L"
+                        }
+                    ]
+                }
+            ]
         }
     },
     "b1-vera": {
@@ -534,6 +1118,152 @@ window.LESEN_B1_CONTENT = {
                             "body": "Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei zweifelhafter Witterung bzw. leichtem Regen auf der Seebühne abzuhalten, weshalb es zu Verzögerungen des Beginns oder zu Unterbrechungen kommen kann. Sollte die Seeaufführung nicht stattfinden können, wird eine halbszenische Version von Porgy and Bess im Festspielhaus gegeben. Wir empfehlen unseren Gästen , bei unsicherer Wetterlage regenfester Kleidung den Vorzug zu geben und auf Schirme zu verzichten, da diese die Sicht beeinträchtigen. Das Spiel auf dem See wird ohne Pause gespielt. Die Spieldauer beträgt ca.2 Std. 45 Min.",
                             "ar": "تبذل إدارة مهرجان بريغنتس قصارى جهدها لتقديم العروض على المسرح العائم حتى في حال تقلب الطقس أو هطول أمطار خفيفة مما قد يترتب عليه بعض التأخير أو التوقف المؤقت وفي حال استحالة العرض في الهواء الطلق يتم تقديم نسخة بديلة داخل دار المهرجان وتناشد الإدارة الزوار بضرورة ارتداء ملابس واقية من المطر مع الامتناع عن استخدام المظلات لعدم حجب الرؤية عن الآخرين علماً أن العرض يستمر لمدة ساعتين وخمس وأربعين دقيقة دون أي فواصل استراحة.",
                             "answer": "C"
+                        }
+                    ]
+                }
+            ]
+        },
+        "teil3": {
+            "title": "Vera",
+            "kind": "ads",
+            "variants": [
+                {
+                    "label": "",
+                    "intro": "Lesen Sie die Situationen 1–10 und die Anzeigen a–l. Welche Anzeige passt zu welcher Situation? Jede Anzeige können Sie nur einmal verwenden. Gibt es zu einer Situation keine passende Anzeige, markieren Sie X.",
+                    "ads": [
+                        {
+                            "key": "A",
+                            "head": "22.55",
+                            "body": "Stern TV-Countdown (VOX)\nIn zehn Reportagen zeigt Spiegel TV: „Mann Jörg Hafermeyer, wie sich die ersten Monate der neuen Regierung gestalten. Jetzt werden Weichen für die Zukunft Deutschlands gestellt. (bis 21.45 Uhr)",
+                            "ar": "برنامج تلفزيوني كيهضر على التطورات السياسية، الحكومة الجديدة، والمستقبل ديال ألمانيا."
+                        },
+                        {
+                            "key": "B",
+                            "head": "20.15 Tatort aus Münster",
+                            "body": "Nun kommen die Fans von Frank Thiel wieder auf ihre Kosten: Frank Thiel alias Axel Prahl ermittelt. Ihm zur Seite steht wieder Meierdet, Die Schweizerin spielt die Freundin des Frieden ermittlers – eine Rolle, mit der das Verständnis für Thielins Lebenswandel zeigt, sich aber auch in Szene zu setzen weiss! Manuelle hofft sie, im deutschen Fernsehen bekannt zu werden.\n(bis 21.45 Uhr)",
+                            "ar": "حلقة ديال مسلسل البوليسي 'Tatort' فيها ممثلة سويسرية باقة جديدة كتقلب باش تولي معروفة فالتلفزة."
+                        },
+                        {
+                            "key": "C",
+                            "head": "Lieben Sie den Umgang",
+                            "body": "mit Menschen?\nSind Sie obendrein auch noch\ndynamisch und ehrgeizig, dann sind\nSie bei uns richtig. Münchens\nbekannte PRIMA-Werbung bietet\nIhnen neben einem tollen Team\nhervorragende Verdienst- und\nAufstiegsmöglichkeiten.\nWir brauchen Leute wie Sie! Rufen\nSie an!",
+                            "ar": "وكالة إشهار فميونيخ كتقلب على ناس ديناميكيين وكيعجبهم يخدمو ويتعاملو مع الناس وسط فريق."
+                        },
+                        {
+                            "key": "D",
+                            "head": "Lukrative Halbtagstätigkeit",
+                            "body": "High-Tech-Unternehmen sucht für Empfang und einfache Büroarbeiten Aushilfe\nMS-Office- und Englischkenntnisse erforderlich!!\nInteressenten wenden sich an\nLoewe New Media GmbH, Tel. 089/45 79 00",
+                            "ar": "شركة ديال التكنولوجيا كتقلب على مساعدين يخدمو نص نهار فالاستقبال والخدمة ديال البيرو."
+                        },
+                        {
+                            "key": "E",
+                            "head": "Wir suchen",
+                            "body": "Junge Mitarbeiter\nfür eine freiberufliche Nebentätigkeit\n(telefonische Absprache und Planung von Interview-\nEinsätzen, 15–25 Std./Woche).\nSpezielle Vorkenntnisse sind nicht erforderlich,\nwichtig ist uns sicheres Auftreten am Telefon.\nNähere Informationen unter (089) 92 23-421",
+                            "ar": "خدمة حرة كعمل إضافي فيها غير التنسيق فالتليفون والمقابلات، ما كتحتاجش خبرة."
+                        },
+                        {
+                            "key": "F",
+                            "head": "ARTE",
+                            "body": "Themenabend\n20.45 Was ist mit unserer Jugend los?\n„UNSERE ZUKUNFT“\nWie kommen Jugendliche in\nDeutschland und Frankreich mit der\nWirtschafts- und Bildungspolitik\nzurecht?\nbis 23.45",
+                            "ar": "برنامج وثائقي فقناة ARTE كيهضر على الشباب كيفاش كيتعاملو مع السياسة، الاقتصاد، والتعليم."
+                        },
+                        {
+                            "key": "G",
+                            "head": "22.15 Radio Bremen",
+                            "body": "Bei einem internationalen Kongress präsentieren norwegische Gäste am zweiten Wochen- ende in Bremen architektonische Projekte zum Thema „Städtische Freiräume“. Weiterhin: Rückschau und Vorschau auf das Programm, über die Schule für Urbane Gärten. Und ein Bericht über die Obdachlosen- Betreuung Wochenendausru!",
+                            "ar": "برنامج فالراديو كيهضر على مشاريع الهندسة المعمارية والتطور العمراني وتصميم المدن."
+                        },
+                        {
+                            "key": "H",
+                            "head": "Wir suchen ständig:",
+                            "body": "Studenten für Schüler-Nachhilfeunterricht:\nEnglisch, Französisch, Mathematik\nMessehostessen – Babysitter – Tiersitter\nStd.-Lohn ca. 13,00 EUR\nVermittlungsagentur Gerdschwager\nTel. 089/74 68 91 93",
+                            "ar": "وكالة كتقلب على طلبة باش يقريو لغات ورياضيات، ويخدمو كجليسات أطفال (بيبي سيتر)."
+                        },
+                        {
+                            "key": "I",
+                            "head": "Max Frisch: Biedermann und die Brandstifter;",
+                            "body": "Samstag, 19. September, 20.10–21.17 Uhr\n„HR2“\n„Ein Lehrstück ohne Lehre“ nannte Frisch sein ursprünglich als Hörspiel gedachtes und dann für das Theater bearbeitetes Stück, das 1958 in Zürich uraufgeführt wurde. Man sah darin sowohl eine Warnung vor dem Kommu- nismus wie vor dem Faschismus. (chw.)",
+                            "ar": "مسرحية سياسية مسموعة فإذاعة HR2 كتحذر من الفاشية والشيوعية، غدوز نهار السبت."
+                        },
+                        {
+                            "key": "J",
+                            "head": "20.15",
+                            "body": "LIVE\nDrei Länder – ein Thema TALK-SHOW „Tacheles!“\nKommt die Öko-Diktatur?\nZündstoff „Treibhausgase“ – Wie begegnen wir in Deutschland, der Schweiz und Österreich den Verkehrsfolgen? Wie retten wir die Umwelt? bis 21.30 65-437-662",
+                            "ar": "برنامج حواري (طوك شو) كيتناقشو فيه على مشاكل الغازات الدفيئة وكيفاش نحميو البيئة."
+                        },
+                        {
+                            "key": "K",
+                            "head": "Wir suchen für unsere Hotelbereiche",
+                            "body": "in München, Frankfurt und Berlin\nMitarbeiter/innen\nam Empfang\nWenn Sie bereits Rezeptionserfahrung\nauch gerade ausgebildet haben\nmind. eine Fremdsprache (E) sprechen\nsenden Sie bitte die Bewerbung an\n3 Blatt’s Hotels Zentrale, Geschäftbereich Personal,\nPostfach 22 11 44, 00591 München",
+                            "ar": "فنادق كتقلب على موظفين للاستقبال ويكون عندهم تجربة سابقة فهاد المجال."
+                        },
+                        {
+                            "key": "L",
+                            "head": "PRAKTIKANT/IN",
+                            "body": "Im Bereich Medien- und Veranstaltungstechnik\ngesucht\nPraktikumzeit sind 6 Monate\nKurze schriftliche Bewerbung an\nTAPE Media Film Gen.\nHeidemannsle 17, 80939 München",
+                            "ar": "فرصة ديال سطاج (تدريب) فمجال تقنيات الإعلام مع شركة ديال الإنتاج التلفزيوني والسينمائي."
+                        }
+                    ],
+                    "situations": [
+                        {
+                            "no": 1,
+                            "de": "Sie haben von einer noch unbekannten Schauspielerin gehört und möchten gern einen Film sehen.",
+                            "ar": "سمعت عن ممثلة غير معروفة بعد وترغب في مشاهدة فيلم.",
+                            "answer": "B"
+                        },
+                        {
+                            "no": 2,
+                            "de": "Sie haben bereits in einem Hotel gearbeitet und suchen wieder eine neue interessante Stelle.",
+                            "ar": "سبق لك العمل في فندق وتبحث عن وظيفة جديدة ومثيرة.",
+                            "answer": "K"
+                        },
+                        {
+                            "no": 3,
+                            "de": "Sie interessieren sich für Umweltschutz und suchen eine passende Sendung.",
+                            "ar": "تهتم بحماية البيئة وتبحث عن برنامج مناسب.",
+                            "answer": "J"
+                        },
+                        {
+                            "no": 4,
+                            "de": "Ihr Freund, der am Institut für Film und Bild studiert, sucht einen geeigneten Praktikumsplatz.",
+                            "ar": "صديقك الذي يدرس في معهد الفيلم والصورة يبحث عن مكان تدريب مناسب.",
+                            "answer": "L"
+                        },
+                        {
+                            "no": 5,
+                            "de": "In einer Sendereihe wird im Fernsehen über die neue politische Entwicklung in Deutschland berichtet. Sie wollen sich informieren.",
+                            "ar": "تُبث سلسلة برامج على التلفزيون حول التطورات السياسية الجديدة في ألمانيا. ترغب في الحصول على معلومات.",
+                            "answer": "A"
+                        },
+                        {
+                            "no": 6,
+                            "de": "Sie interessieren sich für moderne Stadtentwicklung und suchen dazu eine Sendung im Rundfunk.",
+                            "ar": "تهتم بالتنمية الحضرية الحديثة وتبحث عن برنامج إذاعي حول هذا الموضوع.",
+                            "answer": "G"
+                        },
+                        {
+                            "no": 7,
+                            "de": "Sie wollen bei der Deutschen Bahn eine Ausbildung machen.",
+                            "ar": "ترغب في القيام بتدريب مهني في السكك الحديدية الألمانية.",
+                            "answer": "X"
+                        },
+                        {
+                            "no": 8,
+                            "de": "Sie interessieren sich für politisches Theater und möchten am Wochenende dazu etwas hören oder sehen.",
+                            "ar": "تهتم بالمسرح السياسي وترغب في سماع أو مشاهدة شيء حول هذا الموضوع في عطلة نهاية الأسبوع.",
+                            "answer": "I"
+                        },
+                        {
+                            "no": 9,
+                            "de": "Sie arbeiten gern mit anderen zusammen und suchen eine Tätigkeit bei einer Werbefirma.",
+                            "ar": "تحب العمل مع الآخرين وتبحث عن وظيفة في شركة إعلانات.",
+                            "answer": "C"
+                        },
+                        {
+                            "no": 10,
+                            "de": "Sie studieren Fremdsprachen und suchen einen Job, bei dem Sie mit Kindern arbeiten können.",
+                            "ar": "تدرس اللغات الأجنبية وتبحث عن وظيفة يمكنك فيها العمل مع الأطفال.",
+                            "answer": "H"
                         }
                     ]
                 }

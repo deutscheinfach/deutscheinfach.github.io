@@ -339,11 +339,19 @@
             loading.textContent = "كنجيبو التمرين…";
             stack.appendChild(loading);
 
-            Promise.resolve(
-                typeof window.__lesenPremiumFetch === "function"
-                    ? window.__lesenPremiumFetch(themaId)
-                    : null
-            ).then(function (result) {
+            const fetchPart = typeof window.__lesenPremiumFetch === "function"
+                ? window.__lesenPremiumFetch
+                : function () { return null; };
+
+            /* كل موضوع عندو مفتاح KV واحد (lesen-<id>). جزء اللي ماكاينش
+               فيه كيتقلب عليه فمفتاح بوحدو: lesen-<id>-<part> — هاكا
+               زيادة جزء جديد ماكتحتاجش تبدل المفاتيح القدام. */
+            Promise.resolve(fetchPart(themaId)).then(function (result) {
+                if (result && result.ok && (result.data || {})[part]) return result;
+                return Promise.resolve(fetchPart(themaId + "-" + part)).then(function (own) {
+                    return own && own.ok ? own : result;
+                });
+            }).then(function (result) {
                 /* بدّل الجزء ولا خرج من التمرين وهو كيجيب؟ نحبسو. */
                 if (!stillWanted()) return;
                 stack.textContent = "";
