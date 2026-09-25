@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="assets/theme.css?v=0d2713fb">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
+<script src="assets/hoeren-premium.js?v=9a8df7cd"></script>
 <link rel="stylesheet" href="assets/site-header.css?v=ca1258d9">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
@@ -949,6 +950,8 @@ html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-f
 html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-title, html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-falsch { color: #1c1a16 !important; }
 html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-correct, html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-result-success { color: #14663f !important; }
 html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-result-info { color: #6b4f14 !important; }
+html body #hoeren-teil3-stack .nq-note { display: flex; flex-direction: column; gap: 4px; margin: 0 0 14px; padding: 12px 14px; border-radius: 12px; background: #fbf1d6; border: 1px solid rgba(214,178,94,.7); border-inline-start: 4px solid #d6b25e; color: #1c1a16; font-size: 14px; line-height: 1.8; }
+html body #hoeren-teil3-stack .nq-note b { color: #6b4f14; font-weight: 900; }
 </style>
 </head>
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
@@ -1020,6 +1023,7 @@ window.__deutschEinfachPremiumReady = (async function () {
      */
     return await new Promise(function (resolve) {
       onAuthStateChanged(auth, async function (user) {
+        window.__hoerenUser = user || null;
         if (!user) {
           resolve(false);
           return;
@@ -1066,456 +1070,71 @@ window.__deutschEinfachPremiumReady = (async function () {
 
   function boot() {
 
-  var THEMES = [ 
-{ href: "", title: "Telefon", quizId: "Telefon", questions: [
-    { text: "Bei der Deutschen Telefon KG bekommen Sie nur Auskunft zu Telefonapparaten dieses Unternehmens.", answer: "" },
-    { text: "Im Rahmen des „BR3 Aquarena Weekends“ in Starnberg können Sie jeden Abend ein Feuerwerk betrachten.", answer: "" },
-    { text: "Die Trierer Domorganisten spielen am 6. Juli in Michelstadt.", answer: "" },
-    { text: "Während des Musikfestivals „Sound of Frankfurt“ ist die Benutzung der U- und SBahnen Gebührenfrei.", answer: "" },
-    { text: "Sie haben eine ungültige Servicenrufnummer gewählt und werden daher automatisch weiterverbunden.", answer: "" }
-  ]
-},
-{ href: "", title: "Musikfestival (الأساسي)", quizId: "Musikfestival (الأساسي)", questions: [
-    { text: "Während des Musikfestivals „Sound of Frankfurt“ gibt es verbilligte Fahrkarten für alle öffentlichen Verkehrsmittel.", answer: "" },
-    { text: "Sie gehen am 3. Juli ins Konzert, weil Sie die beiden Leipziger Klavier Virtuosen hören möchten.", answer: "" },
-    { text: "Am Wochenende können Sie sich in Namburg über die Bekämpfung von Krankheiten bei Apfelbäumen informieren.", answer: "" },
-    { text: "Im Handwerksmuseum werden Kleidungsstücke ausgestellt.", answer: "" },
-    { text: "Die Autobahn „A5“ ist zwischen Baden-", answer: "" }
-  ]
-},
-{ href: "", title: "Musikfestival (المعدل)", quizId: "Musikfestival (المعدل)", questions: [
-    { text: "Geschäftsreisende werden gebeten, Mietwagen unter der Nummer 3223 zu buchen.", answer: "" },
-    { text: "Sie gehen am 3. Juli ins Konzert, weil Sie die beiden Leipziger Klaviervirtuosen hören möchten.", answer: "" },
-    { text: "Am Wochenende können Sie sich in Naumburg über die Bekämpfung von Krankheiten bei Apfelbäumen informieren.", answer: "" },
-    { text: "Im Handwerksmuseum werden Kleidungsstücke ausgestellt.", answer: "" },
-    { text: "Die Autobahn A5 ist zwischen Baden-Baden und Rastatt in beiden Richtungen gesperrt.", answer: "" }
-  ]
-},
-{ href: "", title: "Die Fahrschule", quizId: "Die Fahrschule", questions: [
-    { text: "Bei der Fahrschule kann man sich über das Internet anmelden.", answer: "" },
-    { text: "Die Anruferin ist im Hinblick auf die Abfahrtszeit flexibel.", answer: "" },
-    { text: "Für den Halb-Marathon kann man sich noch am Sonntag registrieren lassen.", answer: "" },
-    { text: "Bei dem Flug nach Mallorca ändert sich die Abflugzeit.", answer: "" },
-    { text: "In Halle D wird aus E-Books vorgelesen.", answer: "" }
-  ]
-},
-{ href: "", title: "Süden Deutschlands regnen", quizId: "Süden Deutschlands regnen", questions: [
-    { text: "Im Süden Deutschlands wird es nachmittags regnen.", answer: "" },
-    { text: "Die Busse verkehren zu anderen Zeiten als die Regionalzüge.", answer: "" },
-    { text: "Auf der A3 von Würzburg nach Frankfurt gibt es aufgrund eines Unfalls eine Vollsperrung.", answer: "" },
-    { text: "Wenn Sie über Ihre Autoversicherung sprechen wollen, müssen Sie die 1 wählen.", answer: "" },
-    { text: "Ihr Bekannter ist jederzeit telefonisch erreichbar", answer: "" }
-  ]
-},
-{ href: "", title: "Süden Deutschlands Schnee", quizId: "Süden Deutschlands Schnee", questions: [
-    { text: "Morgen muss man im Süden Deutschlands mit Schnee rechnen.", answer: "" },
-    { text: "Die zwei Jungen sind von zu Hause weggelaufen.", answer: "" },
-    { text: "Am Samstag können Sie einen Mitarbeiter der Firma anrufen.", answer: "" },
-    { text: "Wegen einer Demonstration ist es verboten, in die Nürnberger Altstadt zu fahren.", answer: "" },
-    { text: "Die historische elektrische Eisenbahn wird im Dezember wie gewohnt fahren.", answer: "" }
-  ]
-},
-{ href: "", title: "Im Internet", quizId: "Im Internet", questions: [
-    { text: "Sie können im Internet prüfen, ob Ihre aktuelle Bestellung schon unterwegs ist.", answer: "" },
-    { text: "Man kann für die Nacht Veranstaltung noch Karten im Internet kaufen.", answer: "" },
-    { text: "Die Teilnahme an der Party im Burghof kostet nichts.", answer: "" },
-    { text: "In Bamberg kann man in der nächsten Woche besonders günstig Mitglied in einem Sportverein werden.", answer: "" },
-    { text: "Wer ein wichtiges Anliegen hat, soll eine andere Nummer wählen.", answer: "" }
-  ]
-},
-{ href: "", title: "Tag des Ehrenamts", quizId: "Tag des Ehrenamts", questions: [
-    { text: "Man kann am «Tag des Ehrenamts“ probeweise mithelfen.", answer: "" },
-    { text: "Das Skateboard – Vorführung fällt dieses Mal aus.", answer: "" },
-    { text: "Vor passwort- Programmen wird gewarnt.", answer: "" },
-    { text: "Es wird empfohlen, mit dem Fahrrad zum Volkspark zu fahren.", answer: "" },
-    { text: "Wenn man das Training ausprobieren möchte, muss man vorher Bescheid sagen", answer: "" }
-  ]
-},
-{ href: "", title: "Die Demonstration", quizId: "Die Demonstration", questions: [
-    { text: "Die Demonstration findet in Frankfurt vor der Alten Oper statt.", answer: "" },
-    { text: "In der kommenden Saison wird eine Symphonie von Mahler aufgeführt.", answer: "" },
-    { text: "Die Weltmeisterschaften im Eiskunstlauf finden in der Dortmunder Helmut Körnig Halle statt.", answer: "" },
-    { text: "Die Autobahn A980 ist mit Schneeketten befahren.", answer: "" },
-    { text: "Für die Vermittlung einer Mitfahrgelegenheit-E-Mail erhebt fahre mit“ keine Gebühren", answer: "" }
-  ]
-},
-{ href: "", title: "Im August", quizId: "Im August", questions: [
-    { text: "im August gibt es jeden Tag eine Aufführung.", answer: "" },
-    { text: "Zur Station Grünberg kommen Sie mit der U-Bahn-Linie 68.", answer: "" },
-    { text: "In weniger dringlichen Fällen soll man eine Nachricht hinterlassen.", answer: "" },
-    { text: "Am Mittwoch und Donnerstag können Sie Sachspenden vorbeibringen.", answer: "" },
-    { text: "Nur an den Nachmittagen wird eine hohe Verkehrsdichte erwartet.", answer: "" }
-  ]
-},
-{ href: "", title: "Am Wochenanfang", quizId: "Am Wochenanfang", questions: [
-    { text: "Am Wochenanfang soll man einen Aufenthalt im Freien vermeiden.", answer: "" },
-    { text: "Abends ist das Risiko, einen Wild Unfall zu haben am größten.", answer: "" },
-    { text: "Man kann bei dem Fest an verschiedenen Orten Musik hören.", answer: "" },
-    { text: "In dringenden Fällen können Sie die Firma ab Montag erreichen.", answer: "" },
-    { text: "Am Abend werden Verkehrsbehinderungen erwartet", answer: "" }
-  ]
-},
-{ href: "", title: "Fundbüro", quizId: "Fundbüro", questions: [
-    { text: "Sie müssen nicht persönlich beim Fundbüro nachfragen.", answer: "" },
-    { text: "Die Wettervorhersage können Sie nach den Mittagsnachrichten hören.", answer: "" },
-    { text: "Sie dürfen ihr Rad spontan im Zug mitnehmen.", answer: "" },
-    { text: "Am Donnerstag sehen Sie das deutsch Team in Halbfinale.", answer: "" },
-    { text: "während der Sperrung kann man die üblichen Bushaltestellen benutzen.", answer: "" }
-  ]
-},
-{ href: "", title: "Ausgang 26 (الأساسي)", quizId: "Ausgang 26 (الأساسي)", questions: [
-    { text: "Sie sollen zum Ausgang 26 kommen.", answer: "" },
-    { text: "Um die zuständige Abteilung zu erreichen, müssen Sie die 3 wählen.", answer: "" },
-    { text: "Bei der Service - Nummer bekommen Sie Karten für eine Führung.", answer: "" },
-    { text: "Sie können sich am Sonntag um ein Uhr bewerben.", answer: "" },
-    { text: "In der Bäckerstraße dürfen Sie nicht fahren.", answer: "" }
-  ]
-},
-{ href: "", title: "Ausgang 26 (المعدل)", quizId: "Ausgang 26 (المعدل)", questions: [
-    { text: "In der Bäckerstraße dürfen Sie nicht fahren.", answer: "" },
-    { text: "Sie können sich am Sonntag um ein Uhr bewerben.", answer: "" },
-    { text: "Bei der Service-Nummer bekommen Sie Karten für eine Führung.", answer: "" },
-    { text: "Um die zuständige Abteilung zu erreichen, müssen Sie die 3 wählen.", answer: "" },
-    { text: "Sie sollen zum Ausgang 26 kommen.", answer: "" }
-  ]
-},
-{ href: "", title: "Blutspenden", quizId: "Blutspenden", questions: [
-    { text: "Ihre Tochter kann am Freitag verschiedene Sportarten testen.", answer: "" },
-    { text: "Sie können sich im Internet zum Blutspenden anmelden.", answer: "" },
-    { text: "Heute müssen Sie auf den Bus ausweichen.", answer: "" },
-    { text: "Sie müssen das Bad früher verlassen.", answer: "" },
-    { text: "Für einen Termin müssen Sie anrufen.", answer: "" }
-  ]
-},
-{ href: "", title: "Reitturnier", quizId: "Reitturnier", questions: [
-    { text: "Besucher des Reitturniers sollten möglichst Parkplätze außerhalb des Turniergeländes nutzen.", answer: "" },
-    { text: "Das Open-Air-Gospelkonzert wird live im Radio übertragen.", answer: "" },
-    { text: "Bei der Berliner Museumsnacht können Sie mit einer Sonderbuslinie bequem jedes Museum erreichen.", answer: "" },
-    { text: "Wegen Glätte ist die A5 zwischen Mannheim und Frankfurt in beide Richtungen voll gesperrt.", answer: "" },
-    { text: "Hotelreservierungen in Dresden sind ausschließlich telefonisch möglich", answer: "" }
-  ]
-},
-{ href: "", title: "Delikatessen", quizId: "Delikatessen", questions: [
-    { text: "Bis 14 Uhr können Sie Delikatessen aus verschiedenen Ländern kaufen.", answer: "" },
-    { text: "Bis zum Start können Sie mit Ihrem Handy telefonieren.", answer: "" },
-    { text: "Vorführungen mit Tieren werden nicht geboten.", answer: "" },
-    { text: "Am Wochenende können Sie Musik im Schloss Mirabell hören.", answer: "" },
-    { text: "Sie können Frau Dr. Schneider am Samstagabend anrufen.", answer: "" }
-  ]
-},
-{ href: "", title: "In Raum C23", quizId: "In Raum C23", questions: [
-    { text: "In Raum C23 trägt ein bekannter Schriftlicher etwas vor.", answer: "" },
-    { text: "Wenn ihre Software nicht funktioniert, erhalten Sie über Internet Unterstützung.", answer: "" },
-    { text: "In der Stadtbibliothek präsentiert heute eine Hochschule ihr Angebot vor allem für Berufstätige.", answer: "" },
-    { text: "Im Internet finden Sie auch Angebot für spezielle Zielgruppen.", answer: "" },
-    { text: "Wenn man Dienstag oder Donnerstag jemanden persönlich sprechen möchte, braucht man einen Termin.", answer: "" }
-  ]
-},
-{ href: "", title: "In Raum C23 (المعدل)", quizId: "In Raum C23 (المعدل)", questions: [
-    { text: "In Raum C23 trägt ein bekannter Schriftlicher etwas vor.", answer: "" },
-    { text: "Wenn ihre Software nicht funktioniert, erhalten Sie über Internet Unterstützung", answer: "" },
-    { text: "In der Stadtbibliothek präsentiert heute eine Hochschule ihr Angebot vor allem für Berufstätige.", answer: "" },
-    { text: "Im Internet finden Sie auch Angebot für spezielle Zielgruppen", answer: "" },
-    { text: "Wenn man Jemandem Persönlich sprechen möchte, braucht man keinen Termin.", answer: "" }
-  ]
-},
-{ href: "", title: "Nach einer Großdemonstration", quizId: "Nach einer Großdemonstration", questions: [
-    { text: "Nach einer Großdemonstration liegen in Frankfurt Gegenstände auf den Straßen.", answer: "" },
-    { text: "Wer bei der Wanderung keinen Rucksack mitnehmen will, kann unterwegs etwas zu essen und zu trinken bekommen.", answer: "" },
-    { text: "Bei der Volkshochschule Tübingen kann man sich für alle Kurse problemlos per E-Mail anmelden.", answer: "" },
-    { text: "Im Klassikfunk kann man ab 20.15 Uhr CDs mit Musik von Verdi bestellen.", answer: "" },
-    { text: "Kinder können während der Sommerferien im Römerkastell Saalburg übernachten.", answer: "" }
-  ]
-},
-{ href: "", title: "Für ein Konzert (الأساسي)", quizId: "Für ein Konzert (الأساسي)", questions: [
-    { text: "Für ein Konzert morgen Abend kann man noch im Internet Karten kaufen.", answer: "" },
-    { text: "Heute ist das Busfahren in der ganzen Stadt umsonst.", answer: "" },
-    { text: "Bei dem Filmfestival werden internationale Kinderfilme gezeigt.", answer: "" },
-    { text: "Das Busunternehmen Schneider kündigt neue Fernbusverbindungen an.", answer: "" },
-    { text: "Man kann eine kostenlose Probestunde vereinbaren.", answer: "" }
-  ]
-},
-{ href: "", title: "Für ein Konzert (المعدل)", quizId: "Für ein Konzert (المعدل)", questions: [
-    { text: "Für ein Konzert Morgen Abend kann man noch im Internet Karten kaufen.", answer: "" },
-    { text: "Man kann mit dem Bus gratis zum Fest fahren.", answer: "" },
-    { text: "Bei dem Filmfestival werden internationale Kinderfilme gezeigt.", answer: "" },
-    { text: "Das Busunternehmen Schneider kündigt neue Fernbusverbindungen an.", answer: "" },
-    { text: "Man kann sich für eine kostenlose Probestunde anmelden.", answer: "" }
-  ]
-},
-{ href: "", title: "Radio Konzert", quizId: "Radio Konzert", questions: [
-    { text: "Beim Klassik-Radio kann man Karten für ein Konzert in Frankfurt gewinnen.", answer: "" },
-    { text: "Für den Engelberg-Lauf in Miltenberg ist eine frühzeitige Anmeldung erforderlich.", answer: "" },
-    { text: "Der Radiosender Bayern 1 informiert auf seiner Website über das Sommernachtsfest.", answer: "" },
-    { text: "Auf der A3 hat es in der Nähe von Erlangen einen Unfall gegeben.", answer: "" },
-    { text: "Funk-Mobil bietet Dienstleistungen für Autofahrer an.", answer: "" }
-  ]
-},
-{ href: "", title: "Das Fest (ohne Frankfurt)", quizId: "Das Fest (ohne Frankfurt)", questions: [
-    { text: "Heute kann man vormittags das Fest besuchen", answer: "" },
-    { text: "Der Verkauf beginnt um 9 Uhr morgens", answer: "" },
-    { text: "13,50€ kosten Jugendliche Eintrittskarten für", answer: "" },
-    { text: "Die Fahrkarte ist in bestimmten Zügen gültig", answer: "" },
-    { text: "Am Sonntag können Kinder ein Theaterstück anschauen", answer: "" }
-  ]
-},
-{ href: "", title: "Das Fest (Mit Frankfurt)", quizId: "Das Fest (Mit Frankfurt)", questions: [
-    { text: "Heute kann man vormittags das Fest besuchen", answer: "" },
-    { text: "Die Wiese beginnt um 8 Uhr......", answer: "" },
-    { text: "Eintrittskarten für Jugendliche kosten 13,50 €", answer: "" },
-    { text: "Die Fahrkarte ist in bestimmten Zügen gültig.", answer: "" },
-    { text: "Am Sonntag können Kinder ein Theaterstück anschauen", answer: "" }
-  ]
-},
-{ href: "", title: "Sie hören den Anrufbeantworter", quizId: "Sie hören den Anrufbeantworter", questions: [
-    { text: "Sie hören den Anrufbeantworter einer Buchhandlung.", answer: "" },
-    { text: "Beim Jubiläumsfest im Schloss kann man selbst Musik machen", answer: "" },
-    { text: "Wer gerne und lange tanzt, sollte in Kulmbach Vorbei schauen.", answer: "" },
-    { text: "Sie können sich für alle kurse auch über das Internet registrieren", answer: "" },
-    { text: "Internationale Künstler treten an verschiedenen Plätzen in Esens auf", answer: "" }
-  ]
-},
-{ href: "", title: "Das Geschäft", quizId: "Das Geschäft", questions: [
-    { text: "Das Geschäft für österreichische Spezialitäten befindet sich in Check-in 2.", answer: "" },
-    { text: "Fortgeschrittene Schüler, Studenten, Profis und Lehrkräfte haben die Möglichkeit zu unterrichten.", answer: "" },
-    { text: "Interessenten können auf der Messe nur Bestellungen aufgeben.", answer: "" },
-    { text: "Alle Studierenden müssen ab dem Wintersemester Studiengebühren bezahlen.", answer: "" },
-    { text: "Der Bürgermeister eröffnet das Fest.", answer: "" }
-  ]
-},
-{ href: "", title: "Trainingsausfahrten", quizId: "Trainingsausfahrten", questions: [
-    { text: "Trainingsausfahrten mit dem Rennvelo samstags empfehlen sich nur für besonders geübte Radfahrer.", answer: "" },
-    { text: "Auf dem Blumenmarkt in Groningen kann man auch Gartenzubehör kaufen.", answer: "" },
-    { text: "In der Zooschule wird Unterricht nicht nur für Schüler, sondern auch für Rentner erteilt.", answer: "" },
-    { text: "Ein Markt wird Ende Juli für Kinder bis 16 Jahre in Stuttgart veranstaltet, wo sie ihre alten Bücher und Spielzeuge verkaufen können.", answer: "" },
-    { text: "Auf der A94 zwischen München und Burghausen muss man langsam fahren, weil sich auf der Straße Gegenstände befinden.", answer: "" }
-  ]
-},
-{ href: "", title: "Wanderung", quizId: "Wanderung", questions: [
-    { text: "Nach einer Großdemonstration liegen in Frankfurt Gegenstände auf den Straßen.", answer: "" },
-    { text: "Wer bei der Wanderung keinen Rucksack mitnehmen will, kann unterwegs etwas zu essen und zu trinken bekommen.", answer: "" },
-    { text: "Bei der Volkshochschule Tübingen kann man sich für alle Kurse problemlos per E-Mail anmelden.", answer: "" },
-    { text: "Im Klassikfunk kann man ab 20.15 Uhr CDs mit Musik von Verdi bestellen.", answer: "" },
-    { text: "Kinder können während der Sommerferien im Römerkastell Saalburg übernachten.", answer: "" }
-  ]
-},
-{ href: "", title: "Die Gruppe Die Prinzen", quizId: "Die Gruppe Die Prinzen", questions: [
-    { text: "Die Gruppe „Die Prinzen“ tritt am 23. Juni in Kiel auf.", answer: "" },
-    { text: "Der Frankfurter JPMorgan Chase Corporate Challenge Lauf beginnt in der Nähe der Alten Oper.", answer: "" },
-    { text: "Die Prager Nacht findet im Regensburger Dom statt.", answer: "" },
-    { text: "Auf der A3 Frankfurt Richtung Würzburg ist zwischen Offenbach und Seligenstadt ein Stau.", answer: "" },
-    { text: "Der Anbieter „Call & Call“ verbindet Sie kostenlos mit Ihrem Gesprächspartner.", answer: "" }
-  ]
-},
-{ href: "", title: "spätestens in Hannover", quizId: "spätestens in Hannover", questions: [
-    { text: "Sie müssen spätestens in Hannover in den hinteren Zugteil umsteigen.", answer: "" },
-    { text: "Wenn Sie für das Radio eine Geschichte über Ihren eigenen 18. Geburtstag schreiben, müssen Sie bei der Party keinen Eintritt bezahlen.", answer: "" },
-    { text: "Ihrer Freundin geht es nicht gut.", answer: "" },
-    { text: "Auf dem Festival wird auch Musik von Beethoven gespielt.", answer: "" },
-    { text: "Sie können das Eisbärbaby jederzeit im Freien beobachten.", answer: "" }
-  ]
-},
-{ href: "", title: "Für das Konzert mit Romano", quizId: "Für das Konzert mit Romano", questions: [
-    { text: "Der Software-Service von Macrohard steht rund um die Uhr zur Verfügung.", answer: "" },
-    { text: "Für das Konzert mit Romano Castelli gibt es noch Karten ab 200 Euro.", answer: "" },
-    { text: "Über den neuen Tarif von T-Upline können Sie sich im Internet informieren.", answer: "" },
-    { text: "Weil das Schwerpunktthema „Japan“ lautet, treten im Park des Museums für Völkerkunde in diesem Jahr nur japanische Musiker auf.", answer: "" },
-    { text: "Bei dem Festival gibt es nicht nur folkloristische Unterhaltung, sondern auch kulinarische Spezialitäten aus dem In- und Ausland.", answer: "" }
-  ]
-},
-{ href: "", title: "Bayern Radio", quizId: "Bayern Radio", questions: [
-    { text: "Beim Informationsdienst der Telekom können Sie sich auch über Aktienkurse informieren.", answer: "" },
-    { text: "In Hanau findet am Nachmittag ein Kindermaskenball statt.", answer: "" },
-    { text: "Sie erfahren ausschließlich im Internet, ob Sie gewonnen haben.", answer: "" },
-    { text: "Am Freitag müssen Sie in den Mittelgebirgen mit vielen Pollen rechnen.", answer: "" },
-    { text: "Bayern Radio hat computergestützte Fahrschulprogramme getestet.", answer: "" }
-  ]
-},
-{ href: "", title: "Gartenausstellung KöGa", quizId: "Gartenausstellung KöGa", questions: [
-    { text: "Die Parade der Kulturen wird mit einem Feuerwerk eröffnet.", answer: "" },
-    { text: "Zum Skateboard-Treffen am 31. Oktober soll man verkleidet erscheinen.", answer: "" },
-    { text: "Bei der Gartenausstellung KöGa kann man Gartenzwerge kaufen.", answer: "" },
-    { text: "Die Autobahn A2 Richtung Hannover ist zwischen Rheda-Wiedenbrück und Oelde gesperrt.", answer: "" },
-    { text: "Für handvermittelte Telefongespräche ins Ausland müssen Sie die 613 30 30 wählen.", answer: "" }
-  ]
-},
-{ href: "", title: "den Opel-Zoo", quizId: "den Opel-Zoo", questions: [
-    { text: "Am Donnerstag ist in der Uckermark mit Birkenpollen zu rechnen.", answer: "" },
-    { text: "Die Führung durch Frankfurts Hochhäuser beginnt am Messeturm.", answer: "" },
-    { text: "Am 9. Juli kann man den Opel-Zoo nachts besuchen.", answer: "" },
-    { text: "Für die Wanderung zur Ronneburg sollte man unbedingt genügend Verpflegung mitnehmen.", answer: "" },
-    { text: "Auf der A7 Ulm - Füssen ist der linke Fahrstreifen gesperrt.", answer: "" }
-  ]
-},
-{ href: "", title: "Der Christkindlesmarkt in Nürnberg", quizId: "Der Christkindlesmarkt in Nürnberg", questions: [
-    { text: "Der Christkindlesmarkt in Nürnberg bietet einen speziellen Geschenk-Dienst für Kinder an.", answer: "" },
-    { text: "Auf dem deutsch-französischen Bauernmarkt in Hochspeyer werden ökologische Projekte vorgestellt.", answer: "" },
-    { text: "In Heilsheim findet heute Abend ein Jodelkurs statt.", answer: "" },
-    { text: "Auf der A5 gibt es hinter Karlsruhe mehrere Verkehrsbehinderungen.", answer: "" },
-    { text: "Wenn Ihr Computer nicht mehr hochfährt, können Sie die Nummer 70 17 17 wählen, um Hilfe von Computer World zu erhalten.", answer: "" }
-  ]
-},
-{ href: "", title: "Alle Flüge der Fluglinie", quizId: "Alle Flüge der Fluglinie", questions: [
-    { text: "Das Restaurant hat bis 23 Uhr geöffnet.", answer: "" },
-    { text: "Alle Flüge der Fluglinie AirMer sind für heute und morgen gestrichen.", answer: "" },
-    { text: "Auf alle Möbel gibt es heute und morgen einen Preisnachlass von bis zu 70%.", answer: "" },
-    { text: "Der Schickmarkt hat ab Freitagvormittag geöffnet.", answer: "" },
-    { text: "Der Intercity nach Bregenz fällt aufgrund eines technischen Gebrechens aus.", answer: "" }
-  ]
-},
-{ href: "", title: "Auto gewinnen", quizId: "Auto gewinnen", questions: [
-    { text: "Der Regionalzug nach Bruck an der Mur um 7:15 Uhr wird nicht fahren.", answer: "" },
-    { text: "Man kann ein Auto gewinnen, wenn man alle 9 Gewinnzahlen sammelt.", answer: "" },
-    { text: "Nächste Woche gibt es Äpfel zum Preis von unter 1€.", answer: "" },
-    { text: "Der Intercity nach München fährt immer von Bahnsteig 2.", answer: "" },
-    { text: "Der Eintritt ins Kunterbunt-Kindermuseum ist am Eröffnungstag gratis.", answer: "" }
-  ]
-},
-{ href: "", title: "Die Fahrradtouren von Berlin", quizId: "Die Fahrradtouren von Berlin", questions: [
-    { text: "Die Fahrradtouren von „Berlin auf zwei Rädern“ können nicht nur privat, sondern auch im beruflichen Kontext gebucht werden.", answer: "" },
-    { text: "Straßen in Passau sind durch das starke Unwetter heute noch bis vier Uhr blockiert.", answer: "" },
-    { text: "Sitzplatzreservierungen im ICE sind wegen technischer Probleme in den Wagen 24-38 ungültig.", answer: "" },
-    { text: "Selma schlägt vor, die Verabredung auf Samstag zu verschieben.", answer: "" },
-    { text: "Die lange Nacht der Architektur ist kostenlos, wenn man sich vorher online anmeldet.", answer: "" }
-  ]
-},
-{ href: "", title: "Die Literaturmesse für Kleinverleger", quizId: "Die Literaturmesse für Kleinverleger", questions: [
-    { text: "Die Literaturmesse für Kleinverleger findet zum ersten Mal statt.", answer: "" },
-    { text: "Bei dem Wettkampf machte Saskia Winzer alles richtig.", answer: "" },
-    { text: "Am Samstag ist den ganzen Tag mit Sonne zu rechnen.", answer: "" },
-    { text: "Das Theaterstück wird zum ersten Mal am Stadttheater aufgeführt.", answer: "" },
-    { text: "Während des Unterhaltungsprogramms gibt es auch Kinderbetreuung.", answer: "" }
-  ]
-},
-{ href: "", title: "Fußballspiels im Ostpark", quizId: "Fußballspiels im Ostpark", questions: [
-    { text: "Die Übertragung des Fußballspiels im Ostpark findet bei jedem Wetter statt.", answer: "" },
-    { text: "Wer sich für den Newsletter registriert, kann jeden Monat etwas gewinnen.", answer: "" },
-    { text: "Alle Besucher des Schwimmbads dürfen heute im Restaurant kostenlos etwas trinken.", answer: "" },
-    { text: "Wegen einer technischen Störung ist der Onlineshop weder telefonisch noch per E-Mail erreichbar.", answer: "" },
-    { text: "Am Familiensonntag dürfen Kinder kostenlos ins Museum.", answer: "" }
-  ]
-},
-{ href: "", title: "Das Treffen", quizId: "Das Treffen", questions: [
-    { text: "Das Treffen ist am Donnerstag.", answer: "" },
-    { text: "Das Wetter bleibt schlecht und regnerisch; am Sonntagnachmittag leichte Wetterbesserung.", answer: "" },
-    { text: "Die Firma ist direkt an der S-Bahn-Station.", answer: "" },
-    { text: "Das Restaurant bietet Kaffee für 2 Euro 50 und Kuchen für 2 Euro.", answer: "" },
-    { text: "Sprachprogramme für Deutsch gibt es in derselben Abteilung wie Computerspiele.", answer: "" }
-  ]
-},
-{ href: "", title: "im Frankfurter Zoo", quizId: "im Frankfurter Zoo", questions: [
-    { text: "im Frankfurter Zoo kann man Großkatzen in einer naturnahen Umgebung erleben.", answer: "" },
-    { text: "Bei dem deutsch-französischen Fest werden Gaumenfreuden aus Deutschland und Frankangeboten", answer: "" },
-    { text: "Auf der Autobahn A7 zwischen Hamburg und Flensburg ist ein Stau wegen mehrerer Unfe", answer: "" },
-    { text: "Wer anruft, kann über die Vergabe des Preises mitentscheiden,", answer: "" },
-    { text: "Telefonische Beratungen werden an allen Werktagen auch nachmittags angeboten", answer: "" }
-  ]
-},
-{ href: "", title: "Ein Teil der kostenlosen", quizId: "Ein Teil der kostenlosen", questions: [
-    { text: "Der IC 865 fährt heute nicht nach Hamburg, sondern nur bis Bonn.", answer: "" },
-    { text: "Ein Teil der kostenlosen Veranstaltungen beim Literaturfest findet an spannenden Orten in der Stadt statt.", answer: "" },
-    { text: "Die Firma Sanitärbedarf Frieder & Hansen ist sechs Tage die Woche für Anfragen erreichbar.", answer: "" },
-    { text: "Bewohner des Musikerviertels müssen am Donnerstagnachmittag für zwei Stunden zu Hause bleiben.", answer: "" },
-    { text: "Zum Valentinstag gibt es heute eine spezielle Beratung für Schmuck und Kosmetikartikel.", answer: "" }
-  ]
-},
-{ href: "", title: "Auf der Viktoriabrücke", quizId: "Auf der Viktoriabrücke", questions: [
-    { text: "Die nächtlichen Temperaturen gehen in der ganzen Region auf null Grad zurück.", answer: "" },
-    { text: "An der Abendkasse sind die Karten für das Konzert der Gruppe Sing Slow günstiger als im Vorverkauf.", answer: "" },
-    { text: "Auf der Viktoriabrücke kann wegen Bauarbeiten stadteinwärts nur eine Fahrbahn genutzt werden.", answer: "" },
-    { text: "Wenn man den Eindruck hat, man hat zu viel für den Strom bezahlt, wählt man die 2.", answer: "" },
-    { text: "Beim Fest in Bergheim finden Darbietungen von internationalen Theatergruppen statt.", answer: "" }
-  ]
-},
-{ href: "", title: "Die Buchpräsentation", quizId: "Die Buchpräsentation", questions: [
-    { text: "Die Buchpräsentation beginnt laut Programm in 30 Minuten.", answer: "" },
-    { text: "Patienten, die zu einer Nachbehandlung kommen, werden zu Schalter 3 gebeten.", answer: "" },
-    { text: "Dienstags gibt es für einen Friseurbesuch zu Hause ein Sonderangebot.", answer: "" },
-    { text: "Die Führungen im Tierpark beginnen in der Kassazone.", answer: "" },
-    { text: "Die Besucher werden zum Mitmachen eingeladen.", answer: "" }
-  ]
-},
-{ href: "", title: "Beim Klassik-Radio", quizId: "Beim Klassik-Radio", questions: [
-    { text: "Beim Klassik-Radio kann man Karten für ein Konzert in Frankfurt gewinnen.", answer: "" },
-    { text: "Für den Engelberg-Lauf in Miltenberg ist eine frühzeitige Anmeldung erforderlich.", answer: "" },
-    { text: "Der Radiosender Bayern 1 informiert auf seiner Website über das Sommernachtsfest.", answer: "" },
-    { text: "Auf der A3 hat es in der Nähe von Erlangen einen Unfall gegeben.", answer: "" },
-    { text: "Funk-Mobil bietet Dienstleistungen für Autofahrer an.", answer: "" }
-  ]
-},
-{ href: "", title: "Open-Air-Kino", quizId: "Open-Air-Kino", questions: [
-    { text: "Das Open-Air-Kino zeigt im Juli an jedem Wochentag einen Film.", answer: "" },
-    { text: "Zum Flughafen muss man am Westkreuz in einen Bus umsteigen.", answer: "" },
-    { text: "In akuten Notfällen soll man zur Vertretungspraxis gehen.", answer: "" },
-    { text: "Die Abgabe von Bücherspenden ist nur von Montag bis Freitag möglich.", answer: "" },
-    { text: "Auf der A8 ist vor allem abends mit Stau zu rechnen.", answer: "" }
-  ]
-},
-{ href: "", title: "Aktionstag", quizId: "Aktionstag", questions: [
-    { text: "Interessierte können beim Aktionstag Aufgaben unverbindlich ausprobieren.", answer: "" },
-    { text: "Die Akrobatik-Vorführung fällt wegen des starken Windes komplett aus.", answer: "" },
-    { text: "In dem Beitrag wird vor der Nutzung von Passwort-Managern gewarnt.", answer: "" },
-    { text: "Besuchern wird empfohlen, ihr Auto am Nordeingang des Parks abzustellen.", answer: "" },
-    { text: "Für das Probetraining im Box-Club muss man sich vorher anmelden.", answer: "" }
-  ]
-},
-{ href: "", title: "Klavierkonzert", quizId: "Klavierkonzert", questions: [
-    { text: "Festivalbesucher erhalten beim Vorzeigen ihres Tickets Rabatt auf Bus und Bahn.", answer: "" },
-    { text: "Das Klavierkonzert am 3. Juli findet wegen einer Erkrankung der Künstler nicht statt.", answer: "" },
-    { text: "Im Botanischen Garten gibt es am Sonntag Tipps zur Pflege von Obstbäumen.", answer: "" },
-    { text: "Die Sonderausstellung im Museum zeigt historische Arbeitskleidung aus Leder.", answer: "" },
-    { text: "Die A6 ist zwischen Baden-Baden und Rastatt in beide Richtungen gesperrt.", answer: "" }
-  ]
-},
-{ href: "", title: "Süddeutschland", quizId: "Süddeutschland", questions: [
-    { text: "Morgen wird in Süddeutschland mit Neuschnee gerechnet.", answer: "" },
-    { text: "Die Polizei sucht Kinder, die von zu Hause geflohen sind.", answer: "" },
-    { text: "Samstags gibt es bei der Firma telefonische Beratung.", answer: "" },
-    { text: "Besucher können problemlos mit dem Auto in die Altstadt fahren.", answer: "" },
-    { text: "Die historische Bahn fährt im Dezember nach Plan.", answer: "" }
-  ]
-},
-{ href: "", title: "Zugverkehr", quizId: "Zugverkehr", questions: [
-    { text: "Der Zugverkehr nach Westend ist aufgrund von Personalmangel unterbrochen.", answer: "" },
-    { text: "Kursanmeldungen sind trotz geschlossener Anmeldezentrale online möglich.", answer: "" },
-    { text: "Die neuen Parkausweise sind ab sofort ausschließlich digital verfügbar.", answer: "" },
-    { text: "Das Museum bietet am Wochenende freien Eintritt für alle Altersgruppen.", answer: "" },
-    { text: "Die Verpflegung der Freiwilligen wird vom Veranstalter übernommen.", answer: "" }
-  ]
-},
-{ href: "", title: "Musikfest", quizId: "Musikfest", questions: [
-    { text: "Das Musikfest wendet sich vornehmlich an Berufsmusiker.", answer: "" },
-    { text: "„MoveSmart“ unterstützt umweltschonende Verkehrsentscheidungen.", answer: "" },
-    { text: "Die Sendung „Zeitzeugen erzählen“ nutzt ausschließlich Interviews aus den 80er-Jahren.", answer: "" },
-    { text: "„Jobwechsel 40+“ ist speziell für Berufseinsteiger konzipiert.", answer: "" },
-    { text: "Das Zentrum ermöglicht Besuchern eigenständige Experimente.", answer: "" }
-  ]
-},
-{ href: "", title: "Akrobatik-Show im Park", quizId: "Akrobatik-Show im Park", questions: [
-    { text: "Interessierte können am Aktionstag die ehrenamtliche Arbeit direkt austesten.", answer: "" },
-    { text: "Die geplante Akrobatik-Show im Park muss dieses Jahr entfallen.", answer: "" },
-    { text: "Nutzer werden vor einer neuen Methode zum Datendiebstahl gewarnt.", answer: "" },
-    { text: "Die Besucher sollten für die Anreise zum Festival das Rad nutzen.", answer: "" },
-    { text: "Für die Teilnahme am Schnuppertraining ist eine Voranmeldung nötig.", answer: "" }
-  ]
-},
-{ href: "", title: "Konzert ist am 29", quizId: "Konzert ist am 29", questions: [
-    { text: "Ein Konzert ist am 29 Mai in Frankfurt", answer: "" },
-    { text: "Wir können am Nachmittag die Firma anrufen", answer: "" },
-    { text: "…für Erwachsene kostet 280 Euro", answer: "" },
-    { text: "Es gibt auch Programme für Kinder", answer: "" },
-    { text: "….Sonntag", answer: "" }
-  ]
-},
-{ href: "", title: "Autobahn A4 / 50 cent", quizId: "Autobahn A4 / 50 cent", questions: [
-    { text: "Auf der Autobahn A4 ist nur eine Fahrspur gesperrt.", answer: "" },
-    { text: "Das Sommer Sonnen-Festival beginnt am Samstag um 21 Uhr.", answer: "" },
-    { text: "Kinder unter 14 Jahren zahlen weniger für den Kinobesuch.", answer: "" },
-    { text: "Der Zug nach Hamburg hat 15 Minuten Verspätung.", answer: "" },
-    { text: "Die Teilnahme am gewinnspiel kostet 50 Cent", answer: "" }
-  ]
-},
-] 
+  var THEMES = [
+  /* المواضيع 6 وطالع (Premium) ماكايناش هنا — كتجي من Cloudflare KV
+     (lesen-hoeren-teil3) غير للمشتركين. شوف assets/hoeren-premium.js */
+  {"href":"","title":"Telefon","quizId":"Telefon","questions":[{"text":"Bei der Deutschen Telefon KG bekommen Sie nur Auskunft zu Telefonapparaten dieses Unternehmens.","answer":"richtig","ar":"في شركة Deutsche Telefon KG، يمكنك الحصول على معلومات فقط حول أجهزة الهاتف الخاصة بهذه الشركة."},{"text":"Im Rahmen des „BR3 Aquarena Weekends“ in Starnberg können Sie jeden Abend ein Feuerwerk betrachten.","answer":"falsch"},{"text":"Die Trierer Domorganisten spielen am 6. Juli in Michelstadt.","answer":"falsch"},{"text":"Während des Musikfestivals „Sound of Frankfurt“ ist die Benutzung der U- und S-Bahnen gebührenfrei.","answer":"falsch"},{"text":"Sie haben eine ungültige Servicerufnummer gewählt und werden daher automatisch weiterverbunden.","answer":"falsch"}]},
+  {"href":"","title":"Musikfestival (الأساسي)","quizId":"Musikfestival (الأساسي)","questions":[{"text":"Während des Musikfestivals „Sound of Frankfurt“ gibt es verbilligte Fahrkarten für alle öffentlichen Verkehrsmittel.","answer":"richtig","ar":"خلال مهرجان الموسيقى \"صوت فرانكفورت\" توجد تذاكر مخفضة لجميع وسائل النقل العامة."},{"text":"Sie gehen am 3. Juli ins Konzert, weil Sie die beiden Leipziger Klaviervirtuosen hören möchten.","answer":"falsch"},{"text":"Am Wochenende können Sie sich in Naumburg über die Bekämpfung von Krankheiten bei Apfelbäumen informieren.","answer":"richtig","ar":"في عطلة نهاية الأسبوع، يمكنك الحصول على معلومات في نامبورغ حول مكافحة الأمراض التي تصيب أشجار التفاح."},{"text":"Im Handwerksmuseum werden Kleidungsstücke ausgestellt.","answer":"falsch"},{"text":"Die Autobahn A5 ist zwischen Baden-Baden und Rastatt in beiden Richtungen gesperrt.","answer":"falsch"}]},
+  {"href":"","title":"Musikfestival (المعدل)","quizId":"Musikfestival (المعدل)","questions":[{"text":"Geschäftsreisende werden gebeten, Mietwagen unter der Nummer 3223 zu buchen.","answer":"richtig","ar":"يُرجى من المسافرين في رحلات العمل حجز سيارات الأجرة تحت الرقم 3223."},{"text":"Sie gehen am 3. Juli ins Konzert, weil Sie die beiden Leipziger Klaviervirtuosen hören möchten.","answer":"falsch"},{"text":"Am Wochenende können Sie sich in Naumburg über die Bekämpfung von Krankheiten bei Apfelbäumen informieren.","answer":"richtig","ar":"في عطلة نهاية الأسبوع، يمكنك أن تتعرف في ناومبورغ على مكافحة الأمراض التي تصيب أشجار التفاح."},{"text":"Im Handwerksmuseum werden Kleidungsstücke ausgestellt.","answer":"falsch"},{"text":"Die Autobahn A5 ist zwischen Baden-Baden und Rastatt in beiden Richtungen gesperrt.","answer":"falsch"}]},
+  {"href":"","title":"Die Fahrschule","quizId":"Die Fahrschule","questions":[{"text":"Bei der Fahrschule kann man sich über das Internet anmelden.","answer":"richtig","ar":"يمكن التسجيل في مدرسة القيادة عبر الإنترنت."},{"text":"Die Anruferin ist im Hinblick auf die Abfahrtszeit flexibel.","answer":"falsch"},{"text":"Für den Halb-Marathon kann man sich noch am Sonntag registrieren lassen.","answer":"falsch"},{"text":"Bei dem Flug nach Mallorca ändert sich die Abflugzeit.","answer":"richtig","ar":"في الرحلة إلى مايوركا، يتغير وقت المغادرة."},{"text":"In Halle D wird aus E-Books vorgelesen.","answer":"falsch"}]},
+  {"href":"","title":"Süden Deutschlands regnen","quizId":"Süden Deutschlands regnen","questions":[{"text":"Im Süden Deutschlands wird es nachmittags regnen.","answer":"richtig","ar":"في جنوب ألمانيا ستمطر بعد الظهر."},{"text":"Die Busse verkehren zu anderen Zeiten als die Regionalzüge.","answer":"falsch"},{"text":"Auf der A3 von Würzburg nach Frankfurt gibt es aufgrund eines Unfalls eine Vollsperrung.","answer":"falsch"},{"text":"Wenn Sie über Ihre Autoversicherung sprechen wollen, müssen Sie die 1 wählen.","answer":"richtig","ar":"إذا كنت ترغب في التحدث عن تأمين سيارتك، يجب عليك اختيار 1."},{"text":"Ihr Bekannter ist jederzeit telefonisch erreichbar.","answer":"falsch"}]},
+  {"href":"","title":"Süden Deutschlands Schnee","quizId":"Süden Deutschlands Schnee","premium":true,"questions":[]},
+  {"href":"","title":"Im Internet","quizId":"Im Internet","premium":true,"questions":[]},
+  {"href":"","title":"Tag des Ehrenamts","quizId":"Tag des Ehrenamts","premium":true,"questions":[]},
+  {"href":"","title":"Die Demonstration","quizId":"Die Demonstration","premium":true,"questions":[]},
+  {"href":"","title":"Im August","quizId":"Im August","premium":true,"questions":[]},
+  {"href":"","title":"Am Wochenanfang","quizId":"Am Wochenanfang","premium":true,"questions":[]},
+  {"href":"","title":"Fundbüro","quizId":"Fundbüro","premium":true,"questions":[]},
+  {"href":"","title":"Ausgang 26 (الأساسي)","quizId":"Ausgang 26 (الأساسي)","premium":true,"questions":[]},
+  {"href":"","title":"Ausgang 26 (المعدل)","quizId":"Ausgang 26 (المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Blutspenden","quizId":"Blutspenden","premium":true,"questions":[]},
+  {"href":"","title":"Reitturnier","quizId":"Reitturnier","premium":true,"questions":[]},
+  {"href":"","title":"Delikatessen","quizId":"Delikatessen","premium":true,"questions":[]},
+  {"href":"","title":"In Raum C23","quizId":"In Raum C23","premium":true,"questions":[]},
+  {"href":"","title":"In Raum C23 (المعدل)","quizId":"In Raum C23 (المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Nach einer Großdemonstration","quizId":"Nach einer Großdemonstration","premium":true,"questions":[]},
+  {"href":"","title":"Für ein Konzert (الأساسي)","quizId":"Für ein Konzert (الأساسي)","premium":true,"questions":[]},
+  {"href":"","title":"Für ein Konzert (المعدل)","quizId":"Für ein Konzert (المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Radio Konzert","quizId":"Radio Konzert","premium":true,"questions":[]},
+  {"href":"","title":"Das Fest (ohne Frankfurt)","quizId":"Das Fest (ohne Frankfurt)","premium":true,"questions":[]},
+  {"href":"","title":"Das Fest (Mit Frankfurt)","quizId":"Das Fest (Mit Frankfurt)","premium":true,"questions":[]},
+  {"href":"","title":"Sie hören den Anrufbeantworter","quizId":"Sie hören den Anrufbeantworter","premium":true,"questions":[]},
+  {"href":"","title":"Das Geschäft","quizId":"Das Geschäft","premium":true,"questions":[]},
+  {"href":"","title":"Trainingsausfahrten","quizId":"Trainingsausfahrten","premium":true,"questions":[]},
+  {"href":"","title":"Wanderung","quizId":"Wanderung","premium":true,"questions":[]},
+  {"href":"","title":"Die Gruppe Die Prinzen","quizId":"Die Gruppe Die Prinzen","premium":true,"questions":[]},
+  {"href":"","title":"spätestens in Hannover","quizId":"spätestens in Hannover","premium":true,"questions":[]},
+  {"href":"","title":"Für das Konzert mit Romano","quizId":"Für das Konzert mit Romano","premium":true,"questions":[]},
+  {"href":"","title":"Bayern Radio","quizId":"Bayern Radio","premium":true,"questions":[]},
+  {"href":"","title":"Gartenausstellung KöGa","quizId":"Gartenausstellung KöGa","premium":true,"questions":[]},
+  {"href":"","title":"den Opel-Zoo","quizId":"den Opel-Zoo","premium":true,"questions":[]},
+  {"href":"","title":"Der Christkindlesmarkt in Nürnberg","quizId":"Der Christkindlesmarkt in Nürnberg","premium":true,"questions":[]},
+  {"href":"","title":"Alle Flüge der Fluglinie","quizId":"Alle Flüge der Fluglinie","premium":true,"questions":[]},
+  {"href":"","title":"Auto gewinnen","quizId":"Auto gewinnen","premium":true,"questions":[]},
+  {"href":"","title":"Die Fahrradtouren von Berlin","quizId":"Die Fahrradtouren von Berlin","premium":true,"questions":[]},
+  {"href":"","title":"Die Literaturmesse für Kleinverleger","quizId":"Die Literaturmesse für Kleinverleger","premium":true,"questions":[]},
+  {"href":"","title":"Fußballspiels im Ostpark","quizId":"Fußballspiels im Ostpark","premium":true,"questions":[]},
+  {"href":"","title":"Das Treffen","quizId":"Das Treffen","premium":true,"questions":[]},
+  {"href":"","title":"im Frankfurter Zoo","quizId":"im Frankfurter Zoo","premium":true,"questions":[]},
+  {"href":"","title":"Ein Teil der kostenlosen","quizId":"Ein Teil der kostenlosen","premium":true,"questions":[]},
+  {"href":"","title":"Auf der Viktoriabrücke","quizId":"Auf der Viktoriabrücke","premium":true,"questions":[]},
+  {"href":"","title":"Die Buchpräsentation","quizId":"Die Buchpräsentation","premium":true,"questions":[]},
+  {"href":"","title":"Beim Klassik-Radio","quizId":"Beim Klassik-Radio","premium":true,"questions":[]},
+  {"href":"","title":"Open-Air-Kino","quizId":"Open-Air-Kino","premium":true,"questions":[]},
+  {"href":"","title":"Aktionstag","quizId":"Aktionstag","premium":true,"questions":[]},
+  {"href":"","title":"Klavierkonzert","quizId":"Klavierkonzert","premium":true,"questions":[]},
+  {"href":"","title":"Süddeutschland","quizId":"Süddeutschland","premium":true,"questions":[]},
+  {"href":"","title":"Zugverkehr","quizId":"Zugverkehr","premium":true,"questions":[]},
+  {"href":"","title":"Musikfest","quizId":"Musikfest","premium":true,"questions":[]},
+  {"href":"","title":"Akrobatik-Show im Park","quizId":"Akrobatik-Show im Park","premium":true,"questions":[]},
+  {"href":"","title":"Konzert ist am 29","quizId":"Konzert ist am 29","premium":true,"questions":[]},
+  {"href":"","title":"Autobahn A4 / 50 cent","quizId":"Autobahn A4 / 50 cent","premium":true,"questions":[]},
+  {"href":"","title":"Schlagminger","quizId":"Schlagminger (nur Antworten)","premium":true,"questions":[]},
+  {"href":"","title":"Neu Autobahn","quizId":"Neu Autobahn (nur Antworten)","premium":true,"questions":[]},
+  {"href":"","title":"Frankfurt","quizId":"Frankfurt (nur Antworten)","premium":true,"questions":[]}
+  ] 
+
+  if (window.__hoerenPremiumMerge) window.__hoerenPremiumMerge(THEMES, window.__hoerenPremiumResult);
 
   var stack = document.getElementById("hoeren-teil3-stack");
   if (!stack) return;
@@ -1586,6 +1205,12 @@ window.__deutschEinfachPremiumReady = (async function () {
       premiumBody.appendChild(premiumButton);
       item.appendChild(premiumBody);
 
+    } else if (theme.premium && !(theme.questions && theme.questions.length)) {
+      var missing = document.createElement("p");
+      missing.className = "nq-nokey";
+      var why = (window.__hoerenPremiumResult && window.__hoerenPremiumResult.why) || "كنجيبو الموضوع…";
+      missing.textContent = "ما قدرناش نجيبو هاد الموضوع دابا: " + why;
+      item.appendChild(missing);
     } else if (theme.questions && theme.questions.length) {
       item.appendChild(buildNativeQuiz(theme));
     } else {
@@ -1694,6 +1319,47 @@ window.__deutschEinfachPremiumReady = (async function () {
     intro.textContent = "Höre die Informationen aufmerksam und entscheide: Richtig oder Falsch?";
     wrap.appendChild(intro);
 
+    /* ملاحظة هامة (مثلاً: الجواب كيتبدل مع شي موضوع ديال Lesen) */
+    if (theme.note) {
+      var note = document.createElement("div");
+      note.className = "nq-note";
+      note.dir = "rtl";
+      var noteTitle = document.createElement("b");
+      noteTitle.textContent = "ملاحظة هامة";
+      var noteText = document.createElement("span");
+      noteText.textContent = theme.note;
+      note.appendChild(noteTitle);
+      note.appendChild(noteText);
+      wrap.appendChild(note);
+    }
+
+    /* زر الترجمة العربية: الترجمة مخبية حتى يبرك عليه المستخدم */
+    if (theme.questions.some(function (q) { return q.ar; })) {
+      var arBtn = document.createElement("button");
+      arBtn.type = "button";
+      arBtn.className = "ar-toggle";
+      var arIcon = document.createElement("span");
+      arIcon.className = "ar-toggle-icon";
+      arIcon.setAttribute("aria-hidden", "true");
+      arIcon.textContent = "ع";
+      var arLabel = document.createElement("span");
+      arBtn.appendChild(arIcon);
+      arBtn.appendChild(arLabel);
+      var paintAr = function (on) {
+        wrap.classList.toggle("show-ar", on);
+        arBtn.classList.toggle("is-on", on);
+        arBtn.setAttribute("aria-pressed", on ? "true" : "false");
+        arLabel.textContent = on ? "خبي الترجمة" : "بين الترجمة العربية";
+      };
+      paintAr(false);
+      arBtn.addEventListener("click", function () {
+        paintAr(!wrap.classList.contains("show-ar"));
+      });
+      arBtn.style.margin = "0 0 14px";
+      wrap.appendChild(arBtn);
+    }
+
+
     var rows = [];
 
     theme.questions.forEach(function (q, i) {
@@ -1707,6 +1373,14 @@ window.__deutschEinfachPremiumReady = (async function () {
       numEl.textContent = (i + 1);
       textEl.appendChild(numEl);
       textEl.appendChild(document.createTextNode(q.text));
+      /* الترجمة العربية (اختيارية) تحت الجملة */
+      if (q.ar) {
+        var arEl = document.createElement("span");
+        arEl.className = "nq-question-ar";
+        arEl.dir = "rtl";
+        arEl.textContent = q.ar;
+        textEl.appendChild(arEl);
+      }
       row.appendChild(textEl);
 
       var answers = document.createElement("div");
@@ -1955,7 +1629,9 @@ window.__deutschEinfachPremiumReady = (async function () {
     .then(function (premium) {
       if (premium && !isPremiumUser) {
         isPremiumUser = true;
-        boot();
+        /* الجمل ديال المواضيع المدفوعة كيجيو من Cloudflare KV */
+        (window.__hoerenPremiumLoad ? window.__hoerenPremiumLoad("teil3") : Promise.resolve(null))
+          .then(function (result) { window.__hoerenPremiumResult = result; boot(); });
       }
     })
     .catch(function (error) {
