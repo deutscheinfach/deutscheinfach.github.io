@@ -577,3 +577,12 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 .ar-toggle.is-on .ar-toggle-icon { background: rgba(0,0,0,.18) !important; color: var(--on-brand) !important; }
 .ar-block { background: var(--surface-2); border-color: var(--line); }
 .ar-block p { color: var(--text); }
+
+/* =====================================================
+   v4.1 — سما ديال النجوم (assets/stars.js) ورا المحتوى
+   ===================================================== */
+body {
+    background-image: radial-gradient(1100px 520px at 50% -280px, rgba(214,178,94,.13), transparent 70%);
+    background-size: auto;
+}
+@media print { .de-stars { display: none !important; } }

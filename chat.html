@@ -16,7 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css?v=a2e7fb2b">
+<link rel="stylesheet" href="assets/theme.css?v=ce5f39a8">
+<script src="assets/stars.js?v=87c8bc6d" defer></script>
 <style>
 
 :root{
@@ -2506,6 +2507,7 @@ button:disabled{
     --bubble-mine: #2a2519;
 }
 body { background: var(--bg); color: var(--text); }
+.main { background: transparent; }
 .sidebar {
     background: linear-gradient(180deg, #16161b 0%, #0f0f13 100%);
     border-inline-end: 1px solid rgba(214,178,94,.14);
@@ -2549,8 +2551,9 @@ body { background: var(--bg); color: var(--text); }
 .mobile-back { color: var(--text); }
 
 .messages {
-    background-color: var(--bg);
-    background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.2px);
+    /* شفافة شوية باش تبان سما النجوم (stars.js) من وراها */
+    background-color: rgba(14,14,17,.35);
+    background-image: none;
 }
 .message-content { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); }
 .message.mine .message-content {
