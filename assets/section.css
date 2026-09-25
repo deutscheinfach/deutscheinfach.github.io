@@ -1113,6 +1113,28 @@
 }
 .t1-option.is-used .t1-option-key { color: var(--ok); border-color: currentColor; }
 .t1-option-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+/* ملاحظة النسخة + علامة الترويسة المعدلة */
+.t1-note {
+    direction: rtl;
+    unicode-bidi: plaintext;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.7;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+    background: color-mix(in srgb, var(--gold) 12%, transparent);
+    color: var(--text);
+}
+.t1-option-changed {
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #111;
+}
 .t1-option-de {
     font-size: 13.5px;
     font-weight: 700;
