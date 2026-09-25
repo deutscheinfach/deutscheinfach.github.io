@@ -2555,16 +2555,27 @@ body { background: var(--bg); color: var(--text); }
     background-color: rgba(14,14,17,.35);
     background-image: none;
 }
-.message-content { background: var(--surface-2); border: 1px solid var(--border); color: var(--text); }
-.message.mine .message-content {
-    background: linear-gradient(135deg, #2e2819 0%, #221e14 100%);
-    color: #f3ead3;
-    border: 1px solid rgba(214,178,94,.35);
+/* الرسائل فورقة بيضة بكتابة كحلة باش تتقرا مزيان.
+   ديالي: أبيض دافي بلمسة ذهبية؛ ديال الناس: أبيض. */
+.message-content {
+    background: #ffffff;
+    border: 1px solid rgba(28,26,22,.10);
+    color: #1c1a16;
     box-shadow: 0 10px 22px -16px rgba(0,0,0,.9);
 }
-.message.mine .message-time { color: rgba(240,213,140,.7); }
-.message-name { color: var(--brand); }
-.message-time { color: var(--text-muted); }
+.message.mine .message-content {
+    background: linear-gradient(135deg, #fff8e6 0%, #f6e7c1 100%);
+    color: #1c1a16;
+    border: 1px solid rgba(214,178,94,.7);
+    box-shadow: 0 10px 22px -16px rgba(0,0,0,.9);
+}
+.message-content .message-text { color: #1c1a16; }
+.message-content .message-text a, .message.mine .message-text a { color: #8a6a22; text-decoration: underline; }
+.message-name { color: #8a6a22; }
+.message.mine .message-name { color: #6b4f14; }
+.message-time, .message.mine .message-time { color: #7a7266; }
+.message-content ::selection { background: rgba(214,178,94,.45); color: #000; }
+.message-content .tick.double { stroke: #1f9d63; }
 .empty h2 { color: var(--text); }
 .empty p { color: var(--text-muted); }
 .empty h2::after { background: var(--grad-brand); }
