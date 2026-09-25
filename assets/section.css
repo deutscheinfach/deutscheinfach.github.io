@@ -2930,3 +2930,45 @@
 .e2-gl-ar { background: var(--brand-light); color: var(--on-brand); }
 .sp-gap { background: var(--surface-2); border-color: var(--line-gold); color: var(--text); }
 .sp2-word, .sp2-pop { background: var(--surface-2); border-color: var(--line); color: var(--text); }
+
+/* =====================================================
+   v4.2 — النصوص فورقة بيضة: خلفية فاتحة وكتابة كحلة
+   باش يركز المستخدم فالقراءة. الإطار ذهبي باش يبقى
+   متناسق مع الأسود والذهبي. التوكنز كيتبدلو غير داخل
+   الإطار، إذن الأرقام والفراغات والـGlossar كيتبعو.
+   ===================================================== */
+html body .t1-text,
+html body .e2-text {
+    --text: #1c1a16;
+    --muted: #5e584c;
+    --surface: #fffdf8;
+    --surface-2: #f3eddf;
+    --line: rgba(28,26,22,.12);
+    --line-gold: rgba(168,134,58,.55);
+    --brand-light: #8a6a22;
+    background: linear-gradient(180deg, #fffdf8, #faf6ec) !important;
+    color: #1c1a16 !important;
+    border: 1px solid rgba(214,178,94,.55) !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 18px 40px -26px rgba(0,0,0,.9) !important;
+}
+html body .t1-text p,
+html body .t1-text .t1-body,
+html body .e2-text p { color: #1c1a16; }
+html body .t1-text.is-active { border-color: #d6b25e !important; box-shadow: 0 0 0 3px rgba(214,178,94,.28), 0 18px 40px -26px rgba(0,0,0,.9) !important; }
+html body .t1-text.correct { border-color: #1f9d63 !important; box-shadow: 0 0 0 3px rgba(31,157,99,.22) !important; }
+html body .t1-text.wrong { border-color: #d64545 !important; box-shadow: 0 0 0 3px rgba(214,69,69,.2) !important; }
+html body .t1-text .t1-text-num,
+html body .t1-text .t3-ad-key {
+    background: var(--grad-brand);
+    color: var(--on-brand);
+}
+html body .t1-text .t3-ad-head { color: #1c1a16; }
+html body .t1-text .sp-gap,
+html body .t1-text .sp2-word {
+    background: #f3eddf;
+    color: #1c1a16;
+    border-color: rgba(168,134,58,.55);
+}
+html body .t1-text .sp-gap-word { color: #6b4f14; }
+html body .t1-text ::selection,
+html body .e2-text ::selection { background: rgba(214,178,94,.45); color: #000; }
