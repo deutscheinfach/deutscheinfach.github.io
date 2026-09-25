@@ -20,7 +20,9 @@
         { key: "hoeren",    href: "b2-hoeren.html",    label: "Hören" },
         { key: "schreiben", href: "b2-schreiben.html", label: "Schreiben" },
         { key: "sprechen",  href: "b2-sprechen.html",  label: "Sprechen" },
-        { key: "chat",      href: "chat.html",         label: "Community" }
+        { key: "chat",      href: "chat.html",         label: "Community" },
+        /* Training: Fortschritt، Modelltest و Wortschatz — بلا مستوى */
+        { key: "training",  href: "fortschritt.html",  label: "Training" }
     ];
 
     let active = mount.dataset.active || "";
@@ -58,7 +60,7 @@
            من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
            رابط كيتبع المستوى ديال الصفحة اللي راك فيها.
            Community ماعندهاش مستوى. */
-        link.href = item.key === "chat"
+        link.href = (item.key === "chat" || item.key === "training")
             ? item.href
             : pageLevel + "-" + item.key + ".html";
         link.textContent = item.label;
@@ -208,11 +210,11 @@
 
         const urls = [];
         NAV.forEach(function (item) {
-            if (item.key === active || item.key === "chat") return;
+            if (item.key === active || item.key === "chat" || item.key === "training") return;
             urls.push(level + "-" + item.key + ".html");
         });
         /* والمستوى الآخر ديال نفس القسم */
-        if (active) urls.push((level === "b1" ? "b2" : "b1") + "-" + active + ".html");
+        if (active && active !== "chat" && active !== "training") urls.push((level === "b1" ? "b2" : "b1") + "-" + active + ".html");
 
         if (!urls.length) return;
 
@@ -388,7 +390,8 @@
        مرة فالعام). إذن كيبقى ف التدفق العادي تحت البار. */
     let levelWrap = null;
 
-    if (active) {
+    /* Training ماعندوش B1/B2 */
+    if (active && active !== "training" && active !== "chat") {
         const file = (location.pathname.split("/").pop() || "").toLowerCase();
         const level = file.indexOf("b1-") === 0 ? "b1" : "b2";
 
@@ -566,7 +569,7 @@
             Array.prototype.forEach.call(nav.querySelectorAll("a"), function (link) {
                 const mine = link.dataset.key === key;
                 /* بدلنا المستوى؟ الروابط خاصها تتبع */
-                if (link.dataset.key !== "chat") {
+                if (link.dataset.key !== "chat" && link.dataset.key !== "training") {
                     link.href = lvl + "-" + link.dataset.key + ".html";
                 }
                 link.classList.toggle("active", mine);

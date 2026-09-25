@@ -369,6 +369,13 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
         const score = Math.max(0, Math.min(45, Number(data.score) || 0));
         const pct = Math.round((score / 45) * 100);
 
+        /* Fortschritt و Modelltest كيسمعو لهاد الحدث */
+        try {
+            window.dispatchEvent(new CustomEvent("schreiben-points", {
+                detail: { id: "schreiben-" + TOPIC_ID, title: "Thema " + TOPIC_ID + " – " + (topic.title || ""), score: score }
+            }));
+        } catch (e) { /* */ }
+
         let html = "";
         html += '<div class="result-score"><span class="num">' + score +
             '</span><span class="max">/ 45</span></div>';

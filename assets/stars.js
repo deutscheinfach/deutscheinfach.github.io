@@ -13,6 +13,8 @@
 (function () {
     "use strict";
     if (window.__deStars) return;
+    /* داخل Modelltest (iframe) ما كاين لاش */
+    if (document.documentElement.classList.contains("is-embed")) return;
     window.__deStars = true;
 
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -11,8 +11,9 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=ce5f39a8">
-<script src="assets/stars.js?v=87c8bc6d" defer></script>
+<link rel="stylesheet" href="assets/theme.css?v=0d2713fb">
+<script src="assets/stars.js?v=df3dede2" defer></script>
+<script src="assets/progress.js?v=e9be00ad"></script>
 <link rel="stylesheet" href="assets/site-header.css?v=ca1258d9">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
@@ -952,7 +953,7 @@ html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-r
 </head>
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <div id="site-header" data-active="hoeren"></div>
-<script src="assets/site-header.js?v=b854d3fb"></script>
+<script src="assets/site-header.js?v=5c6ea2bc"></script>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
   <a class="hoeren-nav-btn hoeren-nav-back" href="b2-hoeren.html">
@@ -1519,9 +1520,18 @@ window.__deutschEinfachPremiumReady = (async function () {
   var stack = document.getElementById("hoeren-teil3-stack");
   if (!stack) return;
 
+  /* ?thema=N (من Modelltest): غير هاد الموضوع، مفتوح */
+  var onlyThema = parseInt(new URLSearchParams(location.search).get("thema") || "", 10);
+  var THEMES_ALL = THEMES;
+  if (onlyThema > 0 && onlyThema <= THEMES_ALL.length) {
+    THEMES = THEMES_ALL.slice(onlyThema - 1, onlyThema);
+  }
+
   var frag = document.createDocumentFragment();
 
   THEMES.forEach(function (theme, i) {
+    /* الرقم الحقيقي ديال الموضوع (مهم للقفل ديال Premium ملي ?thema=N) */
+    if (THEMES !== THEMES_ALL) i = onlyThema - 1;
     var item = document.createElement("div");
     item.className = "theme-item";
     item.id = "theme-item-" + (i + 1);
@@ -1834,6 +1844,12 @@ window.__deutschEinfachPremiumReady = (async function () {
         '<div class="nq-summary-falsch">أما الباقي فهو (Falsch)</div>';
 
       var total = rows.length;
+      /* Fortschritt و Modelltest كيسمعو لهاد الحدث */
+      try {
+        window.dispatchEvent(new CustomEvent("hoeren-points", {
+          detail: { teil: "teil3", id: "hoeren3-" + (theme.quizId || theme.title), title: theme.title, right: score, total: total }
+        }));
+      } catch (e) {}
       if (score === total) {
         resultBox.innerHTML = '<span class="nq-result-success"><i class="fa-solid fa-trophy"></i> ' + score + ' von ' + total + ' richtig – Sehr gut!</span>';
       } else {
