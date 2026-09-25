@@ -917,6 +917,8 @@ html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-f
 html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-title, html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-falsch { color: #1c1a16 !important; }
 html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-correct, html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-result-success { color: #14663f !important; }
 html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-result-info { color: #6b4f14 !important; }
+html body #hoeren-teil1-stack .nq-note { display: flex; flex-direction: column; gap: 4px; margin: 0 0 14px; padding: 12px 14px; border-radius: 12px; background: #fbf1d6; border: 1px solid rgba(214,178,94,.7); border-inline-start: 4px solid #d6b25e; color: #1c1a16; font-size: 14px; line-height: 1.8; }
+html body #hoeren-teil1-stack .nq-note b { color: #6b4f14; font-weight: 900; }
 </style>
 </head>
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
@@ -1286,6 +1288,47 @@ window.__deutschEinfachPremiumReady = (async function () {
     intro.textContent = "Höre die Informationen aufmerksam und entscheide: Richtig oder Falsch?";
     wrap.appendChild(intro);
 
+    /* ملاحظة هامة (مثلاً: الجواب كيتبدل مع شي موضوع ديال Lesen) */
+    if (theme.note) {
+      var note = document.createElement("div");
+      note.className = "nq-note";
+      note.dir = "rtl";
+      var noteTitle = document.createElement("b");
+      noteTitle.textContent = "ملاحظة هامة";
+      var noteText = document.createElement("span");
+      noteText.textContent = theme.note;
+      note.appendChild(noteTitle);
+      note.appendChild(noteText);
+      wrap.appendChild(note);
+    }
+
+    /* زر الترجمة العربية: الترجمة مخبية حتى يبرك عليه المستخدم */
+    if (theme.questions.some(function (q) { return q.ar; })) {
+      var arBtn = document.createElement("button");
+      arBtn.type = "button";
+      arBtn.className = "ar-toggle";
+      var arIcon = document.createElement("span");
+      arIcon.className = "ar-toggle-icon";
+      arIcon.setAttribute("aria-hidden", "true");
+      arIcon.textContent = "ع";
+      var arLabel = document.createElement("span");
+      arBtn.appendChild(arIcon);
+      arBtn.appendChild(arLabel);
+      var paintAr = function (on) {
+        wrap.classList.toggle("show-ar", on);
+        arBtn.classList.toggle("is-on", on);
+        arBtn.setAttribute("aria-pressed", on ? "true" : "false");
+        arLabel.textContent = on ? "خبي الترجمة" : "بين الترجمة العربية";
+      };
+      paintAr(false);
+      arBtn.addEventListener("click", function () {
+        paintAr(!wrap.classList.contains("show-ar"));
+      });
+      arBtn.style.margin = "0 0 14px";
+      wrap.appendChild(arBtn);
+    }
+
+
     var rows = [];
 
     theme.questions.forEach(function (q, i) {
@@ -1299,6 +1342,14 @@ window.__deutschEinfachPremiumReady = (async function () {
       numEl.textContent = (i + 1);
       textEl.appendChild(numEl);
       textEl.appendChild(document.createTextNode(q.text));
+      /* الترجمة العربية (اختيارية) تحت الجملة */
+      if (q.ar) {
+        var arEl = document.createElement("span");
+        arEl.className = "nq-question-ar";
+        arEl.dir = "rtl";
+        arEl.textContent = q.ar;
+        textEl.appendChild(arEl);
+      }
       row.appendChild(textEl);
 
       var answers = document.createElement("div");
