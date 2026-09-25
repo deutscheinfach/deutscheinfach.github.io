@@ -46,6 +46,11 @@
 
     const SHELL = document.querySelector(".lesen-shell");
 
+    /* المستوى ديال الصفحة: <main class="lesen-shell" data-level="b1">.
+       نفس الكود كيخدم B1 و B2 — غير الداتا والأسماء كيتبدلو. */
+    const LEVEL = (SHELL && SHELL.dataset.level) || "b2";
+    const LV = LEVEL.toUpperCase();
+
     /* الرأس ديال كل جزء: العنوان والسطر الصغير تحتيه. */
     const HEADS = {
         "":        { h1: "Leseverstehen",     lead: "امتحانات كاملة — كل امتحان فيه الأجزاء الخمسة ديال Lesen.",
@@ -64,14 +69,15 @@
 
     /* b2-lesen-teil2.html → "teil2" · b2-lesen.html → "" */
     function partOfFile(name) {
-        const match = /b2-lesen-(teil[123]|sprach[12])\.html$/.exec(name || "");
+        const match = new RegExp(LEVEL + "-lesen-(teil[123]|sprach[12])\\.html$").exec(name || "");
         if (match) return match[1];
-        return /b2-lesen\.html$/.test(name || "") ? "" : null;
+        return new RegExp(LEVEL + "-lesen\\.html$").test(name || "") ? "" : null;
     }
 
     function paintHead(part) {
         const head = HEADS[part];
         if (!head) return;
+        head.title = head.title.replace("B2", LV);
         const h1 = SHELL && SHELL.querySelector(".lesen-hero h1");
         const lead = SHELL && SHELL.querySelector(".lesen-hero .lead");
         if (h1) h1.textContent = head.h1;
@@ -163,8 +169,8 @@
        كيتبدل ملي تبرك على تبويب آخر — بلا ما تتحمل صفحة جديدة. */
     let pagePart = grid.dataset.teil || "";
 
-    const topics = Array.isArray(window.LESEN_B2_TOPICS)
-        ? window.LESEN_B2_TOPICS.slice()
+    const topics = Array.isArray(window["LESEN_" + LV + "_TOPICS"])
+        ? window["LESEN_" + LV + "_TOPICS"].slice()
         : [];
 
     const SORTS = [
@@ -271,7 +277,7 @@
 
         const foot = document.createElement("div");
         foot.className = "lesen-card-foot";
-        foot.appendChild(chip("lesen-chip-level", topic.level || "B2"));
+        foot.appendChild(chip("lesen-chip-level", topic.level || LV));
 
         const parts = topic.parts || [];
         const shownPart = pagePart || parts[0];
@@ -281,6 +287,9 @@
         if (!pagePart && parts.length > 1) {
             foot.appendChild(chip("lesen-chip-parts", "+" + parts.length));
         }
+
+        /* عدد النسخ (الأساسي + المعدل…) */
+        if (topic.variants > 1) foot.appendChild(chip("lesen-chip-parts", topic.variants + " تعديلات"));
 
         /* المجاني خاصو يبان — هو اللي كيخلي الطالب يجرب */
         if (!topic.locked) foot.appendChild(chip("lesen-chip-free", "مجاني"));
@@ -317,7 +326,7 @@
     function renderPart(stack, topic, part, stillWanted) {
         stack.textContent = "";
         const themaId = topic.id;
-        const content = (window.LESEN_B2_CONTENT || {})[themaId] || {};
+        const content = (window["LESEN_" + LV + "_CONTENT"] || {})[themaId] || {};
 
         /* المواضيع المدفوعة ماكايناش نصوصهم فهاد الملف. كيتجابو من
            الـ Worker، اللي كيتحقق من الـ ID token ومن الاشتراك قبل
@@ -440,7 +449,9 @@
         if (!list.length) {
             const empty = document.createElement("div");
             empty.className = "lesen-empty";
-            empty.textContent = "ماكاين حتى امتحان بهاد الاسم.";
+            empty.textContent = examList().length
+                ? "ماكاين حتى امتحان بهاد الاسم."
+                : "الامتحانات الكاملة غادي يتزادو ملي يكونو Teil 1، 2، 3 و Sprach 1، 2 واجدين. دابا تقدر تتمرن جزء بجزء 🙏";
             grid.appendChild(empty);
             return;
         }
@@ -484,7 +495,7 @@
 
         const foot = document.createElement("div");
         foot.className = "lesen-card-foot";
-        foot.appendChild(chip("lesen-chip-level", "B2"));
+        foot.appendChild(chip("lesen-chip-level", LV));
         foot.appendChild(chip("lesen-chip-parts", PARTS.length + " Teile"));
         if (!exam.locked) foot.appendChild(chip("lesen-chip-free", "مجاني"));
         const go = document.createElement("span");
@@ -546,7 +557,7 @@
         h1.appendChild(document.createTextNode("Prüfung " + n));
         const ar = document.createElement("span");
         ar.className = "lesen-card-ar";
-        ar.textContent = "(Lesen B2 · امتحان كامل)";
+        ar.textContent = "(Lesen " + LV + " · امتحان كامل)";
         h1.appendChild(ar);
         head.appendChild(h1);
         detail.appendChild(head);
@@ -743,7 +754,7 @@
         head.appendChild(h1);
         detail.appendChild(head);
 
-        const content = (window.LESEN_B2_CONTENT || {})[themaId] || {};
+        const content = (window["LESEN_" + LV + "_CONTENT"] || {})[themaId] || {};
         const available = (topic.parts && topic.parts.length)
             ? PARTS.filter(function (p) { return topic.parts.indexOf(p.key) !== -1; })
             : PARTS;

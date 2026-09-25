@@ -1,545 +1,81 @@
 <!DOCTYPE html>
 <html lang="de" dir="ltr">
-
 <head>
-
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>B1 Lesen – Deutsch Einfach</title>
-
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/theme.css?v=0d2713fb">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch Einfach – B1 Lesen Leseverstehen</title>
+<meta name="description" content="TELC B1 Leseverstehen – Leseverstehen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
+<link rel="stylesheet" href="assets/theme.css?v=0d2713fb">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
 <link rel="stylesheet" href="assets/site-header.css?v=ca1258d9">
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-
-        body {
-
-            margin: 0;
-
-            font-family: Arial,
-                sans-serif;
-
-            background: linear-gradient(
-                    135deg,
-                    var(--surface-2),
-                    var(--surface-2)
-                );
-
-            min-height: 100vh;
-
-        }
-
-
-        .container {
-
-            max-width: 1000px;
-
-            margin: auto;
-
-            padding: 30px 20px;
-
-        }
-
-
-        .header {
-
-            background: var(--surface);
-
-            padding: 25px;
-
-            border-radius: 18px;
-
-            text-align: center;
-
-            box-shadow: 0 8px 25px
-                rgba(0,0,0,0.10);
-
-            margin-bottom: 25px;
-
-        }
-
-
-        .header h1 {
-
-            margin: 0;
-
-            color: var(--gold);
-
-        }
-
-
-        .header p {
-
-            color: var(--muted);
-
-            margin-bottom: 0;
-
-        }
-
-
-        .parts {
-
-            display: grid;
-
-            grid-template-columns: repeat(
-                    auto-fit,
-                    minmax(250px, 1fr)
-                );
-
-            gap: 20px;
-
-        }
-
-
-        .card {
-
-            background: var(--surface);
-
-            border-radius: 18px;
-
-            padding: 25px;
-
-            box-shadow: 0 8px 25px
-                rgba(0,0,0,0.10);
-
-            text-align: center;
-
-            transition: transform 0.2s;
-
-        }
-
-
-        .card:hover {
-
-            transform: translateY(-5px);
-
-        }
-
-
-        .card h2 {
-
-            margin-top: 0;
-
-            color: var(--text);
-
-        }
-
-
-        .card p {
-
-            color: var(--muted);
-
-            line-height: 1.6;
-
-        }
-
-
-        .open-button {
-
-            border: none;
-
-            background: var(--gold);
-
-            color: white;
-
-            padding: 13px 25px;
-
-            border-radius: 10px;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-        }
-
-
-        .open-button:hover {
-
-            background: var(--gold-dark);
-
-        }
-
-
-        .locked {
-
-            opacity: 0.65;
-
-        }
-
-
-        .locked-button {
-
-            border: none;
-
-            background: #888;
-
-            color: white;
-
-            padding: 13px 25px;
-
-            border-radius: 10px;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-        }
-
-
-        .back-button {
-
-            display: block;
-
-            width: fit-content;
-
-            margin: 30px auto 0;
-
-            padding: 12px 25px;
-
-            background: #333;
-
-            color: white;
-
-            text-decoration: none;
-
-            border-radius: 10px;
-
-        }
-
-
-        .loading {
-
-            position: fixed;
-
-            inset: 0;
-
-            background: var(--surface);
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            z-index: 9999;
-
-            font-size: 20px;
-
-            font-weight: bold;
-
-            color: var(--gold);
-
-        }
-
-    </style>
-
+<link rel="stylesheet" href="assets/section.css?v=a353912f">
 </head>
-
-
 <body>
+
 <div id="site-header" data-active="lesen"></div>
-<script src="assets/site-header.js?v=5c6ea2bc"></script>
+<script src="assets/site-header.js?v=ed0c8ff3"></script>
 
+<main class="lesen-shell" data-level="b1">
 
+    <div class="lesen-head-row">
+        <section class="lesen-hero">
+            <span class="lesen-badge">B1 · Leseverstehen</span>
+            <h1>Leseverstehen</h1>
+            <p class="lead">امتحانات كاملة — كل امتحان فيه الأجزاء الخمسة ديال Lesen.</p>
+        </section>
 
-<div
-    class="loading"
-    id="loading"
->
-    🇩🇪 جاري التحقق من الحساب...
-</div>
-
-
-
-<div class="container">
-
-    <div class="header">
-
-        <h1>
-            📖 B1 Lesen
-        </h1>
-
-        <p>
-            Leseverstehen – TELC B1
-        </p>
-
+        <div class="lesen-stats">
+            <div class="lesen-stat"><b id="lesen-stat-count">45</b><span>نماذج</span></div>
+            <div class="lesen-stat"><b>B1</b><span>المستوى</span></div>
+        </div>
     </div>
 
 
+    <nav class="lesen-tabs" aria-label="Lesen">
+    <a class="lesen-tab active" href="b1-lesen.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3H10v16H4.5A2.5 2.5 0 0 0 2 21.5z"/><path d="M22 5.5A2.5 2.5 0 0 0 19.5 3H14v16h5.5a2.5 2.5 0 0 1 2.5 2.5z"/></svg>Prüfungen</a>
+    <a class="lesen-tab" href="b1-lesen-teil1.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h4"/></svg>Teil 1</a>
+    <a class="lesen-tab" href="b1-lesen-teil2.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h4"/></svg>Teil 2</a>
+    <a class="lesen-tab" href="b1-lesen-teil3.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/><path d="M9 13h6M9 17h4"/></svg>Teil 3</a>
+    <a class="lesen-tab" href="b1-lesen-sprach1.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg>Sprach 1</a>
+    <a class="lesen-tab" href="b1-lesen-sprach2.html"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg>Sprach 2</a>
+    </nav>
 
-    <div class="parts">
-
-
-        <!-- TEIL 1 -->
-
-        <div class="card">
-
-            <h2>
-                Teil 1
-            </h2>
-
-            <p>
-                Lies die Texte und
-                beantworte die Fragen.
-            </p>
-
-            <button
-                class="open-button"
-                onclick="openTeil1()"
-            >
-                ▶ Teil 1 starten
-            </button>
-
-        </div>
-
-
-
-        <!-- TEIL 2 -->
-
-        <div class="card locked">
-
-            <h2>
-                🔒 Teil 2
-            </h2>
-
-            <p>
-                Dieser Teil ist noch
-                nicht verfügbar.
-            </p>
-
-            <button
-                class="locked-button"
-                onclick="lockedTeil()"
-            >
-                🔒 Gesperrt
-            </button>
-
-        </div>
-
-
-
-        <!-- TEIL 3 -->
-
-        <div class="card locked">
-
-            <h2>
-                🔒 Teil 3
-            </h2>
-
-            <p>
-                Dieser Teil ist noch
-                nicht verfügbar.
-            </p>
-
-            <button
-                class="locked-button"
-                onclick="lockedTeil()"
-            >
-                🔒 Gesperrt
-            </button>
-
-        </div>
-
-
+    <div class="lesen-toolbar">
+        <label class="lesen-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
+            </svg>
+            <input id="lesen-search-input" type="search" placeholder="ابحث عن المواضيع..."
+                   autocomplete="off" aria-label="ابحث عن المواضيع">
+        </label>
+        <button class="lesen-sort" id="lesen-sort-btn" type="button">
+            ⇅ <span class="label">ترتيب</span>
+        </button>
     </div>
 
-
-
-    <a
-        href="index.html"
-        class="back-button"
-    >
-        ← Zurück zu B1
-    </a>
-
-</div>
-
-
-
-<script type="module">
-
-/* =========================
-   FIREBASE
-========================= */
-
-import {
-    initializeApp,
-    getApp,
-    getApps
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-
-
-import {
-    getAuth,
-    onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
-
-
-const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
-
-    authDomain:
-        "deutsch-einfach-4c81f.firebaseapp.com",
-
-    projectId:
-        "deutsch-einfach-4c81f",
-
-    storageBucket:
-        "deutsch-einfach-4c81f.firebasestorage.app",
-
-    messagingSenderId:
-        "152448766933",
-
-    appId:
-        "1:152448766933:web:f7824c4db8ab3caccbe35c",
-
-    measurementId:
-        "G-9QV234Z0KZ"
-
-};
-
-
-
-/* البار ديجا دارت initializeApp — وبـconfig بلا measurementId.
-   إلا عاودنا بـconfig مختلف، Firebase كيرمي app/duplicate-app
-   وهاد الملف كامل كيوقف (يعني حتى الحارس ديال الدخول). */
-const app =
-    getApps().length
-        ? getApp()
-        : initializeApp(
-            firebaseConfig
-        );
-
-
-const auth =
-    getAuth(app);
-
-
-
-/* =========================
-   AUTH CHECK
-========================= */
-
-onAuthStateChanged(
-    auth,
-    (user) => {
-
-        if (!user) {
-
-            /*
-                حفظ الصفحة الحالية
-                باش login يعرف فين يرجع
-            */
-
-            const currentPage =
-                window.location.pathname
-                    .split("/")
-                    .pop() +
-                window.location.search +
-                window.location.hash;
-
-
-            sessionStorage.setItem(
-
-                "deutschEinfachReturnTo",
-
-                currentPage
-
-            );
-
-
-            window.location.replace(
-                "login.html"
-            );
-
-
-            return;
-        }
-
-
-        /*
-            المستخدم داخل الحساب
-        */
-
-        document
-            .getElementById("loading")
-            .style.display = "none";
-
-    }
-);
-
-
-
-/* =========================
-   OPEN TEIL 1
-========================= */
-
-function openTeil1() {
-
-    window.location.href =
-        "b1-lesen-teil1.html";
-
-}
-
-
-
-/* =========================
-   LOCKED
-========================= */
-
-function lockedTeil() {
-
-    alert(
-
-        "🔒 Dieser Teil ist noch nicht verfügbar.\n\n" +
-
-        "Demnächst bei Deutsch Einfach! 🇩🇪"
-
-    );
-
-}
-
-
-
-/* =========================
-   MAKE FUNCTIONS AVAILABLE
-========================= */
-
-window.openTeil1 =
-    openTeil1;
-
-window.lockedTeil =
-    lockedTeil;
-
-</script>
-
-
+    <div class="lesen-count" id="lesen-count"></div>
+    <div class="lesen-grid" id="lesen-grid"></div>
+    <div id="lesen-detail" hidden></div>
+
+</main>
+
+<script src="assets/lesen-b1-topics.js?v=5215a2cf"></script>
+<script src="assets/lesen-b1-content.js?v=4732f789"></script>
+<script src="assets/lesen-engine.js?v=faf25829"></script>
+<script src="assets/lesen-teil1.js?v=961d409b"></script>
+<script src="assets/lesen-teil2.js?v=5593ba4f"></script>
+<script src="assets/lesen-teil3.js?v=b10a42c1"></script>
+<script src="assets/lesen-sprach.js?v=3806973e"></script>
+<script src="assets/lesen-sprach2.js?v=3d48dbb5"></script>
+<script src="assets/premium-gate.js?v=6e86f042"></script>
+<script src="assets/lesen-premium.js?v=ee2cef79"></script>
+<script src="assets/lesen-hub.js?v=efb3000e"></script>
 <script src="assets/session-guard.js?v=d6dfc66e"></script>
 </body>
-
 </html>
