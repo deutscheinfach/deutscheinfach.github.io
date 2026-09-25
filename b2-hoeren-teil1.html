@@ -869,6 +869,53 @@ html body #hoeren-teil1-stack .nq-question-number,
 html body #hoeren-teil1-stack .theme-item-index { background: var(--grad-brand) !important; color: var(--on-brand) !important; }
 html body .hoeren-nav-btn i { color: inherit !important; }
 </style>
+<style id="hoeren-paper">
+/* v4.2 — ورقة بيضة: الأسئلة فاتحين بكتابة كحلة باش يركز المستخدم */
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-item {
+  background: linear-gradient(180deg,#fffdf8,#faf6ec) !important;
+  border: 1px solid rgba(214,178,94,.55) !important;
+  color: #1c1a16 !important;
+}
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-item-header {
+  background: linear-gradient(135deg,#f7efdc,#efe4c8) !important;
+  border-bottom: 1px solid rgba(168,134,58,.35) !important;
+}
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-item-title,
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-item-header * { color: #1c1a16 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-item-header .theme-item-index { color: var(--on-brand) !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-intro,
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-question-text { color: #1c1a16 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-question-ar { color: #5e584c !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-question-row {
+  background: #fff !important;
+  border-color: rgba(28,26,22,.13) !important;
+  color: #1c1a16 !important;
+}
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-iframe-wrap { background: #f5efe1 !important; border-color: rgba(28,26,22,.13) !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-radio-option {
+  background: #fbf8f1 !important;
+  color: #1c1a16 !important;
+  border-color: rgba(28,26,22,.18) !important;
+}
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-radio-option:hover { border-color: #d6b25e !important; background: #fffaf0 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-radio-option input { accent-color: #a8863a; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-radio-option:has(input:checked) { background: #fbf1d6 !important; border-color: #d6b25e !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-question-row.nq-correct { background: #eaf7ef !important; border-color: #1f9d63 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-question-row.nq-wrong { background: #fcecec !important; border-color: #d64545 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-radio-option.nq-correct-opt,
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-radio-option.nq-selected-correct { background: #dff3e7 !important; border-color: #1f9d63 !important; color: #14663f !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-radio-option.nq-selected-wrong { background: #fbe2e2 !important; border-color: #d64545 !important; color: #9b2c2c !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-solution-badge { background: #dff3e7 !important; color: #14663f !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-result-box:not(:empty) { background: #f5efe1 !important; border-color: rgba(168,134,58,.4) !important; color: #1c1a16 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-final-summary { color: #1c1a16 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .native-quiz-wrap { background: transparent !important; border-color: rgba(28,26,22,.12) !important; color: #1c1a16 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-item .nq-btn-retry { background: transparent !important; color: #1c1a16 !important; border: 1.5px solid rgba(28,26,22,.35) !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .theme-item .nq-btn-retry:hover { background: #1c1a16 !important; color: #f0d58c !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-final-summary { background: #fff !important; border-color: rgba(214,178,94,.55) !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-title, html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-falsch { color: #1c1a16 !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-summary-correct, html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-result-success { color: #14663f !important; }
+html body :is(#hoeren-teil1-stack,#hoeren-teil2-stack,#hoeren-teil3-stack) .nq-result-info { color: #6b4f14 !important; }
+</style>
 </head>
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <div id="site-header" data-active="hoeren"></div>
