@@ -212,6 +212,12 @@
             });
         });
         fromSite().forEach(function (c) { list.push(c); });
+        /* اللائحة اليومية (1050 كلمة) */
+        if (window.DE_WORDS_1000) {
+            window.DE_WORDS_1000.words().forEach(function (w) {
+                list.push({ id: w.id, deck: "tag", de: w.de, ar: w.ar, ex: "", day: w.day });
+            });
+        }
         if (window.DEProgress) {
             window.DEProgress.custom().forEach(function (w) {
                 list.push({ id: w.id, deck: "meine", de: w.de, ar: w.ar, ex: w.ex || "" });
@@ -221,7 +227,8 @@
     }
 
     function decks() {
-        return DECKS.map(function (d) { return { key: d.key, name: d.name, ar: d.ar }; })
+        return [{ key: "tag", name: "Tageslisten", ar: "اللوائح اليومية" }]
+            .concat(DECKS.map(function (d) { return { key: d.key, name: d.name, ar: d.ar }; }))
             .concat([{ key: "themen", name: "Aus den Themen", ar: "من المواضيع" },
                      { key: "meine", name: "Meine Wörter", ar: "الكلمات ديالي" }]);
     }

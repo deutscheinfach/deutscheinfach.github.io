@@ -129,11 +129,14 @@
                 done = results.some(function (r) { return r.skill === t.skill && r.part === t.part && isToday(r.at); });
             } else if (t.type === "vocab") {
                 const due = vocab ? vocab.dueCount() : 0;
-                title = "Wortschatz: " + (due ? due + " Karten wiederholen" : "10 neue Karten");
-                sub = "5 دقايق ديال البطاقات";
+                const days = window.DE_WORDS_1000 ? window.DE_WORDS_1000.days() : [];
+                const next = days.find(function (d) { return !P.wordDayDone(d.n); });
+                const wl = P.wordDays();
+                const listDone = Object.keys(wl).some(function (n) { return wl[n] === P.today(); }) || !next;
+                title = !listDone ? "10 neue Wörter · Tag " + next.n : due ? "Wortschatz: " + due + " Karten wiederholen" : "Wörter von heute gelernt";
+                sub = listDone ? "المراجعة ديال البطاقات" : (next.theme + " — 5 دقايق");
                 href = "wortschatz.html";
-                const v = P.state.vocab || {};
-                done = Object.keys(v).some(function (id) { return v[id].u && isToday(v[id].u); }) && !due;
+                done = listDone && !due;
             } else {
                 title = "Modelltest machen";
                 sub = "الامتحان قرّب — جرب امتحان كامل بالوقت";

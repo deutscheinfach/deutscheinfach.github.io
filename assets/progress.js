@@ -34,7 +34,7 @@
         return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0");
     }
     function empty() {
-        return { v: 1, results: [], days: {}, examDate: "", examDateAt: 0, vocab: {}, custom: [], updatedAt: 0 };
+        return { v: 1, results: [], days: {}, examDate: "", examDateAt: 0, vocab: {}, custom: [], wl: {}, updatedAt: 0 };
     }
     function load() {
         try {
@@ -155,6 +155,17 @@
         save();
     }
 
+    /* ---------- اللائحة اليومية (10 كلمات فالنهار) ----------
+       wl = { "7": "2026-09-25" } → Tag 7 تكمل فهاد التاريخ */
+    function wordDayDone(n) { return !!(state.wl || {})[n]; }
+    function markWordDay(n) {
+        state.wl = state.wl || {};
+        if (!state.wl[n]) state.wl[n] = today();
+        touchDay();
+        save();
+    }
+    function wordDays() { return Object.assign({}, state.wl || {}); }
+
     /* ---------- المزامنة مع Firestore ---------- */
     function merge(a, b) {
         const out = empty();
@@ -182,6 +193,12 @@
         });
         out.custom = Object.keys(cw).map(function (k) { return cw[k]; });
         out.custom.forEach(function (w) { if (w.del) delete out.vocab[w.id]; });
+        out.wl = {};
+        [a.wl, b.wl].forEach(function (wl) {
+            Object.keys(wl || {}).forEach(function (n) {
+                if (!out.wl[n] || wl[n] < out.wl[n]) out.wl[n] = wl[n];
+            });
+        });
         out.updatedAt = Math.max(a.updatedAt || 0, b.updatedAt || 0);
         return out;
     }
@@ -297,6 +314,7 @@
         card: card, isDue: isDue, grade: grade,
         custom: function () { return state.custom.filter(function (w) { return !w.del; }); },
         addCustom: addCustom, removeCustom: removeCustom,
+        wordDayDone: wordDayDone, markWordDay: markWordDay, wordDays: wordDays,
         sync: sync,
         signedIn: function () { return firebase().then(function () { return !!user; }).catch(function () { return false; }); },
         onChange: function (fn) { listeners.push(fn); }
