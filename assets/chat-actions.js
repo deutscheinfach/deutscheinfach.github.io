@@ -4,10 +4,10 @@
    كليك يمين فالـPC) كيحل مينيو فيه:
 
    - تفاعلات سريعة 👍 ❤️ 😂 😮 👏 🙏
-   - ↩️ الرد على الرسالة (كتبان مقتطفة فوق الجواب)
+   - الرد على الرسالة (كتبان مقتطفة فوق الجواب)
    - 📋 نسخ
    - 🗑 مسح (صاحب الرسالة، مول المجموعة، ولا الأدمين فـCommunity)
-   - 🚩 تبليغ و ⛔ بلوك
+   - تبليغ و بلوك
 
    الكتابة فـFirestore كتدوز عبر window.__chatApi اللي
    كيعرّفها chat.html (فيها db والمستخدم). */
@@ -16,7 +16,23 @@
     "use strict";
 
     const EMOJIS = ["👍", "❤️", "😂", "😮", "👏", "🙏"];
-    const REASONS = ["Beleidigung / سب وشتم", "Spam / إشهار", "Unangemessen / محتوى ماشي مناسب", "Andere / شي حاجة أخرى"];
+    const REASONS = [["Beleidigung", "سب وشتم"], ["Spam", "إشهار"], ["Unangemessen", "محتوى ماشي مناسب"], ["Andere", "شي حاجة أخرى"]];
+
+    /* أيقونات خطية (بحال باقي الشات) — ماشي إيموجي */
+    const ICONS = {
+        reply: '<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>',
+        copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+        trash: '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M10 11v6M14 11v6"/>',
+        flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>',
+        ban: '<circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/>',
+        close: '<path d="M18 6 6 18M6 6l12 12"/>'
+    };
+    function icon(name, className) {
+        const span = el("span", className || "ca-ico");
+        span.setAttribute("aria-hidden", "true");
+        span.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICONS[name] + "</svg>";
+        return span;
+    }
 
     function api() { return window.__chatApi; }
     function el(tag, className, text) {
@@ -83,29 +99,32 @@
         });
         menu.appendChild(reacts);
 
-        function item(icon, label, fn, danger) {
+        function item(name, label, hint, fn, danger) {
             const b = btn("ca-item" + (danger ? " is-danger" : ""));
             b.setAttribute("role", "menuitem");
-            b.appendChild(el("span", "ca-ico", icon));
+            b.appendChild(icon(name));
             b.appendChild(el("span", "ca-label", label));
+            b.appendChild(el("span", "ca-hint", hint));
             b.addEventListener("click", function () { closeMenu(); fn(); });
             menu.appendChild(b);
         }
+        function divider() { menu.appendChild(el("div", "ca-sep")); }
 
-        item("↩️", "Antworten · جاوب", function () { startReply(message); });
+        item("reply", "Antworten", "جاوب", function () { startReply(message); });
         if (message.text) {
-            item("📋", "Kopieren · نسخ", function () {
+            item("copy", "Kopieren", "نسخ", function () {
                 (navigator.clipboard ? navigator.clipboard.writeText(message.text) : Promise.reject())
                     .then(function () { toast("Kopiert ✓"); })
                     .catch(function () { toast("Kopieren nicht möglich."); });
             });
         }
+        if (canDelete(message) || !mine) divider();
         if (canDelete(message)) {
-            item("🗑", "Löschen · مسح", function () { removeMsg(message); }, true);
+            item("trash", "Löschen", "مسح", function () { removeMsg(message); }, true);
         }
         if (!mine) {
-            item("🚩", "Melden · بلّغ", function () { openReport(message); }, true);
-            item("⛔", "Blockieren · بلوكي", function () { block(message); }, true);
+            item("flag", "Melden", "بلّغ", function () { openReport(message); }, true);
+            item("ban", "Blockieren", "بلوكي", function () { block(message); }, true);
         }
 
         back.appendChild(menu);
@@ -141,14 +160,16 @@
             const body = el("div", "ca-replybar-body");
             body.appendChild(el("span", "ca-replybar-name"));
             body.appendChild(el("span", "ca-replybar-text"));
-            const x = btn("ca-replybar-x", "✕");
+            bar.appendChild(icon("reply", "ca-replybar-ico"));
+            const x = btn("ca-replybar-x");
+            x.appendChild(icon("close", "ca-x-ico"));
             x.setAttribute("aria-label", "Antwort abbrechen");
             x.addEventListener("click", clearReply);
             bar.append(body, x);
             const composer = area.querySelector(".composer");
             area.insertBefore(bar, composer || area.firstChild);
         }
-        bar.querySelector(".ca-replybar-name").textContent = "↩️ " + (window.__chatPendingReply.name || "");
+        bar.querySelector(".ca-replybar-name").textContent = window.__chatPendingReply.name || "";
         bar.querySelector(".ca-replybar-text").textContent = window.__chatPendingReply.text;
         const input = document.getElementById("messageInput");
         if (input) input.focus();
@@ -181,11 +202,17 @@
         closeMenu();
         const back = el("div", "ca-backdrop");
         const card = el("div", "ca-menu ca-report");
-        card.appendChild(el("h3", "ca-report-title", "🚩 Nachricht melden · بلّغ على الرسالة"));
+        const title = el("h3", "ca-report-title");
+        title.appendChild(icon("flag", "ca-title-ico"));
+        title.appendChild(document.createTextNode("Nachricht melden · بلّغ على الرسالة"));
+        card.appendChild(title);
         const quote = el("p", "ca-report-quote", "„" + (message.text || "📷 Bild").slice(0, 160) + "“");
         card.appendChild(quote);
-        REASONS.forEach(function (reason) {
-            const b = btn("ca-item", reason);
+        REASONS.forEach(function (pair) {
+            const reason = pair[0] + " / " + pair[1];
+            const b = btn("ca-item");
+            b.appendChild(el("span", "ca-label", pair[0]));
+            b.appendChild(el("span", "ca-hint", pair[1]));
             b.addEventListener("click", function () {
                 back.remove();
                 api().report(message.id, reason)
@@ -223,7 +250,7 @@
         const list = document.querySelector(".settings-list");
         if (!list || list.querySelector(".ca-blocked-row")) return;
         const row = btn("settings-row ca-blocked-row");
-        row.appendChild(el("span", "ico ca-row-ico", "⛔"));
+        row.appendChild(icon("ban", "ico ca-row-ico"));
         row.appendChild(document.createTextNode("الناس اللي بلوكيتي"));
         row.appendChild(el("span", "val"));
         row.addEventListener("click", openBlocked);
@@ -236,7 +263,10 @@
         if (!a) return;
         const back = el("div", "ca-backdrop");
         const card = el("div", "ca-menu ca-report");
-        card.appendChild(el("h3", "ca-report-title", "⛔ Blockiert · الناس اللي بلوكيتي"));
+        const title = el("h3", "ca-report-title");
+        title.appendChild(icon("ban", "ca-title-ico"));
+        title.appendChild(document.createTextNode("Blockiert · الناس اللي بلوكيتي"));
+        card.appendChild(title);
         const ids = a.blocked();
         if (!ids.length) card.appendChild(el("p", "ca-report-quote", "ما بلوكيتي حتى واحد."));
         ids.forEach(function (uid) {
