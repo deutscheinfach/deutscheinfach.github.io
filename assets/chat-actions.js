@@ -5,24 +5,18 @@
 
    - تفاعلات سريعة 👍 ❤️ 😂 😮 👏 🙏
    - ↩️ الرد على الرسالة (كتبان مقتطفة فوق الجواب)
-   - ✍️ Korrigieren: الـAI كيصحح الألمانية ويشرح بالدارجة
    - 📋 نسخ
    - 🗑 مسح (صاحب الرسالة، مول المجموعة، ولا الأدمين فـCommunity)
    - 🚩 تبليغ و ⛔ بلوك
 
    الكتابة فـFirestore كتدوز عبر window.__chatApi اللي
-   كيعرّفها chat.html (فيها db والمستخدم). التصحيح
-   كيبقى غير عند اللي طلبو — ما كيتسجلش. */
+   كيعرّفها chat.html (فيها db والمستخدم). */
 
 (function () {
     "use strict";
 
-    const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
     const EMOJIS = ["👍", "❤️", "😂", "😮", "👏", "🙏"];
     const REASONS = ["Beleidigung / سب وشتم", "Spam / إشهار", "Unangemessen / محتوى ماشي مناسب", "Andere / شي حاجة أخرى"];
-
-    /* نتائج التصحيح: كترجع تتحط ملي الرسائل يتعاودو يترسمو */
-    const extras = new Map();
 
     function api() { return window.__chatApi; }
     function el(tag, className, text) {
@@ -100,7 +94,6 @@
 
         item("↩️", "Antworten · جاوب", function () { startReply(message); });
         if (message.text) {
-            item("✍️", "Korrigieren · صحح الألمانية", function () { correct(message); });
             item("📋", "Kopieren · نسخ", function () {
                 (navigator.clipboard ? navigator.clipboard.writeText(message.text) : Promise.reject())
                     .then(function () { toast("Kopiert ✓"); })
@@ -176,86 +169,11 @@
         node.classList.add("ca-flash");
     }
 
-    /* ---------- التصحيح ---------- */
-    function post(body) {
-        return fetch(ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
-        }).then(function (res) {
-            return res.json().catch(function () { return {}; }).then(function (data) {
-                if (!res.ok) throw new Error(data.error || ("HTTP " + res.status));
-                return data;
-            });
-        });
-    }
-    /* النتائج مرتبة حسب النوع تحت نص الرسالة */
-    function setExtra(id, kind, box) {
-        if (!extras.has(id)) extras.set(id, new Map());
-        const old = extras.get(id).get(kind);
-        if (old && old !== box) old.remove();
-        extras.get(id).set(kind, box);
-        placeExtra(id);
-    }
-    function dropExtra(id, kind) {
-        const boxes = extras.get(id);
-        if (!boxes) return;
-        const box = boxes.get(kind);
-        if (box) box.remove();
-        boxes.delete(kind);
-        if (!boxes.size) extras.delete(id);
-    }
-    function placeExtra(id) {
-        const boxes = extras.get(id);
-        const node = document.querySelector('.message[data-message-id="' + cssEscape(id) + '"] .message-text');
-        if (!boxes || !node) return;
-        let after = node;
-        boxes.forEach(function (box) {
-            if (after.nextSibling !== box) after.after(box);
-            after = box;
-        });
-    }
-    function aiBox(kind, title) {
-        const box = el("div", "ca-ai ca-ai-" + kind);
-        const head = el("div", "ca-ai-head");
-        head.appendChild(el("span", "ca-ai-title", title));
-        const x = btn("ca-ai-x", "✕");
-        x.setAttribute("aria-label", "Schließen");
-        head.appendChild(x);
-        box.appendChild(head);
-        const body = el("div", "ca-ai-body", "…");
-        box.appendChild(body);
-        return { box: box, body: body, close: x };
-    }
-    function correct(message) {
-        const ui = aiBox("co", "✍️ Korrektur");
-        ui.close.addEventListener("click", function () { dropExtra(message.id, "co"); });
-        setExtra(message.id, "co", ui.box);
-        post({ chatCorrect: { text: message.text } })
-            .then(function (data) {
-                ui.body.textContent = "";
-                if (data.ok) {
-                    ui.body.appendChild(el("p", "ca-ok", "✅ Sehr gut! ما كاين حتى غلط."));
-                } else {
-                    ui.body.appendChild(el("p", "ca-fixed", data.corrected || ""));
-                }
-                (data.notes || []).forEach(function (n) {
-                    const p = el("p", "ca-note", "• " + n);
-                    p.dir = "auto";
-                    ui.body.appendChild(p);
-                });
-            })
-            .catch(function () {
-                ui.body.textContent = "التصحيح ما خدمش دابا. عاود من بعد.";
-                ui.box.classList.add("is-error");
-            });
-    }
-
     /* ---------- المسح، التبليغ، البلوك ---------- */
     function removeMsg(message) {
         if (!confirm("Nachricht löschen? · واش نمسحو هاد الرسالة؟")) return;
         api().remove(message.id)
-            .then(function () { extras.delete(message.id); toast("Gelöscht ✓"); })
+            .then(function () { toast("Gelöscht ✓"); })
             .catch(function (e) { console.error(e); toast("Löschen fehlgeschlagen."); });
     }
 
@@ -395,7 +313,6 @@
 
     /* chat.html كيعيط لهادي من بعد كل رسم */
     window.__chatAfterRender = function () {
-        extras.forEach(function (_, id) { placeExtra(id); });
         refreshBlockedRow();
     };
 
