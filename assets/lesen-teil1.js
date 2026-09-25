@@ -15,7 +15,8 @@
        {
          label: "الأساسي",
          intro: "…",                                  // اختياري
-         options: [ { value: "A", text: "…", ar: "…" }, … ],
+         note: "…",                                   // اختياري: ملاحظة على النسخة
+         options: [ { value: "A", text: "…", ar: "…" }, … ],   // changed: true = ترويسة معدلة
          texts:   [ { body: "…", ar: "…", answer: "H" }, … ]
        }, …
      ]
@@ -183,6 +184,7 @@
             const column = el("div", "t1-texts");
 
             if (variant.intro) column.appendChild(el("p", "t1-intro", variant.intro));
+            if (variant.note) column.appendChild(el("p", "t1-note", variant.note));
 
             texts.forEach(function (text, i) {
                 const box = el("article", "t1-text");
@@ -251,6 +253,7 @@
 
                 const textWrap = el("span", "t1-option-text");
                 textWrap.appendChild(el("span", "t1-option-de", option.text || ""));
+                if (option.changed) textWrap.appendChild(el("span", "t1-option-changed", "معدل"));
                 if (option.ar) textWrap.appendChild(el("span", "t1-option-ar", option.ar));
                 item.appendChild(textWrap);
 
