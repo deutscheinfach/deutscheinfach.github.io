@@ -1,9 +1,10 @@
 {
-  "build": "6ded43b13901",
+  "build": "b92a0c29d6de",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
     "assets/fortschritt.js": "f8981382",
+    "assets/hoeren-premium.js": "9a8df7cd",
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b2-content.js": "99e34da2",
     "assets/lesen-b2-topics.js": "940fb40d",

@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="assets/theme.css?v=0d2713fb">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
+<script src="assets/hoeren-premium.js?v=9a8df7cd"></script>
 <link rel="stylesheet" href="assets/site-header.css?v=ca1258d9">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}
 </style>
@@ -1145,6 +1146,7 @@ window.__deutschEinfachPremiumReady = (async function () {
      */
     return await new Promise(function (resolve) {
       onAuthStateChanged(auth, async function (user) {
+        window.__hoerenUser = user || null;
         if (!user) {
           resolve(false);
           return;
@@ -1191,931 +1193,83 @@ window.__deutschEinfachPremiumReady = (async function () {
 
   function boot() {
 
-  var THEMES = [ 
-{ href: "", title: "Mallorca (الأساسي)", quizId: "Mallorca (الأساسي)", questions: [
-    { text: "Die Zahl der deutschen Mallorca-Urlauber hat nur leicht abgenommen.", answer: "falsch" },
-    { text: "Nach Professor Kirsch achten die Deutschen bei der Wahl ihrer Urlaubsreisen nicht besonders auf die Kosten.", answer: "falsch" },
-    { text: "Einige Einheimische in Mallorca haben begonnen, sich gegen das Vordringen der deutschen Sprache zu wehren.", answer: "richtig", ar: "بدأ بعض السكان المحليين في مايوركا في مقاومة تقدم اللغة الألمانية." },
-    { text: "In Mallorca wird der Stadt wegen der Umweltbelastungen zur Kasse bitten.", answer: "richtig", ar: "في مايوركا، ستقوم المدينة بفرض رسوم بسبب التلوث البيئي." },
-    { text: "Viele Deutsche haben jetzt Rumänien und Ungarn als Reiseziel entdeckt.", answer: "falsch" },
-    { text: "Professor Kirsch weist auf günstige Angebote für Golfspieler am Plattensee hin.", answer: "falsch" },
-    { text: "Bulgarien hat sich als Urlaubsland sehr positiv entwickelt.", answer: "richtig", ar: "بلغاريا قد تطورت بشكل إيجابي كوجهة سياحية." },
-    { text: "Viele Westdeutsche meiden Bulgarien, weil die Einreisemodalitäten abschreckend sind.", answer: "falsch" },
-    { text: "Seit Ende der neunziger Jahre geben die Deutschen mehr Geld für den Urlaub aus.", answer: "falsch" },
-    { text: "Durch die Vielzahl aktiver Senioren entsteht eine höhere Nachfrage nach Abenteuerreisen in ferne Länder.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Mallorca-Urlaub (المعدل)", quizId: "Mallorca-Urlaub (المعدل)", questions: [
-    { text: "Die Zahl der deutschen Mallorca-Urlaub hat nur leicht abgenommen.", answer: "falsch" },
-    { text: "Nach Professor Kirsch achten die Deutschen bei der Wahl ihrer Urlaubsreisen nicht besonders auf die Kosten.", answer: "falsch" },
-    { text: "Einige Einheimische in Mallorca haben begonnen, sich gegen das Vordringen der deutschen Sprache zu wehren.", answer: "richtig", ar: "بدأ بعض السكان المحليين في مايوركا في مقاومة انتشار اللغة الألمانية." },
-    { text: "Für den Einbruch des Tourismus auf Mallorca sind verschiedene Faktoren. verantwortlich.", answer: "richtig", ar: "توجد عوامل مختلفة مسؤولة عن تراجع السياحة في مايوركا." },
-    { text: "Viele Deutsche haben jetzt Rumänien und Ungarn als Reiseziel entdeckt.", answer: "falsch" },
-    { text: "Professor Kirsch weist auf günstige Angebote für Golfspieler am Plattensee hin.", answer: "falsch" },
-    { text: "Bulgarien hat sich als Urlaubsland sehr positiv entwickelt.", answer: "richtig", ar: "بلغاريا قد تطورت بشكل إيجابي كوجهة سياحية." },
-    { text: "Viele Westdeutsche meiden Bulgarien, weil die Einreisemodalitäten abschreckend sind.", answer: "falsch" },
-    { text: "Seit Ende der neunziger Jahre geben die Deutschen mehr Geld für den Urlaub aus", answer: "falsch" },
-    { text: "Durch die Vielzahl aktiver Senioren entsteht eine höhere Nachfrage nach Abenteuerreisen in ferne Länder.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "In dem Restaurant", quizId: "In dem Restaurant", note: "عندما يأتي هذا الهورن مع موضوع ليزن (في الجبال الألب - in den Alpen) يصبح الجواب هو: 134789", questions: [
-    { text: "In dem Restaurant gab es einen Wasserschaden.", answer: "richtig", ar: "في المطعم كان هناك ضرر مائي." },
-    { text: "Anton Laurito ist bei seinen Großeltern aufgewachsen.", answer: "falsch" },
-    { text: "Im Haus der Großeltern lebten auch andere Kinder.", answer: "richtig", ar: "في بيت الجدين كان هناك أطفال آخرون أيضًا." },
-    { text: "Der Stress störte den Studiogast während der Ausbildung nicht.", answer: "richtig", ar: "لم يؤثر الضغط على الضيف في الاستوديو أثناء التدريب." },
-    { text: "Bei neuen Mitarbeitern legt Anton Laurito am meisten Wert auf viel Erfahrung.", answer: "falsch" },
-    { text: "Aussehen und Geschmack der Speisen haben für den Koch den gleichen Stellenwert", answer: "falsch" },
-    { text: "In der Essschule können Kinder kochen lernen.", answer: "falsch" },
-    { text: "Anton Laurito lehnt Fastfood nicht grundsätzlich ab.", answer: "richtig", ar: "أنطون لوريتو لا يرفض الوجبات السريعة بشكل قاطع." },
-    { text: "Der Koch hat eine gesunde Einstellung zum Thema Wettbewerb.", answer: "richtig", ar: "الطباخ لديه موقف صحي تجاه موضوع المنافسة." },
-    { text: "Zuhause probiert er gerne komplizierte Gerichte aus.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Suza Hotop (الأساسي)", quizId: "Suza Hotop (الأساسي)", questions: [
-    { text: "Für die Autorin Suza Hotop ist Schreiben Freude und Anstrengung zugleich.", answer: "richtig", ar: "بالنسبة للكاتبة سوزا هوتوب، الكتابة هي فرح وجهد في آن واحد." },
-    { text: "Suza begann im Alter von zwölf Jahren mit ihrem Buch Jenseits von Zaram.", answer: "falsch" },
-    { text: "Am Anfang dachte Suza nicht daran, ihre Geschichte zu veröffentlichen.", answer: "richtig", ar: "في البداية، لم تفكر سوزا في نشر قصتها." },
-    { text: "Zuerst stellte Suza Auszüge ihrer Geschichte ins Internet.", answer: "richtig", ar: "أولاً، قامت سوزا بنشر مقتطفات من قصتها على الإنترنت." },
-    { text: "Begeisterte Nutzer stellten den Kontakt zu einem Verlag her", answer: "falsch" },
-    { text: "Suza beschreibt bewusst Personen aus ihrer eigenen Umwelt.", answer: "falsch" },
-    { text: "Die Autorin plant im Vorfeld genau, was in der Geschichte passieren wird.", answer: "falsch" },
-    { text: "Suza folgt beim Schreiben keinen besonderen Vorbildern.", answer: "richtig", ar: "سوزا لا تتبع في الكتابة أي نماذج خاصة." },
-    { text: "Die junge Frau gab während des Radiointerviews eine Leseprobe.", answer: "falsch" },
-    { text: "Suza braucht immer Ruhe, um schreiben zu können.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Suza Hotop (المعدل)", quizId: "Suza Hotop (المعدل)", questions: [
-    { text: "Für die Autorin Suza Hotop ist Schreiben Freude und Anstrengung zugleich.", answer: "richtig", ar: "بالنسبة للكاتبة سوزا هوتوب، الكتابة هي فرح وجهد في آن واحد." },
-    { text: "Suza begann im Alter von zwölf Jahren mit ihrem Buch Jenseits von Zaram.", answer: "falsch" },
-    { text: "Am Anfang dachte Suza nicht daran, ihre Geschichte zu veröffentlichen.", answer: "richtig", ar: "في البداية، لم تفكر سوزا في نشر قصتها." },
-    { text: "Zuerst stellte Suza Auszüge ihrer Geschichte ins Internet.", answer: "richtig", ar: "أولاً، قامت سوزا بنشر مقتطفات من قصتها على الإنترنت." },
-    { text: "Begeisterte Nutzer stellten den Kontakt zu einem Verlag her.", answer: "falsch" },
-    { text: "Suza beschreibt bewusst Personen aus ihrer eigenen Umwelt.", answer: "falsch" },
-    { text: "Die Autorin plant nie ganz genau, was in der Geschichte passieren wird", answer: "richtig", ar: "تخطط المؤلفة أبدًا بدقة لما سيحدث في القصة" },
-    { text: "Suza folgt beim Schreiben keinen besonderen Vorbildern.", answer: "richtig", ar: "سوزا لا تتبع في الكتابة أي نماذج خاصة." },
-    { text: "Die junge Frau gab während des Radiointerviews eine Leseprobe.", answer: "falsch" },
-    { text: "Suza braucht immer Ruhe, um schreiben zu können", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Julia", quizId: "Julia", questions: [
-    { text: "Julia hatte an einem Schüleraustausch kein Interesse.", answer: "richtig", ar: "لم تكن جوليا مهتمة بتبادل الطلاب." },
-    { text: "Die Lehrer in Julias Schule weigerten sich, mit dem Austauschschüler Englisch zu sprechen.", answer: "falsch" },
-    { text: "Frankreich ist als Aufenthaltsland bei Au-pairs nicht sehr gefragt.", answer: "richtig", ar: "فرنسا ليست دولة مفضلة جداً للإقامة بالنسبة للـ Au-pairs." },
-    { text: "Julia hatte auch darüber nachgedacht, in die Schweiz zu fahren.", answer: "richtig", ar: "جوليا كانت قد فكرت أيضًا في السفر إلى سويسرا." },
-    { text: "Julia empfiehlt, mit der Gastfamilie einen Vertrag zu schließen.", answer: "richtig", ar: "توصي جوليا بإبرام عقد مع عائلة الضيافة." },
-    { text: "Zu Beginn der Au-pair-Bewegung schickten Familien ihre Kinder zum Sprachunterricht in die Schweiz.", answer: "falsch" },
-    { text: "Julia ist der Meinung, dass die Vermittlungskosten zu hoch sind", answer: "falsch" },
-    { text: "Julia verbrachte mit den Kindern auch Zeit in Paris.", answer: "richtig", ar: "قضت جوليا وقتًا مع الأطفال أيضًا في باريس." },
-    { text: "Es gab am Anfang Momente, in denen sich Julia der Gastfamilie nicht zugehörig fühlte.", answer: "falsch" },
-    { text: "Julia lernt im Sprachkurs mehr Französisch als durch den Kontakt mit der Gastfamilie.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Carina (الأساسي)", quizId: "Carina (الأساسي)", questions: [
-    { text: "Der Berufseinstieg ist in anderen Ländern nicht leicht.", answer: "richtig", ar: "ليس من السهل دخول سوق العمل في دول أخرى." },
-    { text: "Carina ist ihr Beruf wichtiger als ihr Privatleben.", answer: "falsch" },
-    { text: "Carina hat sich der Agentur mit einem Film präsentiert.", answer: "richtig", ar: "كارينا قدمت نفسها للوكالة بفيلم." },
-    { text: "Carina musste für einen Film ihr Gewicht stark verändern.", answer: "richtig", ar: "كارينا كان عليها أن تغير وزنها بشكل كبير من أجل فيلم." },
-    { text: "Carina macht lieber gefühlvolle Filme als Action-Filme.", answer: "falsch" },
-    { text: "Wegen der vielen Fehlstunden hatte Carina Probleme mit dem Direktor der Schule", answer: "falsch" },
-    { text: "Carinas Eltern haben ihre Tochter von Anfang an unterstützt.", answer: "falsch" },
-    { text: "Carina findet den Wechsel zwischen Schule und Drehterminen nicht leicht.", answer: "richtig", ar: "كارينا تجد الانتقال بين المدرسة ومواعيد التصوير ليس سهلاً." },
-    { text: "Bei Dialogen darf man auch selbst etwas erfinden.", answer: "richtig", ar: "يمكنك أيضًا اختراع شيء ما في الحوارات." },
-    { text: "Carina empfiehlt, sich andere Schauspieler im Theater und in Filmen anzusehen.", answer: "richtig", ar: "كارينا توصي بمشاهدة ممثلين آخرين في المسرح وفي الأفلام." }
-  ]
-},
-{ href: "", title: "Carina (1 المعدل)", quizId: "Carina (1 المعدل)", questions: [
-    { text: "Der Berufseinstieg ist in anderen Ländern nicht leicht.", answer: "richtig", ar: "ليس من السهل دخول سوق العمل في دول أخرى." },
-    { text: "Carina ist ihr Beruf wichtiger als ihr Privatleben", answer: "falsch" },
-    { text: "Carina hat den Agentur mit einem Videofilm Interesse gewerkt.", answer: "richtig", ar: "كارينا عملت مع الوكالة بفيلم فيديو مثير للاهتمام." },
-    { text: "Carina hat für einen Film ein Dait gemacht.", answer: "richtig", ar: "كارينا قامت بعمل ديت لفيلم." },
-    { text: "Carina macht lieber gefühlvolle Filme als Action-Filme", answer: "falsch" },
-    { text: "Wegen der vielen Fehlstunden hatte Carina Probleme mit dem Direktor der Schule.", answer: "falsch" },
-    { text: "Carinas Eltern haben ihre Tochter von Anfang an unterstützt.", answer: "falsch" },
-    { text: "Carina finde den Wechsel zwischen Schule und Drehterminen Nicht leicht.", answer: "richtig", ar: "كارينا تجد الانتقال بين المدرسة ومواعيد التصوير ليس سهلاً." },
-    { text: "Bei Dialogen darf man auch selbst etwas erfinden.", answer: "richtig", ar: "يمكنك أيضًا اختراع شيء ما في الحوارات." },
-    { text: "Carina empfiehlt, sich andere Schauspieler im Theater und in Filmen anzusehen", answer: "richtig", ar: "كارينا توصي بمشاهدة ممثلين آخرين في المسرح وفي الأفلام" }
-  ]
-},
-{ href: "", title: "Carina (المعدل 2)", quizId: "Carina (المعدل 2)", questions: [
-    { text: "Carina Traumt Davon Filmspiel in Holandy.", answer: "falsch" },
-    { text: "Carina steht iher Beruf an erste Stelle.", answer: "falsch" },
-    { text: "Carina hat sich der Agentur mit einem Film präsentiert.", answer: "falsch" },
-    { text: "Carina musste für einen Film ihr Gewicht stark verändern", answer: "falsch" },
-    { text: "Carina macht lieber gefühlvolle Filme als Action-Filme", answer: "falsch" },
-    { text: "Wegen der vielen Fehlstunden hatte Carina Probleme mit dem Direktor der Schule.", answer: "falsch" },
-    { text: "Carinas Eltern haben ihre Tochter von Anfang an unterstützt.", answer: "falsch" },
-    { text: "Carina findet den Wechsel zwischen Schule und Drehterminen nicht immer Proplemlos.", answer: "richtig", ar: "كارينا تجد الانتقال بين المدرسة ومواعيد التصوير ليس دائمًا بدون مشاكل." },
-    { text: "Bei Dialogen darf man auch selbst etwas erfinden.", answer: "richtig", ar: "يمكنك أيضًا أن تخترع شيئًا في الحوارات." },
-    { text: "Corina würde keine Filmspiel spielen.", answer: "richtig", ar: "كورينا لن تلعب أي فيلم." }
-  ]
-},
-{ href: "", title: "Frau Schenk (الأساسي)", quizId: "Frau Schenk (الأساسي)", questions: [
-    { text: "Frau Schenk hat kurze blondierte Haare.", answer: "richtig", ar: "السيدة شينك لديها شعر قصير مصبوغ بالأشقر." },
-    { text: "Angie ist der Künstlername von Frau Schenk.", answer: "falsch" },
-    { text: "Frau Schenk lebt seit etwas mehr als zwei Jahren in Bayern.", answer: "falsch" },
-    { text: "Das Interview hat keine guten Erinnerungen an seine Aufenthalte in Jugendherberge.", answer: "richtig", ar: "المقابلة لا تحمل ذكريات جيدة عن إقامته في بيت الشباب." },
-    { text: "Auch in der modernen Jugendherberge von Frau Schenk gibt es Schlafräume mit mehr als zehn Bette.", answer: "falsch" },
-    { text: "Nur bei Schulklassen achtet man auf Geschlechtertrennung in Schlafräume.", answer: "richtig", ar: "فقط في الفصول الدراسية يتم الانتباه إلى فصل الجنسين في غرف النوم." },
-    { text: "Das Angebot an Speisen werden auf die Wünsche der Gäste zugeschnitten.", answer: "richtig", ar: "يتم تخصيص عرض الأطعمة وفقًا لرغبات الضيوف." },
-    { text: "Schüler aus ländlichen Regionen sind meist unproblematische Gäste.", answer: "richtig", ar: "الطلاب من المناطق الريفية غالبًا ما يكونون ضيوفًا غير مشكلين." },
-    { text: "Das Reiten zählt zu dem Sportprogramm der Jugendherberge.", answer: "falsch" },
-    { text: "Frau Schenk muss für ihre Dienstwohnung 800€ bezahle.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Frau Schenk (المعدل)", quizId: "Frau Schenk (المعدل)", note: "لا يوجد دليل، إجابات هذا الموضوع يمكن أن تتغيّر مع طيما الألب وتصبح 1478", questions: [
-    { text: "Frau Schenk hat kurze blondierte Haare.", answer: "richtig", ar: "السيدة شينك لديها شعر قصير مصبوغ بالأشقر." },
-    { text: "Angie ist der Künstlername von Frau Schenk.", answer: "falsch" },
-    { text: "Frau Schenk lebt seit etwas mehr als zwei Jahren in Bayer.", answer: "falsch" },
-    { text: "Das Interview hat keine guten Erinnerungen an seine Aufenthalte in Jugendherberge.", answer: "richtig", ar: "المقابلة لا تحمل ذكريات جيدة عن إقامته في بيت الشباب." },
-    { text: "Auch in der modernen Jugendherberge von Frau Schenk gibt es Schlafraum mit mehr als zehn Bette.", answer: "falsch" },
-    { text: "Mädchen und jungen müssen in verschiedenen Schlafräumen schlafen.", answer: "richtig", ar: "يجب على الفتيات والفتيان النوم في غرف نوم مختلفة." },
-    { text: "In der Jugendherberge wird das Essen den Wünschen der Gästegruppen angepasst.", answer: "richtig", ar: "في نزل الشباب، يتم تعديل الطعام وفقًا لرغبات مجموعات الضيوف." },
-    { text: "Schüler aus ländlichen Regionen verhalten sich in der Regel anständig.", answer: "richtig", ar: "يتصرف الطلاب من المناطق الريفية عادةً بشكل لائق." },
-    { text: "Reiten ist Teil des Sportangebots der Jugendherberge.", answer: "falsch" },
-    { text: "Frau Schenk muss für ihre Dienstwohnung 800€ bezahle.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Herr karimov", quizId: "Herr karimov", questions: [
-    { text: "Herr Karimov hat vor sechs Jahren die Internetplattform ZEITPLAN gegründet", answer: "falsch" },
-    { text: "Die Mitglieder bekommen für ihre Hilfe ein Stundenguthaben.", answer: "richtig", ar: "يحصل الأعضاء على رصيد ساعات مقابل مساعدتهم." },
-    { text: "Herr Karimov hatte ein eigenes Handwerksunternehmen.", answer: "falsch" },
-    { text: "Nach dem Umzug aufs Land war er auf die Hilfe der Nachbarn angewiesen.", answer: "falsch" },
-    { text: "Manchmal erwarten Mitglieder keine Gegenleistung für ihre Arbeit.", answer: "richtig", ar: "أحيانًا لا يتوقع الأعضاء أي مقابل لعملهم." },
-    { text: "Meistens brauchen alleinstehende Frauen Herrn Karimovs Hilfe.", answer: "falsch" },
-    { text: "Viele Menschen sehen im ZEITPLAN eine Konkurrenz zu Handwerksbetrieben.", answer: "falsch" },
-    { text: "Herr Karimov erledigt nicht so gerne Büroarbeit.", answer: "richtig", ar: "السيد كريموف لا يحب القيام بأعمال المكتب كثيراً." },
-    { text: "Wer sich bei der Nachbarschaftshilfe einbringen möchte, muss sich persönlich vorstellen.", answer: "richtig", ar: "من يرغب في المشاركة في مساعدة الجيران، يجب أن يقدم نفسه شخصياً." },
-    { text: "Herr Karimov brauchte vorübergehend einen Chauffeur.", answer: "richtig", ar: "كان السيد كريموف بحاجة مؤقتة إلى سائق." }
-  ]
-},
-{ href: "", title: "Nadine", quizId: "Nadine", questions: [
-    { text: "Nadine Wagner ist gerade erst von ihrer Weltreise zurückgekehrt.", answer: "falsch" },
-    { text: "Sie hatte vor der Weltreise einige Zweifel und Bedenken.", answer: "richtig", ar: "كانت لديها بعض الشكوك والقلق قبل الرحلة حول العالم." },
-    { text: "Die Journalistin ist während ihrer Reise auch geflogen.", answer: "richtig", ar: "الصحفية قد سافرت بالطائرة أيضًا خلال رحلتها." },
-    { text: "Sie hat für dieses Abenteuer ihre Stelle gekündigt", answer: "falsch" },
-    { text: "Ihre Freunde waren unterschiedlicher Meinung über ihre Vorhaben.", answer: "richtig", ar: "كان أصدقاؤها مختلفين في آرائهم حول خططها." },
-    { text: "In Tadschikistan hat sie eine Zeit lang andere Motorradfahrer begleitet.", answer: "richtig", ar: "في طاجيكستان، رافقت لفترة من الزمن راكبي الدراجات النارية الآخرين." },
-    { text: "Sie hat auf der Reise ihr ganzes Erspartes aufgebraucht.", answer: "falsch" },
-    { text: "Nadine Wagner hat auf der Reise gelegentlich gearbeitet.", answer: "richtig", ar: "نادين فاغنر قد عملت أحيانًا أثناء الرحلة." },
-    { text: "Sie hat am meisten ihre eigene Wohnung vermisst.", answer: "falsch" },
-    { text: "Nach ihrer Rückkehr musste sie nicht lange nach einer neuen Arbeit.", answer: "richtig", ar: "بعد عودتها، لم يكن عليها أن تبحث طويلاً عن عمل جديد." }
-  ]
-},
-{ href: "", title: "Markus (الأساسي)", quizId: "Markus (الأساسي)", questions: [
-    { text: "Markus ist schon während des Studiums an eine amerikanische Universität gegangen.", answer: "falsch" },
-    { text: "Markus wollte in einem besonders erfolgreichen Team mitarbeiten.", answer: "richtig", ar: "ماركوس أراد أن يعمل في فريق ناجح بشكل خاص." },
-    { text: "Um eine Stelle in einer amerikanischen Forschergruppe zu bekommen, muss man viel Glück haben.", answer: "falsch" },
-    { text: "Markus befindet sich zwischen Ausbildung und Beruf.", answer: "richtig", ar: "ماركوس بين التعليم والوظيفة." },
-    { text: "Das Studium in Bonn hat Markus sehr gut auf den Auslandsaufenthalt vorbereitet.", answer: "richtig", ar: "لقد أعدت دراسة في بون ماركوس بشكل جيد جداً للإقامة في الخارج." },
-    { text: "Markus hatte nach der Ankunft in den USA sehr viele Schwierigkeiten.", answer: "falsch" },
-    { text: "Markus ist immer noch sehr nervös in der fremden Umgebung", answer: "falsch" },
-    { text: "Markus ist mit den Arbeitsbedingungen zufrieden.", answer: "richtig", ar: "ماركوس راضٍ عن ظروف العمل." },
-    { text: "Markus befürwortet es nicht, dass sich Studenten in den USA früh auf ihren zukünftigen Beruf festlegen müssen.", answer: "falsch" },
-    { text: "Für Markus ist Vorteil, dass in Deutschland das Referat und Vortrag halten muss.", answer: "richtig", ar: "بالنسبة لماركوس، فإن الميزة هي أنه في ألمانيا يجب تقديم العروض والمحاضرات." }
-  ]
-},
-{ href: "", title: "Markus (المعدل)", quizId: "Markus (المعدل)", questions: [
-    { text: "Markus ist schon während des Studiums an eine amerikanische Universität gegangen.", answer: "falsch" },
-    { text: "Markus wollte in einem besondererfolgreichen mitarbeiten Team.", answer: "richtig", ar: "ماركوس أراد أن يعمل في فريق ناجح بشكل خاص." },
-    { text: "Um eine Stelle in einer amerikanischen Forschergruppe zu bekommen, muss man viel Glück haben.", answer: "falsch" },
-    { text: "Markus befindet sich zwischen Ausbildung und Beruf.", answer: "richtig", ar: "ماركوس بين التعليم والوظيفة." },
-    { text: "Markus profitiert im Amerika von Erfahrung die, während studirt sammelt.", answer: "richtig", ar: "ماركوس يستفيد في أمريكا من خبرة يجمعها أثناء دراسته." },
-    { text: "Markus profitiert im Amerika von Erfahrung die, während Studium sammelt", answer: "falsch" },
-    { text: "Markus ist immer noch sehr nervös in der fremden Umgebung.", answer: "falsch" },
-    { text: "Markus ist mit den Arbeitsbedingungen zufrieden.", answer: "richtig", ar: "ماركوس راضٍ عن ظروف العمل." },
-    { text: "Markus befürwortet es nicht, dass sich Studenten in den USA früh auf ihren zukünftigen Beruf festlegen müssen.", answer: "falsch" },
-    { text: "für Markus ist Vorteil, dass in Deutschland das Referat und vortrag halten muss.", answer: "richtig", ar: "بالنسبة لماركوس، فإن الميزة هي أنه في ألمانيا يجب تقديم العرض وإلقاء المحاضرة." }
-  ]
-},
-{ href: "", title: "Professor Steiner (الأساسي)", quizId: "Professor Steiner (الأساسي)", questions: [
-    { text: "Professor Steiner ist heute gar nicht mehr nervös, wenn er moderieren muss.", answer: "falsch" },
-    { text: "Steiner vermittelt den Studierenden nicht nur theoretisches Wissen, sondern fordert auch dass es praktisch angewendet wird.", answer: "richtig", ar: "يقدم شتاينر للطلاب ليس فقط المعرفة النظرية، بل يطالب أيضًا بتطبيقها عمليًا." },
-    { text: "Steiners Hobby ist es, experimentelle Filme zu machen", answer: "falsch" },
-    { text: "Journalisten sollten heute auf einzelne Medien spezialisiert sein.", answer: "falsch" },
-    { text: "Sportjournalist zu werden, ist nach Steiners Ansicht heute fast ausgeschlossen.", answer: "falsch" },
-    { text: "Journalisten sollten Lust haben, etwas zu entdecken.", answer: "richtig", ar: "يجب أن يكون لدى الصحفيين رغبة في اكتشاف شيء ما." },
-    { text: "Steiner musste wegen einer Verletzung mit dem Fußballspielen aufhören.", answer: "falsch" },
-    { text: "Steiner hat während seines Journalistik-Studiums für das ZDF-Fußballspiele moderiert", answer: "richtig", ar: "ستينر قدّم خلال دراسته للصحافة مباريات كرة القدم لقناة ZDF." },
-    { text: "Steiner ist es wichtig, als Moderator den Sportlern gegenüber neutral zu bleiben.", answer: "richtig", ar: "ستينر من المهم بالنسبة له، كمنسق، أن يبقى محايدًا تجاه الرياضيين." },
-    { text: "Steiner rät Abiturienten dazu, verschiedene berufliche Möglichkeiten zu", answer: "richtig", ar: "يُنصح شتاينر طلاب الثانوية العامة باستكشاف خيارات مهنية مختلفة." }
-  ]
-},
-{ href: "", title: "Professor Steiner (المعدل)", quizId: "Professor Steiner (المعدل)", note: "عندما يأتي هذا الهورن مع موضوع ليزن (الرياضة مفيدة للصحة - Sport ist gesund) يصبح الجواب هو: 29014", questions: [
-    { text: "Professor Steiner ist heute gar nicht mehr nervös, wenn er moderieren muss.", answer: "falsch" },
-    { text: "Steiner möchte, dass die Studierenden das Gelernte auch in der Praxis anwenden können.", answer: "richtig", ar: "ستينر يريد من الطلاب أن يتمكنوا من تطبيق ما تعلموه في الممارسة العملية." },
-    { text: "Steiners Hobby ist es, experimentelle Filme zu machen.", answer: "falsch" },
-    { text: "Journalisten sollten heute auf einzelne Medien spezialisiert sein.", answer: "falsch" },
-    { text: "Nach Steiners Ansicht ist der Berufswunsch Sportjournalist heutzutage unrealistisch.", answer: "falsch" },
-    { text: "Journalisten sollten Lust haben, etwas zu entdecken.", answer: "falsch" },
-    { text: "Steiner musste wegen einer Verletzung mit dem Fußballspielen aufhören.", answer: "falsch" },
-    { text: "Steiner hat während seines Journalistik-Studiums für das ZDF-Fußballspiele kommentiert.", answer: "falsch" },
-    { text: "Steiner ist wichtig, als Moderator den Sportlern gegenüber neutral zu bleiben.", answer: "richtig", ar: "ستينر مهم، كونه مضيفًا، أن يبقى محايدًا تجاه الرياضيين." },
-    { text: "Steiner rät Abiturienten dazu, verschiedene Tests zu Möglichkeit berufliche", answer: "richtig", ar: "يُنصح شتاينر طلاب الثانوية العامة بإجراء اختبارات مختلفة لاستكشاف الفرص المهنية." }
-  ]
-},
-{ href: "", title: "Herr Gasser und Frau Janke", quizId: "Herr Gasser und Frau Janke", questions: [
-    { text: "Herr Gasser und Frau Janke haben zusammen Urlaub im Gebirge gemacht.", answer: "falsch" },
-    { text: "Josef Gasser ist ein gebürtiger Tiroler.", answer: "falsch" },
-    { text: "Die Bergbauern können kaum vom Verkauf ihrer Produkte leben.", answer: "richtig", ar: "لا يستطيع مزارعو الجبال العيش بالكاد من بيع منتجاتهم." },
-    { text: "Auch heute werden die steilen Hänge noch manuell bearbeitet.", answer: "richtig", ar: "حتى اليوم، لا تزال المنحدرات الشديدة تُعالج يدويًا." },
-    { text: "Josef Gasser findet, dass man die Berglandschaft sich selbst überlassen sollte.", answer: "falsch" },
-    { text: "Eva Janke begeistert sich immer noch für Flugreisen", answer: "falsch" },
-    { text: "Ihren ersten Einsatz auf der Alm hat Frau Janke abgebrochen.", answer: "falsch" },
-    { text: "Für Frau Janke ist der Erholungswert trotz der Anstrengung sehr hoch.", answer: "richtig", ar: "بالنسبة للسيدة يانك، فإن قيمة الاسترخاء رغم الجهد المبذول عالية جداً." },
-    { text: "Almhelferinnen und-helfer können vielfältige Aufgaben übernehmen.", answer: "richtig", ar: "يمكن لمساعدي ومساعدات المساعدة القيام بمهام متنوعة." },
-    { text: "Über die Dauer des Aufenthalts kann man frei entscheiden.", answer: "richtig", ar: "يمكن اتخاذ قرار حر بشأن مدة الإقامة." }
-  ]
-},
-{ href: "", title: "Vanessa", quizId: "Vanessa", questions: [
-    { text: "Vanessa versucht, so viele Orte wie möglich zu besuchen.", answer: "falsch" },
-    { text: "Mit den Arbeitsbedingungen in der Werbeagentur war Vanessa unzufrieden.", answer: "richtig", ar: "لم تكن فانيزا راضية عن ظروف العمل في وكالة الإعلانات." },
-    { text: "Wenn Vanessa unter Menschen ist, schadet das manchmal ihrer Konzentration.", answer: "richtig", ar: "عندما تكون فانيسا بين الناس، فإن ذلك أحيانًا يضر بتركيزها." },
-    { text: "Die Sicherheit, die eine feste Stelle bietet, bedeutet Vanessa nicht viel.", answer: "richtig", ar: "الأمان الذي توفره وظيفة ثابتة لا يعني الكثير لفانيسا." },
-    { text: "Vanessa ist sich sicher, dass sie nie mehr als Angestellte arbeiten möchte.", answer: "falsch" },
-    { text: "Dass sie immer wieder neue Auftraggeber suchen muss, hat für Vanessa auch Vorteile.", answer: "richtig", ar: "إن بحثها المستمر عن عملاء جدد له فوائد أيضًا بالنسبة لوانيسا." },
-    { text: "Vanessa Eltern würden auch gerne öfter verreisen.", answer: "falsch" },
-    { text: "Es fiel Vanessa leicht, sich von persönlichen Gegenständen zu trennen.", answer: "richtig", ar: "كان من السهل على فانيسا أن تتخلص من الأشياء الشخصية." },
-    { text: "Vanessa glaubt, dass man in Zukunft in mehr Berufen ortsunabhängig arbeiten kann.", answer: "falsch" },
-    { text: "Auch wer ortsunabhängig arbeitet, sollte nicht zu oft den Ort wechseln.", answer: "richtig", ar: "حتى من يعمل بشكل مستقل عن المكان، يجب ألا يغير المكان كثيرًا." }
-  ]
-},
-{ href: "", title: "Ronald - Spielen", quizId: "Ronald - Spielen", questions: [
-    { text: "Roland Wünschmann arbeitet Vollzeit als Fußballtrainer bei Viktoria Köln.", answer: "falsch" },
-    { text: "Viktoria Köln möchte nicht nur gegen Mannschaften aus der Verbandsliga spielen.", answer: "richtig", ar: "تود فيكتوريا كولن أن تلعب ليس فقط ضد الفرق من الدوري الإقليمي." },
-    { text: "Zu Beginn dieser Saison hat ein Spieler Viktoria Köln verlassen.", answer: "richtig", ar: "في بداية هذا الموسم، غادر أحد اللاعبين فيكتوريا كولن." },
-    { text: "Neue Spieler kommen bei Viktoria Köln immer aus der eigenen Jugendmannschaft.", answer: "richtig", ar: "يأتي اللاعبون الجدد في فيكتوريا كولن دائمًا من فريق الشباب الخاص بهم." },
-    { text: "Die Mannschaft von Viktoria Köln hat Schwächen in der Abwehr.", answer: "falsch" },
-    { text: "Roland Wünschmann wagt die Prognose, dass dieser Saison der 1. FC Mönchengladbach Meister wird.", answer: "falsch" },
-    { text: "Roland Wünschmann kann seinen Beruf und sein Ehrenamt als Fußballtrainer problemlos miteinander vereinbaren.", answer: "richtig", ar: "يستطيع رولاند وينشمان الجمع بين مهنته وعمله التطوعي كمدرب كرة قدم بسهولة." },
-    { text: "Auch die Frau von Roland Wünschmann engagiert sich im Fußball.", answer: "falsch" },
-    { text: "Der Vereinsvorstand schätzt Herren Wünschmann Arbeit.", answer: "richtig", ar: "يُقدِّر مجلس إدارة الجمعية عمل السيد وينشمان." },
-    { text: "Roland Wünschmann ist mit bisherigen Nachwuchsförderung des Vereins zufrieden.", answer: "richtig", ar: "رولاند وينشمان راضٍ عن دعم الناشئين الذي يقدمه النادي." }
-  ]
-},
-{ href: "", title: "Ronald - Aufsteigen", quizId: "Ronald - Aufsteigen", questions: [
-    { text: "Roland Wünschmann spielt selbst bei Viktoria Köln Fußball.", answer: "falsch" },
-    { text: "Viktoria Köln möchte am Ende der Spielsaison aufsteigen.", answer: "falsch" },
-    { text: "Zu Beginn dieser Saison hat ein Spieler Viktoria Köln verlassen.", answer: "richtig", ar: "في بداية هذا الموسم، غادر لاعب فيكتوريا كولن." },
-    { text: "Neue Spieler kommen bei Viktoria Köln immer aus der eigenen Jugendmannschaft.", answer: "richtig", ar: "يأتي اللاعبون الجدد في فيكتوريا كولن دائمًا من فريق الشباب الخاص بهم." },
-    { text: "Die Mannschaft von Viktoria Köln hat Schwächen in der Abwehr.", answer: "falsch" },
-    { text: "Roland Wünschmann wagt die Prognose, dass dieser Saison der 1. FC Mönchengladbach Meister wird", answer: "falsch" },
-    { text: "Roland Wünschmann kann seinen Beruf und sein Ehrenamt als Fußballtrainer miteinander vereinbaren.", answer: "richtig", ar: "يمكن لرولاند وينشمان أن يوفق بين مهنته وواجبه التطوعي كمدرب كرة قدم." },
-    { text: "Auch die Frau von Roland Wünschmann engagiert sich im Fußball.", answer: "falsch" },
-    { text: "Der Vereinsvorstand schätzt Herren Wünschmann Arbeit.", answer: "richtig", ar: "يُقدِّر مجلس إدارة الجمعية عمل السيد وينشمان." },
-    { text: "Roland Wünschmann ist mit bisherigen Nachwuchsförderung des Vereins noch nicht voll zufrieden.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Roland - In einer höheren einer Liga", quizId: "Roland - In einer höheren einer Liga", questions: [
-    { text: "Roland Wünschmann spielt selbst bei Viktoria Köln Fußball.", answer: "falsch" },
-    { text: "Viktoria Köln spielt seit Beginn der Saison in einer höheren einer Liga.", answer: "richtig", ar: "تلعب فيكتوريا كولن منذ بداية الموسم في دوري أعلى." },
-    { text: "Die meisten Spieler der Mannschaft haben schon in der letzten Saison bei Viktoria Köln gespielt.", answer: "richtig", ar: "لقد لعب معظم لاعبي الفريق بالفعل في الموسم الماضي مع فيكتوريا كولن." },
-    { text: "Neuzugänge kommen bei Viktoria Köln meist aus ganz unterschiedlichen Mannschaften.", answer: "falsch" },
-    { text: "Die Mannschaft von Viktoria Köln möchte in dieser Saison neue Spieltaktiken ausprobieren.", answer: "richtig", ar: "تودّ فريق فيكتوريا كولن تجربة استراتيجيات لعب جديدة في هذا الموسم." },
-    { text: "Roland Wünschmann wagt die Prognose, dass dieser Saison der 1 FC Mönchengladbach Meister wird.", answer: "falsch" },
-    { text: "Roland Wünschmann empfindet sein Ehrenamt oft als Belastung.", answer: "falsch" },
-    { text: "Roland Wünschmanns Frau engagiert sich für denselben verein.", answer: "richtig", ar: "تشارك زوجة رولاند وينشمان في نفس الجمعية." },
-    { text: "Herr Wünschmann und der Vereinsvorstand sind meistens einer Meinung.", answer: "richtig", ar: "السيد وينشمان ورئيس الجمعية غالبًا ما يكونون على نفس الرأي." },
-    { text: "Roland Wünschmann hofft auf Verbesserungen in der Nachwuchsförderung.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Tu Dresden", quizId: "Tu Dresden", questions: [
-    { text: "Die Tu Dresden ist eine kleine Universität.", answer: "falsch" },
-    { text: "An der TU Dresden kann man nur technische Fächer studieren.", answer: "falsch" },
-    { text: "Ältere Studierende kümmern sich um neue Studierende.", answer: "richtig", ar: "يعتني الطلاب الأكبر سناً بالطلاب الجدد." },
-    { text: "Man erreicht die Neustadt nicht mit öffentlichen Verkehrsmitteln.", answer: "falsch" },
-    { text: "Jens ist nicht sicher, ob er nach dem Studium einen interessanten Job bekommt.", answer: "richtig", ar: "جينس غير متأكد مما إذا كان سيحصل على وظيفة مثيرة بعد الدراسة." },
-    { text: "Studienanfänger können noch zwischen Bachelor und Diplom wählen.", answer: "falsch" },
-    { text: "Mit dem Semesterticket dürfen Studierende öffentliche Verkehrsmitteln in Dresden nutzen.", answer: "richtig", ar: "ببطاقة الفصل الدراسي، يُسمح للطلاب باستخدام وسائل النقل العامة في دريسدن." },
-    { text: "Für Studienanfänger gibt es die Möglichkeit bestimmte Grundkenntnisse aufzufrischen.", answer: "richtig", ar: "بالنسبة للطلاب الجدد، هناك إمكانية لتجديد بعض المعارف الأساسية." },
-    { text: "Im Studium gibt es keine Gruppenarbeit.", answer: "falsch" },
-    { text: "An der TU Dresden kann man auch außergewöhnliche Sportarten treiben.", answer: "richtig", ar: "في جامعة TU دريسدن يمكن ممارسة رياضات غير عادية أيضًا." }
-  ]
-},
-{ href: "", title: "Zu Beginn", quizId: "Zu Beginn", questions: [
-    { text: "Zu Beginn der Sendung hatte der Reporter ein exklusives Frühstücksrezept erwartet.", answer: "richtig", ar: "في بداية البرنامج، كان المراسل يتوقع وصفة إفطار حصرية." },
-    { text: "Ole hat sich vor 17 Jahren selbstständig gemacht.", answer: "richtig", ar: "أولي بدأ عمله الخاص قبل 17 عامًا." },
-    { text: "Davor hatte er eine Lehre als Koch absolviert.", answer: "richtig", ar: "قبل ذلك، أنهى تدريبًا كطباخ." },
-    { text: "Er bevorzugt Gerichte ohne Fleisch.", answer: "richtig", ar: "يفضل الأطباق بدون لحم." },
-    { text: "Ole sieht wie ein Punker aus.", answer: "falsch" },
-    { text: "Er kocht für Musiker, die auf Tournee sind.", answer: "richtig", ar: "يطبخ للموسيقيين الذين في جولة." },
-    { text: "Zuletzt hat er für die Band „Die Prinzen“ gekocht.", answer: "falsch" },
-    { text: "Ole nimmt eine komplette Kücheneinrichtung mit auf Tournee.", answer: "richtig", ar: "أولي يأخذ تجهيز مطبخ كامل معه في الجولة." },
-    { text: "Er macht sich über den Sender lustig, weil der Reporter bei englischen Wörtern nachfragt.", answer: "richtig", ar: "يستهزئ بالمذيع لأنه يسأل عن الكلمات الإنجليزية." },
-    { text: "Die Musiker müssen immer essen, was auf den Tisch kommt.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Herr Scherer", quizId: "Herr Scherer", questions: [
-    { text: "Herr Scherer wird an seinem Arbeitsplatz interviewt.", answer: "falsch" },
-    { text: "Herr Scherer probt jede Woche zweimal mit dem Kirchenchor.", answer: "falsch" },
-    { text: "Herr Scherer hat wechselnde Arbeitszeiten.", answer: "richtig", ar: "يمتلك السيد شيرر أوقات عمل متغيرة." },
-    { text: "Verspätungen gehen häufig auf das Konto undisziplinierter Fahrgäste.", answer: "richtig", ar: "تعود التأخيرات غالبًا إلى سلوك الركاب غير المنضبط." },
-    { text: "Herr Scherer und seine Kollegen verkaufen keine Fahrscheine mehr.", answer: "falsch" },
-    { text: "Alkoholisierte Fahrgäste verursachen zunehmend Probleme", answer: "falsch" },
-    { text: "Die Verkehrsbetriebe haben ein eigenes Schwimmbad.", answer: "falsch" },
-    { text: "Die Klimatisierung der Busse ist bei hohen Temperaturen nicht ausreichend.", answer: "falsch" },
-    { text: "Herr Scherer hat bei der Bundeswehr eine Ausbildung zum Automechaniker gemacht.", answer: "falsch" },
-    { text: "Herr Scherer hat bei der Post 15 Jahre in Nachtschicht gearbeitet.", answer: "richtig", ar: "عمل السيد شيرر في البريد لمدة 15 عاماً في نوبة الليل." }
-  ]
-},
-{ href: "", title: "Die Deutschen machen", quizId: "Die Deutschen machen", questions: [
-    { text: "Die Deutschen machen zurzeit gerne bis zu drei Wochen oder mehr Urlaub.", answer: "falsch" },
-    { text: "Viele Wellness-Hotels befinden sich in Großstädten.", answer: "falsch" },
-    { text: "Wellness-Angebote gibt es vor allem in Hotels der gehobenen Kategorie.", answer: "richtig", ar: "تتوفر عروض العافية بشكل أساسي في الفنادق من الفئة الراقية." },
-    { text: "Die von den Hotels angebotenen „Pakete“ enthalten in der Regel Vollpension.", answer: "falsch" },
-    { text: "In den Hotels kann man auch schwimmen und in die Sauna gehen.", answer: "richtig", ar: "يمكنك أيضًا السباحة والذهاب إلى الساونا في الفنادق." },
-    { text: "Die Gäste nehmen die Sportangebote kaum wahr.", answer: "falsch" },
-    { text: "Oft bieten die Hotels auch kulturelle Rahmenprogramme wie Stadtführungen und Opernbesuche an.", answer: "falsch" },
-    { text: "Frauen kommen fast immer in Begleitung ihrer Ehemänner.", answer: "falsch" },
-    { text: "Die Hotels haben besondere Angebote für Männer.", answer: "richtig", ar: "تقدم الفنادق عروضًا خاصة للرجال." },
-    { text: "Mitglieder von Krankenkassen können die Hotels kostenlos besuchen.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Franz Schumacher", quizId: "Franz Schumacher", questions: [
-    { text: "Franz Schumacher handelt nicht nur mit Produkten aus eigenem Anbau.", answer: "richtig", ar: "فرانز شومخر لا يتاجر فقط بالمنتجات من زراعته الخاصة." },
-    { text: "Herr Schumacher lässt sich auch von anderen Bauern Produkte liefern.", answer: "richtig", ar: "يترك السيد شومخر أيضًا منتجات من مزارعين آخرين تُسلم له." },
-    { text: "Auf dem Markt sind schon viele Besucher unterwegs.", answer: "falsch" },
-    { text: "Die große Mehrheit der Kunden von Herrn Schumacher sind Stammkunden.", answer: "richtig", ar: "الغالبية العظمى من زبائن السيد شومخر هم زبائن دائمون." },
-    { text: "Herr Schumacher ist auf die Pfälzer Kartoffeln besonders stolz.", answer: "falsch" },
-    { text: "Franz Schumacher hat keine hohe Meinung vom „Fachhändlerverein vom Rathausplatz“.", answer: "richtig", ar: "فرانز شومخر ليس لديه رأي مرتفع في \"جمعية تجار الحرف من ساحة البلدية\"." },
-    { text: "Herr Schumacher kommt morgens sehr früh auf den Markt, um sich einen guten Platz für seinen Stand zu sichern.", answer: "falsch" },
-    { text: "Herr Schumacher hat seit über 20 Jahren einen Stand auf dem Landauer Markt.", answer: "richtig", ar: "يمتلك السيد شومخر كشكًا في سوق لاندو منذ أكثر من 20 عامًا." },
-    { text: "Herr Schumacher trägt eine Mütze, um sich vor Kälte zu schützen.", answer: "falsch" },
-    { text: "Herr Schumacher möchte in Zukunft einen Verkaufsstand in einer Markthalle eröffnen.", answer: "richtig", ar: "يريد السيد شومخر في المستقبل افتتاح كشك بيع في قاعة السوق." }
-  ]
-},
-{ href: "", title: "Lisa Eisenberg", quizId: "Lisa Eisenberg", questions: [
-    { text: "Lisa Eisenberg war beruflichen Gründen in den USA", answer: "richtig", ar: "ليزا آيزنبرغ كانت في الولايات المتحدة لأسباب مهنية" },
-    { text: "Während einer Reise entschied sich Lisa Eisenberg für einen beruflichen Neuanfang.", answer: "falsch" },
-    { text: "Lisa Eisenbergs Geschäftsidee stieß in ihrem Bekanntenkreis auf Skepsis.", answer: "falsch" },
-    { text: "Lisa Eisenberg hat sich auf regionale Speisen spezialisiert.", answer: "falsch" },
-    { text: "In der Mittagszeit erzielt Lisa Eisenberg den Großteil ihres Umsatzes.", answer: "richtig", ar: "في وقت الظهيرة، تحقق ليزا آيزنبرغ الجزء الأكبر من إيراداتها." },
-    { text: "Lisa Eisenberg muss nicht mehr aktiv nach Kunden suchen.", answer: "falsch" },
-    { text: "Lisa Eisenberg bietet für Firmen täglich auch abends Gerichte an.", answer: "richtig", ar: "ليزا آيزنبرغ تقدم للأعمال يومياً، حتى في المساء، أطباقاً." },
-    { text: "Es ist für Lisa Eisenberg leicht, ein geeignetes Fahrzeug zu finden.", answer: "falsch" },
-    { text: "Lisa Eisenberg hat als Studentin nebenbei in der Gastronomie gearbeitet.", answer: "richtig", ar: "ليزا آيزنبرغ عملت كطالبة في مجال الضيافة بجانب دراستها." },
-    { text: "In den nächsten Monaten wird Lisa Eisenberg einen zweiten Wagen kaufen", answer: "richtig", ar: "في الأشهر المقبلة، ستشتري ليزا آيزنبرغ سيارة ثانية." }
-  ]
-},
-{ href: "", title: "Frau Makeba", quizId: "Frau Makeba", questions: [
-    { text: "Meron Makeba hat schon in Ghana Leichtathletik gemacht.", answer: "falsch" },
-    { text: "Frau Makeba ist mit ihrem Ergebnis bei der WM sehr zufrieden.", answer: "falsch" },
-    { text: "Frau Makeba hat im vergangenen Jahr ihre Eltern in Ghana besucht.", answer: "falsch" },
-    { text: "Das Publikum hat bei der WM die Sportler aller Nationen unterstützt", answer: "richtig", ar: "لقد دعم الجمهور الرياضيين من جميع الأمم في بطولة كأس العالم." },
-    { text: "Frau Makeba trifft selten andere Sportler aus Ghana.", answer: "richtig", ar: "تلتقي السيدة ميكيبا نادرًا مع رياضيين آخرين من غانا." },
-    { text: "Für Frau Makeba ist Ghana noch immer ihre Heimat.", answer: "falsch" },
-    { text: "Wegen ihres Migrationshintergrundes hatte Frau Makeba keine Schwierigkeiten.", answer: "falsch" },
-    { text: "Anfangs war Frau Makeba in ihrem Verein die einzige Migrantin.", answer: "falsch" },
-    { text: "Frau Makeba glaubt nicht, dass man aufgrund der Herkunft in bestimmten Sportarten bevorzugt wird.", answer: "richtig", ar: "تعتقد السيدة ماكيبا أنه لا ينبغي تفضيل شخص ما في رياضات معينة بناءً على أصله." },
-    { text: "Frau Makebas Erfahrungen im privaten Bereich unterscheiden sich stark von denen im Sport.", answer: "richtig", ar: "تختلف تجارب السيدة ميكابا في المجال الخاص بشكل كبير عن تلك في الرياضة." }
-  ]
-},
-{ href: "", title: "Frau Kidar Malta (الأساسي)", quizId: "Frau Kidar Malta (الأساسي)", questions: [
-    { text: "Sie kommt aus Düsseldorf", answer: "falsch" },
-    { text: "Sie lebt jetzt in Malta.", answer: "richtig", ar: "هي تعيش الآن في مالطا." },
-    { text: "Sie ist effektiv und tätig in Malta.", answer: "richtig", ar: "هي فعالة وتعمل في مالطا." },
-    { text: "Sie möchte zu Van... umziehen.", answer: "falsch" },
-    { text: "Sie genießt das ganze Jahr im Mittelmeer baden.", answer: "falsch" },
-    { text: "Der Moderator kennt die Temperatur des Mittelmeers im Winter nicht.", answer: "richtig", ar: "المقدم لا يعرف درجة حرارة البحر الأبيض المتوسط في الشتاء." },
-    { text: "Der Moderator denkt, in Malta gibt es drei Amtssprachen.", answer: "richtig", ar: "يعتقد المقدم أن في مالطا هناك ثلاث لغات رسمية." },
-    { text: "Die Malteser waren konservativ und zurückhaltend.", answer: "falsch" },
-    { text: "Sie plante, die maltesische Sprache zu lernen.", answer: "falsch" },
-    { text: "Malteser kommen aus verschiedenen Religionen.", answer: "richtig", ar: "يأتي المالطيون من ديانات مختلفة." }
-  ]
-},
-{ href: "", title: "Frau Kidar Malta (1 المعدل)", quizId: "Frau Kidar Malta (1 المعدل)", questions: [
-    { text: "Sie kommt aus Düsseldorf.", answer: "falsch" },
-    { text: "Sie lebt jetzt in Malta.", answer: "richtig", ar: "هي تعيش الآن في مالطا." },
-    { text: "Sie ist effektiv und tätig in Malta.", answer: "falsch" },
-    { text: "Sie genießt das ganze Jahr im Mittelmeer baden.", answer: "richtig", ar: "تستمتع بالسباحة في البحر الأبيض المتوسط طوال العام." },
-    { text: "Der Moderator kennt die Temperatur des Mittelmeers im Winter nicht.", answer: "richtig", ar: "المقدم لا يعرف درجة حرارة البحر الأبيض المتوسط في الشتاء." },
-    { text: "Der Moderator denkt, in Malta gibt es drei Amtssprachen", answer: "falsch" },
-    { text: "Die Malteser waren konservativ und zurückhaltend.", answer: "falsch" },
-    { text: "Malteser kommen aus verschiedenen Religionen.", answer: "richtig", ar: "يأتي المالطيون من ديانات مختلفة." },
-    { text: "Sie plante, die maltesische Sprache zu lernen.", answer: "richtig", ar: "كانت تخطط لتعلم اللغة المالطية." },
-    { text: "Sie möchte zu Van... umziehen.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Frau Kiddar Malta (2 المعدل)", quizId: "Frau Kiddar Malta (2 المعدل)", questions: [
-    { text: "Frau Kiddar stammt aus Düsseldorf.", answer: "falsch" },
-    { text: "Sie lebt heute auf Malta.", answer: "richtig", ar: "تعيش اليوم في مالطا." },
-    { text: "Sie ist auf Malta beruflich tätig.", answer: "richtig", ar: "هي تعمل في مالطا بشكل مهني." },
-    { text: "Frau Kiddar möchte gerne bald nach Valletta ziehen.", answer: "falsch" },
-    { text: "Sie genießt es, das ganze Jahr über im Mittelmeer zu baden.", answer: "falsch" },
-    { text: "Der Moderator weiß nicht, wie viel Grad das Mittelmeer im Winter hat.", answer: "richtig", ar: "لا يعرف المقدم كم درجة حرارة البحر الأبيض المتوسط في الشتاء." },
-    { text: "Frau Kiddar weist darauf hin, dass die Einwohner Maltas ursprünglich aus verschiedenen Regionen stammten.", answer: "richtig", ar: "تشير السيدة كيدار إلى أن سكان مالطا كانوا في الأصل من مناطق مختلفة." },
-    { text: "Die Malteser haben sich ihr gegenüber aber zurückhaltend, ja misstrauisch verhalten.", answer: "falsch" },
-    { text: "Der Moderator denkt, dass es auf Malta drei Amtssprachen gibt.", answer: "richtig", ar: "يعتقد المقدم أن هناك ثلاث لغات رسمية في مالطا." },
-    { text: "Frau Kiddar plant, bald die maltesische Sprache zu lernen.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Beim Wettkampf", quizId: "Beim Wettkampf", questions: [
-    { text: "Beim Wettkampf auf Sylt gibt es mehr Zuschauer als bei anderen SurfWettkämpfen", answer: "richtig", ar: "في المنافسة في سيلت، يوجد عدد أكبر من المشاهدين مقارنةً بمنافسات ركوب الأمواج الأخرى." },
-    { text: "Die Wind-Bedingungen sind auf Sylt sehr unberechenbar.", answer: "richtig", ar: "ظروف الرياح في سيلت غير متوقعة للغاية." },
-    { text: "Herr Dunderbeck ist noch immer so fit wie früher.", answer: "falsch" },
-    { text: "Im Freestyle hat er schon starke Gegner, die viel jünger sind als er.", answer: "richtig", ar: "في فريستايل، لديه خصوم أقوياء جداً، وهم أصغر سناً بكثير منه." },
-    { text: "Beim Slalom muss er auch mit starken Gegnern rechnen.", answer: "falsch" },
-    { text: "Sein Hobby ist, solche Strände zu suchen, wo sich im Windsurfen noch niemand ausprobiert hat.", answer: "richtig", ar: "هوايته هي البحث عن الشواطئ التي لم يجرب فيها أحد ركوب الأمواج بعد." },
-    { text: "Er hat ständig Angst vor den Haien.", answer: "falsch" },
-    { text: "Seine Kinder haben noch ein bisschen Angst vor dem Wasser, obwohl er sie schon aufs Brett gesetzt hatte.", answer: "falsch" },
-    { text: "Falls er auf Sylt siegen würde, würde er dies zuerst gerne mit seinen Freunden feiern.", answer: "falsch" },
-    { text: "Er hat zwei Kinder und sie gehen mit ihm auf Reisen.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Mirjam Pressier", quizId: "Mirjam Pressier", questions: [
-    { text: "Mirjam Pressier freut sich, in Kürze die Doktorwürde der Universität Groningen zu erhalten.", answer: "richtig", ar: "تشعر مريم بريسير بالسعادة لأنها ستتلقى قريبًا درجة الدكتوراه من جامعة غرونينغن." },
-    { text: "Sie arbeitet auch als Übersetzerin.", answer: "richtig", ar: "تعمل أيضًا كمترجمة." },
-    { text: "Sie hat als Erste Anne Frank ins Deutsche übersetzt.", answer: "falsch" },
-    { text: "Sie macht jedes Jahr Urlaub in einem Ferienhaus bei Venedig.", answer: "falsch" },
-    { text: "Wenn sie an ihre Kindheit denkt, denkt sie an den Krieg.", answer: "richtig", ar: "عندما تفكر في طفولتها، تفكر في الحرب." },
-    { text: "Der Kontakt zu ihren Pflegeeltern war sehr gut.", answer: "falsch" },
-    { text: "Ihre Werke haben oft biographische Züge.", answer: "richtig", ar: "أعمالهم غالبًا ما تحتوي على سمات سيرة ذاتية." },
-    { text: "Ihre erste Lektüre war ein Roman, der in Petersburg spielt.", answer: "falsch" },
-    { text: "Als Kind las sie immer im Keller des Hauses.", answer: "falsch" },
-    { text: "Ihre Pflegemutter wollte nicht, dass sie Tagebuch schreibt", answer: "richtig", ar: "لم ترغب والدتها بالتبني أن تكتب يوميات." }
-  ]
-},
-{ href: "", title: "Mirjam Pressier (المعدل)", quizId: "Mirjam Pressier (المعدل)", questions: [
-    { text: "Mirjam Pressier freut sich, in Kürze die Doktorwürde der Universität Groningen zu erhalten.", answer: "richtig", ar: "ميريام بريسيير سعيدة بأنها ستتلقى قريبًا درجة الدكتوراه من جامعة غرونينغن." },
-    { text: "Sie arbeitet auch als Übersetzerin.", answer: "richtig", ar: "تعمل أيضًا كمترجمة." },
-    { text: "Sie hat über Anne Frank gearbeitet.", answer: "richtig", ar: "لقد عملت على آن فرانك." },
-    { text: "Sie macht jedes Jahr Urlaub in einem Ferienhaus bei Venedig.", answer: "falsch" },
-    { text: "Wenn sie an ihre Kindheit denkt, denkt sie an den Krieg.", answer: "richtig", ar: "عندما تفكر في طفولتها، تفكر في الحرب." },
-    { text: "Der Kontakt zu ihren Pflegeeltern war sehr gut.", answer: "falsch" },
-    { text: "Ihre Werke haben oft biografische Züge.", answer: "richtig", ar: "أعمالهم غالبًا ما تحتوي على سمات سيرة ذاتية." },
-    { text: "Ihre erste Lektüre war ein Roman, der in Petersburg spielt.", answer: "falsch" },
-    { text: "Als Kind las sie immer im Keller des Hauses.", answer: "falsch" },
-    { text: "Ihre Pflegemutter wollte nicht, dass sie Tagebuch schreibt.", answer: "richtig", ar: "لم ترغب والدتها بالتبني أن تكتب يوميات." }
-  ]
-},
-{ href: "", title: "Frau Pesina", quizId: "Frau Pesina", questions: [
-    { text: "Frau Pesina ist die Chefin des Kosmos Kinos.", answer: "richtig", ar: "السيدة بيسينا هي مديرة سينما كوزموس." },
-    { text: "Von Hanau nach Frankfurt braucht man weniger als eine halbe Stunde.", answer: "richtig", ar: "من هاناو إلى فرانكفورت يحتاج المرء إلى أقل من نصف ساعة." },
-    { text: "Die Gründung des Kinos vor 100 Jahren war eher ein Zufall.", answer: "richtig", ar: "تأسيس السينما قبل 100 عامًا كان في الغالب مصادفة." },
-    { text: "Der Großonkel baute sofort einen separaten Kinosaal.", answer: "falsch" },
-    { text: "Nach ihrem Großonkel leitete gleich Frau Pesina das Kino.", answer: "falsch" },
-    { text: "Manchmal denkt sie, es wäre besser gewesen, die sichere Stelle bei der Bank zu behalten.", answer: "falsch" },
-    { text: "In dem Kino gibt es heute außer der Schwägerin und den beiden Schwestern auch noch weitere Mitarbeiter.", answer: "richtig", ar: "في السينما يوجد اليوم بالإضافة إلى الشقيقة وزوجة الأخ الأثنتين أيضاً موظفون آخرون." },
-    { text: "Der Arbeitsalltag im Kino läuft immer völlig reibungslos ab.", answer: "falsch" },
-    { text: "Frau Pesina entscheidet immer allein, was im Kosmos Kino läuft.", answer: "falsch" },
-    { text: "Manchmal gibt es in dem Kino ein spezielles Programm für Frauen.", answer: "richtig", ar: "أحيانًا يكون هناك في السينما برنامج خاص للنساء." }
-  ]
-},
-{ href: "", title: "Herr Werner", quizId: "Herr Werner", questions: [
-    { text: "Auf dem Gipfel der Zugspitze liegt ungefähr ein Meter Schnee.", answer: "richtig", ar: "على قمة جبل تسوغشبيتز يوجد حوالي متر واحد من الثلج." },
-    { text: "Man kann derzeit auf der Zugspitze Ski fahren.", answer: "falsch" },
-    { text: "Auch in Garmisch-Partenkirchen selbst hat es geschnelt.", answer: "falsch" },
-    { text: "In der kommenden Woche erwartet man für die Zugspitzregion freundliches Wetter.", answer: "richtig", ar: "في الأسبوع المقبل، من المتوقع أن يكون الطقس لطيفًا في منطقة تسوغشبيتز." },
-    { text: "Am Sonntag wird ein Gottesdienst auf einer Bergstation abgehalten", answer: "richtig", ar: "يُقام قداس يوم الأحد في محطة جبلية." },
-    { text: "Die Zugspitze kann man momentan wegen des Nebels nicht erkennen.", answer: "falsch" },
-    { text: "Die Urlauber in Garmisch-Partenkirchen haben bei jedem Wetter genügend Möglichkeiten zur Freizeitgestaltung.", answer: "richtig", ar: "يتمتع السياح في غارميش-بارتنكيرشن بفرص كافية للترفيه في كل الأحوال الجوية." },
-    { text: "Herr Werner erwartet keine Wetterbesserung.", answer: "falsch" },
-    { text: "Auch in früheren Jahren hat es im Juni und August geschnelt.", answer: "richtig", ar: "لقد تساقط الثلج أيضًا في سنوات سابقة في يونيو وأغسطس." },
-    { text: "Herr Werner ist mit seinem Arbeitsplatz zufrieden.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Wohnmobil", quizId: "Wohnmobil", questions: [
-    { text: "Der Hauptpreis des Gewinnspiels ist ein rund vierwöchiger Urlaub in Spanien.", answer: "richtig", ar: "الجائزة الكبرى في السحب هي عطلة مدتها حوالي أربعة أسابيع في إسبانيا." },
-    { text: "Sie können in der Sendung auch schöne Bildbände über verschiedene Länder gewinnen.", answer: "falsch" },
-    { text: "Thomas Schilp vertritt einen großen Wohnmobilhändler.", answer: "falsch" },
-    { text: "Für das Wohnmobil Camper 500F benötigt man einen Zusatzführerschein.", answer: "falsch" },
-    { text: "Wohnmobile für Reisen in Europa sollte man erst am Urlaubsort mieten.", answer: "falsch" },
-    { text: "Reisende mit Wohnmobilen schätzen ihre Unabhängigkeit.", answer: "richtig", ar: "يُقدِّر المسافرون الذين يستخدمون السيارات المنزلية استقلاليتهم." },
-    { text: "Auf Luxus muss man im Wohnwagen auch heute nicht verzichten.", answer: "richtig", ar: "لا يجب التخلي عن الرفاهية في عربة السكن حتى اليوم." },
-    { text: "Wer den Urlaub mit dem Wohnmobil erst einmal ausprobieren will, sollte ein gebrauchtes Fahrzeug kaufen.", answer: "richtig", ar: "من يريد تجربة العطلة مع سيارة متنقلة لأول مرة، ينبغي عليه شراء مركبة مستعملة." },
-    { text: "Deutsche zahlen für ein Wohnmobil durchschnittlich 200.000 Euro", answer: "falsch" },
-    { text: "Der Mietpreis für ein Wohnmobil hängt von der Jahreszeit ab.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Straßenkinder - Die Kinder (Kids)", quizId: "Straßenkinder - Die Kinder (Kids)", questions: [
-    { text: "Frau Edler arbeitete früher für die Verkehrsbetriebe Leipzig.", answer: "richtig", ar: "كانت السيدة إدلر تعمل سابقًا في هيئة النقل في لايبزيغ." },
-    { text: "Zum ersten Mal wurde sie in Frankfurt mit dem Problem der Straßenkinder konfrontiert.", answer: "richtig", ar: "لأول مرة، واجهت مشكلة أطفال الشوارع في فرانكفورت." },
-    { text: "Zu Anfang kümmerte sie sich um obdachlose Erwachsene.", answer: "richtig", ar: "في البداية، كانت تهتم بالبالغين المشردين." },
-    { text: "Sie hat den Straßenkindern immer Geld gegeben.", answer: "falsch" },
-    { text: "Die Kinder (Kids) wollten, nach Meinung von Frau Edler, Zigaretten kaufen.", answer: "richtig", ar: "الأطفال (Kids) أرادوا، حسب رأي السيدة إيدلر، شراء سجائر." },
-    { text: "Sie hat mit den Kindern in leer stehenden Häusern übernachtet.", answer: "richtig", ar: "لقد قضت الليل مع الأطفال في منازل فارغة." },
-    { text: "Die Kolleginnen hatten anfangs kein Verständnis für ihr Engagement.", answer: "richtig", ar: "لم يكن لدى الزميلات في البداية أي فهم لالتزامها." },
-    { text: "Die Zahl der Kinder, die an den Weihnachtsfeiern teilnehmen, ist seit 1990 stark gesunken.", answer: "falsch" },
-    { text: "Sie sammelt noch heute bei den früheren Kollegen Geld für die Straßenkinder.", answer: "richtig", ar: "لا تزال تجمع اليوم من الزملاء السابقين المال لأطفال الشوارع." },
-    { text: "Mit einer Büchse herumzulaufen, ist ihr manchmal peinlich.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Familie - Eltern", quizId: "Familie - Eltern", questions: [
-    { text: "Fast 11500 Kinder leben nicht bei ihren leiblichen Eltern.", answer: "richtig", ar: "تقريباً 11500 طفل لا يعيشون مع والديهم البيولوجيين." },
-    { text: "Früher wurden Fälle von Gewalt in der Familie oft nicht bekannt.", answer: "richtig", ar: "في الماضي، كانت حالات العنف في الأسرة غالبًا ما لا تُعرف." },
-    { text: "Kinder werden nicht sofort von ihren Familien getrennt.", answer: "richtig", ar: "لا يتم فصل الأطفال عن عائلاتهم على الفور." },
-    { text: "Materielle Unterstützung wie Elektrogeräte kann keine Hilfe sein.", answer: "falsch" },
-    { text: "Die Nachmittagsbetreuung für die ältesten Kinder ist kostenlos.", answer: "falsch" },
-    { text: "In Skandinavien gibt es eine bessere Familienvorsorge.", answer: "richtig", ar: "في الدول الاسكندنافية هناك رعاية أسرية أفضل." },
-    { text: "Früher lernte man Erziehung an Modellsituationen in der Großfamilie.", answer: "richtig", ar: "في السابق، كان يتم تعلم التربية من خلال نماذج في الأسرة الكبيرة." },
-    { text: "Der Kontakt zwischen Kindern und leiblichen Eltern wird möglichst erhalten.", answer: "richtig", ar: "يتم الحفاظ على الاتصال بين الأطفال والآباء البيولوجيين قدر الإمكان." },
-    { text: "Es gibt spezielle WGs für Jugendliche, die nicht bei ihren Eltern leben.", answer: "richtig", ar: "يوجد سكن مشترك خاص للمراهقين الذين لا يعيشون مع والديهم." },
-    { text: "Herr Blaschitz bittet die Hörer um Unterstützung.", answer: "richtig", ar: "يطلب السيد بلاشيتز من المستمعين الدعم." }
-  ]
-},
-{ href: "", title: "Revolution Day", quizId: "Revolution Day", questions: [
-    { text: "Am 24. April ist der Fashion Revolution Day.", answer: "richtig", ar: "في 24 أبريل هو يوم ثورة الموضة." },
-    { text: "Der Anlass für den Fashion Revolution Day ist der Einsturz des Fabrikgebäudes in Bangladesch", answer: "richtig", ar: "يعود سبب يوم ثورة الموضة إلى انهيار مبنى المصنع في بنغلاديش" },
-    { text: "Nur wenige Menschen wurden beim Einsturz schwer verletzt.", answer: "falsch" },
-    { text: "An diesem Tag wird nur schwarze Kleidung getragen.", answer: "falsch" },
-    { text: "Eine Näherin verdient dort ca. 20 Cent.", answer: "richtig", ar: "تكسب الخياطة هناك حوالي 20 سنت." },
-    { text: "The Clean Clothes Kampagne fordert bereits seit Jahren einen existenzsichernden Lohn.", answer: "richtig", ar: "تطالب حملة الملابس النظيفة منذ سنوات عديدة بأجر يكفي لتأمين الحياة." },
-    { text: "Faire Mode ist im Geschäft teurer, weil größere Serien produziert werden.", answer: "falsch" },
-    { text: "Eine andere Attraktion ist das Filmscreening des Films \"Traceable\".", answer: "richtig", ar: "جاذبية أخرى هي عرض الفيلم \"Traceable\"." },
-    { text: "Nach dem Film ist die Veranstaltung zu Ende.", answer: "falsch" },
-    { text: "Weitere Informationen können auf der Webseite traceable.org abgerufen werden.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Bicycle", quizId: "Bicycle", questions: [
-    { text: "Das ist ein Interview mit dem Restaurant \"Bicycle\".", answer: "falsch" },
-    { text: "Gert Kronheim ist der alleinige Gründer von Bicycle.", answer: "falsch" },
-    { text: "Bicycle bietet Arbeitsplätze für junge Leute, die schon länger arbeitslos sind.", answer: "richtig", ar: "تقدم Bicycle فرص عمل للشباب الذين كانوا عاطلين عن العمل لفترة طويلة." },
-    { text: "Bicycle gibt es schon seit 1926.", answer: "falsch" },
-    { text: "Anlass für die Gründung von Bicycle war die steigende Arbeitslosigkeit Anfang der 80er Jahre.", answer: "falsch" },
-    { text: "Gert Kronheimer findet, dass das Fahrrad für junge Leute interessant ist.", answer: "richtig", ar: "يجد جيرت كرونهايمر أن الدراجة الهوائية مثيرة للاهتمام للشباب." },
-    { text: "Das Fahrrad ist heute leider sehr unpopulär geworden.", answer: "falsch" },
-    { text: "Bei Bicycle kann man nur Vollzeit arbeiten.", answer: "falsch" },
-    { text: "Bei Bicycle werden im Jahr ungefähr 10000 Fahrräder repariert.", answer: "richtig", ar: "يتم إصلاح حوالي 10000 دراجة في شركة Bicycle في السنة." },
-    { text: "Sibylle Hartung ist nur eine Assistentin und keine Expertin für technische Fragen.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Die Radiosendung", quizId: "Die Radiosendung", questions: [
-    { text: "Die Radiosendung stellt wöchentlich Leute aus ganz Deutschland vor.", answer: "falsch" },
-    { text: "Eva Küpper läuft im Training wenigstens einmal pro Woche auch über die Marathondistanz.", answer: "richtig", ar: "إيفا كوبر تجري في التدريب على الأقل مرة واحدة في الأسبوع أيضًا عبر مسافة الماراثون." },
-    { text: "Ihren Job als Bankangestellte würde Eva Küpper gerne kündigen.", answer: "falsch" },
-    { text: "Nach der Ausbildung hat Eva Küpper ihren Lebensstil radikal verändert.", answer: "richtig", ar: "بعد التدريب، غيرت إيفا كوبر نمط حياتها بشكل جذري." },
-    { text: "Eva Küpper kommt ursprünglich aus München.", answer: "richtig", ar: "إيفا كوبر تأتي في الأصل من ميونيخ." },
-    { text: "Eva Küpper gefallen Dauerläufe in der Stadt genauso gut wie in den Bergen.", answer: "falsch" },
-    { text: "Während eines Ultramarathons wechselt Eva Küpper die Laufschuhe dreimal.", answer: "falsch" },
-    { text: "Die spezielle Uhr ist für Eva Küpper nicht nur im Training, sondern auch im Wettkampf wichtig.", answer: "richtig", ar: "تعتبر الساعة الخاصة مهمة لإيفا كوبر ليس فقط في التدريب، بل أيضًا في المنافسة." },
-    { text: "Solange der Körper gesund ist, will Eva Küpper weiterhin Ultramarathons laufen.", answer: "richtig", ar: "طالما أن الجسم بصحة جيدة، تريد إيفا كوبر أن تستمر في ركض الماراثونات الفائقة." },
-    { text: "Nach dem Berlin Marathon kann Eva Küpper dem Lauf-Club offiziell beitreten.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "psychische", quizId: "psychische", questions: [
-    { text: "Weniger als zehn Prozent der Fehltage am Arbeitsplatz sind auf psychische Erkrankungen zurückzuführen.", answer: "falsch" },
-    { text: "Betroffene Arbeitnehmer sprechen relativ offen über ihre psychischen Probleme.", answer: "falsch" },
-    { text: "Auch Arbeitslosigkeit ist ein Risikofaktor für psychische Probleme.", answer: "richtig", ar: "إن البطالة أيضًا عامل خطر للمشاكل النفسية." },
-    { text: "Schlechte Stimmung am Arbeitsplatz ist die Hauptursache für psychische Erkrankungen.", answer: "richtig", ar: "تعتبر الأجواء السيئة في مكان العمل السبب الرئيسي للأمراض النفسية." },
-    { text: "Menschen, die zu wenig zu tun haben, versuchen, das nicht zu zeigen.", answer: "richtig", ar: "الأشخاص الذين لديهم القليل جداً من العمل يحاولون عدم إظهار ذلك." },
-    { text: "Menschen, die am Arbeitsplatz wenig zu tun haben, sind besonders zufrieden.", answer: "falsch" },
-    { text: "Internet und Smartphone können einen Einfluss auf die Psyche haben.", answer: "richtig", ar: "يمكن أن يكون للإنترنت والهاتف الذكي تأثير على النفس." },
-    { text: "Wem seine Arbeit Spaß macht, der kann eher mehr leisten.", answer: "richtig", ar: "من يستمتع بعمله، يمكنه أن يحقق المزيد." },
-    { text: "Bei Managern ist das Risiko für psychische Erkrankungen unter allen Berufsgruppen am höchsten.", answer: "falsch" },
-    { text: "Für die psychische Gesundheit ist es besser, arbeitslos zu sein, als eine nur durchschnittlich interessante Arbeit zu finden.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Herr Kemper", quizId: "Herr Kemper", questions: [
-    { text: "Herr Kemper arbeitet aus Dankbarkeit für die Hilfe, die er früher bekommen hat, ehrenamtlich.", answer: "richtig", ar: "يعمل السيد كيمبر تطوعًا من باب الامتنان للمساعدة التي حصل عليها في السابق." },
-    { text: "Der Tierschutz hat für Herrn Kemper oberste Priorität.", answer: "falsch" },
-    { text: "Herr Kemper hat zuerst handwerkliche Arbeiten im Tierheim gemacht.", answer: "richtig", ar: "قام السيد كيمبر أولاً بأعمال حرفية في مأوى الحيوانات." },
-    { text: "Herr Kemper hat es abgelehnt, Reinigungsarbeiten zu übernehmen.", answer: "falsch" },
-    { text: "Alle Helferinnen und Helfer arbeiten mehrmals in der Woche im Tierheim.", answer: "falsch" },
-    { text: "Greta hat angefangen, ehrenamtlich zu arbeiten, weil sie zu Hause Langeweile hatte.", answer: "richtig", ar: "بدأت غريتا العمل التطوعي لأنها كانت تشعر بالملل في المنزل." },
-    { text: "Herr Kemper hat einer jungen Frau geholfen, ihren beruflichen Weg zu finden.", answer: "richtig", ar: "ساعد السيد كيمبر امرأة شابة في العثور على طريقها المهني." },
-    { text: "Herr Kemper findet, dass sich jeder Mensch ehrenamtlich engagieren sollte.", answer: "falsch" },
-    { text: "Herr Kemper hat auch Verständnis für Menschen, die sich nicht ehrenamtlich engagieren.", answer: "richtig", ar: "السيد كيمبر لديه أيضًا تفهم للأشخاص الذين لا يشاركون في العمل التطوعي." },
-    { text: "Herr Kemper wohnt in einem Haus, in dem Tierhaltung verboten ist.", answer: "richtig", ar: "السيد كيمبر يعيش في منزل يُمنع فيه تربية الحيوانات." }
-  ]
-},
-{ href: "", title: "Frau Hahn", quizId: "Frau Hahn", questions: [
-    { text: "Der Journalist spricht mit einer Kundin im Kaufhaus.", answer: "falsch" },
-    { text: "Frau Hahn hat ihren Beruf im Kaufhaus Brück gelernt.", answer: "richtig", ar: "لقد تعلمت السيدة هان مهنةها في متجر براك." },
-    { text: "Frau Hahn wollte schon als Kind Verkäuferin im Kaufhaus Brück werden", answer: "falsch" },
-    { text: "Frau Hahn fand es wichtig, nette Kollegen zu haben", answer: "richtig", ar: "وجدت السيدة هان أنه من المهم أن يكون لديها زملاء لطيفون." },
-    { text: "Frau Hahns Mann arbeitet jetzt in demselben Kaufhaus wie sie.", answer: "falsch" },
-    { text: "Der Mann von Frau Hahn hat als Schuhverkäufer gearbeitet.", answer: "richtig", ar: "عمل زوج السيدة هان كبائع أحذية." },
-    { text: "Das Kaufhaus Brück wird nach der Schließung abgerissen.", answer: "falsch" },
-    { text: "Frau Hahn findet es wichtig, in einem schönen Haus zu arbeiten.", answer: "richtig", ar: "تجد السيدة هان أنه من المهم العمل في منزل جميل." },
-    { text: "Die neuen Inhaber hätten das Kaufhaus gerne weitergeführt.", answer: "falsch" },
-    { text: "Frau Hahn will nicht in einem anderen Kaufhaus arbeiten.", answer: "richtig", ar: "السيدة هان لا تريد العمل في متجر آخر." }
-  ]
-},
-{ href: "", title: "Wohnmobilen", quizId: "Wohnmobilen", questions: [
-    { text: "In der Sendung von Bayern 3 können Sie u. a. ein Zelt gewinnen.", answer: "falsch" },
-    { text: "Für das Wohnmobil Camper 500F benötigt man einen Zusatzführerschein.", answer: "falsch" },
-    { text: "Der Hauptpreis des Gewinnspiels ist ein vierwöchiger Urlaub in Spanien.", answer: "richtig", ar: "الجائزة الكبرى في السحب هي عطلة مدتها أربعة أسابيع في إسبانيا." },
-    { text: "Sie können in der Sendung auch Bildbände über verschiedene Länder gewinnen.", answer: "falsch" },
-    { text: "Wohnmobile für Reisen in Europa sollte man erst am Urlaubsort mieten.", answer: "falsch" },
-    { text: "Reisende mit Wohnmobilen schätzen ihre Unabhängigkeit.", answer: "richtig", ar: "يُقدّر المسافرون الذين يستخدمون المركبات السكنية استقلاليتهم." },
-    { text: "Auf Luxus muss man im Wohnwagen auch heute noch verzichten.", answer: "falsch" },
-    { text: "Wer den Urlaub mit dem Wohnmobil erst einmal ausprobieren will, sollte ein gebrauchtes Fahrzeug kaufen", answer: "richtig", ar: "من يريد تجربة الإجازة مع سيارة متنقلة لأول مرة، ينبغي عليه شراء مركبة مستعملة." },
-    { text: "Deutsche zahlen für ein Wohnmobil durchschnittlich 200.000 Euro.", answer: "falsch" },
-    { text: "Der Mietpreis für ein Wohnmobil hängt von der Jahreszeit ab.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Thomas", quizId: "Thomas", questions: [
-    { text: "Nach seinem Studium hat Thomas Hirschbaum zuerst im IT-Bereich gearbeitet.", answer: "richtig", ar: "بعد دراسته، عمل توماس هيرشباوم أولاً في مجال تكنولوجيا المعلومات." },
-    { text: "Er hat den Managementbereich in seiner Firma gegründet.", answer: "falsch" },
-    { text: "Es hat ihm gefallen, Verantwortung für sein 50-köpfiges Team zu haben", answer: "richtig", ar: "لقد أعجبه أن يكون مسؤولاً عن فريقه المكون من 50 شخصًا." },
-    { text: "Seine Eltern haben erwartet, dass er einmal mehr Geld verdient als sie.", answer: "falsch" },
-    { text: "Seit seinem Start ins Berufsleben hatte er keine Freizeit mehr.", answer: "falsch" },
-    { text: "Er hat sich oft nicht gut gefühlt, wenn er an seine Familie dachte.", answer: "falsch" },
-    { text: "Nach seinem 40. Geburtstag hatte er den Wunsch, mal einen Monat Urlaub zu machen.", answer: "falsch" },
-    { text: "Sein Chef war sofort mit dem Vorschlag einverstanden, die Arbeit anders zu organisieren.", answer: "falsch" },
-    { text: "Wie sein Kollege arbeitet Thomas Hirschbaum jetzt halbtags.", answer: "richtig", ar: "يعمل توماس هيرشباوم الآن بدوام جزئي مثل زميله." },
-    { text: "Trotzdem steht die Arbeit für ihn an oberster Stelle.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Bibliothek", quizId: "Bibliothek", questions: [
-    { text: "Astrid Nowak hat ihr ganzes Berufsleben in der Stadtbibliothek verbracht.", answer: "falsch" },
-    { text: "Die meisten Besucher/innen der Stadtbibliothek wollen Medien ausleihen.", answer: "richtig", ar: "تريد معظم زوار/زائرات مكتبة المدينة استئجار وسائل الإعلام." },
-    { text: "Viele halten sich gern in den attraktiven Räumen der Bibliothek auf.", answer: "richtig", ar: "يحب الكثيرون قضاء الوقت في الأماكن الجذابة للمكتبة." },
-    { text: "Die Bibliothek bietet ihre Dienstleistungen seit Jahren auch sonntags an.", answer: "falsch" },
-    { text: "Die vielfältigen Angebote der Bibliothek sind gratis nutzbar.", answer: "richtig", ar: "العروض المتنوعة في المكتبة متاحة للاستخدام مجانًا." },
-    { text: "Ein Angebotsschwerpunkt sind Informationsmedien für jüngere Leute.", answer: "falsch" },
-    { text: "Man kann in der Bibliothek auch elektronische Geräte mieten.", answer: "falsch" },
-    { text: "Heute finden nur Kurse aus dem Bereich Medien und Technik statt.", answer: "falsch" },
-    { text: "Es gibt einen Raum, in dem man mit anderen zusammen moderne technische Werkzeuge ausprobieren kann.", answer: "richtig", ar: "يوجد غرفة يمكن فيها تجربة أدوات تقنية حديثة مع الآخرين." },
-    { text: "Die Bibliotheken in Deutschland werden genauso häufig genutzt wie Kinos oder Museen.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Eisschwimmen", quizId: "Eisschwimmen", questions: [
-    { text: "Mit der Gründung der Eisschwimmervereinigung wollte Elias Wunderlich dem Eisschwimmen unter anderem zu einem offiziellen Status verhelfen.", answer: "falsch" },
-    { text: "Das Eisschwimmen hat Elias Wunderlich durch den Austausch mit anderen Sportlern entdeckt.", answer: "falsch" },
-    { text: "Die Ärzte sind sich einig, dass Eisschwimmen die Gesundheit fördert.", answer: "richtig", ar: "الأطباء متفقون على أن السباحة في الماء البارد تعزز الصحة." },
-    { text: "Nur durchtrainierte Menschen sollten Eisschwimmen betreiben.", answer: "falsch" },
-    { text: "Für den Einstieg in den Eisschwimmsport ist der Winterbeginn der beste Zeitpunkt.", answer: "richtig", ar: "للبدء في رياضة السباحة في المياه الجليدية، فإن بداية الشتاء هي أفضل وقت." },
-    { text: "Elias Wunderlich hält sich strikt an seine eigenen Empfehlungen.", answer: "richtig", ar: "إيلياس وندرليش يلتزم بدقة بتوصياته الخاصة." },
-    { text: "Warmhaltendes Fett wird auch durch die Reaktion des Körpers auf Kälte erzeugt.", answer: "falsch" },
-    { text: "Bei Wettbewerben ist schützende Ganzkörperbekleidung vorgesehen.", answer: "falsch" },
-    { text: "Elias Wunderlich nimmt an Wettbewerben teil, um zu siegen.", answer: "richtig", ar: "إلياس وندرليش يشارك في المسابقات من أجل الفوز." },
-    { text: "Laut Elias Wunderlich kann Eisschwimmen zur Abhängigkeit führen.", answer: "richtig", ar: "وفقًا لإلياس وندرليش، يمكن أن يؤدي السباحة في الجليد إلى الإدمان." }
-  ]
-},
-{ href: "", title: "Die Ausbildung", quizId: "Die Ausbildung", questions: [
-    { text: "Viele befürchten, dass es durch das neue Gesetz zu weiteren Mittelkürzungen kommt.", answer: "richtig", ar: "يخشى الكثيرون من أن يؤدي القانون الجديد إلى مزيد من تخفيضات الميزانية." },
-    { text: "In Zukunft werden weniger Erzieherinnen gebraucht als heute.", answer: "richtig", ar: "في المستقبل، سيكون هناك حاجة إلى عدد أقل من المربيات مقارنةً باليوم." },
-    { text: "Künftig soll es mehr Krippenplätze für Kinder unter drei Jahren geben.", answer: "falsch" },
-    { text: "Der Besuch von Kindergärten soll kostenlos werden.", answer: "richtig", ar: "يجب أن يكون زيارة رياض الأطفال مجانية." },
-    { text: "Die Mehrheit der Kleinkinder wird auch weiterhin zu Hause betreut werden.", answer: "falsch" },
-    { text: "Bei Bedarf setzt die Sprachförderung im vierten Lebensjahr ein.", answer: "richtig", ar: "تبدأ تعزيز اللغة عند الحاجة في السنة الرابعة من العمر." },
-    { text: "Deutsche Kinder haben keinen Anspruch auf staatliche Sprachförderung.", answer: "falsch" },
-    { text: "Im Elternhaus wird die Sprachförderung der Kinder immer häufiger vernachlässigt.", answer: "richtig", ar: "في المنزل العائلي، يتم إهمال تعزيز اللغة للأطفال بشكل متزايد." },
-    { text: "Herr Teichmann sieht in Bezug auf Sprachförderung auch auf Seiten der Politik Handlungsbedarf.", answer: "falsch" },
-    { text: "Die Ausbildung der Erzieherinnen soll künftig an Hochschulen angesiedelt sein.", answer: "richtig", ar: "يجب أن تكون تدريب المربيات في المستقبل في الجامعات." }
-  ]
-},
-{ href: "", title: "Influencerin Maria", quizId: "Influencerin Maria", questions: [
-    { text: "Maria war am Anfang überrascht, wie schnell ihre Beiträge im Internet Aufmerksamkeit bekamen", answer: "richtig", ar: "ماريا كانت في البداية متفاجئة، كيف أن مساهماتها على الإنترنت حصلت على انتباه سريع." },
-    { text: "Ihre Familie stand ihrer Tätigkeit als Influencerin von Beginn an ohne Zweifel positiv gegenüber", answer: "richtig", ar: "كانت عائلتها تدعم نشاطها كمدونة مؤثرة منذ البداية دون أدنى شك." },
-    { text: "Maria prüft Werbeangebote genau, bevor sie eine Zusammenarbeit annimmt", answer: "richtig", ar: "ماريا تفحص عروض الإعلانات بدقة قبل أن تقبل التعاون." },
-    { text: "Für Maria ist es wichtiger, authentisch zu bleiben, als möglichst viele Produkte zu präsentieren", answer: "falsch" },
-    { text: "Negative Kommentare belasten Maria nie, weil sie diese grundsätzlich nicht liest.", answer: "falsch" },
-    { text: "Maria sieht soziale Medien nicht nur als Unterhaltung, sondern auch als berufliche Möglichkeit", answer: "falsch" },
-    { text: "Große Treffen mit Followern empfindet Maria immer als völlig entspannt", answer: "richtig", ar: "تشعر ماريا دائمًا أن اللقاءات الكبيرة مع المتابعين مريحة تمامًا." },
-    { text: "Künstliche Intelligenz nutzt Maria bereits gezielt, um ihre Arbeit effizienter zu organisieren", answer: "richtig", ar: "تستخدم ماريا الذكاء الاصطناعي بالفعل بشكل مستهدف لتنظيم عملها بشكل أكثر كفاءة." },
-    { text: "Maria möchte jungen Menschen zeigen, dass Erfolg im Internet auch mit Verantwortung verbunden ist", answer: "falsch" },
-    { text: "In Zukunft plant Maria, ihre Tätigkeit in den sozialen Medien vollständig aufzugeben", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Obst und Gemüse", quizId: "Obst und Gemüse", questions: [
-    { text: "Die Nachfrage nach regionalem Bio-Obst und Bio-Gemüse hat sich in den letzten Jahren spürbar verändert.", answer: "richtig", ar: "لقد تغيرت الطلبات على الفواكه والخضروات العضوية الإقليمية بشكل ملحوظ في السنوات الأخيرة." },
-    { text: "Viele Kundinnen und Kunden legen bei Bio-Produkten inzwischen mehr Wert auf Herkunft und Frische als auf einen möglichst niedrigen Preis.", answer: "falsch" },
-    { text: "Die Lieferung frischer Lebensmittel verursacht für kleinere Betriebe zusätzliche organisatorische und finanzielle Belastungen.", answer: "falsch" },
-    { text: "Nicht alle angebotenen Bio-Produkte stammen direkt aus der eigenen Produktion.", answer: "richtig", ar: "ليس كل المنتجات العضوية المعروضة تأتي مباشرة من الإنتاج الخاص." },
-    { text: "Digitale Bestellsysteme spielen beim Verkauf von Obst und Gemüse mittlerweile eine wichtige Rolle.", answer: "richtig", ar: "تلعب أنظمة الطلب الرقمية دورًا مهمًا في بيع الفواكه والخضروات في الوقت الحالي." },
-    { text: "Die Qualität der Produkte hängt nach Ansicht des Sprechers vor allem von einer schnellen Lieferung ab.", answer: "falsch" },
-    { text: "Der persönliche Kontakt zu den Kundinnen und Kunden bleibt trotz Online-Bestellungen ein wichtiger Bestandteil des Geschäfts.", answer: "richtig", ar: "يظل الاتصال الشخصي مع الزبائن جزءًا مهمًا من العمل على الرغم من الطلبات عبر الإنترنت." },
-    { text: "Durch den Lieferdienst können auch Menschen erreicht werden, die nicht regelmäßig auf den Wochenmarkt gehen können.", answer: "falsch" },
-    { text: "Für kleinere Bio-Betriebe ist es schwierig, gleichzeitig nachhaltig und preislich konkurrenzfähig zu bleiben.", answer: "richtig", ar: "من الصعب على الشركات الصغيرة في مجال الزراعة العضوية أن تبقى مستدامة وفي نفس الوقت قادرة على المنافسة من حيث الأسعار." },
-    { text: "Der Sprecher geht davon aus, dass regionale Lieferangebote für Bio-Lebensmittel in Zukunft weiter an Bedeutung gewinnen werden.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Frau Eichhorn", quizId: "Frau Eichhorn", questions: [
-    { text: "Der Vater des Gründers hatte früher einen Stand auf einem Markt.", answer: "falsch" },
-    { text: "Die ersten Schritte in die Selbstständigkeit waren problemlos.", answer: "falsch" },
-    { text: "Zu Beginn war es schwierig, passende Lieferanten zu finden.", answer: "falsch" },
-    { text: "Frau Eichhorn erzählt, wie sie die ersten Kunden gewonnen hat.", answer: "richtig", ar: "تروي السيدة آيشهورن كيف تمكنت من جذب أول زبائنها." },
-    { text: "Das Angebot des Geschäfts richtet sich ausschließlich an Kunden aus der eigenen Stadt", answer: "richtig", ar: "عرض المتجر موجه حصريًا للعملاء من المدينة نفسها" },
-    { text: "Anfangs hatten einige Kunden Zweifel an der Qualität der Produkte.", answer: "richtig", ar: "في البداية، كان لدى بعض العملاء شكوك حول جودة المنتجات." },
-    { text: "Frau Eichhorn spricht über die Zusammenarbeit mit Produzenten und Lieferanten.", answer: "richtig", ar: "تتحدث السيدة آيشهورن عن التعاون مع المنتجين والموردين." },
-    { text: "Der Inhaber plant, in naher Zukunft eine weitere Filiale in der Stadt zu eröffnen.", answer: "falsch" },
-    { text: "Ein Verkauf der Produkte in andere Länder ist grundsätzlich vorgesehen.", answer: "falsch" },
-    { text: "Persönliche Beratung im Geschäft bleibt auch in Zukunft sehr wichtig", answer: "richtig", ar: "تظل الاستشارة الشخصية في المتجر مهمة جداً في المستقبل أيضاً" }
-  ]
-},
-{ href: "", title: "Herr Böhm", quizId: "Herr Böhm", questions: [
-    { text: "Amerikanische Politiker haben die Entscheidung für das Projekt getroffen.", answer: "falsch" },
-    { text: "Herr Böhm wollte schon als Kind Bauingenieur werden.", answer: "falsch" },
-    { text: "Das älteste Bauwerk ist 80.000 Jahre alt.", answer: "falsch" },
-    { text: "Herr Böhm arbeitet häufig an ähnlichen Projekten.", answer: "falsch" },
-    { text: "Moderne Maschinen erhöhen die Sicherheit auf Baustellen.", answer: "richtig", ar: "تزيد الآلات الحديثة من الأمان في مواقع البناء." },
-    { text: "Früher mussten Bauarbeiter viele gefährliche Aufgaben selbst übernehmen.", answer: "richtig", ar: "في السابق، كان يتعين على عمال البناء تحمل العديد من المهام الخطيرة بأنفسهم." },
-    { text: "Herr Böhm arbeitete früher im Bereich Maschinenentwicklung.", answer: "richtig", ar: "كان السيد بوم يعمل سابقًا في مجال تطوير الآلات." },
-    { text: "Am Anfang gab es finanzielle Probleme bei dem Projekt.", answer: "richtig", ar: "في البداية كانت هناك مشاكل مالية في المشروع." },
-    { text: "Automatische Kontrollsysteme helfen dabei, Gefahren früher zu erkennen.", answer: "richtig", ar: "تساعد أنظمة التحكم التلقائية في الكشف عن المخاطر في وقت مبكر." },
-    { text: "Das Projekt wird heute durch europäische Fördermittel unterstützt.", answer: "richtig", ar: "يدعم المشروع اليوم من خلال تمويلات أوروبية." }
-  ]
-},
-{ href: "", title: "Matteo", quizId: "Matteo", questions: [
-    { text: "Matteos erstes Restaurant schloss wegen eines Küchenbrands.", answer: "falsch" },
-    { text: "Matteo wuchs hauptsächlich bei seinem Onkel auf dem Land auf.", answer: "richtig", ar: "ماتيو نشأ بشكل رئيسي عند عمه في الريف." },
-    { text: "Auf dem Bauernhof gab es keine anderen Kinder außer Matteo.", answer: "falsch" },
-    { text: "Die Ausbildung war für Matteo psychisch sehr belastend.", answer: "richtig", ar: "كانت التدريب بالنسبة لماتيو مرهقة نفسيًا جدًا." },
-    { text: "Bei Bewerbern achtet Matteo zuerst auf gute Noten und Diplome.", answer: "falsch" },
-    { text: "Der Geschmack des Essens ist Matteo wichtiger als das Aussehen.", answer: "richtig", ar: "طعم الطعام بالنسبة لماتيو أهم من مظهره." },
-    { text: "Seine Kochschule ist in erster Linie für Erwachsene gedacht.", answer: "richtig", ar: "مدرسة الطهي الخاصة به مخصصة في المقام الأول للبالغين." },
-    { text: "Matteo lehnt Fertiggerichte und Fast Food komplett ab.", answer: "falsch" },
-    { text: "Matteo findet TV-Kochshows eine absolute Zeitverschwendung.", answer: "falsch" },
-    { text: "Privat kocht Matteo am liebsten ganz einfache Mahlzeiten.", answer: "richtig", ar: "يطبخ ماتيو في المنزل أطباقًا بسيطة جدًا." }
-  ]
-},
-{ href: "", title: "Mallorca (Neu)", quizId: "Mallorca (Neu)", questions: [
-    { text: "Mallorca ist als Reiseziel laut Dr. Weber am Ende.", answer: "falsch" },
-    { text: "„Coolcationing“ ist Urlaub in kühleren Gebieten.", answer: "richtig", ar: "Coolcationing\" هو عطلة في مناطق أكثر برودة." },
-    { text: "Nordeuropa-Reisenden ist ein günstiger Preis sehr wichtig.", answer: "falsch" },
-    { text: "In Schweden wird das Jedermannsrecht oft missbraucht.", answer: "richtig", ar: "في السويد، يُساء استخدام حق الجميع كثيرًا." },
-    { text: "Albaniens Tourismus-Infrastruktur wurde schnell modernisiert.", answer: "richtig", ar: "تم تحديث بنية السياحة في ألبانيا بسرعة." },
-    { text: "Das Baltikum zieht Touristen durch viele Golfplätze an.", answer: "falsch" },
-    { text: "Laut Dr. Weber sind Visum-Regeln das Hauptproblem bei Ost-Reisen.", answer: "falsch" },
-    { text: "Reisen in den Osten scheitern oft an schlechten Verbindungen.", answer: "richtig", ar: "غالبًا ما تفشل الرحلات إلى الشرق بسبب الاتصالات السيئة." },
-    { text: "Senioren bevorzugen heute vor allem gemütliche Urlaube.", answer: "falsch" },
-    { text: "„Best-Ager“ buchen immer öfter schwierige Fernwanderungen.", answer: "richtig", ar: "„أفضل الأعمار“ يحجزون بشكل متزايد رحلات مشي طويلة صعبة." }
-  ]
-},
-{ href: "", title: "Janis", quizId: "Janis", questions: [
-    { text: "Janis findet, dass Autoren heute von Kritikern ignoriert werden.", answer: "falsch" },
-    { text: "Das Setting seines Romans basiert auf einer Weltreise.", answer: "falsch" },
-    { text: "Sein Biologie-Studium hilft ihm beim Entwurf der Monster.", answer: "richtig", ar: "دراسته في علم الأحياء تساعده في تصميم الوحوش." },
-    { text: "Janis schreibt seine ersten Entwürfe handschriftlich.", answer: "falsch" },
-    { text: "Der Autor korrigiert niemals während des ersten Schreibens.", answer: "richtig", ar: "المؤلف لا يقوم بالتصحيح أبداً أثناء الكتابة الأولى." },
-    { text: "Janis findet den Plot wichtiger als die Charaktere.", answer: "falsch" },
-    { text: "Früher versuchte Janis, Erfolg durch Trends zu kopieren.", answer: "richtig", ar: "في السابق، كان يانيز يحاول تحقيق النجاح من خلال تقليد الاتجاهات." },
-    { text: "Der Verlag hat das Buchende gegen seinen Willen geändert.", answer: "falsch" },
-    { text: "Janis braucht Stille und Einsamkeit zum Schreiben.", answer: "falsch" },
-    { text: "Er rät jungen Autoren, soziale Medien nicht zu wichtig zu nehmen.", answer: "richtig", ar: "يُنصح الكتّاب الشباب بعدم أخذ وسائل التواصل الاجتماعي على محمل الجد." }
-  ]
-},
-{ href: "", title: "Journalisten - Weber", quizId: "Journalisten - Weber", questions: [
-    { text: "Weber ist heute vor Auftritten gar nicht mehr nervös.", answer: "falsch" },
-    { text: "Im Studium ist Weber die Praxis besonders wichtig.", answer: "richtig", ar: "في الدراسة، تعتبر الممارسة مهمة جداً بالنسبة لوبر." },
-    { text: "Weber dreht in seiner Freizeit gerne eigene Filme.", answer: "falsch" },
-    { text: "Journalisten müssen heute multimedial arbeiten können.", answer: "richtig", ar: "يجب على الصحفيين اليوم أن يكونوا قادرين على العمل بشكل متعدد الوسائط." },
-    { text: "Sportjournalist ist heute kein realistischer Berufswunsch.", answer: "falsch" },
-    { text: "Ein guter Journalist braucht Entdeckergeist.", answer: "richtig", ar: "يحتاج الصحفي الجيد إلى روح الاستكشاف." },
-    { text: "Ein Unfall beendete Webers Karriere als Handballer.", answer: "richtig", ar: "انتهت مسيرة ويبر كلاعب كرة يد بسبب حادث." },
-    { text: "Weber sammelte erst nach dem Studium Berufserfahrung.", answer: "falsch" },
-    { text: "Journalisten sollten gegenüber Stars neutral bleiben.", answer: "richtig", ar: "يجب على الصحفيين أن يبقوا محايدين تجاه النجوم." },
-    { text: "Weber rät nach dem Abitur zu Praktika in Redaktionen.", answer: "richtig", ar: "يُنصح ويبر بعد التخرج من الثانوية العامة بالتدريب في التحرير." }
-  ]
-},
-{ href: "", title: "Lukas", quizId: "Lukas", questions: [
-    { text: "Lukas war nach dem Schulabschluss zunächst unentschlossen.", answer: "richtig", ar: "كان لوكاس بعد إنهاء المدرسة غير متأكد في البداية." },
-    { text: "Die Lehrer halfen dem Gastschüler bei Sprachproblemen kaum.", answer: "richtig", ar: "لم يساعد المعلمون الطالب الضيف في مشاكل اللغة تقريبًا." },
-    { text: "Spanien ist als Au-Pair-Land aktuell wenig gefragt.", answer: "falsch" },
-    { text: "Lukas dachte auch über einen Aufenthalt in Italien nach.", answer: "richtig", ar: "لوكاس فكر أيضًا في إقامة في إيطاليا." },
-    { text: "Früher schickte man Au-Pairs vor allem zur Arbeit nach England.", answer: "falsch" },
-    { text: "Lukas rät dazu, unbedingt einen Vertrag abzuschließen.", answer: "richtig", ar: "يُنصح لوكاس بشدة بإبرام عقد." },
-    { text: "Lukas kritisiert die hohen Kosten der Vermittlungsagenturen.", answer: "falsch" },
-    { text: "Lukas fühlte sich anfangs nicht als Teil der Familie.", answer: "richtig", ar: "لم يشعر لوكاس في البداية كجزء من العائلة." },
-    { text: "Die Reise nach Madrid stärkte den Zusammenhalt mit der Familie.", answer: "richtig", ar: "رحلة إلى مدريد عززت الترابط مع العائلة." },
-    { text: "Lukas lernte Spanisch hauptsächlich im Sprachkurs.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Dr. Lenz", quizId: "Dr. Lenz", questions: [
-    { text: "Frau Dr. Lenz spricht aus ihrem ruhigen Büro.", answer: "falsch" },
-    { text: "Das Projekt „Lern-Zukunft“ läuft erst seit wenigen Wochen.", answer: "falsch" },
-    { text: "Es gibt für die Schüler keine Anwesenheitspflicht.", answer: "falsch" },
-    { text: "Feedbackgespräche ersetzen die klassischen Schulnoten.", answer: "richtig", ar: "تُعَوِّضُ محادثات التغذية الراجعة الدرجات المدرسية التقليدية." },
-    { text: "Lehrer halten weiterhin überwiegend Frontalunterricht.", answer: "falsch" },
-    { text: "Alle Eltern befürworteten das Konzept von Anfang an.", answer: "falsch" },
-    { text: "Die Schule wurde rein aus Staatsmitteln finanziert.", answer: "falsch" },
-    { text: "Das Interesse am Schulmodell hat zugenommen.", answer: "richtig", ar: "لقد زاد الاهتمام بنموذج المدرسة." },
-    { text: "Das Konzept verlangt viel Selbstorganisation.", answer: "richtig", ar: "يتطلب هذا المفهوم الكثير من التنظيم الذاتي." },
-    { text: "Frau Dr. Lenz blickt trotz Stress positiv in die Zukunft.", answer: "richtig", ar: "تطلّ السيدة الدكتورة لنتز، على الرغم من الضغوط، بنظرة إيجابية نحو المستقبل." }
-  ]
-},
-{ href: "", title: "Frau Seidel", quizId: "Frau Seidel", questions: [
-    { text: "Frau Seidel erledigt ihre Arbeit überwiegend am Schreibtisch.", answer: "falsch" },
-    { text: "Die Bauarbeiten fallen in eine stark frequentierte Zeit.", answer: "richtig", ar: "تتزامن أعمال البناء مع فترة ذات حركة مرور كثيفة." },
-    { text: "Die aktuellen Probleme betreffen ausschließlich den Regionalverkehr.", answer: "falsch" },
-    { text: "Der Ersatzverkehr erfolgt ausschließlich mit Bussen.", answer: "falsch" },
-    { text: "Geschäftsreisende bleiben von den Störungen weitgehend unbeeinträchtigt.", answer: "falsch" },
-    { text: "Einschränkungen wirken sich nicht auf alle Freizeitangebote gleichermaßen aus.", answer: "richtig", ar: "لا تؤثر القيود على جميع عروض الترفيه بنفس القدر." },
-    { text: "Man erwartet eine vollständige Rückkehr zum Normalbetrieb.", answer: "falsch" },
-    { text: "Die Situation ist im Vergleich zum letzten Wochenende deutlich entspannter.", answer: "falsch" },
-    { text: "Vergleichbare Situationen traten früher nie während der Ferien auf.", answer: "falsch" },
-    { text: "Trotz der Belastung ist Frau Seidel mit ihrer Arbeit zufrieden.", answer: "richtig", ar: "على الرغم من الضغوط، فإن السيدة سايدل راضية عن عملها." }
-  ]
-},
-{ href: "", title: "Jonas", quizId: "Jonas", questions: [
-    { text: "Zu Studienbeginn hatte Jonas keinerlei Gründungsabsichten.", answer: "richtig", ar: "لم يكن لدى يونس أي نوايا للتأسيس في بداية دراسته." },
-    { text: "Der Impuls für das Projekt entstand in einem obligatorischen Seminar.", answer: "richtig", ar: "نشأ الدافع للمشروع في ندوة إلزامية." },
-    { text: "Jonas startete ohne anfängliche finanzielle Hilfe.", answer: "richtig", ar: "بدأ يونس بدون مساعدة مالية أولية." },
-    { text: "Die Maschinennutzung war für Jonas nicht kostenpflichtig.", answer: "richtig", ar: "استخدام الآلات لم يكن مكلفًا بالنسبة ليوانس." },
-    { text: "Die Lieferauflagen der Stadtwerke zwangen Jonas zur Studienpause.", answer: "richtig", ar: "أجبرت شروط تسليم خدمات المدينة يونس على التوقف عن الدراسة." },
-    { text: "Beide Elternteile begrüßten seine Studienpause gleichermaßen.", answer: "falsch" },
-    { text: "Die Anfangshalle bot äußerst schlechte Arbeitsbedingungen.", answer: "richtig", ar: "كانت قاعة البداية تقدم ظروف عمل سيئة للغاية." },
-    { text: "Jonas’ aktuelles Einkommen liegt unter den verbreiteten Erwartungen.", answer: "richtig", ar: "دخل يونس الحالي أقل من التوقعات الشائعة." },
-    { text: "Sein Unternehmen recycelt inzwischen auch Textilabfälle.", answer: "falsch" },
-    { text: "Jonas möchte junge Initiativen durch Schulungen unterstützen.", answer: "richtig", ar: "يود يونس دعم المبادرات الشابة من خلال الدورات التدريبية." }
-  ]
-},
-{ href: "", title: "Laura", quizId: "Laura", questions: [
-    { text: "Laura arbeitete früher in einer Werbeagentur.", answer: "richtig", ar: "لورا كانت تعمل سابقًا في وكالة إعلانات." },
-    { text: "Der Gedanke ans Landleben kam ihr während eines Urlaubs.", answer: "richtig", ar: "جاءتها فكرة الحياة الريفية أثناء عطلة." },
-    { text: "Ihre Eltern fanden ihre Entscheidung sofort gut.", answer: "falsch" },
-    { text: "Ihr Partner unterstützte sie bei der Veränderung.", answer: "richtig", ar: "شريكك دعمك في التغيير." },
-    { text: "Laura hat sich vor dem Umzug nicht vorbereitet.", answer: "falsch" },
-    { text: "Der Start auf dem Hof war körperlich belastend.", answer: "richtig", ar: "كان البدء في الفناء مرهقًا جسديًا." },
-    { text: "Auf ihrem Hof betreibt Laura Tierhaltung.", answer: "richtig", ar: "تدير لورا تربية الحيوانات في مزرعتها." },
-    { text: "Sie führt einen kleinen Hofladen mit regionalen Lebensmitteln.", answer: "falsch" },
-    { text: "Ihre heutigen Einnahmen übertreffen ihr früheres Gehalt.", answer: "falsch" },
-    { text: "Laura möchte auf ihrem Hof Schulungen anbieten.", answer: "richtig", ar: "لورا ترغب في تقديم دورات تدريبية في مزرعتها." }
-  ]
-},
-{ href: "", title: "Martin", quizId: "Martin", questions: [
-    { text: "Seine erste Ausbildung absolvierte Martin als Bäcker.", answer: "falsch" },
-    { text: "Er arbeitete mehr als zehn Jahre in einer Bankfiliale.", answer: "richtig", ar: "عمل لأكثر من عشر سنوات في فرع بنك." },
-    { text: "Die Ursache des Berufswechsels war eine betriebsbedingte Kündigung.", answer: "falsch" },
-    { text: "Martins Partnerin reagierte zunächst kritisch auf seine Entscheidung.", answer: "falsch" },
-    { text: "Martin fand den Start in der Bäckerei körperlich hart.", answer: "richtig", ar: "مارتن وجد أن البداية في المخبز كانت جسديًا صعبة." },
-    { text: "Er konnte ohne Hygieneschulung in der Bäckerei anfangen.", answer: "falsch" },
-    { text: "Martin schätzt besonders den persönlichen Kontakt zu den Kunden.", answer: "richtig", ar: "مارتن يقدّر بشكل خاص الاتصال الشخصي مع العملاء." },
-    { text: "Sein Einkommen ist jetzt höher als bei der Bank.", answer: "falsch" },
-    { text: "Eine eigene Bäckerei kommt für Martin nicht infrage.", answer: "falsch" },
-    { text: "Er empfiehlt eine sorgfältige Planung vor einem Jobwechsel.", answer: "richtig", ar: "يُنصح بالتخطيط الدقيق قبل تغيير الوظيفة." }
-  ]
-},
-{ href: "", title: "Auslöser", quizId: "Auslöser", questions: [
-    { text: "Thomas rauchte zum ersten Mal mit 14.", answer: "richtig", ar: "تومَاس دخّنَ للمرة الأولى عندما كان في الرابعة عشرة." },
-    { text: "Er rauchte besonders oft in Stresssituationen.", answer: "richtig", ar: "كان يدخن بشكل متكرر في حالات التوتر." },
-    { text: "Der Auslöser zum Rauchstopp war ein Krankenhausaufenthalt.", answer: "falsch" },
-    { text: "Er plante seinen Rauchstopp zum Jahresanfang.", answer: "richtig", ar: "خطط لترك التدخين في بداية السنة." },
-    { text: "Am ersten Tag hatte er kaum Verlangen nach Zigaretten.", answer: "falsch" },
-    { text: "Kollegen halfen ihm beim Aufhören.", answer: "richtig", ar: "ساعده زملاؤه في التوقف." },
-    { text: "Er verzichtete bewusst auf digitale Hilfsmittel beim Aufhören.", answer: "falsch" },
-    { text: "Der psychische Entzug war schwieriger als der körperliche.", answer: "richtig", ar: "كان الانسحاب النفسي أصعب من الانسحاب الجسدي." },
-    { text: "Heute verspürt Thomas regelmäßig starke Rauchlust.", answer: "falsch" },
-    { text: "Für seine Tochter ist Rauchen ein völlig fremder Begriff.", answer: "richtig", ar: "بالنسبة لابنته، التدخين هو مفهوم غريب تمامًا." }
-  ]
-},
-{ href: "", title: "David", quizId: "David", questions: [
-    { text: "David Steiner arbeitete früher in der Gastronomie.", answer: "falsch" },
-    { text: "Sein Entschluss zur Selbstständigkeit entstand während eines Praktikums.", answer: "falsch" },
-    { text: "Seine Eltern haben ihn bei der Finanzierung des Cafés unterstützt.", answer: "falsch" },
-    { text: "David hat den Standort eher zufällig gefunden.", answer: "richtig", ar: "داود وجد الموقع بشكل عشوائي إلى حد ما." },
-    { text: "Werbung über soziale Medien war für ihn anfangs nicht relevant.", answer: "falsch" },
-    { text: "Viele Stammgäste schätzen die persönliche Atmosphäre.", answer: "richtig", ar: "يُقدِّر العديد من الزبائن الدائمين الأجواء الشخصية." },
-    { text: "Der Umsatz deckte in den ersten Monaten kaum die laufenden Kosten.", answer: "richtig", ar: "لم يكن العائد في الأشهر الأولى يغطي تكاليف التشغيل." },
-    { text: "Mittlerweile hat David zwei Vollzeitkräfte.", answer: "falsch" },
-    { text: "Längere Pausen während der Saison gönnt er sich regelmäßig.", answer: "falsch" },
-    { text: "Ein zweiter Standort kommt für ihn in einigen Jahren infrage.", answer: "richtig", ar: "موقع ثانٍ سيكون مناسبًا له بعد بضع سنوات." }
-  ]
-},
-{ href: "", title: "Leo Berger", quizId: "Leo Berger", questions: [
-    { text: "Leo Berger wechselt regelmäßig seinen Standort.", answer: "richtig", ar: "ليو بيرجر يغير موقعه بانتظام." },
-    { text: "Sein Tagesablauf ist kaum vom Wetter abhängig.", answer: "falsch" },
-    { text: "Früher arbeitete Leo Berger viel draußen in der Natur.", answer: "falsch" },
-    { text: "Die Wasser- und Energieversorgung erfordert Planung.", answer: "richtig", ar: "تتطلب إمدادات المياه والطاقة تخطيطًا." },
-    { text: "Dieser Lebensstil polarisiert in sozialen Netzwerken.", answer: "richtig", ar: "هذا النمط من الحياة يثير الانقسام في الشبكات الاجتماعية." },
-    { text: "Leo Berger fühlt sich seit dem Vanleben gesünder.", answer: "richtig", ar: "يشعر ليو بيرجر بأنه أكثر صحة منذ أن بدأ حياة الفان." },
-    { text: "Sein Umfeld reagiert teilweise mit Unverständnis.", answer: "richtig", ar: "يتفاعل محيطه جزئياً بعدم الفهم." },
-    { text: "Der Van dient ihm gleichzeitig als Wohnraum und Arbeitsplatz.", answer: "richtig", ar: "يستخدم الفان كمساحة للعيش ومكان للعمل في الوقت نفسه." },
-    { text: "Ständiger Ortswechsel stellt für Leo Berger keinerlei Belastung dar.", answer: "falsch" },
-    { text: "Leo Berger schließt ein festes Leben derzeit nicht aus.", answer: "falsch" }
-  ]
-},
-{ href: "", title: "Nora", quizId: "Nora", questions: [
-    { text: "Nora Weidlich war früher Architektin.", answer: "falsch" },
-    { text: "Die Idee entstand erst während des Bauprozesses.", answer: "falsch" },
-    { text: "Das Grundstück stellt ein älteres Ehepaar zur Verfügung.", answer: "richtig", ar: "يقدم العقار زوجين مسنين." },
-    { text: "Der Bau verlief weitgehend problemlos.", answer: "falsch" },
-    { text: "Der Alltag funktioniert auch auf kleinem Raum.", answer: "richtig", ar: "يعمل الحياة اليومية أيضًا في المساحات الصغيرة." },
-    { text: "Das Loslassen von Besitz war herausfordernd.", answer: "richtig", ar: "كان التخلي عن الملكية تحديًا." },
-    { text: "Einschränkungen beim Komfort belasten sie dauerhaft.", answer: "falsch" },
-    { text: "Das Umfeld reagierte anfangs eher kritisch.", answer: "falsch" },
-    { text: "Größere Wohnungen kommen für sie aktuell nicht infrage.", answer: "richtig", ar: "لا تأتي الشقق الأكبر في الوقت الحالي في اعتبارك." },
-    { text: "Minimalismus bedeutet für sie mehr Lebensqualität.", answer: "richtig", ar: "يعني الحد الأدنى بالنسبة لكَ المزيد من جودة الحياة." }
-  ]
-},
-{ href: "", title: "Tarek", quizId: "Tarek", questions: [
-    { text: "Tarek Hesse begann seine berufliche Laufbahn als Stadtplaner.", answer: "richtig", ar: "بدأ طارق هيس مسيرته المهنية كمهندس تخطيط حضري." },
-    { text: "Das erste Gartenprojekt entstand auf einem Firmengelände.", answer: "falsch" },
-    { text: "Manche Gärten befinden sich auf ehemaligen Parkplätzen.", answer: "richtig", ar: "بعض الحدائق تقع على مواقف سيارات سابقة." },
-    { text: "Das Projekt verfolgt vor allem wirtschaftliche Ziele.", answer: "falsch" },
-    { text: "Die Teilnahme ist kostenpflichtig, aber stark nachgefragt.", answer: "falsch" },
-    { text: "Es gibt feste Regeln, wer was anbauen darf.", answer: "falsch" },
-    { text: "Die Organisation kümmert sich um regelmäßige Ernteaktionen.", answer: "richtig", ar: "تعتني المنظمة بتنظيم حملات حصاد منتظمة." },
-    { text: "Kinder dürfen nur unter Aufsicht mitarbeiten.", answer: "falsch" },
-    { text: "Einige Teilnehmer sind wegen der Unordnung wieder ausgestiegen.", answer: "richtig", ar: "بعض المشاركين انسحبوا مرة أخرى بسبب الفوضى." },
-    { text: "Tarek Hesse kann sich eine internationale Ausweitung vorstellen.", answer: "richtig", ar: "طارق هيس يمكنه أن يتصور توسيعاً دولياً." }
-  ]
-},
-{ href: "", title: "Dorothea", quizId: "Dorothea", questions: [
-    { text: "Dorothea Eichhorn hat sich mit einem Lieferdienst für regionale Produkte selbstständig gemacht.", answer: "richtig", ar: "دوروثيا إيشهورن قامت بتأسيس خدمة توصيل للمنتجات الإقليمية." },
-    { text: "Es war für Dorothea Eichhorn nicht schwierig, Kunden zu finden.", answer: "falsch" },
-    { text: "Dorothea Eichhorns Vater hat einen eigenen Stand auf dem Wochenmarkt.", answer: "falsch" },
-    { text: "Dorothea Eichhorns Kunden achten mehr auf die Qualität als auf den Preis der Produkte.", answer: "richtig", ar: "تولي عملاء دوروثيا إيشهورن اهتمامًا أكبر بالجودة مقارنةً بسعر المنتجات." },
-    { text: "Die Ware wird samstags auch am Abend geliefert.", answer: "falsch" },
-    { text: "Bei der Auslieferung werden teilweise Mehrwegverpackungen benutzt.", answer: "falsch" },
-    { text: "Dorothea Eichhorn arbeitet nicht mit Großbetrieben zusammen.", answer: "richtig", ar: "دوروثيا إيخهورن لا تعمل مع الشركات الكبرى." },
-    { text: "Die regionalen Produzenten konnten zahlreiche neue Kunden gewinnen.", answer: "richtig", ar: "تمكن المنتجون الإقليميون من جذب عدد كبير من العملاء الجدد." },
-    { text: "Mit ihrem Konzept konnte Dorothea Eichhorn sofort Betriebe für die Zusammenarbeit gewinnen.", answer: "falsch" },
-    { text: "Dorothea Eichhorn möchte ihr Angebot vorerst nicht auf andere Städte ausweiten.", answer: "richtig", ar: "لا ترغب دوروثيا إيشهورن في توسيع عرضها في الوقت الحالي إلى مدن أخرى." }
-  ]
-},
-] 
+  var THEMES = [
+  /* المواضيع 6 وطالع (Premium) ماكايناش هنا — كتجي من Cloudflare KV
+     (lesen-hoeren-teil2) غير للمشتركين. شوف assets/hoeren-premium.js */
+  {"href":"","title":"Mallorca (الأساسي)","quizId":"Mallorca (الأساسي)","questions":[{"text":"Die Zahl der deutschen Mallorca-Urlauber hat nur leicht abgenommen.","answer":"falsch"},{"text":"Nach Professor Kirsch achten die Deutschen bei der Wahl ihrer Urlaubsreisen nicht besonders auf die Kosten.","answer":"falsch"},{"text":"Einige Einheimische in Mallorca haben begonnen, sich gegen das Vordringen der deutschen Sprache zu wehren.","answer":"richtig","ar":"بدأ بعض السكان المحليين في مايوركا في مقاومة تقدم اللغة الألمانية."},{"text":"In Mallorca wird die Stadt wegen der Umweltbelastungen zur Kasse bitten.","answer":"richtig","ar":"في مايوركا، ستقوم المدينة بفرض رسوم بسبب التلوث البيئي."},{"text":"Viele Deutsche haben jetzt Rumänien und Ungarn als Reiseziel entdeckt.","answer":"falsch"},{"text":"Professor Kirsch weist auf günstige Angebote für Golfspieler am Plattensee hin.","answer":"falsch"},{"text":"Bulgarien hat sich als Urlaubsland sehr positiv entwickelt.","answer":"richtig","ar":"بلغاريا قد تطورت بشكل إيجابي كوجهة سياحية."},{"text":"Viele Westdeutsche meiden Bulgarien, weil die Einreisemodalitäten abschreckend sind.","answer":"falsch"},{"text":"Seit Ende der neunziger Jahre geben die Deutschen mehr Geld für den Urlaub aus.","answer":"falsch"},{"text":"Durch die Vielzahl aktiver Senioren entsteht eine höhere Nachfrage nach Abenteuerreisen in ferne Länder.","answer":"falsch"}]},
+  {"href":"","title":"Mallorca-Urlaub (المعدل)","quizId":"Mallorca-Urlaub (المعدل)","questions":[{"text":"Die Zahl der deutschen Mallorca-Urlauber hat nur leicht abgenommen.","answer":"falsch"},{"text":"Nach Professor Kirsch achten die Deutschen bei der Wahl ihrer Urlaubsreisen nicht besonders auf die Kosten.","answer":"falsch"},{"text":"Einige Einheimische in Mallorca haben begonnen, sich gegen das Vordringen der deutschen Sprache zu wehren.","answer":"richtig","ar":"بدأ بعض السكان المحليين في مايوركا في مقاومة انتشار اللغة الألمانية."},{"text":"Für den Einbruch des Tourismus auf Mallorca sind verschiedene Faktoren verantwortlich.","answer":"richtig","ar":"توجد عوامل مختلفة مسؤولة عن تراجع السياحة في مايوركا."},{"text":"Viele Deutsche haben jetzt Rumänien und Ungarn als Reiseziel entdeckt.","answer":"falsch"},{"text":"Professor Kirsch weist auf günstige Angebote für Golfspieler am Plattensee hin.","answer":"falsch"},{"text":"Bulgarien hat sich als Urlaubsland sehr positiv entwickelt.","answer":"richtig","ar":"بلغاريا قد تطورت بشكل إيجابي كوجهة سياحية."},{"text":"Viele Westdeutsche meiden Bulgarien, weil die Einreisemodalitäten abschreckend sind.","answer":"falsch"},{"text":"Seit Ende der neunziger Jahre geben die Deutschen mehr Geld für den Urlaub aus.","answer":"falsch"},{"text":"Durch die Vielzahl aktiver Senioren entsteht eine höhere Nachfrage nach Abenteuerreisen in ferne Länder.","answer":"falsch"}]},
+  {"href":"","title":"In dem Restaurant","quizId":"In dem Restaurant","note":"عندما يأتي هذا الهورن مع موضوع ليزن (في الجبال الألب - in den Alpen) يصبح الجواب هو: 134789","questions":[{"text":"In dem Restaurant gab es einen Wasserschaden.","answer":"richtig","ar":"في المطعم كان هناك ضرر مائي."},{"text":"Anton Laurito ist bei seinen Großeltern aufgewachsen.","answer":"falsch"},{"text":"Im Haus der Großeltern lebten auch andere Kinder.","answer":"richtig","ar":"في بيت الجدين كان هناك أطفال آخرون أيضًا."},{"text":"Der Stress störte den Studiogast während der Ausbildung nicht.","answer":"richtig","ar":"لم يؤثر الضغط على الضيف في الاستوديو أثناء التدريب."},{"text":"Bei neuen Mitarbeitern legt Anton Laurito am meisten Wert auf viel Erfahrung.","answer":"falsch"},{"text":"Aussehen und Geschmack der Speisen haben für den Koch den gleichen Stellenwert.","answer":"falsch"},{"text":"In der Essschule können Kinder kochen lernen.","answer":"falsch"},{"text":"Anton Laurito lehnt Fastfood nicht grundsätzlich ab.","answer":"richtig","ar":"أنطون لوريتو لا يرفض الوجبات السريعة بشكل قاطع."},{"text":"Der Koch hat eine gesunde Einstellung zum Thema Wettbewerb.","answer":"richtig","ar":"الطباخ لديه موقف صحي تجاه موضوع المنافسة."},{"text":"Zuhause probiert er gerne komplizierte Gerichte aus.","answer":"falsch"}]},
+  {"href":"","title":"Suza Hotop (الأساسي)","quizId":"Suza Hotop (الأساسي)","questions":[{"text":"Für die Autorin Suza Hotop ist Schreiben Freude und Anstrengung zugleich.","answer":"richtig","ar":"بالنسبة للكاتبة سوزا هوتوب، الكتابة هي فرح وجهد في آن واحد."},{"text":"Suza begann im Alter von zwölf Jahren mit ihrem Buch Jenseits von Zaram.","answer":"falsch"},{"text":"Am Anfang dachte Suza nicht daran, ihre Geschichte zu veröffentlichen.","answer":"richtig","ar":"في البداية، لم تفكر سوزا في نشر قصتها."},{"text":"Zuerst stellte Suza Auszüge ihrer Geschichte ins Internet.","answer":"richtig","ar":"أولاً، قامت سوزا بنشر مقتطفات من قصتها على الإنترنت."},{"text":"Begeisterte Nutzer stellten den Kontakt zu einem Verlag her.","answer":"falsch"},{"text":"Suza beschreibt bewusst Personen aus ihrer eigenen Umwelt.","answer":"falsch"},{"text":"Die Autorin plant im Vorfeld genau, was in der Geschichte passieren wird.","answer":"falsch"},{"text":"Suza folgt beim Schreiben keinen besonderen Vorbildern.","answer":"richtig","ar":"سوزا لا تتبع في الكتابة أي نماذج خاصة."},{"text":"Die junge Frau gab während des Radiointerviews eine Leseprobe.","answer":"falsch"},{"text":"Suza braucht immer Ruhe, um schreiben zu können.","answer":"falsch"}]},
+  {"href":"","title":"Suza Hotop (المعدل)","quizId":"Suza Hotop (المعدل)","questions":[{"text":"Für die Autorin Suza Hotop ist Schreiben Freude und Anstrengung zugleich.","answer":"richtig","ar":"بالنسبة للكاتبة سوزا هوتوب، الكتابة هي فرح وجهد في آن واحد."},{"text":"Suza begann im Alter von zwölf Jahren mit ihrem Buch Jenseits von Zaram.","answer":"falsch"},{"text":"Am Anfang dachte Suza nicht daran, ihre Geschichte zu veröffentlichen.","answer":"richtig","ar":"في البداية، لم تفكر سوزا في نشر قصتها."},{"text":"Zuerst stellte Suza Auszüge ihrer Geschichte ins Internet.","answer":"richtig","ar":"أولاً، قامت سوزا بنشر مقتطفات من قصتها على الإنترنت."},{"text":"Begeisterte Nutzer stellten den Kontakt zu einem Verlag her.","answer":"falsch"},{"text":"Suza beschreibt bewusst Personen aus ihrer eigenen Umwelt.","answer":"falsch"},{"text":"Die Autorin plant nie ganz genau, was in der Geschichte passieren wird.","answer":"richtig","ar":"تخطط المؤلفة أبدًا بدقة لما سيحدث في القصة"},{"text":"Suza folgt beim Schreiben keinen besonderen Vorbildern.","answer":"richtig","ar":"سوزا لا تتبع في الكتابة أي نماذج خاصة."},{"text":"Die junge Frau gab während des Radiointerviews eine Leseprobe.","answer":"falsch"},{"text":"Suza braucht immer Ruhe, um schreiben zu können.","answer":"falsch"}]},
+  {"href":"","title":"Julia","quizId":"Julia","premium":true,"questions":[]},
+  {"href":"","title":"Carina (الأساسي)","quizId":"Carina (الأساسي)","premium":true,"questions":[]},
+  {"href":"","title":"Carina (1 المعدل)","quizId":"Carina (1 المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Carina (المعدل 2)","quizId":"Carina (المعدل 2)","premium":true,"questions":[]},
+  {"href":"","title":"Frau Schenk (الأساسي)","quizId":"Frau Schenk (الأساسي)","premium":true,"questions":[]},
+  {"href":"","title":"Frau Schenk (المعدل)","quizId":"Frau Schenk (المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Herr karimov","quizId":"Herr karimov","premium":true,"questions":[]},
+  {"href":"","title":"Nadine","quizId":"Nadine","premium":true,"questions":[]},
+  {"href":"","title":"Markus (الأساسي)","quizId":"Markus (الأساسي)","premium":true,"questions":[]},
+  {"href":"","title":"Markus (المعدل)","quizId":"Markus (المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Professor Steiner (الأساسي)","quizId":"Professor Steiner (الأساسي)","premium":true,"questions":[]},
+  {"href":"","title":"Professor Steiner (المعدل)","quizId":"Professor Steiner (المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Herr Gasser und Frau Janke","quizId":"Herr Gasser und Frau Janke","premium":true,"questions":[]},
+  {"href":"","title":"Vanessa","quizId":"Vanessa","premium":true,"questions":[]},
+  {"href":"","title":"Ronald - Spielen","quizId":"Ronald - Spielen","premium":true,"questions":[]},
+  {"href":"","title":"Ronald - Aufsteigen","quizId":"Ronald - Aufsteigen","premium":true,"questions":[]},
+  {"href":"","title":"Roland - In einer höheren einer Liga","quizId":"Roland - In einer höheren einer Liga","premium":true,"questions":[]},
+  {"href":"","title":"Tu Dresden","quizId":"Tu Dresden","premium":true,"questions":[]},
+  {"href":"","title":"Zu Beginn","quizId":"Zu Beginn","premium":true,"questions":[]},
+  {"href":"","title":"Herr Scherer","quizId":"Herr Scherer","premium":true,"questions":[]},
+  {"href":"","title":"Die Deutschen machen","quizId":"Die Deutschen machen","premium":true,"questions":[]},
+  {"href":"","title":"Franz Schumacher","quizId":"Franz Schumacher","premium":true,"questions":[]},
+  {"href":"","title":"Lisa Eisenberg","quizId":"Lisa Eisenberg","premium":true,"questions":[]},
+  {"href":"","title":"Frau Makeba","quizId":"Frau Makeba","premium":true,"questions":[]},
+  {"href":"","title":"Frau Kidar Malta (الأساسي)","quizId":"Frau Kidar Malta (الأساسي)","premium":true,"questions":[]},
+  {"href":"","title":"Frau Kidar Malta (1 المعدل)","quizId":"Frau Kidar Malta (1 المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Frau Kiddar Malta (2 المعدل)","quizId":"Frau Kiddar Malta (2 المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Beim Wettkampf","quizId":"Beim Wettkampf","premium":true,"questions":[]},
+  {"href":"","title":"Mirjam Pressier","quizId":"Mirjam Pressier","premium":true,"questions":[]},
+  {"href":"","title":"Mirjam Pressier (المعدل)","quizId":"Mirjam Pressier (المعدل)","premium":true,"questions":[]},
+  {"href":"","title":"Frau Pesina","quizId":"Frau Pesina","premium":true,"questions":[]},
+  {"href":"","title":"Herr Werner","quizId":"Herr Werner","premium":true,"questions":[]},
+  {"href":"","title":"Wohnmobil","quizId":"Wohnmobil","premium":true,"questions":[]},
+  {"href":"","title":"Straßenkinder - Die Kinder (Kids)","quizId":"Straßenkinder - Die Kinder (Kids)","premium":true,"questions":[]},
+  {"href":"","title":"Familie - Eltern","quizId":"Familie - Eltern","premium":true,"questions":[]},
+  {"href":"","title":"Revolution Day","quizId":"Revolution Day","premium":true,"questions":[]},
+  {"href":"","title":"Bicycle","quizId":"Bicycle","premium":true,"questions":[]},
+  {"href":"","title":"Die Radiosendung","quizId":"Die Radiosendung","premium":true,"questions":[]},
+  {"href":"","title":"psychische","quizId":"psychische","premium":true,"questions":[]},
+  {"href":"","title":"Herr Kemper","quizId":"Herr Kemper","premium":true,"questions":[]},
+  {"href":"","title":"Frau Hahn","quizId":"Frau Hahn","premium":true,"questions":[]},
+  {"href":"","title":"Wohnmobilen","quizId":"Wohnmobilen","premium":true,"questions":[]},
+  {"href":"","title":"Thomas","quizId":"Thomas","premium":true,"questions":[]},
+  {"href":"","title":"Bibliothek","quizId":"Bibliothek","premium":true,"questions":[]},
+  {"href":"","title":"Eisschwimmen","quizId":"Eisschwimmen","premium":true,"questions":[]},
+  {"href":"","title":"Die Ausbildung","quizId":"Die Ausbildung","premium":true,"questions":[]},
+  {"href":"","title":"Influencerin Maria","quizId":"Influencerin Maria","premium":true,"questions":[]},
+  {"href":"","title":"Obst und Gemüse","quizId":"Obst und Gemüse","premium":true,"questions":[]},
+  {"href":"","title":"Frau Eichhorn","quizId":"Frau Eichhorn","premium":true,"questions":[]},
+  {"href":"","title":"Herr Böhm","quizId":"Herr Böhm","premium":true,"questions":[]},
+  {"href":"","title":"Matteo","quizId":"Matteo","premium":true,"questions":[]},
+  {"href":"","title":"Mallorca (Neu)","quizId":"Mallorca (Neu)","premium":true,"questions":[]},
+  {"href":"","title":"Janis","quizId":"Janis","premium":true,"questions":[]},
+  {"href":"","title":"Journalisten - Weber","quizId":"Journalisten - Weber","premium":true,"questions":[]},
+  {"href":"","title":"Lukas","quizId":"Lukas","premium":true,"questions":[]},
+  {"href":"","title":"Dr. Lenz","quizId":"Dr. Lenz","premium":true,"questions":[]},
+  {"href":"","title":"Frau Seidel","quizId":"Frau Seidel","premium":true,"questions":[]},
+  {"href":"","title":"Jonas","quizId":"Jonas","premium":true,"questions":[]},
+  {"href":"","title":"Laura","quizId":"Laura","premium":true,"questions":[]},
+  {"href":"","title":"Martin","quizId":"Martin","premium":true,"questions":[]},
+  {"href":"","title":"Auslöser","quizId":"Auslöser","premium":true,"questions":[]},
+  {"href":"","title":"David","quizId":"David","premium":true,"questions":[]},
+  {"href":"","title":"Leo Berger","quizId":"Leo Berger","premium":true,"questions":[]},
+  {"href":"","title":"Nora","quizId":"Nora","premium":true,"questions":[]},
+  {"href":"","title":"Tarek","quizId":"Tarek","premium":true,"questions":[]},
+  {"href":"","title":"Dorothea","quizId":"Dorothea","premium":true,"questions":[]}
+  ] 
+
+  if (window.__hoerenPremiumMerge) window.__hoerenPremiumMerge(THEMES, window.__hoerenPremiumResult);
 
   var stack = document.getElementById("hoeren-teil2-stack");
   if (!stack) return;
@@ -2186,6 +1340,12 @@ window.__deutschEinfachPremiumReady = (async function () {
       premiumBody.appendChild(premiumButton);
       item.appendChild(premiumBody);
 
+    } else if (theme.premium && !(theme.questions && theme.questions.length)) {
+      var missing = document.createElement("p");
+      missing.className = "nq-nokey";
+      var why = (window.__hoerenPremiumResult && window.__hoerenPremiumResult.why) || "كنجيبو الموضوع…";
+      missing.textContent = "ما قدرناش نجيبو هاد الموضوع دابا: " + why;
+      item.appendChild(missing);
     } else if (theme.questions && theme.questions.length) {
       item.appendChild(buildNativeQuiz(theme));
     } else {
@@ -2602,7 +1762,9 @@ window.__deutschEinfachPremiumReady = (async function () {
     .then(function (premium) {
       if (premium && !isPremiumUser) {
         isPremiumUser = true;
-        boot();
+        /* الجمل ديال المواضيع المدفوعة كيجيو من Cloudflare KV */
+        (window.__hoerenPremiumLoad ? window.__hoerenPremiumLoad("teil2") : Promise.resolve(null))
+          .then(function (result) { window.__hoerenPremiumResult = result; boot(); });
       }
     })
     .catch(function (error) {
