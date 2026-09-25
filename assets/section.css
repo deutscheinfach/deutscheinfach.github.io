@@ -2938,6 +2938,7 @@
    الإطار، إذن الأرقام والفراغات والـGlossar كيتبعو.
    ===================================================== */
 html body .t1-text,
+html body .t1-panel,
 html body .e2-text {
     --text: #1c1a16;
     --muted: #5e584c;
@@ -2972,3 +2973,28 @@ html body .t1-text .sp2-word {
 html body .t1-text .sp-gap-word { color: #6b4f14; }
 html body .t1-text ::selection,
 html body .e2-text ::selection { background: rgba(214,178,94,.45); color: #000; }
+
+/* الأسئلة (اللوحة ديال الجنب) حتى هي فورقة بيضة */
+html body .t1-panel .t1-panel-head { border-color: rgba(28,26,22,.12); }
+html body .t1-panel .t1-panel-title { color: #6b4f14; }
+html body .t1-panel :is(.t1-option, .t2-q, .t2-option, .t3-sit, .sp2-word, .sp2-hint) {
+    background: #fff;
+    color: #1c1a16;
+    border-color: rgba(28,26,22,.14);
+}
+html body .t1-panel :is(.t1-option, .t2-option, .sp2-word):hover { border-color: #d6b25e; background: #fffaf0; }
+html body .t1-panel :is(.t1-option-key, .t3-sit-num, .sp2-key) {
+    background: #f3eddf;
+    color: #6b4f14;
+    border-color: rgba(168,134,58,.45);
+}
+html body .t1-panel :is(.t2-q-ar, .t3-sit-ar, .t1-option-ar) { color: #5e584c; }
+html body .t1-panel .t1-progress { background: #f3eddf; color: #6b4f14; border-color: rgba(168,134,58,.45); }
+html body .t1-panel :is(.t2-option.is-picked, .sp2-word.is-picked, .t3-sit.is-active) {
+    background: #fbf1d6; border-color: #d6b25e; box-shadow: 0 0 0 2px rgba(214,178,94,.35);
+}
+html body .t1-panel :is(.t1-option.is-used, .sp2-word.is-used) { opacity: .5; }
+html body .t1-panel :is(.t2-option.is-right) { background: #e5f6ec; border-color: #1f9d63; }
+html body .t1-panel :is(.t2-option.is-wrong) { background: #fbe7e7; border-color: #d64545; }
+html body .t1-panel :is(.t2-q.correct, .t3-sit.correct) { border-color: #1f9d63; box-shadow: 0 0 0 2px rgba(31,157,99,.2); }
+html body .t1-panel :is(.t2-q.wrong, .t3-sit.wrong) { border-color: #d64545; box-shadow: 0 0 0 2px rgba(214,69,69,.18); }
