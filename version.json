@@ -1,6 +1,7 @@
 {
-  "build": "10cc504fedb0",
+  "build": "745ef8467156",
   "assets": {
+    "assets/chat-actions.js": "77fa7281",
     "assets/chat-extras.js": "54c6cba9",
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b2-content.js": "99e34da2",

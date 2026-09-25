@@ -376,6 +376,85 @@ export default {
         return jsonResponse({ translation }, 200, allowedOrigin);
       }
 
+      /* تصحيح رسالة من الشات (Community). جملة وحدة ولا جوج:
+         كنرجعو النسخة المصححة وشرح قصير بالدارجة. */
+      if (body.chatCorrect && typeof body.chatCorrect.text === "string") {
+        if (!env.GEMINI_API_KEY) {
+          return jsonResponse(
+            { error: "GEMINI_API_KEY is not configured." },
+            500,
+            allowedOrigin
+          );
+        }
+
+        const chatText = body.chatCorrect.text.trim().slice(0, 600);
+
+        if (chatText.length < 2) {
+          return jsonResponse({ error: "Nothing to correct." }, 400, allowedOrigin);
+        }
+
+        const correctPayload = {
+          systemInstruction: {
+            parts: [
+              {
+                text:
+                  "You correct short German chat messages written by Moroccan learners (B1/B2).\n" +
+                  "Return ONLY JSON: {\"ok\": boolean, \"corrected\": string, \"notes\": string[]}.\n" +
+                  "- ok = true if the message has no real mistakes (ignore missing final punctuation, emojis and casual chat style).\n" +
+                  "- corrected = the full corrected message in natural German, keep the meaning, keep emojis.\n" +
+                  "- notes = max 3 very short explanations in Moroccan Darija (Arabic letters), each naming the German rule, e.g. \"weil كيصيفط الفعل للآخر\". Empty if ok.\n" +
+                  "- If the message is not German, set ok=true, corrected = original, notes = [\"هاد الرسالة ماشي بالألمانية\"].",
+              },
+            ],
+          },
+          contents: [{ role: "user", parts: [{ text: chatText }] }],
+          generationConfig: { temperature: 0.2, responseMimeType: "application/json" },
+        };
+
+        const correctResult = await callGeminiWithRetry(
+          [env.GEMINI_MODEL || DEFAULT_GEMINI_MODEL].concat(FALLBACK_MODELS),
+          correctPayload,
+          env.GEMINI_API_KEY
+        );
+
+        if (!correctResult.response.ok) {
+          return jsonResponse(
+            {
+              error: "Correction failed.",
+              details: correctResult.data?.error?.message || "Unknown Gemini API error.",
+            },
+            502,
+            allowedOrigin
+          );
+        }
+
+        const raw = (correctResult.data?.candidates?.[0]?.content?.parts || [])
+          .map((part) => part.text || "")
+          .join("")
+          .trim()
+          .replace(/^```(?:json)?\s*|\s*```$/g, "");
+
+        let parsed = null;
+        try { parsed = JSON.parse(raw); } catch (e) { parsed = null; }
+
+        if (!parsed || typeof parsed.corrected !== "string") {
+          return jsonResponse({ error: "Gemini returned an invalid correction." }, 502, allowedOrigin);
+        }
+
+        return jsonResponse(
+          {
+            ok: parsed.ok === true,
+            corrected: parsed.corrected.slice(0, 800),
+            notes: (Array.isArray(parsed.notes) ? parsed.notes : [])
+              .filter((n) => typeof n === "string")
+              .slice(0, 3)
+              .map((n) => n.slice(0, 200)),
+          },
+          200,
+          allowedOrigin
+        );
+      }
+
       const {
         level,
         taskType,
