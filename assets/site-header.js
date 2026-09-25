@@ -478,13 +478,14 @@
            هادو كيتنقلو عادي، وهادشي ماشي مشكل: البار كتعاود
            تتبنى غير تما، ماشي ف كل برْكة. */
         const ROUTABLE =
-            /^(b1|b2)-(lesen|hoeren|schreiben|sprechen)\.html$|^b2-lesen-(teil[123]|sprach[12])\.html$/;
+            /^(b1|b2)-(lesen|hoeren|schreiben|sprechen)\.html$|^(b1|b2)-lesen-(teil[123]|sprach[12])\.html$/;
 
         /* عائلة Lesen: lesen-hub.js كيتكلف بتبديل الأجزاء فنفس
            الصفحة، إذن ملي يكون التنقل جوا هاد العائلة الراوتر
            خاصو يبعد وما يعاودش يجيب الصفحة. */
         function lesenFamily(file) {
-            return /^b2-lesen(-(teil[123]|sprach[12]))?\.html$/.test(file || "");
+            const m = /^(b1|b2)-lesen(-(teil[123]|sprach[12]))?\.html$/.exec(file || "");
+            return m ? m[1] : "";
         }
 
         /* هادو كيخدمو ف كل الأقسام: كيتحملو مرة وحدة وكيبقاو.
@@ -727,7 +728,8 @@
             if (now === herefile) return;
 
             /* Teil 1 ↔ Teil 3 مثلا: hub ديال Lesen كيتكلف */
-            if (lesenFamily(now) && lesenFamily(herefile)) {
+            /* نفس المستوى برك (B1 ↔ B2 عندهم داتا مختلفة) */
+            if (lesenFamily(now) && lesenFamily(now) === lesenFamily(herefile)) {
                 herefile = now;
                 return;
             }
