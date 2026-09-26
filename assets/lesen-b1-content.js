@@ -496,6 +496,84 @@ window.LESEN_B1_CONTENT = {
                     ]
                 }
             ]
+        },
+        "sprach2": {
+            "title": "Alex und Cora",
+            "kind": "bank",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "Sehr geehrte Damen und Herren,\nnachdem ich Ihr Inserat gelesen habe, möchte ich [1] gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und [2] einladen. [3] wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen [4] Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und [5] Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, [6] genügend Parkplätze vorhanden sind.\nEs wäre [7] freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken [8] Bitte senden Sie mir einen Prospekt Ihres Hotels [9] genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai [10] ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\nMit freundlichen Grüßen\nBarbara Heuberger"
+                        }
+                    ],
+                    "words": [
+                        "an",
+                        "Bekannte",
+                        "bereits",
+                        "dafür",
+                        "dass",
+                        "kann",
+                        "mich",
+                        "mit",
+                        "sehr",
+                        "welche"
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "answer": "G",
+                            "why": "الفعل هو sich informieren، وبما أنه فعل منعكس، فضروري خاصو الضمير اللي كيرجع على مول الفعل. ومع الضمير ich، هاد 'sich' كتحول لـ mich"
+                        },
+                        {
+                            "num": 2,
+                            "answer": "B",
+                            "why": "كلمة Bekannte كتعني 'المعارف'. وف الثقافة الألمانية، فاش كنهضرو على عراضة أو حفلة، ديما كتمشي Freunde (الصحاب) لاصقة مع Bekannte (المعارف)."
+                        },
+                        {
+                            "num": 3,
+                            "answer": "D",
+                            "why": "\"باش ما نبقاوش نكررو كلمة 'العراضة' بزاف المرات، كنختصروها فـ dafür. المعنى ديالها هنا هو 'لهاد المناسبة' أو 'على قْبل هاد الغرض'"
+                        },
+                        {
+                            "num": 4,
+                            "answer": "A",
+                            "why": "هادي قاعدة تحفظها كفما هي: باش تطرح أسئلة على شي حد، كنقولو Fragen an jemanden stellen. حرف الجر an هنا هو اللي كيربط السؤال بالشخص"
+                        },
+                        {
+                            "num": 5,
+                            "answer": "J",
+                            "why": "أداة الاستفهام welche كنستعملوها فاش كنبغي نختارو بين بزاف د الحاجات. هنا كيسول: 'أما أطباق بالضبط اللي كتقترح عليا؟'"
+                        },
+                        {
+                            "num": 6,
+                            "answer": "E",
+                            "why": "الرابط dass كيعني 'بأن'. كنستعملوه باش نشرحو المضمون ديال شي حاجة 'مهمة' (wichtig)، اللي هي ف هاد الحالة وجود بلايص فين يوقفوا الطوموبيلات"
+                        },
+                        {
+                            "num": 7,
+                            "answer": "I",
+                            "why": "الكلمة sehr هي 'بزاف'. الدور ديالها هنا هو تزيد الجهد والحرارة للصفة freundlich، باش تولي 'ظريف بزااااف'."
+                        },
+                        {
+                            "num": 8,
+                            "answer": "F",
+                            "why": "هنا استعملنا الفعل können (مُصرف فـ kann) باش نعبروا على الإمكانية، يعني: 'باش نقدر نصيفط ليكم الدعوات ف الوقت'."
+                        },
+                        {
+                            "num": 9,
+                            "answer": "H",
+                            "why": "حرف الجر mit كيعني 'بـ' أو 'مع'. السياق هنا كيهضر على واحد الكتيب اللي جاي معاه نعت مفصل ديال الطريق باش ما يتوضر حد."
+                        },
+                        {
+                            "num": 10,
+                            "answer": "C",
+                            "why": "الكلمة bereits هي المرادف ديال 'ديجا' بالدارجة. كنستعملوها باش نبينو باللي الحالة (امتلاء الأماكن) راه واقعة بالفعل"
+                        }
+                    ]
+                }
+            ]
         }
     },
     "b1-rita": {
@@ -1064,6 +1142,84 @@ window.LESEN_B1_CONTENT = {
                             ],
                             "answer": 0,
                             "why": "التعبير الشهير 'wie es dir geht' كيبقى كيفما هو فاش كنسولو على الحال، والفعل gehen كيتصرف ف المضارع عادي."
+                        }
+                    ]
+                }
+            ]
+        },
+        "sprach2": {
+            "title": "Rita",
+            "kind": "bank",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "Ihre Anzeige in der Frankfurter Rundschau\nSehr geehrte Frau Herrmann ,\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\nZurzeit wohne ich noch in Krakau (Polen). Demnächst [1] ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) [2] Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, [3] möglichst zentral gelegen sein sollte. Ihre Wohnung [4] deshalb genau richtig für uns.\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder [5]? Und gibt es in der näheren Umgebung einen Spielplatz, [6] mein Sohn spielen könnte? Außerdem würde ich [7] wissen, ob die Haltung von Haustieren in [8] Wohnung erlaubt ist. [9] es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\nIch danke Ihnen [10] jetzt für Ihre Antwort und grüße Sie freundlich.\nKASIA KLOC"
+                        }
+                    ],
+                    "words": [
+                        "der",
+                        "die",
+                        "geeignet",
+                        "gerne",
+                        "muss",
+                        "nach",
+                        "schon",
+                        "wenn",
+                        "wo",
+                        "wäre"
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "answer": "E",
+                            "why": "بصح. فاش كنشوفو الفعل umziehen جا ف الآخر ديال الجملة (Infinitiv)، كنفهمو بلي خاصنا فعل ناقص (Modalverb) ف المركز الثاني. واختارينا muss حيت كاين التزام أو ضرورة مهنية هي اللي فرضات الرحيل."
+                        },
+                        {
+                            "num": 2,
+                            "answer": "F",
+                            "why": "قاعدة ذهبية. مع المدن (مثلاً Frankfurt) والبلدان اللي ما عندهاش أداة تعريف، ديما كنستعملو حرف الجر nach باش نعبروا على الاتجاه أو الذهاب لداك المكان"
+                        },
+                        {
+                            "num": 3,
+                            "answer": "B",
+                            "why": "تماماً. هادي جملة صلة، والضمير die هنا كيلعب دور 'الرابط'. كيرجع على كلمة Wohnung (مؤنث) وهو اللي كيعوضها كفاعل (Nominativ) ف الجملة الثانية باش ما نكرروش الكلمة"
+                        },
+                        {
+                            "num": 4,
+                            "answer": "J",
+                            "why": "هادشي لي كاين. استعملنا wäre (صيغة Konjunktiv II) حيت كنهضرو على شي حاجة مثالية أو كنتمنوها تكون، يعني 'غادي تكون' الدار مناسبة لينا بزاف إيلا صدقات"
+                        },
+                        {
+                            "num": 5,
+                            "answer": "C",
+                            "why": "تعبير محفوظ. الصفة geeignet (مناسب) ديما كتمشي مع حرف الجر für. وهنا السؤال هو واش الدار 'صالحة لـ' أو 'مناسبة لـ' الأطفال الصغار"
+                        },
+                        {
+                            "num": 6,
+                            "answer": "I",
+                            "why": "بصح. فاش كنبغيو نوصفو 'مكان' (بحال Spielplatz)، كنستعملو wo كأداة صلة بمعنى 'فين'. الجملة كتقول: 'الملعب فين يقدر ولدي يلعب'."
+                        },
+                        {
+                            "num": 7,
+                            "answer": "D",
+                            "why": "نكتة لغوية. الكلمة gerne فاش كنزيدوها مع شي فعل (بحال wissen)، كتحول المعنى لطلب مؤدب. 'Gerne wissen' كتعني 'بكل سرور بغيت نعرف' أو 'يشرفني نعرف"
+                        },
+                        {
+                            "num": 8,
+                            "answer": "A",
+                            "why": "قاعدة الموقع. حرف الجر in كيهضر هنا على السكن (استقرار ف مكان). وبما أننا كنجاوبو على سؤال 'فين؟' (Wo?)، فراه خاصنا Dativ. داكشي علاش die Wohnung تحولات لـ der Wohnung"
+                        },
+                        {
+                            "num": 9,
+                            "answer": "H",
+                            "why": "صحيح. الرابط wenn كيعطينا 'الشرط'. المعنى هو: 'إيلا' (wenn) كان مسموح، راه حنا باغيين نجيبو الكلب ديالنا معانا للدار الجديدة"
+                        },
+                        {
+                            "num": 10,
+                            "answer": "G",
+                            "why": "لمسة أخيرة. عبارة 'danke schon jetzt' هي وسيلة ذكية ومؤدبة ف المراسلات، كتعني 'شكراً مسبقاً' على الوقت والجواب اللي غدي تعطيني"
                         }
                     ]
                 }
@@ -1786,6 +1942,84 @@ window.LESEN_B1_CONTENT = {
                     ]
                 }
             ]
+        },
+        "sprach2": {
+            "title": "Caroline",
+            "kind": "bank",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "QUANTUM-SYSTEM\nDas Lotterie – Systemspiel\nOtto – Suhr- Allee 100. D- 10120 Berlin\nSehr geehrte Lottospieler,\nwer möchte nicht auch [1] bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht [2] auf das Glück, denn Sie [3] Ihre Chancen selbst stark verbessern, [4] Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! [5] allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich [6] automatisch Ihre Chancen! Und was Sie gewinnen können? [7] unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das [8] wir Ihnen!\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: [9] 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. [10] Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……"
+                        }
+                    ],
+                    "words": [
+                        "bei",
+                        "einmal",
+                        "ganz",
+                        "garantieren",
+                        "können",
+                        "machen",
+                        "nur",
+                        "statt",
+                        "wenn",
+                        "Über"
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "answer": "B",
+                            "why": "بصح. كلمة einmal هنا كتعطي المعنى ديال 'ولو لمرة واحدة ف العمر'. الجملة كتسول سؤال استنكاري: شكون فينا لي مكرهش يكون حاضر ويشوف بعينيه اللحظة لي كيخرجوا فيها الأرقام الرابحة ولو غير مرة وحدة"
+                        },
+                        {
+                            "num": 2,
+                            "answer": "G",
+                            "why": "تماماً. كنستعملو nur باش نعنيو 'فقط'. الفكرة هي أنك خاصك تتحرك ودير مجهود، وماتبقاش حاط يدك على خدك ومعول غير على الزهر 'بوحدو' (nur)."
+                        },
+                        {
+                            "num": 3,
+                            "answer": "E",
+                            "why": "هادشي لي كاين. الفعل können كيهضر على القدرة (Ability). المعنى هو أن الحل ف يدك، وأنت اللي عندك السلطة باش تقدر تزيد من حظوظك ف الربح"
+                        },
+                        {
+                            "num": 4,
+                            "answer": "I",
+                            "why": "صحيح. الرابط wenn هو 'إيلا' ديال الشرط. كتقول ليك: 'إيلا' تبعتي هاد النظام ديالنا، النتيجة غتكون هي أن الفرص ديالك غيطلعوا بزااف"
+                        },
+                        {
+                            "num": 5,
+                            "answer": "H",
+                            "why": "قاعدة مهمة: كلمة statt كتعني 'عوض' أو 'بلاصت ما'. والقاعدة ديالها ف الجملة ديما كتحتاج التركيبة ديال zu + Infinitiv ف اللخر باش تكون الجملة صحيحة"
+                        },
+                        {
+                            "num": 6,
+                            "answer": "C",
+                            "why": "بصح. هنا ganz جات كـ ظرف (Adverb) باش تزيد ف القوة ديال الصفة اللي تذكرات موراها. المعنى هو أن الزيادة ف الفرص كتكون حقيقية و'تماما' (ganz) كيفما كتوصفها الشركة"
+                        },
+                        {
+                            "num": 7,
+                            "answer": "A",
+                            "why": "تماماً. حرف الجر bei هنا كيعني 'مع' أو 'باستعمال'. يعني بفضل هاد السيستيم اللي كنقدمو ليك، كتولي عندك الإمكانية تلعب على مبالغ خيالية"
+                        },
+                        {
+                            "num": 8,
+                            "answer": "D",
+                            "why": "هادي واضحة. الفعل garantieren كيعني 'كنضمنوا'. الشركة هنا كتحاول تبني الثقة مع الزبون وكتقول ليه: هاد الهضرة راه مضمونة مية ف المية"
+                        },
+                        {
+                            "num": 9,
+                            "answer": "J",
+                            "why": "الجملة: Über 700 Quantum-Systemspielgruppen haben... السبب: \"أكثر من (Über) 700 مجموعة لعب...\""
+                        },
+                        {
+                            "num": 10,
+                            "answer": "F",
+                            "why": "رد بالك لهاد الفعل: الفعل هو mitmachen (يشارك). وبما أننا ف جملة أمر (Imperativ)، فالفعل كيتفرق: Machen كتجي ف الأول، وmit كتمشي كاع حتى للآخر"
+                        }
+                    ]
+                }
+            ]
         }
     },
     "b1-vera": {
@@ -2269,6 +2503,84 @@ window.LESEN_B1_CONTENT = {
                             ],
                             "answer": 1,
                             "why": "التعبير 'حتى لـ دابا' بالألمانية هو 'Bis jetzt'."
+                        }
+                    ]
+                }
+            ]
+        },
+        "sprach2": {
+            "title": "Vera",
+            "kind": "bank",
+            "variants": [
+                {
+                    "label": "",
+                    "texts": [
+                        {
+                            "body": "Chiffre 2063/9369\nSehr geehrter Unbekannter,\nmein Mann und ich haben Ihre Anzeige in den Mitteilungen des Deutschen Alpenvereins [1] Wir wohnen etwa 40 km außerhalb von Nürnberg und schreiben Ihnen, [2] wir Lust hätten, etwas in einer Gruppe zu machen.\nUnseren Sommerurlaub verbringen wir eigentlich regelmäßig in den Bergen. Und [3] es unser Terminkalender erlaubt, gehen wir auch noch am Wochenende wandern, [4] fahren wir in die Gegend vom Wilden Kaiser, wo wir inzwischen alle Wanderwege [5] Wir fahren zwar beide auch Ski, [6] der Winter den Bergen ist nicht so unbedingt unsere Sache.\nDagegen macht es [7] viel Spaß. Fahrrad zu fahren, hier in Leupoldstein haben wir tolle Radwege, die durch die Felder führen. Daher [8] wir uns auch auf gemeinsame Radtouren hier bei uns freuen.\nZum Schluss noch ein [9] Worte zu uns selbst. Wir sind 64 und 62. Jahre alt, lieben Musik und gehen ab und zu gern ins Theater.\nRufen Sie uns doch einfach [10] an: Tel.: 09243/7448.\nViele Grüße\nIlka und Heiner Grossmann"
+                        }
+                    ],
+                    "words": [
+                        "aber",
+                        "einmal",
+                        "entdeckt",
+                        "kennen",
+                        "oft",
+                        "paar",
+                        "uns",
+                        "weil",
+                        "wenn",
+                        "würden"
+                    ],
+                    "questions": [
+                        {
+                            "num": 1,
+                            "answer": "C",
+                            "why": "هنا استعملنا 'entdeckt' (لقينا/اكتشفنا) فصيغة Partizip II حيت الفعل المساعد هو 'haben'. المعنى هو 'لقينا الإعلان ديالك'."
+                        },
+                        {
+                            "num": 2,
+                            "answer": "H",
+                            "why": "'weil' كتعني 'حيت' أو 'لأن'. كتربط جملة كتشرح السبب علاش كتبو ليه، والفعل كيجي فالاخر (hätten)."
+                        },
+                        {
+                            "num": 3,
+                            "answer": "I",
+                            "why": "هنا 'wenn' كتعني 'فاش' أو 'إيلا'. كتربط الوقت لي كيسمح فيه البرنامج ديالهم باش يمشيو يتمشاو."
+                        },
+                        {
+                            "num": 4,
+                            "answer": "E",
+                            "why": "'oft' كتعني 'غالبا'. كتوصف شحال من مرة كيمشيو لهاديك المنطقة (Wilden Kaiser)."
+                        },
+                        {
+                            "num": 5,
+                            "answer": "D",
+                            "why": "فعل 'kennen' كيعني 'يعرف' أو 'يكون مألوف مع'. هنا كيهضرو على أنهم كيعرفو كاع طرق المشي لي تما."
+                        },
+                        {
+                            "num": 6,
+                            "answer": "A",
+                            "why": "أداة ربط كتعني 'ولكن'. كتستعمل باش تبين التناقض: كيعرفو يديرو السكي، 'ولكن' الشتا فالجبل ماشي هي هوايتهم."
+                        },
+                        {
+                            "num": 7,
+                            "answer": "G",
+                            "why": "هنا 'uns' هي الضمير فصيغة الداتيف (Dativ) لي كيجي مع عبارة 'macht Spaß'. المعنى هو 'كيعجبنا الحال'."
+                        },
+                        {
+                            "num": 8,
+                            "answer": "J",
+                            "why": "هادي صيغة Konjunktiv II كتعبر على التمني أو شي حاجة فالمستقبل بطريقة مؤدبة: 'غادي نفرحو' (würden uns freuen)."
+                        },
+                        {
+                            "num": 9,
+                            "answer": "F",
+                            "why": "عبارة 'ein paar Worte' كتعني 'بضعة كلمات' أو 'واحد شوية د الهضرة' على راسنا."
+                        },
+                        {
+                            "num": 10,
+                            "answer": "B",
+                            "why": "'einmal' هنا كتجي غير للتشجيع (Partikel)، بحال يلا كتقول ليه 'غير عيط لينا شي مرة وصافي'."
                         }
                     ]
                 }
