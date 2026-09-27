@@ -206,8 +206,7 @@ window.SCHREIBEN_B1_TOPICS = {
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "23": {
     "title": "Sonja - Musikfestival",
