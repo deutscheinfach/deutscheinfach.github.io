@@ -1,4 +1,4 @@
-/* ===== شبكة مواضيع Schreiben B2 =====
+/* ===== شبكة مواضيع Schreiben (B1 و B2) =====
    نفس شكل البطائق ديال Lesen. كل بطاقة كتحل الصفحة ديالها. */
 
 (function () {
@@ -11,9 +11,12 @@
 
     /* الملف كيعرّف const، ماشي window.X — إذن ماكيبانش
        ف window. كنقراوه بحال متغير عام عادي. */
-    const source = (typeof SCHREIBEN_B2_TOPICS !== "undefined")
-        ? SCHREIBEN_B2_TOPICS
-        : null;
+    /* المستوى كيجي من <main data-level="b1"> — بلاه = B2 */
+    const shell = grid.closest("[data-level]");
+    const LEVEL = shell ? shell.dataset.level : "b2";
+    const source = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
+        || ((LEVEL === "b2" && typeof SCHREIBEN_B2_TOPICS !== "undefined")
+            ? SCHREIBEN_B2_TOPICS : null);
 
     if (!grid || !source) return;
 
@@ -81,11 +84,12 @@
     }
 
     function card(topic) {
-        const node = document.createElement("a");
+        /* موضوع ما زال ماوصلش المحتوى ديالو: بطاقة بلا رابط */
+        const node = document.createElement(topic.soon ? "div" : "a");
         /* المشترك عندو گاع المواضيع — ماعندوش علاش يشوف القفل */
         const shut = topic.locked && !window.__deutschEinfachIsPremium;
-        node.className = "lesen-card" + (shut ? " locked" : "");
-        node.href = "b2-schreiben-" + topic.id + ".html";
+        node.className = "lesen-card" + (shut ? " locked" : "") + (topic.soon ? " is-soon" : "");
+        if (!topic.soon) node.href = LEVEL + "-schreiben-" + topic.id + ".html";
 
         const title = document.createElement("div");
         title.className = "lesen-card-title";
@@ -106,10 +110,11 @@
         foot.className = "lesen-card-foot";
         foot.appendChild(timeChip(topic.time || "30 min"));
         foot.appendChild(chip("lesen-chip-level", topic.level || "B2"));
+        if (topic.soon) foot.appendChild(chip("lesen-chip-soon", "قريباً"));
 
         const go = document.createElement("span");
         go.className = "lesen-card-go";
-        go.textContent = shut ? "🔒" : "›";
+        go.textContent = topic.soon ? "⏳" : (shut ? "🔒" : "›");
         go.setAttribute("aria-hidden", "true");
         foot.appendChild(go);
 
