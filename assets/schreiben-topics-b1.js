@@ -118,12 +118,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "10": {
-    "title": "Vera - Arbeitsweg Und Neue Stelle",
+    "title": "Vera - Arbeitsweg und neue Stelle",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "11": {
     "title": "Jennifer - Einladung Zur Hochzeit",
