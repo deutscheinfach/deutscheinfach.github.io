@@ -22,12 +22,21 @@ window.SCHREIBEN_B1_TOPICS = {
     ]
   },
   "02": {
-    "title": "Eva - Traumberuf Und Neuigkeiten",
+    "title": "Eva - Traumberuf und Neuigkeiten",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
     "locked": false,
-    "soon": true
+    "ad": "Liebe(r).......\n\nwie geht es denn so mit dem Deutsch lernen? Kommst du gut voran, und was machst du im Moment so? Stell dir vor, ich habe die neue Stelle bei der Zeitschrift VIA bekommen! ich arbeite jetzt als Journalistin, und das war ja immer mein Traumberuf!\n\nVIA wird vor allem von jüngeren Leuten gelesen. Deshalb schreiben wir viel über Berufe und Ausbildungen und auch über Freizeit und Sport. Für die nächsten Hefte von VIA planen wir jetzt eine neue Serie über Berufs wünsche. Was ist eigentlich dein Traumberuf? Wenn du möchtest, schicke ich dir gerne einmal ein Gratisheft von VIA, damit du siehst, was ich so mache.\n\nIch freue mich schon auf deine Antwort.\n\nHerzliche Grüße\n\nEva",
+    "situation": "",
+    "intro": "Schreiben Sie Ihrer Bekannten nun einen Antwortbrief, der die folgenden Punkte enthält:",
+    "words": "150–180",
+    "points": [
+      "Fortschritte beim Deutsch Lernen",
+      "Auf Evas neue Stelle reagieren",
+      "Was es Neues bei Ihnen gibt",
+      "Ihr Traumberuf"
+    ]
   },
   "03": {
     "title": "Sophie - Würzburg Und Freizeit",
