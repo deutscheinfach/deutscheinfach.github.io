@@ -201,13 +201,6 @@ window.SCHREIBEN_B1_TOPICS = {
     "time": "30 min",
     "locked": true
   },
-  "22": {
-    "title": "Annika - Gemeinsamer Urlaub (Teil 2)",
-    "type": "Brief",
-    "level": "B1",
-    "time": "30 min",
-    "locked": true
-  },
   "23": {
     "title": "Sonja - Musikfestival",
     "type": "Brief",
