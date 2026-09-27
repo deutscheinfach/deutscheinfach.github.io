@@ -195,12 +195,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "21": {
-    "title": "Mara - Reise Und Neuer Freund",
+    "title": "Mara - Reise und neuer Freund",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "22": {
     "title": "Annika - Gemeinsamer Urlaub (Teil 2)",
