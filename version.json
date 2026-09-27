@@ -1,5 +1,5 @@
 {
-  "build": "519bf8de143f",
+  "build": "5435d1c0e65a",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -29,8 +29,8 @@
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/section.css": "8a4b50cf",
     "assets/session-guard.js": "d6dfc66e",
-    "assets/site-header.css": "ca1258d9",
-    "assets/site-header.js": "ed0c8ff3",
+    "assets/site-header.css": "93461d95",
+    "assets/site-header.js": "de584271",
     "assets/sprechen-b2-content.js": "474d9d04",
     "assets/sprechen-b2-teil1.js": "c045e55d",
     "assets/sprechen-b2-teil23.js": "e30dd1f6",
