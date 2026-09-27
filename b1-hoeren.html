@@ -5,70 +5,70 @@
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deutsch Einfach – B1 Hören</title>
+<meta name="description" content="TELC B1 Hörverstehen – Teil 1, 2 und 3.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
 <link rel="stylesheet" href="assets/theme.css?v=0d2713fb">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
 <link rel="stylesheet" href="assets/site-header.css?v=ca1258d9">
-<style>
-.wrap {
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 22px; min-height: 100vh;
-    padding: var(--gutter); text-align: center;
-}
-.card {
-    /* بلا box-sizing، الـ padding كيتزاد على 100% والبطاقة
-       كتخرج على عرض الشاشة فالتيليفون. */
-    box-sizing: border-box;
-    width: min(100%, 540px);
-    max-width: 100%;
-    padding: clamp(24px, 5vw, 48px);
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 22px;
-    box-shadow: 0 24px 60px rgba(0,0,0,.45);
-}
-.icon { font-size: var(--step-4); line-height: 1; }
-h1 { margin: 14px 0 10px; font-size: var(--step-3); font-weight: 900; }
-p { margin: 0 0 26px; color: var(--muted); font-size: var(--step-1); }
-.actions { display: flex; flex-wrap: wrap; gap: 11px; justify-content: center; }
-a.btn {
-    padding: 13px 22px; border-radius: 12px;
-    font-weight: 800; text-decoration: none;
-    border: 1px solid var(--line); background: var(--surface-2); color: var(--muted);
-    transition: .25s;
-}
-a.btn:hover { border-color: var(--line-gold); color: var(--brand); transform: translateY(-2px); }
-a.btn.gold {
-    background: linear-gradient(135deg, var(--brand-light), var(--gold));
-    border-color: transparent; color: #17130a;
-}
-</style>
+<link rel="stylesheet" href="assets/section.css?v=8a4b50cf">
+<style>.part-card.is-soon{opacity:.6;cursor:default}</style>
 </head>
 <body>
+
 <div id="site-header" data-active="hoeren"></div>
 <script src="assets/site-header.js?v=ed0c8ff3"></script>
 
-<div class="wrap">
-    <div class="card">
-        <div class="icon">🎧</div>
-        <h1 class="gold-text">B1 Hören</h1>
-        <p>
-            Das Hörverstehen für B1 wird gerade vorbereitet.<br>
-            <span style="direction:rtl;display:inline-block;margin-top:8px">
-                هاد القسم كنوجدوه دابا. تسنانا شوية 🙏
-            </span>
-        </p>
-        <div class="actions">
-            <a class="btn gold" href="b1-lesen.html">← Lesen B1</a>
-            <a class="btn" href="b2-hoeren.html">B2 Hören</a>
-            <a class="btn" href="index.html">Startseite</a>
+<main class="lesen-shell">
+
+    <div class="lesen-head-row">
+        <section class="lesen-hero">
+            <span class="lesen-badge">B1 · Hörverstehen</span>
+            <h1>Hörverstehen</h1>
+            <p class="lead">تلاتة ديال الأجزاء. اختار الجزء اللي بغيتي تتمرن عليه.</p>
+        </section>
+
+        <div class="lesen-stats">
+            <div class="lesen-stat"><b>3</b><span>أجزاء</span></div>
+            <div class="lesen-stat"><b>B1</b><span>المستوى</span></div>
         </div>
     </div>
-</div>
+
+    <div class="part-grid">
+        <a class="part-card" href="b1-hoeren-teil1.html">
+            <div class="part-card-top">
+                <span class="part-icon">💬</span>
+                <span class="part-card-badges"><span class="lesen-chip lesen-chip-level">B1</span><span class="lesen-chip chip-pro">PRO</span></span>
+            </div>
+            <h3>Teil 1</h3>
+            <p>Richtig oder Falsch — خمس جمل قصار. أول 5 نماذج مجانية، والباقي PRO.</p>
+            <span class="part-cta">📖 ابدأ التدريب</span>
+        </a>
+        <div class="part-card is-soon" aria-disabled="true">
+            <div class="part-card-top">
+                <span class="part-icon">📻</span>
+                <span class="part-card-badges"><span class="lesen-chip lesen-chip-level">B1</span></span>
+            </div>
+            <h3>Teil 2</h3>
+            <p>قريباً — كنوجدو هاد الجزء دابا.</p>
+            <span class="part-cta">⏳ قريباً</span>
+        </div>
+        <div class="part-card is-soon" aria-disabled="true">
+            <div class="part-card-top">
+                <span class="part-icon">👥</span>
+                <span class="part-card-badges"><span class="lesen-chip lesen-chip-level">B1</span></span>
+            </div>
+            <h3>Teil 3</h3>
+            <p>قريباً — كنوجدو هاد الجزء دابا.</p>
+            <span class="part-cta">⏳ قريباً</span>
+        </div>
+    </div>
+
+</main>
+
+
 <script src="assets/session-guard.js?v=d6dfc66e"></script>
 </body>
 </html>
