@@ -132,12 +132,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "12": {
-    "title": "Andreas - Neue Wohnung Und Computer",
+    "title": "Andreas - Neue Wohnung und Computer",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "13": {
     "title": "Thomas - Überraschungsausflug",
