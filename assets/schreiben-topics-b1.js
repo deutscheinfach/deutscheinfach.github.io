@@ -160,12 +160,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "16": {
-    "title": "Viktor - Urlaub In Malta",
+    "title": "Viktor - Urlaub in Malta",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "17": {
     "title": "Anna - Katze Und Blumen",
