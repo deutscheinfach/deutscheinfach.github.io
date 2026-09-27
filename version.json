@@ -1,5 +1,5 @@
 {
-  "build": "a322db42cf01",
+  "build": "b4092fafb47c",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -25,7 +25,7 @@
     "assets/schreiben-engine.js": "b0d7c208",
     "assets/schreiben-hub.js": "e578b50f",
     "assets/schreiben-style.css": "a4daaaf7",
-    "assets/schreiben-topics-b1.js": "9ba5af4c",
+    "assets/schreiben-topics-b1.js": "330ab13f",
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/section.css": "8a4b50cf",
     "assets/session-guard.js": "d6dfc66e",
