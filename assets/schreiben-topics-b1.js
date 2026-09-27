@@ -230,12 +230,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "26": {
-    "title": "Paul - Ausflug In Die Berge",
+    "title": "Paul - Ausflug in die Berge",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "27": {
     "title": "Jakob - Nachbarn Und Wohnung",
