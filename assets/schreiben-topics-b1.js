@@ -111,12 +111,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "09": {
-    "title": "Caroline - Gastschülerin Aus Marokko",
+    "title": "Caroline - Gastschülerin aus Marokko",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "10": {
     "title": "Vera - Arbeitsweg Und Neue Stelle",
