@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch Einfach – B1 Schreiben</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800;900&display=swap"></noscript>
+<link rel="stylesheet" href="assets/theme.css?v=0d2713fb">
+<script src="assets/stars.js?v=df3dede2" defer></script>
+<script src="assets/progress.js?v=1f4ecf40"></script>
+<link rel="stylesheet" href="assets/schreiben-style.css?v=a4daaaf7">
+</head>
+<body>
+
+<header class="task-header">
+    <div class="left">
+        <button class="back-btn" id="back-btn" aria-label="Zurück">←</button>
+        <div class="task-title-block">
+            <h1 id="task-title">—</h1>
+            <div class="sub" id="task-sub">—</div>
+        </div>
+    </div>
+    <div class="right">
+        <span class="timer-pill" id="timer-pill">⏱ 30:00</span>
+        <button class="icon-btn" id="fullscreen-toggle" aria-label="Vollbild">⛶</button>
+        <button class="correct-btn" id="correct-btn">✅ تصحيح</button>
+    </div>
+</header>
+
+<div class="task-body">
+    <section class="panel-left">
+
+        <div class="block">
+            <div class="block-head">
+                <h2>Situation</h2>
+                <button class="translate-btn" data-translate="situation">🌐 ترجمة النص</button>
+            </div>
+            <div class="ad-text" id="situation-ad"></div>
+            <p class="ad-text" id="situation-text" style="margin-top:14px"></p>
+            <div class="translation" id="translation-situation" hidden></div>
+        </div>
+
+        <div class="block">
+            <div class="block-head">
+                <h2>Aufgabe</h2>
+                <button class="translate-btn" data-translate="aufgabe">🌐 ترجمة المهام</button>
+            </div>
+            <p class="aufgabe-intro">Schreiben Sie eine Antwort. Behandeln Sie folgende Punkte:</p>
+            <div id="aufgabe-points"></div>
+            <div class="translation" id="translation-aufgabe" hidden></div>
+        </div>
+
+    </section>
+
+    <section class="panel-right">
+        <div class="editor-toolbar">
+            <div class="umlaut-btns">
+                <button data-umlaut="ä">ä</button>
+                <button data-umlaut="ö">ö</button>
+                <button data-umlaut="ü">ü</button>
+                <button data-umlaut="ß">ß</button>
+                <button data-umlaut="Ä">Ä</button>
+                <button data-umlaut="Ö">Ö</button>
+                <button data-umlaut="Ü">Ü</button>
+            </div>
+            <span class="word-count" id="word-count">0 كلمة</span>
+        </div>
+        <div class="editor-wrap">
+            <textarea id="answer-text" spellcheck="false"></textarea>
+            <div class="editor-placeholder" id="editor-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                <span>ابدأ في كتابة إجابتك هنا...</span>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="result-overlay hidden" id="result-overlay">
+    <div class="result-card">
+        <button class="result-close" id="result-close" type="button">✕ إغلاق</button>
+        <div id="result-body"></div>
+    </div>
+</div>
+
+<script src="assets/schreiben-auth.js?v=c131e3c8"></script>
+<script src="assets/schreiben-topics-b1.js?v=6c6d8339"></script>
+<script>const TOPIC_ID = "35"; const TOPIC_LEVEL = "b1";</script>
+<script src="assets/schreiben-engine.js?v=9b8c0e37"></script>
+<script src="assets/session-guard.js?v=d6dfc66e"></script>
+</body>
+</html>
