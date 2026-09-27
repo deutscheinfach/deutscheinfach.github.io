@@ -146,12 +146,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "14": {
-    "title": "Tamara - Treffen Und Neuer Job",
+    "title": "Tamara - Treffen und neuer Job",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "15": {
     "title": "Jan - Urlaub In Rom",
