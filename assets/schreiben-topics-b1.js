@@ -125,12 +125,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "11": {
-    "title": "Jennifer - Einladung Zur Hochzeit",
+    "title": "Jennifer - Einladung zur Hochzeit",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "12": {
     "title": "Andreas - Neue Wohnung Und Computer",
