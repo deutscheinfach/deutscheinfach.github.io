@@ -181,12 +181,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "19": {
-    "title": "Claudia - Zoobesuch Und Geburtstag",
+    "title": "Claudia - Zoobesuch und Geburtstag",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "20": {
     "title": "Karla - Umzug Und Neue Arbeit",
