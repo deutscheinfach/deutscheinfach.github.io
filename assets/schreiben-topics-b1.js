@@ -153,12 +153,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "15": {
-    "title": "Jan - Urlaub In Rom",
+    "title": "Jan - Urlaub in Rom",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "16": {
     "title": "Viktor - Urlaub In Malta",
