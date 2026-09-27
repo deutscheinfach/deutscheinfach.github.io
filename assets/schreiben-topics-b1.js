@@ -73,12 +73,21 @@ window.SCHREIBEN_B1_TOPICS = {
     ]
   },
   "05": {
-    "title": "Nicole - Probleme Mit Dem Bruder",
+    "title": "Nicole - Probleme mit dem Bruder",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
     "locked": false,
-    "soon": true
+    "ad": "Liebe(r)........\n\nentschuldige, dass ich dir so lange nicht mehr geschrieben habe. Aber weißt du mein älterer Bruder, der schon lange im Ausland lebt, ist jetzt für zwei Monate bei uns. Wir unternehmen einiges zusammen, Z.B. gehen wir nachmittags ins Schwimmbad oder abends ins Kino.\n\nWir verstehen uns eigentlich ganz gut, aber dennoch habe ich ein Problem mit ihm: Wenn es im Fernsehen Sportsendungen gibt, dann bekomme ich ihn nicht mehr weg vom Fernseher! Er sitzt dann stundenlang nur da und sieht fern, ganz egal wie schön das Wetter draußen ist! Was soll ich bloß tun? Überhaupt nichts sagen oder soll ich mit ihm deswegen streiten? Er fährt bald wieder weg und ich möchte doch mit ihm zusammen sein. Was würdest du machen?\n\nHast du vielleicht ein paar Tipps oder Ratschläge für mich?\n\nHerzliche Grüße\nNicole",
+    "situation": "",
+    "intro": "Schreiben Sie Ihrer Bekannten einen Antwortbrief, der die folgenden Punkte enthält:",
+    "words": "150–180",
+    "points": [
+      "Eigene Erfahrungen mit Geschwistern oder Freunden",
+      "Was Sie über den Bruder denken",
+      "Tipps für Nicole",
+      "Was Sie selbst gern gemeinsam mit anderen machen"
+    ]
   },
   "06": {
     "title": "Andreas - Neuer Kollege Und Büroalltag",
