@@ -117,6 +117,16 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         pointsWrap.appendChild(row);
     });
 
+    // ---------- aufgabe intro (اختياري: B1 عندو جملة خاصة) ----------
+    if (topic.intro) {
+        const introEl = document.querySelector(".aufgabe-intro");
+        if (introEl) introEl.textContent = topic.intro;
+    }
+    if (!topic.situation) {
+        const sit = document.getElementById("situation-text");
+        if (sit) sit.hidden = true;
+    }
+
     // ---------- expected length ----------
     /* TELC كيحدد عدد الكلمات، والتصحيح كيحسبو. */
     if (topic.words) {

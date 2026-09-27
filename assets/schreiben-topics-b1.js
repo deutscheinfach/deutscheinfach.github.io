@@ -5,12 +5,21 @@
    locked: true = Premium (أول 5 مجانيين بحال B2). */
 window.SCHREIBEN_B1_TOPICS = {
   "01": {
-    "title": "Urlaub Im Schwarzwald - Antwort An Petra",
+    "title": "Urlaub im Schwarzwald - Antwort an Petra",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
     "locked": false,
-    "soon": true
+    "ad": "Liebe(r).......\n\nIch habe eine tolle Überraschung. stelle dir vor, was mir mein Onkel angeboten hat. Er rief mich am Samstag an. Er hat ein großes Ferienhaus im Schwarzwald. Das Haus kann ich für die Ferien kostenlos haben. Ich kann auch Freunde mitbringen! Wäre das nichts für uns? Wir könnten uns alle dort treffen. Du, deine Eltern und Freunde, und ich mit meiner Familie und meinen Freunden. Ich würde mich wahnsinnig freuen, wenn das klappen würde. Bitte schreibe mir so schnell du kannst, damit wir alles planen können. Urlaub im Schwarzwald - das wird traumhaft schön!\n\nHerzliche Grüße\nPetra",
+    "situation": "",
+    "intro": "Antworten Sie auf den Brief. Schreiben Sie etwas zu den folgenden Punkten:",
+    "words": "150–180",
+    "points": [
+      "Warum Sie gern nach Deutschland kommen möchten?",
+      "Wie Sie anreisen wollen?",
+      "Was Sie gemeinsam machen könnten?",
+      "Wen Sie mitbringen möchten?"
+    ]
   },
   "02": {
     "title": "Eva - Traumberuf Und Neuigkeiten",
