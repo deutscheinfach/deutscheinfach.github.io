@@ -1,6 +1,8 @@
-/* Deutsch Einfach — B2 Schreiben Engine
-   Requires: schreiben-topics-b2.js (SCHREIBEN_B2_TOPICS) loaded first,
-   and a global TOPIC_ID string ("01".."41") set on the page. */
+/* Deutsch Einfach — Schreiben Engine (B1 و B2)
+   Requires: schreiben-topics-b2.js (SCHREIBEN_B2_TOPICS) ولا
+   schreiben-topics-b1.js (SCHREIBEN_B1_TOPICS) loaded first,
+   a global TOPIC_ID string ("01".."41") set on the page,
+   و TOPIC_LEVEL = "b1" فالصفحات ديال B1 (بلاه = b2). */
 
 /* ==========================================================
    ⚙️ CONFIG — set this to your deployed Cloudflare Worker URL
@@ -61,16 +63,30 @@ const OFFER_FEATURES = [
 
 const WHATSAPP_LINK = "https://wa.me/212653618205";
 
+/* المستوى ديال الصفحة */
+const LEVEL = (typeof TOPIC_LEVEL !== "undefined" && TOPIC_LEVEL) ? TOPIC_LEVEL : "b2";
+const HUB = LEVEL + "-schreiben.html";
+const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
+    || (LEVEL === "b2" && typeof SCHREIBEN_B2_TOPICS !== "undefined" ? SCHREIBEN_B2_TOPICS : null);
+
 (async function () {
-    const meta = SCHREIBEN_B2_TOPICS[TOPIC_ID];
+    const meta = (TOPICS || {})[TOPIC_ID];
     if (!meta) {
-        showNotice("❓", "Thema nicht gefunden.", "هاد الموضوع ماكاينش.", '<a class="premium-btn ghost" href="b2-schreiben.html">← رجع للمواضيع</a>', false);
+        showNotice("❓", "Thema nicht gefunden.", "هاد الموضوع ماكاينش.", '<a class="premium-btn ghost" href="' + HUB + '">← رجع للمواضيع</a>', false);
         return;
     }
 
     /* المواضيع Premium ما كيجيوش فالملف العام (الـ repo عام):
        كنجيبو النص من الـ Worker من بعد ما يتحقق من الاشتراك. */
     let topic = meta;
+
+    /* الموضوع ما زال ماوصلش المحتوى ديالو */
+    if (meta.soon) {
+        showNotice("⏳", "Dieses Thema wird gerade vorbereitet.",
+            "المحتوى ديال هاد الموضوع كنوجدوه دابا. تسنانا شوية 🙏",
+            '<a class="premium-btn ghost" href="' + HUB + '">← رجع للمواضيع</a>', false);
+        return;
+    }
 
     if (!Array.isArray(meta.points) || meta.points.length === 0) {
         try {
@@ -136,7 +152,7 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
 
     // ---------- back ----------
     document.getElementById("back-btn").addEventListener("click", function () {
-        window.location.href = "b2-schreiben.html";
+        window.location.href = HUB;
     });
 
     // ---------- textarea + word count + placeholder ----------
@@ -372,7 +388,7 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
         /* Fortschritt و Modelltest كيسمعو لهاد الحدث */
         try {
             window.dispatchEvent(new CustomEvent("schreiben-points", {
-                detail: { id: "schreiben-" + TOPIC_ID, title: "Thema " + TOPIC_ID + " – " + (topic.title || ""), score: score }
+                detail: { id: (LEVEL === "b2" ? "schreiben-" : "schreiben-" + LEVEL + "-") + TOPIC_ID, title: "Thema " + TOPIC_ID + " – " + (topic.title || ""), score: score }
             }));
         } catch (e) { /* */ }
 
@@ -440,7 +456,12 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
         const res = await fetch(CORRECTION_ENDPOINT, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ topicId: id, idToken: idToken || "" }),
+            /* B2: topicId → KV "topic-NN" / "premium-topics".
+               B1: الطريق ديال Lesen → KV "lesen-schreiben-b1-NN"
+               (بلا ما نبدلو الـ Worker). */
+            body: JSON.stringify(LEVEL === "b2"
+                ? { topicId: id, idToken: idToken || "" }
+                : { lesenId: "schreiben-" + LEVEL + "-" + id, idToken: idToken || "" }),
         });
 
         const raw = await res.text();
@@ -507,7 +528,7 @@ const WHATSAPP_LINK = "https://wa.me/212653618205";
     }
 
     function showPremiumNotice(code) {
-        const back = '<a class="premium-btn ghost" href="b2-schreiben.html">← رجع للمواضيع</a>';
+        const back = '<a class="premium-btn ghost" href="' + HUB + '">← رجع للمواضيع</a>';
 
         if (code === "not_signed_in") {
             showNotice(
