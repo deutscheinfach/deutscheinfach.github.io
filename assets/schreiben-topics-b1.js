@@ -237,12 +237,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "27": {
-    "title": "Jakob - Nachbarn Und Wohnung",
+    "title": "Jakob - Nachbarn und Wohnung",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "28": {
     "title": "Emilia",
