@@ -39,12 +39,21 @@ window.SCHREIBEN_B1_TOPICS = {
     ]
   },
   "03": {
-    "title": "Sophie - Würzburg Und Freizeit",
+    "title": "Sophie - Würzburg und Freizeit",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
     "locked": false,
-    "soon": true
+    "ad": "Liebe(r)……..  wir haben lange nichts mehr voreinander gehört. Ich hoffe, es geht dir gut. Gibt es bei dir Neuigkeiten? Ich bin nun schon seit zwei Monaten in Würzburg, und mein neuer Job gefällt mir sehr gut. In der Firma fühle ich mich wohl, mit meinen Kollegen verstehe ich mich prima und die Arbeit macht mir großen Spaß.\n\nAllerdings habe ich ein Problem: Außer meinen Kollegen kenne ich hier in der Stadt noch niemanden. In meiner Freizeit bin ich oft allein und weiß nicht, was ich machen soll. Wie könnte ich neue Leute kennenlernen? Hast du vielleicht einen Tipp für mich? Würzburg ist wirklich eine schöne Stadt mit vielen Sehenswürdigkeiten. Hast du Lust, mich mal an einem Wochenende zu besuchen? Ich würde mich sehr freuen.\n\nViele Grüße\nSophie",
+    "situation": "",
+    "intro": "Schreiben Sie etwas zu allen vier Punkten:",
+    "words": "150–180",
+    "points": [
+      "Was es Neues bei Ihnen gibt",
+      "Was Sie selbst gerne in Ihrer Freizeit machen",
+      "Tipps für Sophie",
+      "Reaktion auf den Vorschlag"
+    ]
   },
   "04": {
     "title": "Nadja - Garten Am Stadtrand",
