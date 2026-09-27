@@ -174,12 +174,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "18": {
-    "title": "Nora - Neue Wohnung Und Leute Kennenlernen",
+    "title": "Nora - Neue Wohnung und Leute kennenlernen",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "19": {
     "title": "Claudia - Zoobesuch Und Geburtstag",
