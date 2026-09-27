@@ -188,12 +188,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "20": {
-    "title": "Karla - Umzug Und Neue Arbeit",
+    "title": "Karla - Umzug und neue Arbeit",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "21": {
     "title": "Mara - Reise Und Neuer Freund",
