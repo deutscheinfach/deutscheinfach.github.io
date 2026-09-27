@@ -56,12 +56,21 @@ window.SCHREIBEN_B1_TOPICS = {
     ]
   },
   "04": {
-    "title": "Nadja - Garten Am Stadtrand",
+    "title": "Nadja - Garten am Stadtrand",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
     "locked": false,
-    "soon": true
+    "ad": "Liebe(r).......\n\nich hoffe, dir geht’s gut. stell dir vor, bei mir gibt es Neuigkeiten Du weißt doch, dass wir schon lange von einem Garten geträumt haben. Jetzt haben wir endlich einen am Stadtrand gefunden. Da er sehr groß ist. Wollte ich dich fragen, ob du nicht Lust hast den Garten mit uns zu teilen.\n\nDie Miete ist gar nicht so hoch . Du könntest dort Salat und Gemüse anpflanzen, natürlich auch Blumen ganz wie du willst. Es gibt auch Obstbäume und eine große Wiese, auf der man sich einfach hinlegen, und wir könnten im Garten auch grillen. Was denkst du? Wäre das nicht toll.\nAntwort mir bald.\n\nAlles Liebe\n\nDeine Nadja",
+    "situation": "",
+    "intro": "Antworten Sie auf den Brief. Schreiben Sie etwas zu den folgenden vier Punkten:",
+    "words": "150–180",
+    "points": [
+      "Reaktion auf den Vorschlag",
+      "Fragen zum Garten",
+      "Weg zum Garten",
+      "Was es bei Ihnen Neues gibt"
+    ]
   },
   "05": {
     "title": "Nicole - Probleme Mit Dem Bruder",
