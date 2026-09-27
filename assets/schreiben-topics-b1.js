@@ -90,12 +90,11 @@ window.SCHREIBEN_B1_TOPICS = {
     ]
   },
   "06": {
-    "title": "Andreas - Neuer Kollege Und Büroalltag",
+    "title": "Andreas - Neuer Kollege und Büroalltag",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "07": {
     "title": "Annika - Gemeinsamer Sommerurlaub",
