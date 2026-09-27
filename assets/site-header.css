@@ -289,6 +289,9 @@ body { padding-top: var(--site-header-h); }
     margin: 12px auto 0;
     padding: 0 var(--gutter);
 }
+/* جوا الصفحة: تحت العنوان وفوق التبويبات */
+.lesen-head-row + .site-level-wrap { margin: 20px auto 6px; padding: 0; }
+.site-level-wrap[hidden] { display: none; }
 .site-level {
     display: inline-flex;
     gap: 4px;

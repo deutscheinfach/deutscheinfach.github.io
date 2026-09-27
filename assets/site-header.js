@@ -390,8 +390,16 @@
        مرة فالعام). إذن كيبقى ف التدفق العادي تحت البار. */
     let levelWrap = null;
 
-    /* Training ماعندوش B1/B2 */
-    if (active && active !== "training" && active !== "chat") {
+    /* Training و Chat ماعندهومش B1/B2.
+
+       ⚠ المبدّل كيتبنى ديما، حتى ف صفحة ماشي قسم (index، Training):
+       البار كتبقى حية ملي كنتنقلو بلا تحميل، وإلا ما تبناش ف الأول
+       عمرو ما كيبان — الدخول من الصفحة الرئيسية لـ Lesen كان كيخلي
+       الصفحة بلا Telc B1 / Telc B2. */
+    function isSection(key) {
+        return !!key && key !== "training" && key !== "chat";
+    }
+    {
         const file = (location.pathname.split("/").pop() || "").toLowerCase();
         const level = file.indexOf("b1-") === 0 ? "b1" : "b2";
 
@@ -403,7 +411,7 @@
 
         [["b1", "Telc B1"], ["b2", "Telc B2"]].forEach(function (pair) {
             const link = document.createElement("a");
-            link.href = pair[0] + "-" + active + ".html";
+            link.href = pair[0] + "-" + (isSection(active) ? active : "lesen") + ".html";
             link.textContent = pair[1];
             link.dataset.level = pair[0];
             if (pair[0] === level) {
@@ -426,6 +434,19 @@
         levelWrap = wrap;
     }
 
+    /* فين كيتحط المبدّل: تحت العنوان ديال القسم (بحال Zertify)،
+       وإلا ماكانش عنوان، تحت البار. ملي الصفحة ماشي قسم كيتخبى. */
+    function placeLevel() {
+        if (!levelWrap) return;
+        levelWrap.hidden = !isSection(active);
+        const anchor = document.querySelector(".lesen-head-row");
+        if (anchor && !levelWrap.hidden) {
+            if (anchor.nextElementSibling !== levelWrap) anchor.insertAdjacentElement("afterend", levelWrap);
+        } else if (header.nextElementSibling !== levelWrap) {
+            header.insertAdjacentElement("afterend", levelWrap);
+        }
+    }
+
     /* ---- الهيدر كيتعلق ف <body> مباشرة ----
 
        قبل، كان كيتحط ف بلاصة #site-header. فـ index.html داك
@@ -440,7 +461,12 @@
        حقيقة وما كتهزّ حتى مع الصفحة. */
     mount.remove();
     document.body.insertBefore(header, document.body.firstChild);
-    if (levelWrap) header.insertAdjacentElement("afterend", levelWrap);
+    placeLevel();
+    /* السكريبت ديال البار كيتنفذ قبل ما يتقرا <main>: ملي تكمل
+       الصفحة كنرجعو نحطوه تحت العنوان. */
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", placeLevel);
+    }
 
 
     /* ===================================================================
@@ -583,12 +609,13 @@
             if (levelWrap) {
                 Array.prototype.forEach.call(levelWrap.querySelectorAll("a"), function (link) {
                     const mine = link.dataset.level === lvl;
-                    link.href = link.dataset.level + "-" + key + ".html";
+                    if (isSection(key)) link.href = link.dataset.level + "-" + key + ".html";
                     link.classList.toggle("active", mine);
                     if (mine) link.setAttribute("aria-current", "page");
                     else link.removeAttribute("aria-current");
                 });
             }
+            placeLevel();
         }
 
         let busy = false;
