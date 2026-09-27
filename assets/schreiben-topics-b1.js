@@ -269,8 +269,7 @@ window.SCHREIBEN_B1_TOPICS = {
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "32": {
     "title": "Cora Und Alex",
