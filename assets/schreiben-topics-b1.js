@@ -216,12 +216,11 @@ window.SCHREIBEN_B1_TOPICS = {
     "locked": true
   },
   "24": {
-    "title": "Rita - Hochzeit Und Neuigkeiten",
+    "title": "Rita - Hochzeit und Neuigkeiten",
     "type": "Brief",
     "level": "B1",
     "time": "30 min",
-    "locked": true,
-    "soon": true
+    "locked": true
   },
   "25": {
     "title": "Anne - Laras Geburtstag",
