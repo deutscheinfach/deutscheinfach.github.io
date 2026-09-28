@@ -315,7 +315,8 @@
         /* المحاكيات ديال Teil 1 / 2 / 3 (sprechen-teil1.js، teil2، teil3) */
         const sim = { erfahrung: window.__sprechenTeil1Render,
                       text: window.__sprechenTeil2Render,
-                      plan: window.__sprechenTeil3Render }[task.kind];
+                      plan: window.__sprechenTeil3Render,
+                      meinungen: window.__sprechenB1Teil2Render }[task.kind];
         if (typeof sim === "function") {
             sim(into, task, topicId);
             return;
