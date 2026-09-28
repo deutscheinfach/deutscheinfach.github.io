@@ -98,7 +98,7 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
     }
 
     // ---------- render header ----------
-    document.title = "Deutsch Einfach – " + topic.title;
+    document.title = "Telc " + (topic.level || LEVEL.toUpperCase()) + " Schreiben: " + topic.title + " | Deutsch Einfach";
     document.getElementById("task-title").textContent = topic.title;
     document.getElementById("task-sub").textContent =
         topic.level + " · " + topic.type;
