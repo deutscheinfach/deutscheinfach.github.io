@@ -54,17 +54,17 @@
     /* الرأس ديال كل جزء: العنوان والسطر الصغير تحتيه. */
     const HEADS = {
         "":        { h1: "Leseverstehen",     lead: "امتحانات كاملة — كل امتحان فيه الأجزاء الخمسة ديال Lesen.",
-                     title: "Deutsch Einfach – B2 Lesen Leseverstehen" },
+                     title: "Telc B2 Lesen – Übungen mit Lösungen | Deutsch Einfach" },
         "teil1":   { h1: "Teil 1",            lead: "Überschriften zuordnen",
-                     title: "Deutsch Einfach – B2 Lesen Teil 1" },
+                     title: "Telc B2 Lesen Teil 1 – Übungen online | Deutsch Einfach" },
         "teil2":   { h1: "Teil 2",            lead: "Multiple Choice",
-                     title: "Deutsch Einfach – B2 Lesen Teil 2" },
+                     title: "Telc B2 Lesen Teil 2 – Übungen online | Deutsch Einfach" },
         "teil3":   { h1: "Teil 3",            lead: "Anzeigen zuordnen",
-                     title: "Deutsch Einfach – B2 Lesen Teil 3" },
+                     title: "Telc B2 Lesen Teil 3 – Übungen online | Deutsch Einfach" },
         "sprach1": { h1: "Sprachbausteine 1", lead: "Grammatik im Text",
-                     title: "Deutsch Einfach – B2 Lesen Sprachbausteine 1" },
+                     title: "Telc B2 Sprachbausteine Teil 1 – Übungen | Deutsch Einfach" },
         "sprach2": { h1: "Sprachbausteine 2", lead: "Wortschatz im Text",
-                     title: "Deutsch Einfach – B2 Lesen Sprachbausteine 2" }
+                     title: "Telc B2 Sprachbausteine Teil 2 – Übungen | Deutsch Einfach" }
     };
 
     /* b2-lesen-teil2.html → "teil2" · b2-lesen.html → "" */
