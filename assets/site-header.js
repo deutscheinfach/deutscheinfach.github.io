@@ -38,7 +38,7 @@
     brand.className = "site-brand";
     brand.href = "index.html";
     brand.innerHTML =
-        '<img src="icon1.png" alt="Deutsch Einfach">' +
+        '<img src="assets/icon-192.png" alt="Deutsch Einfach" width="40" height="40">' +
         '<span class="site-brand-text">' +
         '<span class="site-brand-name">Deutsch <span>Einfach</span></span>' +
         '<span class="site-brand-sub">TELC PREP B1/B2</span>' +

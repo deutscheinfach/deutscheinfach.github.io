@@ -34,8 +34,8 @@ messaging.onBackgroundMessage(function (payload) {
             body: isCall
                 ? (data.fromName || "صديق") + " كيعيط ليك"
                 : (data.body || ""),
-            icon: "icon1.png",
-            badge: "icon1.png",
+            icon: "assets/icon-192.png",
+            badge: "assets/icon-192.png",
             tag: isCall ? "de-call" : "de-msg",
             renotify: true,
             requireInteraction: isCall,
