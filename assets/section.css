@@ -407,6 +407,8 @@
 
 /* موضوع واحد بوحدو (بحال Sprechen B1 Teil 1) كياخذ العرض كامل */
 #sprechen-grid > .lesen-card:only-child { grid-column: 1 / -1; }
+#sprechen-grid > .lesen-card.is-soon { opacity: .72; cursor: default; }
+.lesen-chip-soon { background: rgba(214,178,94,.16); color: var(--brand, #d6b25e); }
 
 .lesen-card {
     display: flex;
