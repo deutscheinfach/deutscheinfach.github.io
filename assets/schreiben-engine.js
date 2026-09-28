@@ -408,6 +408,43 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         html += '<div class="result-bar"><div class="result-bar-fill" style="width:' +
             pct + '%"></div></div>';
 
+        /* شبكة telc: 3 معايير (A/B/C/D) — كيرجعها الـ Worker الجديد */
+        const crit = data.criteria || {};
+        const critRows = [
+            ["inhalt", "المضمون", "Aufgabenbewältigung"],
+            ["kommunikation", "التواصل والتنظيم", "Kommunikative Gestaltung"],
+            ["form", "القواعد والكلمات", "Formale Richtigkeit"],
+        ].filter((r) => crit[r[0]]);
+        if (critRows.length) {
+            html += '<div class="result-section"><h3>📊 التقييم بحال telc</h3><div class="crit-list">' +
+                critRows.map((r) => {
+                    const c = crit[r[0]];
+                    const g = String(c.grade || "D");
+                    return '<div class="crit-row crit-' + escapeHtml(g) + '">' +
+                        '<span class="crit-grade">' + escapeHtml(g) + "</span>" +
+                        '<div class="crit-body"><b>' + r[1] + ' <small dir="ltr">' + r[2] + "</small></b>" +
+                        (c.reason ? "<p>" + escapeHtml(c.reason) + "</p>" : "") + "</div>" +
+                        '<span class="crit-pts">' + (Number(c.points) || 0) + "/15</span></div>";
+                }).join("") + "</div></div>";
+        }
+
+        if (Array.isArray(data.leitpunkte) && data.leitpunkte.length) {
+            const icon = { ja: "✅", teilweise: "⚠️", nein: "❌" };
+            const label = { ja: "مجاوب", teilweise: "قصير بزاف", nein: "ناقص" };
+            html += '<div class="result-section"><h3>📌 النقط ديال المهمة</h3><ul class="lp-list">' +
+                data.leitpunkte.map((p, i) =>
+                    "<li>" + (icon[p.status] || "❌") + " <span dir=\"ltr\">" +
+                    escapeHtml((topic.points && topic.points[i]) || p.punkt || "") + "</span> <small>" +
+                    (label[p.status] || "") + "</small></li>").join("") + "</ul></div>";
+        }
+
+        if (Number(data.word_count) > 0) {
+            const wc = Number(data.word_count), min = Number(data.min_words) || 0;
+            const ok = !min || wc >= min;
+            html += '<p class="wc-note ' + (ok ? "ok" : "short") + '">📝 ' + wc + " كلمة" +
+                (min ? (ok ? " — العدد مزيان." : " — خاصك على الأقل " + min + " كلمة.") : "") + "</p>";
+        }
+
         if (data.summary) {
             html += '<div class="result-section"><h3>📝 ملاحظة عامة</h3><p>' +
                 escapeHtml(data.summary) + "</p></div>";
