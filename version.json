@@ -1,9 +1,9 @@
 {
-  "build": "8c30f7d10428",
+  "build": "419e408603d5",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
-    "assets/fortschritt.js": "f8981382",
+    "assets/fortschritt.js": "02e0b48b",
     "assets/hoeren-premium.js": "9a8df7cd",
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b1-content.js": "9cb136cb",
@@ -29,7 +29,7 @@
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/section.css": "3eddfe3a",
     "assets/session-guard.js": "d6dfc66e",
-    "assets/share-card.js": "f2697d55",
+    "assets/share-card.js": "fd4aa5f9",
     "assets/site-header.css": "be6560fe",
     "assets/site-header.js": "de584271",
     "assets/sprechen-b1-teil2.js": "3ffe476e",

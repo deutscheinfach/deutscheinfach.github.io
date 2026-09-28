@@ -32,7 +32,8 @@
         arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
         exam: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 2h6"/>',
         cards: '<rect x="3" y="5" width="14" height="16" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v14"/>',
-        cloud: '<path d="M17.5 19H7a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 11a4 4 0 0 1-1.5 8z"/>'
+        cloud: '<path d="M17.5 19H7a5 5 0 1 1 .9-9.9A6 6 0 0 1 19 11a4 4 0 0 1-1.5 8z"/>',
+        share: '<path d="M12 3v13"/><path d="m8 7 4-4 4 4"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/>'
     };
     function svg(name, cls) {
         return '<svg class="' + (cls || "ico") + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[name] + "</svg>";
@@ -272,6 +273,36 @@
             '<a class="tr-btn tr-btn-gold" href="b2-lesen.html">Mit Lesen starten</a><a class="tr-btn" href="b2-hoeren.html">Hören</a><a class="tr-btn" href="wortschatz.html">Wortschatz</a></div></div>';
     }
 
+    /* ---------- بطاقة التقدّم اللي كتتشارك ---------- */
+    function shareHtml(results) {
+        if (!window.DEShare || !results.length) return "";
+        return '<div class="tr-row tr-section" style="justify-content:center">' +
+            '<button class="tr-btn tr-btn-gold" type="button" id="fs-share">' +
+            svg("share", "tr-inline-ico") + "شارك التقدّم ديالك</button></div>";
+    }
+
+    function shareProgress(results) {
+        if (!window.DEShare) return;
+        const scored = results.filter(function (r) { return r.skill !== "modelltest"; });
+        const a = avg(scored.slice(-20));
+        let days = null;
+        try { days = P.daysToExam(); } catch (e) { /* ماكاينش تاريخ */ }
+        const streak = P.streak();
+        window.DEShare.open({
+            mode: "progress",
+            kind: "taqaddum",
+            streak: streak,
+            count: results.length,
+            avg: a,
+            daysToExam: (typeof days === "number" && days >= 0) ? days : null,
+            skills: SKILLS.map(function (sk) {
+                return [sk.name, skillAvg(results, sk.key).avg];
+            }),
+            shareText: (streak > 1 ? streak + " يوم متتالي كنقرا الألمانية 🔥" : "كنقرا الألمانية مع Deutsch Einfach 🔥") +
+                (results.length ? " · " + results.length + " تمرين" : "")
+        });
+    }
+
     let syncNote = "";
     function render() {
         const results = P.results();
@@ -290,8 +321,12 @@
             html += '<div class="tr-grid tr-grid-2 tr-section">' + weakHtml(results) + recentHtml(results) + "</div>";
         }
         html += linksHtml();
+        html += shareHtml(results);
         if (syncNote) html += '<p class="tr-muted tr-section" style="display:flex;align-items:center;gap:8px">' + svg("cloud", "tr-inline-ico") + "<span>" + esc(syncNote) + "</span></p>";
         root.innerHTML = html;
+
+        const sh = document.getElementById("fs-share");
+        if (sh) sh.addEventListener("click", function () { shareProgress(results); });
 
         const save = document.getElementById("fs-date-save");
         if (save) save.addEventListener("click", function () {

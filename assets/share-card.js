@@ -80,11 +80,8 @@
         return p >= 0.8 ? C.good : p >= 0.6 ? C.mid : C.low;
     }
 
-    function draw(data) {
-        var cv = document.createElement("canvas");
-        cv.width = W; cv.height = H;
-        var ctx = cv.getContext("2d");
-
+    /* الخلفية والعلامة — مشتركين بين بطاقة النتيجة وبطاقة التقدّم */
+    function chrome(ctx) {
         /* ---- الخلفية ---- */
         var bg = ctx.createLinearGradient(0, 0, W, H);
         bg.addColorStop(0, C.navy2);
@@ -132,6 +129,36 @@
         ctx.fillStyle = C.dim;
         ctx.font = font(700, 23);
         ctx.fillText("TELC PREP B1/B2", mx + ms + 26, my + 76);
+
+    }
+
+    /* الأسفل: الدومين + السطر ديال التعريف */
+    function foot(ctx) {
+        /* ---- الأسفل ---- */
+        ctx.strokeStyle = C.line;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(80, H - 152);
+        ctx.lineTo(W - 80, H - 152);
+        ctx.stroke();
+
+        ctx.fillStyle = C.white;
+        ctx.font = font(900, 34);
+        ctx.fillText(SITE, 80, H - 88);
+        ctx.fillStyle = C.dim;
+        ctx.font = font(700, 25);
+        ctx.textAlign = "right";
+        ctx.fillText("تمرّن على telc B1/B2 بالدارجة", W - 80, H - 88);
+        ctx.textAlign = "left";
+
+    }
+
+    function draw(data) {
+        var cv = document.createElement("canvas");
+        cv.width = W; cv.height = H;
+        var ctx = cv.getContext("2d");
+
+        chrome(ctx);
 
         /* ---- عنوان الامتحان + شارة النجاح (نفس السطر) ---- */
         var pass = !!data.pass;
@@ -208,29 +235,111 @@
             y += 58;
         }
 
-        /* ---- الأسفل ---- */
-        ctx.strokeStyle = C.line;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(80, H - 152);
-        ctx.lineTo(W - 80, H - 152);
-        ctx.stroke();
-
-        ctx.fillStyle = C.white;
-        ctx.font = font(900, 34);
-        ctx.fillText(SITE, 80, H - 88);
-        ctx.fillStyle = C.dim;
-        ctx.font = font(700, 25);
-        ctx.textAlign = "right";
-        ctx.fillText("تمرّن على telc B1/B2 بالدارجة", W - 80, H - 88);
-        ctx.textAlign = "left";
-
+        foot(ctx);
         return cv;
     }
 
     /* JPEG ماشي PNG: نفس الشكل تقريباً (خلفية متدرجة + نص كبير)
        ولكن ~10 مرات أصغر. الداتا غالية عند بزاف ديال الناس،
        وWhatsApp على كل حال كيعاود يضغط الصورة. */
+    /* ===== بطاقة التقدّم =====
+       ماشي نتيجة امتحان: هادي للي كيقرا كل نهار. كيقدر يشاركها
+       حتى إلا مادازش شي Modelltest — وهاد الشي كيخلي الصور
+       كتخرج كل أسبوع ماشي كل شهر. */
+    function drawProgress(data) {
+        var cv = document.createElement("canvas");
+        cv.width = W; cv.height = H;
+        var ctx = cv.getContext("2d");
+
+        chrome(ctx);
+
+        /* ---- العنوان ---- */
+        ctx.fillStyle = C.sun;
+        ctx.font = font(800, 34);
+        ctx.textAlign = "left";
+        ctx.fillText("التقدّم ديالي · telc B2", 80, 290);
+
+        /* ---- الـStreak الكبير ---- */
+        var y = 470;
+        ctx.fillStyle = C.white;
+        ctx.font = font(900, 190);
+        var big = String(data.streak || 0);
+        ctx.fillText(big, 80, y);
+        var bw = ctx.measureText(big).width;
+
+        ctx.font = font(800, 54);
+        ctx.fillText("🔥", 80 + bw + 26, y - 6);
+
+        ctx.fillStyle = C.dim;
+        ctx.font = font(700, 34);
+        ctx.fillText("يوم متتالي ديال القراية", 82, y + 58);
+
+        /* ---- عداد الامتحان ---- */
+        if (data.daysToExam != null && data.daysToExam >= 0) {
+            var t = data.daysToExam === 0
+                ? "الامتحان اليوم"
+                : "باقي " + data.daysToExam + " يوم للامتحان";
+            ctx.font = font(900, 30);
+            var lw = ctx.measureText(t).width;
+            var pw = lw + 64, ph = 70, px = W - 80 - pw, py = 246;
+            ctx.fillStyle = "rgba(227,22,63,.18)";
+            roundRect(ctx, px, py, pw, ph, 35);
+            ctx.fill();
+            ctx.strokeStyle = "rgba(255,74,107,.55)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.fillStyle = C.brandLight;
+            ctx.textAlign = "center";
+            ctx.fillText(t, px + pw / 2, py + ph / 2 + 11);
+            ctx.textAlign = "left";
+        }
+
+        /* ---- رقمين ديال التمارين ---- */
+        y = 624;
+        var kpis = [
+            [String(data.count || 0), "تمرين مصحّح"],
+            [(data.avg == null ? "–" : Math.round(data.avg * 100) + "%"), "المعدل"]
+        ];
+        kpis.forEach(function (k, i) {
+            var x = 80 + i * 300;
+            ctx.fillStyle = C.white;
+            ctx.font = font(900, 62);
+            ctx.fillText(k[0], x, y);
+            ctx.fillStyle = C.dim;
+            ctx.font = font(700, 26);
+            ctx.fillText(k[1], x, y + 40);
+        });
+
+        /* ---- المهارات ---- */
+        y = 742;
+        (data.skills || []).forEach(function (s) {
+            var name = s[0], p = s[1];
+            ctx.fillStyle = C.white;
+            ctx.font = font(700, 30);
+            ctx.fillText(name, 80, y);
+
+            ctx.fillStyle = C.dim;
+            ctx.font = font(800, 28);
+            ctx.textAlign = "right";
+            ctx.fillText(p == null ? "–" : Math.round(p * 100) + "%", W - 80, y);
+            ctx.textAlign = "left";
+
+            var by = y + 20, bh = 14, bwFull = W - 160;
+            ctx.fillStyle = "rgba(255,255,255,.10)";
+            roundRect(ctx, 80, by, bwFull, bh, 7);
+            ctx.fill();
+            if (p > 0) {
+                ctx.fillStyle = barColor(p);
+                roundRect(ctx, 80, by, Math.max(bh, bwFull * p), bh, 7);
+                ctx.fill();
+            }
+            y += 80;
+        });
+
+        foot(ctx);
+        return cv;
+    }
+
     function toBlob(cv) {
         return new Promise(function (res, rej) {
             if (!cv.toBlob) { rej(new Error("no toBlob")); return; }
@@ -275,7 +384,7 @@
         var url = null, file = null;
 
         ready().then(function () {
-            var cv = draw(data);
+            var cv = (data.mode === "progress" ? drawProgress : draw)(data);
             return toBlob(cv);
         }).then(function (blob) {
             url = URL.createObjectURL(blob);
@@ -322,5 +431,5 @@
         return wrap;
     }
 
-    window.DEShare = { open: open, draw: draw };
+    window.DEShare = { open: open, draw: draw, drawProgress: drawProgress };
 }());
