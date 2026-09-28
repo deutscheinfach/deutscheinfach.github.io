@@ -120,9 +120,10 @@
 
         const shut = topic.locked && !window.__deutschEinfachIsPremium;
 
-        const node = document.createElement("a");
-        node.className = "lesen-card" + (shut ? " locked" : "");
-        node.href = pageUrl(topic.id, shownPart);
+        /* soon: المحتوى ما زال ماوصلش → بطاقة بلا رابط */
+        const node = document.createElement(topic.soon ? "div" : "a");
+        node.className = "lesen-card" + (shut ? " locked" : "") + (topic.soon ? " is-soon" : "");
+        if (!topic.soon) node.href = pageUrl(topic.id, shownPart);
 
         const title = document.createElement("div");
         title.className = "lesen-card-title";
@@ -144,14 +145,17 @@
         foot.appendChild(chip("lesen-chip-level", topic.level || LEVEL));
         foot.appendChild(chip("lesen-chip-parts",
             activePart ? PART_NAME[activePart] : (parts.length + " أجزاء")));
+        if (topic.soon) foot.appendChild(chip("lesen-chip-soon", "قريباً"));
 
         const go = document.createElement("span");
         go.className = "lesen-card-go";
-        go.textContent = shut ? "🔒" : "›";
+        go.textContent = topic.soon ? "⏳" : (shut ? "🔒" : "›");
         go.setAttribute("aria-hidden", "true");
         foot.appendChild(go);
 
         node.appendChild(foot);
+
+        if (topic.soon) return node;
 
         node.addEventListener("click", function (event) {
             /* فتح ف تبويب جديد خاصو يبقى خدام عادي */
