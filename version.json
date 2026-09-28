@@ -1,14 +1,14 @@
 {
-  "build": "bb084ed2f84e",
+  "build": "6236b122b567",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
     "assets/fortschritt.js": "02e0b48b",
     "assets/hoeren-premium.js": "9a8df7cd",
     "assets/https-upgrade.js": "473efbeb",
-    "assets/lesen-b1-content.js": "9cb136cb",
+    "assets/lesen-b1-content.js": "a728c3f2",
     "assets/lesen-b1-topics.js": "abfe33b5",
-    "assets/lesen-b2-content.js": "99e34da2",
+    "assets/lesen-b2-content.js": "d98b120d",
     "assets/lesen-b2-topics.js": "940fb40d",
     "assets/lesen-engine.js": "faf25829",
     "assets/lesen-hub.js": "585361ee",
