@@ -35,7 +35,8 @@
         lock: '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
         check: '<path d="m5 12 5 5 9-10"/>',
         x: '<path d="M18 6 6 18M6 6l12 12"/>',
-        arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>'
+        arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+        share: '<path d="M12 3v13"/><path d="m8 7 4-4 4 4"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/>'
     };
     function svg(name) {
         return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[name] + "</svg>";
@@ -282,6 +283,25 @@
         window.scrollTo({ top: 0 });
     }
 
+    let shareData = null;
+
+    function shareResult() {
+        if (!shareData || !window.DEShare) return;
+        let streak = 0;
+        try { streak = (window.DEProgress && window.DEProgress.streak()) || 0; } catch (e) { /* */ }
+        window.DEShare.open({
+            kind: "modelltest-" + state.n,
+            title: "Modelltest " + state.n + " · telc B2",
+            score: Math.round(shareData.total * 2) / 2,
+            max: TOTAL,
+            pass: shareData.pass,
+            rows: shareData.rows.map(function (r) { return [r[0], r[1], r[2]]; }),
+            streak: streak,
+            shareText: (shareData.pass ? "نجحت ف Modelltest " : "درت Modelltest ") + state.n +
+                " — " + (Math.round(shareData.total * 2) / 2) + "/" + TOTAL + " 💪"
+        });
+    }
+
     function renderResult() {
         clearInterval(timer);
         const s = sums();
@@ -313,9 +333,13 @@
             }).join("") + "</div>" +
             '<p class="tr-muted tr-section">نصيحة: الجزء اللي خاصو تمرين أكثر هو <b>' + esc(weakest[0]) + "</b>.</p>" +
             '<div class="tr-row" style="justify-content:center;margin-top:14px">' +
-            '<a class="tr-btn tr-btn-gold" href="' + weakest[3] + '">' + esc(weakest[0]) + " üben</a>" +
+            (window.DEShare
+                ? '<button class="tr-btn tr-btn-gold" type="button" data-act="share">' + svg("share").replace("<svg", '<svg width="16" height="16"') + "شارك النتيجة</button>"
+                : "") +
+            '<a class="tr-btn" href="' + weakest[3] + '">' + esc(weakest[0]) + " üben</a>" +
             '<a class="tr-btn" href="fortschritt.html">Mein Fortschritt</a>' +
             '<button class="tr-btn" type="button" data-act="list">Alle Modelltests</button></div></div>';
+        shareData = { rows: rows, total: s.total, pass: pass };
         window.scrollTo({ top: 0 });
     }
 
@@ -341,6 +365,7 @@
         }
         const act = e.target.closest("[data-act]");
         if (!act) return;
+        if (act.dataset.act === "share") { shareResult(); return; }
         if (act.dataset.act === "next") next(false);
         if (act.dataset.act === "abort" && confirm("Modelltest abbrechen? · واش نحبسو الامتحان؟ النقط ما غاديش تتحفظ.")) { clearState(); renderList(); }
         if (act.dataset.act === "list") { clearState(); renderList(); }

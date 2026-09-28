@@ -1,5 +1,5 @@
 {
-  "build": "e7db6baf622a",
+  "build": "8c30f7d10428",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -18,7 +18,7 @@
     "assets/lesen-teil1.js": "94d4f34e",
     "assets/lesen-teil2.js": "5593ba4f",
     "assets/lesen-teil3.js": "4478495c",
-    "assets/modelltest.js": "d0e98e0d",
+    "assets/modelltest.js": "0b691711",
     "assets/premium-gate.js": "6e86f042",
     "assets/progress.js": "1f4ecf40",
     "assets/schreiben-auth.js": "c131e3c8",
@@ -29,6 +29,7 @@
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/section.css": "3eddfe3a",
     "assets/session-guard.js": "d6dfc66e",
+    "assets/share-card.js": "f2697d55",
     "assets/site-header.css": "be6560fe",
     "assets/site-header.js": "de584271",
     "assets/sprechen-b1-teil2.js": "3ffe476e",
@@ -44,7 +45,7 @@
     "assets/sprechen-teil3.js": "963c0915",
     "assets/stars.js": "df3dede2",
     "assets/theme.css": "0f1853c7",
-    "assets/training.css": "fb84bc42",
+    "assets/training.css": "65936d7b",
     "assets/wortschatz-1000.js": "1b72e9ed",
     "assets/wortschatz-b2.js": "856a61b2",
     "assets/wortschatz.js": "c9ae860b"
