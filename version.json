@@ -1,5 +1,5 @@
 {
-  "build": "f11ee32ef7cd",
+  "build": "6b346a1a458f",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -32,13 +32,13 @@
     "assets/site-header.css": "93461d95",
     "assets/site-header.js": "de584271",
     "assets/sprechen-b1-teil2.js": "36bbd213",
-    "assets/sprechen-b1.js": "e22f9045",
+    "assets/sprechen-b1.js": "30c18469",
     "assets/sprechen-b2-content.js": "474d9d04",
     "assets/sprechen-b2-teil1.js": "c045e55d",
     "assets/sprechen-b2-teil23.js": "e30dd1f6",
     "assets/sprechen-b2-topics.js": "aaaf6da0",
     "assets/sprechen-engine.js": "63923e09",
-    "assets/sprechen-hub.js": "b3c8bf78",
+    "assets/sprechen-hub.js": "02bcf31b",
     "assets/sprechen-teil1.js": "39194a12",
     "assets/sprechen-teil2.js": "3f8ea805",
     "assets/sprechen-teil3.js": "963c0915",

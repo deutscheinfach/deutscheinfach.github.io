@@ -502,7 +502,7 @@
         head.appendChild(h1);
         detail.appendChild(head);
 
-        const content = CONTENT[themaId] || {};
+        let content = CONTENT[themaId] || {};
         const available = (topic.parts && topic.parts.length)
             ? PARTS.filter(function (p) { return topic.parts.indexOf(p.key) !== -1; })
             : PARTS;
@@ -560,6 +560,28 @@
                     box.textContent = "🔒 هاد الموضوع ديال Premium.";
                     stack.appendChild(box);
                 }
+                return;
+            }
+
+            /* Premium ديال B1: المحتوى ف Cloudflare KV (lesen-sprechen-b1-<id>)،
+               والـ Worker ماكيعطيه حتى يتحقق من الاشتراك. */
+            if (topic.locked && !content[current] && LEVEL !== "B2"
+                    && typeof window.__lesenPremiumFetch === "function") {
+                const wait = document.createElement("div");
+                wait.className = "lesen-empty";
+                wait.textContent = "⏳ كنجيبو الموضوع…";
+                stack.appendChild(wait);
+                const asked = current;
+                window.__lesenPremiumFetch("sprechen-" + LEVEL.toLowerCase() + "-" + themaId).then(function (r) {
+                    if (stale() || !stack.isConnected || current !== asked) return;
+                    if (r && r.ok && r.data) {
+                        CONTENT[themaId] = r.data;
+                        content = r.data;
+                        paint();
+                    } else {
+                        wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. " + ((r && r.why) || "");
+                    }
+                });
                 return;
             }
 

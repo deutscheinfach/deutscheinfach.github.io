@@ -24,14 +24,14 @@ window.SPRECHEN_B1_TOPICS = [
        soon: true = المحتوى ما زال ماوصلش (البطاقة كتبان بلا رابط). */
     { id: "t2-01", title: "Bücherhören", ar: "الكتب الصوتية", parts: ["teil2"], locked: false, level: "B1" },
     { id: "t2-02", title: "Tanzen", ar: "الرقص", parts: ["teil2"], locked: false, level: "B1" },
-    { id: "t2-03", title: "Schöner Wohnen", ar: "السكن الزوين", parts: ["teil2"], locked: false, soon: true, level: "B1" },
-    { id: "t2-04", title: "Stress", ar: "الضغط", parts: ["teil2"], locked: false, soon: true, level: "B1" },
-    { id: "t2-05", title: "Arbeitszeiten in der Gastronomie", ar: "أوقات الخدمة فالمطاعم", parts: ["teil2"], locked: false, soon: true, level: "B1" },
-    { id: "t2-06", title: "Lebensmittel im Internet", ar: "شراء الماكلة من الإنترنت", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-07", title: "Essensgewohnheiten", ar: "عادات الماكلة", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-08", title: "Geld sparen", ar: "توفير الفلوس", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-09", title: "Am Wochenende etwas unternehmen?", ar: "الخرجات فالويكاند", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-10", title: "Rapmusik", ar: "موسيقى الراب", parts: ["teil2"], locked: true, soon: true, level: "B1" },
+    { id: "t2-03", title: "Schöner Wohnen", ar: "السكن الزوين", parts: ["teil2"], locked: false, level: "B1" },
+    { id: "t2-04", title: "Stress", ar: "الضغط", parts: ["teil2"], locked: false, level: "B1" },
+    { id: "t2-05", title: "Arbeitszeiten in der Gastronomie", ar: "أوقات الخدمة فالمطاعم", parts: ["teil2"], locked: false, level: "B1" },
+    { id: "t2-06", title: "Lebensmittel im Internet", ar: "شراء الماكلة من الإنترنت", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-07", title: "Essensgewohnheiten", ar: "عادات الماكلة", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-08", title: "Geld sparen", ar: "توفير الفلوس", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-09", title: "Am Wochenende etwas unternehmen?", ar: "الخرجات فالويكاند", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-10", title: "Rapmusik", ar: "موسيقى الراب", parts: ["teil2"], locked: true, level: "B1" },
     { id: "t2-11", title: "Auto, Bus oder Bahn", ar: "الطوموبيل، الطوبيس ولا التران", parts: ["teil2"], locked: true, soon: true, level: "B1" },
     { id: "t2-12", title: "Große Feier veranstalten", ar: "تنظيم حفلة كبيرة", parts: ["teil2"], locked: true, soon: true, level: "B1" },
     { id: "t2-13", title: "TikTok", ar: "تيك توك", parts: ["teil2"], locked: true, soon: true, level: "B1" },
@@ -499,6 +499,479 @@ window.SPRECHEN_B1_CONTENT = {
             {
                 "de": "unsicher",
                 "ar": "مقلق / ماشي واثق"
+            }
+        ]
+    } },
+
+    "t2-03": { teil2: {
+        "kind": "meinungen",
+        "title": "Schöner Wohnen",
+        "a": {
+            "de": "Ich liebe schöne Möbel und Bilder! In meiner Wohnung habe ich sogar ein paar Antiquitäten und moderne Designermöbel. Außerdem ist meine Wohnung immer aufgeräumt und alles hat seinen festen Platz. So fühle ich mich einfach wohl!",
+            "ar": "كنبغي الأثاث والتصاور الزوينين! فالشقة ديالي عندي حتى شي أنتيكات وأثاث عصري ديال الديزاين. وزيد على هادشي الشقة ديالي ديما مرتبة وكل حاجة عندها بلاصتها. هكا كنحس براسي مرتاح!"
+        },
+        "b": {
+            "de": "Für mich hat es keine Bedeutung, wie meine Einrichtung aussieht. Wichtig für mich ist, ob die Möbel bequem und praktisch sind. Die Qualität spielt auch eine wichtige Rolle. Denn wenn man Geld ausgibt, will man ja auch etwas davon haben.",
+            "ar": "بالنسبة ليا ما كيهمنيش كيف داير الأثاث ديالي. المهم عندي واش الأثاث مريح وعملي. والجودة حتى هي مهمة، حيت ملي كتخلص الفلوس بغيتي تستافد منهم."
+        },
+        "kurzA": [
+            {
+                "de": "Schöne Möbel und Bilder sind ihr wichtig.",
+                "ar": "الأثاث والتصاور الزوينين مهمين عندها."
+            },
+            {
+                "de": "Sie hat Antiquitäten und Designermöbel.",
+                "ar": "عندها أنتيكات وأثاث ديال الديزاين."
+            },
+            {
+                "de": "Ihre Wohnung ist immer aufgeräumt.",
+                "ar": "الشقة ديالها ديما مرتبة."
+            },
+            {
+                "de": "So fühlt sie sich wohl.",
+                "ar": "هكا كتحس براسها مرتاحة."
+            }
+        ],
+        "kurzB": [
+            {
+                "de": "Das Aussehen der Möbel ist ihm egal.",
+                "ar": "الشكل ديال الأثاث ما كيهموش."
+            },
+            {
+                "de": "Möbel müssen bequem und praktisch sein.",
+                "ar": "الأثاث خاصو يكون مريح وعملي."
+            },
+            {
+                "de": "Gute Qualität ist ihm wichtig.",
+                "ar": "الجودة مهمة عندو."
+            },
+            {
+                "de": "Für sein Geld möchte er etwas Gutes.",
+                "ar": "بغا حاجة مزيانة مقابل الفلوس ديالو."
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Wie ist deine Wohnung eingerichtet?",
+                "ar": "كيفاش مفرشة الدار ديالك؟"
+            },
+            {
+                "de": "Was ist dir bei Möbeln wichtiger: schön oder praktisch?",
+                "ar": "شنو أهم عندك فالأثاث: الزين ولا العملي؟"
+            },
+            {
+                "de": "Wo kaufst du am liebsten Möbel?",
+                "ar": "فين كتفضل تشري الأثاث؟"
+            },
+            {
+                "de": "Wie wohnt man in deinem Heimatland?",
+                "ar": "كيفاش كيسكنو الناس فبلادك؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "In meinem Text geht es um eine Person, die schöne Möbel liebt. Sie hat sogar Antiquitäten, und in ihrer Wohnung ist alles ordentlich. Was steht in deinem Text?",
+                "ar": "فالنص ديالي كاين شخص كيبغي الأثاث الزوين. عندو حتى أنتيكات، وفالشقة ديالو كلشي مرتب. شنو كاين فالنص ديالك؟"
+            },
+            {
+                "who": "B",
+                "de": "Die Person in meinem Text findet das Aussehen nicht wichtig. Für sie müssen Möbel bequem, praktisch und von guter Qualität sein.",
+                "ar": "الشخص فالنص ديالي ما كيشوفش الشكل مهم. عندو الأثاث خاصو يكون مريح وعملي وجودتو مزيانة."
+            },
+            {
+                "who": "A",
+                "de": "Und wie ist das bei dir? Achtest du auf schöne Möbel?",
+                "ar": "ونتا كيفاش؟ واش كتهتم بالأثاث الزوين؟"
+            },
+            {
+                "who": "B",
+                "de": "Nicht so sehr. Mein Sofa ist alt, aber sehr bequem. Ich gebe mein Geld lieber für Reisen aus. Und du?",
+                "ar": "ماشي بزاف. الكنبة ديالي قديمة ولكن مريحة بزاف. كنفضل نصرف الفلوس ديالي فالسفر. ونتا؟"
+            },
+            {
+                "who": "A",
+                "de": "Mir ist eine schöne Wohnung wichtig, weil ich viel Zeit zu Hause verbringe. Ich habe zum Beispiel einen schönen Teppich aus Marokko.",
+                "ar": "أنا الدار الزوينة مهمة عندي، حيت كندوز بزاف ديال الوقت فالدار. مثلا عندي زربية زوينة من المغرب."
+            },
+            {
+                "who": "B",
+                "de": "Das klingt gemütlich. Aber sind schöne Möbel nicht oft sehr teuer?",
+                "ar": "هادشي كيبان مريح. ولكن الأثاث الزوين ماشي غالبا غالي بزاف؟"
+            },
+            {
+                "who": "A",
+                "de": "Nicht immer. Auf dem Flohmarkt findet man manchmal schöne Sachen für wenig Geld.",
+                "ar": "ماشي ديما. فالجوطية كتلقى شي مرات حوايج زوينة بثمن قليل."
+            },
+            {
+                "who": "B",
+                "de": "Gute Idee! Vielleicht kann man ja beides haben: schön und praktisch.",
+                "ar": "فكرة مزيانة! يمكن نقدرو يكون عندنا بجوج: الزين والعملي."
+            },
+            {
+                "who": "A",
+                "de": "Genau. Am wichtigsten ist, dass man sich zu Hause wohlfühlt.",
+                "ar": "بالضبط. الأهم هو تحس براسك مرتاح فالدار."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "die Möbel (Pl.)",
+                "ar": "الأثاث"
+            },
+            {
+                "de": "die Einrichtung",
+                "ar": "الفرش / التأثيث"
+            },
+            {
+                "de": "die Antiquität",
+                "ar": "الأنتيكة"
+            },
+            {
+                "de": "aufgeräumt",
+                "ar": "مرتب"
+            },
+            {
+                "de": "bequem",
+                "ar": "مريح"
+            },
+            {
+                "de": "praktisch",
+                "ar": "عملي"
+            },
+            {
+                "de": "die Qualität",
+                "ar": "الجودة"
+            },
+            {
+                "de": "Geld ausgeben",
+                "ar": "يصرف الفلوس"
+            },
+            {
+                "de": "der Flohmarkt",
+                "ar": "الجوطية"
+            },
+            {
+                "de": "sich wohlfühlen",
+                "ar": "يحس براسو مرتاح"
+            }
+        ]
+    } },
+
+    "t2-04": { teil2: {
+        "kind": "meinungen",
+        "title": "Stress",
+        "a": {
+            "de": "Ich bin sehr beschäftigt. Die Arbeit wächst mir langsam über den Kopf. Aus diesem Grund bin ich immer sehr erschöpft. Für meine eigenen Interessen und zum Entspannen möchte ich mehr Zeit haben. Auch mit meinem Mann und den Kindern möchte ich mehr unternehmen.",
+            "ar": "أنا مشغولة بزاف. الخدمة بدات كتفوتني شوية بشوية. لهذا ديما كنكون عيانة بزاف. بغيت يكون عندي وقت كثر للحوايج اللي كتعجبني وباش نرتاح. وبغيت حتى ندير حوايج كثر مع راجلي والدراري."
+        },
+        "b": {
+            "de": "Ich bin eine sehr lebhafte und neugierige Person. Für mich ist die Abwechslung im Leben wichtig. Ich habe keine Ahnung, was Stress bedeutet. Ich bin immer unterwegs und das macht mir Spaß. Ich fühle mich wohl, wenn ich viel zu tun habe.",
+            "ar": "أنا شخص نشيط وفضولي بزاف. التنوع فالحياة مهم عندي. ما عنديش فكرة شنو هو الستريس. ديما كنكون خارج وهادشي كيعجبني. كنحس براسي مرتاح ملي كيكون عندي بزاف ديال الخدمة."
+        },
+        "kurzA": [
+            {
+                "de": "Sie hat sehr viel Arbeit.",
+                "ar": "عندها بزاف ديال الخدمة."
+            },
+            {
+                "de": "Sie ist oft sehr müde.",
+                "ar": "غالبا كتكون عيانة بزاف."
+            },
+            {
+                "de": "Sie möchte mehr Zeit für sich.",
+                "ar": "بغات وقت كثر لراسها."
+            },
+            {
+                "de": "Sie möchte mehr mit der Familie machen.",
+                "ar": "بغات دير حوايج كثر مع العائلة."
+            }
+        ],
+        "kurzB": [
+            {
+                "de": "Die Person ist aktiv und neugierig.",
+                "ar": "الشخص نشيط وفضولي."
+            },
+            {
+                "de": "Abwechslung ist ihr wichtig.",
+                "ar": "التنوع مهم عندو."
+            },
+            {
+                "de": "Sie kennt keinen Stress.",
+                "ar": "ما كيعرفش الستريس."
+            },
+            {
+                "de": "Viel zu tun macht ihr Spaß.",
+                "ar": "الخدمة الكثيرة كتعجبو."
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Hast du oft Stress? Wann?",
+                "ar": "واش كيكون عندك الستريس بزاف؟ فوقاش؟"
+            },
+            {
+                "de": "Was machst du gegen Stress?",
+                "ar": "شنو كدير ضد الستريس؟"
+            },
+            {
+                "de": "Hast du genug Zeit für deine Familie und Hobbys?",
+                "ar": "واش عندك وقت كافي للعائلة والهوايات ديالك؟"
+            },
+            {
+                "de": "Arbeitest du lieber ruhig oder mit viel Abwechslung?",
+                "ar": "كتفضل تخدم بالهدوء ولا بزاف ديال التنوع؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "In meinem Text hat eine Frau sehr viel Arbeit. Sie ist immer müde und hat zu wenig Zeit für sich und ihre Familie. Was steht in deinem Text?",
+                "ar": "فالنص ديالي كاينة وحدة المرا عندها بزاف ديال الخدمة. ديما عيانة وما عندهاش وقت كافي لراسها وللعائلة ديالها. شنو كاين فالنص ديالك؟"
+            },
+            {
+                "who": "B",
+                "de": "In meinem Text ist es ganz anders. Die Person ist gern aktiv und hat keinen Stress. Sie fühlt sich gut, wenn sie viel zu tun hat.",
+                "ar": "فالنص ديالي الأمر مختلف تماما. الشخص كيبغي يكون نشيط وما عندوش الستريس. كيحس براسو مزيان ملي كيكون عندو بزاف ديال الخدمة."
+            },
+            {
+                "who": "A",
+                "de": "Und du? Hast du oft Stress?",
+                "ar": "ونتا؟ واش كيكون عندك الستريس بزاف؟"
+            },
+            {
+                "who": "B",
+                "de": "Manchmal, besonders vor Prüfungen. Dann schlafe ich schlecht. Wie ist das bei dir?",
+                "ar": "شي مرات، خصوصا قبل الامتحانات. كنعس ناقص. وعندك كيفاش؟"
+            },
+            {
+                "who": "A",
+                "de": "Bei mir ist es wie bei der Frau in meinem Text. Arbeit, Deutschkurs, Haushalt … Am Abend bin ich total kaputt.",
+                "ar": "عندي بحال المرا فالنص ديالي. الخدمة، الكور ديال الألمانية، شغل الدار … فالليل كنكون عيانة بزاف."
+            },
+            {
+                "who": "B",
+                "de": "Was machst du, um dich zu entspannen?",
+                "ar": "شنو كدير باش ترتاح؟"
+            },
+            {
+                "who": "A",
+                "de": "Am Wochenende gehe ich gern spazieren, am liebsten im Park. Das hilft mir. Und du?",
+                "ar": "فالويكاند كنبغي نتسارا، خصوصا فالجردة. هادشي كيعاوني. ونتا؟"
+            },
+            {
+                "who": "B",
+                "de": "Ich mache Sport. Nach dem Joggen fühle ich mich viel besser.",
+                "ar": "أنا كندير الرياضة. من بعد الجري كنحس براسي حسن بزاف."
+            },
+            {
+                "who": "A",
+                "de": "Ich glaube, ein bisschen Stress ist normal, aber man braucht auch Pausen.",
+                "ar": "كنظن شوية ديال الستريس عادي، ولكن خاص حتى الراحة."
+            },
+            {
+                "who": "B",
+                "de": "Da hast du recht. Wichtig ist die richtige Mischung.",
+                "ar": "عندك الحق. المهم هو التوازن."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "beschäftigt",
+                "ar": "مشغول"
+            },
+            {
+                "de": "erschöpft",
+                "ar": "عيان بزاف"
+            },
+            {
+                "de": "Die Arbeit wächst mir über den Kopf.",
+                "ar": "الخدمة فاتتني"
+            },
+            {
+                "de": "sich entspannen",
+                "ar": "يرتاح"
+            },
+            {
+                "de": "etwas unternehmen",
+                "ar": "يدير شي خرجة / نشاط"
+            },
+            {
+                "de": "lebhaft",
+                "ar": "نشيط"
+            },
+            {
+                "de": "neugierig",
+                "ar": "فضولي"
+            },
+            {
+                "de": "die Abwechslung",
+                "ar": "التنوع"
+            },
+            {
+                "de": "die Pause",
+                "ar": "الراحة / البوز"
+            },
+            {
+                "de": "kaputt sein (ugs.)",
+                "ar": "عيان بزاف"
+            }
+        ]
+    } },
+
+    "t2-05": { teil2: {
+        "kind": "meinungen",
+        "title": "Arbeitszeiten in der Gastronomie",
+        "a": {
+            "de": "Ich bin mein eigener Chef, deshalb habe ich keine geregelten Arbeitszeiten. Zum Glück läuft mein Bekleidungsgeschäft gut. Obwohl ich sehr wenig Urlaub machen kann und immer abends und am Wochenende arbeiten muss, will ich nicht klagen.",
+            "ar": "أنا الشاف ديال راسي، لهذا ما عنديش أوقات خدمة منظمة. الحمد لله المحل ديال الحوايج ديالي خدام مزيان. واخا كناخد عطلة قليلة بزاف وديما خاصني نخدم فالعشية وفالويكاند، ما بغيتش نشكي."
+        },
+        "b": {
+            "de": "Zurzeit arbeite ich Teilzeit, das heißt nur vormittags. Neben der Hausarbeit muss ich mich um unsere kleinen Kinder kümmern. In ein paar Jahren, wenn sie größer sind, möchte ich wieder ganztags arbeiten. Darüber habe ich auch schon mit meinem Mann gesprochen. Er wird mich immer unterstützen.",
+            "ar": "دابا كنخدم نص الوقت، يعني غير فالصباح. من غير شغل الدار خاصني نتهلا فالدراري الصغار ديالنا. من هنا شي سنين، ملي يكبرو، بغيت نرجع نخدم الوقت كامل. وهضرت فهادشي مع راجلي، وغادي يعاوني ديما."
+        },
+        "kurzA": [
+            {
+                "de": "Die Person ist selbstständig.",
+                "ar": "الشخص خدام لحسابو."
+            },
+            {
+                "de": "Sie hat keine festen Arbeitszeiten.",
+                "ar": "ما عندهاش أوقات خدمة ثابتة."
+            },
+            {
+                "de": "Sie arbeitet abends und am Wochenende.",
+                "ar": "كتخدم فالعشية وفالويكاند."
+            },
+            {
+                "de": "Trotzdem ist sie zufrieden.",
+                "ar": "ومع ذلك راضية."
+            }
+        ],
+        "kurzB": [
+            {
+                "de": "Sie arbeitet nur vormittags (Teilzeit).",
+                "ar": "كتخدم غير فالصباح (نص الوقت)."
+            },
+            {
+                "de": "Sie kümmert sich um die Kinder und den Haushalt.",
+                "ar": "كتتهلا فالدراري وفشغل الدار."
+            },
+            {
+                "de": "Später möchte sie wieder ganztags arbeiten.",
+                "ar": "من بعد بغات ترجع تخدم الوقت كامل."
+            },
+            {
+                "de": "Ihr Mann unterstützt sie.",
+                "ar": "راجلها كيعاونها."
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Wie sind deine Arbeitszeiten?",
+                "ar": "كيفاش هي أوقات الخدمة ديالك؟"
+            },
+            {
+                "de": "Möchtest du lieber Teilzeit oder Vollzeit arbeiten?",
+                "ar": "كتفضل تخدم نص الوقت ولا الوقت كامل؟"
+            },
+            {
+                "de": "Würdest du gern selbstständig sein?",
+                "ar": "واش تبغي تخدم لحسابك؟"
+            },
+            {
+                "de": "Wer kümmert sich in deinem Heimatland meistens um die Kinder?",
+                "ar": "شكون غالبا كيتهلا فالدراري فبلادك؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "In meinem Text hat eine Person ein eigenes Geschäft. Sie arbeitet oft abends und am Wochenende und hat wenig Urlaub, aber sie ist zufrieden. Was steht in deinem Text?",
+                "ar": "فالنص ديالي كاين شخص عندو محل ديالو. كيخدم بزاف فالعشية وفالويكاند وعطلتو قليلة، ولكن راضي. شنو كاين فالنص ديالك؟"
+            },
+            {
+                "who": "B",
+                "de": "In meinem Text arbeitet eine Frau nur vormittags, weil sie kleine Kinder hat. Später möchte sie wieder ganztags arbeiten, und ihr Mann hilft ihr.",
+                "ar": "فالنص ديالي وحدة المرا كتخدم غير فالصباح، حيت عندها دراري صغار. من بعد بغات ترجع تخدم الوقت كامل، وراجلها كيعاونها."
+            },
+            {
+                "who": "A",
+                "de": "Und wie ist das bei dir? Arbeitest du Vollzeit?",
+                "ar": "ونتا كيفاش؟ كتخدم الوقت كامل؟"
+            },
+            {
+                "who": "B",
+                "de": "Im Moment arbeite ich in einem Restaurant, oft bis spät in die Nacht. Das ist anstrengend. Und du?",
+                "ar": "دابا كنخدم فمطعم، غالبا حتى لوقت متأخر فالليل. هادشي متعب. ونتا؟"
+            },
+            {
+                "who": "A",
+                "de": "Ich arbeite von acht bis fünf in einem Büro. Die Abende und Wochenenden sind frei. Das finde ich sehr wichtig.",
+                "ar": "أنا كنخدم من التمنية حتى الخمسة فمكتب. العشيات والويكاند خاويين. هادشي كنشوفو مهم بزاف."
+            },
+            {
+                "who": "B",
+                "de": "Das verstehe ich. Möchtest du irgendwann selbstständig sein?",
+                "ar": "فهمتك. واش بغيتي شي نهار تخدم لحسابك؟"
+            },
+            {
+                "who": "A",
+                "de": "Eher nicht. Man verdient vielleicht mehr, aber man hat kaum Freizeit.",
+                "ar": "لا، ماشي بزاف. يمكن تربح كثر، ولكن ما كيبقاش عندك وقت فراغ."
+            },
+            {
+                "who": "B",
+                "de": "Da hast du recht. Aber man ist frei und kann selbst entscheiden.",
+                "ar": "عندك الحق. ولكن كتكون حر وكتقرر براسك."
+            },
+            {
+                "who": "A",
+                "de": "Stimmt. Ich glaube, jeder muss die richtige Arbeitszeit für sein Leben finden.",
+                "ar": "صحيح. كنظن كل واحد خاصو يلقى الوقت ديال الخدمة اللي مناسب لحياتو."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "die Arbeitszeit",
+                "ar": "وقت الخدمة"
+            },
+            {
+                "de": "selbstständig",
+                "ar": "خدام لحسابو"
+            },
+            {
+                "de": "geregelt",
+                "ar": "منظم"
+            },
+            {
+                "de": "das Geschäft",
+                "ar": "المحل / البيزنس"
+            },
+            {
+                "de": "klagen",
+                "ar": "يشكي"
+            },
+            {
+                "de": "die Teilzeit",
+                "ar": "نص الوقت"
+            },
+            {
+                "de": "ganztags / Vollzeit",
+                "ar": "الوقت كامل"
+            },
+            {
+                "de": "sich kümmern um",
+                "ar": "يتهلا فـ"
+            },
+            {
+                "de": "unterstützen",
+                "ar": "يعاون / يدعم"
+            },
+            {
+                "de": "die Freizeit",
+                "ar": "وقت الفراغ"
             }
         ]
     } }
