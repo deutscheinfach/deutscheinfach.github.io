@@ -246,8 +246,12 @@ body { padding-top: var(--site-header-h); }
     .site-btn-label-long { display: none; }
 }
 
-/* ===== ما يخرجش على عرض الشاشة ===== */
-.site-header, .site-header-inner { max-width: 100%; box-sizing: border-box; }
+/* ===== ما يخرجش على عرض الشاشة =====
+   min() باش ما نكسروش عرض الحاوية (--shell) فالشاشات
+   الكبيرة: بـ 100% وحدها الهيدر كان كيتمدّ من الطرف
+   للطرف على PC. */
+.site-header { max-width: 100%; box-sizing: border-box; }
+.site-header-inner { max-width: min(var(--shell), 100%); box-sizing: border-box; }
 .site-header-inner { flex-wrap: wrap; min-width: 0; }
 .site-brand { min-width: 0; }
 .site-brand-name { white-space: nowrap; }

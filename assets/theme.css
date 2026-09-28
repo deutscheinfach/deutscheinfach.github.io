@@ -606,3 +606,23 @@ html.is-embed .lesen-count,
 html.is-embed .lesen-back { display: none !important; }
 html.is-embed body { padding-top: 0 !important; }
 html.is-embed::before, html.is-embed::after { display: none !important; }
+
+
+/* روابط صفحة الدخول (إنشاء حساب · نسيت كلمة المرور) وفتات
+   الخبز: كانو غير 16px ديال الطول — صعيب تنقرهم بالصبع. */
+@media (pointer: coarse) {
+    .links a,
+    .login-text a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 8px;
+    }
+    .breadcrumb a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 32px;
+        padding: 0 4px;
+    }
+}

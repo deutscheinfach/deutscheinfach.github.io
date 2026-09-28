@@ -401,7 +401,10 @@
 
 .lesen-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    /* 255px كانت ضيقة: الشارات الثلاثة (B2 · Lesen Teil 1 ·
+       مجاني) ما كانوش كيدخلو فسطر واحد. min() باش الهاتف
+       يبقى بعمود واحد. */
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 285px), 1fr));
     gap: 16px;
 }
 
@@ -443,10 +446,17 @@
 .lesen-card-rule { height: 1px; background: var(--line); }
 
 .lesen-card-foot {
+    /* الزر ديال السهم كان كينزل لسطر جديد ملي كيكونو 3 شارات
+       (B2 · Lesen Teil 1 · مجاني) فبطاقة ضيقة — وهاد الشي كان
+       كيطوّل السطر كامل. دابا الزر مثبت فالطرف والشارات
+       كيتلفّو وحدهم فالباقي. */
+    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
+    min-height: 34px;
+    padding-inline-end: 42px;
 }
 .lesen-chip {
     display: inline-flex;
@@ -471,7 +481,10 @@
 }
 
 .lesen-card-go {
-    margin-inline-start: auto;
+    position: absolute;
+    inset-inline-end: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 34px;
     height: 34px;
     flex: 0 0 auto;
@@ -583,9 +596,11 @@
     .lesen-level a { padding: 0 20px; }
 }
 
-/* الشبكة ديال العداد كانت كتزيد 2px على عرض الشاشة */
+/* الشبكة ديال العداد كانت كتزيد 2px على عرض الشاشة.
+   الحاوية خاصها تبقى محدودة بـ --shell: بـ 100% وحدها
+   كان كلشي كيتمدّ من الطرف للطرف على PC. */
 .lesen-stats { max-width: 100%; box-sizing: border-box; }
-.lesen-shell { max-width: 100%; box-sizing: border-box; }
+.lesen-shell { max-width: min(var(--shell), 100%); box-sizing: border-box; }
 
 
 /* ===== زيادات ديال الأقسام الأخرى ===== */
