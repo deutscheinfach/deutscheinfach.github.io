@@ -572,7 +572,14 @@
                 wait.textContent = "⏳ كنجيبو الموضوع…";
                 stack.appendChild(wait);
                 const asked = current;
-                window.__lesenPremiumFetch("sprechen-" + LEVEL.toLowerCase() + "-" + themaId).then(function (r) {
+                /* الأول كنجربو المفتاح الجامع (lesen-sprechen-b1-t2 = كاع المواضيع
+                   ديال Teil 2 ف value وحدة)، ومن بعد المفتاح ديال الموضوع بوحدو. */
+                const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
+                const bundle = lvl + themaId.split("-")[0];
+                window.__lesenPremiumFetch(bundle).then(function (r) {
+                    const one = r && r.ok && r.data && r.data[themaId];
+                    return one ? { ok: true, data: one } : window.__lesenPremiumFetch(lvl + themaId);
+                }).then(function (r) {
                     if (stale() || !stack.isConnected || current !== asked) return;
                     if (r && r.ok && r.data) {
                         CONTENT[themaId] = r.data;
