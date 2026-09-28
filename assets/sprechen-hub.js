@@ -31,18 +31,25 @@
        ما زال فالصفحة، إذن أنا النسخة القديمة. */
     function stale() { return !document.body.contains(grid); }
 
-    const PARTS = [
-        { key: "teil1", label: "Teil 1", name: "Erfahrungen" },
-        { key: "teil2", label: "Teil 2", name: "Text & Meinung" },
-        { key: "teil3", label: "Teil 3", name: "Gemeinsam planen" }
-    ];
+    /* المستوى كيتقرا من data-level ديال الصفحة (b1 / b2).
+       المواضيع كيتجابو من SPRECHEN_B1_TOPICS ولا SPRECHEN_B2_TOPICS. */
+    const shell = grid.closest("[data-level]");
+    const LEVEL = ((shell && shell.dataset.level) || "b2").toUpperCase();
+
+    const PART_NAMES = {
+        B1: ["Kennenlernen", "Über ein Thema sprechen", "Gemeinsam planen"],
+        B2: ["Erfahrungen", "Text & Meinung", "Gemeinsam planen"]
+    };
+    const PARTS = ["teil1", "teil2", "teil3"].map(function (key, i) {
+        return { key: key, label: "Teil " + (i + 1), name: (PART_NAMES[LEVEL] || PART_NAMES.B2)[i] };
+    });
+    const CONTENT = window["SPRECHEN_" + LEVEL + "_CONTENT"] || {};
     const PART_LABEL = {};
     const PART_NAME = {};
     PARTS.forEach(function (p) { PART_LABEL[p.key] = p.label; PART_NAME[p.key] = p.name; });
 
-    const topics = Array.isArray(window.SPRECHEN_B2_TOPICS)
-        ? window.SPRECHEN_B2_TOPICS.slice()
-        : [];
+    const SOURCE = window["SPRECHEN_" + LEVEL + "_TOPICS"];
+    const topics = Array.isArray(SOURCE) ? SOURCE.slice() : [];
 
     const SORTS = [
         { key: "default", label: "ترتيب" },
@@ -96,9 +103,10 @@
         if (!list.length) {
             const empty = document.createElement("div");
             empty.className = "lesen-empty";
-            empty.textContent = topics.length
+            const term = (search ? search.value : "").trim();
+            empty.textContent = term
                 ? "ماكاين حتى موضوع بهاد الاسم."
-                : "ما زال ماكاينش مواضيع.";
+                : "⏳ هاد الجزء كنوجدوه دابا — قريباً.";
             grid.appendChild(empty);
             return;
         }
@@ -133,7 +141,7 @@
 
         const foot = document.createElement("div");
         foot.className = "lesen-card-foot";
-        foot.appendChild(chip("lesen-chip-level", topic.level || "B2"));
+        foot.appendChild(chip("lesen-chip-level", topic.level || LEVEL));
         foot.appendChild(chip("lesen-chip-parts",
             activePart ? PART_NAME[activePart] : (parts.length + " أجزاء")));
 
@@ -422,7 +430,7 @@
                     stack.appendChild(box);
                 }
             } else if (typeof window.__sprechenRender === "function") {
-                const content = (window.SPRECHEN_B2_CONTENT || {})[topic.id] || {};
+                const content = CONTENT[topic.id] || {};
                 window.__sprechenRender(stack, current, content[current], topic.id);
             }
 
@@ -490,7 +498,7 @@
         head.appendChild(h1);
         detail.appendChild(head);
 
-        const content = (window.SPRECHEN_B2_CONTENT || {})[themaId] || {};
+        const content = CONTENT[themaId] || {};
         const available = (topic.parts && topic.parts.length)
             ? PARTS.filter(function (p) { return topic.parts.indexOf(p.key) !== -1; })
             : PARTS;
@@ -599,7 +607,7 @@
         if (exam) { openExam(exam, params.get("teil") || "teil1", false); return; }
         if (thema) { open(thema, params.get("teil") || "teil1", false); return; }
         close(false);
-        setPart(params.get("teil") || "", false);
+        setPart(params.get("teil") || (hasExamTab ? "" : "teil1"), false);
     });
 
     if (search) search.addEventListener("input", renderList);
@@ -629,7 +637,9 @@
     /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
     const startParams = new URLSearchParams(location.search);
     const startThema = startParams.get("thema");
-    const startTeil = startParams.get("teil") || "";
+    /* صفحة بلا تبويب Prüfungen (بحال B1 دابا) كتبدا من أول جزء. */
+    const hasExamTab = !tabsNav || !!tabsNav.querySelector('.lesen-tab[data-teil=""]');
+    const startTeil = startParams.get("teil") || (hasExamTab ? "" : "teil1");
 
     const startExam = parseInt(startParams.get("pruefung"), 10);
 

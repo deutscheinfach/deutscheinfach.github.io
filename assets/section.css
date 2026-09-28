@@ -846,6 +846,12 @@
     flex-direction: column;
     gap: 6px;
 }
+.sp-trans { margin: 12px 16px; }
+.sp-trans-list li { direction: rtl; text-align: right; }
+.sp-qa { display: flex; flex-direction: column; gap: 4px; }
+.sp-qa-q { color: var(--text); font-weight: 800; }
+.sp-qa-a { color: var(--text); }
+.sp-qa-ar { direction: rtl; text-align: right; color: var(--muted); font-size: 13px; }
 .sp-phrase-list li {
     padding: 9px 12px;
     border-radius: 10px;
