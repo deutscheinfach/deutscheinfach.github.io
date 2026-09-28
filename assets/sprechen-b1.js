@@ -23,7 +23,7 @@ window.SPRECHEN_B1_TOPICS = [
     /* ---- Teil 2 · Über ein Thema sprechen ----
        soon: true = المحتوى ما زال ماوصلش (البطاقة كتبان بلا رابط). */
     { id: "t2-01", title: "Bücherhören", ar: "الكتب الصوتية", parts: ["teil2"], locked: false, level: "B1" },
-    { id: "t2-02", title: "Tanzen", ar: "الرقص", parts: ["teil2"], locked: false, soon: true, level: "B1" },
+    { id: "t2-02", title: "Tanzen", ar: "الرقص", parts: ["teil2"], locked: false, level: "B1" },
     { id: "t2-03", title: "Schöner Wohnen", ar: "السكن الزوين", parts: ["teil2"], locked: false, soon: true, level: "B1" },
     { id: "t2-04", title: "Stress", ar: "الضغط", parts: ["teil2"], locked: false, soon: true, level: "B1" },
     { id: "t2-05", title: "Arbeitszeiten in der Gastronomie", ar: "أوقات الخدمة فالمطاعم", parts: ["teil2"], locked: false, soon: true, level: "B1" },
@@ -338,6 +338,167 @@ window.SPRECHEN_B1_CONTENT = {
             {
                 "de": "empfehlen",
                 "ar": "ينصح بـ"
+            }
+        ]
+    } },
+
+    "t2-02": { teil2: {
+        "kind": "meinungen",
+        "title": "Tanzen",
+        "a": {
+            "de": "Ich bin ein musikalischer Mensch und habe ein großes Interesse am Tanzen. Ich fühle mich beim Tanzen sehr entspannt. Ich habe auch schon an einigen Tanzkursen teilgenommen. An Wochenenden gehe ich regelmäßig mit Freundinnen in die Disko und genieße diese Zeit bis zur Erschöpfung. Ich habe viel Spaß dabei.",
+            "ar": "أنا إنسانة كنبغي الموسيقى وكيعجبني الرقص بزاف. ملي كنشطح كنحس براسي مرتاحة. وقريت من قبل فشي كورات ديال الرقص. فالويكاند كنمشي ديما مع صاحباتي للديسكو وكنتمتع بالوقت حتى كنعيا. كنتبسط بزاف."
+        },
+        "b": {
+            "de": "Ich interessiere mich für Musikhören, aber Tanzen liegt mir nicht. Meine Frau wollte mich oft überreden, an einem Tanzkurs teilzunehmen. Aber das hat sie bis jetzt noch nicht geschafft. Ich will kein großer Tänzer werden.",
+            "ar": "كيعجبني نسمع الموسيقى، ولكن الرقص ماشي ديالي. مراتي بغات تقنعني بزاف ديال المرات نقرا كور ديال الرقص، ولكن حتى لدابا ما قدراتش. وأنا ما باغيش نولي راقص كبير."
+        },
+        "kurzA": [
+            {
+                "de": "Sie liebt Musik und tanzt sehr gern.",
+                "ar": "كتبغي الموسيقى وكتبغي الرقص بزاف."
+            },
+            {
+                "de": "Beim Tanzen kann sie sich gut entspannen.",
+                "ar": "فالرقص كترتاح مزيان."
+            },
+            {
+                "de": "Sie hat schon Tanzkurse gemacht.",
+                "ar": "دارت من قبل كورات ديال الرقص."
+            },
+            {
+                "de": "Am Wochenende tanzt sie mit Freundinnen in der Disko.",
+                "ar": "فالويكاند كتشطح مع صاحباتها فالديسكو."
+            }
+        ],
+        "kurzB": [
+            {
+                "de": "Er hört gern Musik, tanzt aber nicht gern.",
+                "ar": "كيبغي يسمع الموسيقى، ولكن ما كيبغيش يشطح."
+            },
+            {
+                "de": "Seine Frau möchte, dass er einen Tanzkurs macht.",
+                "ar": "مراتو بغاتو يدير كور ديال الرقص."
+            },
+            {
+                "de": "Bis jetzt hat er immer Nein gesagt.",
+                "ar": "حتى لدابا ديما قال لا."
+            },
+            {
+                "de": "Tanzen ist für ihn nicht wichtig.",
+                "ar": "الرقص ماشي مهم عندو."
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Tanzt du gern? Wo und mit wem?",
+                "ar": "واش كتبغي تشطح؟ فين ومع من؟"
+            },
+            {
+                "de": "Hast du schon einmal einen Tanzkurs gemacht?",
+                "ar": "واش عمرك درتي كور ديال الرقص؟"
+            },
+            {
+                "de": "Welche Musik hörst du am liebsten?",
+                "ar": "أشمن موسيقى كتسمع كثر؟"
+            },
+            {
+                "de": "Wie feiert man in deinem Heimatland? Wird dort viel getanzt?",
+                "ar": "كيفاش كيحتفلو فبلادك؟ واش كيشطحو بزاف؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "In meinem Text geht es um eine Frau, die sehr gern tanzt. Beim Tanzen entspannt sie sich, und am Wochenende geht sie mit Freundinnen in die Disko. Was steht in deinem Text?",
+                "ar": "فالنص ديالي كاينة وحدة المرا كتبغي الرقص بزاف. فالرقص كترتاح، وفالويكاند كتمشي مع صاحباتها للديسكو. شنو كاين فالنص ديالك؟"
+            },
+            {
+                "who": "B",
+                "de": "In meinem Text hört ein Mann gern Musik, aber er tanzt nicht gern. Seine Frau möchte, dass er einen Tanzkurs macht, aber er will nicht.",
+                "ar": "فالنص ديالي واحد الراجل كيبغي يسمع الموسيقى، ولكن ما كيبغيش يشطح. مراتو بغاتو يدير كور ديال الرقص، ولكن هو ما بغاش."
+            },
+            {
+                "who": "A",
+                "de": "Und du? Tanzt du gern?",
+                "ar": "ونتا؟ واش كتبغي تشطح؟"
+            },
+            {
+                "who": "B",
+                "de": "Ehrlich gesagt nicht so gern. Ich höre lieber Musik oder gehe auf ein Konzert. Beim Tanzen fühle ich mich ein bisschen unsicher. Und du?",
+                "ar": "بصراحة ماشي بزاف. كنفضل نسمع الموسيقى ولا نمشي لشي حفلة. فالرقص كنحس براسي مقلق شوية. ونتا؟"
+            },
+            {
+                "who": "A",
+                "de": "Ich tanze sehr gern, vor allem auf Hochzeiten. Bei uns in Marokko tanzen auf Festen fast alle, auch die Großeltern.",
+                "ar": "أنا كنبغي الرقص بزاف، خصوصا فالأعراس. عندنا فالمغرب فالأفراح تقريبا كولشي كيشطح، حتى الجدود."
+            },
+            {
+                "who": "B",
+                "de": "Das finde ich schön. Aber muss man dafür nicht gut tanzen können?",
+                "ar": "هادشي زوين. ولكن ما خاصكش تعرف تشطح مزيان باش تدير هكا؟"
+            },
+            {
+                "who": "A",
+                "de": "Nein, gar nicht! Es geht um den Spaß, nicht um perfekte Schritte. Außerdem ist Tanzen ein guter Sport.",
+                "ar": "لا، أبدا! المهم هو الفرحة، ماشي الخطوات الكاملة. وزيد على هادشي الرقص رياضة مزيانة."
+            },
+            {
+                "who": "B",
+                "de": "Das stimmt. Vielleicht probiere ich doch einmal einen Anfängerkurs aus, zusammen mit Freunden.",
+                "ar": "عندك الحق. يمكن نجرب واحد الكور ديال المبتدئين، مع الصحاب."
+            },
+            {
+                "who": "A",
+                "de": "Gute Idee! Mit Freunden macht es sicher mehr Spaß.",
+                "ar": "فكرة مزيانة! مع الصحاب أكيد غادي تكون فيها فرحة كثر."
+            },
+            {
+                "who": "B",
+                "de": "Ja, und wenn es mir nicht gefällt, höre ich eben weiter nur Musik.",
+                "ar": "إيه، وإلا ما عجبنيش، نبقى غير نسمع الموسيقى."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "tanzen",
+                "ar": "يشطح / يرقص"
+            },
+            {
+                "de": "der Tanzkurs",
+                "ar": "كور ديال الرقص"
+            },
+            {
+                "de": "teilnehmen an",
+                "ar": "يشارك فـ"
+            },
+            {
+                "de": "die Disko",
+                "ar": "الديسكو"
+            },
+            {
+                "de": "genießen",
+                "ar": "يتمتع بـ"
+            },
+            {
+                "de": "die Erschöpfung",
+                "ar": "العيا"
+            },
+            {
+                "de": "jemanden überreden",
+                "ar": "يقنع شي واحد"
+            },
+            {
+                "de": "Das liegt mir nicht.",
+                "ar": "هادشي ماشي ديالي"
+            },
+            {
+                "de": "der Anfängerkurs",
+                "ar": "كور المبتدئين"
+            },
+            {
+                "de": "unsicher",
+                "ar": "مقلق / ماشي واثق"
             }
         ]
     } }
