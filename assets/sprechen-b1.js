@@ -22,7 +22,7 @@ window.SPRECHEN_B1_TOPICS = [
 
     /* ---- Teil 2 · Über ein Thema sprechen ----
        soon: true = المحتوى ما زال ماوصلش (البطاقة كتبان بلا رابط). */
-    { id: "t2-01", title: "Bücherhören", ar: "الكتب الصوتية", parts: ["teil2"], locked: false, soon: true, level: "B1" },
+    { id: "t2-01", title: "Bücherhören", ar: "الكتب الصوتية", parts: ["teil2"], locked: false, level: "B1" },
     { id: "t2-02", title: "Tanzen", ar: "الرقص", parts: ["teil2"], locked: false, soon: true, level: "B1" },
     { id: "t2-03", title: "Schöner Wohnen", ar: "السكن الزوين", parts: ["teil2"], locked: false, soon: true, level: "B1" },
     { id: "t2-04", title: "Stress", ar: "الضغط", parts: ["teil2"], locked: false, soon: true, level: "B1" },
@@ -178,5 +178,167 @@ window.SPRECHEN_B1_CONTENT = {
                 ]
             }
         }
-    }
+    },
+
+    /* ---- Teil 2 ---- (Person A / B: النص ديال الامتحان كما هو؛ الباقي تمارين ديالنا) */
+    "t2-01": { teil2: {
+        "kind": "meinungen",
+        "title": "Bücherhören",
+        "a": {
+            "de": "Ich lese gern. Das Lesen von Büchern hilft mir, meinen Geist zu entspannen und Stress abzubauen. Ich verbringe viel Zeit damit, Bücher zu lesen.",
+            "ar": "كنبغي القراية. قراية الكتب كتعاوني نرتاح فراسي ونقص من الضغط. كندوز بزاف ديال الوقت كنقرا الكتب."
+        },
+        "b": {
+            "de": "Bücher hören ist besser. Ich kann jederzeit und überall Bücher hören, zum Beispiel beim Kochen, beim Sport oder bei anderen Aktivitäten. Für mich ist das Lesen relativ zeitaufwändig.",
+            "ar": "سماع الكتب حسن. نقدر نسمع الكتب فأي وقت وفأي بلاصة، مثلا وأنا كنطيب، كندير الرياضة ولا شي حاجة أخرى. بالنسبة ليا القراية كتاخد شوية بزاف ديال الوقت."
+        },
+        "kurzA": [
+            {
+                "de": "Lesen macht ihr Spaß.",
+                "ar": "كتبغي القراية."
+            },
+            {
+                "de": "Bücher beruhigen sie.",
+                "ar": "الكتب كيهدنوها."
+            },
+            {
+                "de": "Durch Lesen hat sie weniger Stress.",
+                "ar": "بالقراية كينقص عليها الضغط."
+            },
+            {
+                "de": "Sie liest oft und lange.",
+                "ar": "كتقرا بزاف ولمدة طويلة."
+            }
+        ],
+        "kurzB": [
+            {
+                "de": "Sie hört lieber Hörbücher.",
+                "ar": "كتفضل الكتب الصوتية."
+            },
+            {
+                "de": "Sie kann überall und jederzeit hören.",
+                "ar": "تقدر تسمع فأي بلاصة وفأي وقت."
+            },
+            {
+                "de": "Zum Beispiel beim Kochen oder beim Sport.",
+                "ar": "مثلا وهي كطيب ولا كدير الرياضة."
+            },
+            {
+                "de": "Lesen dauert ihr zu lange.",
+                "ar": "القراية كتطول عليها."
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Liest du gern? Was liest du am liebsten?",
+                "ar": "واش كتبغي القراية؟ شنو كتقرا كثر؟"
+            },
+            {
+                "de": "Hast du schon einmal ein Hörbuch gehört?",
+                "ar": "واش عمرك سمعتي كتاب صوتي؟"
+            },
+            {
+                "de": "Wann und wo hörst du Hörbücher oder Podcasts?",
+                "ar": "فوقاش وفين كتسمع الكتب الصوتية ولا البودكاست؟"
+            },
+            {
+                "de": "Was hilft dir mehr beim Deutschlernen: Lesen oder Hören?",
+                "ar": "شنو كيعاونك كثر فتعلم الألمانية: القراية ولا السماع؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "In meinem Text geht es ums Lesen. Die Person liest sehr gern, weil Bücher ihr helfen, sich zu entspannen und Stress abzubauen. Was steht in deinem Text?",
+                "ar": "فالنص ديالي الموضوع على القراية. الشخص كيبغي القراية بزاف، حيت الكتب كتعاونو يرتاح وينقص من الضغط. شنو كاين فالنص ديالك؟"
+            },
+            {
+                "who": "B",
+                "de": "Die Person in meinem Text hört lieber Hörbücher. Sie findet das praktisch, weil sie dabei kochen oder Sport machen kann. Lesen kostet ihr zu viel Zeit.",
+                "ar": "الشخص فالنص ديالي كيفضل الكتب الصوتية. كيلقاها عملية، حيت يقدر يطيب ولا يدير الرياضة فنفس الوقت. القراية كتاخد ليه بزاف ديال الوقت."
+            },
+            {
+                "who": "A",
+                "de": "Und wie ist das bei dir? Liest du lieber oder hörst du lieber?",
+                "ar": "ونتا كيفاش؟ كتفضل تقرا ولا تسمع؟"
+            },
+            {
+                "who": "B",
+                "de": "Ich höre oft Hörbücher, zum Beispiel morgens in der Straßenbahn. Da habe ich keine Hand frei für ein Buch. Und du?",
+                "ar": "كنسمع بزاف الكتب الصوتية، مثلا فالصباح فالطرامواي. تما ما عنديش يد خاوية للكتاب. ونتا؟"
+            },
+            {
+                "who": "A",
+                "de": "Ich lese lieber richtige Bücher. Beim Lesen kann ich langsam machen und schwierige Stellen noch einmal lesen. Das ist gut für mein Deutsch.",
+                "ar": "أنا كنفضل الكتب الحقيقية. فالقراية نقدر نمشي بشوية ونعاود نقرا البلايص الصعيبة. هادشي مزيان للألمانية ديالي."
+            },
+            {
+                "who": "B",
+                "de": "Das stimmt. Beim Hören verpasse ich manchmal etwas, wenn ich nicht aufpasse. Aber ich lerne dabei die Aussprache.",
+                "ar": "عندك الحق. فالسماع كتفلت ليا شي حوايج ملي ما كنكونش مركز. ولكن كنتعلم النطق."
+            },
+            {
+                "who": "A",
+                "de": "Das ist ein guter Punkt. Vielleicht probiere ich ein deutsches Hörbuch aus. Kannst du mir eins empfehlen?",
+                "ar": "هادي نقطة مزيانة. يمكن نجرب شي كتاب صوتي بالألمانية. تقدر تنصحني بشي واحد؟"
+            },
+            {
+                "who": "B",
+                "de": "Ja, für den Anfang sind kurze Geschichten gut. Man kann sie auch etwas langsamer abspielen.",
+                "ar": "إيه، فالبداية القصص القصيرة مزيانين. وتقدر حتى تشغلهم بشوية."
+            },
+            {
+                "who": "A",
+                "de": "Ich glaube, beides hat Vorteile: Zu Hause lese ich, und unterwegs könnte ich hören.",
+                "ar": "كنظن بجوج عندهم مزايا: فالدار نقرا، وفالطريق نقدر نسمع."
+            },
+            {
+                "who": "B",
+                "de": "Genau, so sehe ich das auch.",
+                "ar": "بالضبط، حتى أنا كنشوفها هكا."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "das Hörbuch",
+                "ar": "الكتاب الصوتي"
+            },
+            {
+                "de": "die Geschichte",
+                "ar": "القصة"
+            },
+            {
+                "de": "unterwegs",
+                "ar": "فالطريق"
+            },
+            {
+                "de": "sich entspannen",
+                "ar": "يرتاح"
+            },
+            {
+                "de": "Stress abbauen",
+                "ar": "ينقص من الضغط"
+            },
+            {
+                "de": "zeitaufwändig",
+                "ar": "كياخد بزاف ديال الوقت"
+            },
+            {
+                "de": "sich konzentrieren",
+                "ar": "يركز"
+            },
+            {
+                "de": "etwas verpassen",
+                "ar": "تفلت ليه شي حاجة"
+            },
+            {
+                "de": "die Aussprache",
+                "ar": "النطق"
+            },
+            {
+                "de": "empfehlen",
+                "ar": "ينصح بـ"
+            }
+        ]
+    } }
 };

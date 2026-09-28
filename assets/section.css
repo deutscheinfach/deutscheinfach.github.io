@@ -3045,3 +3045,52 @@ html body :is(.e1-box, .e1-task) :is(.e1-guide-btn, .e2-arg, .e1-word, .e1-opt, 
 html body :is(.e1-box, .e1-task) :is(.e1-notes, .t1-select, .e3-own-input) { background: #fff; color: #1c1a16; border-color: rgba(168,134,58,.5); }
 html body :is(.e1-box, .e1-task) :is(.sp-btn-ghost, .e1-btn) { color: #1c1a16; border-color: rgba(28,26,22,.3); }
 html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45); color: #000; }
+
+/* ===== Sprechen B1 · Teil 2 (sprechen-b1-teil2.js) ===== */
+.e3-role { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 14px; direction: rtl; }
+.e3-role-label { font-weight: 800; color: var(--muted); font-size: 14px; }
+.e3-role-btn {
+    min-height: 40px; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--line); background: var(--surface-2); color: var(--text); font-weight: 800;
+}
+.e3-role-btn.active { background: var(--gold); color: #1a1405; border-color: var(--gold); }
+
+.e3-text.is-mine { border-color: var(--line-gold); }
+.e3-text-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.e3-text-top .e1-box-title { margin: 0; }
+.e3-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); }
+.e3-text.is-mine .e3-badge { color: var(--gold); border-color: var(--line-gold); }
+.e3-text-de { font-size: 17px; line-height: 1.75; margin: 0 0 12px; }
+.e3-listen { margin-top: 12px; }
+
+.e3-de { display: block; line-height: 1.6; }
+.e3-ar { display: block; direction: rtl; text-align: right; color: var(--muted); font-size: 13.5px; line-height: 1.7; }
+.e3 .e3-tr { display: none; }
+.e3.show-ar .e3-tr { display: block; }
+
+.e3-pairs { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.e3-pairs li { padding: 9px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); }
+
+.e3-choices { display: flex; flex-direction: column; gap: 8px; }
+.e3-choice { text-align: left; }
+.e3-choice.active { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+
+.e3-words { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; margin-bottom: 10px; }
+.e3-word { position: relative; padding: 10px 44px 10px 12px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); }
+.e3-word .e3-de { font-weight: 800; }
+.e3-add {
+    position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
+    width: 30px; height: 30px; border-radius: 9px; cursor: pointer; font-weight: 900;
+    border: 1px solid var(--line-gold); background: transparent; color: var(--gold);
+}
+.e3-add.done { background: var(--gold); color: #1a1405; }
+
+.e3-dialog { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+.e3-line { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); cursor: pointer; }
+.e3-line.is-mine { border-inline-start: 3px solid var(--gold); }
+.e3-line.is-speaking { border-color: var(--gold); box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 25%, transparent); }
+.e3-line p { margin: 0; }
+.e3-line-body { flex: 1 1 auto; min-width: 0; }
+.e3-who { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-weight: 900; font-size: 13px; background: color-mix(in srgb, var(--gold) 14%, transparent); color: var(--gold); border: 1px solid var(--line-gold); }
+.e3-line.is-hidden .e3-line-body { filter: blur(6px); user-select: none; }
+.e3-hint { margin: 12px 0 6px; }
