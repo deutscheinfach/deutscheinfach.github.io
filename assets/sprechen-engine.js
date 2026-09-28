@@ -213,7 +213,11 @@
         if (task.intro) {
             const box = el("div", "lesen-text");
             box.appendChild(el("span", "lesen-text-label", "Aufgabe"));
-            box.appendChild(document.createTextNode(task.intro));
+            /* intro يقدر يكون سطر واحد ولا لائحة ديال السطور */
+            [].concat(task.intro).forEach(function (line, i) {
+                if (i) box.appendChild(document.createElement("br"));
+                box.appendChild(document.createTextNode(line));
+            });
             body.appendChild(box);
         }
 
@@ -229,11 +233,54 @@
         }
 
         if (task.note) {
-            body.appendChild(el("p", "sp-note", task.note));
+            const note = el("p", "sp-note", task.note);
+            /* ملاحظة بالألمانية (بحال B1) كتتكتب من اليسار */
+            if (!/[\u0600-\u06FF]/.test(task.note)) { note.dir = "ltr"; note.style.direction = "ltr"; note.style.textAlign = "left"; }
+            body.appendChild(note);
         }
 
-        /* العبارات — مطوية باش ما تاخذش البلاصة */
-        const pack = REDEMITTEL[part];
+        /* الترجمة ديال المهمة — مطوية */
+        if (task.ar) {
+            const box = document.createElement("details");
+            box.className = "sp-phrases";
+            const sum = document.createElement("summary");
+            sum.textContent = "🌐 ترجمة المهمة";
+            box.appendChild(sum);
+            if (task.ar.intro) box.appendChild(el("p", "sp-note sp-trans", task.ar.intro));
+            if (Array.isArray(task.ar.points)) {
+                const ul = el("ul", "sp-phrase-list sp-trans-list");
+                task.ar.points.forEach(function (item) { ul.appendChild(el("li", "", item)); });
+                box.appendChild(ul);
+            }
+            if (task.ar.note) box.appendChild(el("p", "sp-note sp-trans", task.ar.note));
+            body.appendChild(box);
+        }
+
+        /* أسئلة وأجوبة نموذجية لكل نقطة — مطوية */
+        if (Array.isArray(task.fragen) && task.fragen.length) {
+            const box = document.createElement("details");
+            box.className = "sp-phrases";
+            const sum = document.createElement("summary");
+            sum.textContent = task.fragenLabel || "❓ أسئلة وأجوبة نموذجية";
+            box.appendChild(sum);
+            task.fragen.forEach(function (group) {
+                box.appendChild(el("div", "sp-phrase-head", group.head));
+                const ul = el("ul", "sp-phrase-list");
+                (group.items || []).forEach(function (item) {
+                    const li = el("li", "sp-qa");
+                    li.appendChild(el("b", "sp-qa-q", item.q));
+                    li.appendChild(el("span", "sp-qa-a", item.a));
+                    if (item.ar) li.appendChild(el("span", "sp-qa-ar", item.ar));
+                    ul.appendChild(li);
+                });
+                box.appendChild(ul);
+            });
+            body.appendChild(box);
+        }
+
+        /* العبارات — مطوية باش ما تاخذش البلاصة.
+           task.redemittel كيعوض العبارات العامة ديال الجزء (مثلا ف B1). */
+        const pack = task.redemittel || REDEMITTEL[part];
         if (pack) {
             const box = document.createElement("details");
             box.className = "sp-phrases";
