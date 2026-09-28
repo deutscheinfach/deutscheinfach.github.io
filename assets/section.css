@@ -3094,3 +3094,10 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .e3-who { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-weight: 900; font-size: 13px; background: color-mix(in srgb, var(--gold) 14%, transparent); color: var(--gold); border: 1px solid var(--line-gold); }
 .e3-line.is-hidden .e3-line-body { filter: blur(6px); user-select: none; }
 .e3-hint { margin: 12px 0 6px; }
+
+/* Teil 3 (planen) */
+.e3-aufgabe { font-size: clamp(15px, 2vw, 18px); font-weight: 700; }
+.e3-checks { list-style: none; margin: 8px 0 12px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.e3-check { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); cursor: pointer; }
+.e3-check input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--gold); flex: 0 0 auto; }
+.e3-check input:checked + span .e3-de { text-decoration: line-through; opacity: .7; }

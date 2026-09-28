@@ -316,7 +316,8 @@
         const sim = { erfahrung: window.__sprechenTeil1Render,
                       text: window.__sprechenTeil2Render,
                       plan: window.__sprechenTeil3Render,
-                      meinungen: window.__sprechenB1Teil2Render }[task.kind];
+                      meinungen: window.__sprechenB1Teil2Render,
+                      planen: window.__sprechenB1Teil2Render }[task.kind];
         if (typeof sim === "function") {
             sim(into, task, topicId);
             return;

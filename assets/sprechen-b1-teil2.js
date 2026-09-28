@@ -24,6 +24,15 @@
      woerter: [{ de, ar }]
    }
 
+   Teil 3 (kind: "planen") كيستعمل نفس المحاكي، ولكن المرحلة 1
+   فيها المهمة ديال الامتحان والنقط ديال التخطيط (Zettel):
+   {
+     kind: "planen",
+     aufgabe: ["سطر", …],  aufgabeAr: "…",   // نص الامتحان + الترجمة
+     punkte: [{ de, ar }],                    // النقط اللي خاصكم تخططو ليها
+     fragen, dialog, woerter                  // بحال Teil 2
+   }
+
    كيستعمل الأدوات ديال sprechen-teil1.js (window.__sprechenKit).
 */
 
@@ -57,6 +66,29 @@
             "Das ist ein guter Punkt, aber … ." ] }
     ];
 
+    const REDEMITTEL_PLAN = [
+        { head: "اقترح فكرة", items: [
+            "Ich schlage vor, dass wir … .",
+            "Wie wäre es, wenn wir … ?",
+            "Wir könnten doch … ." ] },
+        { head: "سول الشريك على رأيو", items: [
+            "Was meinst du?",
+            "Was hältst du davon?",
+            "Hast du eine andere Idee?" ] },
+        { head: "وافق ولا اقترح حاجة أخرى", items: [
+            "Gute Idee! / Einverstanden.",
+            "Das finde ich nicht so gut, weil … .",
+            "Ich habe eine andere Idee: … ." ] },
+        { head: "عطي سبب", items: [
+            "…, weil das billiger ist.",
+            "Das ist praktischer, denn … .",
+            "Deshalb finde ich … besser." ] },
+        { head: "اتافقو فالأخير", items: [
+            "Also, wir machen es so: … .",
+            "Dann übernehme ich … , und du … .",
+            "Gut, dann sind wir uns einig." ] }
+    ];
+
     function render(into, task, topicId) {
         const K = window.__sprechenKit;
         if (!K) { into.textContent = "…"; return; }
@@ -65,26 +97,41 @@
         into.textContent = "";
         const wrap = el("div", "e1 e3");
         const key = function (k) { return "e3-" + (topicId || "x") + "-" + k; };
+        const PLAN = task.kind === "planen";
+        const TEIL = PLAN ? "Teil 3" : "Teil 2";
 
         let role = store("e3-role") === "B" ? "B" : "A";
         const other = function () { return role === "A" ? "B" : "A"; };
 
         /* ---- العنوان والمهمة ---- */
         const head = el("div", "t1-head");
-        head.appendChild(el("h2", "t1-title", task.title || "Über ein Thema sprechen"));
-        head.appendChild(el("div", "t1-kicker", "SPRECHEN TEIL 2 · B1 · MEINUNGEN AUSTAUSCHEN"));
+        head.appendChild(el("h2", "t1-title", task.title || (PLAN ? "Gemeinsam etwas planen" : "Über ein Thema sprechen")));
+        head.appendChild(el("div", "t1-kicker", PLAN
+            ? "SPRECHEN TEIL 3 · B1 · GEMEINSAM ETWAS PLANEN"
+            : "SPRECHEN TEIL 2 · B1 · MEINUNGEN AUSTAUSCHEN"));
         head.appendChild(K.arToggle(wrap));
         wrap.appendChild(head);
 
         const card = el("section", "e1-task");
         card.appendChild(el("span", "e1-task-label", "Aufgabe"));
-        card.appendChild(el("p", "e1-task-de",
-            "Sie haben eine kurze Meinung zu einem Thema gelesen, Ihre Partnerin / Ihr Partner eine andere. " +
-            "Berichten Sie kurz, was in Ihrem Text steht. Sagen Sie Ihre Meinung, erzählen Sie von Ihren Erfahrungen " +
-            "und sprechen Sie miteinander über das Thema."));
-        card.appendChild(K.arBlock(
-            "كل واحد قرا رأي مختلف على نفس الموضوع. قول باختصار شنو كاين فالنص ديالك، عطي رأيك وتجربتك، " +
-            "وتناقش مع الشريك: سولو وجاوب على كلامو. ما تحبسش الهضرة غير بعد التلخيص.", "المطلوب"));
+        if (PLAN) {
+            /* نص المهمة ديال الامتحان كما هو، سطر بسطر */
+            const de = el("p", "e1-task-de e3-aufgabe");
+            [].concat(task.aufgabe || []).forEach(function (line, i) {
+                if (i) de.appendChild(document.createElement("br"));
+                de.appendChild(document.createTextNode(line));
+            });
+            card.appendChild(de);
+            if (task.aufgabeAr) card.appendChild(K.arBlock(task.aufgabeAr, "المطلوب"));
+        } else {
+            card.appendChild(el("p", "e1-task-de",
+                "Sie haben eine kurze Meinung zu einem Thema gelesen, Ihre Partnerin / Ihr Partner eine andere. " +
+                "Berichten Sie kurz, was in Ihrem Text steht. Sagen Sie Ihre Meinung, erzählen Sie von Ihren Erfahrungen " +
+                "und sprechen Sie miteinander über das Thema."));
+            card.appendChild(K.arBlock(
+                "كل واحد قرا رأي مختلف على نفس الموضوع. قول باختصار شنو كاين فالنص ديالك، عطي رأيك وتجربتك، " +
+                "وتناقش مع الشريك: سولو وجاوب على كلامو. ما تحبسش الهضرة غير بعد التلخيص.", "المطلوب"));
+        }
 
         /* اختيار الدور */
         const roleBox = el("div", "e3-role");
@@ -111,7 +158,7 @@
 
         /* ---- المراحل ---- */
         const STEPS = [
-            { key: "read",  n: "1", de: "Texte",        ar: "الآراء" },
+            { key: "read",  n: "1", de: PLAN ? "Planen" : "Texte", ar: PLAN ? "النقط" : "الآراء" },
             { key: "prep",  n: "2", de: "Vorbereiten",  ar: "التحضير" },
             { key: "model", n: "3", de: "Modelldialog", ar: "حوار نموذجي" },
             { key: "sim",   n: "4", de: "Simulation",   ar: "المحاكاة" }
@@ -214,6 +261,39 @@
 
         function buildRead() {
             const pane = el("div", "e1-pane");
+            if (PLAN) {
+                /* النقط اللي خاصكم تتفاهمو عليها (Zettel mit Notizen) */
+                const box = el("section", "e1-box e3-zettel");
+                box.appendChild(el("h3", "e1-box-title", "Notizen · النقط اللي خاصكم تخططو ليها"));
+                const done = JSON.parse(store(key("done")) || "[]");
+                const ul = el("ul", "e3-checks");
+                (task.punkte || []).forEach(function (p, i) {
+                    const li = el("li", "");
+                    const label = el("label", "e3-check");
+                    const input = document.createElement("input");
+                    input.type = "checkbox";
+                    input.checked = done.indexOf(i) !== -1;
+                    input.addEventListener("change", function () {
+                        const now = [];
+                        ul.querySelectorAll("input").forEach(function (x, j) { if (x.checked) now.push(j); });
+                        store(key("done"), JSON.stringify(now));
+                    });
+                    const txt = el("span", "");
+                    txt.appendChild(el("span", "e3-de", p.de));
+                    if (p.ar) { const ar = el("span", "e3-ar e3-tr", p.ar); ar.dir = "rtl"; txt.appendChild(ar); }
+                    label.append(input, txt);
+                    li.appendChild(label);
+                    ul.appendChild(li);
+                });
+                box.appendChild(ul);
+                box.appendChild(el("p", "e1-box-hint",
+                    "💡 فالامتحان: تكلمو على كل نقطة، كل واحد يقترح، يسول الشريك ويعطي سبب. ومن بعد اتافقو. " +
+                    "علّم ✓ على النقطة ملي تكملوها."));
+                box.appendChild(listen([].concat(task.aufgabe || []).join(" "), false));
+                pane.appendChild(box);
+                pane.appendChild(cta("← التحضير (Vorbereiten)", "prep"));
+                return pane;
+            }
             pane.appendChild(textCard(role));
             pane.appendChild(textCard(other()));
             pane.appendChild(cta("← التحضير (Vorbereiten)", "prep"));
@@ -225,8 +305,9 @@
         function buildPrep() {
             const pane = el("div", "e1-pane");
 
-            /* الموقف ديالك */
+            /* الموقف ديالك (غير ف Teil 2) */
             const pos = el("section", "e1-box");
+            if (PLAN) pos.hidden = true;
             pos.appendChild(el("h3", "e1-box-title", "Ihre Meinung · شنو رأيك؟"));
             const choices = [
                 { k: "A", de: "Ich bin eher der Meinung von Person A.", ar: "أنا مع الرأي ديال A" },
@@ -254,7 +335,9 @@
             /* أسئلة للشريك */
             if ((task.fragen || []).length) {
                 const q = el("section", "e1-box");
-                q.appendChild(el("h3", "e1-box-title", "Fragen an den Partner · سول الشريك"));
+                q.appendChild(el("h3", "e1-box-title", PLAN
+                    ? "Ideen & Fragen · أفكار وأسئلة للشريك"
+                    : "Fragen an den Partner · سول الشريك"));
                 q.appendChild(pairList(task.fragen));
                 pane.appendChild(q);
             }
@@ -290,9 +373,9 @@
             const rm = document.createElement("details");
             rm.className = "sp-phrases";
             const sum = document.createElement("summary");
-            sum.textContent = "💬 عبارات كتنفعك ف Teil 2";
+            sum.textContent = "💬 عبارات كتنفعك ف " + TEIL;
             rm.appendChild(sum);
-            REDEMITTEL.forEach(function (g) {
+            (PLAN ? REDEMITTEL_PLAN : REDEMITTEL).forEach(function (g) {
                 rm.appendChild(el("div", "sp-phrase-head", g.head));
                 const ul = el("ul", "sp-phrase-list");
                 g.items.forEach(function (i) { ul.appendChild(el("li", "", i)); });
@@ -306,7 +389,9 @@
             const area = document.createElement("textarea");
             area.className = "e1-notes";
             area.rows = 4;
-            area.placeholder = "كتب 3–4 كلمات: الرأي ديالك، علاش، ومثال من الحياة ديالك…";
+            area.placeholder = PLAN
+                ? "كتب الاقتراحات ديالك لكل نقطة: فوقاش، فين، شكون كيدير شنو…"
+                : "كتب 3–4 كلمات: الرأي ديالك، علاش، ومثال من الحياة ديالك…";
             area.value = store(key("notes"));
             area.addEventListener("input", function () { store(key("notes"), area.value); });
             notes.appendChild(area);
@@ -532,7 +617,14 @@
                 }
 
                 const check = el("section", "e1-box e1-self");
-                const items = [
+                const items = PLAN ? [
+                    "اقترحت أفكار (Ich schlage vor … / Wie wäre es …?).",
+                    "سولت الشريك على رأيو (Was meinst du?).",
+                    "جاوبت على الاقتراحات ديالو (Gute Idee! / Das finde ich nicht so gut …).",
+                    "عطيت سبب بسيط (weil / denn).",
+                    "تكلمنا على كاع النقط ديال المهمة.",
+                    "اتافقنا فالأخير على خطة (Also, wir machen es so …)."
+                ] : [
                     "لخصت النص ديالي باختصار (In meinem Text geht es um …).",
                     "عطيت رأيي بوضوح (Ich finde, dass …).",
                     "علّلت الرأي ديالي (weil / deshalb).",

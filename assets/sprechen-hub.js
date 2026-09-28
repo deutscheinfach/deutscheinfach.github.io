@@ -176,15 +176,43 @@
 
     /* ================= Prüfungen: امتحان كامل =================
        Prüfung n = الموضوع رقم n من Teil 1 و Teil 2 و Teil 3. */
+    /* Premium ديال B1: المحتوى ف Cloudflare KV. الأول المفتاح الجامع
+       (lesen-sprechen-b1-t2 = كاع المواضيع ديال الجزء ف value وحدة)،
+       ومن بعد المفتاح ديال الموضوع بوحدو (lesen-sprechen-b1-t2-06). */
+    function premiumLoad(themaId) {
+        const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
+        return window.__lesenPremiumFetch(lvl + themaId.split("-")[0]).then(function (r) {
+            const one = r && r.ok && r.data && r.data[themaId];
+            return one ? { ok: true, data: one } : window.__lesenPremiumFetch(lvl + themaId);
+        }).then(function (r) {
+            if (r && r.ok && r.data) CONTENT[themaId] = r.data;
+            return r;
+        });
+    }
+    function needsPremiumLoad(topic) {
+        return topic.locked && !CONTENT[topic.id] && LEVEL !== "B2"
+            && typeof window.__lesenPremiumFetch === "function";
+    }
+    function waitBox(into) {
+        const wait = document.createElement("div");
+        wait.className = "lesen-empty";
+        wait.textContent = "⏳ كنجيبو الموضوع…";
+        into.appendChild(wait);
+        return wait;
+    }
+
     function examList() {
         const lists = PARTS.map(function (p) {
             return topics.filter(function (t) { return (t.parts || []).indexOf(p.key) !== -1; });
         });
-        const count = Math.min.apply(null, lists.map(function (l) { return l.length; }));
+        /* جزء فيه موضوع واحد (بحال Teil 1 ف B1 = Kennenlernen) كيتعاود فكل امتحان */
+        const many = lists.filter(function (l) { return l.length > 1; });
+        const count = lists.some(function (l) { return !l.length; }) ? 0
+            : Math.min.apply(null, (many.length ? many : lists).map(function (l) { return l.length; }));
         const out = [];
         for (let i = 0; i < count; i++) {
             const parts = {};
-            PARTS.forEach(function (p, j) { parts[p.key] = lists[j][i]; });
+            PARTS.forEach(function (p, j) { parts[p.key] = lists[j][i % lists[j].length]; });
             out.push({ n: i + 1, parts: parts,
                        locked: PARTS.some(function (p) { return parts[p.key].locked; }) });
         }
@@ -245,7 +273,7 @@
 
         const foot = document.createElement("div");
         foot.className = "lesen-card-foot";
-        foot.appendChild(chip("lesen-chip-level", "B2"));
+        foot.appendChild(chip("lesen-chip-level", LEVEL));
         foot.appendChild(chip("lesen-chip-parts", PARTS.length + " Teile"));
         if (!exam.locked) foot.appendChild(chip("lesen-chip-free", "مجاني"));
         const go = document.createElement("span");
@@ -433,6 +461,14 @@
                     box.textContent = "🔒 هاد الموضوع ديال Premium.";
                     stack.appendChild(box);
                 }
+            } else if (needsPremiumLoad(topic)) {
+                const wait = waitBox(stack);
+                const asked = current;
+                premiumLoad(topic.id).then(function (r) {
+                    if (stale() || !stack.isConnected || current !== asked) return;
+                    if (r && r.ok) paint();
+                    else wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. " + ((r && r.why) || "");
+                });
             } else if (typeof window.__sprechenRender === "function") {
                 const content = CONTENT[topic.id] || {};
                 window.__sprechenRender(stack, current, content[current], topic.id);
@@ -563,31 +599,13 @@
                 return;
             }
 
-            /* Premium ديال B1: المحتوى ف Cloudflare KV (lesen-sprechen-b1-<id>)،
-               والـ Worker ماكيعطيه حتى يتحقق من الاشتراك. */
-            if (topic.locked && !content[current] && LEVEL !== "B2"
-                    && typeof window.__lesenPremiumFetch === "function") {
-                const wait = document.createElement("div");
-                wait.className = "lesen-empty";
-                wait.textContent = "⏳ كنجيبو الموضوع…";
-                stack.appendChild(wait);
+            if (needsPremiumLoad(topic)) {
+                const wait = waitBox(stack);
                 const asked = current;
-                /* الأول كنجربو المفتاح الجامع (lesen-sprechen-b1-t2 = كاع المواضيع
-                   ديال Teil 2 ف value وحدة)، ومن بعد المفتاح ديال الموضوع بوحدو. */
-                const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
-                const bundle = lvl + themaId.split("-")[0];
-                window.__lesenPremiumFetch(bundle).then(function (r) {
-                    const one = r && r.ok && r.data && r.data[themaId];
-                    return one ? { ok: true, data: one } : window.__lesenPremiumFetch(lvl + themaId);
-                }).then(function (r) {
+                premiumLoad(themaId).then(function (r) {
                     if (stale() || !stack.isConnected || current !== asked) return;
-                    if (r && r.ok && r.data) {
-                        CONTENT[themaId] = r.data;
-                        content = r.data;
-                        paint();
-                    } else {
-                        wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. " + ((r && r.why) || "");
-                    }
+                    if (r && r.ok) { content = CONTENT[themaId]; paint(); }
+                    else wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. " + ((r && r.why) || "");
                 });
                 return;
             }

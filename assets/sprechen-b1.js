@@ -83,7 +83,54 @@ window.SPRECHEN_B1_TOPICS = [
     { id: "t2-59", title: "Alter und Lebenserfahrung", ar: "السن وتجربة الحياة", parts: ["teil2"], locked: true, level: "B1" },
     { id: "t2-60", title: "Verwandtschaft", ar: "العائلة والقرابة", parts: ["teil2"], locked: true, level: "B1" },
     { id: "t2-61", title: "Hauskauf oder Mieten", ar: "شراء الدار ولا الكرا", parts: ["teil2"], locked: true, level: "B1" },
-    { id: "t2-62", title: "Essen", ar: "الماكلة", parts: ["teil2"], locked: true, level: "B1" }
+    { id: "t2-62", title: "Essen", ar: "الماكلة", parts: ["teil2"], locked: true, level: "B1" },
+
+    /* ---- Teil 3 · Gemeinsam etwas planen ---- */
+    { id: "t3-01", title: "Pflanzen auf dem Balkon", ar: "نباتات فالبالكون", parts: ["teil3"], locked: false, level: "B1" },
+    { id: "t3-02", title: "Nachbarin bei großem Familientreffen helfen", ar: "نعاونو الجارة فلقاء عائلي كبير", parts: ["teil3"], locked: false, level: "B1" },
+    { id: "t3-03", title: "Von Ihrer Heimatstadt erzählen", ar: "نحكيو على المدينة ديالنا", parts: ["teil3"], locked: false, level: "B1" },
+    { id: "t3-04", title: "Auf die Kinder aufpassen", ar: "نتهلاو فالدراري", parts: ["teil3"], locked: false, level: "B1" },
+    { id: "t3-05", title: "Gemeinsam einen Ausflug mit neuen Kollegen", ar: "خرجة مع جوج زملاء جداد", parts: ["teil3"], locked: false, level: "B1" },
+    { id: "t3-06", title: "Einen Spieleabend organisieren", ar: "نظمو عشية ديال الألعاب", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-07", title: "Eine Städtereise machen", ar: "رحلة لشي مدينة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-08", title: "Gruppenreise nach Berlin", ar: "رحلة جماعية لبرلين", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-09", title: "Tierpark besuchen", ar: "زيارة حديقة الحيوانات", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-10", title: "Einen kranken Freund besuchen", ar: "نزورو صاحب مريض", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-11", title: "Einen Computerkurs besuchen", ar: "نقراو كور ديال الحاسوب", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-12", title: "Treffen mit den ehemaligen Mitschülerinnen", ar: "لقاء مع صحاب القسم القدام", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-13", title: "Geburtstagsparty in einer anderen Stadt", ar: "حفلة عيد ميلاد فمدينة أخرى", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-14", title: "Firmenjubiläum", ar: "ذكرى تأسيس الشركة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-15", title: "Sich auf die Deutschprüfung vorbereiten", ar: "نوجدو راسنا لامتحان الألمانية", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-16", title: "Abschiedsparty feiern", ar: "حفلة الوداع", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-17", title: "Ein Tag im Wald mit den Familien", ar: "نهار فالغابة مع العائلات", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-18", title: "Sommerfest", ar: "حفلة الصيف", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-19", title: "Eine Spendenaktion organisieren", ar: "نظمو حملة تبرعات", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-20", title: "Ein Musikinstrument lernen", ar: "نتعلمو آلة موسيقية", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-21", title: "Ferienspiele für die Kinder", ar: "ألعاب العطلة للدراري", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-22", title: "Kindergarten verschönern", ar: "نزينو روض الأطفال", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-23", title: "Abschlussfest organisieren", ar: "نظمو حفلة آخر الكور", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-24", title: "Ein Haus zusammen renovieren", ar: "نرممو دار مجموعين", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-25", title: "Einen Sprachkurs planen", ar: "نخططو لكور ديال اللغة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-26", title: "Die alte Sprachschule besuchen", ar: "نزورو مدرسة اللغة القديمة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-27", title: "Hilfe bei der Hausarbeit", ar: "نعاونو فشغل الدار", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-28", title: "Kinderbetreuung während einer Hochzeit", ar: "نتهلاو فالدراري فالعرس", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-29", title: "Gemeinsam einen Fernsehabend organisieren", ar: "نظمو عشية ديال التلفزة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-30", title: "Ausflug mit dem Fahrrad", ar: "جولة بالبشكليط", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-31", title: "Menschen helfen, die wenig Glück hatten", ar: "نعاونو الناس اللي ما عندهمش الزهر", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-32", title: "Kochkurs: Die deutsche Küche", ar: "كور ديال الطياب: الماكلة الألمانية", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-33", title: "Kinder-Lesenacht", ar: "ليلة القراية للدراري", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-34", title: "Schiffsreise planen", ar: "نخططو لرحلة بالبابور", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-35", title: "Wanderung", ar: "خرجة ديال المشي", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-36", title: "Firmen-Olympiade", ar: "أولمبياد الشركة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-37", title: "Kindern beim Deutschlernen helfen", ar: "نعاونو الدراري يتعلمو الألمانية", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-38", title: "Straßenfest", ar: "حفلة الزنقة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-39", title: "Einen Kochkurs besuchen", ar: "نقراو كور ديال الطياب", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-40", title: "Zusammen kochen", ar: "نطيبو مجموعين", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-41", title: "Firmenfeier organisieren", ar: "نظمو حفلة للشركة", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-42", title: "Eine gewonnene Schiffsreise planen", ar: "نخططو لرحلة بحرية ربحناها", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-43", title: "Ausflug auf den höchsten Berg", ar: "خرجة لأعلى جبل", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-44", title: "Einen Tanzkurs besuchen", ar: "نقراو كور ديال الرقص", parts: ["teil3"], locked: true, level: "B1" },
+    { id: "t3-45", title: "Gemeinsam Abendessen gehen", ar: "نمشيو نتعشاو مجموعين", parts: ["teil3"], locked: true, level: "B1" }
 ];
 
 window.SPRECHEN_B1_CONTENT = {
@@ -972,6 +1019,656 @@ window.SPRECHEN_B1_CONTENT = {
             {
                 "de": "die Freizeit",
                 "ar": "وقت الفراغ"
+            }
+        ]
+    } },
+
+    /* ---- Teil 3 ---- (Aufgabe: نص الامتحان كما هو؛ الباقي تمارين ديالنا) */
+    "t3-01": { teil3: {
+        "kind": "planen",
+        "title": "Pflanzen auf dem Balkon",
+        "aufgabe": [
+            "Ihre Nachbarin möchte nach dem Winter neue Pflanzen auf dem Balkon anpflanzen. Sie sollen ihr dabei helfen.",
+            "Überlegen Sie zusammen mit Ihrer Gesprächspartnerin/Ihrem Gesprächspartner, was zu tun ist.",
+            "Tauschen Sie Ideen aus und diskutieren Sie darüber.",
+            "Einigen Sie sich zum Schluss."
+        ],
+        "aufgabeAr": "الجارة ديالكم بغات من بعد الشتا تزرع نباتات جداد فالبالكون. خاصكم تعاونوها. فكرو مع الشريك شنو خاصكم دير، تبادلو الأفكار وتناقشو، وفالأخير اتافقو.",
+        "punkte": [
+            {
+                "de": "Welche Pflanzen?",
+                "ar": "أشمن نباتات؟"
+            },
+            {
+                "de": "Wo kaufen?",
+                "ar": "فين نشريو؟"
+            },
+            {
+                "de": "Wann?",
+                "ar": "فوقاش؟"
+            },
+            {
+                "de": "Was brauchen wir? (Erde, Töpfe …)",
+                "ar": "شنو محتاجين؟ (التراب، الأصص …)"
+            },
+            {
+                "de": "Wer macht was?",
+                "ar": "شكون يدير شنو؟"
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Welche Pflanzen mag die Nachbarin?",
+                "ar": "أشمن نباتات كتبغي الجارة؟"
+            },
+            {
+                "de": "Hat der Balkon viel Sonne?",
+                "ar": "واش البالكون فيه الشمس بزاف؟"
+            },
+            {
+                "de": "Wie viel Geld dürfen wir ausgeben?",
+                "ar": "شحال نقدرو نصرفو؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "Unsere Nachbarin möchte neue Pflanzen auf dem Balkon. Ich schlage vor, dass wir zuerst mit ihr sprechen: Was gefällt ihr?",
+                "ar": "الجارة ديالنا بغات نباتات جداد فالبالكون. كنقترح نهضرو معاها الأول: شنو كيعجبها؟"
+            },
+            {
+                "who": "B",
+                "de": "Gute Idee. Ich glaube, sie mag Blumen. Ihr Balkon hat viel Sonne, deshalb passen Geranien gut. Was meinst du?",
+                "ar": "فكرة مزيانة. كنظن كتبغي الورد. البالكون ديالها فيه الشمس بزاف، لهذا الجيرانيوم كيجي مزيان. شنو رأيك؟"
+            },
+            {
+                "who": "A",
+                "de": "Einverstanden. Und vielleicht auch ein paar Kräuter, zum Beispiel Minze und Petersilie. Die kann sie in der Küche benutzen.",
+                "ar": "متفق. ويمكن حتى شي عشوب، مثلا النعناع والمعدنوس. تقدر تستعملهم فالكوزينة."
+            },
+            {
+                "who": "B",
+                "de": "Das finde ich super. Wo kaufen wir die Pflanzen? Im Gartencenter oder auf dem Markt?",
+                "ar": "زوين بزاف. فين نشريو النباتات؟ فالمشتل ولا فالسوق؟"
+            },
+            {
+                "who": "A",
+                "de": "Im Gartencenter, weil es dort auch Erde und Töpfe gibt. Dann müssen wir nur einmal fahren.",
+                "ar": "فالمشتل، حيت تما كاين حتى التراب والأصص. هكا نمشيو غير مرة وحدة."
+            },
+            {
+                "who": "B",
+                "de": "Stimmt. Wann hast du Zeit? Ich könnte am Samstagvormittag.",
+                "ar": "صحيح. فوقاش عندك الوقت؟ أنا نقدر السبت فالصباح."
+            },
+            {
+                "who": "A",
+                "de": "Samstag passt mir auch. Ich habe ein Auto, ich fahre. Kannst du die Nachbarin fragen, wie viel sie ausgeben möchte?",
+                "ar": "السبت مناسب ليا حتى أنا. عندي طوموبيل، أنا نسوق. تقدر تسول الجارة شحال بغات تصرف؟"
+            },
+            {
+                "who": "B",
+                "de": "Ja, das mache ich. Und am Nachmittag pflanzen wir alles zusammen ein.",
+                "ar": "إيه، غادي نديرها. وفالعشية نزرعو كلشي مجموعين."
+            },
+            {
+                "who": "A",
+                "de": "Perfekt. Also: Samstag Gartencenter, dann pflanzen wir zusammen mit der Nachbarin.",
+                "ar": "مزيان. إذن: السبت المشتل، ومن بعد نزرعو مجموعين مع الجارة."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "die Pflanze",
+                "ar": "النبتة"
+            },
+            {
+                "de": "der Balkon",
+                "ar": "البالكون"
+            },
+            {
+                "de": "anpflanzen",
+                "ar": "يزرع"
+            },
+            {
+                "de": "das Gartencenter",
+                "ar": "المشتل"
+            },
+            {
+                "de": "die Erde",
+                "ar": "التراب"
+            },
+            {
+                "de": "der Blumentopf",
+                "ar": "الأصيص"
+            },
+            {
+                "de": "gießen",
+                "ar": "يسقي"
+            },
+            {
+                "de": "die Kräuter (Pl.)",
+                "ar": "العشوب"
+            }
+        ]
+    } },
+
+    "t3-02": { teil3: {
+        "kind": "planen",
+        "title": "Nachbarin bei großem Familientreffen helfen",
+        "aufgabe": [
+            "Sie und Ihre Gesprächspartnerin/Ihr Gesprächspartner haben eine gemeinsame Nachbarin, die ein großes Familientreffen plant.",
+            "Sie und Ihre Gesprächspartnerin/Ihr Gesprächspartner wollen ihr helfen.",
+            "Überlegen Sie zusammen mit Ihrer Gesprächspartnerin/Ihrem Gesprächspartner, was zu tun ist.",
+            "Tauschen Sie Ideen aus und diskutieren Sie darüber.",
+            "Einigen Sie sich zum Schluss."
+        ],
+        "aufgabeAr": "عندكم جارة مشتركة كتخطط للقاء عائلي كبير، وبغيتو تعاونوها. فكرو مع الشريك شنو خاصكم دير، تبادلو الأفكار وتناقشو، وفالأخير اتافقو.",
+        "punkte": [
+            {
+                "de": "Wo feiern? (Wohnung, Garten, Saal)",
+                "ar": "فين يحتافلو؟ (الشقة، الجردة، قاعة)"
+            },
+            {
+                "de": "Essen und Getränke",
+                "ar": "الماكلة والمشروبات"
+            },
+            {
+                "de": "Tische und Stühle",
+                "ar": "الطبالي والكراسي"
+            },
+            {
+                "de": "Einladungen",
+                "ar": "الدعوات"
+            },
+            {
+                "de": "Aufräumen danach",
+                "ar": "التنظيف من بعد"
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Wie viele Gäste kommen?",
+                "ar": "شحال من ضيف غادي يجي؟"
+            },
+            {
+                "de": "Wann ist das Familientreffen?",
+                "ar": "فوقاش اللقاء العائلي؟"
+            },
+            {
+                "de": "Was können wir kochen?",
+                "ar": "شنو نقدرو نطيبو؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "Unsere Nachbarin plant ein großes Familientreffen. Wie können wir ihr helfen? Ich schlage vor, dass wir beim Kochen helfen.",
+                "ar": "الجارة ديالنا كتخطط لقاء عائلي كبير. كيفاش نقدرو نعاونوها؟ كنقترح نعاونوها فالطياب."
+            },
+            {
+                "who": "B",
+                "de": "Gute Idee. Ich kann einen Kuchen backen. Weißt du, wie viele Gäste kommen?",
+                "ar": "فكرة مزيانة. نقدر نصاوب كيكة. عارف شحال من ضيف غادي يجي؟"
+            },
+            {
+                "who": "A",
+                "de": "Ungefähr dreißig Personen. Ihre Wohnung ist zu klein. Wie wäre es, wenn wir im Garten feiern?",
+                "ar": "تقريبا تلاتين واحد. الشقة ديالها صغيرة بزاف. واش نحتافلو فالجردة؟"
+            },
+            {
+                "who": "B",
+                "de": "Das finde ich gut, aber wir brauchen dann Tische und Stühle. Ich kann meine Gartenstühle mitbringen.",
+                "ar": "مزيان، ولكن غادي نحتاجو طبالي وكراسي. نقدر نجيب الكراسي ديال الجردة ديالي."
+            },
+            {
+                "who": "A",
+                "de": "Super. Ich frage auch die anderen Nachbarn. Vielleicht haben sie noch Tische.",
+                "ar": "زوين. غادي نسول حتى الجيران الآخرين. يمكن عندهم طبالي."
+            },
+            {
+                "who": "B",
+                "de": "Und was ist, wenn es regnet?",
+                "ar": "وإلا طاحت الشتا؟"
+            },
+            {
+                "who": "A",
+                "de": "Dann bauen wir ein Zelt auf. Mein Bruder hat eins.",
+                "ar": "ننصبو خيمة. خويا عندو وحدة."
+            },
+            {
+                "who": "B",
+                "de": "Perfekt. Nach der Feier helfen wir auch beim Aufräumen, oder?",
+                "ar": "مزيان. ومن بعد الحفلة نعاونو حتى فالتنظيف، ياك؟"
+            },
+            {
+                "who": "A",
+                "de": "Natürlich. Also: Ich organisiere Tische und das Zelt, du backst den Kuchen und bringst die Stühle.",
+                "ar": "طبعا. إذن: أنا نتكلف بالطبالي والخيمة، ونتا تصاوب الكيكة وتجيب الكراسي."
+            },
+            {
+                "who": "B",
+                "de": "Einverstanden. Dann sprechen wir heute Abend mit der Nachbarin.",
+                "ar": "متفق. نهضرو مع الجارة هاد العشية."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "das Familientreffen",
+                "ar": "اللقاء العائلي"
+            },
+            {
+                "de": "planen",
+                "ar": "يخطط"
+            },
+            {
+                "de": "der Gast (die Gäste)",
+                "ar": "الضيف"
+            },
+            {
+                "de": "backen",
+                "ar": "يصاوب (حلوة)"
+            },
+            {
+                "de": "das Zelt",
+                "ar": "الخيمة"
+            },
+            {
+                "de": "aufbauen",
+                "ar": "ينصب / يركب"
+            },
+            {
+                "de": "aufräumen",
+                "ar": "ينظم / ينقي"
+            },
+            {
+                "de": "mitbringen",
+                "ar": "يجيب معاه"
+            }
+        ]
+    } },
+
+    "t3-03": { teil3: {
+        "kind": "planen",
+        "title": "Von Ihrer Heimatstadt erzählen",
+        "aufgabe": [
+            "In Ihrem Sprachkurs sollten Sie etwas über Ihre Heimatstadt erzählen.",
+            "Ihre Gesprächspartnerin/Ihr Gesprächspartner kommt aus derselben Stadt wie Sie.",
+            "Überlegen Sie zusammen mit Ihrer Gesprächspartnerin/Ihrem Gesprächspartner, was zu tun ist.",
+            "Tauschen Sie Ideen aus und diskutieren Sie darüber.",
+            "Einigen Sie sich zum Schluss."
+        ],
+        "aufgabeAr": "فالكور ديال اللغة خاصكم تحكيو شي حاجة على المدينة الأصلية ديالكم. الشريك ديالك من نفس المدينة. فكرو شنو خاصكم دير، تبادلو الأفكار وتناقشو، وفالأخير اتافقو.",
+        "punkte": [
+            {
+                "de": "Was wollen wir zeigen? (Sehenswürdigkeiten, Essen, Feste)",
+                "ar": "شنو نوريو؟ (المعالم، الماكلة، الأعياد)"
+            },
+            {
+                "de": "Fotos oder Video?",
+                "ar": "تصاور ولا فيديو؟"
+            },
+            {
+                "de": "Wie lange?",
+                "ar": "شحال من وقت؟"
+            },
+            {
+                "de": "Wer spricht über was?",
+                "ar": "شكون يهضر على شنو؟"
+            },
+            {
+                "de": "Wann üben wir?",
+                "ar": "فوقاش نتمرنو؟"
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Was ist in unserer Stadt besonders?",
+                "ar": "شنو خاص فالمدينة ديالنا؟"
+            },
+            {
+                "de": "Hast du schöne Fotos?",
+                "ar": "عندك تصاور زوينين؟"
+            },
+            {
+                "de": "Sollen wir etwas zum Probieren mitbringen?",
+                "ar": "واش نجيبو شي حاجة يذوقوها؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "Wir sollen im Kurs etwas über unsere Heimatstadt Fès erzählen. Womit fangen wir an?",
+                "ar": "خاصنا نحكيو فالكور شي حاجة على المدينة ديالنا فاس. بشنو نبداو؟"
+            },
+            {
+                "who": "B",
+                "de": "Ich schlage vor, dass wir zuerst die Altstadt zeigen. Die Medina ist sehr bekannt. Was meinst du?",
+                "ar": "كنقترح نوريو الأول المدينة القديمة. المدينة مشهورة بزاف. شنو رأيك؟"
+            },
+            {
+                "who": "A",
+                "de": "Gute Idee. Ich habe viele Fotos von der Medina und den Gerbereien. Ich kann eine kleine Präsentation machen.",
+                "ar": "فكرة مزيانة. عندي بزاف ديال التصاور ديال المدينة ودار الدباغ. نقدر ندير عرض صغير."
+            },
+            {
+                "who": "B",
+                "de": "Super. Dann spreche ich über das Essen, zum Beispiel über Pastilla. Vielleicht bringe ich auch Gebäck mit.",
+                "ar": "زوين. أنا نهضر على الماكلة، مثلا البسطيلة. ويمكن نجيب حتى شي حلوة."
+            },
+            {
+                "who": "A",
+                "de": "Das finde ich toll, dann können alle probieren. Wie lange soll die Präsentation dauern?",
+                "ar": "هادشي زوين، هكا كلشي يذوق. شحال خاص العرض يدوم؟"
+            },
+            {
+                "who": "B",
+                "de": "Die Lehrerin hat zehn Minuten gesagt. Jeder spricht fünf Minuten.",
+                "ar": "الأستاذة قالت عشر دقايق. كل واحد يهضر خمس دقايق."
+            },
+            {
+                "who": "A",
+                "de": "Einverstanden. Wann können wir zusammen üben?",
+                "ar": "متفق. فوقاش نقدرو نتمرنو مجموعين؟"
+            },
+            {
+                "who": "B",
+                "de": "Am Donnerstag nach dem Kurs? Dann haben wir noch Zeit bis Montag.",
+                "ar": "نهار الخميس من بعد الكور؟ هكا باقي عندنا الوقت حتى الاثنين."
+            },
+            {
+                "who": "A",
+                "de": "Gut. Also: Ich mache die Fotos und die Medina, du das Essen, und am Donnerstag üben wir.",
+                "ar": "مزيان. إذن: أنا التصاور والمدينة القديمة، نتا الماكلة، ونهار الخميس نتمرنو."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "die Heimatstadt",
+                "ar": "المدينة الأصلية"
+            },
+            {
+                "de": "die Altstadt",
+                "ar": "المدينة القديمة"
+            },
+            {
+                "de": "die Sehenswürdigkeit",
+                "ar": "المعلمة"
+            },
+            {
+                "de": "die Präsentation",
+                "ar": "العرض"
+            },
+            {
+                "de": "probieren",
+                "ar": "يذوق / يجرب"
+            },
+            {
+                "de": "das Gebäck",
+                "ar": "الحلوة"
+            },
+            {
+                "de": "üben",
+                "ar": "يتمرن"
+            },
+            {
+                "de": "dauern",
+                "ar": "يدوم"
+            }
+        ]
+    } },
+
+    "t3-04": { teil3: {
+        "kind": "planen",
+        "title": "Auf die Kinder aufpassen",
+        "aufgabe": [
+            "Ihr Bruder ist auf Geschäftsreise und braucht Ihre Hilfe, auf seine Kinder aufzupassen.",
+            "Gemeinsam mit Ihrem Partner/Ihrer Partnerin erstellen Sie einen Plan und besprechen diesen."
+        ],
+        "aufgabeAr": "خوك فسفر ديال الخدمة ومحتاج المساعدة ديالك باش تتهلا فالدراري ديالو. ديرو خطة مع الشريك ديالك وتناقشو فيها.",
+        "punkte": [
+            {
+                "de": "Wer bringt die Kinder zur Schule?",
+                "ar": "شكون يدي الدراري للمدرسة؟"
+            },
+            {
+                "de": "Essen kochen",
+                "ar": "الطياب"
+            },
+            {
+                "de": "Hausaufgaben",
+                "ar": "الواجبات"
+            },
+            {
+                "de": "Freizeit am Nachmittag",
+                "ar": "وقت الفراغ فالعشية"
+            },
+            {
+                "de": "Wer bleibt nachts?",
+                "ar": "شكون يبات معاهم؟"
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Wie lange ist dein Bruder weg?",
+                "ar": "شحال غادي يغيب خوك؟"
+            },
+            {
+                "de": "Wann beginnt die Schule?",
+                "ar": "فوقاش كتبدا المدرسة؟"
+            },
+            {
+                "de": "Was essen die Kinder gern?",
+                "ar": "شنو كيبغيو ياكلو الدراري؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "Mein Bruder ist eine Woche auf Geschäftsreise. Können wir zusammen auf seine Kinder aufpassen?",
+                "ar": "خويا فسفر ديال الخدمة سيمانة. واش نقدرو نتهلاو مجموعين فالدراري ديالو؟"
+            },
+            {
+                "who": "B",
+                "de": "Ja, gern. Ich schlage vor, dass ich morgens die Kinder zur Schule bringe, weil ich erst um zehn arbeite.",
+                "ar": "إيه، بكل فرح. كنقترح أنا ندي الدراري للمدرسة فالصباح، حيت ما كنبدا نخدم حتى للعشرة."
+            },
+            {
+                "who": "A",
+                "de": "Super, danke. Dann hole ich sie mittags ab und koche. Was meinst du?",
+                "ar": "زوين، شكرا. أنا نجيبهم فالغدا ونطيب. شنو رأيك؟"
+            },
+            {
+                "who": "B",
+                "de": "Gute Idee. Und wer hilft bei den Hausaufgaben?",
+                "ar": "فكرة مزيانة. وشكون يعاونهم فالواجبات؟"
+            },
+            {
+                "who": "A",
+                "de": "Das mache ich nach dem Essen. Am Nachmittag könnten wir mit ihnen in den Park gehen.",
+                "ar": "أنا نديرها من بعد الماكلة. فالعشية نقدرو نمشيو معاهم للجردة."
+            },
+            {
+                "who": "B",
+                "de": "Das finde ich gut, dann spielen sie draußen und nicht nur am Handy.",
+                "ar": "هادشي مزيان، هكا يلعبو برا ماشي غير فالتيليفون."
+            },
+            {
+                "who": "A",
+                "de": "Und nachts? Ich kann nicht jede Nacht bei ihnen schlafen.",
+                "ar": "وفالليل؟ ما نقدرش نبات عندهم كل ليلة."
+            },
+            {
+                "who": "B",
+                "de": "Dann wechseln wir uns ab: Montag, Mittwoch und Freitag du, die anderen Tage ich.",
+                "ar": "نتناوبو: الاثنين، الأربعاء والجمعة نتا، والأيام الأخرى أنا."
+            },
+            {
+                "who": "A",
+                "de": "Einverstanden. Also: Du bringst sie morgens, ich hole sie ab, und nachts wechseln wir uns ab.",
+                "ar": "متفق. إذن: نتا كتديهم فالصباح، أنا كنجيبهم، وفالليل كنتناوبو."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "aufpassen auf",
+                "ar": "يتهلا فـ / يحضي"
+            },
+            {
+                "de": "die Geschäftsreise",
+                "ar": "سفر ديال الخدمة"
+            },
+            {
+                "de": "abholen",
+                "ar": "يجيب (شي واحد)"
+            },
+            {
+                "de": "die Hausaufgaben (Pl.)",
+                "ar": "الواجبات"
+            },
+            {
+                "de": "sich abwechseln",
+                "ar": "يتناوبو"
+            },
+            {
+                "de": "der Plan",
+                "ar": "الخطة"
+            },
+            {
+                "de": "bringen",
+                "ar": "يدي"
+            },
+            {
+                "de": "draußen spielen",
+                "ar": "يلعب برا"
+            }
+        ]
+    } },
+
+    "t3-05": { teil3: {
+        "kind": "planen",
+        "title": "Gemeinsam einen Ausflug mit neuen Kollegen",
+        "aufgabe": [
+            "Sie und Ihre Gesprächspartnerin/Ihr Gesprächspartner haben zwei neue Kollegen in Ihrer Firma.",
+            "Sie möchten sich gemeinsam mit ihnen treffen und einen Ausflug organisieren.",
+            "Tauschen Sie Ihre Ideen aus und einigen Sie sich am Ende auf einen Plan."
+        ],
+        "aufgabeAr": "عندكم جوج زملاء جداد فالشركة. بغيتو تتلاقاو معاهم وتنظمو خرجة مجموعين. تبادلو الأفكار وفالأخير اتافقو على خطة.",
+        "punkte": [
+            {
+                "de": "Wohin?",
+                "ar": "فين؟"
+            },
+            {
+                "de": "Wann?",
+                "ar": "فوقاش؟"
+            },
+            {
+                "de": "Wie fahren wir hin?",
+                "ar": "كيفاش نمشيو؟"
+            },
+            {
+                "de": "Essen und Trinken",
+                "ar": "الماكلة والشراب"
+            },
+            {
+                "de": "Wer lädt die Kollegen ein?",
+                "ar": "شكون يعرض على الزملاء؟"
+            }
+        ],
+        "fragen": [
+            {
+                "de": "Was machen die neuen Kollegen gern?",
+                "ar": "شنو كيبغيو يديرو الزملاء الجداد؟"
+            },
+            {
+                "de": "Soll der Ausflug am Wochenende sein?",
+                "ar": "واش الخرجة تكون فالويكاند؟"
+            },
+            {
+                "de": "Wie viel darf es kosten?",
+                "ar": "شحال تقدر تكلف؟"
+            }
+        ],
+        "dialog": [
+            {
+                "who": "A",
+                "de": "Wir haben zwei neue Kollegen. Ich schlage vor, dass wir einen Ausflug mit ihnen machen, damit sie uns besser kennenlernen.",
+                "ar": "عندنا جوج زملاء جداد. كنقترح نديرو معاهم خرجة، باش يتعرفو علينا مزيان."
+            },
+            {
+                "who": "B",
+                "de": "Gute Idee! Wohin könnten wir fahren? Vielleicht an den See?",
+                "ar": "فكرة مزيانة! فين نقدرو نمشيو؟ يمكن للبحيرة؟"
+            },
+            {
+                "who": "A",
+                "de": "Der See ist schön, aber bei schlechtem Wetter ist das schwierig. Wie wäre es mit einer Stadtführung?",
+                "ar": "البحيرة زوينة، ولكن إلا كان الجو خايب صعيب. واش نديرو زيارة مصحوبة فالمدينة؟"
+            },
+            {
+                "who": "B",
+                "de": "Hmm, das finde ich ein bisschen langweilig. Lass uns zum See fahren und, wenn es regnet, gehen wir ins Museum.",
+                "ar": "همم، كنلقاها مملة شوية. يلاه نمشيو للبحيرة، وإلا طاحت الشتا نمشيو للمتحف."
+            },
+            {
+                "who": "A",
+                "de": "Einverstanden. Und wann? Am Samstag?",
+                "ar": "متفق. وفوقاش؟ السبت؟"
+            },
+            {
+                "who": "B",
+                "de": "Samstag ist gut. Wir fahren mit dem Zug, dann ist es billiger und wir können uns unterhalten.",
+                "ar": "السبت مزيان. نمشيو بالتران، هكا أرخص ونقدرو نهضرو."
+            },
+            {
+                "who": "A",
+                "de": "Stimmt. Ich mache ein Picknick: Brot, Käse und Obst. Kannst du die Getränke mitbringen?",
+                "ar": "صحيح. أنا نوجد البيكنيك: الخبز، الفرماج والفواكه. تقدر تجيب المشروبات؟"
+            },
+            {
+                "who": "B",
+                "de": "Klar. Und ich schreibe den Kollegen heute eine Nachricht und lade sie ein.",
+                "ar": "أكيد. وأنا نكتب ليهم اليوم ميساج ونعرض عليهم."
+            },
+            {
+                "who": "A",
+                "de": "Perfekt. Also: Samstag mit dem Zug zum See, ich mache das Essen, du die Getränke und die Einladung.",
+                "ar": "مزيان. إذن: السبت بالتران للبحيرة، أنا الماكلة، ونتا المشروبات والدعوة."
+            }
+        ],
+        "woerter": [
+            {
+                "de": "der Kollege / die Kollegin",
+                "ar": "الزميل / الزميلة"
+            },
+            {
+                "de": "der Ausflug",
+                "ar": "الخرجة"
+            },
+            {
+                "de": "kennenlernen",
+                "ar": "يتعرف على"
+            },
+            {
+                "de": "die Stadtführung",
+                "ar": "زيارة مصحوبة فالمدينة"
+            },
+            {
+                "de": "das Picknick",
+                "ar": "البيكنيك"
+            },
+            {
+                "de": "die Getränke (Pl.)",
+                "ar": "المشروبات"
+            },
+            {
+                "de": "einladen",
+                "ar": "يعرض على"
+            },
+            {
+                "de": "sich unterhalten",
+                "ar": "يهضر مع"
             }
         ]
     } }
