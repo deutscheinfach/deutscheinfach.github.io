@@ -72,18 +72,18 @@ window.SPRECHEN_B1_TOPICS = [
     { id: "t2-48", title: "Ausziehen oder allein wohnen", ar: "الخروج من دار الوالدين", parts: ["teil2"], locked: true, level: "B1" },
     { id: "t2-49", title: "Sammlungen und sammeln", ar: "جمع الحوايج", parts: ["teil2"], locked: true, level: "B1" },
     { id: "t2-50", title: "Heiraten / Hochzeit", ar: "الزواج / العرس", parts: ["teil2"], locked: true, level: "B1" },
-    { id: "t2-51", title: "Gemeinschaftsgarten", ar: "جردة مشتركة", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-52", title: "Serie oder Film", ar: "مسلسل ولا فيلم", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-53", title: "Sport im Fitnessstudio", ar: "الرياضة فالصالة", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-54", title: "Klassentreffen", ar: "لقاء صحاب القسم", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-55", title: "Führerschein", ar: "البيرمي", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-56", title: "Immer online", ar: "ديما أونلاين", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-57", title: "Wohngemeinschaft", ar: "السكن المشترك", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-58", title: "Der ideale Urlaub", ar: "العطلة المثالية", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-59", title: "Alter und Lebenserfahrung", ar: "السن وتجربة الحياة", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-60", title: "Verwandtschaft", ar: "العائلة والقرابة", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-61", title: "Hauskauf oder Mieten", ar: "شراء الدار ولا الكرا", parts: ["teil2"], locked: true, soon: true, level: "B1" },
-    { id: "t2-62", title: "Essen", ar: "الماكلة", parts: ["teil2"], locked: true, soon: true, level: "B1" }
+    { id: "t2-51", title: "Gemeinschaftsgarten", ar: "جردة مشتركة", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-52", title: "Serie oder Film", ar: "مسلسل ولا فيلم", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-53", title: "Sport im Fitnessstudio", ar: "الرياضة فالصالة", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-54", title: "Klassentreffen", ar: "لقاء صحاب القسم", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-55", title: "Führerschein", ar: "البيرمي", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-56", title: "Immer online", ar: "ديما أونلاين", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-57", title: "Wohngemeinschaft", ar: "السكن المشترك", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-58", title: "Der ideale Urlaub", ar: "العطلة المثالية", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-59", title: "Alter und Lebenserfahrung", ar: "السن وتجربة الحياة", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-60", title: "Verwandtschaft", ar: "العائلة والقرابة", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-61", title: "Hauskauf oder Mieten", ar: "شراء الدار ولا الكرا", parts: ["teil2"], locked: true, level: "B1" },
+    { id: "t2-62", title: "Essen", ar: "الماكلة", parts: ["teil2"], locked: true, level: "B1" }
 ];
 
 window.SPRECHEN_B1_CONTENT = {
