@@ -810,8 +810,21 @@
             }
 
             /* من بعد النتيجة: الامتحان كامل من الأول (Teil 1 خاوي) */
+            /* بلا رسالة ديال المتصفح: الضغطة الأولى كتسول «متأكد؟» فالزر
+               نيت، والثانية (فـ4 ثواني) كتعاود — هاد الزر حدا «السابق». */
             if (graded) {
-                navButton("lesen-btn-retry exam-bar-again", "↻ عاود من الأول", "rtl", restartExam);
+                const again = navButton("lesen-btn-retry exam-bar-again", "↻ عاود من الأول", "rtl", null);
+                let armed = null;
+                again.addEventListener("click", function () {
+                    if (armed) { clearTimeout(armed); armed = null; restartExam(); return; }
+                    again.textContent = "متأكد؟ كليكي مرة خرى";
+                    again.classList.add("is-armed");
+                    armed = setTimeout(function () {
+                        armed = null;
+                        again.textContent = "↻ عاود من الأول";
+                        again.classList.remove("is-armed");
+                    }, 4000);
+                });
             }
 
             const prev = navButton("lesen-btn-show exam-bar-prev", "السابق", "rtl",
@@ -846,7 +859,6 @@
         function checkButton(box) { return partButton(box, "lesen-btn-check"); }
 
         function restartExam() {
-            if (!confirm("نعاودو الامتحان من الأول؟ الأجوبة كاملين غادي يتمسحو.")) return;
             PARTS.forEach(function (p) {
                 const btn = partButton(boxes[p.key], "lesen-btn-retry");
                 if (btn) btn.click();
@@ -860,7 +872,6 @@
         }
 
         function gradeAll() {
-            if (!confirm("نصححو الامتحان كامل (الأجزاء الخمسة) دابا؟")) return;
             graded = true;
             frozen = Math.max(0, LIMIT - (Date.now() - started));
             tick();

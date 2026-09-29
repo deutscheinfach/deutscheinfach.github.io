@@ -3368,3 +3368,8 @@ html.is-embed .exam-top-clock { display: none; }
     .exam-tab-kind::before { content: attr(data-short); font-size: 8px; }
     .exam-top .exam-tab .exam-tab-nr { font-size: 12px; }
 }
+.lesen-bar .exam-bar-again.is-armed {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 10%, var(--surface-2));
+}
