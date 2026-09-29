@@ -1,5 +1,5 @@
 {
-  "build": "8b66cb6fb9e3",
+  "build": "f8cbd57ccac1",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -22,7 +22,7 @@
     "assets/premium-gate.js": "6e86f042",
     "assets/progress.js": "1f4ecf40",
     "assets/schreiben-auth.js": "c131e3c8",
-    "assets/schreiben-engine.js": "7255b108",
+    "assets/schreiben-engine.js": "e243be02",
     "assets/schreiben-hub.js": "e578b50f",
     "assets/schreiben-style.css": "26ec4157",
     "assets/schreiben-topics-b1.js": "5c35fe86",
@@ -46,7 +46,7 @@
     "assets/stars.js": "df3dede2",
     "assets/theme.css": "0f1853c7",
     "assets/training.css": "65936d7b",
-    "assets/whatsapp.js": "56de1cb7",
+    "assets/whatsapp.js": "25e3ea72",
     "assets/wortschatz-1000.js": "1b72e9ed",
     "assets/wortschatz-b2.js": "856a61b2",
     "assets/wortschatz.js": "c9ae860b"
