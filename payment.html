@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=0f1853c7">
+<link rel="stylesheet" href="assets/theme.css?v=e32435cd">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
     <style>
@@ -71,7 +71,7 @@
 
         .back-button:hover {
             border-color: var(--border-strong);
-            color: var(--brand);
+            color: var(--accent-text);
             transform: translateY(-2px);
         }
 
@@ -84,7 +84,7 @@
             font-size: 36px;
             margin: 0 0 10px;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--brand-light), var(--red));
+            background: var(--grad-text, linear-gradient(135deg, var(--brand-light), var(--red)));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -136,7 +136,7 @@
         .offer-title {
             text-align: center;
             font-size: 25px;
-            color: var(--brand);
+            color: var(--accent-text);
             margin: 0 0 8px;
         }
 
@@ -204,8 +204,8 @@
             width: 100%;
             margin-top: 20px;
             padding: 14px 10px;
-            background: #25D366;
-            color: white;
+            background: var(--grad-brand);
+            color: var(--on-brand);
             text-decoration: none;
             text-align: center;
             border-radius: 12px;
@@ -215,7 +215,7 @@
         }
 
         .whatsapp-button:hover {
-            background: #1ebe5d;
+            filter: brightness(1.05);
             transform: translateY(-2px);
             box-shadow: 0 10px 25px -6px rgba(37,211,102,0.4);
         }
@@ -336,14 +336,14 @@
 
     </style>
 
-<style id="v4">
+<style id="v4" media="not all">
 /* v4 — ذهبي وأسود */
 :root { --dark: #ece7dc; --gray: #a39d90; --light: #1e1e24; --white: #16161b; --border: rgba(255,255,255,.10); --border-strong: rgba(214,178,94,.4); --bg: #0e0e11; }
 body { background: radial-gradient(circle at 15% 10%, rgba(214,178,94,.12), transparent 40%), linear-gradient(180deg, #111115 0%, #0b0b0e 100%) !important; color: var(--dark); }
 .offer { background: linear-gradient(160deg, #1b1b21, #131317); border: 1px solid rgba(214,178,94,.22); box-shadow: 0 30px 60px -34px rgba(0,0,0,.9); }
 .offer:hover { border-color: rgba(214,178,94,.55); }
-.offer-title { color: var(--brand-light); }
-.check { color: var(--brand); }
+.offer-title { color: var(--accent-text); }
+.check { color: var(--accent-text); }
 .back-button { background: transparent; color: var(--dark); border-color: rgba(214,178,94,.4); }
 </style>
 <!-- seo:start (tools/seo.py) -->
