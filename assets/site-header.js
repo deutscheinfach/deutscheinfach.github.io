@@ -837,6 +837,7 @@
                     /* خرج بصح — كنمسحو الذاكرة باش المرة الجاية
                        ما نرسموش ليه حساب ماكاينش. */
                     remember(null);
+                    news.setUser(null);
                     news.setAdmin(false);
                     guest.hidden = false;
                     account.hidden = true;
@@ -848,6 +849,7 @@
 
                 guest.hidden = true;
                 account.hidden = false;
+                news.setUser(person.uid);
 
                 let name = person.displayName
                     || (person.email || "").split("@")[0]
@@ -1106,10 +1108,16 @@
         function read(key) {
             try { return localStorage.getItem(key); } catch (e) { return null; }
         }
-        function seenAt() { return Number(read(SEEN)) || 0; }
-
-        /* أول مرة: كنعتبرو كلشي مشاف — ماشي معقول الزائر الجديد يلقى 10 إشعارات */
-        if (!read(SEEN)) store(SEEN, String(Date.now()));
+        /* «شفتهم» كيتحفظ لكل حساب بوحدو (ماشي للمتصفح كامل): إلا دخل
+           حساب آخر فنفس المتصفح كيشوف النقطة الحمرا ديالو.
+           أول مرة (حتى للزائر الجديد): الأخبار ديال آخر 14 يوم كتبان جديدة. */
+        let who = "guest";
+        const FRESH = 14 * 86400000;
+        function seenKey() { return SEEN + ":" + who; }
+        function seenAt() {
+            const v = Number(read(seenKey()));
+            return v || (Date.now() - FRESH);
+        }
 
         try {
             const cached = JSON.parse(read(CACHE) || "null");
@@ -1212,6 +1220,8 @@
                 note.textContent = "كنشرو…";
                 try {
                     await fs.addDoc(fs.collection(db, "news"), data);
+                    /* اللي كتب الخبر ماخاصوش يشوف النقطة الحمرا عليه */
+                    store(seenKey(), String(Date.now() + 5000));
                     await refresh(true);
                 } catch (e) {
                     send.disabled = false;
@@ -1257,7 +1267,7 @@
                 panel.dataset.seen = String(seenAt());
                 paint();
                 const newest = items.reduce(function (m, n) { return Math.max(m, n.at); }, 0);
-                store(SEEN, String(Math.max(Date.now(), newest)));
+                store(seenKey(), String(Math.max(Date.now(), newest)));
                 paintDot();
                 refresh(false);
             }
@@ -1281,6 +1291,10 @@
                 fs = fsMod;
                 db = database;
                 refresh(false);
+            },
+            setUser: function (uid) {
+                who = uid || "guest";
+                paintDot();
             },
             setAdmin: function (value) {
                 if (admin === value) return;
