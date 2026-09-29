@@ -687,7 +687,9 @@
 
             const note = document.createElement("p");
             note.className = "exam-summary-note";
-            note.textContent = done.length < PARTS.length
+            note.textContent = !graded
+                ? "صححتي " + done.length + " من " + PARTS.length + " ديال الأجزاء. كمل، وفالجزء الأخير «صحح الامتحان كامل» كيعطيك النتيجة كاملة."
+                : done.length < PARTS.length
                 ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء بلا تصحيح (مقفولين ولا ماتحملوش)."
                 : (total >= need
                     ? "🎉 ناجح! جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة)."
@@ -731,6 +733,16 @@
             }
             nav.appendChild(main);
 
+            /* من بعد النتيجة: الامتحان كامل من الأول (Teil 1 خاوي) */
+            if (graded) {
+                const again = document.createElement("button");
+                again.type = "button";
+                again.className = "lesen-btn lesen-btn-retry exam-bar-again";
+                again.textContent = "↻ عاود من الأول";
+                again.addEventListener("click", restartExam);
+                nav.appendChild(again);
+            }
+
             if (before) {
                 const prev = document.createElement("button");
                 prev.type = "button";
@@ -740,19 +752,32 @@
                 nav.appendChild(prev);
             }
 
-            /* قبل التصحيح: غير أزرار الامتحان (بحال telc، التصحيح فالأخير).
-               من بعد: كيرجعو «شوف الحل» و«عاود» ديال كل جزء. */
+            /* قبل النتيجة: «تحقق» كيصحح غير الجزء اللي فيه.
+               من بعد: «شوف الحل» ديال الجزء + «عاود الامتحان من الأول». */
             if (typeof window.__lesenBarExtra === "function") {
-                window.__lesenBarExtra(nav, stack, { hideActions: !graded });
+                window.__lesenBarExtra(nav, stack, { mode: graded ? "done" : "live" });
             }
         }
 
-        function checkButton(box) {
-            const inPlace = box.querySelector(".lesen-actions .lesen-btn-check");
+        function partButton(box, cls) {
+            const inPlace = box.querySelector(".lesen-actions ." + cls);
             if (inPlace) return inPlace;
             const anchor = box.querySelector(".lesen-actions-anchor");
             return anchor && anchor.__actions
-                ? anchor.__actions.querySelector(".lesen-btn-check") : null;
+                ? anchor.__actions.querySelector("." + cls) : null;
+        }
+        function checkButton(box) { return partButton(box, "lesen-btn-check"); }
+
+        function restartExam() {
+            if (!confirm("نعاودو الامتحان من الأول؟ الأجوبة كاملين غادي يتمسحو.")) return;
+            PARTS.forEach(function (p) {
+                const btn = partButton(boxes[p.key], "lesen-btn-retry");
+                if (btn) btn.click();
+                delete scores[p.key];
+            });
+            graded = false;
+            paintScores();
+            go("teil1");
         }
 
         function gradeAll() {
