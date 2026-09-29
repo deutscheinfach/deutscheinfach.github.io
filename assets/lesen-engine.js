@@ -99,29 +99,52 @@
     const bar = document.createElement("div");
     bar.className = "lesen-bar";
     bar.hidden = true;
+    const slot = document.createElement("div");
+    slot.className = "lesen-bar-slot";
+    const extraBox = document.createElement("div");
+    extraBox.className = "lesen-bar-extra";
+    bar.append(slot, extraBox);
     let adopted = [];
     let queued = false;
+    /* زيادة فالشريط (أزرار الامتحان الكامل). كتبان غير ملي owner باين. */
+    let extra = null, extraOwner = null, hideActions = false;
+    window.__lesenBarExtra = function (node, owner, options) {
+        extra = node || null;
+        extraOwner = owner || null;
+        hideActions = !!(options && options.hideActions);
+        queueBar();
+    };
 
     function syncBar() {
         queued = false;
         document.querySelectorAll(".lesen-actions").forEach(function (actions) {
-            if (actions.__anchor) return;
+            if (actions.__anchor || bar.contains(actions)) return;
             const anchor = document.createElement("span");
             anchor.className = "lesen-actions-anchor";
             actions.replaceWith(anchor);
             actions.__anchor = anchor;
+            anchor.__actions = actions;
             adopted.push(actions);
         });
         adopted = adopted.filter(function (a) { return a.__anchor.isConnected; });
         let current = null;
         adopted.forEach(function (a) { if (a.__anchor.getClientRects().length) current = a; });
 
+        const showExtra = !!(extra && extraOwner && extraOwner.isConnected
+                             && extraOwner.getClientRects().length);
+        const shown = !!current || showExtra;
+
         if (!bar.isConnected) document.body.appendChild(bar);
-        if (current && current.parentNode !== bar) bar.replaceChildren(current);
-        if (!current && bar.firstChild) bar.replaceChildren();
-        if (bar.hidden !== !current) bar.hidden = !current;
-        if (document.body.classList.contains("has-lesen-bar") !== !!current) {
-            document.body.classList.toggle("has-lesen-bar", !!current);
+        if (current && current.parentNode !== slot) slot.replaceChildren(current);
+        if (!current && slot.firstChild) slot.replaceChildren();
+        if (showExtra && extra.parentNode !== extraBox) extraBox.replaceChildren(extra);
+        if (!showExtra && extraBox.firstChild) extraBox.replaceChildren();
+        if (bar.classList.contains("has-extra") !== showExtra) bar.classList.toggle("has-extra", showExtra);
+        const slotHidden = showExtra && hideActions;
+        if (slot.hidden !== slotHidden) slot.hidden = slotHidden;
+        if (bar.hidden !== !shown) bar.hidden = !shown;
+        if (document.body.classList.contains("has-lesen-bar") !== shown) {
+            document.body.classList.toggle("has-lesen-bar", shown);
         }
     }
     function queueBar() {

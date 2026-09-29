@@ -601,20 +601,34 @@
                 return;
             }
             const d = event.detail || {};
-            if (d.part !== current) return;
-            scores[current] = d.points;
+            if (!EXAM_MAX[d.part]) return;
+            scores[d.part] = d.points;
             paintScores();
         };
         window.addEventListener("lesen-points", examListener);
 
+        /* كل جزء فالحاوية ديالو، كيتبنا مرة وحدة وكيبقى (غير كيتخبى).
+           هكا الأجوبة ماكتضيعش ملي تدوز من جزء لجزء، وفالأخير
+           «صحح الامتحان كامل» كيصحح الخمسة دقة وحدة. */
         const stack = document.createElement("div");
-        stack.id = "lesen-stack";
-        stack.setAttribute("data-manual", "");
+        stack.className = "exam-parts";
         detail.appendChild(stack);
+        const boxes = {};
+        let graded = false;
+        PARTS.forEach(function (p) {
+            const box = document.createElement("div");
+            box.className = "exam-part";
+            box.hidden = true;
+            stack.appendChild(box);
+            boxes[p.key] = box;
+            renderPart(box, exam.parts[p.key], p.key, function () {
+                return !detail.hidden && document.body.contains(box);
+            });
+        });
 
-        const next = document.createElement("div");
-        next.className = "exam-next";
-        detail.appendChild(next);
+        /* الأزرار ديال الامتحان فالشريط الثابت تحت */
+        const nav = document.createElement("div");
+        nav.className = "lesen-actions exam-bar";
 
         const summary = document.createElement("div");
         summary.className = "exam-summary";
@@ -674,7 +688,7 @@
             const note = document.createElement("p");
             note.className = "exam-summary-note";
             note.textContent = done.length < PARTS.length
-                ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء. صحح كل جزء بـ «تحقق من الإجابات» باش تبان النتيجة الكاملة."
+                ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء بلا تصحيح (مقفولين ولا ماتحملوش)."
                 : (total >= need
                     ? "🎉 ناجح! جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة)."
                     : "باقي شوية: جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة). عاود الأجزاء الضعاف.");
@@ -692,26 +706,67 @@
         }
 
         function paint() {
-            const wanted = current;
-            renderPart(stack, exam.parts[current], current, function () {
-                return current === wanted && !detail.hidden;
-            });
+            PARTS.forEach(function (p) { boxes[p.key].hidden = p.key !== current; });
 
-            /* زر للجزء اللي من بعد */
-            next.textContent = "";
+            /* الشريط: السابق · الجزء اللي من بعد / صحح الامتحان كامل */
+            nav.textContent = "";
             const at = PARTS.findIndex(function (p) { return p.key === current; });
+            const before = PARTS[at - 1];
             const after = PARTS[at + 1];
-            const b = document.createElement("button");
-            b.type = "button";
-            b.className = "exam-next-btn";
+
+            const main = document.createElement("button");
+            main.type = "button";
+            main.className = "lesen-btn lesen-btn-check exam-bar-main";
             if (after) {
-                b.textContent = "الجزء اللي من بعد: " + after.label + " ←";
-                b.addEventListener("click", function () { go(after.key); });
+                main.textContent = "الجزء اللي من بعد: " + after.label + " ←";
+                main.addEventListener("click", function () { go(after.key); });
+            } else if (!graded) {
+                main.textContent = "✓ صحح الامتحان كامل";
+                main.addEventListener("click", gradeAll);
             } else {
-                b.textContent = "✓ ساليتي الامتحان — رجع للائحة";
-                b.addEventListener("click", function () { close(true); });
+                main.textContent = "شوف النتيجة";
+                main.addEventListener("click", function () {
+                    summary.scrollIntoView({ behavior: "smooth", block: "center" });
+                });
             }
-            next.appendChild(b);
+            nav.appendChild(main);
+
+            if (before) {
+                const prev = document.createElement("button");
+                prev.type = "button";
+                prev.className = "lesen-btn lesen-btn-show exam-bar-prev";
+                prev.textContent = "→ " + before.label;
+                prev.addEventListener("click", function () { go(before.key); });
+                nav.appendChild(prev);
+            }
+
+            /* قبل التصحيح: غير أزرار الامتحان (بحال telc، التصحيح فالأخير).
+               من بعد: كيرجعو «شوف الحل» و«عاود» ديال كل جزء. */
+            if (typeof window.__lesenBarExtra === "function") {
+                window.__lesenBarExtra(nav, stack, { hideActions: !graded });
+            }
+        }
+
+        function checkButton(box) {
+            const inPlace = box.querySelector(".lesen-actions .lesen-btn-check");
+            if (inPlace) return inPlace;
+            const anchor = box.querySelector(".lesen-actions-anchor");
+            return anchor && anchor.__actions
+                ? anchor.__actions.querySelector(".lesen-btn-check") : null;
+        }
+
+        function gradeAll() {
+            if (!confirm("نصححو الامتحان كامل (الأجزاء الخمسة) دابا؟")) return;
+            graded = true;
+            PARTS.forEach(function (p) {
+                const btn = checkButton(boxes[p.key]);
+                if (btn) btn.click();
+            });
+            paint();
+            paintScores();
+            setTimeout(function () {
+                summary.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 60);
         }
     }
 
