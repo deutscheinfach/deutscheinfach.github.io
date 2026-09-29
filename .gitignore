@@ -8,3 +8,10 @@
 premium-lesen.json
 premium-topics.json
 premium-lesen-split/
+
+# ===== محتوى Sprechen B2 المدفوع =====
+# نفس السبب ديال premium-lesen: الريبو عام.
+#   node tools/split-sprechen.mjs   ← كيبنيهم
+# ومن بعد كتلصقهم ف KV تحت lesen-sprechen-b2-<id>
+premium-sprechen.json
+premium-sprechen-split/

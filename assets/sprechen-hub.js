@@ -190,7 +190,11 @@
         });
     }
     function needsPremiumLoad(topic) {
-        return topic.locked && !CONTENT[topic.id] && LEVEL !== "B2"
+        /* قبل كان هنا LEVEL !== "B2" حيت محتوى B2 كان محطوط
+           ف assets/sprechen-b2-content.js — يعني مقروء عند
+           أي واحد، والريبو عام. دابا المدفوع ف KV بحال Lesen
+           و Hören، إذن B2 خاصو يجيب من الـ Worker حتى هو. */
+        return topic.locked && !CONTENT[topic.id]
             && typeof window.__lesenPremiumFetch === "function";
     }
     function waitBox(into) {
