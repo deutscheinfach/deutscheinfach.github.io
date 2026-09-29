@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deutsch-einfach.online/"
-IMAGE = SITE + "icon1.png"
+IMAGE = SITE + "assets/icon-512.png"
 BRAND = "Deutsch Einfach"
 
 # ---------------------------------------------------------------- الصفحات
@@ -186,7 +186,10 @@ def seo_block(f, title, desc, noindex):
         f'<meta property="og:image" content="{IMAGE}">',
         '<meta property="og:locale" content="ar_MA">',
         '<meta name="twitter:card" content="summary">',
-        '<link rel="icon" href="icon1.png">',
+        '<link rel="icon" href="assets/icon-32.png" sizes="32x32">',
+        '<link rel="apple-touch-icon" href="assets/icon-180.png">',
+        '<link rel="manifest" href="manifest.webmanifest">',
+        '<meta name="theme-color" content="#e3163f">',
     ]
     if f == "index.html":
         lines.append('<script type="application/ld+json">'
