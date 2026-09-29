@@ -2748,13 +2748,13 @@
 .lesen-head-row .lesen-stat + .lesen-stat { border-color: rgba(255,255,255,.16); }
 
 /* ---- التبويبات ---- */
-.lesen-tabs { border: 1px solid var(--line); background: #fff; }
+.lesen-tabs { border: 1px solid var(--line); background: var(--surface); }
 .lesen-tab { color: var(--muted); font-weight: 800; }
-.lesen-tab:hover { color: var(--navy); background: var(--surface-2); }
+.lesen-tab:hover { color: var(--accent-text); background: var(--surface-2); }
 
 /* ---- البطائق ---- */
-.lesen-card { background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
-.lesen-card-title { color: var(--navy); }
+.lesen-card { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.lesen-card-title { color: var(--accent-text); }
 /* زر الدخول فالبطاقة: ديما باين (أزرق)، وكيولي أحمر ملي تقرب */
 .lesen-card .lesen-card-go {
     width: 36px; height: 36px;
@@ -2810,8 +2810,8 @@
 .e1-btn:not(.e1-btn-main):not(.e1-btn-soft),
 .sp-btn-ghost,
 .lesen-back {
-    background: #fff !important;
-    color: var(--navy) !important;
+    background: var(--surface) !important;
+    color: var(--accent-text) !important;
     border: 1.5px solid var(--navy) !important;
     box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
 }
@@ -2823,20 +2823,20 @@
     color: #fff !important;
 }
 .e1-btn-main.is-early {
-    background: #fff !important;
-    color: var(--navy) !important;
+    background: var(--surface) !important;
+    color: var(--accent-text) !important;
     border: 1.5px solid var(--navy) !important;
     box-shadow: none !important;
 }
 .lesen-btn { padding: 0 22px; }
 
 /* زر الترجمة */
-.ar-toggle { border: 1.5px solid var(--navy); color: var(--navy); background: #fff; }
+.ar-toggle { border: 1.5px solid var(--navy); color: var(--accent-text); background: var(--surface); }
 .ar-toggle-icon { background: var(--navy); color: #fff; }
 .ar-toggle.is-on { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; }
 
 /* عناوين التمارين */
-.t1-title, .e1-stage-title, .lesen-detail-title { color: var(--navy); }
+.t1-title, .e1-stage-title, .lesen-detail-title { color: var(--accent-text); }
 .t1-kicker { color: var(--accent-text); }
 .t1-variant.active,
 .e1-step.active {
@@ -3037,7 +3037,7 @@ html body .e2-text ::selection { background: rgba(214,178,94,.45); color: #000; 
 html body .t1-panel .t1-panel-head { border-color: rgba(28,26,22,.12); }
 html body .t1-panel .t1-panel-title { color: #6b4f14; }
 html body .t1-panel :is(.t1-option, .t2-q, .t2-option, .t3-sit, .sp2-word, .sp2-hint) {
-    background: #fff;
+    background: var(--surface);
     color: #1c1a16;
     border-color: rgba(28,26,22,.14);
 }
@@ -3064,7 +3064,7 @@ html body :is(.e1-box, .e1-task) :is(.e1-box-hint, .e1-task-label, .e1-guide-tex
 html body :is(.e1-box, .e1-task) .e2-gl { background: rgba(214,178,94,.22); border-bottom-color: #a8863a; color: #1c1a16; }
 html body :is(.e1-box, .e1-task) .e2-gl-ar { background: #1c1a16; color: #f0d58c; }
 html body :is(.e1-box, .e1-task) :is(.e1-guide-btn, .e2-arg, .e1-word, .e1-opt, .e2-point, .e1-answer, .e1-clip):hover { border-color: #d6b25e; }
-html body :is(.e1-box, .e1-task) :is(.e1-notes, .t1-select, .e3-own-input) { background: #fff; color: #1c1a16; border-color: rgba(168,134,58,.5); }
+html body :is(.e1-box, .e1-task) :is(.e1-notes, .t1-select, .e3-own-input) { background: var(--surface); color: #1c1a16; border-color: rgba(168,134,58,.5); }
 html body :is(.e1-box, .e1-task) :is(.sp-btn-ghost, .e1-btn) { color: #1c1a16; border-color: rgba(28,26,22,.3); }
 html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45); color: #000; }
 

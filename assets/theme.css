@@ -453,8 +453,8 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
     box-shadow: var(--shadow-navy) !important;
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
-    background: #fff !important;
-    color: var(--navy) !important;
+    background: var(--surface) !important;
+    color: var(--accent-text) !important;
     border: 1.5px solid var(--navy) !important;
     box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
 }
@@ -633,7 +633,7 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
    =====================================================================
    · الخلفية: #EFEDE6 (OC-17 White Dove)، البطائق بيضا صافية.
    · جوج بندات رقاق بالبوردو على الجناب ديال الشاشة.
-   · تظليل (vignette) 60٪ فالزوايا — فالخلفية فقط، المحتوى صافي.
+   · تظليل (vignette) 45٪ فالزوايا — فالخلفية فقط، المحتوى صافي.
    · كل حاجة كتكليكا (أزرار، تبويبات، اختيارات) بالأصفر ديال العلم
      الألماني #FFCE00 وكتابة كحلة عليها.
    · الكتابة الملونة (عناوين صغار، تسميات) بالبوردو — الأصفر على
@@ -711,7 +711,7 @@ html::after {
             var(--bordeaux) 0 var(--band-w),
             transparent var(--band-w) calc(100% - var(--band-w)),
             var(--bordeaux) calc(100% - var(--band-w)) 100%),
-        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.60) 100%) !important;
+        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.45) 100%) !important;
 }
 html::before {
     height: 3px;
@@ -748,3 +748,100 @@ html body .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
     border-color: var(--brand) !important;
 }
+
+/* =====================================================================
+   v5 · الوضع المظلم — <html data-theme="dark"> (assets/theme-toggle.js)
+   =====================================================================
+   نفس الهوية: البندات بوردو، الكليكات صفرا. غير الخلفية والبطائق
+   كيوليو داكنين والكتابة فاتحة. الكتابة الملونة بوردو فاتح (وردي)
+   باش تتقرا على الأسود. */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #121015;
+    --surface: #1c181e;
+    --surface-2: #262128;
+    --bg: var(--paper);
+    --card: var(--surface);
+    --text: #f1ebe4;
+    --muted: #b8ada3;
+    --line: rgba(255,255,255,.11);
+    --line-gold: rgba(232,137,154,.28);
+    --accent-text: #f09aaa;
+    --grad-text: linear-gradient(135deg, #ffc2cc 0%, #f09aaa 55%, #e2788c 100%);
+    --brand-soft: rgba(255,206,0,.16);
+    --brand-tint: rgba(255,206,0,.10);
+    --shadow: 0 1px 2px rgba(0,0,0,.45), 0 12px 30px -12px rgba(0,0,0,.7);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,.5), 0 30px 60px -22px rgba(0,0,0,.8);
+    --ok: #4ade80;
+    --danger: #f87171;
+}
+:root[data-theme="dark"]::after {
+    background:
+        linear-gradient(90deg,
+            var(--bordeaux) 0 var(--band-w),
+            transparent var(--band-w) calc(100% - var(--band-w)),
+            var(--bordeaux) calc(100% - var(--band-w)) 100%),
+        radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,.45) 100%) !important;
+}
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select { color-scheme: dark; }
+:root[data-theme="dark"] ::selection { color: #fff; }
+
+/* ---- زر الوضع ---- */
+.de-theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.de-theme-btn.is-floating {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    left: calc(var(--band-w, 10px) + 10px);
+    z-index: 2147482000;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brand);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+.de-theme-btn.is-floating:hover { background: var(--brand); color: var(--on-brand); }
+html.is-embed .de-theme-btn { display: none !important; }
+.de-theme-btn.is-chat {
+    margin-inline-start: auto;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.55);
+    background: rgba(255,255,255,.08);
+    color: #fff;
+}
+.de-theme-btn.is-chat:hover { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+
+/* ---- الوضع المظلم: الصفحات اللي عندها لوحة ديالها (الدخول، العروض…) ----
+   :root[data-theme] (0,2,0) كيغلب :root ديال الصفحة (0,1,0). */
+:root[data-theme="dark"] {
+    --dark: var(--text);
+    --gray: var(--muted);
+    --light: var(--surface-2);
+    --white: var(--surface);
+    --black: var(--text);
+    --bg-soft: var(--surface-2);
+    --text-dim: var(--muted);
+    --text-faint: #8f857c;
+    --border: var(--line);
+    --border-strong: var(--line-gold);
+    --sidebar-hover: rgba(255,255,255,.08);
+}
+:root[data-theme="dark"] body::before { background: none !important; }
+:root[data-theme="dark"] .hoeren-sticky-nav { background: color-mix(in srgb, var(--surface) 92%, transparent) !important; border-color: var(--line) !important; }
+:root[data-theme="dark"] :is(.back-button, .offer) { background: var(--surface); color: var(--text); }
+:root[data-theme="dark"] :is(input, textarea, select):not([type="radio"]):not([type="checkbox"]) { background-color: var(--surface-2); color: var(--text); border-color: var(--line); }
+/* مناطق «الورقة البيضا» (النصوص، الأسئلة، خانة الكتابة) كيبقاو فاتحين
+   بكتابة كحلة فحتى الوضع المظلم — كتقرا بحال فالكتاب. */
+:root[data-theme="dark"] :is(.editor, #editor, .writing-area) :is(textarea, [contenteditable]) { background-color: #fffdf8; color: #1c1a16; }
+:root[data-theme="dark"] .lesen-search input { background-color: transparent !important; border-color: transparent !important; }

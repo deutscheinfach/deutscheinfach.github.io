@@ -653,7 +653,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 }
 .site-header-inner .site-actions a.site-btn:not(.site-btn-primary):hover {
     color: var(--navy, var(--navy));
-    background: #fff;
+    background: var(--surface);
     border-color: #fff;
 }
 .site-btn-primary {
@@ -675,7 +675,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 
 /* شريط المستوى B1/B2 تحت البار */
 .site-level {
-    background: #fff;
+    background: var(--surface);
     border-color: var(--line);
     box-shadow: var(--shadow);
 }
@@ -820,3 +820,42 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 }
 .site-bell { padding: 0 !important; }
 .site-bell svg { width: 19px !important; height: 19px !important; flex: 0 0 auto; }
+
+/* ===== v5: الجرس وزر الوضع — بيض، غلاظ وكبار شوية باش يبانو ===== */
+.site-header .site-bell,
+.site-header .site-theme {
+    width: 44px;
+    min-height: 44px;
+    padding: 0 !important;
+    color: #fff !important;
+    border: 1.5px solid rgba(255,255,255,.55) !important;
+    background: rgba(255,255,255,.08) !important;
+}
+.site-header .site-bell svg,
+.site-header .site-theme svg {
+    width: 23px !important;
+    height: 23px !important;
+    stroke-width: 2.7;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
+}
+.site-header .site-bell:hover,
+.site-header .site-theme:hover,
+.site-header .site-news-wrap.is-open .site-bell {
+    color: var(--on-brand) !important;
+    background: var(--brand) !important;
+    border-color: var(--brand) !important;
+}
+.site-header .site-bell.has-news { border-color: var(--brand) !important; }
+@media (max-width: 560px) {
+    .site-header .site-bell,
+    .site-header .site-theme { width: 34px; min-height: 34px; border-radius: 10px; }
+    .site-header .site-bell svg,
+    .site-header .site-theme svg { width: 19px !important; height: 19px !important; }
+    .site-header .site-actions { gap: 5px; }
+}
+/* التيليفون: العلامة كتصغر (…) بلا ما الأزرار ينزلو لسطر زايد */
+@media (max-width: 1000px) {
+    .site-header .site-brand { flex: 1 1 0; min-width: 0; }
+    .site-header .site-brand-name { overflow: hidden; text-overflow: ellipsis; }
+    .site-header .site-actions { flex: 0 0 auto; flex-wrap: nowrap; }
+}
