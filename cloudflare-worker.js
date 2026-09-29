@@ -209,8 +209,17 @@ export default {
         }
 
         /* مفتاح خاص بكل موضوع أولا — خفيف وسريع.
-           الـ blob الكبير "premium-lesen" كيبقى غير كحل احتياطي. */
+           الـ blobs الكبار كيبقاو غير كحل احتياطي. */
         let lesenTopic = await env.TOPICS.get("lesen-" + lesenId, "json");
+
+        /* Sprechen عندو blob ديالو باش ما نخلطوش المحتوى ديالو
+           مع premium-lesen — هادوك جوج لوائح مختلفة وكل وحدة
+           كتتحدث بوحدها. */
+        if (!lesenTopic && lesenId.startsWith("sprechen-")) {
+          const sprechenAll = await env.TOPICS.get("premium-sprechen", "json");
+          lesenTopic = sprechenAll?.[lesenId];
+        }
+
         if (!lesenTopic) {
           const lesenAll = await env.TOPICS.get("premium-lesen", "json");
           lesenTopic = lesenAll?.[lesenId];
