@@ -31,6 +31,7 @@
     "use strict";
 
     const KEYS = ["a", "b", "c", "d"];
+    const WIDE = window.matchMedia("(min-width: 1001px)");
     const GAP = /\[(\d+)\]/g;
 
     function el(tag, className, text) {
@@ -120,6 +121,11 @@
             const column = el("div", "t1-texts");
             if (variant.intro) column.appendChild(el("p", "t1-intro", variant.intro));
 
+            /* اللائحة الصغيرة اللي كتحل تحت السطر ملي تكليكي على رقم فالنص */
+            const pop = el("div", "sp2-pop sp1-pop");
+            pop.hidden = true;
+            let active = null;
+
             variant.texts.forEach(function (text) {
                 const box = el("article", "t1-text sp-text");
                 if (text.title) box.appendChild(el("h3", "t2-sub", text.title));
@@ -136,7 +142,7 @@
                         gap.appendChild(word);
                         gap.setAttribute("aria-label", "Lücke " + num);
                         /* نفس الرقم يقدر يتكرر (entweder … oder) */
-                        (gaps[num] = gaps[num] || []).push({ node: gap, word: word });
+                        (gaps[num] = gaps[num] || []).push({ node: gap, word: word, line: p });
                         p.appendChild(gap);
                         last = at + match.length;
                         return match;
@@ -201,13 +207,17 @@
                     choices.appendChild(item);
                 });
 
-                /* الضغط على الفراغ فالنص كيدّيك للسؤال ديالو */
+                /* الضغط على الرقم فالنص: كتحل الاختيارات ديالو تحت السطر نيشان
+                   (بحال Sprach 2)، واللوحة فالـPC كتمشي للسؤال ديالو. */
                 (row.gap || []).forEach(function (gap) {
                     gap.node.addEventListener("click", function () {
-                        box.scrollIntoView({ behavior: "smooth", block: "center" });
+                        if (WIDE.matches && panel.scrollHeight > panel.clientHeight + 4) {
+                            panel.scrollTo({ top: Math.max(0, box.offsetTop - 70), behavior: "smooth" });
+                        }
                         box.classList.remove("sp-flash");
                         void box.offsetWidth;
                         box.classList.add("sp-flash");
+                        togglePop(row);
                     });
                 });
 
@@ -260,12 +270,46 @@
                 return typeof option === "string" ? option : ((option || {}).text || "");
             }
 
+            function togglePop(row) {
+                if (active === row || row.box.classList.contains("is-done")) { closePop(); return; }
+                closePop();
+                active = row;
+                const num = String(row.question.num || rows.indexOf(row) + 1);
+                pop.textContent = "";
+                pop.appendChild(el("div", "sp2-pop-title", "Lücke " + num));
+                const list = el("div", "sp2-pop-list");
+                (row.question.options || []).forEach(function (option, oi) {
+                    const item = btn("sp2-word" + (row.picked === oi ? " is-picked" : ""), "");
+                    item.appendChild(el("span", "sp2-key", KEYS[oi] || String(oi + 1)));
+                    item.appendChild(el("span", "sp2-text", optionText(row, oi)));
+                    item.addEventListener("click", function () {
+                        row.buttons[oi].click();
+                        closePop();
+                    });
+                    list.appendChild(item);
+                });
+                pop.appendChild(list);
+                (row.gap || []).forEach(function (gap) { gap.node.classList.add("is-active"); });
+                const first = (row.gap || [])[0];
+                if (first) first.line.after(pop);
+                pop.hidden = false;
+                /* ماتبقاش مخبية تحت شريط الأزرار */
+                pop.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+
+            function closePop() {
+                if (active) (active.gap || []).forEach(function (gap) { gap.node.classList.remove("is-active"); });
+                active = null;
+                pop.hidden = true;
+            }
+
             function paintProgress() {
                 const done = rows.filter(function (r) { return r.picked !== -1; }).length;
                 progress.textContent = done + "/" + rows.length;
             }
 
             function grade(reveal) {
+                closePop();
                 let right = 0;
                 let answered = 0;
 
@@ -315,6 +359,7 @@
             }
 
             function reset() {
+                closePop();
                 rows.forEach(function (row) {
                     row.picked = -1;
                     clear(row);

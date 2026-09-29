@@ -3151,7 +3151,7 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .lesen-bar .lesen-btn-show { margin-right: auto; }
 .lesen-bar .lesen-btn { font-family: "Cairo", system-ui, sans-serif; font-size: 15px; }
 body.has-lesen-bar { padding-bottom: 84px; }
-.lesen-score { scroll-margin: 110px 0; }
+.lesen-score, .sp2-pop { scroll-margin: 110px 0; }
 .lesen-actions-anchor { display: inline; }
 @media (max-width: 640px) {
     .lesen-bar { padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); }
