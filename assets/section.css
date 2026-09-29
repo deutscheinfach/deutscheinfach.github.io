@@ -3145,32 +3145,33 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
     box-shadow: 0 -10px 28px rgba(0, 0, 0, .28);
 }
 .lesen-bar[hidden] { display: none; }
-.lesen-bar { display: flex; align-items: center; gap: 12px; direction: rtl; }
+/* الترتيب بحال Zertify: «تحقق» على اليسار، والباقي على اليمين
+   (شوف الحل · عاود — ولا فالامتحان: السابق · Lesen Teil 2 →). */
+.lesen-bar { display: flex; align-items: center; gap: 12px; direction: ltr; }
 .lesen-bar-slot { flex: 1 1 auto; min-width: 0; }
 .lesen-bar-slot[hidden] { display: none; }
-.lesen-bar-extra { flex: 1 1 auto; display: flex; min-width: 0; }
+.lesen-bar-extra { flex: 1 1 auto; display: flex; justify-content: flex-end; min-width: 0; }
 .lesen-bar-extra:empty { display: none; }
-.lesen-bar.has-extra .lesen-bar-slot:not([hidden]) + .lesen-bar-extra { padding-inline-start: 12px; border-inline-start: 1px solid var(--line); }
-.lesen-bar .lesen-actions { margin: 0; flex-wrap: nowrap; direction: rtl; }
-/* الامتحان الكامل: «الجزء اللي من بعد» / «صحح الامتحان كامل» */
-.lesen-bar .exam-bar { flex: 1 1 auto; }
-.lesen-bar .exam-bar .exam-bar-prev { margin-right: auto; }
-.lesen-bar .exam-bar-main { min-width: 240px; justify-content: center; }
+.lesen-bar .lesen-actions { margin: 0; flex-wrap: nowrap; direction: ltr; }
+/* الامتحان الكامل */
+.lesen-bar .exam-bar { flex: 0 1 auto; justify-content: flex-end; }
+.lesen-bar .exam-bar-main { min-width: 210px; justify-content: center; }
+.lesen-bar .exam-bar-prev { min-width: 110px; justify-content: center; }
 .exam-part[hidden] { display: none; }
 /* الامتحان: قبل النتيجة غير «تحقق» (الجزء الحالي)، من بعد غير «شوف الحل» */
 .lesen-bar[data-exam="live"] .lesen-bar-slot :is(.lesen-btn-show, .lesen-btn-retry),
 .lesen-bar[data-exam="done"] .lesen-bar-slot :is(.lesen-btn-check, .lesen-btn-retry) { display: none; }
 .lesen-bar[data-exam] .lesen-bar-slot { flex: 0 0 auto; }
 .lesen-bar[data-exam] .lesen-bar-slot .lesen-btn { min-width: 0; }
-/* "تحقق" هو الزر الكبير؛ "شوف الحل" و"عاود" فالجهة الأخرى */
+/* "تحقق" هو الزر الكبير على اليسار؛ "شوف الحل" و"عاود" على اليمين */
 .lesen-bar .lesen-btn-check { min-width: 210px; justify-content: center; }
-.lesen-bar .lesen-btn-show { margin-right: auto; }
+.lesen-bar .lesen-btn-show { margin-left: auto; }
 .lesen-bar .lesen-btn { font-family: "Cairo", system-ui, sans-serif; font-size: 15px; }
 body.has-lesen-bar { padding-bottom: 84px; }
 .lesen-score, .sp2-pop { scroll-margin: 110px 0; }
 .lesen-actions-anchor { display: inline; }
 @media (max-width: 640px) {
-    .lesen-bar { padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); }
+    .lesen-bar { padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); flex-wrap: wrap; gap: 8px; }
     .lesen-bar .lesen-actions { gap: 8px; }
     .lesen-bar .lesen-btn {
         flex: 1 1 auto;
@@ -3182,15 +3183,14 @@ body.has-lesen-bar { padding-bottom: 84px; }
         justify-content: center;
     }
     .lesen-bar .lesen-btn-check { flex-grow: 2; min-width: 0; }
-    .lesen-bar .lesen-btn-show { margin-right: 0; }
-    .lesen-bar { flex-wrap: wrap; gap: 8px; }
-    .lesen-bar-slot, .lesen-bar .exam-bar { flex: 1 1 100%; }
-    .lesen-bar.has-extra .lesen-bar-slot:not([hidden]) + .lesen-bar-extra { padding: 8px 0 0; border: 0; border-top: 1px solid var(--line); }
-    .lesen-bar .exam-bar-main { min-width: 0; flex-grow: 3; }
+    .lesen-bar .lesen-btn-show { margin-left: 0; }
+    /* فالتيليفون: «تحقق» سطر، والتنقل ديال الامتحان سطر تحتو */
+    .lesen-bar-slot, .lesen-bar-extra, .lesen-bar .exam-bar,
+    .lesen-bar[data-exam] .lesen-bar-slot { flex: 1 1 100%; }
+    .lesen-bar.has-extra .lesen-bar-slot:not([hidden]) + .lesen-bar-extra { padding-top: 8px; border-top: 1px solid var(--line); }
     .lesen-bar .exam-bar { flex-wrap: wrap; }
     .lesen-bar .exam-bar .lesen-btn { flex: 1 1 auto; }
-    .lesen-bar .exam-bar .exam-bar-prev { margin-right: 0; }
-    .lesen-bar[data-exam] .lesen-bar-slot { flex: 1 1 100%; }
-    .lesen-bar-extra { flex-basis: 100%; }
+    .lesen-bar .exam-bar-main { min-width: 0; flex-grow: 3; }
+    .lesen-bar .exam-bar-prev { min-width: 0; }
     body.has-lesen-bar { padding-bottom: 76px; }
 }

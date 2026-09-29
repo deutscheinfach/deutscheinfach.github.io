@@ -162,6 +162,11 @@
         { key: "sprach1", label: "Sprach 1" },
         { key: "sprach2", label: "Sprach 2" }
     ];
+    /* السمية الكاملة بالألمانية (زر «الجزء الجاي» فالامتحان) */
+    const PART_DE = {
+        teil1: "Lesen Teil 1", teil2: "Lesen Teil 2", teil3: "Lesen Teil 3",
+        sprach1: "Sprachbausteine Teil 1", sprach2: "Sprachbausteine Teil 2"
+    };
     const PART_LABEL = {};
     PARTS.forEach(function (p) { PART_LABEL[p.key] = p.label; });
 
@@ -710,46 +715,43 @@
         function paint() {
             PARTS.forEach(function (p) { boxes[p.key].hidden = p.key !== current; });
 
-            /* الشريط: السابق · الجزء اللي من بعد / صحح الامتحان كامل */
+            /* الشريط بحال Zertify: [↻ عاود] [السابق] [Lesen Teil 2 →]
+               — السمية ديال الجزء الجاي بالألمانية، و«السابق» ديما كاين
+               (مطفي ف Teil 1). فالجزء الأخير: «صحح الامتحان كامل». */
             nav.textContent = "";
             const at = PARTS.findIndex(function (p) { return p.key === current; });
             const before = PARTS[at - 1];
             const after = PARTS[at + 1];
 
-            const main = document.createElement("button");
-            main.type = "button";
-            main.className = "lesen-btn lesen-btn-check exam-bar-main";
-            if (after) {
-                main.textContent = "الجزء اللي من بعد: " + after.label + " ←";
-                main.addEventListener("click", function () { go(after.key); });
-            } else if (!graded) {
-                main.textContent = "✓ صحح الامتحان كامل";
-                main.addEventListener("click", gradeAll);
-            } else {
-                main.textContent = "شوف النتيجة";
-                main.addEventListener("click", function () {
-                    summary.scrollIntoView({ behavior: "smooth", block: "center" });
-                });
+            function navButton(cls, text, dir, onClick) {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.className = "lesen-btn " + cls;
+                b.textContent = text;
+                b.dir = dir;
+                if (onClick) b.addEventListener("click", onClick);
+                nav.appendChild(b);
+                return b;
             }
-            nav.appendChild(main);
 
             /* من بعد النتيجة: الامتحان كامل من الأول (Teil 1 خاوي) */
             if (graded) {
-                const again = document.createElement("button");
-                again.type = "button";
-                again.className = "lesen-btn lesen-btn-retry exam-bar-again";
-                again.textContent = "↻ عاود من الأول";
-                again.addEventListener("click", restartExam);
-                nav.appendChild(again);
+                navButton("lesen-btn-retry exam-bar-again", "↻ عاود من الأول", "rtl", restartExam);
             }
 
-            if (before) {
-                const prev = document.createElement("button");
-                prev.type = "button";
-                prev.className = "lesen-btn lesen-btn-show exam-bar-prev";
-                prev.textContent = "→ " + before.label;
-                prev.addEventListener("click", function () { go(before.key); });
-                nav.appendChild(prev);
+            const prev = navButton("lesen-btn-show exam-bar-prev", "السابق", "rtl",
+                before ? function () { go(before.key); } : null);
+            prev.disabled = !before;
+
+            if (after) {
+                navButton("lesen-btn-check exam-bar-main", PART_DE[after.key] + " →", "ltr",
+                    function () { go(after.key); });
+            } else if (!graded) {
+                navButton("lesen-btn-check exam-bar-main", "✓ صحح الامتحان كامل", "rtl", gradeAll);
+            } else {
+                navButton("lesen-btn-check exam-bar-main", "شوف النتيجة", "rtl", function () {
+                    summary.scrollIntoView({ behavior: "smooth", block: "center" });
+                });
             }
 
             /* قبل النتيجة: «تحقق» كيصحح غير الجزء اللي فيه.
