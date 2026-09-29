@@ -3382,7 +3382,8 @@ limit,
 onSnapshot,
 serverTimestamp,
 runTransaction,
-deleteField
+deleteField,
+getCountFromServer
 }
 from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
@@ -5007,8 +5008,12 @@ clearInterval(heartbeatTimer);
 
 sendHeartbeat(true);
 
+/* تبويب مخبي ماكيصيفطش (كل كتبة كتحسب ف الخطة المجانية) —
+   ملي يرجع كيتجدد دغيا (visibilitychange تحت). */
 heartbeatTimer=
-setInterval(()=>sendHeartbeat(true),HEARTBEAT_MS);
+setInterval(()=>{
+if(document.visibilityState==="visible")sendHeartbeat(true);
+},HEARTBEAT_MS);
 
 /* ملي يرجع للتبويبة، نجددو دغيا بدل ما نتسناو */
 document.addEventListener("visibilitychange",()=>{
@@ -11027,15 +11032,17 @@ try{
 
 const cutoff=new Date(Date.now()-ONLINE_WINDOW_MS);
 
-const snap=await getDocs(
+/* count() كيتحسب ف Firestore: قراءة وحدة (لكل 1000 واحد) بلاصة
+   ما نجيبو الوثيقة ديال كل واحد أونلاين. قبل، 20 واحد فالشات
+   كانو كيكلفو 24.000 قراءة فالساعة — والخطة المجانية فيها 50.000 فالنهار. */
+const snap=await getCountFromServer(
 query(
 collection(db,"users"),
 where("lastSeen",">",cutoff)
 )
 );
 
-let count=0;
-snap.forEach(function(){count++;});
+const count=snap.data().count;
 
 out.textContent=String(count);
 pill.hidden=false;
@@ -11053,7 +11060,10 @@ pill.hidden=true;
 function startOnlineCounter(){
 if(onlineTimer)clearInterval(onlineTimer);
 refreshOnlineCount();
-onlineTimer=setInterval(refreshOnlineCount,60*1000);
+/* كل 2 دقايق، وغير ملي الصفحة باينة (ماشي فتبويب مخبي) */
+onlineTimer=setInterval(function(){
+if(document.visibilityState==="visible")refreshOnlineCount();
+},2*60*1000);
 }
 
 

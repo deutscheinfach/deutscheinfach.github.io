@@ -1076,7 +1076,8 @@
     function newsBell() {
         const CACHE = "de-news-cache";
         const SEEN = "de-news-seen";
-        const TTL = 20 * 60 * 1000;
+        const TTL = 30 * 60 * 1000;
+        const DAY = 24 * 3600 * 1000;
 
         let fs = null, db = null, items = [], admin = false, loaded = false;
 
@@ -1232,15 +1233,33 @@
             return box;
         }
 
+        /* القراية ديال Firestore محسوبة (50.000 فالنهار فالخطة المجانية)
+           وكل زائر كيشوف الجرس. إذن:
+           - كل 30 دقيقة: كنقراو غير آخر خبر (قراءة وحدة). إلا هو نفسو
+             اللي عندنا، الكاش صالح وماكنقراو والو آخر.
+           - اللائحة كاملة (10) غير ملي يتزاد خبر جديد، ولا مرة فالنهار
+             (باش الخبر اللي تمسح يغبر حتى هو). */
         async function refresh(force) {
             if (!fs) return;
+            let cached = null;
+            try { cached = JSON.parse(read(CACHE) || "null"); } catch (e) { cached = null; }
+            const age = cached ? Date.now() - cached.t : Infinity;
+            const fullAge = cached ? Date.now() - (cached.full || 0) : Infinity;
+            if (!force && age < TTL) return;
+            const col = fs.collection(db, "news");
             try {
-                const cached = JSON.parse(read(CACHE) || "null");
-                if (!force && cached && Date.now() - cached.t < TTL) return;
-            } catch (e) { /* نكملو */ }
-            try {
-                const snap = await fs.getDocs(fs.query(fs.collection(db, "news"),
-                    fs.orderBy("createdAt", "desc"), fs.limit(15)));
+                if (!force && cached && Array.isArray(cached.items) && fullAge < DAY) {
+                    const top = await fs.getDocs(fs.query(col, fs.orderBy("createdAt", "desc"), fs.limit(1)));
+                    const newest = top.docs[0] ? top.docs[0].id : null;
+                    const known = cached.items[0] ? cached.items[0].id : null;
+                    if (newest === known) {
+                        cached.t = Date.now();
+                        store(CACHE, JSON.stringify(cached));
+                        loaded = true;
+                        return;
+                    }
+                }
+                const snap = await fs.getDocs(fs.query(col, fs.orderBy("createdAt", "desc"), fs.limit(10)));
                 items = snap.docs.map(function (d) {
                     const v = d.data();
                     return {
@@ -1252,7 +1271,7 @@
                     };
                 });
                 loaded = true;
-                store(CACHE, JSON.stringify({ t: Date.now(), items: items }));
+                store(CACHE, JSON.stringify({ t: Date.now(), full: Date.now(), items: items }));
             } catch (e) {
                 console.warn("Header: ماقدرناش نجيبو الإشعارات", e);
                 loaded = true;
