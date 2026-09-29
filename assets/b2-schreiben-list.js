@@ -3,7 +3,7 @@
    فجوج بلايص، وهادشي هو اللي خلا موضوع 05 يتناقض. */
 
 (function () {
-    const WHATSAPP_NUMBER = "212653618205";
+    const WHATSAPP_NUMBER = "212776551898";
 
     /* نفس العروض ديال payment.html — خاصهم يبقاو متطابقين. */
     const OFFERS = [
