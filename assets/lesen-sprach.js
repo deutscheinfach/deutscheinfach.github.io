@@ -194,6 +194,7 @@
                         });
                         row.fill(label);
                         paintProgress();
+                        window.__lesenNext(panel, rows, row);
                     });
 
                     row.buttons.push(item);
@@ -230,11 +231,9 @@
             const showBtn = btn("lesen-btn lesen-btn-show", "Lösungen anzeigen");
             const retryBtn = btn("lesen-btn lesen-btn-retry", "Nochmal versuchen");
             actions.append(checkBtn, showBtn, retryBtn);
-            panel.appendChild(actions);
-
+            
             const score = el("div", "lesen-score");
             score.hidden = true;
-            panel.appendChild(score);
 
             checkBtn.addEventListener("click", function () { grade(false); });
             showBtn.addEventListener("click", function () { grade(true); });
@@ -242,6 +241,8 @@
 
             side.appendChild(panel);
             board.append(column, side);
+            /* الأزرار تحت النصوص فالـPC، ومن بعد الأسئلة فالتيليفون */
+            window.__lesenFoot(column, side, [actions, score]);
             paintProgress();
 
             /* "entweder ... oder" → كل جزء فالفراغ ديالو */
