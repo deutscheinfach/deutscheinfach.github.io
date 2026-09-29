@@ -454,7 +454,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
     background: var(--surface) !important;
-    color: var(--accent-text) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
     border: 1.5px solid var(--navy) !important;
     box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
 }
@@ -557,7 +557,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
     background: #26262e !important;
-    color: var(--accent-text) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
     border: 1.5px solid var(--line-gold) !important;
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
@@ -567,7 +567,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)):hover {
     border-color: var(--brand) !important;
-    color: var(--accent-text) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
 }
 
 /* زر الترجمة */
@@ -741,7 +741,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
     border-color: var(--line) !important;
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)):hover {
-    color: var(--accent-text) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
 }
 /* الهيدر: البار شفاف ورا الكبسولة — الـblur كان كيضبب البندات والتظليل */
 html body .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; }
@@ -766,8 +766,10 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
     --muted: #b8ada3;
     --line: rgba(255,255,255,.11);
     --line-gold: rgba(232,137,154,.28);
-    --accent-text: #f09aaa;
-    --grad-text: linear-gradient(135deg, #ffc2cc 0%, #f09aaa 55%, #e2788c 100%);
+    /* الكتابة الملونة (عناوين، تسميات) فالمظلم: بيضا وغليظة */
+    --accent-text: #ffffff;
+    --accent-weight: 800;
+    --grad-text: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
     --brand-soft: rgba(255,206,0,.16);
     --brand-tint: rgba(255,206,0,.10);
     --shadow: 0 1px 2px rgba(0,0,0,.45), 0 12px 30px -12px rgba(0,0,0,.7);
@@ -845,3 +847,189 @@ html.is-embed .de-theme-btn { display: none !important; }
    بكتابة كحلة فحتى الوضع المظلم — كتقرا بحال فالكتاب. */
 :root[data-theme="dark"] :is(.editor, #editor, .writing-area) :is(textarea, [contenteditable]) { background-color: #fffdf8; color: #1c1a16; }
 :root[data-theme="dark"] .lesen-search input { background-color: transparent !important; border-color: transparent !important; }
+
+/* المظلم: كل كتابة ملونة (--accent-text) كتولي بيضا وغليظة — مولّد من الأوراق كاملين */
+:root[data-theme="dark"] .header-btn:hover,
+:root[data-theme="dark"] .breadcrumb a,
+:root[data-theme="dark"] .info-card i,
+:root[data-theme="dark"] .result-info,
+:root[data-theme="dark"] .page-footer strong,
+:root[data-theme="dark"] .btn-show,
+:root[data-theme="dark"] .task-title-block .sub,
+:root[data-theme="dark"] .translate-btn:hover,
+:root[data-theme="dark"] .umlaut-btns button:hover,
+:root[data-theme="dark"] .result-score .num,
+:root[data-theme="dark"] .result-close:hover,
+:root[data-theme="dark"] .premium-btn.ghost:hover,
+:root[data-theme="dark"] .offer-box h3,
+:root[data-theme="dark"] .timer-pill.low,
+:root[data-theme="dark"] .task-header .task-title-block .sub,
+:root[data-theme="dark"] .lesen-back:hover,
+:root[data-theme="dark"] .lesen-teil-btn:hover,
+:root[data-theme="dark"] .lesen-badge,
+:root[data-theme="dark"] .lesen-text h3,
+:root[data-theme="dark"] .lesen-text-label { font-weight: 800; }
+:root[data-theme="dark"] .lesen-sort:hover,
+:root[data-theme="dark"] .lesen-chip-level,
+:root[data-theme="dark"] .lesen-card:hover .lesen-card-go,
+:root[data-theme="dark"] .lesen-card.locked .lesen-card-go,
+:root[data-theme="dark"] .part-icon,
+:root[data-theme="dark"] .part-card.locked .part-cta,
+:root[data-theme="dark"] .chip-pro,
+:root[data-theme="dark"] .sp-btn-ghost:hover,
+:root[data-theme="dark"] .sp-btn-rec.on,
+:root[data-theme="dark"] .sp-point-num,
+:root[data-theme="dark"] .sp-phrase-head,
+:root[data-theme="dark"] .t1-text-num,
+:root[data-theme="dark"] .t1-summary > summary,
+:root[data-theme="dark"] .t1-progress,
+:root[data-theme="dark"] .pg-chip,
+:root[data-theme="dark"] .pg-btn-ghost:hover,
+:root[data-theme="dark"] .pg-peek-num,
+:root[data-theme="dark"] .lesen-card.locked .lesen-card-go::after,
+:root[data-theme="dark"] .t3-ad-key,
+:root[data-theme="dark"] .t3-ad-slot { font-weight: 800; }
+:root[data-theme="dark"] .t2-q-changed,
+:root[data-theme="dark"] .t2-sub,
+:root[data-theme="dark"] .lesen-stat b,
+:root[data-theme="dark"] .sp2-hint.is-on,
+:root[data-theme="dark"] .sp2-key,
+:root[data-theme="dark"] .sp2-pop-title,
+:root[data-theme="dark"] .e1-task-label,
+:root[data-theme="dark"] .e1-btn-soft,
+:root[data-theme="dark"] .e1-peek-label,
+:root[data-theme="dark"] .e1-examiner-who,
+:root[data-theme="dark"] .e1-answer-n,
+:root[data-theme="dark"] .e2-phase-hint,
+:root[data-theme="dark"] .e3-line-b .e3-who,
+:root[data-theme="dark"] .exam-card-parts b,
+:root[data-theme="dark"] .lesen-tab:hover,
+:root[data-theme="dark"] .lesen-card-title,
+:root[data-theme="dark"] .lesen-btn-retry,
+:root[data-theme="dark"] .e1-btn:not(.e1-btn-main):not(.e1-btn-soft),
+:root[data-theme="dark"] .sp-btn-ghost,
+:root[data-theme="dark"] .lesen-back { font-weight: 800; }
+:root[data-theme="dark"] .e1-btn-main.is-early,
+:root[data-theme="dark"] .ar-toggle,
+:root[data-theme="dark"] .t1-title,
+:root[data-theme="dark"] .e1-stage-title,
+:root[data-theme="dark"] .lesen-detail-title,
+:root[data-theme="dark"] .t1-kicker,
+:root[data-theme="dark"] .lesen-head-row .lesen-badge,
+:root[data-theme="dark"] .lesen-head-row .lesen-stat b,
+:root[data-theme="dark"] .lesen-card .lesen-card-go,
+:root[data-theme="dark"] .lesen-btn-show,
+:root[data-theme="dark"] .lesen-btn-retry:hover,
+:root[data-theme="dark"] .e1-btn:not(.e1-btn-main):not(.e1-btn-soft):hover,
+:root[data-theme="dark"] .t1-option-key,
+:root[data-theme="dark"] .t3-sit-num,
+:root[data-theme="dark"] .sp-gap-num,
+:root[data-theme="dark"] .e3-text.is-mine .e3-badge,
+:root[data-theme="dark"] .e3-add,
+:root[data-theme="dark"] .e3-who,
+:root[data-theme="dark"] .exam-top-back:hover,
+:root[data-theme="dark"] .exam-top-level { font-weight: 800; }
+:root[data-theme="dark"] .exam-tab-kind,
+:root[data-theme="dark"] .exam-top-clock svg,
+:root[data-theme="dark"] .site-brand-name span,
+:root[data-theme="dark"] .site-btn:hover,
+:root[data-theme="dark"] .site-premium,
+:root[data-theme="dark"] .site-menu-up,
+:root[data-theme="dark"] .site-bell.has-news,
+:root[data-theme="dark"] .site-news-wrap.is-open .site-bell,
+:root[data-theme="dark"] .site-news-link,
+:root[data-theme="dark"] .site-news-form-label,
+:root[data-theme="dark"] .tr-card h2 .ico,
+:root[data-theme="dark"] .tr-kpi-ico,
+:root[data-theme="dark"] .tr-btn:hover,
+:root[data-theme="dark"] .tr-ring-in b,
+:root[data-theme="dark"] .tr-plan-go,
+:root[data-theme="dark"] .tr-tag,
+:root[data-theme="dark"] .tr-score.is-mid,
+:root[data-theme="dark"] .mt-chip.prem,
+:root[data-theme="dark"] .mt-timer,
+:root[data-theme="dark"] .mt-sub button.is-on { font-weight: 800; }
+:root[data-theme="dark"] .mt-live b,
+:root[data-theme="dark"] .ws-ar,
+:root[data-theme="dark"] .ws-back .ws-speak,
+:root[data-theme="dark"] .tr-inline-ico,
+:root[data-theme="dark"] .training-page svg.ico,
+:root[data-theme="dark"] .ws-day-kicker,
+:root[data-theme="dark"] .ws-day-theme,
+:root[data-theme="dark"] .ws-bday,
+:root[data-theme="dark"] .teil-nav-btn,
+:root[data-theme="dark"] .theme-item-chevron,
+:root[data-theme="dark"] .theme-iframe-loading,
+:root[data-theme="dark"] .nq-result-info,
+:root[data-theme="dark"] .teil-nav-btn:hover,
+:root[data-theme="dark"] #hoeren-teil1-stack .theme-item-chevron,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-back:hover,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-start:hover,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-part:hover,
+:root[data-theme="dark"] .premium-theme-icon,
+:root[data-theme="dark"] .premium-theme-open,
+:root[data-theme="dark"] .hoeren-offer-price { font-weight: 800; }
+:root[data-theme="dark"] #hoeren-teil2-stack .theme-item-chevron,
+html[data-theme="dark"].dark .premium-theme-open,
+:root[data-theme="dark"] .h2-offer-price,
+:root[data-theme="dark"] .h2-offer-btn,
+:root[data-theme="dark"] #hoeren-teil3-stack .theme-item-chevron,
+:root[data-theme="dark"] .de-premium-offer span,
+:root[data-theme="dark"] .message-name,
+:root[data-theme="dark"] .friend-limit-box strong,
+:root[data-theme="dark"] .message-text a,
+:root[data-theme="dark"] .message-text a:hover,
+:root[data-theme="dark"] .scroll-down,
+:root[data-theme="dark"] .upload-bar,
+:root[data-theme="dark"] .composer-btn:hover,
+:root[data-theme="dark"] .char-count.warn,
+:root[data-theme="dark"] .call-kind,
+:root[data-theme="dark"] .online-pill,
+:root[data-theme="dark"] .settings-row .ico,
+:root[data-theme="dark"] .tabbar button.active,
+:root[data-theme="dark"] #callAudioBtn,
+:root[data-theme="dark"] #callVideoBtn { font-weight: 800; }
+:root[data-theme="dark"] .mobile-back:hover,
+:root[data-theme="dark"] .reject,
+:root[data-theme="dark"] .modal-btn.secondary,
+:root[data-theme="dark"] .close-btn,
+:root[data-theme="dark"] .header-name,
+:root[data-theme="dark"] .header-btn,
+:root[data-theme="dark"] .composer-btn,
+:root[data-theme="dark"] .dx-word-use,
+:root[data-theme="dark"] .dx-key,
+:root[data-theme="dark"] .dx-starter,
+:root[data-theme="dark"] .dx-starter:hover,
+:root[data-theme="dark"] .dx-word-label,
+:root[data-theme="dark"] .back-button:hover,
+:root[data-theme="dark"] .resend-button,
+:root[data-theme="dark"] .login-text a,
+:root[data-theme="dark"] .links a,
+:root[data-theme="dark"] .back-home:hover,
+:root[data-theme="dark"] .brand span,
+:root[data-theme="dark"] .nav-links a:hover,
+:root[data-theme="dark"] .signup { font-weight: 800; }
+:root[data-theme="dark"] .user-name,
+:root[data-theme="dark"] .small-badge,
+:root[data-theme="dark"] .hero-secondary:hover,
+:root[data-theme="dark"] .stat strong,
+:root[data-theme="dark"] .showcase-eyebrow,
+:root[data-theme="dark"] .preview-tag,
+:root[data-theme="dark"] .preview-num,
+:root[data-theme="dark"] mark.hl2,
+:root[data-theme="dark"] .preview-score b,
+:root[data-theme="dark"] .section-title .mini,
+:root[data-theme="dark"] .card-link,
+:root[data-theme="dark"] .community-card h3,
+:root[data-theme="dark"] .promise h2 span,
+:root[data-theme="dark"] .footer-brand span,
+:root[data-theme="dark"] .footer-links a:hover,
+:root[data-theme="dark"] .hero .stat strong,
+:root[data-theme="dark"] .cta h2,
+:root[data-theme="dark"] header h1,
+:root[data-theme="dark"] .intro h2,
+:root[data-theme="dark"] .offer-title { font-weight: 800; }
+:root[data-theme="dark"] .check,
+:root[data-theme="dark"] .nav-home,
+:root[data-theme="dark"] .headings h2,
+:root[data-theme="dark"] .offer-box h2 { font-weight: 800; }
