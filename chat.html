@@ -5,6 +5,7 @@
 
 <meta charset="UTF-8">
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=1e586e51"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Community – Deutsch Einfach</title>
@@ -16,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/theme.css?v=e32435cd">
+<link rel="stylesheet" href="assets/theme.css?v=83a3b025">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
 <style>
@@ -176,7 +177,7 @@ button:disabled{
 
 .search-box input:focus{
     border-color: var(--brand);
-    background: #fff;
+    background: var(--surface);
     box-shadow: 0 0 0 3px rgba(214,178,94,.12);
 }
 
@@ -1785,7 +1786,7 @@ button:disabled{
 .call-btn:hover { transform: translateY(-3px); background: rgba(255,255,255,.22); }
 .call-btn:active { transform: scale(.93); }
 
-.call-btn.off { background: #fff; color: #17130a; }
+.call-btn.off { background: var(--surface); color: #17130a; }
 .call-btn.accept { background: #25d366; }
 .call-btn.accept:hover { background: #1ebe5d; }
 .call-btn.hangup { background: #e5484d; }
@@ -2176,7 +2177,7 @@ button:disabled{
 .logo { box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(214,178,94,.35); }
 .logo-text { font-weight: 800; letter-spacing: -.02em; }
 .search-box input { border: 1px solid transparent; transition: border-color .2s, box-shadow .2s, background .2s; }
-.search-box input:focus { background: #fff; border-color: var(--brand); box-shadow: var(--ring); }
+.search-box input:focus { background: var(--surface); border-color: var(--brand); box-shadow: var(--ring); }
 .nav button { border-radius: 12px; }
 .nav button.active {
     background: var(--grad-brand);
@@ -2226,7 +2227,7 @@ button:disabled{
 
 /* الكتابة */
 .input-area { background: rgba(255,255,255,.9); backdrop-filter: blur(12px); border-top: 1px solid var(--border); }
-.composer { background: #fff; border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(20,22,31,.04); }
+.composer { background: var(--surface); border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(20,22,31,.04); }
 .composer:focus-within { border-color: var(--brand); box-shadow: var(--ring); }
 .send-btn { box-shadow: var(--shadow-brand); }
 .send-btn:disabled { opacity: .45; box-shadow: none; }
@@ -2287,7 +2288,7 @@ button:disabled{
 }
 .call-btn { background: rgba(255,255,255,.12); }
 .call-btn:hover { background: rgba(255,255,255,.2); }
-.call-btn.off { background: #fff; color: #14161f; }
+.call-btn.off { background: var(--surface); color: #14161f; }
 .call-btn.hangup { background: linear-gradient(135deg, #ff5a5f, #d7263d); box-shadow: 0 10px 24px -8px rgba(229,72,77,.7); }
 .call-btn.accept { background: linear-gradient(135deg, #34e27a, #1fb85a); }
 .call-action span { color: rgba(255,255,255,.78); font-weight: 600; }
@@ -2366,23 +2367,23 @@ button:disabled{
 
 /* ---- الأزرار: ما يبقاش شي زر كحل مخبّع ---- */
 .accept { background: #12915a; color: #fff; }
-.reject { background: #fff; color: var(--navy); border: 1.5px solid var(--navy) !important; }
+.reject { background: var(--surface); color: var(--accent-text); border: 1.5px solid var(--navy) !important; }
 .member-remove { color: #fff; }
 .modal-btn { color: #fff; font-weight: 800; border-radius: 12px; }
-.modal-btn.secondary { background: #fff; color: var(--navy); border: 1.5px solid var(--navy); }
+.modal-btn.secondary { background: var(--surface); color: var(--accent-text); border: 1.5px solid var(--navy); }
 .modal-btn.yellow { background: var(--sun); color: #1b1400; }
-.close-btn { background: var(--surface-2); color: var(--navy); border: 1px solid var(--border); }
+.close-btn { background: var(--surface-2); color: var(--accent-text); border: 1px solid var(--border); }
 .close-btn:hover { background: var(--navy); color: #fff; }
 
 /* ---- رأس المحادثة ---- */
 .header-avatar { background: var(--grad-navy); box-shadow: var(--shadow-navy); }
-.header-name { color: var(--navy); }
-.header-btn { color: var(--navy); }
+.header-name { color: var(--accent-text); }
+.header-btn { color: var(--accent-text); }
 #callAudioBtn, #callVideoBtn { background: var(--grad-brand); color: var(--on-brand); box-shadow: var(--shadow-brand); }
 #callAudioBtn:hover, #callVideoBtn:hover { color: #fff; transform: translateY(-1px); }
 
 /* ---- الفقاعات ---- */
-.message-content { background: #fff; border: 1px solid var(--border); }
+.message-content { background: var(--surface); border: 1px solid var(--border); }
 .message.mine .message-content {
     background: var(--grad-navy);
     color: #fff;
@@ -2395,7 +2396,7 @@ button:disabled{
 .message-avatar { color: #fff; font-weight: 800; }
 
 /* ---- الكتابة ---- */
-.composer-btn { color: var(--navy); }
+.composer-btn { color: var(--accent-text); }
 .composer-btn:hover { color: var(--accent-text); }
 .send-btn { background: var(--grad-brand); color: var(--on-brand); }
 
@@ -2428,8 +2429,8 @@ button:disabled{
     border: 0;
     border-radius: 10px;
     padding: 7px 12px;
-    background: #fff;
-    color: var(--navy);
+    background: var(--surface);
+    color: var(--accent-text);
     font: inherit; font-size: 12.5px; font-weight: 800;
     cursor: pointer;
 }
@@ -2448,8 +2449,8 @@ button:disabled{
     padding: 0 8px;
     border-radius: 9px;
     border: 1.5px solid var(--navy);
-    background: #fff;
-    color: var(--navy);
+    background: var(--surface);
+    color: var(--accent-text);
     font: inherit; font-weight: 800; font-size: 14px;
     cursor: pointer;
 }
@@ -2471,8 +2472,8 @@ button:disabled{
     padding: 7px 12px;
     border-radius: 999px;
     border: 1px solid var(--border);
-    background: #fff;
-    color: var(--navy);
+    background: var(--surface);
+    color: var(--accent-text);
     font: inherit; font-size: 13px; font-weight: 700;
     cursor: pointer;
     text-align: left;
@@ -2559,7 +2560,7 @@ body { background: var(--bg); color: var(--text); }
 /* الرسائل فورقة بيضة بكتابة كحلة باش تتقرا مزيان.
    ديالي: أبيض دافي بلمسة ذهبية؛ ديال الناس: أبيض. */
 .message-content {
-    background: #ffffff;
+    background: var(--surface);
     border: 1px solid rgba(28,26,22,.10);
     color: #1c1a16;
     box-shadow: 0 10px 22px -16px rgba(0,0,0,.9);
@@ -2643,7 +2644,7 @@ body { background: var(--bg); color: var(--text); }
 .msg-reacts { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
 .msg-react {
     display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px;
-    border-radius: 999px; border: 1px solid rgba(28,26,22,.14); background: #fff;
+    border-radius: 999px; border: 1px solid rgba(28,26,22,.14); background: var(--surface);
     font-size: 13px; cursor: pointer; color: #1c1a16;
 }
 .msg-react span { font-size: 11.5px; font-weight: 800; color: #5e584c; }
@@ -2709,6 +2710,20 @@ body { background: var(--bg); color: var(--text); }
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#e3163f">
 <!-- seo:end -->
+<style id="chat-v5">
+/* v5: الكتابة ف البندة البوردو ديال الشات (الجنب) غليظة */
+.sidebar :is(p, span, a, button, li, small, label, input, div) { font-weight: 700 !important; }
+.sidebar :is(input)::placeholder { font-weight: 600; }
+.sidebar :is(h1, h2, h3, strong, b) { font-weight: 900 !important; }
+/* الوضع المظلم ديال الشات */
+:root[data-theme="dark"] .chat-header,
+:root[data-theme="dark"] .input-area { background: color-mix(in srgb, var(--surface) 92%, transparent) !important; }
+:root[data-theme="dark"] .tabbar { background: color-mix(in srgb, var(--surface) 94%, transparent) !important; }
+:root[data-theme="dark"] :is(.message-content, .msg-more, .input-area input, .input-area textarea, .chat-input) { background: var(--surface-2); color: var(--text); }
+:root[data-theme="dark"] .message.mine .message-content { background: var(--grad-navy); color: #fff; }
+:root[data-theme="dark"] :is(.dx-starter, .dx-key) { background: var(--surface-2); color: var(--text); }
+.sidebar .logo-area { display: flex; }
+</style>
 </head>
 
 <body>

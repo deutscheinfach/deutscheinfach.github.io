@@ -257,6 +257,11 @@
     const news = newsBell();
     actions.appendChild(news.root);
 
+    /* فاتح ↔ مظلم (assets/theme-toggle.js) */
+    if (window.__deTheme && window.__deTheme.button) {
+        actions.appendChild(window.__deTheme.button("site-btn site-btn-icon site-theme"));
+    }
+
     /* ضيف — حتى نعرفو شكون داخل */
     const guest = document.createElement("span");
     guest.className = "site-actions";
@@ -780,7 +785,7 @@
     }());
 
     /* الزر العايم ديال الوضع ماعندوش معنى وهاد الزر كاين */
-    const floating = document.querySelector(".de-theme-btn");
+    const floating = document.querySelector(".de-theme-btn.is-floating");
     if (floating) floating.remove();
     document.documentElement.classList.add("has-site-header");
 
