@@ -148,11 +148,43 @@ try {
     }
 
     if (response.status === 200 && payload && payload.teil1) {
-        step("ok", "3. الـ Worker", "رجع الموضوع insel كامل.");
-        step("ok", "4. المحتوى", "عدد النصوص: " +
+        step("ok", "3. الـ Worker — Lesen", "رجع الموضوع insel كامل.");
+        step("ok", "4. المحتوى ديال Lesen", "عدد النصوص: " +
             (payload.teil1.variants?.[0]?.texts?.length ?? "?") +
             " · النسخ: " + (payload.teil1.variants?.length ?? "?"));
-        step("ok", "كلشي مزيان", "المواضيع المدفوعة خاصهم يتحلو ليك دابا. إلا ما تحلاوش، صفي الكاش.");
+
+        /* 5 — Sprechen. مخزون ف مفتاح آخر (premium-sprechen) وكيحتاج
+           نسخة جديدة ديال الـWorker. كنفحصوه على حدة باش نعرفو
+           واش المشكل ف Lesen ولا غير ف Sprechen. */
+        const SP_ID = "sprechen-b2-e-musik";
+        let spRes, spPayload = null, spRaw = "";
+        try {
+            spRes = await fetch(ENDPOINT, {
+                method: "POST", headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ lesenId: SP_ID, idToken: token })
+            });
+            spRaw = await spRes.text();
+            try { spPayload = JSON.parse(spRaw); } catch (e) { spPayload = null; }
+        } catch (error) {
+            step("no", "5. Sprechen", error.message, "الـ Worker ماكيجاوبش.");
+            spRes = null;
+        }
+
+        if (spRes && spRes.status === 200 && spPayload && (spPayload.teil1 || spPayload.teil2)) {
+            step("ok", "5. الـ Worker — Sprechen", "رجع الموضوع " + SP_ID + " كامل.");
+            step("ok", "كلشي مزيان", "Lesen و Sprechen بجوج خدامين. إلا ما تحلاوش ف الصفحة، صفي الكاش.");
+        } else if (spRes) {
+            const spCode = spPayload && spPayload.error ? spPayload.error : spRaw.slice(0, 160);
+            step("no", "5. الـ Worker — Sprechen — HTTP " + spRes.status, spCode,
+                'Lesen خدام، إذن الحساب والـ KV binding مزيانين — المشكل ف Sprechen برك. ' +
+                'شوف هاد التلاتة بالترتيب:<br>' +
+                '<b>1)</b> واش دفعتي <code>cloudflare-worker.js</code> الجديد للـ Worker؟ ' +
+                'النسخة القديمة ماكتعرفش <code>premium-sprechen</code> بالمرة.<br>' +
+                '<b>2)</b> المفتاح ف KV خاصو يكون <code>premium-sprechen</code> بالضبط ' +
+                '(بلا فراغ، بلا <code>.json</code>).<br>' +
+                '<b>3)</b> خاصو يكون ف <b>نفس</b> الـ Namespace اللي فيه <code>premium-lesen</code> ' +
+                '— هو اللي مربوط بالـ Worker تحت السميّة <code>TOPICS</code>.');
+        }
     } else {
         const code = payload && payload.error ? payload.error : raw.slice(0, 160);
         let fix = "";
