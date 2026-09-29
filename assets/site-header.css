@@ -617,7 +617,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-header-inner {
     position: relative;
     border: 1px solid rgba(255,255,255,.08);
-    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #a30000));
+    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #5e0f1d));
     box-shadow: 0 18px 40px -18px rgba(10,19,48,.65), inset 0 1px 0 rgba(255,255,255,.08);
     color: #fff;
 }
