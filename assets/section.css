@@ -3145,7 +3145,17 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
     box-shadow: 0 -10px 28px rgba(0, 0, 0, .28);
 }
 .lesen-bar[hidden] { display: none; }
+.lesen-bar { display: flex; align-items: center; gap: 12px; direction: rtl; }
+.lesen-bar-slot { flex: 1 1 auto; min-width: 0; }
+.lesen-bar-slot[hidden] { display: none; }
+.lesen-bar-extra:empty { display: none; }
+.lesen-bar.has-extra .lesen-bar-slot:not([hidden]) + .lesen-bar-extra { padding-inline-start: 12px; border-inline-start: 1px solid var(--line); }
 .lesen-bar .lesen-actions { margin: 0; flex-wrap: nowrap; direction: rtl; }
+/* الامتحان الكامل: «الجزء اللي من بعد» / «صحح الامتحان كامل» */
+.lesen-bar .exam-bar { flex: 1 1 auto; }
+.lesen-bar .exam-bar .exam-bar-prev { margin-right: auto; }
+.lesen-bar .exam-bar-main { min-width: 240px; justify-content: center; }
+.exam-part[hidden] { display: none; }
 /* "تحقق" هو الزر الكبير؛ "شوف الحل" و"عاود" فالجهة الأخرى */
 .lesen-bar .lesen-btn-check { min-width: 210px; justify-content: center; }
 .lesen-bar .lesen-btn-show { margin-right: auto; }
@@ -3167,5 +3177,9 @@ body.has-lesen-bar { padding-bottom: 84px; }
     }
     .lesen-bar .lesen-btn-check { flex-grow: 2; min-width: 0; }
     .lesen-bar .lesen-btn-show { margin-right: 0; }
+    .lesen-bar { flex-wrap: wrap; gap: 8px; }
+    .lesen-bar-slot, .lesen-bar .exam-bar { flex: 1 1 100%; }
+    .lesen-bar.has-extra .lesen-bar-slot:not([hidden]) + .lesen-bar-extra { padding: 8px 0 0; border: 0; border-top: 1px solid var(--line); }
+    .lesen-bar .exam-bar-main { min-width: 0; flex-grow: 3; }
     body.has-lesen-bar { padding-bottom: 76px; }
 }
