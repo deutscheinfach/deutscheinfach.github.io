@@ -17,14 +17,20 @@
    استعمال:  node tools/split-sprechen.mjs
              node tools/split-sprechen.mjs --check   (بلا ما يبدل)
 */
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
 
 const check = process.argv.includes("--check");
 
 const TOPICS_FILE  = "assets/sprechen-b2-topics.js";
 const CONTENT_FILE = "assets/sprechen-b2-content.js";
 const OUT          = "premium-sprechen-split";
-const PREFIX       = "sprechen-b2-";
+/* سميّة الملف = مفتاح KV بالضبط. الـWorker كيقلب على
+   "lesen-" + lesenId، والـhub كيصيفط lesenId = sprechen-b2-<id>
+   — إذن المفتاح كامل هو lesen-sprechen-b2-<id>.
+   KEY_PREFIX هو اللي كيتسمّى بيه الملف، وID_PREFIX هو اللي
+   كيتصيفط للـWorker وكيتستعمل كمفتاح داخل الـblob. */
+const ID_PREFIX    = "sprechen-b2-";
+const KEY_PREFIX   = "lesen-" + ID_PREFIX;
 
 /* الملفات ديال المتصفح كيكتبو ف window — كنقلدوه */
 function evalWindow(files) {
@@ -52,7 +58,7 @@ for (const [id, body] of Object.entries(content)) {
 }
 
 /* الـ Worker كيقبل غير [a-z0-9-]{2,40} */
-const bad = Object.keys(paid).filter((id) => !/^[a-z0-9-]{2,40}$/.test(PREFIX + id));
+const bad = Object.keys(paid).filter((id) => !/^[a-z0-9-]{2,40}$/.test(ID_PREFIX + id));
 if (bad.length) {
     console.error("❌ مفاتيح ما كيقبلهمش الـ Worker:", bad.join(", "));
     process.exit(1);
@@ -68,8 +74,23 @@ if (check) {
     process.exit(stillPublic ? 1 : 0);
 }
 
-/* ---- 0) نسخة كاملة، باش تقدر تعاود تقسم من بعد ---- */
-writeFileSync("premium-sprechen.json", JSON.stringify(paid, null, 2) + "\n");
+/* ---- 0) نسخة كاملة ----
+   الأداة كتخدم ف اتجاه واحد: من بعد ما تفصل، الملفات
+   العامة ما بقاش فيهم المدفوع، وإلا عاودتي شغلتيها كتلقا
+   والو. إذن كنخزنو نسخة، وكنرجعو ليها ملي نحتاجو نعاودو
+   نبنيو مفاتيح KV بلا ما نرجعو الملفات من git. */
+const MASTER = "premium-sprechen.json";
+if (!Object.keys(paid).length && existsSync(MASTER)) {
+    const saved = JSON.parse(readFileSync(MASTER, "utf8"));
+    for (const [k, v] of Object.entries(saved)) {
+        if (k.startsWith(ID_PREFIX)) paid[k.slice(ID_PREFIX.length)] = v;
+    }
+    console.log(`(الملفات العامة ديجا مفصولين — قريت ${Object.keys(paid).length} من ${MASTER})`);
+} else if (Object.keys(paid).length) {
+    const master = {};
+    for (const [id, body] of Object.entries(paid)) master[ID_PREFIX + id] = body;
+    writeFileSync(MASTER, JSON.stringify(master, null, 2) + "\n");
+}
 
 /* ---- 1) الملفات ديال KV ---- */
 rmSync(OUT, { recursive: true, force: true });
@@ -77,7 +98,7 @@ mkdirSync(OUT, { recursive: true });
 
 const rows = [];
 for (const [id, body] of Object.entries(paid)) {
-    const key = PREFIX + id;
+    const key = KEY_PREFIX + id;
     const text = JSON.stringify(body);
     writeFileSync(`${OUT}/${key}.json`, text + "\n");
     rows.push([key, Buffer.byteLength(text) / 1024]);
@@ -128,7 +149,7 @@ writeFileSync(CONTENT_FILE, head + JSON.stringify(free, null, 4) + ";\n");
     }
 
     for (const [id, body] of Object.entries(paid1)) {
-        const key = PREFIX + id;
+        const key = KEY_PREFIX + id;
         /* الشكل اللي كيتسنى الـhub: { teil1: … } */
         const text = JSON.stringify({ teil1: body });
         writeFileSync(`${OUT}/${key}.json`, text + "\n");
