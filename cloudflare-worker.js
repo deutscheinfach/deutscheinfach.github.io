@@ -226,6 +226,17 @@ export default {
         }
 
         if (!lesenTopic) {
+          /* رسالة مختلفة لـSprechen — كتخدم كعلامة باش نعرفو
+             واش هاد النسخة ديال الـWorker هي اللي خدامة.
+             إلا شفتي "Topic not found." ف موضوع Sprechen، يعني
+             الـDeploy ما دازش والـWorker القديم مازال خدام. */
+          if (lesenId.startsWith("sprechen-")) {
+            return jsonResponse({
+              error: "sprechen_key_missing",
+              details: "الـWorker جديد وخدام. المفتاح premium-sprechen ماكاينش ف KV، " +
+                       "ولا كاين وماكاينش فيه " + lesenId + "، ولا ماشي ف نفس الـNamespace."
+            }, 404, allowedOrigin);
+          }
           return jsonResponse({ error: "Topic not found." }, 404, allowedOrigin);
         }
 

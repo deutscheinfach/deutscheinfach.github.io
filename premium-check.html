@@ -175,8 +175,24 @@ try {
             step("ok", "كلشي مزيان", "Lesen و Sprechen بجوج خدامين. إلا ما تحلاوش ف الصفحة، صفي الكاش.");
         } else if (spRes) {
             const spCode = spPayload && spPayload.error ? spPayload.error : spRaw.slice(0, 160);
-            step("no", "5. الـ Worker — Sprechen — HTTP " + spRes.status, spCode,
-                'Lesen خدام، إذن الحساب والـ KV binding مزيانين — المشكل ف Sprechen برك. ' +
+            /* الـWorker الجديد كيرجع sprechen_key_missing. إلا شفنا
+               "Topic not found." يعني النسخة القديمة مازالة خدامة. */
+            const oldWorker = spRes.status === 404 && !/sprechen_key_missing/.test(spRaw);
+            step("no", "5. الـ Worker — Sprechen — HTTP " + spRes.status, spCode, oldWorker
+                ? '<b>الـWorker القديم مازال خدام — الـDeploy ما دازش.</b><br>' +
+                  'ف Cloudflare ماكافيش تلصق الكود وتسجل: خاصك تبرك على <b>Deploy</b> بصح.<br><br>' +
+                  'Workers &amp; Pages → الـWorker ديالك → <b>Deployments</b>: شوف واش آخر ' +
+                  'نسخة هي ديال اليوم. إلا كانت قديمة، الكود الجديد ما دازش.<br>' +
+                  'لصق <code>cloudflare-worker.js</code> كامل، من بعد <b>Save and Deploy</b>، ' +
+                  'وعاود هاد الفحص.'
+                : 'الـWorker الجديد خدام — إذن المشكل ف المفتاح:<br>' +
+                  '<b>1)</b> المفتاح خاصو يكون <code>premium-sprechen</code> بالضبط ' +
+                  '(بلا فراغ، بلا <code>.json</code>).<br>' +
+                  '<b>2)</b> خاصو يكون ف <b>نفس</b> الـNamespace اللي فيه <code>premium-lesen</code>.<br>' +
+                  '<b>3)</b> شوف واش القيمة JSON صحيح — خاصها تبدا بـ<code>{</code> ' +
+                  'وتسالي بـ<code>}</code> بلا والو زايد.');
+        } else if (false) {
+            step("no", "", "", 'Lesen خدام، إذن الحساب والـ KV binding مزيانين — المشكل ف Sprechen برك. ' +
                 'شوف هاد التلاتة بالترتيب:<br>' +
                 '<b>1)</b> واش دفعتي <code>cloudflare-worker.js</code> الجديد للـ Worker؟ ' +
                 'النسخة القديمة ماكتعرفش <code>premium-sprechen</code> بالمرة.<br>' +
