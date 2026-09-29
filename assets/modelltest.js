@@ -105,7 +105,7 @@
                     "<li><span>Hören</span><b>Thema " + t.n + " · Teil 1–3</b></li>" +
                     "<li><span>Schreiben</span><b>" + esc(t.schreiben.title) + "</b></li>" +
                     '<li><span>Dauer</span><b>140 Min · 225 P</b></li></ul>' +
-                    (last ? '<p class="mt-last">آخر نتيجة: <b style="color:var(--brand-light)">' + fmtPts(last.points) + " / 225</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
+                    (last ? '<p class="mt-last">آخر نتيجة: <b style="color:var(--accent-text)">' + fmtPts(last.points) + " / 225</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
                     '<div class="mt-foot"><span class="mt-chip ' + (t.locked ? "prem" : "free") + '">' + (t.locked ? "Premium" : "مجاني") + "</span>" +
                     (shut
                         ? '<a class="tr-btn" href="payment.html">' + svg("lock") + "Entsperren</a>"

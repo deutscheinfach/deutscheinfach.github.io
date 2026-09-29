@@ -14,10 +14,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=0f1853c7">
+<link rel="stylesheet" href="assets/theme.css?v=e32435cd">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
-<link rel="stylesheet" href="assets/site-header.css?v=42e513ac">
+<link rel="stylesheet" href="assets/site-header.css?v=99f31e88">
     <style>
 
         * {
@@ -138,7 +138,7 @@
         }
 
         .brand span {
-            color: var(--red);
+            color: var(--accent-text);
         }
 
         .nav-links {
@@ -162,8 +162,8 @@
 
         .nav-links a:hover {
             background: rgba(214,178,94,0.08);
-            color: var(--red-dark);
-            color: var(--red-dark);
+            color: var(--accent-text);
+            color: var(--accent-text);
         }
 
         .nav-actions {
@@ -188,7 +188,7 @@
 
         .login {
             background: linear-gradient(135deg, var(--brand-light), var(--red) 55%, var(--red-dark));
-            color: #fff;
+            color: var(--on-brand);
         }
 
         .login:hover {
@@ -199,7 +199,7 @@
         .signup {
             background: var(--surface-2);
             border: 1px solid var(--border-strong);
-            color: var(--red-dark);
+            color: var(--accent-text);
         }
 
         .signup:hover {
@@ -234,7 +234,7 @@
             padding: 10px 13px;
             border-radius: 12px;
 
-            color: var(--red-dark);
+            color: var(--accent-text);
             font-weight: bold;
             font-size: 13px;
 
@@ -321,7 +321,7 @@
             margin-bottom: 20px;
 
             background: rgba(214,178,94,0.10);
-            color: var(--red-dark);
+            color: var(--accent-text);
 
             border: 1px solid var(--border-strong);
             border-radius: 999px;
@@ -390,7 +390,7 @@
 
         .hero-primary {
             background: linear-gradient(135deg, var(--brand-light), var(--red) 55%, var(--red-dark));
-            color: #fff;
+            color: var(--on-brand);
             box-shadow: 0 10px 25px -6px rgba(214,178,94,0.4);
         }
 
@@ -407,7 +407,7 @@
 
         .hero-secondary:hover {
             border-color: var(--border-strong);
-            color: var(--red-dark);
+            color: var(--accent-text);
             transform: translateY(-3px);
         }
 
@@ -531,7 +531,7 @@
         .stat strong {
             display: block;
             font-size: 25px;
-            color: var(--red-dark);
+            color: var(--accent-text);
             margin-bottom: 5px;
         }
 
@@ -561,7 +561,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            color: var(--red);
+            color: var(--accent-text);
             font-weight: 900;
             font-size: 15px;
             margin-bottom: 14px;
@@ -635,7 +635,7 @@
             padding: 2px 8px;
             border-radius: 999px;
             background: rgba(214,178,94,.10);
-            color: var(--red-dark);
+            color: var(--accent-text);
             font-size: 11px;
             font-weight: 900;
         }
@@ -686,7 +686,7 @@
             display: grid;
             place-items: center;
             background: rgba(214,178,94,.10);
-            color: var(--red-dark);
+            color: var(--accent-text);
             font-size: 11px;
             font-weight: 900;
             flex: 0 0 auto;
@@ -699,7 +699,7 @@
         }
         mark.hl2 {
             background: rgba(214,178,94,.14);
-            color: var(--red-dark);
+            color: var(--accent-text);
             border-radius: 4px;
             padding: 0 3px;
         }
@@ -785,7 +785,7 @@
             background: rgba(214,178,94,.05);
             direction: rtl;
         }
-        .preview-score b { font-size: 16px; font-weight: 900; color: var(--red-dark); }
+        .preview-score b { font-size: 16px; font-weight: 900; color: var(--accent-text); }
         .preview-score span { font-size: 10.5px; color: var(--muted); display: block; }
 
         .preview-foot {
@@ -824,7 +824,7 @@
         .preview-btn.main {
             background: var(--red);
             border-color: var(--red);
-            color: #fff;
+            color: var(--on-brand);
         }
 
         @media (max-width: 900px) {
@@ -853,7 +853,7 @@
 
         .section-title .mini {
             display: inline-block;
-            color: var(--red-dark);
+            color: var(--accent-text);
             background: rgba(214,178,94,0.10);
             padding: 7px 13px;
             border-radius: 999px;
@@ -959,7 +959,7 @@
         .card-link {
             display: inline-block;
             margin-top: 18px;
-            color: var(--red-dark);
+            color: var(--accent-text);
             text-decoration: none;
             font-size: 14px;
             font-weight: bold;
@@ -984,7 +984,7 @@
         }
 
         .community-card h3 {
-            color: var(--red-dark);
+            color: var(--accent-text);
         }
 
         .community-online {
@@ -1045,7 +1045,7 @@
         }
 
         .promise h2 span {
-            color: var(--red-dark);
+            color: var(--accent-text);
         }
 
         .promise p {
@@ -1099,16 +1099,10 @@
 
             text-align: center;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--brand-light),
-                    var(--red) 55%,
-                    var(--red-dark)
-                );
+            background: var(--grad-navy);
 
             border-radius: 30px;
-            color: #fff;
+            color: var(--on-brand);
 
             box-shadow: 0 20px 50px -10px rgba(214,178,94,0.35);
         }
@@ -1133,9 +1127,9 @@
             padding: 14px 25px;
             border-radius: 14px;
 
-            background: #fff;
-            color: var(--red-dark);
-            box-shadow: 0 12px 28px -10px rgba(20,22,31,.45);
+            background: var(--grad-brand);
+            color: var(--on-brand);
+            box-shadow: var(--shadow-brand);
 
             text-decoration: none;
             font-weight: 900;
@@ -1171,7 +1165,7 @@
         }
 
         .footer-brand span {
-            color: var(--red-dark);
+            color: var(--accent-text);
         }
 
         footer p {
@@ -1196,7 +1190,7 @@
         }
 
         .footer-links a:hover {
-            color: var(--red-dark);
+            color: var(--accent-text);
         }
 
 
@@ -1529,8 +1523,10 @@
         }
         .hero .stat strong { color: #fff; }
         .hero .stat span { color: rgba(255,255,255,.7); }
-        .cta-button { color: var(--brand-dark); font-weight: 900; }
+        .cta-button { color: var(--on-brand); font-weight: 900; }
 
+        /* v5: الطبقة الداكنة v4 مسدودة */
+        @media not all {
         /* =========================================
            v4 — ذهبي وأسود: مريح للعين
         ========================================= */
@@ -1560,19 +1556,20 @@
         .hero-secondary { border-color: rgba(214,178,94,.45); }
         .hero-secondary:hover { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
         .hero .stat { border-color: rgba(214,178,94,.18); }
-        .hero .stat strong { color: var(--brand-light); }
+        .hero .stat strong { color: var(--accent-text); }
         .section-title, .showcase-copy h2, .promise-content h2 { color: var(--text); }
         .preview { background: var(--surface); border-color: rgba(214,178,94,.22); }
         .preview-opt { background: var(--surface-2); }
         .promise { background: linear-gradient(145deg, #1a1a20, #121216); border-color: rgba(214,178,94,.2); }
         .promise-item { background: var(--surface-2); border-color: var(--border); color: var(--text); }
         .cta { background: linear-gradient(135deg, #2a2418, #16140f 60%, #0f0e0b); border: 1px solid rgba(214,178,94,.35); color: var(--text); }
-        .cta h2 { color: var(--brand-light); }
+        .cta h2 { color: var(--accent-text); }
         .cta p { color: var(--muted); }
         .cta-button { background: var(--grad-brand); color: var(--on-brand); box-shadow: var(--shadow-brand); }
         footer { background: transparent; border-top: 1px solid rgba(214,178,94,.14); }
         .footer-brand { color: var(--text); }
-        .footer-brand span { color: var(--brand); }
+        .footer-brand span { color: var(--accent-text); }
+        }
     </style>
 
 <!-- seo:start (tools/seo.py) -->

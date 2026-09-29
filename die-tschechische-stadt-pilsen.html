@@ -20,7 +20,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/theme.css?v=0f1853c7">
+    <link rel="stylesheet" href="assets/theme.css?v=e32435cd">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
     <style>
@@ -138,7 +138,7 @@
                     var(--danger)
                 );
 
-            color: white;
+            color: var(--on-brand);
 
             font-weight: 900;
             font-size: 17px;
@@ -196,7 +196,7 @@
 
         .header-btn:hover {
             border-color: var(--red);
-            color: var(--red);
+            color: var(--accent-text);
 
             transform: translateY(-1px);
         }
@@ -232,7 +232,7 @@
         }
 
         .breadcrumb a {
-            color: var(--red);
+            color: var(--accent-text);
             text-decoration: none;
             font-weight: 700;
         }
@@ -252,7 +252,7 @@
                     var(--red-dark)
                 );
 
-            color: white;
+            color: var(--on-brand);
 
             border-radius: 22px;
 
@@ -349,7 +349,7 @@
         }
 
         .info-card i {
-            color: var(--red);
+            color: var(--accent-text);
 
             margin-bottom: 7px;
 
@@ -477,7 +477,7 @@
 
             background: var(--red);
 
-            color: white;
+            color: var(--on-brand);
 
             font-size: 12px;
 
@@ -644,7 +644,7 @@
         .btn-check {
             background: var(--red);
 
-            color: white;
+            color: var(--on-brand);
 
             box-shadow: 0 7px 18px rgba(214,0,0,0.22);
         }
@@ -701,7 +701,7 @@
         }
 
         .result-info {
-            color: var(--red);
+            color: var(--accent-text);
         }
 
         /* =========================
@@ -719,7 +719,7 @@
         }
 
         .page-footer strong {
-            color: var(--red);
+            color: var(--accent-text);
         }
 
         /* =========================
@@ -774,7 +774,7 @@
         }
 
     </style>
-<style id="v4">
+<style id="v4" media="not all">
 /* v4 — ذهبي وأسود */
 :root {
   --bg: #0e0e11; --card: #16161b; --text: #ece7dc; --muted: #a39d90;
@@ -788,7 +788,7 @@ body { background: radial-gradient(circle at 12% 6%, rgba(214,178,94,.10), trans
 .question-number { background: var(--grad-brand) !important; color: var(--on-brand) !important; }
 .radio-option { background: #1e1e24 !important; color: var(--text) !important; border-color: rgba(255,255,255,.1) !important; }
 .btn-check { background: var(--grad-brand) !important; color: var(--on-brand) !important; }
-.btn-show { background: #26262e !important; color: var(--brand-light) !important; border: 1.5px solid rgba(214,178,94,.45) !important; }
+.btn-show { background: #26262e !important; color: var(--accent-text) !important; border: 1.5px solid rgba(214,178,94,.45) !important; }
 .btn-retry { background: transparent !important; color: var(--text) !important; border: 1.5px solid rgba(255,255,255,.28) !important; }
 </style>
 <!-- seo:start (tools/seo.py) -->

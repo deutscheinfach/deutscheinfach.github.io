@@ -11,28 +11,28 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=0f1853c7">
+<link rel="stylesheet" href="assets/theme.css?v=e32435cd">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
 <script src="assets/hoeren-premium.js?v=9a8df7cd"></script>
-<link rel="stylesheet" href="assets/site-header.css?v=42e513ac">
+<link rel="stylesheet" href="assets/site-header.css?v=99f31e88">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Telc B1 Hören Teil 1 – Übungen online | Deutsch Einfach</title>
   <style>
     :root { --de-red: var(--gold); --de-red-dark: var(--gold-dark); --de-yellow: var(--gold-soft); --de-black: var(--surface-2); }
     body { background: radial-gradient(circle at 12% 6%, rgba(214,178,94,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(214,178,94,.07), transparent 44%),#08090c; font-family: Arial, sans-serif; padding: 30px; }
-    .btn-check { margin-top: 20px; padding: 10px 18px; font-size: 16px; background-color: var(--de-red); color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .btn-check { margin-top: 20px; padding: 10px 18px; font-size: 16px; background-color: var(--de-red); color: var(--on-brand); border: none; border-radius: 8px; cursor: pointer; }
     .btn-check:hover { background-color: var(--de-red-dark); }
     .correct { background-color: rgba(74,222,128,.14); }
     .wrong { background-color: rgba(255,107,107,.14); }
-    #warningBox { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--de-red); color: #fff; padding: 15px 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); font-size: 14px; font-weight: bold; z-index: 9999; }
+    #warningBox { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--de-red); color: var(--on-brand); padding: 15px 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); font-size: 14px; font-weight: bold; z-index: 9999; }
     .teil-nav-wrap { display: flex; justify-content: center; gap: 10px; margin: 0 auto 24px; flex-wrap: wrap; max-width: 7xl; }
-    .teil-nav-btn { padding: 10px 26px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; background: var(--surface); border: 2px solid var(--de-red); color: var(--de-red); transition: .22s; }
-    .teil-nav-btn:hover { background: var(--de-red); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(214,178,94,0.2); }
-    .teil-nav-btn.active { background: var(--de-red); color: #fff; box-shadow: 0 4px 12px rgba(214,178,94,0.25); }
+    .teil-nav-btn { padding: 10px 26px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; background: var(--surface); border: 2px solid var(--de-red); color: var(--accent-text); transition: .22s; }
+    .teil-nav-btn:hover { background: var(--de-red); color: var(--on-brand); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(214,178,94,0.2); }
+    .teil-nav-btn.active { background: var(--de-red); color: var(--on-brand); box-shadow: 0 4px 12px rgba(214,178,94,0.25); }
     html.dark .teil-nav-btn { background: #1f1f1f; border-color: var(--de-red); color: #f1f1f1; }
-    html.dark .teil-nav-btn.active { background: var(--de-red); color: #fff; }
+    html.dark .teil-nav-btn.active { background: var(--de-red); color: var(--on-brand); }
   </style>
 <!-- AUTO_NAV_START -->
 <style>
@@ -181,7 +181,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     height: 30px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
-    color: #fff;
+    color: var(--on-brand);
     font-weight: 800;
     font-size: 13px;
     display: flex;
@@ -197,7 +197,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   html.dark .theme-item-title { color: #f1f1f1; }
   .theme-item-chevron {
     flex: 0 0 auto;
-    color: var(--de-red);
+    color: var(--accent-text);
     transition: transform .25s ease;
   }
   .theme-item.collapsed .theme-item-chevron { transform: rotate(-90deg); }
@@ -233,7 +233,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
-    color: #fff;
+    color: var(--on-brand);
     font-size: 18px;
     box-shadow: 0 6px 14px rgba(214,178,94,0.16);
   }
@@ -250,7 +250,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     padding: 0 14px;
     border-radius: 11px;
     background: var(--de-red);
-    color: #fff !important;
+    color: var(--on-brand) !important;
     text-decoration: none;
     font-size: 12px;
     font-weight: 800;
@@ -278,7 +278,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     align-items: center;
     justify-content: center;
     gap: 10px;
-    color: var(--de-red);
+    color: var(--accent-text);
     font-weight: 700;
     font-size: 14px;
   }
@@ -328,7 +328,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   .nq-question-number {
     display: inline-flex; align-items: center; justify-content: center;
     width: 26px; height: 26px; border-radius: 8px;
-    background: var(--de-red); color: #fff; font-size: 12px; font-weight: 800; margin-right: 7px;
+    background: var(--de-red); color: var(--on-brand); font-size: 12px; font-weight: 800; margin-right: 7px;
   }
   .nq-answers { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
   .nq-radio-option {
@@ -357,7 +357,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     transition: transform .2s, box-shadow .2s;
   }
   .nq-btn:hover { transform: translateY(-2px); }
-  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(214,178,94,0.22); }
+  .nq-btn-check { background: var(--de-red); color: var(--on-brand); box-shadow: 0 7px 18px rgba(214,178,94,0.22); }
   .nq-btn-show { background: var(--surface-2); color: var(--text); }
   html.dark .nq-btn-show { background: var(--surface-2); color: var(--text); }
   .nq-btn-retry { background: var(--de-yellow); color: var(--text); }
@@ -366,7 +366,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   html.dark .nq-result-box:not(:empty) { border-color: #3a3a3a; }
   .nq-result-success { color: #16803c; }
   html.dark .nq-result-success { color: #51d88a; }
-  .nq-result-info { color: var(--de-red); }
+  .nq-result-info { color: var(--accent-text); }
   @media (max-width: 620px) {
     .nq-question-row { grid-template-columns: 1fr; gap: 10px; }
     .nq-answers { justify-content: flex-start; }
@@ -419,13 +419,13 @@ body{
 .teil-nav-btn:hover{
   background: rgba(214,178,94,.12) !important;
   border-color: var(--gold) !important;
-  color: var(--gold) !important;
+  color: var(--accent-text) !important;
   box-shadow: 0 10px 24px rgba(214,178,94,.13) !important;
 }
 .teil-nav-btn.active{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
   border-color: var(--gold) !important;
-  color: #fff !important;
+  color: var(--on-brand) !important;
   box-shadow: 0 9px 22px rgba(214,178,94,.25) !important;
 }
 
@@ -470,7 +470,7 @@ body{
   letter-spacing: .1px !important;
 }
 #hoeren-teil1-stack .theme-item-chevron{
-  color: var(--brand) !important;
+  color: var(--accent-text) !important;
 }
 #hoeren-teil1-stack .theme-item-index{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
@@ -672,7 +672,7 @@ body{
 .hoeren-sticky-nav .hoeren-nav-back:hover,
 .hoeren-sticky-nav .hoeren-nav-start:hover{
   background: var(--surface) !important;
-  color: var(--brand) !important;
+  color: var(--accent-text) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -682,7 +682,7 @@ body{
   border: 1px solid var(--border) !important;
 }
 .hoeren-sticky-nav .hoeren-nav-part:hover{
-  color: var(--gold) !important;
+  color: var(--accent-text) !important;
   border-color: var(--gold) !important;
   background: rgba(214,178,94,.12) !important;
   transform: translateY(-2px) !important;
@@ -827,16 +827,16 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
 
 <style id="hoeren-premium-lock">
 .premium-theme-body{background: var(--surface) !important;min-height: 100px;}
-.premium-theme-icon{background: var(--surface-2) !important;color: var(--brand) !important;box-shadow: 0 6px 14px rgba(23,23,23,.18) !important;}
-.premium-theme-open{background: var(--surface-2) !important;color: var(--brand) !important;border: 1px solid var(--border) !important;}
-.premium-theme-open:hover{background: var(--gold) !important;color: #fff !important;border-color: var(--gold) !important;}
+.premium-theme-icon{background: var(--surface-2) !important;color: var(--accent-text) !important;box-shadow: 0 6px 14px rgba(23,23,23,.18) !important;}
+.premium-theme-open{background: var(--surface-2) !important;color: var(--accent-text) !important;border: 1px solid var(--border) !important;}
+.premium-theme-open:hover{background: var(--gold) !important;color: var(--on-brand) !important;border-color: var(--gold) !important;}
 html.dark .premium-theme-body{background: #1b1b1b !important;}
 html.dark .premium-theme-open{background: #111318 !important;color: #fff !important;border-color: #343842 !important;}
-html.dark .premium-theme-open:hover{background: var(--gold) !important;color: #fff !important;border-color: var(--gold) !important;}
+html.dark .premium-theme-open:hover{background: var(--gold) !important;color: var(--on-brand) !important;border-color: var(--gold) !important;}
 </style>
 
 
-<style id="hoeren-v4">
+<style id="hoeren-v4" media="not all">
 /* v4 — ذهبي وأسود: البطائق والشريط ديال فوق داكنين، والنص فاتح */
 html body .hoeren-sticky-nav,
 html body .telc-exercise-topbar {
@@ -1854,7 +1854,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 .hoeren-premium-head{background: #171717;color: #fff;padding: 22px 60px 20px 22px;border-bottom: 4px solid var(--gold-soft);}
 .hoeren-premium-head h3{margin-bottom: 7px;font-size: 24px;}
 .hoeren-premium-head p{line-height: 1.6;color: #eee;}
-.hoeren-premium-close{position: absolute;top: 12px;right: 14px;width: 38px;height: 38px;border: none;border-radius: 50%;background: var(--gold);color: #fff;font-size: 24px;cursor: pointer;z-index: 5;}
+.hoeren-premium-close{position: absolute;top: 12px;right: 14px;width: 38px;height: 38px;border: none;border-radius: 50%;background: var(--gold);color: var(--on-brand);font-size: 24px;cursor: pointer;z-index: 5;}
 .hoeren-premium-close:hover{background: #111;color: #fff;}
 .hoeren-premium-body{padding: 22px;}
 .hoeren-premium-intro{background: var(--surface-2);border-radius: 12px;padding: 15px;margin-bottom: 20px;color: var(--text);line-height: 1.7;text-align: center;}
@@ -1864,15 +1864,15 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 .hoeren-offer-card{border: 2px solid var(--line);border-radius: 14px;padding: 16px 12px;text-align: center;background: var(--surface);direction: ltr;transition: .2s;}
 .hoeren-offer-card:hover{border-color: var(--gold);transform: translateY(-2px);}
 .hoeren-offer-card h4{margin-bottom: 8px;font-size: 17px;}
-.hoeren-offer-price{color: var(--gold);font-size: 24px;font-weight: bold;margin-bottom: 10px;}
+.hoeren-offer-price{color: var(--accent-text);font-size: 24px;font-weight: bold;margin-bottom: 10px;}
 .hoeren-offer-description{color: var(--muted);font-size: 13px;line-height: 1.8;min-height: 62px;text-align: center;display: flex;flex-direction: column;justify-content: center;}
 .hp-ar-small{direction: rtl;display: block;font-size: 13px;}
-.hoeren-offer-btn{display: block;margin-top: 12px;text-decoration: none;background: var(--gold);color: #fff;padding: 10px 8px;border-radius: 8px;font-weight: bold;font-size: 13px;transition: .2s;}
+.hoeren-offer-btn{display: block;margin-top: 12px;text-decoration: none;background: var(--gold);color: var(--on-brand);padding: 10px 8px;border-radius: 8px;font-weight: bold;font-size: 13px;transition: .2s;}
 .hoeren-offer-btn:hover{background: #111;color: #fff;}
 .hoeren-whatsapp-area{margin-top: 20px;padding-top: 18px;border-top: 1px solid var(--line);text-align: center;}
 .hoeren-whatsapp-area p{margin-bottom: 11px;color: var(--muted);line-height: 1.7;}
 .hoeren-whatsapp-main{display: block;width: 100%;background: #171717;color: #fff;text-decoration: none;padding: 13px 15px;border-radius: 9px;font-weight: bold;transition: .2s;}
-.hoeren-whatsapp-main:hover{background: var(--gold);color: #fff;}
+.hoeren-whatsapp-main:hover{background: var(--gold);color: var(--on-brand);}
 html.dark .hoeren-premium-box{background: #1b1b1b;color: #f1f1f1;}
 html.dark .hoeren-premium-intro{background: #2b2818;color: #f1f1f1;}
 html.dark .hoeren-offer-card{background: #191c22;border-color: #343842;}
@@ -2012,7 +2012,7 @@ html[data-theme="light"] #hoeren-teil1-stack .nq-question-row{
 /* الأزرار اللي كان نصها أبيض مفروض */
 html[data-theme="light"] .auto-nav-btn.auto-nav-secondary{
   background: var(--gold) !important;
-  color: #fff !important;
+  color: var(--on-brand) !important;
 }
 /* الصح والغلط كيبقاو نفس المعنى */
 html[data-theme="light"] .nq-question-row.nq-wrong{ background: rgba(198,40,40,.09) !important; }

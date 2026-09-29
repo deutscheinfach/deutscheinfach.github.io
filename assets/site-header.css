@@ -117,7 +117,7 @@ body { padding-top: var(--site-header-h); }
 }
 .site-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
 .site-brand-name { font-weight: 900; font-size: 16px; }
-.site-brand-name span { color: var(--gold); }
+.site-brand-name span { color: var(--accent-text); }
 .site-brand-sub {
     font-size: 10px;
     font-weight: 700;
@@ -181,7 +181,7 @@ body { padding-top: var(--site-header-h); }
     cursor: pointer;
     white-space: nowrap;
 }
-.site-btn:hover { border-color: var(--gold); color: var(--gold); }
+.site-btn:hover { border-color: var(--gold); color: var(--accent-text); }
 .site-btn-primary {
     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
     border-color: transparent;
@@ -222,7 +222,7 @@ body { padding-top: var(--site-header-h); }
     font-weight: 900;
     letter-spacing: .4px;
     background: color-mix(in srgb, var(--gold) 20%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
     border: 1px solid var(--line-gold);
 }
 
@@ -447,7 +447,7 @@ body { padding-top: var(--site-header-h); }
 .site-menu-item:disabled { opacity: .55; cursor: default; }
 .site-menu-icon { width: 17px; height: 17px; flex: 0 0 auto; opacity: .8; }
 
-.site-menu-up { color: var(--gold); }
+.site-menu-up { color: var(--accent-text); }
 .site-menu-out { color: #e05252; }
 .site-menu-out:hover { background: color-mix(in srgb, #e05252 12%, transparent); }
 
@@ -580,10 +580,10 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-level a.active,
 .site-nav-pill {
     background: var(--grad-brand, linear-gradient(135deg, #ff4f64, #e11d33 45%, #b4142a)) !important;
-    color: #fff;
+    color: var(--on-brand);
     box-shadow: var(--shadow-brand, 0 10px 26px -8px rgba(214,178,94,.55));
 }
-.site-nav.has-pill a.active { background: transparent !important; box-shadow: none; color: #fff; }
+.site-nav.has-pill a.active { background: transparent !important; box-shadow: none; color: var(--on-brand); }
 .site-level { background: rgba(255,255,255,.9); box-shadow: var(--shadow); }
 
 /* التيليفون: الخمسة ديال الأقسام كيتقاسمو العرض — ما يبقاش
@@ -617,7 +617,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-header-inner {
     position: relative;
     border: 1px solid rgba(255,255,255,.08);
-    background: var(--grad-navy, linear-gradient(135deg, #1c2c5e, #0f1b3d 55%, #0a1330));
+    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #5e0f1d));
     box-shadow: 0 18px 40px -18px rgba(10,19,48,.65), inset 0 1px 0 rgba(255,255,255,.08);
     color: #fff;
 }
@@ -644,7 +644,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 }
 .site-nav a { color: rgba(255,255,255,.78); }
 .site-nav a:hover { color: #fff; background: rgba(255,255,255,.10); }
-.site-nav a.active { color: #fff; }
+.site-nav a.active { color: var(--on-brand); }
 
 .site-header-inner .site-actions a.site-btn:not(.site-btn-primary) {
     color: #fff;
@@ -652,13 +652,13 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     background: rgba(255,255,255,.06);
 }
 .site-header-inner .site-actions a.site-btn:not(.site-btn-primary):hover {
-    color: var(--navy, #0f1b3d);
+    color: var(--navy, var(--navy));
     background: #fff;
     border-color: #fff;
 }
 .site-btn-primary {
     background: var(--grad-brand) !important;
-    color: #fff !important;
+    color: var(--on-brand) !important;
     box-shadow: var(--shadow-brand);
 }
 .site-account > .site-user {
@@ -680,8 +680,10 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     box-shadow: var(--shadow);
 }
 .site-level a { color: var(--muted); }
-.site-level a:hover { color: var(--navy, #0f1b3d); }
+.site-level a:hover { color: var(--navy, var(--navy)); }
 
+/* v5: الطبقة الداكنة v4 مسدودة (@media not all) — كتبقى هنا إلا بغينا نرجعوها */
+@media not all {
 /* =====================================================
    v4 — بار أسود وذهبي
    ===================================================== */
@@ -697,7 +699,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     height: 1px;
     opacity: .8;
 }
-.site-brand-name span { color: var(--brand); }
+.site-brand-name span { color: var(--accent-text); }
 .site-brand img { box-shadow: 0 0 0 2px rgba(214,178,94,.6), 0 0 18px -4px rgba(214,178,94,.5); }
 .site-nav { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.07); }
 .site-nav a { color: rgba(236,231,220,.72); }
@@ -734,11 +736,12 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 /* قائمة الحساب */
 .site-menu { background: var(--surface); border-color: var(--line-gold); color: var(--text); box-shadow: var(--shadow-lg); }
 
+}
 /* ===== الجرس: الجديد فالموقع ===== */
 .site-news-wrap { position: relative; display: inline-flex; }
 .site-bell { position: relative; color: var(--muted); }
-.site-bell.has-news { color: var(--gold); border-color: var(--line-gold, var(--gold)); }
-.site-news-wrap.is-open .site-bell { border-color: var(--gold); color: var(--gold); }
+.site-bell.has-news { color: var(--accent-text); border-color: var(--line-gold, var(--gold)); }
+.site-news-wrap.is-open .site-bell { border-color: var(--gold); color: var(--accent-text); }
 .site-bell-dot {
     position: absolute;
     top: -5px;
@@ -791,7 +794,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-news-title { font-size: 13.5px; line-height: 1.5; }
 .site-news-date { flex: 0 0 auto; font-size: 11px; color: var(--muted); }
 .site-news-body { margin: 5px 0 0; font-size: 12.5px; line-height: 1.7; color: var(--muted); white-space: pre-line; }
-.site-news-link { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 800; color: var(--gold); text-decoration: none; }
+.site-news-link { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 800; color: var(--accent-text); text-decoration: none; }
 .site-news-del {
     position: absolute;
     top: 6px;
@@ -807,7 +810,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-news-del:hover { background: color-mix(in srgb, #e3163f 15%, transparent); color: #e3163f; }
 .site-news-item:has(.site-news-del) .site-news-top { padding-left: 24px; }
 .site-news-form { display: grid; gap: 7px; padding: 10px; margin-bottom: 10px; border-radius: 12px; border: 1px dashed var(--gold); }
-.site-news-form-label { font-size: 12.5px; font-weight: 800; color: var(--gold); }
+.site-news-form-label { font-size: 12.5px; font-weight: 800; color: var(--accent-text); }
 .site-news-text { resize: vertical; min-height: 64px; font-family: inherit; }
 @media (max-width: 560px) {
     /* فالتيليفون: اللوحة كتاخد عرض الشاشة تحت الهيدر */
