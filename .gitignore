@@ -15,3 +15,11 @@ premium-lesen-split/
 # ومن بعد كتلصقهم ف KV تحت lesen-sprechen-b2-<id>
 premium-sprechen.json
 premium-sprechen-split/
+
+# شبكة أمان: أي ملف premium-*.json مهما كانت السميّة.
+# السبب: premium-lesen-MERGED.json (كان فيه 922 كيلو ديال
+# المحتوى المدفوع) ماكانش داخل فالقواعد اللي فوق حيت السميّة
+# مختلفة — والـhook طلب مني ندفعو. قاعدة واحدة عامة أأمن من
+# لائحة أسماء كنزيدو ليها وحدة وحدة.
+premium-*.json
+premium-*-split/
