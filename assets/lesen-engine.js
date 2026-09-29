@@ -107,11 +107,12 @@
     let adopted = [];
     let queued = false;
     /* زيادة فالشريط (أزرار الامتحان الكامل). كتبان غير ملي owner باين. */
-    let extra = null, extraOwner = null, hideActions = false;
+    /* mode: "live" = غير «تحقق» ديال الجزء · "done" = غير «شوف الحل» */
+    let extra = null, extraOwner = null, examMode = "";
     window.__lesenBarExtra = function (node, owner, options) {
         extra = node || null;
         extraOwner = owner || null;
-        hideActions = !!(options && options.hideActions);
+        examMode = (options && options.mode) || "";
         queueBar();
     };
 
@@ -140,8 +141,10 @@
         if (showExtra && extra.parentNode !== extraBox) extraBox.replaceChildren(extra);
         if (!showExtra && extraBox.firstChild) extraBox.replaceChildren();
         if (bar.classList.contains("has-extra") !== showExtra) bar.classList.toggle("has-extra", showExtra);
-        const slotHidden = showExtra && hideActions;
-        if (slot.hidden !== slotHidden) slot.hidden = slotHidden;
+        const mode = showExtra ? examMode : "";
+        if ((bar.dataset.exam || "") !== mode) {
+            if (mode) bar.dataset.exam = mode; else delete bar.dataset.exam;
+        }
         if (bar.hidden !== !shown) bar.hidden = !shown;
         if (document.body.classList.contains("has-lesen-bar") !== shown) {
             document.body.classList.toggle("has-lesen-bar", shown);
