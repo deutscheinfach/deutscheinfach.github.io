@@ -63,7 +63,7 @@ const OFFER_FEATURES = [
 function waUrl(options) {
     return typeof window.deWhatsAppUrl === "function"
         ? window.deWhatsAppUrl(options)
-        : "https://wa.me/212781584562";
+        : "https://wa.me/212776551898";
 }
 
 /* المستوى ديال الصفحة */

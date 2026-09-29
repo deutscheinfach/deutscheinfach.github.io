@@ -12,7 +12,7 @@
 (function () {
     "use strict";
 
-    var NUMBER = "212781584562";          /* 0781584562 */
+    var NUMBER = "212776551898";          /* 0776551898 */
     window.DE_WHATSAPP_NUMBER = NUMBER;
 
     function accountEmail() {
