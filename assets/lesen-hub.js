@@ -674,7 +674,7 @@
             const note = document.createElement("p");
             note.className = "exam-summary-note";
             note.textContent = done.length < PARTS.length
-                ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء. صحح كل جزء بـ «Antworten prüfen» باش تبان النتيجة الكاملة."
+                ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء. صحح كل جزء بـ «تحقق من الإجابات» باش تبان النتيجة الكاملة."
                 : (total >= need
                     ? "🎉 ناجح! جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة)."
                     : "باقي شوية: جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة). عاود الأجزاء الضعاف.");

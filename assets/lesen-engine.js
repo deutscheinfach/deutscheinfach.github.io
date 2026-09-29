@@ -91,6 +91,50 @@
         });
     });
 
+    /* ---- شريط الأزرار الثابت تحت (بحال التطبيقات) ----
+       كل جزء كيبني الأزرار ديالو فبلاصتهم. هنا كنبدلوهم بعلامة خاوية
+       وكنديوهم لشريط واحد فالـbody: الـboard فيه transform (الانتقال بين
+       النسخ)، وأي position: fixed داخلو كيتبع ليه ماشي للشاشة.
+       الشريط كيبين الأزرار ديال الجزء اللي باين دابا، وكيتخبى فاللائحة. */
+    const bar = document.createElement("div");
+    bar.className = "lesen-bar";
+    bar.hidden = true;
+    let adopted = [];
+    let queued = false;
+
+    function syncBar() {
+        queued = false;
+        document.querySelectorAll(".lesen-actions").forEach(function (actions) {
+            if (actions.__anchor) return;
+            const anchor = document.createElement("span");
+            anchor.className = "lesen-actions-anchor";
+            actions.replaceWith(anchor);
+            actions.__anchor = anchor;
+            adopted.push(actions);
+        });
+        adopted = adopted.filter(function (a) { return a.__anchor.isConnected; });
+        let current = null;
+        adopted.forEach(function (a) { if (a.__anchor.getClientRects().length) current = a; });
+
+        if (!bar.isConnected) document.body.appendChild(bar);
+        if (current && current.parentNode !== bar) bar.replaceChildren(current);
+        if (!current && bar.firstChild) bar.replaceChildren();
+        if (bar.hidden !== !current) bar.hidden = !current;
+        if (document.body.classList.contains("has-lesen-bar") !== !!current) {
+            document.body.classList.toggle("has-lesen-bar", !!current);
+        }
+    }
+    function queueBar() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(syncBar);
+    }
+    new MutationObserver(queueBar).observe(document.body, {
+        childList: true, subtree: true,
+        attributes: true, attributeFilter: ["hidden", "class", "style"],
+    });
+    queueBar();
+
     /* من بعد ما يختار جواب: فالـPC اللوحة كتسكرولي بوحدها للسؤال الجاي
        اللي مازال ماتجاوبش — ماكيحتاجش يقلب عليه. الصفحة ماكتتحركش. */
     window.__lesenNext = function (panel, rows, row) {
@@ -123,6 +167,8 @@
             ? "الحلول كاينة فوق · " + right + " من " + total + " كانو صحاح"
             : right + " / " + total + " صحيحة" + (missing ? " · باقي " + missing + " بلا جواب" : "");
         box.append(big, unit, detail);
+        /* الأزرار ولاو تحت فالشريط الثابت: كنوريو النتيجة باش ماتبقاش مخبية */
+        box.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
         try {
             window.dispatchEvent(new CustomEvent("lesen-points",
@@ -280,9 +326,9 @@
         /* ---------- الأزرار ---------- */
 
         const actions = el("div", "lesen-actions");
-        const checkBtn = button("lesen-btn lesen-btn-check", "Antworten prüfen");
-        const showBtn = button("lesen-btn lesen-btn-show", "Lösungen anzeigen");
-        const retryBtn = button("lesen-btn lesen-btn-retry", "Nochmal versuchen");
+        const checkBtn = button("lesen-btn lesen-btn-check", "تحقق من الإجابات");
+        const showBtn = button("lesen-btn lesen-btn-show", "شوف الحل");
+        const retryBtn = button("lesen-btn lesen-btn-retry", "عاود من جديد");
         actions.append(checkBtn, showBtn, retryBtn);
         body.appendChild(actions);
 
