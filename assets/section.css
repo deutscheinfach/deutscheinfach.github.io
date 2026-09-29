@@ -1726,6 +1726,10 @@
 .sp-gap.is-wrong .sp-gap-num { background: var(--danger); }
 
 .sp-choices { display: grid; grid-template-columns: 1fr; gap: 6px; }
+/* الاختيارات القصار (arbeite / arbeiten / …) كيتجمعو فسطر واحد:
+   اللوحة كتقصار بزاف وكتشوف اللاكونة كاملة بلا سكرول. الطوال كينزلو لسطر جديد. */
+.sp-choices:not(:has(.sp-option:nth-child(4))) { display: flex; flex-wrap: wrap; }
+.sp-choices:not(:has(.sp-option:nth-child(4))) .sp-option { flex: 1 1 auto; width: auto; min-height: 40px; padding: 8px 10px; align-items: center; }
 .sp-option { justify-content: flex-start; direction: ltr; text-align: left; }
 .sp-option .t1-option-de { overflow-wrap: normal; word-break: normal; hyphens: none; }
 
@@ -3116,3 +3120,11 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .e3-check { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); cursor: pointer; }
 .e3-check input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--gold); flex: 0 0 auto; }
 .e3-check input:checked + span .e3-de { text-decoration: line-through; opacity: .7; }
+
+/* ===== Lesen: الأزرار تحت النصوص (Teil 2 / Sprach 1 / Sprach 2) ===== */
+.t1-foot { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.t1-foot .lesen-actions { margin-top: 4px; }
+@media (min-width: 1001px) {
+    /* الأسئلة ديال Teil 2 و Sprach طوال: اللوحة كتوسع شوية فالـPC */
+    .t1-board:has(.t2-panel) { grid-template-columns: minmax(0, 1fr) 400px; }
+}

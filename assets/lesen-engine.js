@@ -68,6 +68,40 @@
         return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(".", ",");
     }
 
+    /* ---- مكان الأزرار ديال Teil 2 / Sprach 1 / Sprach 2 ----
+       فالـPC: تحت النصوص (بحال Teil 1)، ماشي مدفونين لتحت فاللوحة اللي كتسكرولي.
+       فالتيليفون: من بعد الأسئلة، حيت الأسئلة كتجي تحت النصوص. */
+    const WIDE = window.matchMedia("(min-width: 1001px)");
+    function placeFoot(foot) {
+        if (WIDE.matches) foot.__column.appendChild(foot);
+        else foot.__side.after(foot);
+    }
+    window.__lesenFoot = function (column, side, nodes) {
+        const foot = document.createElement("div");
+        foot.className = "t1-foot";
+        nodes.forEach(function (n) { foot.appendChild(n); });
+        foot.__column = column;
+        foot.__side = side;
+        placeFoot(foot);
+        return foot;
+    };
+    WIDE.addEventListener("change", function () {
+        document.querySelectorAll(".t1-foot").forEach(function (foot) {
+            if (foot.__column) placeFoot(foot);
+        });
+    });
+
+    /* من بعد ما يختار جواب: فالـPC اللوحة كتسكرولي بوحدها للسؤال الجاي
+       اللي مازال ماتجاوبش — ماكيحتاجش يقلب عليه. الصفحة ماكتتحركش. */
+    window.__lesenNext = function (panel, rows, row) {
+        if (!WIDE.matches || panel.scrollHeight <= panel.clientHeight + 4) return;
+        const at = rows.indexOf(row);
+        const next = rows.slice(at + 1).concat(rows.slice(0, at))
+            .find(function (r) { return r.picked === -1; });
+        if (!next) return;
+        panel.scrollTo({ top: Math.max(0, next.box.offsetTop - 70), behavior: "smooth" });
+    };
+
     window.__lesenScore = function (box, part, right, total, reveal, missing) {
         const max = MAX_POINTS[part] || 25;
         const points = total ? Math.round(right / total * max * 2) / 2 : 0;
