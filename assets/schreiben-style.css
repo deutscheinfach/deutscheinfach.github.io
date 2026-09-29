@@ -697,7 +697,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     --muted: #56607a;
 }
 .task-header {
-    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #a30000));
+    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #5e0f1d));
     color: #fff;
     border-bottom: 3px solid var(--red);
     box-shadow: 0 10px 30px -14px rgba(10,19,48,.6);

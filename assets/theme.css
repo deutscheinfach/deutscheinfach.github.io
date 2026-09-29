@@ -629,11 +629,11 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
 
 
 /* =====================================================================
-   v5 — أبيض White Dove (Benjamin Moore OC-17) + أحمر العلم + أصفر العلم
+   v5 — أبيض White Dove (Benjamin Moore OC-17) + بوردو + أصفر العلم
    =====================================================================
    · الخلفية: #EFEDE6 (OC-17 White Dove)، البطائق بيضا صافية.
    · جوج بندات رقاق بالبوردو على الجناب ديال الشاشة.
-   · تظليل (vignette) 45٪ فالزوايا — فالخلفية فقط، المحتوى صافي.
+   · تظليل (vignette) 60٪ فالزوايا — فالخلفية فقط، المحتوى صافي.
    · كل حاجة كتكليكا (أزرار، تبويبات، اختيارات) بالأصفر ديال العلم
      الألماني #FFCE00 وكتابة كحلة عليها.
    · الكتابة الملونة (عناوين صغار، تسميات) بالبوردو — الأصفر على
@@ -642,10 +642,10 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
 :root {
     color-scheme: light;
 
-    --bordeaux: #dd0000;
-    --bordeaux-2: #e00000;
-    --accent-text: #dd0000;
-    --grad-text: linear-gradient(135deg, #ff1a1a 0%, #dd0000 60%, #a30000 100%);
+    --bordeaux: #7a1426;
+    --bordeaux-2: #8e1b30;
+    --accent-text: #7a1426;
+    --grad-text: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%);
     --band-w: 10px;
 
     --brand: #ffce00;
@@ -656,17 +656,17 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     --brand-tint: rgba(255,206,0,.12);
     --on-brand: #1e1b18;
 
-    --navy: #dd0000;
-    --navy-2: #e00000;
-    --navy-3: #ff1a1a;
-    --grad-navy: linear-gradient(145deg, #e00000 0%, #dd0000 55%, #a30000 100%);
+    --navy: #7a1426;
+    --navy-2: #8e1b30;
+    --navy-3: #a3243b;
+    --grad-navy: linear-gradient(145deg, #8e1b30 0%, #7a1426 55%, #5e0f1d 100%);
     --sun: #ffce00;
 
     --flag-gold: #ffce00;
     --flag-black: #000000;
 
     --grad-brand: linear-gradient(135deg, #ffe04d 0%, #ffce00 50%, #f2bc00 100%);
-    --grad-ink: linear-gradient(145deg, #e00000 0%, #a30000 100%);
+    --grad-ink: linear-gradient(145deg, #8e1b30 0%, #5e0f1d 100%);
 
     --ink: #1e1b18;
     --paper: #efede6;
@@ -679,7 +679,7 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     --muted: #5e574f;
 
     --line: rgba(30,27,24,.12);
-    --line-gold: rgba(221,0,0,.22);
+    --line-gold: rgba(122,20,38,.22);
 
     --ok: #15803d;
     --danger: #c81e1e;
@@ -687,7 +687,7 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     --shadow: 0 1px 2px rgba(30,27,24,.06), 0 10px 28px -12px rgba(30,27,24,.20);
     --shadow-lg: 0 2px 4px rgba(30,27,24,.06), 0 28px 56px -20px rgba(30,27,24,.30);
     --shadow-brand: 0 12px 26px -12px rgba(230,184,0,.60);
-    --shadow-navy: 0 12px 28px -14px rgba(163,0,0,.45);
+    --shadow-navy: 0 12px 28px -14px rgba(94,15,29,.45);
     --ring: 0 0 0 4px rgba(255,206,0,.35);
 }
 @media (max-width: 700px) { :root { --band-w: 6px; } }
@@ -711,7 +711,7 @@ html::after {
             var(--bordeaux) 0 var(--band-w),
             transparent var(--band-w) calc(100% - var(--band-w)),
             var(--bordeaux) calc(100% - var(--band-w)) 100%),
-        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.45) 100%) !important;
+        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.60) 100%) !important;
 }
 html::before {
     height: 3px;
@@ -719,13 +719,13 @@ html::before {
 }
 .de-stars { display: none !important; }
 ::selection { background: rgba(255,206,0,.45); color: var(--text); }
-* { scrollbar-color: rgba(221,0,0,.35) transparent; }
+* { scrollbar-color: rgba(122,20,38,.35) transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(30,27,24,.22); }
-::-webkit-scrollbar-thumb:hover { background-color: rgba(221,0,0,.55); }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(122,20,38,.55); }
 :focus-visible { outline-color: var(--bordeaux); }
 input, textarea, select { color-scheme: light; }
 .gold-text {
-    background: linear-gradient(135deg, #ff1a1a 0%, #dd0000 60%, #a30000 100%) !important;
+    background: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%) !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
