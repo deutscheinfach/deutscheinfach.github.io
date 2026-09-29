@@ -34,7 +34,6 @@ const PREMIUM_OFFERS = [
         amount: "49 DH",
         per: "/ 15 يوم",
         tag: "",
-        whatsapp: "السلام عليكم، بغيت نشترك في باقة 15 يوم بثمن 49 DH.",
     },
     {
         name: "باقة شهر واحد",
@@ -42,7 +41,6 @@ const PREMIUM_OFFERS = [
         amount: "99 DH",
         per: "/ شهر",
         tag: "الأكثر طلباً",
-        whatsapp: "السلام عليكم، بغيت نشترك في باقة شهر واحد بثمن 99 DH.",
     },
     {
         name: "باقة شهرين",
@@ -50,7 +48,6 @@ const PREMIUM_OFFERS = [
         amount: "150 DH",
         per: "/ شهرين",
         tag: "",
-        whatsapp: "السلام عليكم، بغيت نشترك في باقة شهرين بثمن 150 DH.",
     },
 ];
 
@@ -61,7 +58,13 @@ const OFFER_FEATURES = [
     "المقاطع الصوتية ديال Hören",
 ];
 
-const WHATSAPP_LINK = "https://wa.me/212653618205";
+/* WhatsApp: الرقم والرسالة المرتبة كيجيو من assets/whatsapp.js.
+   إلا ماتحملش لشي سبب، كيبقى غير الرابط للرقم. */
+function waUrl(options) {
+    return typeof window.deWhatsAppUrl === "function"
+        ? window.deWhatsAppUrl(options)
+        : "https://wa.me/212776551898";
+}
 
 /* المستوى ديال الصفحة */
 const LEVEL = (typeof TOPIC_LEVEL !== "undefined" && TOPIC_LEVEL) ? TOPIC_LEVEL : "b2";
@@ -539,8 +542,11 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
             OFFER_FEATURES.map(function (f) { return "<li>" + f + "</li>"; }).join("") +
             "</ul>" +
             '<a class="premium-btn whatsapp" style="margin-top:18px" target="_blank" ' +
-            'rel="noopener noreferrer" href="' + WHATSAPP_LINK + "?text=" +
-            encodeURIComponent(offer.whatsapp) + '">الترقية عبر WhatsApp</a>' +
+            'rel="noopener noreferrer" href="' + waUrl({
+                offer: offer.name + " – " + offer.amount,
+                section: "Schreiben " + LEVEL.toUpperCase(),
+                topic: meta.title || ""
+            }) + '">الترقية عبر WhatsApp</a>' +
             "</div>"
         );
     }
@@ -596,8 +602,10 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
                 "هاد الموضوع Premium",
                 "باش تفتح هاد الموضوع وجميع المواضيع الأخرى، فعّل الاشتراك ديالك. ختار العرض اللي يناسبك.",
                 '<button class="premium-btn gold" id="offers-toggle" type="button">📦 شوف العروض</button>' +
-                '<a class="premium-btn whatsapp" href="' + WHATSAPP_LINK +
-                '" target="_blank" rel="noopener noreferrer">💬 تواصل معنا</a>' +
+                '<a class="premium-btn whatsapp" href="' + waUrl({
+                    section: "Schreiben " + LEVEL.toUpperCase(),
+                    topic: meta.title || ""
+                }) + '" target="_blank" rel="noopener noreferrer">💬 تواصل معنا</a>' +
                 back,
                 true
             );

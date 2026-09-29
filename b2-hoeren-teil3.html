@@ -1932,7 +1932,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 
     <a href="#" class="de-premium-whatsapp" onclick="chooseHoerenTeil3Offer(event,'Kontakt über WhatsApp')">
       <i class="fa-brands fa-whatsapp"></i>
-      <span>WhatsApp: 0653618205</span>
+      <span>WhatsApp: 0776551898</span>
     </a>
   </div>
 </div>
@@ -2062,7 +2062,7 @@ html.dark .de-premium-offer:hover{background: var(--gold);border-color: var(--go
 
 <script>
 (function(){
-  const HOEREN_TEIL3_WHATSAPP_NUMBER = "212653618205";
+  const HOEREN_TEIL3_WHATSAPP_NUMBER = "212776551898";
   let selectedHoerenTeil3Topic = "";
 
   window.openHoerenTeil3Premium = function(topic){
@@ -2093,16 +2093,11 @@ html.dark .de-premium-offer:hover{background: var(--gold);border-color: var(--go
 
   window.chooseHoerenTeil3Offer = function(event, offer){
     event.preventDefault();
-    var message =
-      "Salam, bghit nفتح الولوج لـ Hören B2 Teil 3" +
-      "\nThema: " + selectedHoerenTeil3Topic +
-      "\nAngebot: " + offer;
-
-    window.open(
-      "https://wa.me/" + HOEREN_TEIL3_WHATSAPP_NUMBER +
-      "?text=" + encodeURIComponent(message),
-      "_blank"
-    );
+    window.open(deWhatsAppUrl({
+      offer: offer === "Kontakt über WhatsApp" ? "" : offer,
+      section: "Hören B2 · Teil 3",
+      topic: selectedHoerenTeil3Topic
+    }), "_blank");
   };
 
   document.addEventListener("keydown",function(event){
@@ -2272,5 +2267,6 @@ body{ padding-top: var(--site-header-h, 72px) !important; }
   .hoeren-sticky-nav .hoeren-nav-btn{ min-height: 44px !important; }
 }
 </style>
+<script src="assets/whatsapp.js?v=56de1cb7"></script>
 </body>
 </html>
