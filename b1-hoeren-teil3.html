@@ -966,6 +966,7 @@ html body #hoeren-teil3-stack .nq-note b { color: #6b4f14; font-weight: 900; }
 <meta property="og:locale" content="ar_MA">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#e3163f">
 <!-- seo:end -->
@@ -1648,8 +1649,7 @@ function sendPing() {
     const now = Date.now();
     if (now - lastPing < 10000) return; 
     lastPing = now;
-    if (navigator.sendBeacon && navigator.sendBeacon("/ping")) { return; }
-    fetch("/ping", { keepalive: true }).catch(() => {});
+    /* GitHub Pages ماعندوش /ping، ف ما كنصيفطو والو: كنحسبو غير النشاط محليا. */
 }
 
 function resetTimers() {
