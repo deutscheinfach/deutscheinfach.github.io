@@ -733,3 +733,87 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-level a:hover { color: var(--text); }
 /* قائمة الحساب */
 .site-menu { background: var(--surface); border-color: var(--line-gold); color: var(--text); box-shadow: var(--shadow-lg); }
+
+/* ===== الجرس: الجديد فالموقع ===== */
+.site-news-wrap { position: relative; display: inline-flex; }
+.site-bell { position: relative; color: var(--muted); }
+.site-bell.has-news { color: var(--gold); border-color: var(--line-gold, var(--gold)); }
+.site-news-wrap.is-open .site-bell { border-color: var(--gold); color: var(--gold); }
+.site-bell-dot {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #e3163f;
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 18px;
+    text-align: center;
+    box-shadow: 0 0 0 2px var(--bg);
+}
+.site-bell-dot[hidden] { display: none; }
+.site-news {
+    position: absolute;
+    inset-block-start: calc(100% + 8px);
+    right: 0;
+    z-index: 61;
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(70vh, 560px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 10px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: var(--card, var(--bg));
+    box-shadow: 0 18px 44px rgba(0, 0, 0, .22);
+    direction: rtl;
+    text-align: start;
+    font-family: "Cairo", system-ui, sans-serif;
+    animation: site-menu-in .16s ease;
+}
+.site-news[hidden] { display: none; }
+.site-news-head { padding: 4px 6px 10px; border-block-end: 1px solid var(--line); margin-block-end: 8px; font-size: 14.5px; }
+.site-news-empty { margin: 14px 6px; color: var(--muted); font-size: 13px; }
+.site-news-list { display: grid; gap: 8px; }
+.site-news-item {
+    position: relative;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--text) 3%, transparent);
+}
+.site-news-item.is-new { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent); }
+.site-news-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.site-news-title { font-size: 13.5px; line-height: 1.5; }
+.site-news-date { flex: 0 0 auto; font-size: 11px; color: var(--muted); }
+.site-news-body { margin: 5px 0 0; font-size: 12.5px; line-height: 1.7; color: var(--muted); white-space: pre-line; }
+.site-news-link { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 800; color: var(--gold); text-decoration: none; }
+.site-news-del {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 24px;
+    height: 24px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+}
+.site-news-del:hover { background: color-mix(in srgb, #e3163f 15%, transparent); color: #e3163f; }
+.site-news-item:has(.site-news-del) .site-news-top { padding-left: 24px; }
+.site-news-form { display: grid; gap: 7px; padding: 10px; margin-bottom: 10px; border-radius: 12px; border: 1px dashed var(--gold); }
+.site-news-form-label { font-size: 12.5px; font-weight: 800; color: var(--gold); }
+.site-news-text { resize: vertical; min-height: 64px; font-family: inherit; }
+@media (max-width: 560px) {
+    /* فالتيليفون: اللوحة كتاخد عرض الشاشة تحت الهيدر */
+    .site-news-wrap { position: static; }
+    .site-news { position: fixed; top: calc(var(--site-header-h, 110px) + 4px); left: 12px; right: 12px; width: auto; }
+    .site-bell { width: 36px; min-height: 36px; }
+}
+.site-bell { padding: 0 !important; }
+.site-bell svg { width: 19px !important; height: 19px !important; flex: 0 0 auto; }
