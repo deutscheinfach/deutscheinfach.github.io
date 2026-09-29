@@ -202,6 +202,32 @@ service cloud.firestore {
        الواجهة — كتشوفهم فـ Firebase Console.
        ===================================================== */
 
+    /* =====================================================
+       NEWS — الإشعارات ديال الجرس فالهيدر
+
+       الكل كيقرا (حتى اللي ماداخلش). غير الأدمين
+       (users/{uid}.isAdmin = true) اللي كينشر ولا كيمسح.
+       ===================================================== */
+
+    match /news/{newsId} {
+
+      allow read: if true;
+
+      allow create: if isAdmin()
+        && request.resource.data.keys().hasOnly(["title", "body", "link", "createdAt"])
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 120
+        && (!("body" in request.resource.data)
+            || (request.resource.data.body is string && request.resource.data.body.size() <= 1000))
+        && (!("link" in request.resource.data)
+            || (request.resource.data.link is string && request.resource.data.link.size() <= 300))
+        && request.resource.data.createdAt == request.time;
+
+      allow delete: if isAdmin();
+    }
+
+
     match /reports/{reportId} {
 
       allow create: if request.auth != null
