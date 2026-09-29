@@ -197,9 +197,9 @@
 
             /* ---- الأزرار ---- */
             const actions = el("div", "lesen-actions t2-actions");
-            const checkBtn = btn("lesen-btn lesen-btn-check", "Antworten prüfen");
-            const showBtn = btn("lesen-btn lesen-btn-show", "Lösungen anzeigen");
-            const retryBtn = btn("lesen-btn lesen-btn-retry", "Nochmal versuchen");
+            const checkBtn = btn("lesen-btn lesen-btn-check", "تحقق من الإجابات");
+            const showBtn = btn("lesen-btn lesen-btn-show", "شوف الحل");
+            const retryBtn = btn("lesen-btn lesen-btn-retry", "عاود من جديد");
             actions.append(checkBtn, showBtn, retryBtn);
             
             const score = el("div", "lesen-score");
