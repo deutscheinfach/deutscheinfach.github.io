@@ -186,11 +186,16 @@
            المفتاح ديال الموضوع بوحدو. */
         const topic = topics.find(function (t) { return t.id === themaId; });
         if (topic && topic.pack) {
-            return window.__lesenPremiumFetch(lvl + "pack").then(function (r) {
-                const one = r && r.ok && r.data && r.data[themaId];
-                const out = one ? { ok: true, data: one }
-                                : (r && !r.ok ? r : { ok: false, why: "ما لقيناش " + themaId + " ف lesen-" + lvl + "pack" });
-                if (out.ok) CONTENT[themaId] = out.data;
+            /* أولا المفتاح ديال الموضوع بوحدو (lesen-sprechen-<lvl>-<id>)،
+               وإلا ماكانش: الـpack اللي فيه كاملين. */
+            return window.__lesenPremiumFetch(lvl + themaId).then(function (own) {
+                if (own && own.ok && own.data) return own;
+                return window.__lesenPremiumFetch(lvl + "pack").then(function (r) {
+                    const one = r && r.ok && r.data && r.data[themaId];
+                    return one ? { ok: true, data: one } : (own || r);
+                });
+            }).then(function (out) {
+                if (out && out.ok && out.data) CONTENT[themaId] = out.data;
                 return out;
             });
         }
