@@ -69,6 +69,15 @@ service cloud.firestore {
              "subscriptionActive", "subscriptionEnd", "role", "isAdmin"
            ]);
 
+      /* الأدمين (admin.html) كيفعّل ولا يوقف الاشتراك ديال أي واحد —
+         غير هاد الخانات، وماشي isAdmin. */
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+             "subscriptionActive", "subscriptionEnd", "subscriptionStart",
+             "plan", "subscriptionOffer", "subscriptionUpdatedAt"
+           ])
+        && request.resource.data.subscriptionActive is bool;
+
       allow delete: if false;
 
       /* =================================================
