@@ -883,7 +883,7 @@
                     function repairUser(old) {
                         const fix = {};
                         if (!old || !old.email) fix.email = person.email || "";
-                        if (!old || !old.name) fix.name = name;
+                        if (!old || !old.name) fix.name = (old && old.displayName) || name;
                         if (!old || !old.createdAt) {
                             const born = person.metadata && person.metadata.creationTime
                                 ? new Date(person.metadata.creationTime) : new Date();

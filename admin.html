@@ -84,7 +84,7 @@
 </head>
 <body>
 <div id="site-header" data-active="training"></div>
-<script src="assets/site-header.js?v=a5f9755b"></script>
+<script src="assets/site-header.js?v=fcd9ed53"></script>
 
 <main class="adm">
     <h1>لوحة الإدارة</h1>
@@ -231,7 +231,7 @@ function paintUser() {
     box.textContent = "";
     box.hidden = false;
     const d = found.data;
-    box.appendChild(el("b", "", d.name || "(بلا سمية)"));
+    box.appendChild(el("b", "", d.name || d.displayName || "(بلا سمية)"));
     box.appendChild(document.createElement("br"));
     box.appendChild(el("span", "mail", (d.email || "") + "  ·  uid: " + found.id));
     box.appendChild(document.createElement("br"));
@@ -388,7 +388,7 @@ async function loadList(kind) {
         const body = el("tbody");
         rows.forEach(function (r) {
             const tr = el("tr");
-            tr.appendChild(el("td", "", r.data.name || "—"));
+            tr.appendChild(el("td", "", r.data.name || r.data.displayName || "—"));
             tr.appendChild(el("td", "mail", r.data.email || r.id));
             if (kind === "active") {
                 const left = daysLeft(r.data);
