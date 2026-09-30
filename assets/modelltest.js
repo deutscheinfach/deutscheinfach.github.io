@@ -90,6 +90,7 @@
 
     function renderList() {
         if (head) head.hidden = false;
+        document.body.classList.remove("has-lesen-bar", "mt-hoeren");
         document.body.classList.remove("mt-running");
         const list = tests();
         document.getElementById("mt-count").textContent = String(list.length);
@@ -257,7 +258,7 @@
         if (step.key === "hoeren") {
             body += '<div class="mt-sub">' + [1, 2, 3].map(function (k, i) {
                 return '<button type="button" data-sub="' + i + '" class="' + (i === state.sub ? "is-on" : "") + '">Teil ' + k + "<small></small></button>";
-            }).join("") + '<span class="mt-sub-nav" id="mt-sub-nav"></span></div>';
+            }).join("") + "</div>";
             body += [0, 1, 2].map(function (i) {
                 return '<iframe class="mt-frame" data-frame="' + i + '" title="Hören Teil ' + (i + 1) + '"' + (i === state.sub ? "" : " hidden") + ' src="' + frameUrl(1, i) + '"></iframe>';
             }).join("");
@@ -275,7 +276,19 @@
             '<p class="mt-live" id="mt-live"></p>' + body +
             '<div class="mt-next"><button class="tr-btn tr-btn-red" type="button" data-act="abort">' + svg("x") + "Abbrechen</button>" +
             '<button class="tr-btn tr-btn-gold" type="button" data-act="next">' +
-            (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + svg("arrow") + "</button></div>";
+            (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + svg("arrow") + "</button></div>" +
+            (step.key === "hoeren"
+                /* نفس الشريط الثابت ديال Lesen: «تحقق» على اليسار،
+                   «السابق» و «Hören Teil 2 →» على اليمين. */
+                ? '<div class="lesen-bar" data-exam="live"><div class="lesen-bar-slot">' +
+                  '<button type="button" class="lesen-btn lesen-btn-check" data-act="hcheck" dir="rtl">تحقق من الإجابات</button></div>' +
+                  '<div class="lesen-bar-extra"><div class="lesen-actions exam-bar">' +
+                  '<button type="button" class="lesen-btn lesen-btn-show exam-bar-prev" data-act="subprev" dir="rtl">السابق</button>' +
+                  '<button type="button" class="lesen-btn lesen-btn-check exam-bar-main" data-act="subnext" dir="ltr"></button>' +
+                  "</div></div></div>"
+                : "");
+        document.body.classList.toggle("has-lesen-bar", step.key === "hoeren");
+        document.body.classList.toggle("mt-hoeren", step.key === "hoeren");
 
         root.querySelectorAll("iframe.mt-frame").forEach(function (f) { hook(f); });
         paintSubNav();
@@ -289,18 +302,29 @@
        نفس الزر لتحت (mt-next) كيتبدل حسب الجزء. */
     function paintSubNav() {
         const step = STEPS[state.step];
-        const main = root.querySelector('.mt-next [data-act="next"], .mt-next [data-act="subnext"]');
-        const nav = document.getElementById("mt-sub-nav");
-        const toNext = (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + svg("arrow");
         if (!step || step.key !== "hoeren") return;
         const last = state.sub >= 2;
-        const label = last ? toNext : "Hören Teil " + (state.sub + 2) + svg("arrow");
-        if (main) { main.dataset.act = last ? "next" : "subnext"; main.innerHTML = label; }
-        if (nav) {
-            nav.innerHTML =
-                (state.sub > 0 ? '<button type="button" class="tr-btn" data-act="subprev">السابق</button>' : "") +
-                '<button type="button" class="tr-btn tr-btn-gold" data-act="' + (last ? "next" : "subnext") + '">' + label + "</button>";
+        const main = root.querySelector(".lesen-bar .exam-bar-main");
+        const prev = root.querySelector(".lesen-bar .exam-bar-prev");
+        if (main) {
+            main.dataset.act = last ? "next" : "subnext";
+            main.textContent = last
+                ? (state.step < STEPS.length - 1 ? STEPS[state.step + 1].short + " →" : "Ergebnis →")
+                : "Hören Teil " + (state.sub + 2) + " →";
         }
+        if (prev) prev.disabled = state.sub === 0;
+    }
+
+    /* «تحقق» ديال الشريط كيضغط على «Antworten prüfen» ديال الجزء اللي باين */
+    function checkHoeren() {
+        const frame = root.querySelector('iframe.mt-frame[data-frame="' + state.sub + '"]');
+        let doc = null;
+        try { doc = frame && frame.contentDocument; } catch (e) { /* */ }
+        if (!doc) return;
+        const btns = doc.querySelectorAll(".nq-btn-check");
+        btns.forEach(function (b) { b.click(); });
+        const res = doc.querySelector(".nq-result-box");
+        if (res && res.scrollIntoView) res.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     function setSub(i) {
@@ -391,6 +415,7 @@
         if (act.dataset.act === "share") { shareResult(); return; }
         if (act.dataset.act === "next") next(false);
         if (act.dataset.act === "subnext" && state) setSub(state.sub + 1);
+        if (act.dataset.act === "hcheck" && state) checkHoeren();
         if (act.dataset.act === "subprev" && state) setSub(state.sub - 1);
         /* الخروج (فوق) و Abbrechen (لتحت): الضغطة الأولى كتسول ف الزر نيت،
            الثانية (ف 4 ثواني) كتخرج للائحة وكتمسح الامتحان — باش ملي يرجع

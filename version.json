@@ -1,5 +1,5 @@
 {
-  "build": "91ec23369ba7",
+  "build": "293f89b28370",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -19,7 +19,7 @@
     "assets/lesen-teil1.js": "d281ec6f",
     "assets/lesen-teil2.js": "3bd27601",
     "assets/lesen-teil3.js": "b1e371b8",
-    "assets/modelltest.js": "de6d33ec",
+    "assets/modelltest.js": "ec7fee09",
     "assets/premium-gate.js": "99d22bd9",
     "assets/progress.js": "1f4ecf40",
     "assets/schreiben-auth.js": "c131e3c8",
@@ -47,7 +47,7 @@
     "assets/stars.js": "df3dede2",
     "assets/theme-toggle.js": "1e586e51",
     "assets/theme.css": "8adec87d",
-    "assets/training.css": "76b18289",
+    "assets/training.css": "4fa4588c",
     "assets/whatsapp.js": "56de1cb7",
     "assets/wortschatz-1000.js": "1b72e9ed",
     "assets/wortschatz-b2.js": "856a61b2",
