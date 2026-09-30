@@ -97,7 +97,7 @@
         <section class="adm-card">
             <h2>1) تفعيل / تجديد اشتراك</h2>
             <form id="adm-find" class="adm-row">
-                <input id="adm-email" type="email" placeholder="email@gmail.com" required autocomplete="off">
+                <input id="adm-email" type="text" inputmode="email" placeholder="email@gmail.com ولا UID" required autocomplete="off">
                 <button class="adm-btn main" type="submit">قلّب</button>
             </form>
             <p id="adm-find-note" class="adm-note" hidden></p>
@@ -109,8 +109,10 @@
             <h2>2) المشتركين</h2>
             <div class="adm-tabs">
                 <button class="adm-btn adm-mini is-on" data-list="active" type="button">النشطين</button>
-                <button class="adm-btn adm-mini" data-list="recent" type="button">آخر المسجلين</button>
+                <button class="adm-btn adm-mini" data-list="recent" type="button">كل المستخدمين</button>
+                <button class="adm-btn adm-mini" id="adm-sync" type="button">مزامنة مع Authentication</button>
             </div>
+            <p id="adm-sync-note" class="adm-note" hidden></p>
             <div id="adm-list"><p class="adm-empty">كنجيبو اللائحة…</p></div>
         </section>
     </div>
@@ -184,7 +186,33 @@ authMod.onAuthStateChanged(auth, async function (me) {
     gate.hidden = true;
     $("adm-app").hidden = false;
     loadList("active");
+    syncUsers(me);
 });
+
+/* الحسابات اللي ف Authentication وما عندهمش وثيقة كاملة ف users
+   (تسجلو والتسجيل طاح، ولا دخلو للشات قبل) — الـWorker كيكمّلهم. */
+const WORKER = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+async function syncUsers(me) {
+    const note = $("adm-sync-note");
+    note.hidden = false; note.className = "adm-note"; note.textContent = "كنقارنو الحسابات مع Authentication…";
+    try {
+        const res = await fetch(WORKER, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ adminSyncUsers: true, idToken: await me.getIdToken() })
+        });
+        const data = await res.json().catch(function () { return {}; });
+        if (!res.ok) throw new Error(data.details || data.error || res.status);
+        note.className = "adm-note ok";
+        note.textContent = "Authentication: " + data.authCount + " حساب · "
+            + (data.fixed ? "تكمّلو " + data.fixed + " حساب كانو ناقصين." : "كلشي كامل ✓");
+        if (data.fixed) loadList(currentList);
+    } catch (e) {
+        note.className = "adm-note bad";
+        note.textContent = "المزامنة ماخدماتش: " + e.message + " — تأكد بلي الـWorker الجديد منشور.";
+    }
+}
+$("adm-sync").addEventListener("click", function () { if (auth.currentUser) syncUsers(auth.currentUser); });
 
 /* ================= 1) القلبان + التفعيل ================= */
 let found = null;   // { id, data }
@@ -364,9 +392,14 @@ async function loadList(kind) {
     try {
         const q = kind === "active"
             ? fs.query(fs.collection(db, "users"), fs.where("subscriptionActive", "==", true))
-            : fs.query(fs.collection(db, "users"), fs.orderBy("createdAt", "desc"), fs.limit(25));
+            : fs.query(fs.collection(db, "users"), fs.limit(1000));
         const snap = await fs.getDocs(q);
         let rows = snap.docs.map(function (d) { return { id: d.id, data: d.data() }; });
+        if (kind !== "active") {
+            /* بلا orderBy ف السيرفر: الوثائق اللي ماعندهاش createdAt كانت كتطيح من اللائحة */
+            const born = function (r) { return r.data.createdAt && r.data.createdAt.toDate ? r.data.createdAt.toDate().getTime() : 0; };
+            rows.sort(function (a, b) { return born(b) - born(a); });
+        }
         if (kind === "active") {
             rows.sort(function (a, b) {
                 const x = endOf(a.data), y = endOf(b.data);
@@ -375,6 +408,7 @@ async function loadList(kind) {
         }
         box.textContent = "";
         if (!rows.length) { box.appendChild(el("p", "adm-empty", "ماكاين حتى واحد.")); return; }
+        if (kind !== "active") box.appendChild(el("p", "adm-note", rows.length + " مستخدم ف Firestore"));
         if (kind === "active") {
             const soon = rows.filter(function (r) { const l = daysLeft(r.data); return l !== null && l <= 3; }).length;
             box.appendChild(el("p", "adm-note", rows.length + " مشترك نشيط" + (soon ? " · " + soon + " غادي يساليو ف 3 أيام ولا ساليو" : "")));
