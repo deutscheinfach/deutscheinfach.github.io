@@ -32,11 +32,11 @@
     /* ألوان مكتوبة بصريح العبارة: <canvas> ماكيقراش
        var(--brand) ديال CSS. */
     var C = {
-        navy: "#0f1b3d",
-        navy2: "#1c2c5e",
+        navy: "#2a0710",
+        navy2: "#7a1426",
         brand: "#e3163f",
         brandLight: "#ff4a6b",
-        sun: "#ffb703",
+        sun: "#ffce00",
         good: "#2fbf71",
         mid: "#ffb703",
         low: "#ff5d6c",
@@ -162,7 +162,8 @@
 
         /* ---- عنوان الامتحان + شارة النجاح (نفس السطر) ---- */
         var pass = !!data.pass;
-        var label = pass ? "BESTANDEN \u00b7 \u0646\u062c\u062d\u062a" : "\u0645\u0627\u0632\u0627\u0644 \u00b7 \u0642\u0631\u064a\u0628";
+        var label = data.badge ? String(data.badge)
+            : pass ? "BESTANDEN \u00b7 \u0646\u062c\u062d\u062a" : "\u0645\u0627\u0632\u0627\u0644 \u00b7 \u0642\u0631\u064a\u0628";
         ctx.font = font(900, 30);
         var lw = ctx.measureText(label).width;
         var pw = lw + 64, ph = 70, px = W - 80 - pw, py = 244;
@@ -415,7 +416,7 @@
                 btnShare.addEventListener("click", function () {
                     navigator.share({
                         files: [file],
-                        text: (data.shareText || "") + "\n" + "https://" + SITE
+                        text: (data.shareText || "") + "\n" + (data.url || "https://" + SITE)
                     }).catch(function () { /* المستخدم لغا: ماشي مشكل */ });
                 });
                 note.textContent = "صيفطها ل WhatsApp ولا حطها ف الـ Status.";

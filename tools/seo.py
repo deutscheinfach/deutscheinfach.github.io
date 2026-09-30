@@ -94,6 +94,9 @@ PAGES = {
     "modelltest.html": ("Telc B2 Modelltest online mit Timer | Deutsch Einfach",
         "امتحان تجريبي كامل ديال telc B2 بالوقت: Lesen، Sprachbausteine، Hören و Schreiben، والنتيجة من 225. "
         "Telc B2 Modelltest online.", "0.8"),
+    "einstufungstest.html": ("Einstufungstest Deutsch kostenlos – A2, B1 oder B2? | Deutsch Einfach",
+        "اختبار مجاني يعرفك المستوى ديالك ف الألمانية ف 10 دقايق (A2، B1، B2) مع خطة 30 يوم لـ telc. "
+        "Deutsch Einstufungstest online kostenlos.", "0.9"),
     "wortschatz.html": ("Wortschatz B1/B2 – 1000 Wörter mit Karteikarten | Deutsch Einfach",
         "تعلم 1000 كلمة ألمانية مهمة لـ telc B1 و B2 بالبطاقات والمراجعة الذكية، مع الترجمة للعربية. Wortschatz trainieren.", "0.8"),
     "payment.html": ("Premium – Preise und Zahlung | Deutsch Einfach",
