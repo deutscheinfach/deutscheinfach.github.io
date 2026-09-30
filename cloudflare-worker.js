@@ -248,6 +248,35 @@ export default {
        * كنتحققو من هوية اللي كيعيط، من بعد كنقراو الـ tokens
        * ديال المستقبل وكنصيفطو عبر FCM.
        */
+      /*
+       * admin.html: كنجيبو جميع الحسابات من Authentication وكنكمّلو
+       * users/{uid} اللي ناقصين (بلا وثيقة، ولا بلا email/name).
+       * الكليان ماكيقدرش يشوف لائحة Auth — غير حساب الخدمة.
+       */
+      if (body.adminSyncUsers === true) {
+        if (!env.FIREBASE_SERVICE_ACCOUNT) {
+          return jsonResponse({ error: "sync_not_configured",
+            details: "FIREBASE_SERVICE_ACCOUNT secret is missing." }, 500, allowedOrigin);
+        }
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        try {
+          const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+          const me = await readUserFields(caller.sub, accessToken);
+          if (!me || me.isAdmin?.booleanValue !== true) {
+            return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+          }
+          const result = await syncAuthUsers(accessToken);
+          return jsonResponse(result, 200, allowedOrigin);
+        } catch (syncError) {
+          return jsonResponse({ error: "sync_failed", details: syncError.message }, 502, allowedOrigin);
+        }
+      }
+
       if (body.notify && typeof body.notify.toUid === "string") {
         if (!env.FIREBASE_SERVICE_ACCOUNT) {
           return jsonResponse(
@@ -950,6 +979,111 @@ async function readPushTokens(uid, accessToken) {
   return Object.keys(map);
 }
 
+
+/* =====================================================
+   Admin — مزامنة Authentication مع users/{uid}
+   ===================================================== */
+
+const FIRESTORE_DOCS =
+  `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}` +
+  `/databases/(default)/documents`;
+
+async function readUserFields(uid, accessToken) {
+  const res = await fetch(`${FIRESTORE_DOCS}/users/${uid}`, {
+    headers: { Authorization: "Bearer " + accessToken },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Could not read users/" + uid);
+  return (await res.json()).fields || {};
+}
+
+async function listAuthUsers(accessToken) {
+  const all = [];
+  let page = "";
+  do {
+    const url =
+      `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}` +
+      `/accounts:batchGet?maxResults=500` + (page ? "&nextPageToken=" + encodeURIComponent(page) : "");
+    const res = await fetch(url, { headers: { Authorization: "Bearer " + accessToken } });
+    const data = await res.json();
+    if (!res.ok) throw new Error("Auth list: " + (data.error?.message || res.status));
+    all.push(...(data.users || []));
+    page = data.nextPageToken || "";
+  } while (page && all.length < 5000);
+  return all;
+}
+
+async function listUserDocs(accessToken) {
+  const docs = new Map();
+  let page = "";
+  do {
+    const url = `${FIRESTORE_DOCS}/users?pageSize=300` +
+      "&mask.fieldPaths=email&mask.fieldPaths=name&mask.fieldPaths=displayName" +
+      "&mask.fieldPaths=createdAt&mask.fieldPaths=plan" +
+      (page ? "&pageToken=" + encodeURIComponent(page) : "");
+    const res = await fetch(url, { headers: { Authorization: "Bearer " + accessToken } });
+    const data = await res.json();
+    if (!res.ok) throw new Error("Firestore list: " + (data.error?.message || res.status));
+    for (const d of data.documents || []) docs.set(d.name.split("/").pop(), d.fields || {});
+    page = data.nextPageToken || "";
+  } while (page);
+  return docs;
+}
+
+async function syncAuthUsers(accessToken) {
+  const [authUsers, docs] = await Promise.all([
+    listAuthUsers(accessToken),
+    listUserDocs(accessToken),
+  ]);
+
+  const writes = [];
+  for (const u of authUsers) {
+    const old = docs.get(u.localId);
+    const email = u.email || "";
+    const name =
+      old?.displayName?.stringValue || u.displayName || email.split("@")[0] || "User";
+    const born = u.createdAt ? new Date(Number(u.createdAt)).toISOString() : new Date().toISOString();
+
+    const fields = {};
+    if (!old?.email?.stringValue && email) fields.email = { stringValue: email };
+    if (!old?.name?.stringValue) fields.name = { stringValue: name };
+    if (!old?.createdAt) fields.createdAt = { timestampValue: born };
+    /* وثيقة ما كايناش (ولا خاوية): الحساب مجاني. ماكنمسّوش الاشتراك إلا كان. */
+    if (!old) {
+      fields.plan = { stringValue: "free" };
+      fields.subscriptionActive = { booleanValue: false };
+      fields.subscriptionEnd = { nullValue: null };
+    }
+    if (!Object.keys(fields).length) continue;
+
+    writes.push({
+      update: {
+        name: `projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/users/${u.localId}`,
+        fields,
+      },
+      updateMask: { fieldPaths: Object.keys(fields) },
+    });
+  }
+
+  for (let i = 0; i < writes.length; i += 400) {
+    const res = await fetch(`${FIRESTORE_DOCS}:commit`, {
+      method: "POST",
+      headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
+      body: JSON.stringify({ writes: writes.slice(i, i + 400) }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error("Firestore commit: " + (data.error?.message || res.status));
+    }
+  }
+
+  return {
+    authCount: authUsers.length,
+    docCount: docs.size,
+    fixed: writes.length,
+  };
+}
+
 /* توقيع JWT بالمفتاح ديال service account، وتبديلو بـ access token.
    نفس المنطق ديال verifyIdToken ولكن بالمقلوب: هنا كنوقعو. */
 async function getGoogleAccessToken(serviceAccountJson) {
@@ -968,7 +1102,8 @@ async function getGoogleAccessToken(serviceAccountJson) {
     iss: account.client_email,
     scope:
       "https://www.googleapis.com/auth/firebase.messaging" +
-      " https://www.googleapis.com/auth/datastore",
+      " https://www.googleapis.com/auth/datastore" +
+      " https://www.googleapis.com/auth/identitytoolkit",
     aud: "https://oauth2.googleapis.com/token",
     iat: now,
     exp: now + 3600,
