@@ -3943,25 +3943,40 @@ if(snap.exists()){
 
 currentUserData=snap.data();
 
+/* وثيقة قديمة تخلقات من الشات بلا إيميل/سمية: نكملوها */
+const fill={};
+if(!currentUserData.email&&currentUser.email)fill.email=currentUser.email;
+if(!currentUserData.name)fill.name=currentUserData.displayName||currentUser.displayName||(currentUser.email||"").split("@")[0]||"User";
+if(Object.keys(fill).length){
+setDoc(ref,fill,{merge:true}).catch(()=>{});
+currentUserData={...currentUserData,...fill};
+}
+
 }else{
 
-currentUserData={
-
-displayName:
+/* نفس الخانات ديال signup.html — قبل كانت هنا غير displayName
+   و createdAt، والحساب كيبان ف لوحة الإدارة بلا إيميل وبلا سمية. */
+const baseName=
 currentUser.displayName
 ||
 currentUser.email?.split("@")[0]
 ||
-"User",
+"User";
 
-createdAt:
-serverTimestamp()
-
+currentUserData={
+name:baseName,
+displayName:baseName,
+email:currentUser.email||"",
+plan:"free",
+subscriptionActive:false,
+subscriptionEnd:null,
+createdAt:serverTimestamp()
 };
 
 await setDoc(
 ref,
-currentUserData
+currentUserData,
+{merge:true}
 );
 
 }
