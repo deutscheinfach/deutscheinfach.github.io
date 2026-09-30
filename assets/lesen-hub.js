@@ -790,8 +790,8 @@
             PARTS.forEach(function (p) { boxes[p.key].hidden = p.key !== current; });
             topTitle.textContent = exam.parts[current].title || "";
 
-            /* الشريط بحال Zertify: [↻ عاود] [← Zurück] [Lesen Teil 2 →]
-               — السمية ديال الجزء الجاي بالألمانية، و«Zurück» ديما كاين
+            /* الشريط بحال Zertify: [↻ عاود] [السابق] [Lesen Teil 2 →]
+               — السمية ديال الجزء الجاي بالألمانية، و«السابق» ديما كاين
                (مطفي ف Teil 1). فالجزء الأخير: «صحح الامتحان كامل». */
             nav.textContent = "";
             const at = PARTS.findIndex(function (p) { return p.key === current; });
@@ -827,7 +827,7 @@
                 });
             }
 
-            const prev = navButton("lesen-btn-show exam-bar-prev", "← Zurück", "ltr",
+            const prev = navButton("lesen-btn-show exam-bar-prev", "السابق", "rtl",
                 before ? function () { go(before.key); } : null);
             prev.disabled = !before;
 
