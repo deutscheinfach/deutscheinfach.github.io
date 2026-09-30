@@ -135,12 +135,12 @@
 .mt-sub { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
 .mt-sub button { padding: 8px 14px; border-radius: 12px; border: 1px solid rgba(30,27,24,.1); background: transparent; color: var(--text); font: inherit; font-weight: 800; font-size: 13px; cursor: pointer; }
 .mt-sub button.is-on { border-color: var(--brand); color: var(--accent-text); background: rgba(214,178,94,.1); }
-.mt-sub-nav { margin-inline-start: auto; display: flex; gap: 8px; }
-.mt-sub .mt-sub-nav .tr-btn { min-height: 38px; padding: 0 16px; font-size: 13.5px; border-radius: 12px; }
-.mt-sub .mt-sub-nav .tr-btn-gold { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; box-shadow: var(--shadow-brand); }
 .mt-sub button small { color: var(--muted); font-weight: 600; margin-inline-start: 6px; }
 .mt-frame { width: 100%; height: calc(100dvh - 190px); min-height: 520px; border: 1px solid rgba(214,178,94,.25); border-radius: 16px; background: var(--paper); display: block; }
 .mt-frame[hidden] { display: none; }
+/* Hören ف Modelltest: الشريط الثابت لتحت كيعوض أزرار mt-next */
+body.mt-hoeren .mt-frame { height: calc(100dvh - 270px); }
+body.mt-hoeren .mt-next { display: none; }
 .mt-live { font-size: 12.5px; color: var(--muted); }
 .mt-live b { color: var(--accent-text); }
 .mt-next { margin-top: 12px; display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
