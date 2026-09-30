@@ -57,11 +57,16 @@ service cloud.firestore {
 
       allow read: if request.auth != null;
 
+      /* التسجيل (signup.html) كيكتب subscriptionActive: false و
+         subscriptionEnd: null — مسموح، ولكن ماشي true ولا تاريخ.
+         قبل كانت هاد الخانات ممنوعة كاملين، والتسجيل كان كيطيح
+         بلا ما يبان: الحساب كيتخلق ف Auth بلا وثيقة ف users. */
       allow create: if request.auth != null
         && request.auth.uid == userId
-        && !request.resource.data.keys().hasAny([
-             "subscriptionActive", "subscriptionEnd", "role", "isAdmin"
-           ]);
+        && !request.resource.data.keys().hasAny(["role", "isAdmin"])
+        && request.resource.data.get("subscriptionActive", false) == false
+        && request.resource.data.get("subscriptionEnd", null) == null
+        && request.resource.data.get("plan", "free") == "free";
 
       allow update: if request.auth != null
         && request.auth.uid == userId
