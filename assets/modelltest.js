@@ -187,7 +187,7 @@
         if (step && step.key === "hoeren") now = s.hoeren;
         if (step && step.key === "schreiben") now = s.schreiben;
         el.innerHTML = step ? "هاد الجزء: <b>" + fmtPts(now) + " / " + step.max + "</b> · المجموع: <b>" + fmtPts(s.total) + " / " + TOTAL + "</b>" : "";
-        document.querySelectorAll(".mt-sub button").forEach(function (b, i) {
+        document.querySelectorAll(".mt-sub [data-sub]").forEach(function (b, i) {
             const k = "teil" + (i + 1);
             const small = b.querySelector("small");
             if (small) small.textContent = state.hoeren[k] != null ? fmtPts(state.hoeren[k]) + "/25" : "";
@@ -257,7 +257,7 @@
         if (step.key === "hoeren") {
             body += '<div class="mt-sub">' + [1, 2, 3].map(function (k, i) {
                 return '<button type="button" data-sub="' + i + '" class="' + (i === state.sub ? "is-on" : "") + '">Teil ' + k + "<small></small></button>";
-            }).join("") + "</div>";
+            }).join("") + '<span class="mt-sub-nav" id="mt-sub-nav"></span></div>';
             body += [0, 1, 2].map(function (i) {
                 return '<iframe class="mt-frame" data-frame="' + i + '" title="Hören Teil ' + (i + 1) + '"' + (i === state.sub ? "" : " hidden") + ' src="' + frameUrl(1, i) + '"></iframe>';
             }).join("");
@@ -278,10 +278,38 @@
             (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + svg("arrow") + "</button></div>";
 
         root.querySelectorAll("iframe.mt-frame").forEach(function (f) { hook(f); });
+        paintSubNav();
         live();
         tick();
         timer = setInterval(tick, 1000);
         window.scrollTo({ top: 0 });
+    }
+
+    /* Hören: أسهم بين Teil 1 → 2 → 3، ومن Teil 3 «Weiter zu Schreiben».
+       نفس الزر لتحت (mt-next) كيتبدل حسب الجزء. */
+    function paintSubNav() {
+        const step = STEPS[state.step];
+        const main = root.querySelector('.mt-next [data-act="next"], .mt-next [data-act="subnext"]');
+        const nav = document.getElementById("mt-sub-nav");
+        const toNext = (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + svg("arrow");
+        if (!step || step.key !== "hoeren") return;
+        const last = state.sub >= 2;
+        const label = last ? toNext : "Hören Teil " + (state.sub + 2) + svg("arrow");
+        if (main) { main.dataset.act = last ? "next" : "subnext"; main.innerHTML = label; }
+        if (nav) {
+            nav.innerHTML =
+                (state.sub > 0 ? '<button type="button" class="tr-btn" data-act="subprev">السابق</button>' : "") +
+                '<button type="button" class="tr-btn tr-btn-gold" data-act="' + (last ? "next" : "subnext") + '">' + label + "</button>";
+        }
+    }
+
+    function setSub(i) {
+        state.sub = Math.max(0, Math.min(2, i));
+        saveState();
+        root.querySelectorAll(".mt-sub [data-sub]").forEach(function (b, k) { b.classList.toggle("is-on", k === state.sub); });
+        root.querySelectorAll("iframe.mt-frame").forEach(function (f, k) { f.hidden = k !== state.sub; });
+        paintSubNav();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     let shareData = null;
@@ -357,17 +385,13 @@
             return;
         }
         const sub = e.target.closest("[data-sub]");
-        if (sub && state) {
-            state.sub = Number(sub.dataset.sub);
-            saveState();
-            root.querySelectorAll(".mt-sub button").forEach(function (b, i) { b.classList.toggle("is-on", i === state.sub); });
-            root.querySelectorAll("iframe.mt-frame").forEach(function (f, i) { f.hidden = i !== state.sub; });
-            return;
-        }
+        if (sub && state) { setSub(Number(sub.dataset.sub)); return; }
         const act = e.target.closest("[data-act]");
         if (!act) return;
         if (act.dataset.act === "share") { shareResult(); return; }
         if (act.dataset.act === "next") next(false);
+        if (act.dataset.act === "subnext" && state) setSub(state.sub + 1);
+        if (act.dataset.act === "subprev" && state) setSub(state.sub - 1);
         /* الخروج (فوق) و Abbrechen (لتحت): الضغطة الأولى كتسول ف الزر نيت،
            الثانية (ف 4 ثواني) كتخرج للائحة وكتمسح الامتحان — باش ملي يرجع
            يلقى اللائحة ويختار Modelltest آخر، ماشي نفس الامتحان. */
