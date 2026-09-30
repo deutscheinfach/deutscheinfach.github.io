@@ -860,6 +860,7 @@
                     || (person.email || "").split("@")[0]
                     || "Student";
                 let premium = false;
+                let admin = false;
 
                 try {
                     const snap = await fsMod.getDoc(fsMod.doc(db, "users", person.uid));
@@ -870,7 +871,8 @@
                             || (data.subscriptionEnd.toDate
                                 && data.subscriptionEnd.toDate().getTime() > Date.now());
                         premium = data.subscriptionActive === true && notExpired;
-                        news.setAdmin(data.isAdmin === true);
+                        admin = data.isAdmin === true;
+                        news.setAdmin(admin);
                     }
                 } catch (error) {
                     console.warn("Header: ما قدرناش نقراو الحساب", error);
@@ -998,6 +1000,16 @@
                         note.textContent = text;
                         note.hidden = false;
                         note.classList.toggle("is-bad", !!bad);
+                    }
+
+                    /* لوحة الإدارة: غير للأدمين */
+                    if (admin) {
+                        const adm = document.createElement("a");
+                        adm.className = "site-menu-item";
+                        adm.setAttribute("role", "menuitem");
+                        adm.href = "admin.html";
+                        adm.append(icon("star"), document.createTextNode("لوحة الإدارة (الاشتراكات)"));
+                        menu.appendChild(adm);
                     }
 
                     /* تسجيل الخروج */

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=1e586e51"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deutsch Einfach – لوحة الإدارة</title>
+<link rel="stylesheet" href="assets/theme.css?v=8adec87d">
+<script src="assets/progress.js?v=1f4ecf40"></script>
+<link rel="stylesheet" href="assets/site-header.css?v=3eb55250">
+<link rel="stylesheet" href="assets/section.css?v=8ceeec81">
+<style>
+.adm { width: min(100% - 32px, 980px); margin: 28px auto 60px; }
+.adm h1 { font-size: var(--step-3); font-weight: 900; margin: 0 0 4px; color: var(--accent-text); }
+.adm .lead { color: var(--muted); margin: 0 0 22px; line-height: 1.7; }
+.adm-card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+    padding: 18px; margin-bottom: 18px; box-shadow: var(--shadow);
+}
+.adm-card h2 { margin: 0 0 12px; font-size: 18px; font-weight: 900; }
+.adm-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.adm input:not([type="checkbox"]), .adm select {
+    flex: 1 1 240px; min-height: 46px; padding: 0 14px; border-radius: 12px;
+    border: 1.5px solid var(--line); background: var(--surface-2); color: var(--text); font: inherit;
+}
+.adm input[type="email"] { direction: ltr; text-align: left; }
+.adm-btn {
+    min-height: 46px; padding: 0 18px; border-radius: 12px; border: 1.5px solid var(--brand);
+    background: var(--surface); color: var(--text); font: inherit; font-weight: 800; cursor: pointer;
+}
+.adm-btn:hover { background: var(--brand-soft); }
+.adm-btn.main { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; box-shadow: var(--shadow-brand); }
+.adm-btn.danger { border-color: var(--danger); color: var(--danger); }
+.adm-btn:disabled { opacity: .5; cursor: default; }
+.adm-note { margin: 10px 0 0; font-size: 14px; line-height: 1.7; }
+.adm-note.ok { color: var(--ok); font-weight: 800; }
+.adm-note.bad { color: var(--danger); font-weight: 800; }
+.adm-user { margin-top: 14px; padding: 14px; border-radius: 14px; border: 1px dashed var(--line-gold); background: var(--surface-2); }
+.adm-user b { font-size: 16px; }
+.adm-user .mail { direction: ltr; display: inline-block; color: var(--muted); font-size: 13.5px; }
+.adm-status { display: inline-block; margin: 8px 0 12px; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 800; }
+.adm-status.on { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
+.adm-status.off { background: color-mix(in srgb, var(--danger) 12%, transparent); color: var(--danger); }
+.adm-offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin: 6px 0 10px; }
+.adm-offer { padding: 12px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); cursor: pointer; font: inherit; color: var(--text); text-align: center; }
+.adm-offer b { display: block; font-size: 15px; }
+.adm-offer span { font-size: 12.5px; color: var(--muted); }
+.adm-offer.is-on { border-color: var(--brand); background: var(--brand-soft); }
+.adm-check { display: flex; align-items: center; gap: 8px; margin: 4px 0 12px; font-size: 14px; }
+.adm-check input { width: 20px; height: 20px; flex: 0 0 auto; accent-color: #e6b800; }
+.adm-table { width: 100%; border-collapse: collapse; display: table; font-size: 14px; }
+.adm-table th, .adm-table td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: start; vertical-align: middle; }
+.adm-table th { font-size: 12.5px; color: var(--muted); font-weight: 800; }
+.adm-table td.mail { direction: ltr; text-align: left; overflow-wrap: anywhere; }
+.adm-days { font-weight: 900; }
+.adm-days.soon { color: #d97706; }
+.adm-days.over { color: var(--danger); }
+.adm-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.adm-tabs button.is-on { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; }
+.adm-empty { color: var(--muted); padding: 14px 0; }
+.adm-mini { min-height: 34px; padding: 0 12px; font-size: 13px; }
+@media (max-width: 640px) {
+    .adm-table thead { display: none; }
+    .adm-table, .adm-table tbody, .adm-table tr, .adm-table td { display: block; width: 100%; }
+    .adm-table tr { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .adm-table td { border: 0; padding: 3px 0; }
+}
+</style>
+<!-- seo:start (tools/seo.py) -->
+<meta name="robots" content="noindex, follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deutsch Einfach">
+<meta property="og:title" content="Deutsch Einfach – لوحة الإدارة">
+<meta property="og:url" content="https://deutsch-einfach.online/admin.html">
+<meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
+<meta property="og:locale" content="ar_MA">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#e3163f">
+<!-- seo:end -->
+</head>
+<body>
+<div id="site-header" data-active="training"></div>
+<script src="assets/site-header.js?v=bad16ade"></script>
+
+<main class="adm">
+    <h1>لوحة الإدارة</h1>
+    <p class="lead">فعّل الاشتراك ديال أي مستخدم بالإيميل ديالو، وتبّع شكون غادي يسالي ليه قريب.</p>
+
+    <div id="adm-gate" class="adm-card"><p class="adm-empty">كنتأكدو من الحساب…</p></div>
+
+    <div id="adm-app" hidden>
+        <!-- 1) التفعيل -->
+        <section class="adm-card">
+            <h2>1) تفعيل / تجديد اشتراك</h2>
+            <form id="adm-find" class="adm-row">
+                <input id="adm-email" type="email" placeholder="email@gmail.com" required autocomplete="off">
+                <button class="adm-btn main" type="submit">قلّب</button>
+            </form>
+            <p id="adm-find-note" class="adm-note" hidden></p>
+            <div id="adm-user" class="adm-user" hidden></div>
+        </section>
+
+        <!-- 2) اللائحة -->
+        <section class="adm-card">
+            <h2>2) المشتركين</h2>
+            <div class="adm-tabs">
+                <button class="adm-btn adm-mini is-on" data-list="active" type="button">النشطين</button>
+                <button class="adm-btn adm-mini" data-list="recent" type="button">آخر المسجلين</button>
+            </div>
+            <div id="adm-list"><p class="adm-empty">كنجيبو اللائحة…</p></div>
+        </section>
+    </div>
+</main>
+
+<script type="module">
+const OFFERS = [
+    { key: "15d", label: "باقة 15 يوم", price: "49 DH", days: 15 },
+    { key: "1m",  label: "باقة شهر واحد", price: "99 DH", days: 30 },
+    { key: "2m",  label: "باقة شهرين", price: "150 DH", days: 60 }
+];
+const $ = (id) => document.getElementById(id);
+const DAY = 86400000;
+
+function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined) n.textContent = text;
+    return n;
+}
+function fmt(d) { return d ? d.toLocaleDateString("fr-MA", { day: "2-digit", month: "2-digit", year: "numeric" }) : "—"; }
+function endOf(data) { return data && data.subscriptionEnd && data.subscriptionEnd.toDate ? data.subscriptionEnd.toDate() : null; }
+function isActive(data) {
+    const end = endOf(data);
+    return !!data && data.subscriptionActive === true && (!end || end.getTime() > Date.now());
+}
+function daysLeft(data) {
+    const end = endOf(data);
+    return end ? Math.ceil((end.getTime() - Date.now()) / DAY) : null;
+}
+
+const appMod  = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
+const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
+const fs      = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
+const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
+    apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
+    authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
+    projectId: "deutsch-einfach-4c81f",
+    storageBucket: "deutsch-einfach-4c81f.firebasestorage.app",
+    messagingSenderId: "152448766933",
+    appId: "1:152448766933:web:f7824c4db8ab3caccbe35c"
+});
+const auth = authMod.getAuth(app);
+const db = fs.getFirestore(app);
+
+authMod.onAuthStateChanged(auth, async function (me) {
+    const gate = $("adm-gate");
+    gate.textContent = "";
+    if (!me) {
+        gate.appendChild(el("p", "adm-empty", "دخل بالحساب ديال الأدمين باش تشوف هاد الصفحة."));
+        const a = el("a", "adm-btn main", "تسجيل الدخول"); a.href = "login.html"; a.style.display = "inline-flex"; a.style.alignItems = "center";
+        gate.appendChild(a);
+        return;
+    }
+    let admin = false;
+    try {
+        const snap = await fs.getDoc(fs.doc(db, "users", me.uid));
+        admin = snap.exists() && snap.data().isAdmin === true;
+    } catch (e) { /* نكملو */ }
+    if (!admin) {
+        gate.appendChild(el("p", "adm-empty", "هاد الصفحة غير للأدمين."));
+        return;
+    }
+    gate.hidden = true;
+    $("adm-app").hidden = false;
+    loadList("active");
+});
+
+/* ================= 1) القلبان + التفعيل ================= */
+let found = null;   // { id, data }
+
+$("adm-find").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const raw = $("adm-email").value.trim();
+    const note = $("adm-find-note");
+    note.hidden = false; note.className = "adm-note"; note.textContent = "كنقلبو…";
+    $("adm-user").hidden = true;
+    try {
+        found = await findUser(raw);
+        if (!found) {
+            note.className = "adm-note bad";
+            note.textContent = "ما لقينا حتى حساب بهاد الإيميل. تأكد بلي المستخدم تسجل فالموقع بنفس الإيميل.";
+            return;
+        }
+        note.hidden = true;
+        paintUser();
+    } catch (e) {
+        note.className = "adm-note bad";
+        note.textContent = "خطأ فالقلبان: " + (e.code || e.message);
+    }
+});
+
+async function findUser(email) {
+    const tries = Array.from(new Set([email, email.toLowerCase()]));
+    for (const e of tries) {
+        const snap = await fs.getDocs(fs.query(fs.collection(db, "users"), fs.where("email", "==", e), fs.limit(1)));
+        if (!snap.empty) return { id: snap.docs[0].id, data: snap.docs[0].data() };
+    }
+    /* حتى بالـuid نيشان */
+    if (/^[A-Za-z0-9]{20,}$/.test(email)) {
+        const d = await fs.getDoc(fs.doc(db, "users", email));
+        if (d.exists()) return { id: d.id, data: d.data() };
+    }
+    return null;
+}
+
+let offer = OFFERS[1];
+
+function paintUser() {
+    const box = $("adm-user");
+    box.textContent = "";
+    box.hidden = false;
+    const d = found.data;
+    box.appendChild(el("b", "", d.name || "(بلا سمية)"));
+    box.appendChild(document.createElement("br"));
+    box.appendChild(el("span", "mail", (d.email || "") + "  ·  uid: " + found.id));
+    box.appendChild(document.createElement("br"));
+
+    const on = isActive(d);
+    const left = daysLeft(d);
+    box.appendChild(el("span", "adm-status " + (on ? "on" : "off"),
+        on ? ("✓ Premium حتى " + fmt(endOf(d)) + (left !== null ? " (باقي " + left + " يوم)" : ""))
+           : ("✗ ماشي مشترك" + (endOf(d)
+                ? (endOf(d).getTime() > Date.now() ? " · محبوس (كان حتى " + fmt(endOf(d)) + ")" : " · سالا " + fmt(endOf(d)))
+                : ""))));
+
+    const offers = el("div", "adm-offers");
+    OFFERS.forEach(function (o) {
+        const b = el("button", "adm-offer" + (o === offer ? " is-on" : ""));
+        b.type = "button";
+        b.append(el("b", "", o.label), el("span", "", o.days + " يوم · " + o.price));
+        b.addEventListener("click", function () { offer = o; paintUser(); });
+        offers.appendChild(b);
+    });
+    box.appendChild(offers);
+
+    const lab = el("label", "adm-check");
+    const extend = document.createElement("input");
+    extend.type = "checkbox";
+    extend.checked = on;
+    extend.disabled = !on;
+    lab.append(extend, document.createTextNode(on
+        ? "زيد المدة من بعد نهاية الاشتراك الحالي (" + fmt(endOf(d)) + ")"
+        : "كيبدا من اليوم"));
+    box.appendChild(lab);
+
+    const preview = el("p", "adm-note");
+    function paintPreview() {
+        const start = extend.checked && on ? endOf(d) : new Date();
+        const end = new Date(start.getTime() + offer.days * DAY);
+        preview.textContent = "غادي يولي Premium حتى: " + fmt(end);
+        return end;
+    }
+    paintPreview();
+    extend.addEventListener("change", paintPreview);
+    box.appendChild(preview);
+
+    const row = el("div", "adm-row");
+    const go = el("button", "adm-btn main", "✓ فعّل " + offer.label);
+    go.type = "button";
+    const stop = el("button", "adm-btn danger", "وقف الاشتراك");
+    stop.type = "button";
+    stop.disabled = !on;
+    row.append(go, stop);
+    box.appendChild(row);
+    const result = el("p", "adm-note");
+    result.hidden = true;
+    box.appendChild(result);
+
+    go.addEventListener("click", async function () {
+        const end = paintPreview();
+        go.disabled = true;
+        try {
+            await fs.updateDoc(fs.doc(db, "users", found.id), {
+                subscriptionActive: true,
+                subscriptionEnd: fs.Timestamp.fromDate(end),
+                subscriptionStart: (extend.checked && on && d.subscriptionStart) ? d.subscriptionStart : fs.serverTimestamp(),
+                plan: "premium",
+                subscriptionOffer: offer.key,
+                subscriptionUpdatedAt: fs.serverTimestamp()
+            });
+            const fresh = await fs.getDoc(fs.doc(db, "users", found.id));
+            found = { id: fresh.id, data: fresh.data() };
+            paintUser();
+            flash("✓ تفعّل: " + (found.data.email || found.id) + " Premium حتى " + fmt(end), true);
+            loadList(currentList);
+        } catch (e) {
+            go.disabled = false;
+            result.hidden = false;
+            result.className = "adm-note bad";
+            result.textContent = "ماتفعّلش: " + (e.code || e.message) + " — واش لصقتي القواعد الجداد ف Firestore Rules؟";
+        }
+    });
+
+    stop.addEventListener("click", async function () {
+        if (stop.dataset.armed !== "1") {
+            stop.dataset.armed = "1";
+            stop.textContent = "متأكد؟ كليكي مرة خرى";
+            setTimeout(function () { stop.dataset.armed = ""; stop.textContent = "وقف الاشتراك"; }, 4000);
+            return;
+        }
+        stop.disabled = true;
+        try {
+            await fs.updateDoc(fs.doc(db, "users", found.id), {
+                subscriptionActive: false,
+                plan: "free",
+                subscriptionUpdatedAt: fs.serverTimestamp()
+            });
+            const fresh = await fs.getDoc(fs.doc(db, "users", found.id));
+            found = { id: fresh.id, data: fresh.data() };
+            paintUser();
+            flash("تحبس الاشتراك ديال " + (found.data.email || found.id), true);
+            loadList(currentList);
+        } catch (e) {
+            stop.disabled = false;
+            result.hidden = false;
+            result.className = "adm-note bad";
+            result.textContent = "ماتحبسش: " + (e.code || e.message);
+        }
+    });
+
+    function flash(text, ok) {
+        const r = box.querySelector(".adm-note:last-child");
+        r.hidden = false;
+        r.className = "adm-note " + (ok ? "ok" : "bad");
+        r.textContent = text;
+    }
+}
+
+/* ================= 2) اللائحة ================= */
+let currentList = "active";
+document.querySelectorAll("[data-list]").forEach(function (b) {
+    b.addEventListener("click", function () {
+        document.querySelectorAll("[data-list]").forEach(function (x) { x.classList.toggle("is-on", x === b); });
+        loadList(b.dataset.list);
+    });
+});
+
+async function loadList(kind) {
+    currentList = kind;
+    const box = $("adm-list");
+    box.textContent = "";
+    box.appendChild(el("p", "adm-empty", "كنجيبو اللائحة…"));
+    try {
+        const q = kind === "active"
+            ? fs.query(fs.collection(db, "users"), fs.where("subscriptionActive", "==", true))
+            : fs.query(fs.collection(db, "users"), fs.orderBy("createdAt", "desc"), fs.limit(25));
+        const snap = await fs.getDocs(q);
+        let rows = snap.docs.map(function (d) { return { id: d.id, data: d.data() }; });
+        if (kind === "active") {
+            rows.sort(function (a, b) {
+                const x = endOf(a.data), y = endOf(b.data);
+                return (x ? x.getTime() : Infinity) - (y ? y.getTime() : Infinity);
+            });
+        }
+        box.textContent = "";
+        if (!rows.length) { box.appendChild(el("p", "adm-empty", "ماكاين حتى واحد.")); return; }
+        if (kind === "active") {
+            const soon = rows.filter(function (r) { const l = daysLeft(r.data); return l !== null && l <= 3; }).length;
+            box.appendChild(el("p", "adm-note", rows.length + " مشترك نشيط" + (soon ? " · " + soon + " غادي يساليو ف 3 أيام ولا ساليو" : "")));
+        }
+        const table = el("table", "adm-table");
+        const head = el("thead");
+        const hr = el("tr");
+        (kind === "active" ? ["الاسم", "الإيميل", "كيسالي", "باقي", ""] : ["الاسم", "الإيميل", "تسجل", "الحالة", ""]).forEach(function (h) { hr.appendChild(el("th", "", h)); });
+        head.appendChild(hr);
+        table.appendChild(head);
+        const body = el("tbody");
+        rows.forEach(function (r) {
+            const tr = el("tr");
+            tr.appendChild(el("td", "", r.data.name || "—"));
+            tr.appendChild(el("td", "mail", r.data.email || r.id));
+            if (kind === "active") {
+                const left = daysLeft(r.data);
+                tr.appendChild(el("td", "", fmt(endOf(r.data))));
+                tr.appendChild(el("td", "adm-days" + (left === null ? "" : left <= 0 ? " over" : left <= 3 ? " soon" : ""),
+                    left === null ? "بلا تاريخ" : left <= 0 ? "سالا" : left + " يوم"));
+            } else {
+                const c = r.data.createdAt && r.data.createdAt.toDate ? r.data.createdAt.toDate() : null;
+                tr.appendChild(el("td", "", fmt(c)));
+                tr.appendChild(el("td", "adm-days", isActive(r.data) ? "Premium" : "مجاني"));
+            }
+            const td = el("td");
+            const pick = el("button", "adm-btn adm-mini", "فتح");
+            pick.type = "button";
+            pick.addEventListener("click", function () {
+                found = r;
+                $("adm-email").value = r.data.email || r.id;
+                $("adm-find-note").hidden = true;
+                paintUser();
+                $("adm-user").scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+            td.appendChild(pick);
+            tr.appendChild(td);
+            body.appendChild(tr);
+        });
+        table.appendChild(body);
+        box.appendChild(table);
+    } catch (e) {
+        box.textContent = "";
+        box.appendChild(el("p", "adm-note bad", "ماقدرناش نجيبو اللائحة: " + (e.code || e.message)));
+    }
+}
+</script>
+<script src="assets/session-guard.js?v=d6dfc66e"></script>
+</body>
+</html>
