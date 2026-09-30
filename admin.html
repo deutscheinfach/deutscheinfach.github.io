@@ -142,9 +142,16 @@ function daysLeft(data) {
     return end ? Math.ceil((end.getTime() - Date.now()) / DAY) : null;
 }
 
-const appMod  = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
-const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
-const fs      = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
+let appMod, authMod, fs;
+try {
+    appMod  = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
+    authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
+    fs      = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
+} catch (e) {
+    $("adm-gate").textContent = "";
+    $("adm-gate").appendChild(el("p", "adm-note bad", "Firebase ماتحملش — شوف الأنترنت وعاود حل الصفحة."));
+    await new Promise(function () {});   // نوقفو هنا بلا خطأ
+}
 const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
     apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
     authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
