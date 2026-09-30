@@ -266,7 +266,8 @@
         }
 
         root.innerHTML =
-            '<div class="mt-bar"><span class="mt-title">Modelltest ' + state.n + '</span><div class="mt-steps">' +
+            '<div class="mt-bar"><button class="tr-btn mt-exit" type="button" data-act="exit" title="خرج من الامتحان">← Zurück</button>' +
+            '<span class="mt-title">Modelltest ' + state.n + '</span><div class="mt-steps">' +
             STEPS.map(function (s, i) {
                 return '<span class="mt-step ' + (i === state.step ? "is-now" : i < state.step ? "is-done" : "") + '">' + (i < state.step ? svg("check").replace("<svg", '<svg width="14" height="14"') : (i + 1) + ".") + " " + esc(s.short) + "</span>";
             }).join("") + '<span class="mt-step">4. Ergebnis</span></div>' +
@@ -367,7 +368,21 @@
         if (!act) return;
         if (act.dataset.act === "share") { shareResult(); return; }
         if (act.dataset.act === "next") next(false);
-        if (act.dataset.act === "abort" && confirm("Modelltest abbrechen? · واش نحبسو الامتحان؟ النقط ما غاديش تتحفظ.")) { clearState(); renderList(); }
+        /* الخروج (فوق) و Abbrechen (لتحت): الضغطة الأولى كتسول ف الزر نيت،
+           الثانية (ف 4 ثواني) كتخرج للائحة وكتمسح الامتحان — باش ملي يرجع
+           يلقى اللائحة ويختار Modelltest آخر، ماشي نفس الامتحان. */
+        if (act.dataset.act === "exit" || act.dataset.act === "abort") {
+            if (act.dataset.armed) { clearInterval(timer); clearState(); renderList(); window.scrollTo({ top: 0 }); return; }
+            act.dataset.armed = "1";
+            act.dataset.label = act.innerHTML;
+            act.textContent = "متأكد؟ كليكي مرة خرى";
+            setTimeout(function () {
+                if (!act.isConnected) return;
+                delete act.dataset.armed;
+                act.innerHTML = act.dataset.label;
+            }, 4000);
+            return;
+        }
         if (act.dataset.act === "list") { clearState(); renderList(); }
     });
 
