@@ -873,6 +873,25 @@
                         premium = data.subscriptionActive === true && notExpired;
                         admin = data.isAdmin === true;
                         news.setAdmin(admin);
+                        /* وثيقة ناقصة (تخلقات من login بلا createdAt/email) */
+                        if (!data.createdAt || !data.email) repairUser(data);
+                    } else {
+                        /* حساب ف Auth بلا وثيقة ف users (التسجيل طاح قبل) */
+                        repairUser(null);
+                    }
+
+                    function repairUser(old) {
+                        const fix = {};
+                        if (!old || !old.email) fix.email = person.email || "";
+                        if (!old || !old.name) fix.name = name;
+                        if (!old || !old.createdAt) {
+                            const born = person.metadata && person.metadata.creationTime
+                                ? new Date(person.metadata.creationTime) : new Date();
+                            fix.createdAt = fsMod.Timestamp.fromDate(born);
+                        }
+                        if (!old) { fix.plan = "free"; fix.subscriptionActive = false; fix.subscriptionEnd = null; }
+                        fsMod.setDoc(fsMod.doc(db, "users", person.uid), fix, { merge: true })
+                            .catch(function (e) { console.warn("Header: ماصلحناش الوثيقة", e && e.code); });
                     }
                 } catch (error) {
                     console.warn("Header: ما قدرناش نقراو الحساب", error);
