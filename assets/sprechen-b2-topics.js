@@ -14,12 +14,12 @@
 */
 
 window.SPRECHEN_B2_TOPICS = [
-    { id: "sport-gesundheit",   title: "Sport und Gesundheit",                  ar: "الرياضة والصحة",            parts: ["teil2","teil3"], locked: false },
-    { id: "smartphone-alltag",  title: "Smartphones im Alltag",                 ar: "الهاتف فالحياة اليومية",    parts: ["teil2","teil3"], locked: false },
-    { id: "umweltschutz",       title: "Umweltschutz im Alltag",                ar: "حماية البيئة",              parts: ["teil2","teil3"], locked: false },
-    { id: "ernaehrung",         title: "Gesunde Ernährung",                     ar: "التغذية الصحية",            parts: ["teil2","teil3"], locked: false },
-    { id: "stadt-land",         title: "Stadt oder Land",                       ar: "المدينة ولا البادية",       parts: ["teil2","teil3"], locked: false },
-    { id: "fremdsprachen",      title: "Fremdsprachen lernen",                  ar: "تعلم اللغات",               parts: ["teil2","teil3"], locked: false },
+    { id: "sport-gesundheit",   title: "Sport und Gesundheit",                  ar: "الرياضة والصحة",            parts: ["teil2","teil3"], locked: true, pack: true },
+    { id: "smartphone-alltag",  title: "Smartphones im Alltag",                 ar: "الهاتف فالحياة اليومية",    parts: ["teil2","teil3"], locked: true, pack: true },
+    { id: "umweltschutz",       title: "Umweltschutz im Alltag",                ar: "حماية البيئة",              parts: ["teil2","teil3"], locked: true, pack: true },
+    { id: "ernaehrung",         title: "Gesunde Ernährung",                     ar: "التغذية الصحية",            parts: ["teil2","teil3"], locked: true, pack: true },
+    { id: "stadt-land",         title: "Stadt oder Land",                       ar: "المدينة ولا البادية",       parts: ["teil2","teil3"], locked: true, pack: true },
+    { id: "fremdsprachen",      title: "Fremdsprachen lernen",                  ar: "تعلم اللغات",               parts: ["teil2","teil3"], locked: true, pack: true },
     { id: "soziale-netzwerke",  title: "Soziale Netzwerke",                     ar: "الشبكات الاجتماعية",        parts: ["teil2","teil3"], locked: true },
     { id: "beruf-familie",      title: "Beruf und Familie",                     ar: "الخدمة والعائلة",           parts: ["teil2","teil3"], locked: true },
     { id: "online-shopping",    title: "Online-Shopping",                       ar: "التسوق عبر الإنترنت",       parts: ["teil2","teil3"], locked: true },
