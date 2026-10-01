@@ -3503,25 +3503,26 @@ html body .t2 .t1-texts > .t1-text {
     flex: 0 0 auto;
     display: inline-grid;
     place-items: center;
-    min-width: 34px;
-    height: 24px;
-    padding: 0 7px;
-    border-radius: 999px;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 50%;
     border: 1px solid #f2c200;
     background: #fff3a6;
-    color: #6b4f14;
     cursor: pointer;
     transition: background .16s ease, border-color .16s ease, opacity .16s ease;
 }
 .t1-panel-head .keys-toggle:hover { border-color: #d6b25e; }
 .t1-panel-head .keys-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.keys-toggle-ink { font-size: 11.5px; font-weight: 900; line-height: 1; }
+.keys-toggle-ink { font-size: 13px; line-height: 1; }
+
+/* مطفي: الساروت كيبهت باش تعرف من النظرة */
+.t1-panel-head .keys-toggle.is-off .keys-toggle-ink { opacity: .45; filter: grayscale(1); }
 
 /* مطفي: بلا لون، باش تعرف من النظرة أن التلوين محيّد */
 .t1-panel-head .keys-toggle.is-off {
     background: transparent;
     border-color: var(--line);
-    color: var(--muted);
 }
 
 /* التلوين محيّد — الـmark كيبقى نص عادي */

@@ -41,7 +41,7 @@
 
         var ink = document.createElement("span");
         ink.className = "keys-toggle-ink";
-        ink.textContent = "Ab";
+        ink.textContent = "\ud83d\udd11";          /* 🔑 */
         ink.setAttribute("aria-hidden", "true");
         button.appendChild(ink);
 
