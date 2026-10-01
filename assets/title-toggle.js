@@ -4,13 +4,12 @@
    الموضوع "Sport ist gesund" هي بحالها وحدة من الـÜberschriften
    اللي خاصك تختار.
 
-   الزر: غير عين صغيرة حدا سميّة الموضوع ف الشريط ديال فوق.
+   الزر: غير عين صغيرة حدا العنوان الكبير ديال التمرين.
    كيخبي:
-     - سميّة الموضوع ف الشريط (.lesen-detail-title)
-     - العنوان الكبير فوق التمرين (.t1-title) والسطر اللي تحتو
-       (.t1-kicker)
+     - العنوان الكبير (.t1-title) والسطر اللي تحتو (.t1-kicker)
+     - وسميّة الموضوع ف الشريط ديال فوق (.lesen-detail-title)
 
-   مهم: الزر كيتحط ف .lesen-detail-head حدا الـh1، ماشي جواه —
+   مهم: الزر كيتحط حدا الـ.t1-title ف سطر مشترك، ماشي جواه —
    وإلا كيتخبى هو حتى هو ملي كيتخبى العنوان.
 
    الاختيار كيتحفظ ف localStorage، إذن كيبقى ف كل المواضيع
@@ -24,8 +23,7 @@
 
     var KEY = "de-hide-title";
     var ON = "de-hide-title";
-    var HOST = ".lesen-detail-head";
-    var FALLBACK = ".t1-head";
+    var HOST = ".t1-head";
 
     function stored() {
         try { return localStorage.getItem(KEY) === "1"; }
@@ -79,25 +77,27 @@
         return button;
     }
 
-    function install(host) {
-        if (!host || host.querySelector(".title-toggle")) return;
-        host.appendChild(build());
+    function install(head) {
+        if (!head || head.querySelector(".title-toggle")) return;
+
+        var title = head.querySelector(".t1-title");
+        if (!title) { head.appendChild(build()); return; }
+
+        /* سطر مشترك: العنوان + العين. ملي كيتخبى العنوان
+           كيبقى السطر فيه غير العين. */
+        var row = document.createElement("div");
+        row.className = "t1-title-row";
+        title.parentNode.insertBefore(row, title);
+        row.appendChild(title);
+        row.appendChild(build());
     }
 
-    /* الشريط ديال فوق هو البلاصة. الصفحات اللي ماعندهاش
-       (التمرين لوحدو ف صفحة) كتاخد الرأس ديال التمرين. */
     function pick(root) {
         var out = [];
         if (root.nodeType !== 1) return out;
         if (root.matches && root.matches(HOST)) out.push(root);
         if (root.querySelectorAll) {
             out = out.concat(Array.prototype.slice.call(root.querySelectorAll(HOST)));
-        }
-        if (out.length) return out;
-        if (document.querySelector(HOST)) return out;      /* كاين فبلاصة أخرى */
-        if (root.matches && root.matches(FALLBACK)) out.push(root);
-        if (root.querySelectorAll) {
-            out = out.concat(Array.prototype.slice.call(root.querySelectorAll(FALLBACK)));
         }
         return out;
     }

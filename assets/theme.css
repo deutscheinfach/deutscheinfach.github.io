@@ -1069,8 +1069,17 @@ html.de-hide-title .lesen-detail-title { display: none !important; }
 /* الرأس كيبقى فيه غير الأزرار — ما نخليوش فراغ كبير */
 html.de-hide-title .t1-head { gap: 0; }
 
-/* الزر: غير عين، حدا سميّة الموضوع. بلا نص — السميّة
-   كتمشي ف aria-label و title باش القارئ الصوتي يفهمها. */
+/* سطر مشترك: العنوان الكبير + العين حداه */
+.t1-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* الزر: غير عين، حدا العنوان. بلا نص — السميّة كتمشي
+   ف aria-label و title باش القارئ الصوتي يفهمها. */
 .title-toggle {
     flex: 0 0 auto;
     display: inline-grid;
