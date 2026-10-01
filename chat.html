@@ -4,6 +4,47 @@
 <head>
 
 <meta charset="UTF-8">
+
+<script>
+/* ===== ماشي داخل؟ ماتشوفش Community أصلاً =====
+
+   Firebase كياخد شي ثانية باش يجاوب، وفداك الوقت
+   الصفحة كتترسم كاملة: البار، Wort des Tages،
+   الاقتراحات... من بعد كتختافى وكتمشي لlogin.
+   المستخدم كيضن أنه كان داخل وطردوه.
+
+   إلا ماكانش sessionId محلي، راه ماشي داخل بالتأكيد —
+   كنمشيو لlogin قبل ما يترسم والو.
+
+   مهم: غير ملي نقدرو نقراو localStorage بصح. إلا كان
+   مسدود (التصفح الخاص) كنخليو onAuthStateChanged هو
+   اللي يقرر — إلا ردينا هنا، واحد داخل بصح كيتطرد. */
+(function () {
+
+    var id;
+
+    try {
+
+        id = localStorage.getItem("deutschEinfachSessionId");
+
+    }
+
+    catch (error) {
+
+        return;
+
+    }
+
+
+    if (id)
+        return;
+
+
+    location.replace("login.html");
+
+})();
+</script>
+
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=1e586e51"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -3892,6 +3933,26 @@ unsubscribeMessages=null;
    AUTH
    ===================================================== */
 
+/* bfcache: "رجوع" كيرجع الصفحة مرسومة بحالها من الذاكرة،
+   بلا ما يعاود يشعل onAuthStateChanged. بلا هادشي، واحد
+   خارج من الحساب كيشوف Community كاملة وهو ماشي داخل.
+   persisted معناها "جات من الذاكرة ماشي من الشبكة". */
+window.addEventListener("pageshow",function(event){
+
+if(!event.persisted)
+return;
+
+if(window.__deSessionKick)
+return;
+
+if(auth.currentUser)
+return;
+
+location.replace("login.html");
+
+});
+
+
 onAuthStateChanged(
 auth,
 async user=>{
@@ -3905,7 +3966,11 @@ if(!user){
 if(window.__deSessionKick)
 return;
 
-location.href="login.html";
+/* replace ماشي href: href كيخلي chat.html ف التاريخ،
+   ف "رجوع" من login.html كيرجعك لصفحة Community
+   اللي ماشي داخل فيها — كتبان مرسومة بحالها وخاوية.
+   مع replace، "رجوع" كيرجعك للصفحة اللي جيتي منها. */
+location.replace("login.html");
 
 return;
 
