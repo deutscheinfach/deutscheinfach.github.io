@@ -3436,3 +3436,18 @@ mark.kw {
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) mark.kw { background: rgba(255, 206, 0, .28); border-bottom-color: #ffce00; }
 }
+.t1-option.kw-answer { border-color: rgba(31, 157, 99, .55); background: rgba(31, 157, 99, .08); opacity: 1; }
+html body .t1-panel .t1-option.kw-answer.is-used { opacity: 1; }
+.t1-option.kw-answer .t1-option-de { color: var(--text); }
+.kw-for {
+    flex: 0 0 auto;
+    align-self: center;
+    margin-inline-start: auto;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(31, 157, 99, .14);
+    color: #15803d;
+    font-size: 11.5px;
+    font-weight: 900;
+    white-space: nowrap;
+}
