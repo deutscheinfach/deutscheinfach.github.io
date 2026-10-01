@@ -3469,14 +3469,20 @@ html body .t1-panel .t1-option.kw-answer.is-used { opacity: 1; }
     margin: 0;
     padding: 14px 16px 0;
 }
-.t2 .t1-text {
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    padding: 14px 16px 0;
+/* الحدود والظل كيجيو من قاعدة ديال الثيم فيها !important
+   (html body .t1-text) — إذن خاصنا نفس القوة، وإلا كيبقى
+   الخط بين الفقرة والفقرة. */
+html body .t2 .t1-texts > .t1-text {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
-.t2 .t1-text:last-child { padding-bottom: 16px; }
+.t2 .t1-text {
+    padding: 16px 16px 0;
+}
+.t2 .t1-text:first-child { padding-top: 18px; }
+.t2 .t1-text:last-child { padding-bottom: 18px; }
 
 /* الترجمة كتجي ملصوقة ف آخر الفقرة ديالها */
 .t2 .t1-text .ar-block { margin-top: 8px; }
