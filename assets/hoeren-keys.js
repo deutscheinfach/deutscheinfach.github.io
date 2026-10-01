@@ -43,25 +43,29 @@
         return span;
     }
 
-    function paint(span) {
+    /* كلمة وحدة برك ف كل جملة: الأطول من بين الكلمات المرشحة
+       (الأسماء الطويلة كتكون هي المعنى: Reisebüro، Überstunden…) */
+    function paintOne(span, accept) {
         if (span.__kwText == null) span.__kwText = span.textContent;
         const text = span.__kwText;
-        span.textContent = "";
-        let last = 0, m, first = true;
+        let best = null, m, first = true;
         WORD.lastIndex = 0;
         while ((m = WORD.exec(text))) {
-            const ok = isKey(m[0].trim(), first);
+            const w = m[0].trim();
+            const ok = accept(w, first);
             first = false;
-            if (!ok) continue;
-            span.appendChild(document.createTextNode(text.slice(last, m.index)));
-            const mark = document.createElement("mark");
-            mark.className = "kw";
-            mark.textContent = m[0].trim();
-            span.appendChild(mark);
-            last = m.index + m[0].trim().length;
+            if (ok && (!best || w.length > best.w.length)) best = { w: w, at: m.index };
         }
-        span.appendChild(document.createTextNode(text.slice(last)));
+        span.textContent = "";
+        if (!best) { span.textContent = text; return; }
+        span.appendChild(document.createTextNode(text.slice(0, best.at)));
+        const mark = document.createElement("mark");
+        mark.className = "kw";
+        mark.textContent = best.w;
+        span.appendChild(mark);
+        span.appendChild(document.createTextNode(text.slice(best.at + best.w.length)));
     }
+    function paint(span) { paintOne(span, isKey); }
 
     /* ---- الكلمات ديال القصة (بين قوسين) ---- */
     const PAREN = /\(([^()]*[A-Za-zÄÖÜäöüß][^()]*)\)/g;
@@ -114,24 +118,9 @@
             return s === k || (k.length >= 5 && s.indexOf(k) !== -1) || (s.length >= 5 && k.indexOf(s) !== -1);
         });
     }
-    /* كنلونو ف الجملة غير الكلمات اللي كاينين ف القصة */
+    /* كنلونو ف الجملة كلمة وحدة من العبارة ديال القصة */
     function paintFrom(span, stems) {
-        if (span.__kwText == null) span.__kwText = span.textContent;
-        const text = span.__kwText;
-        span.textContent = "";
-        let last = 0, m;
-        WORD.lastIndex = 0;
-        while ((m = WORD.exec(text))) {
-            const w = m[0].trim();
-            if (!hit(w, stems)) continue;
-            span.appendChild(document.createTextNode(text.slice(last, m.index)));
-            const mark = document.createElement("mark");
-            mark.className = "kw";
-            mark.textContent = w;
-            span.appendChild(mark);
-            last = m.index + w.length;
-        }
-        span.appendChild(document.createTextNode(text.slice(last)));
+        paintOne(span, function (w) { return hit(w, stems); });
     }
     /* ف القصة: الجمل اللي بين قوسين كاملين */
     function paintNote(span) {
@@ -166,6 +155,99 @@
     function rowsOf(wrap) {
         return Array.from(wrap.querySelectorAll("[data-answer]"));
     }
+
+    /* ===== زر الترجمة العربية =====
+       شي مواضيع عندهم الترجمة (q.ar) وزر ديالهم. للباقيين كنزيدو نفس
+       الزر، والترجمة كتجي من الـWorker (نفس translate ديال Schreiben،
+       مع كاش 30 يوم — كتترجم مرة وحدة للجميع). */
+    const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+
+    function statementsOf(wrap) {
+        return rowsOf(wrap).map(function (row) {
+            const textEl = row.querySelector(".nq-question-text");
+            const span = textEl && sentence(textEl);
+            return { textEl: textEl, text: span ? (span.__kwText != null ? span.__kwText : span.textContent).trim() : "" };
+        });
+    }
+
+    async function translate(items) {
+        const source = items.map(function (it, i) { return (i + 1) + ". " + it.text; }).join("\n");
+        const res = await fetch(ENDPOINT, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ translate: { text: source } })
+        });
+        const data = await res.json().catch(function () { return {}; });
+        if (!res.ok || !data.translation) throw new Error(data.error || ("HTTP " + res.status));
+        const out = [];
+        data.translation.split("\n").forEach(function (line) {
+            const m = line.match(/^\s*([0-9\u0660-\u0669]+)\s*[.)\-:]\s*(.+)$/);
+            if (!m) return;
+            const n = Number(m[1].replace(/[\u0660-\u0669]/g, function (d) { return d.charCodeAt(0) - 0x0660; }));
+            out[n - 1] = m[2].trim();
+        });
+        return out;
+    }
+
+    function addArButton(wrap) {
+        if (wrap.__arDone || wrap.querySelector(".ar-toggle")) return;
+        if (!rowsOf(wrap).length) return;
+        wrap.__arDone = true;
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "ar-toggle";
+        btn.style.margin = "0 0 14px";
+        const icon = document.createElement("span");
+        icon.className = "ar-toggle-icon";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = "ع";
+        const label = document.createElement("span");
+        btn.append(icon, label);
+
+        let loaded = false, busy = false;
+        function show(on) {
+            wrap.classList.toggle("show-ar", on);
+            btn.classList.toggle("is-on", on);
+            btn.setAttribute("aria-pressed", on ? "true" : "false");
+            label.textContent = on ? "خبي الترجمة" : "بين الترجمة العربية";
+        }
+        show(false);
+
+        btn.addEventListener("click", async function () {
+            if (busy) return;
+            if (loaded) { show(!wrap.classList.contains("show-ar")); return; }
+            busy = true;
+            label.textContent = "كنترجمو…";
+            try {
+                const items = statementsOf(wrap);
+                const ar = await translate(items);
+                items.forEach(function (it, i) {
+                    if (!it.textEl || !ar[i]) return;
+                    const el = document.createElement("span");
+                    el.className = "nq-question-ar";
+                    el.dir = "rtl";
+                    el.textContent = ar[i];
+                    it.textEl.appendChild(el);
+                });
+                loaded = true;
+                show(true);
+            } catch (e) {
+                label.textContent = "ما قدرناش نترجمو — عاود";
+            }
+            busy = false;
+        });
+
+        const after = wrap.querySelector(".nq-note") || wrap.querySelector(".nq-intro");
+        if (after) after.insertAdjacentElement("afterend", btn);
+        else wrap.insertBefore(btn, wrap.firstChild);
+    }
+
+    function scan() {
+        document.querySelectorAll(".native-quiz-wrap").forEach(addArButton);
+    }
+    new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
+    scan();
 
     document.addEventListener("click", function (event) {
         const btn = event.target.closest(".nq-btn-check, .nq-btn-show, .nq-btn-retry");
