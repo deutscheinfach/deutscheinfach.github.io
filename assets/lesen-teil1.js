@@ -341,6 +341,18 @@
                         ok ? "✓ Richtig"
                            : (reveal ? "Lösung: " + expected
                                      : (given === "" ? "Noch nicht beantwortet" : "✗ Falsch"))));
+
+                    /* الترويسة الصحيحة فوق النص + الكلمات المفتاحية ملونين */
+                    const head = options.find(function (o) { return String(o.value) === expected; });
+                    const body = row.box.querySelector(".t1-body");
+                    if (head && body && window.__lesenKeys) {
+                        const title = el("div", "kw-title");
+                        title.appendChild(el("span", "kw-key", expected));
+                        const words = el("span", "kw-words", head.text || "");
+                        title.appendChild(words);
+                        body.parentNode.insertBefore(title, body);
+                        window.__lesenKeys.link([body], [words]);
+                    }
                 });
 
                 paintUsed();
@@ -352,6 +364,9 @@
                 row.box.classList.remove("correct", "wrong");
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
+                const title = row.box.querySelector(".kw-title");
+                if (title) title.remove();
+                if (window.__lesenKeys) window.__lesenKeys.clear([row.box.querySelector(".t1-body")]);
             }
 
             function reset() {
