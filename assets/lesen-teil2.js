@@ -235,7 +235,11 @@
                     row.buttons.forEach(function (item, i) {
                         item.classList.remove("is-picked");
                         if (i === row.picked) item.classList.add(ok ? "is-right" : "is-wrong");
-                        if (i === expected && (ok || reveal)) item.classList.add("is-right");
+                        /* الجواب الصحيح كيتلون ديما ملي كتبرك على
+                           "تحقق" — حتى إلا غلطتي ولا ما جاوبتيش.
+                           بلا هادشي كتشوف غير "✗ Falsch" وماتعرفش
+                           شنو كان الصحيح. */
+                        if (i === expected) item.classList.add("is-right");
                     });
 
                     row.box.appendChild(el("div", "lesen-mark " + (ok ? "ok" : "no"),

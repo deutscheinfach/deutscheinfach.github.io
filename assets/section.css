@@ -3479,10 +3479,10 @@ html body .t2 .t1-texts > .t1-text {
     box-shadow: none !important;
 }
 .t2 .t1-text {
-    padding: 16px 16px 0;
+    padding: 22px 16px 0;
 }
 .t2 .t1-text:first-child { padding-top: 18px; }
-.t2 .t1-text:last-child { padding-bottom: 18px; }
+.t2 .t1-text:last-child { padding-bottom: 20px; }
 
 /* الترجمة كتجي ملصوقة ف آخر الفقرة ديالها */
 .t2 .t1-text .ar-block { margin-top: 8px; }
