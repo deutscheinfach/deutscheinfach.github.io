@@ -1068,3 +1068,28 @@ html.de-hide-title .lesen-detail-title { display: none !important; }
 
 /* الرأس كيبقى فيه غير الأزرار — ما نخليوش فراغ كبير */
 html.de-hide-title .t1-head { gap: 0; }
+
+/* الزر: غير عين، حدا سميّة الموضوع. بلا نص — السميّة
+   كتمشي ف aria-label و title باش القارئ الصوتي يفهمها. */
+.title-toggle {
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1.5px solid var(--line-gold);
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+.title-toggle:hover { border-color: var(--gold); transform: translateY(-1px); }
+.title-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.title-toggle.is-on {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-color: transparent;
+}
+.title-toggle-icon { font-size: 17px; line-height: 1; }
+.title-toggle.is-on .title-toggle-icon { opacity: .55; }

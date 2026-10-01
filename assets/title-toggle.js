@@ -1,25 +1,31 @@
 /* ===== خبي عنوان الموضوع =====
 
-   المشكل: العنوان الكبير فوق التمرين كيفضح الجواب. مثلا ف
-   Lesen Teil 1، الموضوع سميتو "Sport ist gesund" — وهي
-   بحالها وحدة من الـÜberschriften اللي خاصك تختار.
+   المشكل: العنوان كيفضح الجواب. مثلا ف Lesen Teil 1، سميّة
+   الموضوع "Sport ist gesund" هي بحالها وحدة من الـÜberschriften
+   اللي خاصك تختار.
 
-   الحل: زر صغير حدا زر الترجمة كيخبي:
-     - العنوان الكبير (.t1-title) والسطر اللي تحتو (.t1-kicker)
-     - وسميّة الموضوع ف الشريط ديال فوق (.lesen-detail-title)
+   الزر: غير عين صغيرة حدا سميّة الموضوع ف الشريط ديال فوق.
+   كيخبي:
+     - سميّة الموضوع ف الشريط (.lesen-detail-title)
+     - العنوان الكبير فوق التمرين (.t1-title) والسطر اللي تحتو
+       (.t1-kicker)
+
+   مهم: الزر كيتحط ف .lesen-detail-head حدا الـh1، ماشي جواه —
+   وإلا كيتخبى هو حتى هو ملي كيتخبى العنوان.
 
    الاختيار كيتحفظ ف localStorage، إذن كيبقى ف كل المواضيع
-   وف كل الصفحات، ماشي غير ف هاد الوحدة.
+   وكل الصفحات.
 
-   الزر كيتزاد بوحدو ف أي .t1-head كيطلع — حيت الرؤوس
-   كيتعاودو يتبناو ف كل paint (تبديل النسخة، تبديل الجزء…)،
-   إذن ماكيكفيش نزيدوه مرة وحدة. */
+   الزر كيتزاد بوحدو ف أي رأس كيطلع (MutationObserver) حيت
+   الرؤوس كيتعاودو يتبناو ف كل paint. */
 
 (function () {
     "use strict";
 
     var KEY = "de-hide-title";
     var ON = "de-hide-title";
+    var HOST = ".lesen-detail-head";
+    var FALLBACK = ".t1-head";
 
     function stored() {
         try { return localStorage.getItem(KEY) === "1"; }
@@ -30,33 +36,31 @@
         catch (e) { /* التصفح الخاص: كيخدم، غير ماكيتعاودش */ }
     }
 
-    /* كنطبقو دغيا قبل ما يبان شي حاجة — بلا هادشي العنوان
-       كيبان شي لحظة من بعد كيختافى، وهادشي كيفضح الجواب. */
+    /* كنطبقو دغيا — بلا هادشي العنوان كيبان شي لحظة
+       من بعد كيختافى، وهادشي كيفضح الجواب. */
     function apply(on) {
         document.documentElement.classList.toggle(ON, on);
     }
     apply(stored());
 
-    function label(on) {
-        return on ? "بين العنوان" : "خبي العنوان";
-    }
-
     function build() {
         var button = document.createElement("button");
         button.type = "button";
-        button.className = "ar-toggle title-toggle";
+        button.className = "title-toggle";
+
         var icon = document.createElement("span");
-        icon.className = "ar-toggle-icon";
+        icon.className = "title-toggle-icon";
         icon.textContent = "👁";
         icon.setAttribute("aria-hidden", "true");
-        var text = document.createElement("span");
-        button.append(icon, text);
+        button.appendChild(icon);
 
         function paint() {
             var on = document.documentElement.classList.contains(ON);
-            text.textContent = label(on);
+            var label = on ? "بين العنوان" : "خبي العنوان";
             button.classList.toggle("is-on", on);
             button.setAttribute("aria-pressed", on ? "true" : "false");
+            button.setAttribute("aria-label", label);
+            button.title = label;
         }
         paint();
 
@@ -64,8 +68,7 @@
             var next = !document.documentElement.classList.contains(ON);
             apply(next);
             remember(next);
-            /* كاين بزاف ديال الأزرار ف الصفحة (رأس لكل جزء) —
-               كنحدّثوهم كاملين باش ما يتناقضوش */
+            /* ممكن يكون كثر من زر ف الصفحة — كنحدثوهم كاملين */
             Array.prototype.forEach.call(
                 document.querySelectorAll(".title-toggle"),
                 function (other) { other.__paint && other.__paint(); }
@@ -76,16 +79,31 @@
         return button;
     }
 
-    function install(head) {
-        if (!head || head.querySelector(".title-toggle")) return;
-        head.appendChild(build());
+    function install(host) {
+        if (!host || host.querySelector(".title-toggle")) return;
+        host.appendChild(build());
+    }
+
+    /* الشريط ديال فوق هو البلاصة. الصفحات اللي ماعندهاش
+       (التمرين لوحدو ف صفحة) كتاخد الرأس ديال التمرين. */
+    function pick(root) {
+        var out = [];
+        if (root.nodeType !== 1) return out;
+        if (root.matches && root.matches(HOST)) out.push(root);
+        if (root.querySelectorAll) {
+            out = out.concat(Array.prototype.slice.call(root.querySelectorAll(HOST)));
+        }
+        if (out.length) return out;
+        if (document.querySelector(HOST)) return out;      /* كاين فبلاصة أخرى */
+        if (root.matches && root.matches(FALLBACK)) out.push(root);
+        if (root.querySelectorAll) {
+            out = out.concat(Array.prototype.slice.call(root.querySelectorAll(FALLBACK)));
+        }
+        return out;
     }
 
     function scan(root) {
-        if (!root || root.nodeType !== 1) return;
-        if (root.classList && root.classList.contains("t1-head")) install(root);
-        var heads = root.querySelectorAll ? root.querySelectorAll(".t1-head") : [];
-        Array.prototype.forEach.call(heads, install);
+        pick(root).forEach(install);
     }
 
     function start() {
