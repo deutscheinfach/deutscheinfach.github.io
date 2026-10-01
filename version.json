@@ -1,10 +1,11 @@
 {
-  "build": "cae82e1ffb01",
+  "build": "c7d46e91553e",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
+    "assets/hoeren-keys.js": "f2cb976d",
     "assets/hoeren-premium.js": "9a8df7cd",
     "assets/https-upgrade.js": "473efbeb",
     "assets/lesen-b1-content.js": "a728c3f2",
