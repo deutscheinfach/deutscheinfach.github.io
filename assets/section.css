@@ -3399,3 +3399,40 @@ html.is-embed .exam-top-clock { display: none; }
     color: var(--on-brand);
     box-shadow: var(--shadow-brand);
 }
+
+/* ===== Lesen: الكلمات المفتاحية ملي كيتصحح (Teil 1 / Teil 3) ===== */
+mark.kw {
+    background: #fff3a6;
+    color: inherit;
+    border-bottom: 2px solid #f2c200;
+    border-radius: 4px;
+    padding: 0 2px;
+}
+.kw-title {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 4px 0 12px;
+    padding: 10px 14px;
+    border: 1.5px dashed var(--line-gold);
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--text);
+    background: var(--surface);
+}
+.kw-key {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(31, 157, 99, .14);
+    color: #15803d;
+    font-weight: 900;
+}
+:root[data-theme="dark"] mark.kw { background: rgba(255, 206, 0, .28); border-bottom-color: #ffce00; }
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) mark.kw { background: rgba(255, 206, 0, .28); border-bottom-color: #ffce00; }
+}

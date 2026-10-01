@@ -254,6 +254,77 @@
         return box;
     };
 
+    /* ===== الكلمات المفتاحية (بحال Zertify) =====
+       ملي كيتصحح Teil 1 ولا Teil 3، كنلونو الكلمات اللي مشتركين بين
+       النص والترويسة (ولا الوضعية والإعلان) — باش يبان علاش هادا
+       هو الجواب. بلا داتا زايدة: كنقارنو الجذور ديال الكلمات
+       (Alter ↔ Lebensalter، Sport ↔ Leistungssport). */
+    const KW_STOP = new Set(("andere anderen bekannte bekannten bekannter besonders einige einigen einiger interessieren interessiert manche mochte mochten mogen sucht suchen aber alle allem allen aller alles also auch auf aus bei beim bis bitte dabei damit dann darf das dass dem den denn der des dessen die dies diese diesem diesen dieser dieses doch dort durch eine einem einen einer eines etwas euch fur gibt ganz gegen geht hier hinter ihnen ihre ihrem ihren ihrer immer jede jedem jeden jeder jedes jetzt kann kein keine keinen konnen machen macht mehr mein meine muss mussen nach neue neuen nicht noch nur oder ohne schon sehr sein seine seit sich sind soll sollen sowie uber unter unsere viel viele vielen vom von vor wann warum weil wenig wenn werden wieder will wird wollen wurde zum zur zwei zwischen").split(" "));
+    function kwFold(w) {
+        return w.toLowerCase().replace(/ä/g, "a").replace(/ö/g, "o").replace(/ü/g, "u").replace(/ß/g, "ss");
+    }
+    function kwStem(w) {
+        const f = kwFold(w);
+        const ends = ["ern", "en", "er", "es", "em", "e", "n", "s"];
+        for (let i = 0; i < ends.length; i++) {
+            if (f.length - ends[i].length >= 4 && f.endsWith(ends[i])) return f.slice(0, -ends[i].length);
+        }
+        return f;
+    }
+    const KW_WORD = /[A-Za-zÄÖÜäöüß]+/g;
+    function kwStems(text) {
+        const out = new Set();
+        (String(text || "").match(KW_WORD) || []).forEach(function (w) {
+            if (w.length < 4 || KW_STOP.has(kwFold(w))) return;
+            const st = kwStem(w);
+            if (st.length >= 4) out.add(st);
+        });
+        return Array.from(out);
+    }
+    function kwHit(word, stems) {
+        if (word.length < 4 || KW_STOP.has(kwFold(word))) return false;
+        const s = kwStem(word);
+        return stems.some(function (k) {
+            return s === k || (k.length >= 5 && s.indexOf(k) !== -1) || (s.length >= 5 && k.indexOf(s) !== -1);
+        });
+    }
+    function kwPaint(node, stems) {
+        if (node.__kwText == null) node.__kwText = node.textContent;
+        const text = node.__kwText;
+        node.textContent = "";
+        let last = 0, hits = 0, m;
+        KW_WORD.lastIndex = 0;
+        while ((m = KW_WORD.exec(text))) {
+            if (!kwHit(m[0], stems)) continue;
+            node.appendChild(document.createTextNode(text.slice(last, m.index)));
+            const mark = document.createElement("mark");
+            mark.className = "kw";
+            mark.textContent = m[0];
+            node.appendChild(mark);
+            last = m.index + m[0].length;
+            hits++;
+        }
+        node.appendChild(document.createTextNode(text.slice(last)));
+        return hits;
+    }
+    window.__lesenKeys = {
+        /* a و b: لائحتين ديال العناصر (نص عادي) — كنلونو ف a الكلمات
+           اللي كاينين ف b، والعكس. */
+        link: function (a, b) {
+            const sa = kwStems(a.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
+            const sb = kwStems(b.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
+            let hits = 0;
+            a.forEach(function (n) { hits += kwPaint(n, sb); });
+            b.forEach(function (n) { hits += kwPaint(n, sa); });
+            return hits;
+        },
+        clear: function (nodes) {
+            nodes.forEach(function (n) {
+                if (n && n.__kwText != null) { n.textContent = n.__kwText; n.__kwText = null; }
+            });
+        }
+    };
+
     /* الصفحات العادية كترسم دغيا. الصفحات اللي كتبدل
        التمرين بوحدها كتحط data-manual. */
     const initial = document.getElementById("lesen-stack");

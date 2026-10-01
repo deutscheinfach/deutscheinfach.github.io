@@ -347,6 +347,15 @@
                         ok ? "✓ Richtig"
                            : (reveal ? "Lösung: " + expected
                                      : (given === "" ? "Noch nicht beantwortet" : "✗ Falsch"))));
+
+                    /* الكلمات المشتركين بين الوضعية والإعلان الصحيح */
+                    const ad = adRows.find(function (a) { return a.key === expected; });
+                    const sitText = row.box.querySelector(".t3-sit-de");
+                    if (ad && sitText && window.__lesenKeys) {
+                        const adBody = ad.node.querySelector(".t1-body");
+                        const adHead = ad.node.querySelector(".t3-ad-head");
+                        window.__lesenKeys.link([sitText], [adHead, adBody].filter(Boolean));
+                    }
                 });
 
                 paintUsed();
@@ -358,6 +367,12 @@
                 row.box.classList.remove("correct", "wrong");
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
+                if (window.__lesenKeys) {
+                    window.__lesenKeys.clear([row.box.querySelector(".t3-sit-de")]);
+                    adRows.forEach(function (a) {
+                        window.__lesenKeys.clear([a.node.querySelector(".t1-body"), a.node.querySelector(".t3-ad-head")]);
+                    });
+                }
             }
 
             function reset() {
