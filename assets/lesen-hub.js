@@ -10,6 +10,9 @@
 (function () {
     "use strict";
 
+    /* ?embed=1: الصفحة داخل Modelltest (iframe) */
+    const EMBEDDED = new URLSearchParams(location.search).get("embed") === "1";
+
     const grid = document.getElementById("lesen-grid");
     const toolbar = document.querySelector(".lesen-toolbar");
     const countEl = document.getElementById("lesen-count");
@@ -834,6 +837,12 @@
             if (after) {
                 navButton("lesen-btn-check exam-bar-main", PART_DE[after.key] + " →", "ltr",
                     function () { go(after.key); });
+            } else if (EMBEDDED) {
+                /* داخل Modelltest: ماكاينش تصحيح هنا — كندوزو لـ Hören،
+                   والتصحيح كامل كيكون ف اللخر (modelltest.js). */
+                navButton("lesen-btn-check exam-bar-main", "Hören →", "ltr", function () {
+                    window.dispatchEvent(new CustomEvent("exam-next"));
+                });
             } else if (!graded) {
                 navButton("lesen-btn-check exam-bar-main", "✓ صحح الامتحان كامل", "rtl", gradeAll);
             } else {
@@ -870,6 +879,15 @@
             paintScores();
             go("teil1");
         }
+
+        /* Modelltest كيعيط لهادي ملي كيدوز لـ Hören: كيصحح الأجزاء كاملين
+           (كيتصيفطو lesen-points) بلا ما نبدلو الصفحة. */
+        if (EMBEDDED) window.__examGradeAll = function () {
+            PARTS.forEach(function (p) {
+                const btn = checkButton(boxes[p.key]);
+                if (btn && scores[p.key] == null) btn.click();
+            });
+        };
 
         function gradeAll() {
             graded = true;
