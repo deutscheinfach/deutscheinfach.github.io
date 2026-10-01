@@ -41,10 +41,7 @@
 (function () {
     "use strict";
 
-    const TOPICS = [
-        { id: "t2-homeoffice", title: "Homeoffice – Fluch oder Segen?", ar: "الخدمة من الدار", parts: ["teil2"], locked: true, pack: true },
-        { id: "t3-abschied",   title: "Abschiedsfeier für die Kursleiterin", ar: "حفلة توديع الأستاذة", parts: ["teil3"], locked: true, pack: true }
-    ];
+    const TOPICS = [];
 
     /* المحتوى ف KV: lesen-sprechen-b2-pack (الريبو عام) */
     const CONTENT = {};
