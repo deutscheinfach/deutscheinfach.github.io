@@ -3451,3 +3451,5 @@ html body .t1-panel .t1-option.kw-answer.is-used { opacity: 1; }
     font-weight: 900;
     white-space: nowrap;
 }
+.t3-sit .kw-title { margin: 8px 0; padding: 8px 10px; font-size: 14px; gap: 8px; }
+.t3-sit .kw-key { min-width: 24px; height: 24px; }

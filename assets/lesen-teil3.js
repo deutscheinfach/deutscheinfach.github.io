@@ -352,6 +352,15 @@
                     /* الكلمات المشتركين بين الوضعية والإعلان الصحيح */
                     const ad = adRows.find(function (a) { return a.key === expected; });
                     const sitText = row.box.querySelector(".t3-sit-de");
+                    /* فوق الوضعية: الحرف ديال الإعلان الصحيح + العنوان ديالو */
+                    if (sitText && expected) {
+                        const title = el("div", "kw-title");
+                        title.appendChild(el("span", "kw-key", expected));
+                        const headText = ad ? ((ad.node.querySelector(".t3-ad-head") || {}).textContent || "") : "Keine passende Anzeige";
+                        title.appendChild(el("span", "kw-words", headText));
+                        sitText.parentNode.insertBefore(title, sitText);
+                    }
+
                     /* «تحقق» و «شوف الحل» بجوج كيبينو الكلمات المفتاحية */
                     if (ad && sitText && window.__lesenKeys) {
                         const adBody = ad.node.querySelector(".t1-body");
@@ -370,6 +379,8 @@
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
                 if (window.__lesenKeys) window.__lesenKeys.clear([row.box.querySelector(".t3-sit-de")]);
+                const title = row.box.querySelector(".kw-title");
+                if (title) title.remove();
             }
 
             /* الإعلانات كيتمسحو مرة وحدة قبل التصحيح — ماشي ف clear(row)،
