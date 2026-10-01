@@ -249,9 +249,7 @@
                 /* الكلمات المفتاحية: الجواب الصحيح ديال كل سؤال ↔ النص */
                 if (window.__lesenKeys) {
                     const bodies = Array.from(column.querySelectorAll(".t1-body"));
-                    const answers = rows.filter(function (r) {
-                        return reveal || r.picked === Number(r.question.answer);
-                    }).map(function (r) {
+                    const answers = rows.map(function (r) {
                         const b = r.buttons[Number(r.question.answer)];
                         return b && b.querySelector(".t1-option-de");
                     }).filter(Boolean);

@@ -1,5 +1,5 @@
 {
-  "build": "a4d2d48a82ab",
+  "build": "df6e4ac2ebf4",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -16,9 +16,9 @@
     "assets/lesen-premium.js": "ee2cef79",
     "assets/lesen-sprach.js": "4e48be62",
     "assets/lesen-sprach2.js": "20fa03ac",
-    "assets/lesen-teil1.js": "2f7ec27d",
-    "assets/lesen-teil2.js": "7c561893",
-    "assets/lesen-teil3.js": "286ee19c",
+    "assets/lesen-teil1.js": "810f11c9",
+    "assets/lesen-teil2.js": "5ab6fed3",
+    "assets/lesen-teil3.js": "7982304c",
     "assets/modelltest.js": "fbad2e2d",
     "assets/premium-gate.js": "99d22bd9",
     "assets/progress.js": "1f4ecf40",
