@@ -160,43 +160,47 @@
             board.textContent = "";
 
             const rows = [];            /* { select, box, sit } */
-            const adRows = [];          /* { node, key, slot }  */
+            const sitRows = [];         /* { node, no, sit }    */
             let activeRow = null;
 
-            /* ---- العمود: الوضعيات، كل وحدة بـselect فوقها ----
-               نفس الشكل ديال Teil 1: العنصر اللي كتجاوب عليه ف
-               العمود العريض والـselect فوقو، والاختيارات ف اللوحة
-               على اليمين بوحدهم. */
+            /* ---- العمود: الإعلانات، كل واحد بـselect فوقو ----
+               نفس Teil 1 بالضبط: الفقرة الطويلة ف العمود العريض
+               والـselect فوقها، والاختيارات ف اللوحة على اليمين
+               نقيين — بلا والو جواهم. */
             const column = el("div", "t1-texts");
             if (variant.intro) column.appendChild(el("p", "t1-intro", variant.intro));
             if (variant.note) column.appendChild(el("p", "t1-note", variant.note));
 
-            sits.forEach(function (sit, i) {
-                const no = sit.no || (i + 11);
-                const box = el("article", "t1-text t3-sit");
+            /* شمن وضعية خاصها تمشي لكل إعلان. الإعلان اللي
+               ماكاين حتى وضعية ديالو جوابو NONE. */
+            const wantFor = {};
+            sits.forEach(function (sit) {
+                if (sit.answer) wantFor[String(sit.answer)] = String(sit.no);
+            });
+
+            ads.forEach(function (ad) {
+                const box = el("article", "t1-text t3-ad");
 
                 const top = el("div", "t1-text-top");
-                top.appendChild(el("span", "t1-text-num", String(no)));
+                top.appendChild(el("span", "t1-text-num t3-ad-key", ad.key));
 
                 const select = document.createElement("select");
                 select.className = "t1-select t3-select";
-                select.setAttribute("aria-label", "Anzeige für Situation " + no);
-                select.appendChild(new Option("— Anzeige wählen —", ""));
-                ads.forEach(function (ad) {
-                    /* العنوان كامل ماشي غير الحرف — باش تعرف شنو
-                       كتختار بلا ما تهبط للإعلان (بحال Teil 1) */
-                    select.appendChild(new Option(
-                        ad.key + " — " + (ad.head || ""), ad.key));
+                select.setAttribute("aria-label", "Situation für Anzeige " + ad.key);
+                select.appendChild(new Option("— Situation wählen —", ""));
+                sits.forEach(function (sit, i) {
+                    const no = sit.no || (i + 11);
+                    select.appendChild(new Option(no + " — " + (sit.de || ""), String(no)));
                 });
-                select.appendChild(new Option(NONE + " — Keine passende Anzeige", NONE));
+                select.appendChild(new Option(NONE + " — keine Situation", NONE));
                 top.appendChild(select);
                 box.appendChild(top);
 
-                if (sit.changed) box.appendChild(el("span", "t1-option-changed", "معدل"));
-                box.appendChild(el("p", "t3-sit-de", sit.de || ""));
-                if (sit.ar) box.appendChild(el("p", "t3-sit-ar", sit.ar));
+                box.appendChild(el("span", "t3-ad-head", ad.head || ""));
+                box.appendChild(el("p", "t1-body", ad.body || ""));
+                if (ad.ar) box.appendChild(window.__lesenArBlock(ad.ar, "ملخص الإعلان"));
 
-                const row = { select: select, box: box, sit: sit };
+                const row = { select: select, box: box, ad: ad, want: wantFor[ad.key] || NONE };
                 rows.push(row);
 
                 function focusRow() {
@@ -206,11 +210,14 @@
                     });
                 }
 
-                box.addEventListener("click", focusRow);
+                box.addEventListener("click", function (event) {
+                    if (event.target.closest(".ar-block")) return;   /* قراية الملخص */
+                    focusRow();
+                });
                 select.addEventListener("focus", focusRow);
                 select.addEventListener("change", function () {
                     focusRow();
-                    /* نفس الإعلان ماشي ف جوج وضعيات — غير X كيتعاود */
+                    /* نفس الوضعية ماشي ف جوج إعلانات — غير X كيتعاود */
                     if (select.value && select.value !== NONE) {
                         rows.forEach(function (other) {
                             if (other !== row && other.select.value === select.value) {
@@ -229,38 +236,34 @@
                 rows[0].box.classList.add("is-active");
             }
 
-            /* ---- لوحة الإعلانات ---- */
+            /* ---- لوحة الوضعيات: نقيين، بلا select جواهم ---- */
             const side = el("aside", "t1-side");
             const panel = el("div", "t1-panel t3-panel");
 
             const panelHead = el("div", "t1-panel-head");
-            panelHead.appendChild(el("span", "t1-panel-title", "ANZEIGEN"));
+            panelHead.appendChild(el("span", "t1-panel-title", "SITUATIONEN"));
             const progress = el("span", "t1-progress", "0/" + sits.length);
             panelHead.appendChild(progress);
             panel.appendChild(panelHead);
 
-            ads.forEach(function (ad) {
-                const item = el("article", "t3-ad");
+            sits.forEach(function (sit, i) {
+                const no = String(sit.no || (i + 11));
+                const item = document.createElement("button");
+                item.type = "button";
+                item.className = "t1-option t3-sit-opt";
 
-                const top = el("div", "t3-ad-top");
-                top.appendChild(el("span", "t3-ad-key", ad.key));
-                top.appendChild(el("span", "t3-ad-head", ad.head || ""));
+                item.appendChild(el("span", "t1-option-key", no));
 
-                const slot = el("span", "t3-ad-slot");
-                slot.hidden = true;
-                top.appendChild(slot);
-                item.appendChild(top);
+                const textWrap = el("span", "t1-option-text");
+                textWrap.appendChild(el("span", "t1-option-de t3-sit-de", sit.de || ""));
+                if (sit.changed) textWrap.appendChild(el("span", "t1-option-changed", "معدل"));
+                if (sit.ar) textWrap.appendChild(el("span", "t1-option-ar t3-sit-ar", sit.ar));
+                item.appendChild(textWrap);
 
-                item.appendChild(el("p", "t1-body", ad.body || ""));
-                if (ad.ar) item.appendChild(window.__lesenArBlock(ad.ar, "ملخص الإعلان"));
+                /* تبرك على الوضعية = كتمشي للإعلان الخدام */
+                item.addEventListener("click", function () { assign(no); });
 
-                /* تبرك على الإعلان = كيتحط فالوضعية الخدامة */
-                item.addEventListener("click", function (event) {
-                    if (event.target.closest(".ar-block")) return;   /* قراية الملخص */
-                    assign(ad.key);
-                });
-
-                adRows.push({ node: item, key: ad.key, slot: slot });
+                sitRows.push({ node: item, no: no, sit: sit });
                 panel.appendChild(item);
             });
 
@@ -286,19 +289,21 @@
 
             paintUsed();
 
-            /* ---- تبرك على إعلان ---- */
-            function assign(key) {
+            /* ---- تبرك على وضعية ف اللوحة ---- */
+            function assign(no) {
                 const target = activeRow || rows[0];
                 if (!target) return;
 
+                /* نفس الوضعية ماشي ف جوج إعلانات */
                 rows.forEach(function (other) {
-                    if (other !== target && other.select.value === key) {
+                    if (other !== target && other.select.value === no) {
                         other.select.value = "";
                     }
                 });
-                target.select.value = key;
+                target.select.value = no;
                 paintUsed();
 
+                /* نمشيو للإعلان اللي من بعد باش ما يبقاش يتبرك بزاف */
                 const at = rows.indexOf(target);
                 const next = rows[at + 1];
                 if (next) {
@@ -309,97 +314,125 @@
                 }
             }
 
-            /* ---- الإعلانات المستعملة + العداد ---- */
+            /* ---- الوضعيات المستعملة + العداد ---- */
             function paintUsed() {
                 const used = {};
                 rows.forEach(function (row) {
-                    if (row.select.value) used[row.select.value] = row.sit.no;
+                    if (row.select.value && row.select.value !== NONE) {
+                        used[row.select.value] = true;
+                    }
                 });
 
-                adRows.forEach(function (item) {
-                    const at = used[item.key];
-                    item.node.classList.toggle("is-used", at !== undefined);
-                    item.slot.hidden = at === undefined;
-                    item.slot.textContent = at === undefined ? "" : "Situation " + at;
+                sitRows.forEach(function (item) {
+                    item.node.classList.toggle("is-used", !!used[item.no]);
                 });
 
-                const answered = rows.filter(function (r) { return r.select.value; }).length;
-                progress.textContent = answered + "/" + rows.length;
+                progress.textContent = Object.keys(used).length + "/" + sits.length;
             }
 
-            /* ---- التصحيح ---- */
+            /* ---- التصحيح ----
+               النقطة على الوضعيات (10)، ماشي على الإعلانات (12).
+
+               مهم: شي وضعيات جوابها X — ما كاين حتى إعلان مناسب
+               (14% ف المواضيع ديالنا). دابا الـselect فوق الإعلان،
+               إذن ماكاينش فين تختار X للوضعية. الحل: الوضعية اللي
+               ما عطيتي ليها حتى إعلان = جوابك هو X. وهادشي طبيعي:
+               ملي ماكاين حتى إعلان كيمشي معاها، كتخليها خاوية. */
             function grade(reveal) {
-                let right = 0;
-                let answered = 0;
-                clearAds();
+                clearSits();
+                rows.forEach(clear);
 
+                if (reveal) {
+                    rows.forEach(function (row) { row.select.value = row.want; });
+                }
+
+                /* شمن إعلان خدا كل وضعية */
+                const takenBy = {};
                 rows.forEach(function (row) {
-                    clear(row);
+                    if (row.select.value && row.select.value !== NONE) {
+                        takenBy[row.select.value] = row;
+                    }
+                });
 
-                    const expected = String(row.sit.answer || "");
+                let right = 0;
+                sits.forEach(function (sit, i) {
+                    const no = String(sit.no || (i + 11));
+                    const expected = String(sit.answer === undefined ? NONE : sit.answer).toUpperCase();
+                    const picked = takenBy[no];
+                    const given = picked ? String(picked.ad.key) : NONE;
+                    if (given === expected) right++;
+                });
+
+                /* علامة على كل إعلان */
+                rows.forEach(function (row) {
+                    const want = row.want;
                     const given = row.select.value;
+                    const real = want !== NONE;
+                    const ok = given === want;
 
-                    if (given !== "") answered++;
-                    const ok = given !== "" && given === expected;
-                    if (ok) right++;
+                    if (given !== "") row.box.classList.add(ok ? "correct" : "wrong");
 
-                    if (reveal) {
-                        row.select.value = expected;
-                        row.box.classList.add("correct");
-                    } else {
-                        row.box.classList.add(ok ? "correct" : "wrong");
+                    if (given !== "" || reveal) {
+                        row.box.appendChild(el("div", "lesen-mark " + (ok ? "ok" : "no"),
+                            ok ? (real ? "✓ Richtig" : "✓ Richtig — keine Situation")
+                               : (reveal
+                                    ? (real ? "Lösung: Situation " + want : "Lösung: keine Situation")
+                                    : "✗ Falsch")));
                     }
 
-                    row.box.appendChild(el("div", "lesen-mark " + (ok ? "ok" : "no"),
-                        ok ? "✓ Richtig"
-                           : (reveal ? "Lösung: " + expected
-                                     : (given === "" ? "Noch nicht beantwortet" : "✗ Falsch"))));
-
-                    /* الكلمات المشتركين بين الوضعية والإعلان الصحيح */
-                    const ad = adRows.find(function (a) { return a.key === expected; });
-                    const sitText = row.box.querySelector(".t3-sit-de");
-                    /* فوق الوضعية: الحرف ديال الإعلان الصحيح + العنوان ديالو */
-                    if (sitText && expected) {
+                    /* فوق نص الإعلان: رقم الوضعية الصحيحة ونصها */
+                    const sitRow = sitRows.find(function (x) { return x.no === want; });
+                    const adBody = row.box.querySelector(".t1-body");
+                    if (adBody && real && sitRow) {
                         const title = el("div", "kw-title");
-                        title.appendChild(el("span", "kw-key", expected));
-                        const headText = ad ? ((ad.node.querySelector(".t3-ad-head") || {}).textContent || "") : "Keine passende Anzeige";
-                        title.appendChild(el("span", "kw-words", headText));
-                        sitText.parentNode.insertBefore(title, sitText);
+                        title.appendChild(el("span", "kw-key", want));
+                        title.appendChild(el("span", "kw-words", sitRow.sit.de || ""));
+                        adBody.parentNode.insertBefore(title, adBody);
                     }
 
-                    /* «تحقق» و «شوف الحل» بجوج كيبينو الكلمات المفتاحية */
-                    if (ad && sitText && window.__lesenKeys) {
-                        const adBody = ad.node.querySelector(".t1-body");
-                        const adHead = ad.node.querySelector(".t3-ad-head");
-                        window.__lesenKeys.link([sitText], [adHead, adBody].filter(Boolean));
+                    /* الكلمات المشتركين بين الإعلان والوضعية الصحيحة */
+                    if (sitRow && adBody && window.__lesenKeys) {
+                        const sitText = sitRow.node.querySelector(".t3-sit-de");
+                        const adHead = row.box.querySelector(".t3-ad-head");
+                        if (sitText) {
+                            window.__lesenKeys.link([sitText], [adHead, adBody].filter(Boolean));
+                        }
                     }
                 });
 
                 paintUsed();
-                window.__lesenScore(score, "teil3", right, rows.length, reveal,
-                    rows.length - answered);
+
+                /* "بلا جواب" = إعلان ما خترتي ليه والو — ماشي وضعية
+                   خاوية، حيت الخاوية ممكن تكون هي الجواب الصحيح (X). */
+                const blank = rows.filter(function (row) { return row.select.value === ""; }).length;
+                window.__lesenScore(score, "teil3", right, sits.length, reveal, blank);
             }
 
             function clear(row) {
                 row.box.classList.remove("correct", "wrong");
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
-                if (window.__lesenKeys) window.__lesenKeys.clear([row.box.querySelector(".t3-sit-de")]);
+                if (window.__lesenKeys) {
+                    window.__lesenKeys.clear([
+                        row.box.querySelector(".t1-body"),
+                        row.box.querySelector(".t3-ad-head")
+                    ]);
+                }
                 const title = row.box.querySelector(".kw-title");
                 if (title) title.remove();
             }
 
-            /* الإعلانات كيتمسحو مرة وحدة قبل التصحيح — ماشي ف clear(row)،
-               وإلا كل وضعية كتمسح الألوان ديال اللي قبلها. */
-            function clearAds() {
+            /* الوضعيات كيتمسحو مرة وحدة قبل التصحيح — ماشي ف clear(row)،
+               وإلا كل إعلان كيمسح الألوان ديال اللي قبلو. */
+            function clearSits() {
                 if (!window.__lesenKeys) return;
-                adRows.forEach(function (a) {
-                    window.__lesenKeys.clear([a.node.querySelector(".t1-body"), a.node.querySelector(".t3-ad-head")]);
+                sitRows.forEach(function (x) {
+                    window.__lesenKeys.clear([x.node.querySelector(".t3-sit-de")]);
                 });
             }
 
             function reset() {
-                clearAds();
+                clearSits();
                 rows.forEach(function (row) {
                     clear(row);
                     row.select.value = "";
