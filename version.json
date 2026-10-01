@@ -1,5 +1,5 @@
 {
-  "build": "2191d7b92868",
+  "build": "149cefb63092",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -19,7 +19,7 @@
     "assets/lesen-teil1.js": "d281ec6f",
     "assets/lesen-teil2.js": "3bd27601",
     "assets/lesen-teil3.js": "b1e371b8",
-    "assets/modelltest.js": "919fb0df",
+    "assets/modelltest.js": "fbad2e2d",
     "assets/premium-gate.js": "99d22bd9",
     "assets/progress.js": "1f4ecf40",
     "assets/schreiben-auth.js": "c131e3c8",
