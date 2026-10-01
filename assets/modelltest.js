@@ -104,8 +104,8 @@
                     (last ? '<p class="mt-last">آخر نتيجة: <b style="color:var(--accent-text)">' + fmtPts(last.points) + " / " + (last.max || TOTAL) + "</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
                     '<div class="mt-foot"><span class="mt-chip ' + (t.locked ? "prem" : "free") + '">' + (t.locked ? "Premium" : "مجاني") + "</span>" +
                     (shut
-                        ? '<a class="tr-btn" href="payment.html">' + svg("lock") + "Entsperren</a>"
-                        : '<button class="tr-btn tr-btn-gold" type="button" data-start="' + t.n + '">' + svg("play") + "Starten</button>") +
+                        ? '<a class="tr-btn" href="payment.html">' + svg("lock") + "فتح بـ Premium</a>"
+                        : '<button class="tr-btn tr-btn-gold" type="button" data-start="' + t.n + '">' + svg("play") + "بدا الامتحان</button>") +
                     "</div></article>";
             }).join("") + "</div>";
     }
@@ -203,10 +203,10 @@
 
     function timeUp() {
         const step = STEPS[state.step];
-        const m = modal('<h2 style="justify-content:center">' + svg("clock") + "Die Zeit ist um!</h2>" +
+        const m = modal('<h2 style="justify-content:center">' + svg("clock") + "سالا الوقت!</h2>" +
             '<p class="tr-muted">الوقت ديال ' + esc(step.name) + " سالا. الأجوبة اللي درتي كيتحسبو.</p>" +
             '<div class="tr-row" style="justify-content:center;margin-top:12px"><button class="tr-btn tr-btn-gold" type="button" id="mt-timeup">' +
-            (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + "</button></div>");
+            (state.step < STEPS.length - 1 ? "دوز لـ " + esc(STEPS[state.step + 1].short) : "شوف النتيجة") + "</button></div>");
         m.querySelector("#mt-timeup").addEventListener("click", function () { m.remove(); next(); });
     }
 
@@ -254,16 +254,16 @@
         }
 
         root.innerHTML =
-            '<div class="mt-bar"><button class="tr-btn mt-exit" type="button" data-act="exit" title="خرج من الامتحان">← Zurück</button>' +
+            '<div class="mt-bar"><button class="tr-btn mt-exit" type="button" data-act="exit" title="خرج من الامتحان" dir="ltr">← رجوع</button>' +
             '<span class="mt-title">Modelltest ' + state.n + '</span><div class="mt-steps">' +
             STEPS.map(function (s, i) {
                 return '<span class="mt-step ' + (i === state.step ? "is-now" : i < state.step ? "is-done" : "") + '">' + (i < state.step ? svg("check").replace("<svg", '<svg width="14" height="14"') : (i + 1) + ".") + " " + esc(s.short) + "</span>";
             }).join("") + '<span class="mt-step">4. Ergebnis</span></div>' +
             '<span class="mt-timer" id="mt-timer" title="Restzeit">' + svg("clock") + '<span id="mt-timer-t">--:--</span></span></div>' +
             '<p class="mt-live" id="mt-live"></p>' + body +
-            '<div class="mt-next"><button class="tr-btn tr-btn-red" type="button" data-act="abort">' + svg("x") + "Abbrechen</button>" +
+            '<div class="mt-next"><button class="tr-btn tr-btn-red" type="button" data-act="abort">' + svg("x") + "وقف الامتحان</button>" +
             '<button class="tr-btn tr-btn-gold" type="button" data-act="next">' +
-            (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + svg("arrow") + "</button></div>" +
+            (state.step < STEPS.length - 1 ? "دوز لـ " + esc(STEPS[state.step + 1].short) : "شوف النتيجة") + svg("arrow") + "</button></div>" +
             (step.key === "hoeren"
                 /* نفس الشريط الثابت ديال Lesen: «تحقق» على اليسار،
                    «السابق» و «Hören Teil 2 →» على اليمين. */
@@ -285,7 +285,7 @@
         window.scrollTo({ top: 0 });
     }
 
-    /* Hören: أسهم بين Teil 1 → 2 → 3، ومن Teil 3 «Ergebnis →».
+    /* Hören: أسهم بين Teil 1 → 2 → 3، ومن Teil 3 «شوف النتيجة →».
        نفس الزر لتحت (mt-next) كيتبدل حسب الجزء. */
     function paintSubNav() {
         const step = STEPS[state.step];
@@ -296,7 +296,7 @@
         if (main) {
             main.dataset.act = last ? "next" : "subnext";
             main.textContent = last
-                ? (state.step < STEPS.length - 1 ? STEPS[state.step + 1].short + " →" : "Ergebnis →")
+                ? (state.step < STEPS.length - 1 ? STEPS[state.step + 1].short + " →" : "شوف النتيجة →")
                 : "Hören Teil " + (state.sub + 2) + " →";
         }
         if (prev) prev.disabled = state.sub === 0;
@@ -375,9 +375,9 @@
             (window.DEShare
                 ? '<button class="tr-btn tr-btn-gold" type="button" data-act="share">' + svg("share").replace("<svg", '<svg width="16" height="16"') + "شارك النتيجة</button>"
                 : "") +
-            '<a class="tr-btn" href="' + weakest[3] + '">' + esc(weakest[0]) + " üben</a>" +
-            '<a class="tr-btn" href="fortschritt.html">Mein Fortschritt</a>' +
-            '<button class="tr-btn" type="button" data-act="list">Alle Modelltests</button></div></div>';
+            '<a class="tr-btn" dir="rtl" href="' + weakest[3] + '">' + "تمرن على " + esc(weakest[0]) + "</a>" +
+            '<a class="tr-btn" href="fortschritt.html">التقدم ديالي</a>' +
+            '<button class="tr-btn" type="button" data-act="list">كل الامتحانات</button></div></div>';
         shareData = { rows: rows, total: s.total, pass: pass };
         window.scrollTo({ top: 0 });
     }
@@ -389,7 +389,7 @@
             const n = Number(startBtn.dataset.start);
             const m = modal('<h2 style="justify-content:center">' + svg("play") + "Modelltest " + n + " starten?</h2>" +
                 '<p class="tr-muted">جوج أجزاء: Lesen & Sprachbausteine (90 د) و Hören (20 د). الوقت كيبدا دابا. جاوب ودوز — التصحيح كامل ف اللخر.</p>' +
-                '<div class="tr-row" style="justify-content:center;margin-top:12px"><button class="tr-btn" type="button" data-no>Später</button><button class="tr-btn tr-btn-gold" type="button" data-yes>Los geht\'s</button></div>');
+                '<div class="tr-row" style="justify-content:center;margin-top:12px"><button class="tr-btn" type="button" data-no>من بعد</button><button class="tr-btn tr-btn-gold" type="button" data-yes>يلاه نبداو</button></div>');
             m.querySelector("[data-no]").addEventListener("click", function () { m.remove(); });
             m.querySelector("[data-yes]").addEventListener("click", function () { m.remove(); start(n); });
             return;
@@ -403,7 +403,7 @@
         if (act.dataset.act === "subnext" && state) setSub(state.sub + 1);
         if (act.dataset.act === "hcheck" && state) checkHoeren();
         if (act.dataset.act === "subprev" && state) setSub(state.sub - 1);
-        /* الخروج (فوق) و Abbrechen (لتحت): الضغطة الأولى كتسول ف الزر نيت،
+        /* الخروج (فوق) و «وقف الامتحان» (لتحت): الضغطة الأولى كتسول ف الزر نيت،
            الثانية (ف 4 ثواني) كتخرج للائحة وكتمسح الامتحان — باش ملي يرجع
            يلقى اللائحة ويختار Modelltest آخر، ماشي نفس الامتحان. */
         if (act.dataset.act === "exit" || act.dataset.act === "abort") {
