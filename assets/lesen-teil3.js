@@ -325,6 +325,7 @@
             function grade(reveal) {
                 let right = 0;
                 let answered = 0;
+                clearAds();
 
                 rows.forEach(function (row) {
                     clear(row);
@@ -351,7 +352,8 @@
                     /* الكلمات المشتركين بين الوضعية والإعلان الصحيح */
                     const ad = adRows.find(function (a) { return a.key === expected; });
                     const sitText = row.box.querySelector(".t3-sit-de");
-                    if (ad && sitText && window.__lesenKeys) {
+                    /* «تحقق» كيبين غير ف الأجوبة الصحيحة، «شوف الحل» ف كلشي */
+                    if ((ok || reveal) && ad && sitText && window.__lesenKeys) {
                         const adBody = ad.node.querySelector(".t1-body");
                         const adHead = ad.node.querySelector(".t3-ad-head");
                         window.__lesenKeys.link([sitText], [adHead, adBody].filter(Boolean));
@@ -367,15 +369,20 @@
                 row.box.classList.remove("correct", "wrong");
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
-                if (window.__lesenKeys) {
-                    window.__lesenKeys.clear([row.box.querySelector(".t3-sit-de")]);
-                    adRows.forEach(function (a) {
-                        window.__lesenKeys.clear([a.node.querySelector(".t1-body"), a.node.querySelector(".t3-ad-head")]);
-                    });
-                }
+                if (window.__lesenKeys) window.__lesenKeys.clear([row.box.querySelector(".t3-sit-de")]);
+            }
+
+            /* الإعلانات كيتمسحو مرة وحدة قبل التصحيح — ماشي ف clear(row)،
+               وإلا كل وضعية كتمسح الألوان ديال اللي قبلها. */
+            function clearAds() {
+                if (!window.__lesenKeys) return;
+                adRows.forEach(function (a) {
+                    window.__lesenKeys.clear([a.node.querySelector(".t1-body"), a.node.querySelector(".t3-ad-head")]);
+                });
             }
 
             function reset() {
+                clearAds();
                 rows.forEach(function (row) {
                     clear(row);
                     row.select.value = "";

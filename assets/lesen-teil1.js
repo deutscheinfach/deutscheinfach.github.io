@@ -345,7 +345,8 @@
                     /* الترويسة الصحيحة فوق النص + الكلمات المفتاحية ملونين */
                     const head = options.find(function (o) { return String(o.value) === expected; });
                     const body = row.box.querySelector(".t1-body");
-                    if (head && body && window.__lesenKeys) {
+                    /* «تحقق» كيبين غير ف الأجوبة الصحيحة، «شوف الحل» ف كلشي */
+                    if ((ok || reveal) && head && body && window.__lesenKeys) {
                         const title = el("div", "kw-title");
                         title.appendChild(el("span", "kw-key", expected));
                         const words = el("span", "kw-words", head.text || "");
