@@ -163,62 +163,32 @@
             const adRows = [];          /* { node, key, slot }  */
             let activeRow = null;
 
-            /* ---- الإعلانات ---- */
+            /* ---- العمود: الوضعيات، كل وحدة بـselect فوقها ----
+               نفس الشكل ديال Teil 1: العنصر اللي كتجاوب عليه ف
+               العمود العريض والـselect فوقو، والاختيارات ف اللوحة
+               على اليمين بوحدهم. */
             const column = el("div", "t1-texts");
             if (variant.intro) column.appendChild(el("p", "t1-intro", variant.intro));
             if (variant.note) column.appendChild(el("p", "t1-note", variant.note));
 
-            ads.forEach(function (ad) {
-                const box = el("article", "t1-text t3-ad");
-
-                const top = el("div", "t3-ad-top");
-                top.appendChild(el("span", "t3-ad-key", ad.key));
-                top.appendChild(el("span", "t3-ad-head", ad.head || ""));
-
-                const slot = el("span", "t3-ad-slot");
-                slot.hidden = true;
-                top.appendChild(slot);
-                box.appendChild(top);
-
-                box.appendChild(el("p", "t1-body", ad.body || ""));
-
-                if (ad.ar) box.appendChild(window.__lesenArBlock(ad.ar, "ملخص الإعلان"));
-
-                /* تبرك على الإعلان = كيتحط فالوضعية الخدامة */
-                box.addEventListener("click", function (event) {
-                    if (event.target.closest(".ar-block")) return;   /* قراية الملخص */
-                    assign(ad.key);
-                });
-
-                adRows.push({ node: box, key: ad.key, slot: slot });
-                column.appendChild(box);
-            });
-
-            /* ---- لوحة الوضعيات ---- */
-            const side = el("aside", "t1-side");
-            const panel = el("div", "t1-panel t3-panel");
-
-            const panelHead = el("div", "t1-panel-head");
-            panelHead.appendChild(el("span", "t1-panel-title", "SITUATIONEN"));
-            const progress = el("span", "t1-progress", "0/" + sits.length);
-            panelHead.appendChild(progress);
-            panel.appendChild(panelHead);
-
             sits.forEach(function (sit, i) {
-                const box = el("div", "t3-sit");
+                const no = sit.no || (i + 11);
+                const box = el("article", "t1-text t3-sit");
 
-                const top = el("div", "t3-sit-top");
-                top.appendChild(el("span", "t3-sit-num", String(sit.no || (i + 11))));
+                const top = el("div", "t1-text-top");
+                top.appendChild(el("span", "t1-text-num", String(no)));
 
                 const select = document.createElement("select");
                 select.className = "t1-select t3-select";
-                select.setAttribute("aria-label",
-                    "Anzeige für Situation " + (sit.no || (i + 11)));
-                select.appendChild(new Option("—", ""));
+                select.setAttribute("aria-label", "Anzeige für Situation " + no);
+                select.appendChild(new Option("— Anzeige wählen —", ""));
                 ads.forEach(function (ad) {
-                    select.appendChild(new Option(ad.key, ad.key));
+                    /* العنوان كامل ماشي غير الحرف — باش تعرف شنو
+                       كتختار بلا ما تهبط للإعلان (بحال Teil 1) */
+                    select.appendChild(new Option(
+                        ad.key + " — " + (ad.head || ""), ad.key));
                 });
-                select.appendChild(new Option(NONE, NONE));
+                select.appendChild(new Option(NONE + " — Keine passende Anzeige", NONE));
                 top.appendChild(select);
                 box.appendChild(top);
 
@@ -251,7 +221,7 @@
                     paintUsed();
                 });
 
-                panel.appendChild(box);
+                column.appendChild(box);
             });
 
             if (rows.length) {
@@ -259,7 +229,43 @@
                 rows[0].box.classList.add("is-active");
             }
 
+            /* ---- لوحة الإعلانات ---- */
+            const side = el("aside", "t1-side");
+            const panel = el("div", "t1-panel t3-panel");
+
+            const panelHead = el("div", "t1-panel-head");
+            panelHead.appendChild(el("span", "t1-panel-title", "ANZEIGEN"));
+            const progress = el("span", "t1-progress", "0/" + sits.length);
+            panelHead.appendChild(progress);
+            panel.appendChild(panelHead);
+
+            ads.forEach(function (ad) {
+                const item = el("article", "t3-ad");
+
+                const top = el("div", "t3-ad-top");
+                top.appendChild(el("span", "t3-ad-key", ad.key));
+                top.appendChild(el("span", "t3-ad-head", ad.head || ""));
+
+                const slot = el("span", "t3-ad-slot");
+                slot.hidden = true;
+                top.appendChild(slot);
+                item.appendChild(top);
+
+                item.appendChild(el("p", "t1-body", ad.body || ""));
+                if (ad.ar) item.appendChild(window.__lesenArBlock(ad.ar, "ملخص الإعلان"));
+
+                /* تبرك على الإعلان = كيتحط فالوضعية الخدامة */
+                item.addEventListener("click", function (event) {
+                    if (event.target.closest(".ar-block")) return;   /* قراية الملخص */
+                    assign(ad.key);
+                });
+
+                adRows.push({ node: item, key: ad.key, slot: slot });
+                panel.appendChild(item);
+            });
+
             side.appendChild(panel);
+
             board.append(column, side);
 
             /* ---- الأزرار ---- */

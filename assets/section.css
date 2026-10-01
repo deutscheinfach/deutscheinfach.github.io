@@ -3480,3 +3480,29 @@ html body .t1-panel .t1-option.kw-answer.is-used { opacity: 1; }
 
 /* الترجمة كتجي ملصوقة ف آخر الفقرة ديالها */
 .t2 .t1-text .ar-block { margin-top: 8px; }
+
+/* ===== Teil 3: نفس شكل Teil 1 =====
+   الوضعيات ف العمود مع الـselect فوق كل وحدة، والإعلانات
+   ف اللوحة على اليمين بوحدهم.
+
+   الفرق مع Teil 1: تما الاختيارات قصار (ترويسة ف سطر)،
+   وهنا الإعلان فيه عنوان + فقرة. إذن اللوحة خاصها عرض
+   أكثر من 340px — وإلا الإعلان كيتهرس. */
+.t3-wrap .t1-board { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); }
+
+@media (max-width: 1000px) {
+    .t3-wrap .t1-board { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* الإعلان داخل اللوحة: بطاقة صغيرة، ماشي زر ديال سطر */
+.t3-panel .t3-ad {
+    padding: 12px 13px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    cursor: pointer;
+    transition: border-color .16s ease, background .16s ease;
+}
+.t3-panel .t3-ad:hover { border-color: var(--line-gold); }
+.t3-panel .t3-ad .t1-body { font-size: 13.5px; line-height: 1.7; margin: 6px 0 0; }
+.t3-panel .t3-ad .ar-block { margin-top: 8px; }
