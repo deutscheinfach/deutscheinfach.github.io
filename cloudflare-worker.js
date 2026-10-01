@@ -1,4 +1,4 @@
-// Deutsch Einfach - B2 Schreiben Correction Worker
+// Deutsch Einfach - Schreiben Correction Worker (B1 + B2)
 // Gemini API backend
 //
 // Required Cloudflare secret:
@@ -248,6 +248,35 @@ export default {
        * كنتحققو من هوية اللي كيعيط، من بعد كنقراو الـ tokens
        * ديال المستقبل وكنصيفطو عبر FCM.
        */
+      /*
+       * admin.html: كنجيبو جميع الحسابات من Authentication وكنكمّلو
+       * users/{uid} اللي ناقصين (بلا وثيقة، ولا بلا email/name).
+       * الكليان ماكيقدرش يشوف لائحة Auth — غير حساب الخدمة.
+       */
+      if (body.adminSyncUsers === true) {
+        if (!env.FIREBASE_SERVICE_ACCOUNT) {
+          return jsonResponse({ error: "sync_not_configured",
+            details: "FIREBASE_SERVICE_ACCOUNT secret is missing." }, 500, allowedOrigin);
+        }
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        try {
+          const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+          const me = await readUserFields(caller.sub, accessToken);
+          if (!me || me.isAdmin?.booleanValue !== true) {
+            return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+          }
+          const result = await syncAuthUsers(accessToken);
+          return jsonResponse(result, 200, allowedOrigin);
+        } catch (syncError) {
+          return jsonResponse({ error: "sync_failed", details: syncError.message }, 502, allowedOrigin);
+        }
+      }
+
       if (body.notify && typeof body.notify.toUid === "string") {
         if (!env.FIREBASE_SERVICE_ACCOUNT) {
           return jsonResponse(
@@ -343,6 +372,14 @@ export default {
           );
         }
 
+        /* نفس النص (Anzeige ولا المهام) كيترجم مرة وحدة للجميع:
+           الترجمة كتتحفظ ف كاش Cloudflare 30 يوم، والمرة الجاية كترجع دغيا. */
+        const cacheKey = await translationCacheKey(sourceText);
+        const cached = await cacheGet(cacheKey);
+        if (cached) {
+          return jsonResponse({ translation: cached, cached: true }, 200, allowedOrigin);
+        }
+
         const translatePayload = {
           systemInstruction: {
             parts: [
@@ -357,7 +394,11 @@ export default {
             ],
           },
           contents: [{ role: "user", parts: [{ text: sourceText }] }],
-          generationConfig: { temperature: 0.3 },
+          generationConfig: {
+            temperature: 0.3,
+            // الترجمة ماكتحتاجش التفكير: كيجاوب دغيا بزاف
+            thinkingConfig: { thinkingLevel: "minimal" },
+          },
         };
 
         const translateResult = await callGeminiWithRetry(
@@ -393,6 +434,7 @@ export default {
           );
         }
 
+        await cachePut(cacheKey, translation);
         return jsonResponse({ translation }, 200, allowedOrigin);
       }
 
@@ -438,45 +480,53 @@ export default {
         ? points.slice(0, 8)
         : [];
 
+      /* عدد الكلمات كنحسبوه حنا (دقيق)، وكنعطيوه لـ Gemini */
+      const wordCount = (safeStudentText.match(/[A-Za-zÄÖÜäöüß0-9]+(?:[-'][A-Za-zÄÖÜäöüß0-9]+)*/g) || []).length;
+      const wordsHint = String(words || "").slice(0, 40);
+      const minWords = parseInt((wordsHint.match(/\d+/) || [0])[0], 10) || 0;
+
+      /* النقطة كتتحسب بحال telc: 3 معايير، كل واحد A/B/C/D
+         (A=5، B=3، C=1، D=0) × 3 = من 0 حتى 45.
+         Gemini كيعطي غير الحروف + السبب، والحساب كيديرو الـ Worker
+         — هكا نفس النص كياخد ديما نفس النقطة تقريبا. */
       const systemPrompt = `
-Du bist ein erfahrener TELC-Deutschprüfer und korrigierst
-einen Schreibtext auf dem Niveau ${level || "B2"}.
+Du bist ein erfahrener, strenger aber fairer telc-Prüfer für den
+Schriftlichen Ausdruck auf Niveau ${level || "B2"}.
 
-Aufgabe:
-Bewerte den Text nach diesen Bereichen:
+Bewerte den Text mit dem offiziellen telc-Raster. Vergib für jedes der
+drei Kriterien genau eine Stufe A, B, C oder D:
 
-1. Inhaltliche Angemessenheit
-2. Kommunikative Gestaltung
-3. Formale Richtigkeit
+I. Aufgabenbewältigung (Inhalt)
+  A = alle Leitpunkte angemessen und ausführlich behandelt, Textsorte erfüllt
+  B = alle Leitpunkte behandelt, aber einer nur knapp; oder drei Leitpunkte angemessen
+  C = nur zwei Leitpunkte behandelt, oder mehrere nur sehr knapp
+  D = höchstens ein Leitpunkt behandelt oder Thema verfehlt
 
-Die Gesamtbewertung ist von 0 bis 45 Punkten.
+II. Kommunikative Gestaltung
+  A = passende Anrede und Gruß, klarer Aufbau, gute Verbindungen (weil, deshalb, außerdem …),
+      Register dem Empfänger angemessen, Wortschatz dem Niveau entsprechend
+  B = im Großen und Ganzen angemessen, kleinere Schwächen im Aufbau oder Register
+  C = deutliche Schwächen: kaum Verbindungen, Register unpassend, Wiederholungen
+  D = kein zusammenhängender Text / nicht verständlich
 
-WICHTIG:
-- Bewerte den tatsächlichen Studententext.
-- Erfinde keine Informationen.
-- Berücksichtige die Aufgabenstellung und alle vorgegebenen Punkte.
-- Der Studententext soll nicht einfach komplett neu erfunden werden.
-- corrected_text soll eine verbesserte, natürliche deutsche Version des
-  ursprünglichen Textes sein.
-- Behalte die ursprüngliche Aussage und Absicht möglichst bei.
-- summary, strengths und improvements müssen auf Marokkanischem Darija
-  (Arabisch-Schrift) geschrieben werden.
-- corrected_text muss vollständig auf Deutsch sein.
-- Gib ausschließlich gültiges JSON zurück.
-- Kein Markdown.
-- Keine Erklärung außerhalb des JSON.
+III. Formale Richtigkeit (Grammatik, Wortschatz, Rechtschreibung)
+  A = keine oder nur vereinzelte Fehler, die das Verständnis nicht stören
+  B = einige Fehler, das Verständnis wird kaum beeinträchtigt
+  C = viele Fehler, das Verständnis wird stellenweise beeinträchtigt
+  D = so viele Fehler, dass der Text kaum verständlich ist
 
-Das JSON muss exakt diese Struktur haben:
-
-{
-  "score": 0,
-  "summary": "...",
-  "strengths": ["...", "..."],
-  "improvements": ["...", "..."],
-  "corrected_text": "..."
-}
-
-score muss eine Zahl zwischen 0 und 45 sein.
+Regeln:
+- Bewerte NUR den tatsächlich geschriebenen Text. Erfinde nichts.
+- Prüfe jeden Leitpunkt einzeln: "ja" (angemessen), "teilweise" (zu knapp), "nein" (fehlt).
+- Die Wortanzahl ist vorgegeben (vom System gezählt). Ist der Text deutlich
+  zu kurz (unter der Hälfte des erwarteten Umfangs), kann Kriterium I höchstens C sein.
+- Sei konsistent: derselbe Text muss immer dieselben Stufen bekommen.
+- summary, strengths, improvements und alle "reason"-Felder auf Marokkanischem
+  Darija (arabische Schrift), kurz und konkret, mit Beispielen aus dem Text.
+- improvements: die wichtigsten Fehler mit Korrektur, z. B. «ich habe gegangen» ← «ich bin gegangen».
+- corrected_text: verbesserte, natürliche deutsche Version des Textes, gleiche
+  Aussage und Absicht, gleiches Niveau. Vollständig auf Deutsch.
+- Gib ausschließlich JSON gemäß Schema zurück.
 `;
 
       const userPrompt = `
@@ -489,72 +539,56 @@ ${safeSituation}
 Anzeige / Kontext:
 ${safeAd}
 
-Aufgabenpunkte:
-${JSON.stringify(safePoints)}
-${words ? `Erwarteter Umfang: ${String(words).slice(0, 40)} Wörter` : ""}
+Leitpunkte (in dieser Reihenfolge prüfen):
+${safePoints.map((p, i) => (i + 1) + ". " + p).join("\n")}
+${wordsHint ? `Erwarteter Umfang: ${wordsHint} Wörter` : ""}
+Gezählte Wörter im Text des Studenten: ${wordCount}
 
 Text des Studenten:
 ${safeStudentText}
-
-Korrigiere und bewerte diesen Text gemäß den Regeln.
 `;
+
+      const GRADE = { type: "STRING", enum: ["A", "B", "C", "D"] };
+      const CRIT = {
+        type: "OBJECT",
+        properties: { grade: GRADE, reason: { type: "STRING" } },
+        required: ["grade", "reason"],
+      };
 
       // Gemini REST API
       const requestPayload = {
-          systemInstruction: {
-            parts: [
-              {
-                text: systemPrompt,
-              },
-            ],
-          },
-
-          contents: [
-            {
-              role: "user",
-              parts: [
-                {
-                  text: userPrompt,
-                },
-              ],
-            },
-          ],
-
+          systemInstruction: { parts: [{ text: systemPrompt }] },
+          contents: [{ role: "user", parts: [{ text: userPrompt }] }],
           generationConfig: {
-            temperature: 0.2,
+            // 0 = نفس النص كياخد نفس التقييم
+            temperature: 0,
+            // تفكير قليل: أسرع بزاف، والجودة كتبقى مزيانة
+            thinkingConfig: { thinkingLevel: "low" },
             responseMimeType: "application/json",
             responseSchema: {
               type: "OBJECT",
               properties: {
-                score: {
-                  type: "INTEGER",
-                },
-                summary: {
-                  type: "STRING",
-                },
-                strengths: {
+                inhalt: CRIT,
+                kommunikation: CRIT,
+                form: CRIT,
+                leitpunkte: {
                   type: "ARRAY",
                   items: {
-                    type: "STRING",
+                    type: "OBJECT",
+                    properties: {
+                      punkt: { type: "STRING" },
+                      status: { type: "STRING", enum: ["ja", "teilweise", "nein"] },
+                    },
+                    required: ["punkt", "status"],
                   },
                 },
-                improvements: {
-                  type: "ARRAY",
-                  items: {
-                    type: "STRING",
-                  },
-                },
-                corrected_text: {
-                  type: "STRING",
-                },
+                summary: { type: "STRING" },
+                strengths: { type: "ARRAY", items: { type: "STRING" } },
+                improvements: { type: "ARRAY", items: { type: "STRING" } },
+                corrected_text: { type: "STRING" },
               },
-              required: [
-                "score",
-                "summary",
-                "strengths",
-                "improvements",
-                "corrected_text",
-              ],
+              required: ["inhalt", "kommunikation", "form", "leitpunkte",
+                         "summary", "strengths", "improvements", "corrected_text"],
             },
           },
         };
@@ -627,23 +661,35 @@ Korrigiere und bewerte diesen Text gemäß den Regeln.
         );
       }
 
-      // Normalize / validate result
-      const score = Number(result.score);
+      // النقطة: كنحسبوها من الحروف (A=5، B=3، C=1، D=0) × 3
+      const PTS = { A: 5, B: 3, C: 1, D: 0 };
+      const crit = {};
+      for (const k of ["inhalt", "kommunikation", "form"]) {
+        const g = String(result?.[k]?.grade || "").toUpperCase();
+        crit[k] = {
+          grade: PTS[g] !== undefined ? g : "D",
+          points: (PTS[g] || 0) * 3,
+          reason: String(result?.[k]?.reason || ""),
+        };
+      }
+      let score = crit.inhalt.points + crit.kommunikation.points + crit.form.points;
 
-      if (
-        !Number.isFinite(score) ||
-        score < 0 ||
-        score > 45
-      ) {
-        return jsonResponse(
-          { error: "Invalid score returned by Gemini." },
-          502,
-          allowedOrigin
-        );
+      /* موديل قديم رجع score مباشرة؟ كنقبلوه (0–45) */
+      if (!result?.inhalt && Number.isFinite(Number(result?.score))) {
+        score = Math.max(0, Math.min(45, Math.round(Number(result.score))));
       }
 
       const finalResult = {
-        score: Math.round(score),
+        score,
+        criteria: crit,
+        leitpunkte: Array.isArray(result.leitpunkte)
+          ? result.leitpunkte.slice(0, 8).map((x) => ({
+              punkt: String(x?.punkt || ""),
+              status: ["ja", "teilweise", "nein"].includes(x?.status) ? x.status : "nein",
+            }))
+          : [],
+        word_count: wordCount,
+        min_words: minWords,
         summary: String(result.summary || ""),
         strengths: Array.isArray(result.strengths)
           ? result.strengths.map(String)
@@ -701,9 +747,12 @@ function jsonResponse(data, status, origin) {
  * 503 = الموديل معمّر، و 429 = تجاوزنا المعدل. بجوج مؤقتين،
  * علا هاكدا كنعاودو المحاولة قبل ما نيأسو، ومن بعد كنجربو موديل احتياطي.
  */
-const FALLBACK_MODELS = ["gemini-3.5-flash", "gemini-flash-latest"];
+/* flash-latest غالبا هو نفس الموديل الأساسي، ف إلا كان معمّر كيكون معمّر
+   حتى هو. lite عندو ضغط قليل، ف كنخليوه آخر احتياط باش التصحيح ديما يخرج. */
+const FALLBACK_MODELS = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-flash-lite-latest"];
 
-const MAX_ATTEMPTS_PER_MODEL = 3;
+// جوج محاولات فقط لكل موديل: إلا كان معمّر، الأحسن ندوزو للموديل الجاي بسرعة.
+const MAX_ATTEMPTS_PER_MODEL = 2;
 
 function isTransient(status) {
   return status === 503 || status === 429 || status >= 500;
@@ -734,7 +783,18 @@ async function callGeminiWithRetry(models, payload, apiKey) {
 
       if (response.ok) return { response, data };
 
-      last = { response, data };
+      /* شي موديلات ماكيعرفوش thinkingLevel (ولا "minimal"):
+         كنحيدوه وكنعاودو فنفس الموديل، بلا ما نحسبوها محاولة. */
+      if (response.status === 400 && payload.generationConfig?.thinkingConfig
+          && /thinking/i.test(JSON.stringify(data))) {
+        payload = { ...payload, generationConfig: { ...payload.generationConfig } };
+        delete payload.generationConfig.thinkingConfig;
+        attempt--;
+        continue;
+      }
+
+      /* موديل ماكاينش (404) ما يمسحش الخطأ المفيد ديال موديل قبلو. */
+      if (!last || response.status !== 404) last = { response, data };
 
       // خطأ دائم (مفتاح خايب، موديل ماكاينش): ما كاين علاش نعاودو.
       if (!isTransient(response.status)) break;
@@ -743,12 +803,42 @@ async function callGeminiWithRetry(models, payload, apiKey) {
         `Gemini ${model} attempt ${attempt} failed with ${response.status}`
       );
 
-      // 1s ثم 2s — الـ Worker عندو حدود ديال الوقت، ف ما نطولوش.
+      // 1s بين المحاولتين — الـ Worker عندو حدود ديال الوقت، ف ما نطولوش.
       if (attempt < MAX_ATTEMPTS_PER_MODEL) await sleep(attempt * 1000);
     }
   }
 
   return last;
+}
+
+/* ================= كاش الترجمة =================
+ * Cloudflare Cache API (مجاني). كل ترجمة كتتحفظ 30 يوم بمفتاح
+ * SHA-256 ديال النص. إلا ماكانش الكاش (مثلا فالتجارب)، كنكملو عادي.
+ */
+async function translationCacheKey(text) {
+  const bytes = new TextEncoder().encode("v1|" + text);
+  const hash = await crypto.subtle.digest("SHA-256", bytes);
+  const hex = [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, "0")).join("");
+  return "https://translate-cache.deutsch-einfach.online/" + hex;
+}
+
+async function cacheGet(key) {
+  try {
+    if (typeof caches === "undefined") return null;
+    const hit = await caches.default.match(key);
+    return hit ? await hit.text() : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function cachePut(key, value) {
+  try {
+    if (typeof caches === "undefined") return;
+    await caches.default.put(key, new Response(value, {
+      headers: { "Cache-Control": "public, max-age=2592000", "Content-Type": "text/plain; charset=utf-8" },
+    }));
+  } catch (e) { /* الكاش اختياري */ }
 }
 
 /* ================= Firebase auth =================
@@ -889,6 +979,111 @@ async function readPushTokens(uid, accessToken) {
   return Object.keys(map);
 }
 
+
+/* =====================================================
+   Admin — مزامنة Authentication مع users/{uid}
+   ===================================================== */
+
+const FIRESTORE_DOCS =
+  `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}` +
+  `/databases/(default)/documents`;
+
+async function readUserFields(uid, accessToken) {
+  const res = await fetch(`${FIRESTORE_DOCS}/users/${uid}`, {
+    headers: { Authorization: "Bearer " + accessToken },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Could not read users/" + uid);
+  return (await res.json()).fields || {};
+}
+
+async function listAuthUsers(accessToken) {
+  const all = [];
+  let page = "";
+  do {
+    const url =
+      `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}` +
+      `/accounts:batchGet?maxResults=500` + (page ? "&nextPageToken=" + encodeURIComponent(page) : "");
+    const res = await fetch(url, { headers: { Authorization: "Bearer " + accessToken } });
+    const data = await res.json();
+    if (!res.ok) throw new Error("Auth list: " + (data.error?.message || res.status));
+    all.push(...(data.users || []));
+    page = data.nextPageToken || "";
+  } while (page && all.length < 5000);
+  return all;
+}
+
+async function listUserDocs(accessToken) {
+  const docs = new Map();
+  let page = "";
+  do {
+    const url = `${FIRESTORE_DOCS}/users?pageSize=300` +
+      "&mask.fieldPaths=email&mask.fieldPaths=name&mask.fieldPaths=displayName" +
+      "&mask.fieldPaths=createdAt&mask.fieldPaths=plan" +
+      (page ? "&pageToken=" + encodeURIComponent(page) : "");
+    const res = await fetch(url, { headers: { Authorization: "Bearer " + accessToken } });
+    const data = await res.json();
+    if (!res.ok) throw new Error("Firestore list: " + (data.error?.message || res.status));
+    for (const d of data.documents || []) docs.set(d.name.split("/").pop(), d.fields || {});
+    page = data.nextPageToken || "";
+  } while (page);
+  return docs;
+}
+
+async function syncAuthUsers(accessToken) {
+  const [authUsers, docs] = await Promise.all([
+    listAuthUsers(accessToken),
+    listUserDocs(accessToken),
+  ]);
+
+  const writes = [];
+  for (const u of authUsers) {
+    const old = docs.get(u.localId);
+    const email = u.email || "";
+    const name =
+      old?.displayName?.stringValue || u.displayName || email.split("@")[0] || "User";
+    const born = u.createdAt ? new Date(Number(u.createdAt)).toISOString() : new Date().toISOString();
+
+    const fields = {};
+    if (!old?.email?.stringValue && email) fields.email = { stringValue: email };
+    if (!old?.name?.stringValue) fields.name = { stringValue: name };
+    if (!old?.createdAt) fields.createdAt = { timestampValue: born };
+    /* وثيقة ما كايناش (ولا خاوية): الحساب مجاني. ماكنمسّوش الاشتراك إلا كان. */
+    if (!old) {
+      fields.plan = { stringValue: "free" };
+      fields.subscriptionActive = { booleanValue: false };
+      fields.subscriptionEnd = { nullValue: null };
+    }
+    if (!Object.keys(fields).length) continue;
+
+    writes.push({
+      update: {
+        name: `projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/users/${u.localId}`,
+        fields,
+      },
+      updateMask: { fieldPaths: Object.keys(fields) },
+    });
+  }
+
+  for (let i = 0; i < writes.length; i += 400) {
+    const res = await fetch(`${FIRESTORE_DOCS}:commit`, {
+      method: "POST",
+      headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
+      body: JSON.stringify({ writes: writes.slice(i, i + 400) }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error("Firestore commit: " + (data.error?.message || res.status));
+    }
+  }
+
+  return {
+    authCount: authUsers.length,
+    docCount: docs.size,
+    fixed: writes.length,
+  };
+}
+
 /* توقيع JWT بالمفتاح ديال service account، وتبديلو بـ access token.
    نفس المنطق ديال verifyIdToken ولكن بالمقلوب: هنا كنوقعو. */
 async function getGoogleAccessToken(serviceAccountJson) {
@@ -907,7 +1102,8 @@ async function getGoogleAccessToken(serviceAccountJson) {
     iss: account.client_email,
     scope:
       "https://www.googleapis.com/auth/firebase.messaging" +
-      " https://www.googleapis.com/auth/datastore",
+      " https://www.googleapis.com/auth/datastore" +
+      " https://www.googleapis.com/auth/identitytoolkit",
     aud: "https://oauth2.googleapis.com/token",
     iat: now,
     exp: now + 3600,

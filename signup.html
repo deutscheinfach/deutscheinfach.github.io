@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=1e586e51"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>إنشاء حساب – Deutsch Einfach</title>
 
@@ -10,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=82fd95b2">
+<link rel="stylesheet" href="assets/theme.css?v=04a185db">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
 <style>
@@ -112,7 +113,7 @@ body::before {
 
 .back-button:hover {
   border-color: var(--border-strong);
-  color: var(--gold-dark);
+  color: var(--accent-text);
 }
 
 .auth-card {
@@ -130,7 +131,7 @@ h1 {
   font-size: clamp(22px, 3vw, 27px);
   font-weight: 900;
   margin: 0 0 10px;
-  background: linear-gradient(135deg, var(--brand-light), var(--gold));
+  background: var(--grad-text, linear-gradient(135deg, var(--brand-light), var(--gold)));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -183,7 +184,7 @@ input:focus {
   padding: 14px;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--brand-light), var(--gold) 55%, var(--gold-dark));
-  color: #fff;
+  color: var(--on-brand);
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
@@ -211,7 +212,7 @@ input:focus {
 }
 
 .login-text a {
-  color: var(--gold-dark);
+  color: var(--accent-text);
   font-weight: 700;
 }
 
@@ -342,7 +343,7 @@ input:focus {
   .back-button { position: static !important; align-self: flex-start; margin: 0 !important; }
 }
 </style>
-<style id="v4">
+<style id="v4" media="not all">
 /* v4 — ذهبي وأسود */
 :root {
   --bg: #0e0e11; --bg-soft: #1e1e24; --surface: #16161b; --surface-2: #1e1e24;
@@ -361,7 +362,7 @@ body::before {
 .auth-card input { background: #1e1e24; color: var(--text); border-color: rgba(255,255,255,.12); }
 .auth-card input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(214,178,94,.18); }
 .login-button, .auth-card button[type="submit"] { color: var(--on-brand) !important; }
-.links a, .back-home:hover { color: var(--brand-light) !important; }
+.links a, .back-home:hover { color: var(--accent-text) !important; }
 </style>
 <!-- seo:start (tools/seo.py) -->
 <meta name="robots" content="noindex, follow">

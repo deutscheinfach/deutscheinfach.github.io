@@ -61,7 +61,7 @@
         titles.appendChild(el("h2", "pg-title",
             config.title || "هاد الموضوع ديال المشتركين"));
         titles.appendChild(el("p", "pg-lead",
-            "المواضيع المجانية محلولة كاملة. باقي المواضيع كيفتحو مع الاشتراك."));
+            config.lead || "المواضيع المجانية محلولة كاملة. باقي المواضيع كيفتحو مع الاشتراك."));
         head.appendChild(titles);
         card.appendChild(head);
 

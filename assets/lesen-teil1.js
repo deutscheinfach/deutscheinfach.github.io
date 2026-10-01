@@ -289,9 +289,9 @@
 
             /* ---- الأزرار ---- */
             const actions = el("div", "lesen-actions");
-            const checkBtn = btn("lesen-btn lesen-btn-check", "Antworten prüfen");
-            const showBtn = btn("lesen-btn lesen-btn-show", "Lösungen anzeigen");
-            const retryBtn = btn("lesen-btn lesen-btn-retry", "Nochmal versuchen");
+            const checkBtn = btn("lesen-btn lesen-btn-check", "تحقق من الإجابات");
+            const showBtn = btn("lesen-btn lesen-btn-show", "شوف الحل");
+            const retryBtn = btn("lesen-btn lesen-btn-retry", "عاود من جديد");
             actions.append(checkBtn, showBtn, retryBtn);
             column.appendChild(actions);
 
@@ -341,6 +341,27 @@
                         ok ? "✓ Richtig"
                            : (reveal ? "Lösung: " + expected
                                      : (given === "" ? "Noch nicht beantwortet" : "✗ Falsch"))));
+
+                    /* الترويسة الصحيحة فوق النص + الكلمات المفتاحية ملونين */
+                    const head = options.find(function (o) { return String(o.value) === expected; });
+                    const body = row.box.querySelector(".t1-body");
+                    /* «تحقق» و «شوف الحل» بجوج كيبينو الترويسة والكلمات */
+                    if (head && body && window.__lesenKeys) {
+                        const title = el("div", "kw-title");
+                        title.appendChild(el("span", "kw-key", expected));
+                        const words = el("span", "kw-words", head.text || "");
+                        title.appendChild(words);
+                        body.parentNode.insertBefore(title, body);
+                        /* حتى ف لوحة الترويسات: الكلمات + «Text n» */
+                        const item = optionRows.find(function (o) { return String(o.value) === expected; });
+                        const de = item && item.node.querySelector(".t1-option-de");
+                        if (item) {
+                            item.node.classList.add("kw-answer");
+                            const tag = el("span", "kw-for", "Text " + (rows.indexOf(row) + 1));
+                            item.node.appendChild(tag);
+                        }
+                        window.__lesenKeys.link([body], de ? [words, de] : [words]);
+                    }
                 });
 
                 paintUsed();
@@ -352,6 +373,16 @@
                 row.box.classList.remove("correct", "wrong");
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
+                const title = row.box.querySelector(".kw-title");
+                if (title) title.remove();
+                if (window.__lesenKeys) window.__lesenKeys.clear([row.box.querySelector(".t1-body")]);
+                const item = optionRows.find(function (o) { return String(o.value) === String(row.text.answer || ""); });
+                if (item) {
+                    item.node.classList.remove("kw-answer");
+                    const tag = item.node.querySelector(".kw-for");
+                    if (tag) tag.remove();
+                    if (window.__lesenKeys) window.__lesenKeys.clear([item.node.querySelector(".t1-option-de")]);
+                }
             }
 
             function reset() {

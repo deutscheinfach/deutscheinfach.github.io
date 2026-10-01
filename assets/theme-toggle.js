@@ -1,138 +1,81 @@
-/* ===== تبديل الوضع: ذهبي على أسود ↔ أبيض وذهبي =====
+/* ===== الوضع: فاتح (White Dove) ↔ مظلم =====
 
-   الحالة كتتخزن ف localStorage تحت "de-theme" وكتطبق على
-   <html data-theme> و <body data-theme> بجوج:
-   theme.css كيقرا من <html>، وschreiben-style.css كيقرا من
-   <body> حيت هكا كان مكتوب من قبل.
+   كيتحمل ف <head> (قبل ما تبان الصفحة) باش ما يبانش وميض:
+   كيحط <html data-theme="light|dark"> من localStorage ("de-theme").
+   الافتراضي: فاتح.
 
-   خاصو يتزاد ف <head> باش الوضع يتطبق قبل ما تبان الصفحة
-   وما يبانش وميض أبيض. */
+   الزر:
+   - الصفحات اللي فيها الهيدر المشترك: site-header.js كيزيد زر
+     ☀️/🌙 حدا الجرس ويعيط لـ window.__deTheme.toggle().
+   - الصفحات بلا هيدر (الشات، الدخول، Schreiben…): زر صغير عايم
+     فالزاوية.
+   theme.css كيقرا [data-theme="dark"] ويبدل الألوان. */
 
 (function () {
     "use strict";
 
     var KEY = "de-theme";
-    var DARK = "dark";
-    var LIGHT = "light";
+    var root = document.documentElement;
 
     function stored() {
-        try {
-            return localStorage.getItem(KEY);
-        } catch (error) {
-            return null;
-        }
+        try { return localStorage.getItem(KEY); } catch (e) { return null; }
     }
-
     function remember(mode) {
-        try {
-            localStorage.setItem(KEY, mode);
-        } catch (error) {
-            /* التصفح الخاص: الوضع كيخدم، غير ماكيتعاودش ملي تسد */
-        }
+        try { localStorage.setItem(KEY, mode); } catch (e) { /* تصفح خاص */ }
+    }
+    function current() {
+        return root.getAttribute("data-theme") === "dark" ? "dark" : "light";
     }
 
-    function current() {
-        return document.documentElement.getAttribute("data-theme") === LIGHT
-            ? LIGHT
-            : DARK;
+    var ICON = {
+        dark: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+        light: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2 12h2.2M19.8 12H22M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/></svg>'
+    };
+
+    /* الزر كيبين الوضع اللي غادي تمشي ليه */
+    function paint(btn) {
+        var dark = current() === "dark";
+        btn.innerHTML = dark ? ICON.light : ICON.dark;
+        btn.setAttribute("aria-label", dark ? "الوضع الفاتح" : "الوضع المظلم");
+        btn.title = dark ? "الوضع الفاتح" : "الوضع المظلم";
+    }
+    function paintAll() {
+        var all = document.querySelectorAll(".de-theme-btn");
+        for (var i = 0; i < all.length; i++) paint(all[i]);
     }
 
     function apply(mode, save) {
-        var light = mode === LIGHT;
-        var root = document.documentElement;
-
-        root.setAttribute("data-theme", light ? LIGHT : DARK);
-        if (document.body) {
-            document.body.setAttribute("data-theme", light ? LIGHT : DARK);
-        }
-
-        /* صفحات Hören عندها كلاس .dark قديم ديالها. إلا خليناه
-           مشعل فالوضع الفاتح، كيبقى كيفرض ألوان مظلمة. */
-        root.classList.remove("dark");
-
-        if (save) remember(light ? LIGHT : DARK);
-        refreshButtons();
+        root.setAttribute("data-theme", mode === "dark" ? "dark" : "light");
+        if (document.body) document.body.setAttribute("data-theme", current());
+        if (save) remember(current());
+        paintAll();
     }
+    function toggle() { apply(current() === "dark" ? "light" : "dark", true); }
 
-    function label(btn) {
-        var light = current() === LIGHT;
-        btn.textContent = light ? "🌙 مظلم" : "☀️ فاتح";
-        btn.setAttribute("aria-label", light ? "الوضع المظلم" : "الوضع الفاتح");
-        btn.setAttribute("aria-pressed", light ? "true" : "false");
-    }
-
-    function refreshButtons() {
-        var own = document.querySelectorAll(".de-theme-btn");
-        for (var i = 0; i < own.length; i++) label(own[i]);
-    }
-
-    function toggle() {
-        apply(current() === LIGHT ? DARK : LIGHT, true);
-    }
-
-    /* 1. طبّق الوضع المحفوظ دغيا، قبل ما يتبنى الـ body. */
-    apply(stored() === LIGHT ? LIGHT : DARK, false);
-
-    /* 2. ملي يكون الـ body جاهز: طبّق عليه وزيد الزر. */
-    function addFloatingButton() {
-        if (document.querySelector(".de-theme-btn")) return;
-        /* الصفحات اللي فيها الهيدر المشترك عندها زر ديالها
-           فوق — ماكنزيدوش واحد عايم فوقو. */
-        if (document.querySelector(".site-header, #site-header")) return;
+    function makeButton(extraClass) {
         var btn = document.createElement("button");
         btn.type = "button";
-        btn.className = "de-theme-btn";
+        btn.className = "de-theme-btn" + (extraClass ? " " + extraClass : "");
         btn.addEventListener("click", toggle);
-        label(btn);
-        document.body.appendChild(btn);
+        paint(btn);
+        return btn;
     }
 
-    function ensureButton() {
-        /* صفحات Schreiben عندها زر ف الـ header. ماكنزيدوش
-           واحد آخر عايم فوقو. */
-        var header = document.getElementById("theme-toggle");
-        if (header) {
-            if (!header.__deWired) {
-                header.__deWired = true;
-                header.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    toggle();
-                });
-            }
-            return;
-        }
-        addFloatingButton();
-    }
+    /* 1. دغيا، قبل ما يتبنى الـbody */
+    apply(stored() === "dark" ? "dark" : "light", false);
 
+    /* 2. صفحة بلا هيدر مشترك: زر عايم */
     function install() {
         apply(current(), false);
-        ensureButton();
-
-        /* شاشة Premium كتعوض document.body.innerHTML كامل، وكتمسح
-           معاها الزر ديال الـ header. إذن كنراقبو الـ body
-           وكنرجعو الزر إلا مشا. */
-        if (typeof MutationObserver === "function") {
-            new MutationObserver(function () {
-                if (
-                    !document.getElementById("theme-toggle") &&
-                    !document.querySelector(".de-theme-btn")
-                ) {
-                    addFloatingButton();
-                }
-            }).observe(document.body, { childList: true, subtree: false });
-        }
+        if (document.querySelector(".site-header, .de-theme-btn")) return;
+        if (root.classList.contains("is-embed")) return;
+        /* الشات: فالرأس ديال الجنب، حدا الاسم */
+        var chatHead = document.querySelector(".sidebar .logo-area");
+        if (chatHead) { chatHead.appendChild(makeButton("is-chat")); return; }
+        document.body.appendChild(makeButton("is-floating"));
     }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", install);
+    else install();
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", install);
-    } else {
-        install();
-    }
-
-    window.__deTheme = {
-        get: current,
-        set: function (m) { apply(m, true); },
-        toggle: toggle,
-        ensureButton: ensureButton
-    };
+    window.__deTheme = { get: current, set: function (m) { apply(m, true); }, toggle: toggle, button: makeButton };
 })();

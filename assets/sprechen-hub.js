@@ -181,6 +181,24 @@
        ومن بعد المفتاح ديال الموضوع بوحدو (lesen-sprechen-b1-t2-06). */
     function premiumLoad(themaId) {
         const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
+        /* المواضيع اللي كانو مجانيين (pack: true): كاملين فمفتاح واحد
+           lesen-sprechen-<lvl>-pack. الباقي: الـbundle ديال الجزء، ومن بعد
+           المفتاح ديال الموضوع بوحدو. */
+        const topic = topics.find(function (t) { return t.id === themaId; });
+        if (topic && topic.pack) {
+            /* أولا المفتاح ديال الموضوع بوحدو (lesen-sprechen-<lvl>-<id>)،
+               وإلا ماكانش: الـpack اللي فيه كاملين. */
+            return window.__lesenPremiumFetch(lvl + themaId).then(function (own) {
+                if (own && own.ok && own.data) return own;
+                return window.__lesenPremiumFetch(lvl + "pack").then(function (r) {
+                    const one = r && r.ok && r.data && r.data[themaId];
+                    return one ? { ok: true, data: one } : (own || r);
+                });
+            }).then(function (out) {
+                if (out && out.ok && out.data) CONTENT[themaId] = out.data;
+                return out;
+            });
+        }
         return window.__lesenPremiumFetch(lvl + themaId.split("-")[0]).then(function (r) {
             const one = r && r.ok && r.data && r.data[themaId];
             return one ? { ok: true, data: one } : window.__lesenPremiumFetch(lvl + themaId);
@@ -458,7 +476,7 @@
             stack.textContent = "";
             if (topic.locked && !window.__deutschEinfachIsPremium) {
                 if (typeof window.__premiumGate === "function") {
-                    window.__premiumGate(stack, { title: topic.title });
+                    window.__premiumGate(stack, { title: topic.title, lead: "كاع مواضيع Sprechen كيتفتحو مع الاشتراك: تمرين بالصوت، حوار نموذجي وكلمات بالترجمة." });
                 } else {
                     const box = document.createElement("div");
                     box.className = "lesen-empty";
@@ -593,7 +611,7 @@
 
             if (topic.locked && !window.__deutschEinfachIsPremium) {
                 if (typeof window.__premiumGate === "function") {
-                    window.__premiumGate(stack, { title: topic.title });
+                    window.__premiumGate(stack, { title: topic.title, lead: "كاع مواضيع Sprechen كيتفتحو مع الاشتراك: تمرين بالصوت، حوار نموذجي وكلمات بالترجمة." });
                 } else {
                     const box = document.createElement("div");
                     box.className = "lesen-empty";

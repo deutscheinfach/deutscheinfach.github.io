@@ -80,7 +80,7 @@ body {
 }
 .task-title-block .sub {
     font-size: 12px;
-    color: var(--brand);
+    color: var(--accent-text);
     letter-spacing: .3px;
     margin-top: 2px;
 }
@@ -201,7 +201,7 @@ body {
     align-items: center;
     gap: 6px;
 }
-.translate-btn:hover { border-color: var(--red); color: var(--red); }
+.translate-btn:hover { border-color: var(--red); color: var(--accent-text); }
 
 .ad-text {
     white-space: pre-wrap;
@@ -263,7 +263,7 @@ body {
     font-weight: 700;
     line-height: 1;
 }
-.umlaut-btns button:hover { border-color: var(--red); color: var(--red); }
+.umlaut-btns button:hover { border-color: var(--red); color: var(--accent-text); }
 .word-count { font-size: 13px; color: var(--muted); white-space: nowrap; }
 
 .editor-wrap {
@@ -325,7 +325,7 @@ body {
     gap: 10px;
     margin-bottom: 6px;
 }
-.result-score .num { font-size: 42px; font-weight: 800; color: var(--red); }
+.result-score .num { font-size: 42px; font-weight: 800; color: var(--accent-text); }
 .result-score .max { font-size: 18px; color: var(--muted); }
 .result-bar {
     height: 8px;
@@ -350,7 +350,7 @@ body {
     cursor: pointer;
     font-weight: 600;
 }
-.result-close:hover { border-color: var(--red); color: var(--red); }
+.result-close:hover { border-color: var(--red); color: var(--accent-text); }
 
 .loading-dots span {
     display: inline-block;
@@ -446,7 +446,7 @@ body {
     font-size: 27px;
     font-weight: 900;
     margin: 0 0 12px;
-    background: linear-gradient(135deg, var(--gold), var(--brand-light));
+    background: var(--grad-text, linear-gradient(135deg, var(--gold), var(--brand-light)));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -480,14 +480,14 @@ body {
 
 .premium-btn.gold {
     background: linear-gradient(135deg, var(--gold), var(--brand-light));
-    color: #fff;
+    color: var(--on-brand);
 }
 .premium-btn.gold:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 30px -8px rgba(214,178,94,.5);
 }
 
-.premium-btn.whatsapp { background: #25d366; color: #fff; }
+.premium-btn.whatsapp { background: var(--grad-brand); color: var(--on-brand); }
 .premium-btn.whatsapp:hover {
     transform: translateY(-2px);
     box-shadow: 0 14px 30px -8px rgba(37,211,102,.45);
@@ -498,7 +498,7 @@ body {
     border-color: var(--line);
     color: var(--muted);
 }
-.premium-btn.ghost:hover { border-color: rgba(214,178,94,.35); color: var(--red); }
+.premium-btn.ghost:hover { border-color: rgba(214,178,94,.35); color: var(--accent-text); }
 
 /* ===== OFFERS ===== */
 .offers-sheet {
@@ -538,12 +538,12 @@ body {
     padding: 4px 13px;
     border-radius: 999px;
     background: linear-gradient(135deg, var(--gold), var(--brand-light));
-    color: #fff;
+    color: var(--on-brand);
     font-size: 12px;
     font-weight: 800;
 }
 
-.offer-box h3 { margin: 0 0 6px; font-size: 22px; color: var(--red-dark); }
+.offer-box h3 { margin: 0 0 6px; font-size: 22px; color: var(--accent-text); }
 .offer-box .sub { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
 .offer-box .amount { font-size: 32px; font-weight: 800; color: var(--text); }
 .offer-box .per { font-size: 15px; color: var(--muted); }
@@ -681,13 +681,13 @@ html, body { max-width: 100%; overflow-x: hidden; }
     border-color: rgba(20,22,31,.12);
     color: var(--bar-text);
 }
-.timer-pill.low { background: rgba(214,178,94,.12); border-color: var(--red); color: var(--red-dark); }
+.timer-pill.low { background: rgba(214,178,94,.12); border-color: var(--red); color: var(--accent-text); }
 .icon-btn { background: rgba(20,22,31,.05); color: var(--bar-text); }
 .icon-btn:hover { background: rgba(20,22,31,.10); }
-.task-title-block .sub { color: var(--red-dark); }
-.correct-btn { background: var(--red); color: #fff; }
+.task-title-block .sub { color: var(--accent-text); }
+.correct-btn { background: var(--red); color: var(--on-brand); }
 .correct-btn:hover { background: var(--red-dark); }
-.point-num { background: var(--red); color: #fff; }
+.point-num { background: var(--red); color: var(--on-brand); }
 
 /* ===== v3 — نفس الهوية ديال الموقع: بار أزرق ليلي + أزرار واضحين ===== */
 :root {
@@ -697,7 +697,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     --muted: #56607a;
 }
 .task-header {
-    background: var(--grad-navy, linear-gradient(135deg, #1c2c5e, #0f1b3d 55%, #0a1330));
+    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #5e0f1d));
     color: #fff;
     border-bottom: 3px solid var(--red);
     box-shadow: 0 10px 30px -14px rgba(10,19,48,.6);
@@ -716,26 +716,28 @@ html, body { max-width: 100%; overflow-x: hidden; }
     border-radius: 12px;
     font-weight: 800;
     background: var(--grad-brand, linear-gradient(135deg, #ff4a6b, #e3163f 45%, #b30e30));
-    color: #fff;
+    color: var(--on-brand);
     box-shadow: 0 10px 24px -10px rgba(214,178,94,.7);
 }
 .correct-btn:hover { background: var(--grad-brand); filter: brightness(1.06); }
 .translate-btn {
     min-height: 34px;
-    border: 1.5px solid var(--navy, #0f1b3d);
-    color: var(--navy, #0f1b3d);
+    border: 1.5px solid var(--navy, var(--navy));
+    color: var(--navy, var(--navy));
     background: #fff;
     font-weight: 800;
 }
-.translate-btn:hover { background: var(--navy, #0f1b3d); color: #fff; border-color: var(--navy, #0f1b3d); }
+.translate-btn:hover { background: var(--navy, var(--navy)); color: #fff; border-color: var(--navy, var(--navy)); }
 .umlaut-btns button {
-    border: 1.5px solid var(--navy, #0f1b3d);
-    color: var(--navy, #0f1b3d);
+    border: 1.5px solid var(--navy, var(--navy));
+    color: var(--navy, var(--navy));
     background: #fff;
     font-weight: 800;
 }
-.umlaut-btns button:hover { background: var(--navy, #0f1b3d); color: #fff; }
+.umlaut-btns button:hover { background: var(--navy, var(--navy)); color: #fff; }
 
+/* v5: الطبقة الداكنة v4 مسدودة (@media not all) — كتبقى هنا إلا بغينا نرجعوها */
+@media not all {
 /* ===== v4 — ذهبي وأسود ===== */
 :root {
     --ink: #ece7dc;
@@ -753,7 +755,7 @@ body { background: var(--paper); color: var(--ink); }
     border-bottom: 1px solid rgba(214,178,94,.35);
     box-shadow: 0 12px 30px -16px rgba(0,0,0,.9);
 }
-.task-header .task-title-block .sub { color: var(--brand); }
+.task-header .task-title-block .sub { color: var(--accent-text); }
 .correct-btn { background: var(--grad-brand); color: var(--on-brand); box-shadow: var(--shadow-brand); }
 .correct-btn:hover { background: var(--grad-brand); color: var(--on-brand); }
 .translate-btn,
@@ -767,6 +769,7 @@ body { background: var(--paper); color: var(--ink); }
 .point-num { background: var(--grad-brand); color: var(--on-brand); }
 textarea, input { background: transparent; color: var(--ink); }
 
+}
 /* =====================================================
    v4.2 — ورقة بيضة: النص، المهام وخانة الكتابة فاتحين
    بكتابة كحلة باش يركز المستخدم. الباقي أسود وذهبي.

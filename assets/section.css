@@ -45,7 +45,7 @@
     font-weight: 700;
     font-size: 13px;
 }
-.lesen-back:hover { border-color: var(--gold); color: var(--gold); }
+.lesen-back:hover { border-color: var(--gold); color: var(--accent-text); }
 
 .lesen-teil-nav { display: flex; gap: 8px; margin-inline-start: auto; flex-wrap: wrap; }
 .lesen-teil-btn {
@@ -61,7 +61,7 @@
     display: inline-flex;
     align-items: center;
 }
-.lesen-teil-btn:hover { border-color: var(--gold); color: var(--gold); }
+.lesen-teil-btn:hover { border-color: var(--gold); color: var(--accent-text); }
 .lesen-teil-btn.active {
     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
     border-color: var(--gold);
@@ -80,7 +80,7 @@
     border-radius: 999px;
     border: 1px solid var(--line-gold);
     background: color-mix(in srgb, var(--gold) 12%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
     font-size: 12px;
     font-weight: 800;
     margin-bottom: 12px;
@@ -134,14 +134,14 @@
 .lesen-text h3 {
     font-size: var(--step-1);
     margin-bottom: 8px;
-    color: var(--gold);
+    color: var(--accent-text);
 }
 .lesen-text-label {
     /* block، ماشي inline-block: بلاه الحرف كيلتصق بالنص
        وكيبان "aErster Text" */
     display: block;
     font-weight: 800;
-    color: var(--gold);
+    color: var(--accent-text);
     margin-bottom: 6px;
     text-transform: uppercase;
     letter-spacing: .5px;
@@ -393,7 +393,7 @@
     font-size: 14px;
     cursor: pointer;
 }
-.lesen-sort:hover { border-color: var(--gold); color: var(--gold); }
+.lesen-sort:hover { border-color: var(--gold); color: var(--accent-text); }
 
 /* =====================================================
    شبكة المواضيع
@@ -471,7 +471,7 @@
 .lesen-chip-time { color: var(--muted); padding-inline-start: 0; }
 .lesen-chip-level {
     background: color-mix(in srgb, var(--gold) 16%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
     border: 1px solid var(--line-gold);
 }
 .lesen-chip-parts {
@@ -496,11 +496,11 @@
     color: var(--muted);
     font-size: 14px;
 }
-.lesen-card:hover .lesen-card-go { border-color: var(--gold); color: var(--gold); }
+.lesen-card:hover .lesen-card-go { border-color: var(--gold); color: var(--accent-text); }
 .lesen-card.locked .lesen-card-go {
     background: color-mix(in srgb, var(--gold) 16%, transparent);
     border-color: var(--line-gold);
-    color: var(--gold);
+    color: var(--accent-text);
 }
 .lesen-card.locked .lesen-card-title { opacity: .85; }
 
@@ -641,7 +641,7 @@
     place-items: center;
     background: color-mix(in srgb, var(--gold) 14%, transparent);
     border: 1px solid var(--line-gold);
-    color: var(--gold);
+    color: var(--accent-text);
     font-size: 20px;
     flex: 0 0 auto;
 }
@@ -663,12 +663,12 @@
 }
 .part-card.locked .part-cta {
     background: color-mix(in srgb, var(--gold) 18%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
     border: 1px solid var(--line-gold);
 }
 .chip-pro {
     background: color-mix(in srgb, var(--gold) 20%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
     border: 1px solid var(--line-gold);
 }
 
@@ -725,7 +725,7 @@
     color: var(--text);
     border-color: var(--line);
 }
-.sp-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.sp-btn-ghost:hover { border-color: var(--gold); color: var(--accent-text); }
 
 .sp-btn-rec {
     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -733,7 +733,7 @@
 }
 .sp-btn-rec.on {
     background: var(--surface);
-    color: var(--gold);
+    color: var(--accent-text);
     border-color: var(--gold);
     animation: sp-pulse 1.2s ease-in-out infinite;
 }
@@ -812,7 +812,7 @@
     font-size: 12px;
     font-weight: 900;
     background: color-mix(in srgb, var(--gold) 14%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
     border: 1px solid var(--line-gold);
 }
 
@@ -855,7 +855,7 @@
     font-weight: 900;
     letter-spacing: .4px;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--accent-text);
     direction: rtl;
 }
 .sp-phrase-list {
@@ -1004,7 +1004,7 @@
     font-size: 13px;
     font-weight: 900;
     background: color-mix(in srgb, var(--gold) 13%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
     border: 1px solid var(--line-gold);
 }
 .t1-select {
@@ -1045,7 +1045,7 @@
     align-items: center;
     font-weight: 800;
     font-size: 13.5px;
-    color: var(--gold);
+    color: var(--accent-text);
     cursor: pointer;
 }
 .t1-summary > summary::-webkit-details-marker { display: none; }
@@ -1097,7 +1097,7 @@
 .t1-progress {
     font-size: 12px;
     font-weight: 800;
-    color: var(--gold);
+    color: var(--accent-text);
     background: color-mix(in srgb, var(--gold) 12%, transparent);
     border: 1px solid var(--line-gold);
     border-radius: 999px;
@@ -1271,7 +1271,7 @@
     letter-spacing: 1.6px;
     padding: 3px 10px;
     border-radius: 999px;
-    color: var(--gold);
+    color: var(--accent-text);
     background: color-mix(in srgb, var(--gold) 12%, transparent);
     border: 1px solid var(--line-gold);
     direction: ltr;
@@ -1329,7 +1329,7 @@
 }
 .pg-btn-ghost { background: var(--surface-2); color: var(--text); border-color: var(--line); }
 .pg-btn:hover { transform: translateY(-2px); }
-.pg-btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.pg-btn-ghost:hover { border-color: var(--gold); color: var(--accent-text); }
 
 /* النموذج المغبّش — شكل التمرين بلا محتواه */
 .pg-peek {
@@ -1352,7 +1352,7 @@
     border-radius: 8px;
     display: grid; place-items: center;
     font-size: 12px; font-weight: 900;
-    color: var(--gold);
+    color: var(--accent-text);
     background: color-mix(in srgb, var(--gold) 13%, transparent);
 }
 .pg-peek-lines { flex: 1 1 auto; display: grid; gap: 7px; }
@@ -1379,7 +1379,7 @@
     font-size: 10.5px;
     font-weight: 900;
     letter-spacing: 1px;
-    color: var(--gold);
+    color: var(--accent-text);
     direction: ltr;
 }
 
@@ -1472,7 +1472,7 @@
     width: 2rem; height: 2rem;
     border-radius: .7rem;
     background: color-mix(in srgb, var(--de-red) 12%, transparent);
-    color: var(--de-red);
+    color: var(--accent-text);
     font-weight: 800;
 }
 .t3-ad-head { font-weight: 700; direction: ltr; text-align: left; flex: 1 1 12rem; }
@@ -1481,7 +1481,7 @@
     padding: .18rem .55rem;
     border-radius: 999px;
     background: color-mix(in srgb, var(--de-red) 10%, transparent);
-    color: var(--de-red);
+    color: var(--accent-text);
     font-size: .78rem; font-weight: 700;
 }
 
@@ -1543,7 +1543,7 @@
     background: color-mix(in srgb, var(--brand) 7%, transparent);
 }
 .t2-option.is-picked .t1-option-key {
-    background: var(--brand); border-color: var(--brand); color: #fff;
+    background: var(--brand); border-color: var(--brand); color: var(--on-brand);
 }
 .t2-option.is-right {
     border-color: var(--ok);
@@ -1568,7 +1568,7 @@
     border-radius: 999px;
     font-size: 11.5px;
     font-weight: 800;
-    color: var(--brand);
+    color: var(--accent-text);
     background: var(--brand-tint);
     border: 1px solid var(--line-gold);
 }
@@ -1584,7 +1584,7 @@
     direction: rtl;
     text-align: right;
 }
-.t2-sub { margin: 0 0 8px; font-size: 16px; font-weight: 900; color: var(--brand); line-height: 1.4; }
+.t2-sub { margin: 0 0 8px; font-size: 16px; font-weight: 900; color: var(--accent-text); line-height: 1.4; }
 
 /* =====================================================
    v2 — الهوية الجديدة على الأقسام
@@ -1614,14 +1614,14 @@
 }
 .lesen-stat { padding: 0 20px; }
 .lesen-stat + .lesen-stat { border-inline-start: 1px solid var(--line); }
-.lesen-stat b { color: var(--brand); letter-spacing: -.02em; }
+.lesen-stat b { color: var(--accent-text); letter-spacing: -.02em; }
 
 /* التبويبات */
 .lesen-tabs { border-color: rgba(20,22,31,.08); box-shadow: var(--shadow-lg); background: rgba(255,255,255,.94); backdrop-filter: blur(10px); }
 .lesen-tab.active,
 .lesen-level a.active {
     background: var(--grad-brand);
-    color: #fff;
+    color: var(--on-brand);
     box-shadow: var(--shadow-brand);
 }
 
@@ -1653,7 +1653,7 @@
 }
 .lesen-card:hover::before,
 .part-card:hover::before { transform: scaleX(1); }
-.lesen-card:hover .lesen-card-go { background: var(--brand); border-color: var(--brand); color: #fff; }
+.lesen-card:hover .lesen-card-go { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
 
 /* البحث */
 .lesen-search, .lesen-sort { border-color: rgba(20,22,31,.10); box-shadow: 0 1px 2px rgba(20,22,31,.04); }
@@ -1707,7 +1707,7 @@
     min-width: 1.45rem; height: 1.45rem;
     border-radius: 999px;
     background: var(--brand);
-    color: #fff;
+    color: var(--on-brand);
     font-size: 11px;
     font-weight: 900;
 }
@@ -1726,6 +1726,10 @@
 .sp-gap.is-wrong .sp-gap-num { background: var(--danger); }
 
 .sp-choices { display: grid; grid-template-columns: 1fr; gap: 6px; }
+/* الاختيارات القصار (arbeite / arbeiten / …) كيتجمعو فسطر واحد:
+   اللوحة كتقصار بزاف وكتشوف اللاكونة كاملة بلا سكرول. الطوال كينزلو لسطر جديد. */
+.sp-choices:not(:has(.sp-option:nth-child(4))) { display: flex; flex-wrap: wrap; }
+.sp-choices:not(:has(.sp-option:nth-child(4))) .sp-option { flex: 1 1 auto; width: auto; min-height: 40px; padding: 8px 10px; align-items: center; }
 .sp-option { justify-content: flex-start; direction: ltr; text-align: left; }
 .sp-option .t1-option-de { overflow-wrap: normal; word-break: normal; hyphens: none; }
 
@@ -1745,7 +1749,7 @@
     text-align: right;
     transition: color .18s ease;
 }
-.sp2-hint.is-on { color: var(--brand); font-weight: 700; }
+.sp2-hint.is-on { color: var(--accent-text); font-weight: 700; }
 
 .sp2-bank, .sp2-pop-list {
     display: grid;
@@ -1778,7 +1782,7 @@
     width: 22px; height: 22px;
     border-radius: 7px;
     background: color-mix(in srgb, var(--brand) 10%, transparent);
-    color: var(--brand);
+    color: var(--accent-text);
     font-size: 11.5px;
     font-weight: 900;
 }
@@ -1794,7 +1798,7 @@
 .sp2-used:empty { display: none; }
 .sp2-word.is-used { opacity: .5; background: color-mix(in srgb, var(--text) 4%, var(--surface)); }
 .sp2-word.is-picked { border-color: var(--brand); background: color-mix(in srgb, var(--brand) 8%, var(--surface)); opacity: 1; }
-.sp2-word.is-picked .sp2-key { background: var(--brand); color: #fff; }
+.sp2-word.is-picked .sp2-key { background: var(--brand); color: var(--on-brand); }
 
 .sp2-pop {
     margin: 4px 0 12px;
@@ -1806,7 +1810,7 @@
     animation: sp2-in .18s ease;
 }
 @keyframes sp2-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-.sp2-pop-title { font-weight: 900; font-size: 13px; color: var(--brand); margin-bottom: 8px; }
+.sp2-pop-title { font-weight: 900; font-size: 13px; color: var(--accent-text); margin-bottom: 8px; }
 .sp2-clear {
     margin-top: 8px;
     padding: 6px 12px;
@@ -1867,7 +1871,7 @@
     font-weight: 900;
     letter-spacing: 1.4px;
     text-transform: uppercase;
-    color: var(--gold);
+    color: var(--accent-text);
     background: color-mix(in srgb, var(--gold) 12%, transparent);
 }
 .e1-task-de { margin: 0; font-size: clamp(17px, 2.3vw, 21px); font-weight: 800; line-height: 1.5; }
@@ -2068,7 +2072,7 @@
 }
 .e1-btn-main:hover { transform: translateY(-1px); }
 .e1-btn-main.is-early { background: var(--surface-2); color: var(--text); border: 1px solid var(--line); box-shadow: none; }
-.e1-btn-soft { color: var(--gold); border-color: var(--line-gold); background: var(--surface); }
+.e1-btn-soft { color: var(--accent-text); border-color: var(--line-gold); background: var(--surface); }
 
 /* ---- المحاكاة ---- */
 .e1-stage {
@@ -2166,7 +2170,7 @@
 .e1-peek-label {
     display: block; margin-bottom: 6px;
     font-size: 11.5px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase;
-    color: var(--gold);
+    color: var(--accent-text);
 }
 .e1-peek-text { margin: 0; white-space: pre-wrap; line-height: 1.7; font-size: 14.5px; }
 .e1-peek-list { margin: 0; padding-left: 18px; font-size: 13.5px; line-height: 1.8; color: var(--muted); }
@@ -2182,7 +2186,7 @@
     border: 1px solid var(--line-gold);
     text-align: left; direction: ltr;
 }
-.e1-examiner-who { font-size: 12px; font-weight: 900; color: var(--gold); }
+.e1-examiner-who { font-size: 12px; font-weight: 900; color: var(--accent-text); }
 .e1-examiner-q { margin: 6px 0 10px; font-size: clamp(17px, 2.4vw, 20px); font-weight: 800; line-height: 1.5; }
 .e1-examiner .t2-q-ar { margin-bottom: 10px; }
 
@@ -2213,7 +2217,7 @@
     background: var(--surface-2);
     direction: ltr; text-align: left;
 }
-.e1-answer-n { font-size: 12px; font-weight: 900; color: var(--gold); }
+.e1-answer-n { font-size: 12px; font-weight: 900; color: var(--accent-text); }
 .e1-answer-q { font-size: 13.5px; font-weight: 600; min-width: 0; }
 .e1-answer-t { font-variant-numeric: tabular-nums; }
 
@@ -2373,7 +2377,7 @@
 .e2-phase-t { font-size: 12px; font-variant-numeric: tabular-nums; }
 .e2-phase.active { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--surface)); color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow); }
 .e2-phase.done { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
-.e2-phase-hint { margin: 0; font-weight: 800; color: var(--gold); }
+.e2-phase-hint { margin: 0; font-weight: 800; color: var(--accent-text); }
 .e2-peek-slot { width: 100%; }
 .e2-peek-rm { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); font-style: italic; }
 .e2-kind { color: var(--text); opacity: .75; }
@@ -2454,7 +2458,7 @@
     font-weight: 900; font-size: 14px;
     background: var(--surface-2); border: 1px solid var(--line);
 }
-.e3-line-b .e3-who { background: color-mix(in srgb, var(--gold) 15%, var(--surface)); color: var(--gold); border-color: var(--line-gold); }
+.e3-line-b .e3-who { background: color-mix(in srgb, var(--gold) 15%, var(--surface)); color: var(--accent-text); border-color: var(--line-gold); }
 .e3-bubble {
     padding: 10px 14px;
     border-radius: 16px 16px 16px 5px;
@@ -2578,7 +2582,7 @@
     flex: 0 0 auto;
     min-width: 58px;
     font-size: 11.5px; font-weight: 900;
-    color: var(--gold);
+    color: var(--accent-text);
 }
 .exam-tabs { flex-wrap: nowrap; }
 .exam-tab {
@@ -2744,13 +2748,13 @@
 .lesen-head-row .lesen-stat + .lesen-stat { border-color: rgba(255,255,255,.16); }
 
 /* ---- التبويبات ---- */
-.lesen-tabs { border: 1px solid var(--line); background: #fff; }
+.lesen-tabs { border: 1px solid var(--line); background: var(--surface); }
 .lesen-tab { color: var(--muted); font-weight: 800; }
-.lesen-tab:hover { color: var(--navy); background: var(--surface-2); }
+.lesen-tab:hover { color: var(--accent-text); background: var(--surface-2); }
 
 /* ---- البطائق ---- */
-.lesen-card { background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
-.lesen-card-title { color: var(--navy); }
+.lesen-card { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.lesen-card-title { color: var(--accent-text); }
 /* زر الدخول فالبطاقة: ديما باين (أزرق)، وكيولي أحمر ملي تقرب */
 .lesen-card .lesen-card-go {
     width: 36px; height: 36px;
@@ -2760,7 +2764,7 @@
     font-weight: 900;
 }
 .lesen-card:hover .lesen-card-go { background: var(--brand); border-color: var(--brand); }
-.exam-card-parts b { color: var(--brand); }
+.exam-card-parts b { color: var(--accent-text); }
 
 /* ---- الأزرار ديال التمارين ---- */
 .lesen-btn,
@@ -2789,7 +2793,7 @@
 .exam-next-btn,
 .sp-btn-rec {
     background: var(--grad-brand) !important;
-    color: #fff !important;
+    color: var(--on-brand) !important;
     border: 1.5px solid transparent !important;
     box-shadow: var(--shadow-brand) !important;
 }
@@ -2806,8 +2810,8 @@
 .e1-btn:not(.e1-btn-main):not(.e1-btn-soft),
 .sp-btn-ghost,
 .lesen-back {
-    background: #fff !important;
-    color: var(--navy) !important;
+    background: var(--surface) !important;
+    color: var(--accent-text) !important;
     border: 1.5px solid var(--navy) !important;
     box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
 }
@@ -2819,29 +2823,31 @@
     color: #fff !important;
 }
 .e1-btn-main.is-early {
-    background: #fff !important;
-    color: var(--navy) !important;
+    background: var(--surface) !important;
+    color: var(--accent-text) !important;
     border: 1.5px solid var(--navy) !important;
     box-shadow: none !important;
 }
 .lesen-btn { padding: 0 22px; }
 
 /* زر الترجمة */
-.ar-toggle { border: 1.5px solid var(--navy); color: var(--navy); background: #fff; }
+.ar-toggle { border: 1.5px solid var(--navy); color: var(--accent-text); background: var(--surface); }
 .ar-toggle-icon { background: var(--navy); color: #fff; }
-.ar-toggle.is-on { background: var(--grad-brand); color: #fff; border-color: transparent; }
+.ar-toggle.is-on { background: var(--grad-brand); color: var(--on-brand); border-color: transparent; }
 
 /* عناوين التمارين */
-.t1-title, .e1-stage-title, .lesen-detail-title { color: var(--navy); }
-.t1-kicker { color: var(--brand); }
+.t1-title, .e1-stage-title, .lesen-detail-title { color: var(--accent-text); }
+.t1-kicker { color: var(--accent-text); }
 .t1-variant.active,
 .e1-step.active {
     background: var(--grad-navy);
     color: #fff;
     box-shadow: var(--shadow-navy);
 }
-.e1-step.active .e1-step-n { background: var(--brand); border-color: var(--brand); color: #fff; }
+.e1-step.active .e1-step-n { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
 
+/* v5: الطبقة الداكنة v4 مسدودة (@media not all) — كتبقى هنا إلا بغينا نرجعوها */
+@media not all {
 /* =====================================================
    v4 — ذهبي وأسود
    ===================================================== */
@@ -2862,14 +2868,14 @@
 }
 .lesen-head-row .lesen-hero h1::after { background: var(--grad-brand); }
 .lesen-head-row .lesen-hero .lead { color: rgba(236,231,220,.72); }
-.lesen-head-row .lesen-badge { background: rgba(214,178,94,.12); border-color: rgba(214,178,94,.35); color: var(--brand-light); }
+.lesen-head-row .lesen-badge { background: rgba(214,178,94,.12); border-color: rgba(214,178,94,.35); color: var(--accent-text); }
 .lesen-head-row .lesen-stats { background: rgba(255,255,255,.04); border-color: rgba(214,178,94,.22); }
-.lesen-head-row .lesen-stat b { color: var(--brand-light); }
+.lesen-head-row .lesen-stat b { color: var(--accent-text); }
 .lesen-head-row .lesen-stat span { color: var(--muted); }
 
-.lesen-badge { background: var(--brand-soft); color: var(--brand-light); border-color: var(--line-gold); box-shadow: none; }
+.lesen-badge { background: var(--brand-soft); color: var(--accent-text); border-color: var(--line-gold); box-shadow: none; }
 .lesen-stats { background: var(--surface); border-color: var(--line); }
-.lesen-stat b { color: var(--brand); }
+.lesen-stat b { color: var(--accent-text); }
 .lesen-hero h1::after { background: var(--grad-brand); }
 
 /* ---- التبويبات والبحث ---- */
@@ -2896,14 +2902,14 @@
 .lesen-card .lesen-card-go {
     background: transparent;
     border: 1.5px solid var(--line-gold);
-    color: var(--brand-light);
+    color: var(--accent-text);
 }
 .lesen-card:hover .lesen-card-go { background: var(--grad-brand); border-color: transparent; color: var(--on-brand); }
 .lesen-chip { background: rgba(255,255,255,.05); border-color: var(--line); color: var(--muted); }
-.lesen-chip-level { background: var(--brand-soft); color: var(--brand-light); border-color: var(--line-gold); }
+.lesen-chip-level { background: var(--brand-soft); color: var(--accent-text); border-color: var(--line-gold); }
 .lesen-chip-free { background: rgba(62,207,142,.12); color: #6fe3ae; border-color: rgba(62,207,142,.3); }
 .exam-card-parts li { color: var(--muted); }
-.exam-card-parts b { color: var(--brand); }
+.exam-card-parts b { color: var(--accent-text); }
 
 /* ---- الأزرار ---- */
 /* 1) الأساسي: ذهبي، كتابة داكنة */
@@ -2923,7 +2929,7 @@
 .lesen-btn-show,
 .e1-btn-soft {
     background: #26262e !important;
-    color: var(--brand-light) !important;
+    color: var(--accent-text) !important;
     border: 1.5px solid var(--line-gold) !important;
     box-shadow: var(--shadow-navy) !important;
 }
@@ -2945,14 +2951,14 @@
 .sp-btn-ghost:hover,
 .e1-btn:not(.e1-btn-main):not(.e1-btn-soft):hover {
     background: rgba(214,178,94,.10) !important;
-    color: var(--brand-light) !important;
+    color: var(--accent-text) !important;
     border-color: var(--brand) !important;
 }
 .e1-step.active .e1-step-n { background: rgba(0,0,0,.2); border-color: transparent; color: var(--on-brand); }
 
 /* ---- التمارين ---- */
 .t1-title, .e1-stage-title, .lesen-detail-title { color: var(--text); }
-.t1-kicker { color: var(--brand); }
+.t1-kicker { color: var(--accent-text); }
 .t1-text, .t1-panel, .e1-box, .e1-stage, .e1-task, .e1-steps, .t1-variants,
 .exam-summary, .e1-points {
     background: var(--surface);
@@ -2966,11 +2972,11 @@
     color: var(--text);
 }
 .t1-option:hover, .e1-guide-btn:hover, .e2-arg:hover { border-color: var(--brand); }
-.t1-option-key, .t1-text-num, .t3-sit-num, .sp-gap-num { color: var(--brand-light); }
+.t1-option-key, .t1-text-num, .t3-sit-num, .sp-gap-num { color: var(--accent-text); }
 .t1-select, .e1-notes, .e3-own-input { background: var(--surface-2); color: var(--text); border-color: var(--line-gold); }
 .lesen-score, .lesen-score-points { background: var(--surface-2); color: var(--text); }
 .e1-examiner, .e3-partner { background: linear-gradient(135deg, rgba(214,178,94,.10), rgba(214,178,94,.03)), var(--surface-2); border-color: var(--line-gold); }
-.e1-examiner-who { color: var(--brand); }
+.e1-examiner-who { color: var(--accent-text); }
 .e1-ring-track { stroke: rgba(255,255,255,.07); }
 .e1-ring[data-tone="prep"] .e1-ring-bar { stroke: var(--brand); }
 .exam-tab-pts { background: rgba(62,207,142,.15); color: #6fe3ae; }
@@ -2981,6 +2987,7 @@
 .sp-gap { background: var(--surface-2); border-color: var(--line-gold); color: var(--text); }
 .sp2-word, .sp2-pop { background: var(--surface-2); border-color: var(--line); color: var(--text); }
 
+}
 /* =====================================================
    v4.2 — النصوص فورقة بيضة: خلفية فاتحة وكتابة كحلة
    باش يركز المستخدم فالقراءة. الإطار ذهبي باش يبقى
@@ -3030,7 +3037,7 @@ html body .e2-text ::selection { background: rgba(214,178,94,.45); color: #000; 
 html body .t1-panel .t1-panel-head { border-color: rgba(28,26,22,.12); }
 html body .t1-panel .t1-panel-title { color: #6b4f14; }
 html body .t1-panel :is(.t1-option, .t2-q, .t2-option, .t3-sit, .sp2-word, .sp2-hint) {
-    background: #fff;
+    background: var(--surface);
     color: #1c1a16;
     border-color: rgba(28,26,22,.14);
 }
@@ -3057,7 +3064,7 @@ html body :is(.e1-box, .e1-task) :is(.e1-box-hint, .e1-task-label, .e1-guide-tex
 html body :is(.e1-box, .e1-task) .e2-gl { background: rgba(214,178,94,.22); border-bottom-color: #a8863a; color: #1c1a16; }
 html body :is(.e1-box, .e1-task) .e2-gl-ar { background: #1c1a16; color: #f0d58c; }
 html body :is(.e1-box, .e1-task) :is(.e1-guide-btn, .e2-arg, .e1-word, .e1-opt, .e2-point, .e1-answer, .e1-clip):hover { border-color: #d6b25e; }
-html body :is(.e1-box, .e1-task) :is(.e1-notes, .t1-select, .e3-own-input) { background: #fff; color: #1c1a16; border-color: rgba(168,134,58,.5); }
+html body :is(.e1-box, .e1-task) :is(.e1-notes, .t1-select, .e3-own-input) { background: var(--surface); color: #1c1a16; border-color: rgba(168,134,58,.5); }
 html body :is(.e1-box, .e1-task) :is(.sp-btn-ghost, .e1-btn) { color: #1c1a16; border-color: rgba(28,26,22,.3); }
 html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45); color: #000; }
 
@@ -3074,7 +3081,7 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .e3-text-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
 .e3-text-top .e1-box-title { margin: 0; }
 .e3-badge { font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); }
-.e3-text.is-mine .e3-badge { color: var(--gold); border-color: var(--line-gold); }
+.e3-text.is-mine .e3-badge { color: var(--accent-text); border-color: var(--line-gold); }
 .e3-text-de { font-size: 17px; line-height: 1.75; margin: 0 0 12px; }
 .e3-listen { margin-top: 12px; }
 
@@ -3096,7 +3103,7 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .e3-add {
     position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
     width: 30px; height: 30px; border-radius: 9px; cursor: pointer; font-weight: 900;
-    border: 1px solid var(--line-gold); background: transparent; color: var(--gold);
+    border: 1px solid var(--line-gold); background: transparent; color: var(--accent-text);
 }
 .e3-add.done { background: var(--gold); color: #1a1405; }
 
@@ -3106,7 +3113,7 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .e3-line.is-speaking { border-color: var(--gold); box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 25%, transparent); }
 .e3-line p { margin: 0; }
 .e3-line-body { flex: 1 1 auto; min-width: 0; }
-.e3-who { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-weight: 900; font-size: 13px; background: color-mix(in srgb, var(--gold) 14%, transparent); color: var(--gold); border: 1px solid var(--line-gold); }
+.e3-who { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-weight: 900; font-size: 13px; background: color-mix(in srgb, var(--gold) 14%, transparent); color: var(--accent-text); border: 1px solid var(--line-gold); }
 .e3-line.is-hidden .e3-line-body { filter: blur(6px); user-select: none; }
 .e3-hint { margin: 12px 0 6px; }
 
@@ -3117,6 +3124,335 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .e3-check input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--gold); flex: 0 0 auto; }
 .e3-check input:checked + span .e3-de { text-decoration: line-through; opacity: .7; }
 
+/* ===== Lesen: الأزرار تحت النصوص (Teil 2 / Sprach 1 / Sprach 2) ===== */
+.t1-foot { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.t1-foot .lesen-actions { margin-top: 4px; }
+@media (min-width: 1001px) {
+    /* الأسئلة ديال Teil 2 و Sprach طوال: اللوحة كتوسع شوية فالـPC */
+    .t1-board:has(.t2-panel) { grid-template-columns: minmax(0, 1fr) 400px; }
+}
+
+/* ===== Lesen: شريط الأزرار الثابت تحت الشاشة =====
+   كيبقى باين واخا تهبط فالنص — تصحح فأي وقت بلا ما تقلب على الأزرار. */
+.lesen-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    padding: 12px max(16px, calc((100vw - 1132px) / 2)) calc(12px + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line-gold);
+    box-shadow: 0 -10px 28px rgba(0, 0, 0, .28);
+}
+.lesen-bar[hidden] { display: none; }
+/* الترتيب بحال Zertify: «تحقق» على اليسار، والباقي على اليمين
+   (شوف الحل · عاود — ولا فالامتحان: السابق · Lesen Teil 2 →). */
+.lesen-bar { display: flex; align-items: center; gap: 12px; direction: ltr; }
+.lesen-bar-slot { flex: 1 1 auto; min-width: 0; }
+.lesen-bar-slot[hidden] { display: none; }
+.lesen-bar-extra { flex: 1 1 auto; display: flex; justify-content: flex-end; min-width: 0; }
+.lesen-bar-extra:empty { display: none; }
+.lesen-bar .lesen-actions { margin: 0; flex-wrap: nowrap; direction: ltr; }
+/* الامتحان الكامل */
+.lesen-bar .exam-bar { flex: 0 1 auto; justify-content: flex-end; }
+.lesen-bar .exam-bar-main { min-width: 210px; justify-content: center; }
+.lesen-bar .exam-bar-prev { min-width: 110px; justify-content: center; }
+.exam-part[hidden] { display: none; }
+/* الامتحان: قبل النتيجة غير «تحقق» (الجزء الحالي)، من بعد غير «شوف الحل» */
+.lesen-bar[data-exam="live"] .lesen-bar-slot :is(.lesen-btn-show, .lesen-btn-retry),
+.lesen-bar[data-exam="done"] .lesen-bar-slot :is(.lesen-btn-check, .lesen-btn-retry) { display: none; }
+.lesen-bar[data-exam] .lesen-bar-slot { flex: 0 0 auto; }
+.lesen-bar[data-exam] .lesen-bar-slot .lesen-btn { min-width: 0; }
+/* "تحقق" هو الزر الكبير على اليسار؛ "شوف الحل" و"عاود" على اليمين */
+.lesen-bar .lesen-btn-check { min-width: 210px; justify-content: center; }
+.lesen-bar .lesen-btn-show { margin-left: auto; }
+.lesen-bar .lesen-btn { font-family: "Cairo", system-ui, sans-serif; font-size: 15px; }
+body.has-lesen-bar { padding-bottom: 84px; }
+.lesen-score, .sp2-pop { scroll-margin: 110px 0; }
+.lesen-actions-anchor { display: inline; }
+@media (max-width: 640px) {
+    .lesen-bar { padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); flex-wrap: wrap; gap: 8px; }
+    .lesen-bar .lesen-actions { gap: 8px; }
+    .lesen-bar .lesen-btn {
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 46px;
+        padding: 0 10px;
+        font-size: 13px;
+        white-space: nowrap;
+        justify-content: center;
+    }
+    .lesen-bar .lesen-btn-check { flex-grow: 2; min-width: 0; }
+    .lesen-bar .lesen-btn-show { margin-left: 0; }
+    /* فالتيليفون: «تحقق» سطر، والتنقل ديال الامتحان سطر تحتو */
+    .lesen-bar-slot, .lesen-bar-extra, .lesen-bar .exam-bar,
+    .lesen-bar[data-exam] .lesen-bar-slot { flex: 1 1 100%; }
+    .lesen-bar.has-extra .lesen-bar-slot:not([hidden]) + .lesen-bar-extra { padding-top: 8px; border-top: 1px solid var(--line); }
+    .lesen-bar .exam-bar { flex-wrap: wrap; }
+    .lesen-bar .exam-bar .lesen-btn { flex: 1 1 auto; }
+    .lesen-bar .exam-bar-main { min-width: 0; flex-grow: 3; }
+    .lesen-bar .exam-bar-prev { min-width: 0; }
+    body.has-lesen-bar { padding-bottom: 76px; }
+}
+
+/* ===== الامتحان الكامل: بار صغير فوق بحال Zertify =====
+   الهيدر الكبير و Telc B1/B2 كيتخباو (html.is-exam-focus) وكيبقى بار
+   واحد رقيق: ← · B2 PRÜFUNG n · العنوان · LESEN Teil 1 … · الوقت. */
+html.is-exam-focus #site-header,
+html.is-exam-focus .site-header,
+html.is-exam-focus .site-level-wrap,
+html.is-exam-focus .site-level { display: none !important; }
+html.is-exam-focus body,
+html.is-embed.is-exam-focus body { padding-top: calc(var(--exam-top-h, 66px) + 14px) !important; }
+
+.exam-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 70;
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line-gold);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+}
+.exam-top-inner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    direction: ltr;
+}
+.exam-top-back {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color .15s ease, color .15s ease;
+}
+.exam-top-back:hover { border-color: var(--gold); color: var(--accent-text); }
+.exam-top-meta { flex: 0 1 240px; min-width: 0; display: grid; gap: 2px; }
+.exam-top-kicker {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+}
+.exam-top-level {
+    padding: 1px 7px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--gold) 18%, transparent);
+    color: var(--accent-text);
+    letter-spacing: .04em;
+}
+.exam-top-title {
+    font-size: 14.5px;
+    font-weight: 900;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.exam-top .exam-tabs {
+    flex: 1 1 auto;
+    display: flex;
+    gap: 4px;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4px;
+    border-radius: 16px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+}
+.exam-top .exam-tab {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 5px 8px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    line-height: 1.25;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+.exam-top .exam-tab:hover { color: var(--text); background: color-mix(in srgb, var(--gold) 8%, transparent); }
+.exam-top .exam-tab.active {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--ink);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--gold) 30%, transparent);
+}
+.exam-tab-kind {
+    max-width: 100%;
+    font-size: 8.5px;
+    font-weight: 900;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.exam-top .exam-tab.active .exam-tab-kind { color: inherit; opacity: .75; }
+.exam-top .exam-tab .exam-tab-nr { font-size: 13.5px; font-weight: 900; white-space: nowrap; }
+.exam-top .exam-tab .exam-tab-pts {
+    margin: 0;
+    padding: 0;
+    border-radius: 999px;
+    background: none;
+    color: inherit;
+    font-size: 9.5px;
+    font-weight: 800;
+    opacity: .6;
+    direction: ltr;
+}
+.exam-top .exam-tab .exam-tab-pts.has-score {
+    padding: 0 6px;
+    opacity: 1;
+    background: color-mix(in srgb, var(--ok) 18%, transparent);
+    color: var(--ok);
+}
+.exam-top .exam-tab.active .exam-tab-pts.has-score { background: rgba(0, 0, 0, .16); color: var(--ink); }
+.exam-top-clock {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .02em;
+}
+.exam-top-clock svg { color: var(--accent-text); flex: 0 0 auto; }
+.exam-top-clock.is-low { color: #f0a53a; border-color: color-mix(in srgb, #f0a53a 55%, transparent); }
+.exam-top-clock.is-over { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 55%, transparent); }
+.exam-top-clock.is-done { opacity: .65; }
+/* داخل Modelltest: عندو الوقت والرجوع ديالو */
+html.is-embed .exam-top-back,
+html.is-embed .exam-top-clock { display: none; }
+@media (max-width: 760px) {
+    .exam-top-inner { flex-wrap: wrap; gap: 8px 10px; padding: 8px 12px; }
+    .exam-top-back { width: 38px; height: 38px; }
+    .exam-top-meta { flex: 1 1 0; }
+    .exam-top-clock { padding: 6px 10px; font-size: 14.5px; }
+    .exam-top .exam-tabs { order: 5; flex: 1 1 100%; max-width: none; padding: 3px; border-radius: 14px; }
+    .exam-top .exam-tab { padding: 4px 2px; border-radius: 10px; }
+    /* «SPRACHBAUSTEINE» ماكيدخلش فالتيليفون: «SPRACHB.» */
+    .exam-tab-kind { font-size: 0; letter-spacing: .05em; }
+    .exam-tab-kind::before { content: attr(data-short); font-size: 8px; }
+    .exam-top .exam-tab .exam-tab-nr { font-size: 12px; }
+}
+.lesen-bar .exam-bar-again.is-armed {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 10%, var(--surface-2));
+}
+
+/* =====================================================
+   v5 — كل حاجة كتكليكا صفرا (أصفر العلم الألماني)
+   · الزر الرئيسي والتبويب النشيط: أصفر بكتابة كحلة.
+   · الأزرار الثانوية (شوف الحل، السابق…): أبيض بإطار أصفر،
+     وكيتعمرو بالأصفر ملي تدوز عليهم.
+   ===================================================== */
+.lesen-btn-show,
+.e1-btn-soft {
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    border: 1.5px solid var(--brand) !important;
+    box-shadow: none !important;
+}
+.lesen-btn-show:hover,
+.e1-btn-soft:hover { background: var(--brand-soft) !important; }
+.lesen-btn:disabled { opacity: .45; }
+.t1-variant.active,
+.e1-step.active {
+    background: var(--grad-brand);
+    color: var(--on-brand);
+    box-shadow: var(--shadow-brand);
+}
+
+/* ===== Lesen: الكلمات المفتاحية ملي كيتصحح (Teil 1 / Teil 3) ===== */
+mark.kw {
+    background: #fff3a6;
+    color: inherit;
+    border-bottom: 2px solid #f2c200;
+    border-radius: 4px;
+    padding: 0 2px;
+}
+.kw-title {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 4px 0 12px;
+    padding: 10px 14px;
+    border: 1.5px dashed var(--line-gold);
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--text);
+    background: var(--surface);
+}
+.kw-key {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    min-width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(31, 157, 99, .14);
+    color: #15803d;
+    font-weight: 900;
+}
+:root[data-theme="dark"] mark.kw { background: rgba(255, 206, 0, .28); border-bottom-color: #ffce00; }
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) mark.kw { background: rgba(255, 206, 0, .28); border-bottom-color: #ffce00; }
+}
+.t1-option.kw-answer { border-color: rgba(31, 157, 99, .55); background: rgba(31, 157, 99, .08); opacity: 1; }
+html body .t1-panel .t1-option.kw-answer.is-used { opacity: 1; }
+.t1-option.kw-answer .t1-option-de { color: var(--text); }
+.kw-for {
+    flex: 0 0 auto;
+    align-self: center;
+    margin-inline-start: auto;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(31, 157, 99, .14);
+    color: #15803d;
+    font-size: 11.5px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+.t3-sit .kw-title { margin: 8px 0; padding: 8px 10px; font-size: 14px; gap: 8px; }
+.t3-sit .kw-key { min-width: 24px; height: 24px; }
 /* ===== Teil 2: الفقرات ملصوقين ف بلوك واحد =====
    قبل، كل فقرة كانت بطاقة بوحدها و.t1-texts كان فيه gap —
    والنتيجة فراغ كبير بين الفقرة والفقرة، والنص كيتقطع.

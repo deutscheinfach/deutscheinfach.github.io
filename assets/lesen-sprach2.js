@@ -202,14 +202,12 @@
             });
 
             const actions = el("div", "lesen-actions t2-actions");
-            const checkBtn = btn("lesen-btn lesen-btn-check", "Antworten prüfen");
-            const showBtn = btn("lesen-btn lesen-btn-show", "Lösungen anzeigen");
-            const retryBtn = btn("lesen-btn lesen-btn-retry", "Nochmal versuchen");
+            const checkBtn = btn("lesen-btn lesen-btn-check", "تحقق من الإجابات");
+            const showBtn = btn("lesen-btn lesen-btn-show", "شوف الحل");
+            const retryBtn = btn("lesen-btn lesen-btn-retry", "عاود من جديد");
             actions.append(checkBtn, showBtn, retryBtn);
-            panel.appendChild(actions);
-            const score = el("div", "lesen-score");
+                        const score = el("div", "lesen-score");
             score.hidden = true;
-            panel.appendChild(score);
 
             checkBtn.addEventListener("click", function () { grade(false); });
             showBtn.addEventListener("click", function () { grade(true); });
@@ -217,6 +215,8 @@
 
             side.appendChild(panel);
             board.append(column, side);
+            /* الأزرار تحت النصوص فالـPC، ومن بعد الأسئلة فالتيليفون */
+            window.__lesenFoot(column, side, [actions, score]);
             sync();
 
             /* ---- اللائحة الصغيرة تحت الفراغ ---- */

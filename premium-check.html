@@ -3,14 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=1e586e51"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Deutsch Einfach – فحص الاشتراك</title>
 <meta name="robots" content="noindex">
-<link rel="stylesheet" href="assets/theme.css?v=82fd95b2">
+<link rel="stylesheet" href="assets/theme.css?v=04a185db">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
-<link rel="stylesheet" href="assets/site-header.css?v=be6560fe">
-<link rel="stylesheet" href="assets/section.css?v=910e16af">
+<link rel="stylesheet" href="assets/site-header.css?v=3eb55250">
+<link rel="stylesheet" href="assets/section.css?v=2d36156a">
 <style>
 .chk { width: min(100% - 32px, 760px); margin: 40px auto; }
 .chk h1 { font-size: var(--step-2); font-weight: 900; margin-bottom: 6px; }
@@ -52,7 +53,7 @@ code { direction: ltr; display: inline-block; background: var(--surface-2);
 </head>
 <body>
 <div id="site-header"></div>
-<script src="assets/site-header.js?v=ec4161ae"></script>
+<script src="assets/site-header.js?v=fcd9ed53"></script>
 
 <main class="chk">
     <h1>فحص الاشتراك</h1>
@@ -112,10 +113,13 @@ try {
 
     /* 2 — الاشتراك ف Firestore */
     let premium = false, detail = "ماكاينش users/" + account.uid;
+    let adminLine = "ماكاينش users/" + account.uid, isAdmin = false;
     try {
         const snap = await fsMod.getDoc(fsMod.doc(db, "users", account.uid));
         if (snap.exists()) {
             const data = snap.data();
+            isAdmin = data.isAdmin === true;
+            adminLine = "isAdmin: " + JSON.stringify(data.isAdmin) + " (" + typeof data.isAdmin + ")";
             const end = data.subscriptionEnd && data.subscriptionEnd.toDate
                 ? data.subscriptionEnd.toDate() : null;
             const notExpired = !end || end.getTime() > Date.now();
@@ -125,6 +129,11 @@ try {
                           + (notExpired ? "" : " (سالا)") : " · بلا تاريخ انتهاء");
         }
     } catch (error) { detail = "ما قدرناش نقراو Firestore: " + error.message; }
+
+    /* الأدمين: الجرس ديال الإشعارات كيبين الفورم غير لهاد الحساب */
+    step(isAdmin ? "ok" : "no", "الأدمين (الإشعارات)", adminLine, isAdmin ? "" :
+        'ف Firebase → Firestore → <code>users/' + account.uid + '</code> حط ' +
+        '<code>isAdmin: true</code> (نوع boolean). رد البال: خاص نفس الـ uid اللي فوق.');
 
     step(premium ? "ok" : "no", "2. الاشتراك ف Firestore", detail, premium ? "" :
         'ف Firebase → Firestore → <code>users/' + account.uid + '</code> حط ' +

@@ -250,6 +250,18 @@
     const actions = document.createElement("div");
     actions.className = "site-actions";
 
+    /* ---- الإشعارات: الجديد فالموقع ----
+       صاحب الموقع (users/{uid}.isAdmin = true) كيكتب الخبر من هنا،
+       وكيبان لكاع الناس فالجرس مع رقم ديال اللي مازال ماشافوهش.
+       الأخبار فـ Firestore: news/{id} = {title, body, link, createdAt}. */
+    const news = newsBell();
+    actions.appendChild(news.root);
+
+    /* فاتح ↔ مظلم (assets/theme-toggle.js) */
+    if (window.__deTheme && window.__deTheme.button) {
+        actions.appendChild(window.__deTheme.button("site-btn site-btn-icon site-theme"));
+    }
+
     /* ضيف — حتى نعرفو شكون داخل */
     const guest = document.createElement("span");
     guest.className = "site-actions";
@@ -773,7 +785,7 @@
     }());
 
     /* الزر العايم ديال الوضع ماعندوش معنى وهاد الزر كاين */
-    const floating = document.querySelector(".de-theme-btn");
+    const floating = document.querySelector(".de-theme-btn.is-floating");
     if (floating) floating.remove();
     document.documentElement.classList.add("has-site-header");
 
@@ -823,11 +835,15 @@
                Firebase من جديد. */
             window.__deutschEinfachAuth = auth;
 
+            news.start(fsMod, db);
+
             authMod.onAuthStateChanged(auth, async function (person) {
                 if (!person) {
                     /* خرج بصح — كنمسحو الذاكرة باش المرة الجاية
                        ما نرسموش ليه حساب ماكاينش. */
                     remember(null);
+                    news.setUser(null);
+                    news.setAdmin(false);
                     guest.hidden = false;
                     account.hidden = true;
                     openMenu(false);
@@ -838,11 +854,13 @@
 
                 guest.hidden = true;
                 account.hidden = false;
+                news.setUser(person.uid);
 
                 let name = person.displayName
                     || (person.email || "").split("@")[0]
                     || "Student";
                 let premium = false;
+                let admin = false;
 
                 try {
                     const snap = await fsMod.getDoc(fsMod.doc(db, "users", person.uid));
@@ -853,6 +871,27 @@
                             || (data.subscriptionEnd.toDate
                                 && data.subscriptionEnd.toDate().getTime() > Date.now());
                         premium = data.subscriptionActive === true && notExpired;
+                        admin = data.isAdmin === true;
+                        news.setAdmin(admin);
+                        /* وثيقة ناقصة (تخلقات من login بلا createdAt/email) */
+                        if (!data.createdAt || !data.email) repairUser(data);
+                    } else {
+                        /* حساب ف Auth بلا وثيقة ف users (التسجيل طاح قبل) */
+                        repairUser(null);
+                    }
+
+                    function repairUser(old) {
+                        const fix = {};
+                        if (!old || !old.email) fix.email = person.email || "";
+                        if (!old || !old.name) fix.name = (old && old.displayName) || name;
+                        if (!old || !old.createdAt) {
+                            const born = person.metadata && person.metadata.creationTime
+                                ? new Date(person.metadata.creationTime) : new Date();
+                            fix.createdAt = fsMod.Timestamp.fromDate(born);
+                        }
+                        if (!old) { fix.plan = "free"; fix.subscriptionActive = false; fix.subscriptionEnd = null; }
+                        fsMod.setDoc(fsMod.doc(db, "users", person.uid), fix, { merge: true })
+                            .catch(function (e) { console.warn("Header: ماصلحناش الوثيقة", e && e.code); });
                     }
                 } catch (error) {
                     console.warn("Header: ما قدرناش نقراو الحساب", error);
@@ -982,6 +1021,16 @@
                         note.classList.toggle("is-bad", !!bad);
                     }
 
+                    /* لوحة الإدارة: غير للأدمين */
+                    if (admin) {
+                        const adm = document.createElement("a");
+                        adm.className = "site-menu-item";
+                        adm.setAttribute("role", "menuitem");
+                        adm.href = "admin.html";
+                        adm.append(icon("star"), document.createTextNode("لوحة الإدارة (الاشتراكات)"));
+                        menu.appendChild(adm);
+                    }
+
                     /* تسجيل الخروج */
                     const out = item("out", "تسجيل الخروج");
                     out.classList.add("site-menu-out");
@@ -1054,6 +1103,261 @@
             }
         }
     })();
+
+    /* ================= الجرس ديال الجديد =================
+       - الكل كيقرا news (حتى الضيف). كنخبيو اللائحة فالمتصفح 20 دقيقة
+         باش ما نقراوش Firestore ف كل صفحة (الخطة المجانية).
+       - الرقم الأحمر = الأخبار اللي تنشرات من بعد آخر مرة حل فيها الجرس.
+       - الأدمين كيشوف فوق اللائحة فورم «زيد إشعار» و✕ باش يمسح. */
+    function newsBell() {
+        const CACHE = "de-news-cache";
+        const SEEN = "de-news-seen";
+        const TTL = 30 * 60 * 1000;
+        const DAY = 24 * 3600 * 1000;
+
+        let fs = null, db = null, items = [], admin = false, loaded = false;
+
+        const root = document.createElement("div");
+        root.className = "site-news-wrap";
+
+        const bell = document.createElement("button");
+        bell.type = "button";
+        bell.className = "site-btn site-btn-icon site-bell";
+        bell.setAttribute("aria-label", "الإشعارات");
+        bell.setAttribute("aria-expanded", "false");
+        bell.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" '
+            + 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+            + '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>';
+        const dot = document.createElement("span");
+        dot.className = "site-bell-dot";
+        dot.hidden = true;
+        bell.appendChild(dot);
+
+        const panel = document.createElement("div");
+        panel.className = "site-news";
+        panel.hidden = true;
+
+        root.append(bell, panel);
+
+        function store(key, value) {
+            try { localStorage.setItem(key, value); } catch (e) { /* وضع خاص */ }
+        }
+        function read(key) {
+            try { return localStorage.getItem(key); } catch (e) { return null; }
+        }
+        /* «شفتهم» كيتحفظ لكل حساب بوحدو (ماشي للمتصفح كامل): إلا دخل
+           حساب آخر فنفس المتصفح كيشوف النقطة الحمرا ديالو.
+           أول مرة (حتى للزائر الجديد): الأخبار ديال آخر 14 يوم كتبان جديدة. */
+        let who = "guest";
+        const FRESH = 14 * 86400000;
+        function seenKey() { return SEEN + ":" + who; }
+        function seenAt() {
+            const v = Number(read(seenKey()));
+            return v || (Date.now() - FRESH);
+        }
+
+        try {
+            const cached = JSON.parse(read(CACHE) || "null");
+            if (cached && Array.isArray(cached.items)) { items = cached.items; loaded = true; }
+        } catch (e) { /* كاش خايب */ }
+        paintDot();
+
+        function paintDot() {
+            const seen = seenAt();
+            const fresh = items.filter(function (n) { return n.at > seen; }).length;
+            dot.hidden = !fresh;
+            dot.textContent = fresh > 9 ? "9+" : String(fresh);
+            bell.classList.toggle("has-news", !!fresh);
+        }
+
+        function when(ms) {
+            const d = Math.floor((Date.now() - ms) / 86400000);
+            if (d <= 0) return "اليوم";
+            if (d === 1) return "البارح";
+            if (d < 30) return "قبل " + d + " أيام";
+            return new Date(ms).toLocaleDateString("fr-MA");
+        }
+
+        function el(tag, cls, text) {
+            const n = document.createElement(tag);
+            if (cls) n.className = cls;
+            if (text !== undefined) n.textContent = text;
+            return n;
+        }
+
+        function paint() {
+            panel.textContent = "";
+            const head = el("div", "site-news-head");
+            head.appendChild(el("strong", "", "الجديد فالموقع"));
+            panel.appendChild(head);
+
+            if (admin) panel.appendChild(form());
+
+            if (!loaded) { panel.appendChild(el("p", "site-news-empty", "كنجيبو الجديد…")); return; }
+            if (!items.length) { panel.appendChild(el("p", "site-news-empty", "ماكاين حتى جديد دابا.")); return; }
+
+            const seen = Number(panel.dataset.seen || 0);
+            const list = el("div", "site-news-list");
+            items.forEach(function (n) {
+                const item = el("article", "site-news-item" + (n.at > seen ? " is-new" : ""));
+                const top = el("div", "site-news-top");
+                top.appendChild(el("strong", "site-news-title", n.title));
+                top.appendChild(el("span", "site-news-date", when(n.at)));
+                item.appendChild(top);
+                if (n.body) item.appendChild(el("p", "site-news-body", n.body));
+                if (n.link && /^(https?:\/\/|[a-z0-9-]+\.html)/i.test(n.link)) {
+                    const a = el("a", "site-news-link", "شوف ←");
+                    a.href = n.link;
+                    item.appendChild(a);
+                }
+                if (admin) {
+                    const del = el("button", "site-news-del", "✕");
+                    del.type = "button";
+                    del.title = "مسح";
+                    del.addEventListener("click", async function () {
+                        if (!confirm("نمسحو هاد الإشعار؟")) return;
+                        try {
+                            await fs.deleteDoc(fs.doc(db, "news", n.id));
+                            await refresh(true);
+                        } catch (e) { alert("ماقدرناش نمسحوه: " + (e.code || e.message)); }
+                    });
+                    item.appendChild(del);
+                }
+                list.appendChild(item);
+            });
+            panel.appendChild(list);
+        }
+
+        function form() {
+            const box = el("form", "site-news-form");
+            const title = el("input", "site-menu-input");
+            title.placeholder = "العنوان (مثلا: زدنا 10 مواضيع Schreiben B1)";
+            title.maxLength = 120;
+            title.required = true;
+            const body = el("textarea", "site-menu-input site-news-text");
+            body.placeholder = "التفاصيل (اختياري)";
+            body.maxLength = 1000;
+            body.rows = 3;
+            const link = el("input", "site-menu-input");
+            link.placeholder = "رابط (اختياري): b1-sprechen.html";
+            link.maxLength = 300;
+            link.dir = "ltr";
+            const send = el("button", "site-menu-save", "نشر الإشعار");
+            send.type = "submit";
+            const note = el("p", "site-menu-note");
+            box.append(el("span", "site-news-form-label", "✍️ إشعار جديد (غير نتا كتشوف هادي)"), title, body, link, send, note);
+
+            box.addEventListener("submit", async function (event) {
+                event.preventDefault();
+                const data = { title: title.value.trim(), createdAt: fs.serverTimestamp() };
+                if (!data.title) return;
+                if (body.value.trim()) data.body = body.value.trim();
+                if (link.value.trim()) data.link = link.value.trim();
+                send.disabled = true;
+                note.textContent = "كنشرو…";
+                try {
+                    await fs.addDoc(fs.collection(db, "news"), data);
+                    /* اللي كتب الخبر ماخاصوش يشوف النقطة الحمرا عليه */
+                    store(seenKey(), String(Date.now() + 5000));
+                    await refresh(true);
+                } catch (e) {
+                    send.disabled = false;
+                    note.textContent = "ماتنشرش: " + (e.code || e.message)
+                        + " — واش القواعد ديال Firestore محدثة؟";
+                }
+            });
+            return box;
+        }
+
+        /* القراية ديال Firestore محسوبة (50.000 فالنهار فالخطة المجانية)
+           وكل زائر كيشوف الجرس. إذن:
+           - كل 30 دقيقة: كنقراو غير آخر خبر (قراءة وحدة). إلا هو نفسو
+             اللي عندنا، الكاش صالح وماكنقراو والو آخر.
+           - اللائحة كاملة (10) غير ملي يتزاد خبر جديد، ولا مرة فالنهار
+             (باش الخبر اللي تمسح يغبر حتى هو). */
+        async function refresh(force) {
+            if (!fs) return;
+            let cached = null;
+            try { cached = JSON.parse(read(CACHE) || "null"); } catch (e) { cached = null; }
+            const age = cached ? Date.now() - cached.t : Infinity;
+            const fullAge = cached ? Date.now() - (cached.full || 0) : Infinity;
+            if (!force && age < TTL) return;
+            const col = fs.collection(db, "news");
+            try {
+                if (!force && cached && Array.isArray(cached.items) && fullAge < DAY) {
+                    const top = await fs.getDocs(fs.query(col, fs.orderBy("createdAt", "desc"), fs.limit(1)));
+                    const newest = top.docs[0] ? top.docs[0].id : null;
+                    const known = cached.items[0] ? cached.items[0].id : null;
+                    if (newest === known) {
+                        cached.t = Date.now();
+                        store(CACHE, JSON.stringify(cached));
+                        loaded = true;
+                        return;
+                    }
+                }
+                const snap = await fs.getDocs(fs.query(col, fs.orderBy("createdAt", "desc"), fs.limit(10)));
+                items = snap.docs.map(function (d) {
+                    const v = d.data();
+                    return {
+                        id: d.id,
+                        title: String(v.title || ""),
+                        body: String(v.body || ""),
+                        link: String(v.link || ""),
+                        at: v.createdAt && v.createdAt.toMillis ? v.createdAt.toMillis() : Date.now()
+                    };
+                });
+                loaded = true;
+                store(CACHE, JSON.stringify({ t: Date.now(), full: Date.now(), items: items }));
+            } catch (e) {
+                console.warn("Header: ماقدرناش نجيبو الإشعارات", e);
+                loaded = true;
+            }
+            paintDot();
+            if (!panel.hidden) paint();
+        }
+
+        function open(show) {
+            if (show) {
+                /* كنحفظو شنو كان جديد قبل ما نعلمو عليه مشاف، باش يبان مميز */
+                panel.dataset.seen = String(seenAt());
+                paint();
+                const newest = items.reduce(function (m, n) { return Math.max(m, n.at); }, 0);
+                store(seenKey(), String(Math.max(Date.now(), newest)));
+                paintDot();
+                refresh(false);
+            }
+            panel.hidden = !show;
+            root.classList.toggle("is-open", show);
+            bell.setAttribute("aria-expanded", show ? "true" : "false");
+        }
+
+        bell.addEventListener("click", function () { open(panel.hidden); });
+        /* capture: زر الحساب كيوقف الـclick، وخاص الجرس يتسد حتى ملي كيتحل الحساب */
+        document.addEventListener("click", function (event) {
+            if (!root.contains(event.target) && !panel.hidden) open(false);
+        }, true);
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") open(false);
+        });
+
+        return {
+            root: root,
+            start: function (fsMod, database) {
+                fs = fsMod;
+                db = database;
+                refresh(false);
+            },
+            setUser: function (uid) {
+                who = uid || "guest";
+                paintDot();
+            },
+            setAdmin: function (value) {
+                if (admin === value) return;
+                admin = value;
+                if (!panel.hidden) paint();
+            }
+        };
+    }
 })();
 
 /* ===== تنضيف Service Worker قديم =====

@@ -264,9 +264,9 @@
 
             /* ---- الأزرار ---- */
             const actions = el("div", "lesen-actions");
-            const checkBtn = btn("lesen-btn lesen-btn-check", "Antworten prüfen");
-            const showBtn = btn("lesen-btn lesen-btn-show", "Lösungen anzeigen");
-            const retryBtn = btn("lesen-btn lesen-btn-retry", "Nochmal versuchen");
+            const checkBtn = btn("lesen-btn lesen-btn-check", "تحقق من الإجابات");
+            const showBtn = btn("lesen-btn lesen-btn-show", "شوف الحل");
+            const retryBtn = btn("lesen-btn lesen-btn-retry", "عاود من جديد");
             actions.append(checkBtn, showBtn, retryBtn);
             column.appendChild(actions);
 
@@ -325,6 +325,7 @@
             function grade(reveal) {
                 let right = 0;
                 let answered = 0;
+                clearAds();
 
                 rows.forEach(function (row) {
                     clear(row);
@@ -347,6 +348,25 @@
                         ok ? "✓ Richtig"
                            : (reveal ? "Lösung: " + expected
                                      : (given === "" ? "Noch nicht beantwortet" : "✗ Falsch"))));
+
+                    /* الكلمات المشتركين بين الوضعية والإعلان الصحيح */
+                    const ad = adRows.find(function (a) { return a.key === expected; });
+                    const sitText = row.box.querySelector(".t3-sit-de");
+                    /* فوق الوضعية: الحرف ديال الإعلان الصحيح + العنوان ديالو */
+                    if (sitText && expected) {
+                        const title = el("div", "kw-title");
+                        title.appendChild(el("span", "kw-key", expected));
+                        const headText = ad ? ((ad.node.querySelector(".t3-ad-head") || {}).textContent || "") : "Keine passende Anzeige";
+                        title.appendChild(el("span", "kw-words", headText));
+                        sitText.parentNode.insertBefore(title, sitText);
+                    }
+
+                    /* «تحقق» و «شوف الحل» بجوج كيبينو الكلمات المفتاحية */
+                    if (ad && sitText && window.__lesenKeys) {
+                        const adBody = ad.node.querySelector(".t1-body");
+                        const adHead = ad.node.querySelector(".t3-ad-head");
+                        window.__lesenKeys.link([sitText], [adHead, adBody].filter(Boolean));
+                    }
                 });
 
                 paintUsed();
@@ -358,9 +378,22 @@
                 row.box.classList.remove("correct", "wrong");
                 const mark = row.box.querySelector(".lesen-mark");
                 if (mark) mark.remove();
+                if (window.__lesenKeys) window.__lesenKeys.clear([row.box.querySelector(".t3-sit-de")]);
+                const title = row.box.querySelector(".kw-title");
+                if (title) title.remove();
+            }
+
+            /* الإعلانات كيتمسحو مرة وحدة قبل التصحيح — ماشي ف clear(row)،
+               وإلا كل وضعية كتمسح الألوان ديال اللي قبلها. */
+            function clearAds() {
+                if (!window.__lesenKeys) return;
+                adRows.forEach(function (a) {
+                    window.__lesenKeys.clear([a.node.querySelector(".t1-body"), a.node.querySelector(".t3-ad-head")]);
+                });
             }
 
             function reset() {
+                clearAds();
                 rows.forEach(function (row) {
                     clear(row);
                     row.select.value = "";

@@ -68,6 +68,110 @@
         return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(".", ",");
     }
 
+    /* ---- مكان الأزرار ديال Teil 2 / Sprach 1 / Sprach 2 ----
+       فالـPC: تحت النصوص (بحال Teil 1)، ماشي مدفونين لتحت فاللوحة اللي كتسكرولي.
+       فالتيليفون: من بعد الأسئلة، حيت الأسئلة كتجي تحت النصوص. */
+    const WIDE = window.matchMedia("(min-width: 1001px)");
+    function placeFoot(foot) {
+        if (WIDE.matches) foot.__column.appendChild(foot);
+        else foot.__side.after(foot);
+    }
+    window.__lesenFoot = function (column, side, nodes) {
+        const foot = document.createElement("div");
+        foot.className = "t1-foot";
+        nodes.forEach(function (n) { foot.appendChild(n); });
+        foot.__column = column;
+        foot.__side = side;
+        placeFoot(foot);
+        return foot;
+    };
+    WIDE.addEventListener("change", function () {
+        document.querySelectorAll(".t1-foot").forEach(function (foot) {
+            if (foot.__column) placeFoot(foot);
+        });
+    });
+
+    /* ---- شريط الأزرار الثابت تحت (بحال التطبيقات) ----
+       كل جزء كيبني الأزرار ديالو فبلاصتهم. هنا كنبدلوهم بعلامة خاوية
+       وكنديوهم لشريط واحد فالـbody: الـboard فيه transform (الانتقال بين
+       النسخ)، وأي position: fixed داخلو كيتبع ليه ماشي للشاشة.
+       الشريط كيبين الأزرار ديال الجزء اللي باين دابا، وكيتخبى فاللائحة. */
+    const bar = document.createElement("div");
+    bar.className = "lesen-bar";
+    bar.hidden = true;
+    const slot = document.createElement("div");
+    slot.className = "lesen-bar-slot";
+    const extraBox = document.createElement("div");
+    extraBox.className = "lesen-bar-extra";
+    bar.append(slot, extraBox);
+    let adopted = [];
+    let queued = false;
+    /* زيادة فالشريط (أزرار الامتحان الكامل). كتبان غير ملي owner باين. */
+    /* mode: "live" = غير «تحقق» ديال الجزء · "done" = غير «شوف الحل» */
+    let extra = null, extraOwner = null, examMode = "";
+    window.__lesenBarExtra = function (node, owner, options) {
+        extra = node || null;
+        extraOwner = owner || null;
+        examMode = (options && options.mode) || "";
+        queueBar();
+    };
+
+    function syncBar() {
+        queued = false;
+        document.querySelectorAll(".lesen-actions").forEach(function (actions) {
+            if (actions.__anchor || bar.contains(actions)) return;
+            const anchor = document.createElement("span");
+            anchor.className = "lesen-actions-anchor";
+            actions.replaceWith(anchor);
+            actions.__anchor = anchor;
+            anchor.__actions = actions;
+            adopted.push(actions);
+        });
+        adopted = adopted.filter(function (a) { return a.__anchor.isConnected; });
+        let current = null;
+        adopted.forEach(function (a) { if (a.__anchor.getClientRects().length) current = a; });
+
+        const showExtra = !!(extra && extraOwner && extraOwner.isConnected
+                             && extraOwner.getClientRects().length);
+        const shown = !!current || showExtra;
+
+        if (!bar.isConnected) document.body.appendChild(bar);
+        if (current && current.parentNode !== slot) slot.replaceChildren(current);
+        if (!current && slot.firstChild) slot.replaceChildren();
+        if (showExtra && extra.parentNode !== extraBox) extraBox.replaceChildren(extra);
+        if (!showExtra && extraBox.firstChild) extraBox.replaceChildren();
+        if (bar.classList.contains("has-extra") !== showExtra) bar.classList.toggle("has-extra", showExtra);
+        const mode = showExtra ? examMode : "";
+        if ((bar.dataset.exam || "") !== mode) {
+            if (mode) bar.dataset.exam = mode; else delete bar.dataset.exam;
+        }
+        if (bar.hidden !== !shown) bar.hidden = !shown;
+        if (document.body.classList.contains("has-lesen-bar") !== shown) {
+            document.body.classList.toggle("has-lesen-bar", shown);
+        }
+    }
+    function queueBar() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(syncBar);
+    }
+    new MutationObserver(queueBar).observe(document.body, {
+        childList: true, subtree: true,
+        attributes: true, attributeFilter: ["hidden", "class", "style"],
+    });
+    queueBar();
+
+    /* من بعد ما يختار جواب: فالـPC اللوحة كتسكرولي بوحدها للسؤال الجاي
+       اللي مازال ماتجاوبش — ماكيحتاجش يقلب عليه. الصفحة ماكتتحركش. */
+    window.__lesenNext = function (panel, rows, row) {
+        if (!WIDE.matches || panel.scrollHeight <= panel.clientHeight + 4) return;
+        const at = rows.indexOf(row);
+        const next = rows.slice(at + 1).concat(rows.slice(0, at))
+            .find(function (r) { return r.picked === -1; });
+        if (!next) return;
+        panel.scrollTo({ top: Math.max(0, next.box.offsetTop - 70), behavior: "smooth" });
+    };
+
     window.__lesenScore = function (box, part, right, total, reveal, missing) {
         const max = MAX_POINTS[part] || 25;
         const points = total ? Math.round(right / total * max * 2) / 2 : 0;
@@ -89,6 +193,8 @@
             ? "الحلول كاينة فوق · " + right + " من " + total + " كانو صحاح"
             : right + " / " + total + " صحيحة" + (missing ? " · باقي " + missing + " بلا جواب" : "");
         box.append(big, unit, detail);
+        /* الأزرار ولاو تحت فالشريط الثابت: كنوريو النتيجة باش ماتبقاش مخبية */
+        box.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
         try {
             window.dispatchEvent(new CustomEvent("lesen-points",
@@ -146,6 +252,77 @@
         p.textContent = text;
         box.append(tag, p);
         return box;
+    };
+
+    /* ===== الكلمات المفتاحية (بحال Zertify) =====
+       ملي كيتصحح Teil 1 ولا Teil 3، كنلونو الكلمات اللي مشتركين بين
+       النص والترويسة (ولا الوضعية والإعلان) — باش يبان علاش هادا
+       هو الجواب. بلا داتا زايدة: كنقارنو الجذور ديال الكلمات
+       (Alter ↔ Lebensalter، Sport ↔ Leistungssport). */
+    const KW_STOP = new Set(("damals gestern haben hatte hatten heute morgen waren worden wurden andere anderen bekannte bekannten bekannter besonders einige einigen einiger interessieren interessiert manche mochte mochten mogen sucht suchen aber alle allem allen aller alles also auch auf aus bei beim bis bitte dabei damit dann darf das dass dem den denn der des dessen die dies diese diesem diesen dieser dieses doch dort durch eine einem einen einer eines etwas euch fur gibt ganz gegen geht hier hinter ihnen ihre ihrem ihren ihrer immer jede jedem jeden jeder jedes jetzt kann kein keine keinen konnen machen macht mehr mein meine muss mussen nach neue neuen nicht noch nur oder ohne schon sehr sein seine seit sich sind soll sollen sowie uber unter unsere viel viele vielen vom von vor wann warum weil wenig wenn werden wieder will wird wollen wurde zum zur zwei zwischen").split(" "));
+    function kwFold(w) {
+        return w.toLowerCase().replace(/ä/g, "a").replace(/ö/g, "o").replace(/ü/g, "u").replace(/ß/g, "ss");
+    }
+    function kwStem(w) {
+        const f = kwFold(w);
+        const ends = ["ern", "en", "er", "es", "em", "e", "n", "s"];
+        for (let i = 0; i < ends.length; i++) {
+            if (f.length - ends[i].length >= 4 && f.endsWith(ends[i])) return f.slice(0, -ends[i].length);
+        }
+        return f;
+    }
+    const KW_WORD = /[A-Za-zÄÖÜäöüß]+/g;
+    function kwStems(text) {
+        const out = new Set();
+        (String(text || "").match(KW_WORD) || []).forEach(function (w) {
+            if (w.length < 4 || KW_STOP.has(kwFold(w))) return;
+            const st = kwStem(w);
+            if (st.length >= 4) out.add(st);
+        });
+        return Array.from(out);
+    }
+    function kwHit(word, stems) {
+        if (word.length < 4 || KW_STOP.has(kwFold(word))) return false;
+        const s = kwStem(word);
+        return stems.some(function (k) {
+            return s === k || (k.length >= 5 && s.indexOf(k) !== -1) || (s.length >= 5 && k.indexOf(s) !== -1);
+        });
+    }
+    function kwPaint(node, stems) {
+        if (node.__kwText == null) node.__kwText = node.textContent;
+        const text = node.__kwText;
+        node.textContent = "";
+        let last = 0, hits = 0, m;
+        KW_WORD.lastIndex = 0;
+        while ((m = KW_WORD.exec(text))) {
+            if (!kwHit(m[0], stems)) continue;
+            node.appendChild(document.createTextNode(text.slice(last, m.index)));
+            const mark = document.createElement("mark");
+            mark.className = "kw";
+            mark.textContent = m[0];
+            node.appendChild(mark);
+            last = m.index + m[0].length;
+            hits++;
+        }
+        node.appendChild(document.createTextNode(text.slice(last)));
+        return hits;
+    }
+    window.__lesenKeys = {
+        /* a و b: لائحتين ديال العناصر (نص عادي) — كنلونو ف a الكلمات
+           اللي كاينين ف b، والعكس. */
+        link: function (a, b) {
+            const sa = kwStems(a.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
+            const sb = kwStems(b.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
+            let hits = 0;
+            a.forEach(function (n) { hits += kwPaint(n, sb); });
+            b.forEach(function (n) { hits += kwPaint(n, sa); });
+            return hits;
+        },
+        clear: function (nodes) {
+            nodes.forEach(function (n) {
+                if (n && n.__kwText != null) { n.textContent = n.__kwText; n.__kwText = null; }
+            });
+        }
     };
 
     /* الصفحات العادية كترسم دغيا. الصفحات اللي كتبدل
@@ -246,9 +423,9 @@
         /* ---------- الأزرار ---------- */
 
         const actions = el("div", "lesen-actions");
-        const checkBtn = button("lesen-btn lesen-btn-check", "Antworten prüfen");
-        const showBtn = button("lesen-btn lesen-btn-show", "Lösungen anzeigen");
-        const retryBtn = button("lesen-btn lesen-btn-retry", "Nochmal versuchen");
+        const checkBtn = button("lesen-btn lesen-btn-check", "تحقق من الإجابات");
+        const showBtn = button("lesen-btn lesen-btn-show", "شوف الحل");
+        const retryBtn = button("lesen-btn lesen-btn-retry", "عاود من جديد");
         actions.append(checkBtn, showBtn, retryBtn);
         body.appendChild(actions);
 

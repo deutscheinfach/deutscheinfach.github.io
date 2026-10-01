@@ -10,6 +10,9 @@
 (function () {
     "use strict";
 
+    /* ?embed=1: الصفحة داخل Modelltest (iframe) */
+    const EMBEDDED = new URLSearchParams(location.search).get("embed") === "1";
+
     const grid = document.getElementById("lesen-grid");
     const toolbar = document.querySelector(".lesen-toolbar");
     const countEl = document.getElementById("lesen-count");
@@ -162,6 +165,11 @@
         { key: "sprach1", label: "Sprach 1" },
         { key: "sprach2", label: "Sprach 2" }
     ];
+    /* السمية الكاملة بالألمانية (زر «الجزء الجاي» فالامتحان) */
+    const PART_DE = {
+        teil1: "Lesen Teil 1", teil2: "Lesen Teil 2", teil3: "Lesen Teil 3",
+        sprach1: "Sprachbausteine Teil 1", sprach2: "Sprachbausteine Teil 2"
+    };
     const PART_LABEL = {};
     PARTS.forEach(function (p) { PART_LABEL[p.key] = p.label; });
 
@@ -536,6 +544,15 @@
         return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(".", ",");
     }
 
+    /* البار ديال فوق ديال الامتحان (كيتزاد لـbody) والساعة ديالو */
+    let examTop = null, examClock = null, examTopSize = null;
+    function dropExamTop() {
+        if (examClock) { clearInterval(examClock); examClock = null; }
+        if (examTopSize) { examTopSize.disconnect(); examTopSize = null; }
+        if (examTop) { examTop.remove(); examTop = null; }
+        document.documentElement.classList.remove("is-exam-focus");
+    }
+
     function openExam(n, part, push) {
         const exam = examList()[n - 1];
         if (!exam) { close(push); return; }
@@ -552,46 +569,107 @@
         detail.hidden = false;
         detail.textContent = "";
 
-        const head = document.createElement("div");
-        head.className = "lesen-detail-head";
+        /* ---- البار الصغير ديال فوق (بحال Zertify) ----
+           فالامتحان كنخبيو الهيدر الكبير و Telc B1/B2 (html.is-exam-focus)
+           وكنحطو بار واحد رقيق: ← · B2 PRÜFUNG n · عنوان الجزء ·
+           LESEN Teil 1 … SPRACHBAUSTEINE Teil 2 · الوقت (90 دقيقة). */
+        dropExamTop();
+        const top = document.createElement("div");
+        top.className = "exam-top";
+        const topIn = document.createElement("div");
+        topIn.className = "exam-top-inner";
+        top.appendChild(topIn);
+
         const back = document.createElement("button");
         back.type = "button";
-        back.className = "lesen-back";
-        back.textContent = "← اللائحة";
+        back.className = "exam-top-back";
+        back.setAttribute("aria-label", "رجوع للائحة");
+        back.title = "رجوع للائحة";
+        back.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" '
+            + 'stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+            + '<path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>';
         back.addEventListener("click", function () { close(true); });
-        head.appendChild(back);
-        const h1 = document.createElement("h1");
-        h1.className = "lesen-detail-title";
-        h1.appendChild(document.createTextNode("Prüfung " + n));
-        const ar = document.createElement("span");
-        ar.className = "lesen-card-ar";
-        ar.textContent = "(Lesen " + LV + " · امتحان كامل)";
-        h1.appendChild(ar);
-        head.appendChild(h1);
-        detail.appendChild(head);
+
+        const meta = document.createElement("div");
+        meta.className = "exam-top-meta";
+        const kicker = document.createElement("span");
+        kicker.className = "exam-top-kicker";
+        const lvl = document.createElement("b");
+        lvl.className = "exam-top-level";
+        lvl.textContent = LV;
+        kicker.append(lvl, document.createTextNode("Prüfung " + n));
+        const topTitle = document.createElement("strong");
+        topTitle.className = "exam-top-title";
+        meta.append(kicker, topTitle);
 
         const tabs = document.createElement("nav");
-        tabs.className = "lesen-tabs lesen-part-tabs exam-tabs";
+        tabs.className = "exam-tabs";
+        tabs.setAttribute("aria-label", "الأجزاء");
         PARTS.forEach(function (p) {
             const tab = document.createElement("button");
             tab.type = "button";
-            tab.className = "lesen-tab exam-tab" + (p.key === current ? " active" : "");
+            tab.className = "exam-tab" + (p.key === current ? " active" : "");
+            tab.title = exam.parts[p.key].title || "";
+            const full = PART_DE[p.key];                     /* "Sprachbausteine Teil 1" */
+            const kind = document.createElement("span");
+            kind.className = "exam-tab-kind";
+            kind.textContent = full.replace(/ Teil \d$/, "");
+            kind.dataset.short = kind.textContent === "Sprachbausteine" ? "Sprachb." : kind.textContent;
             const nr = document.createElement("span");
             nr.className = "exam-tab-nr";
-            nr.textContent = p.label;
-            const nm = document.createElement("span");
-            nm.className = "exam-tab-topic";
-            nm.textContent = exam.parts[p.key].title || "";
-            tab.append(nr, nm);
-            if (exam.parts[p.key].locked && !window.__deutschEinfachIsPremium) tab.classList.add("is-locked");
+            nr.textContent = full.slice(full.lastIndexOf("Teil"));
             const pts = document.createElement("span");
             pts.className = "exam-tab-pts";
-            pts.hidden = true;
-            tab.appendChild(pts);
+            pts.textContent = EXAM_MAX[p.key] + "P";
+            tab.append(kind, nr, pts);
+            if (exam.parts[p.key].locked && !window.__deutschEinfachIsPremium) tab.classList.add("is-locked");
             tab.addEventListener("click", function () { go(p.key); });
             tabs.appendChild(tab);
         });
-        detail.appendChild(tabs);
+
+        /* الوقت: 90 دقيقة ديال Lesen + Sprachbausteine بحال telc.
+           كيتحفظ فـsessionStorage باش refresh مايرجعوش لـ90. */
+        const clock = document.createElement("div");
+        clock.className = "exam-top-clock";
+        clock.innerHTML = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" '
+            + 'stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/>'
+            + '<path d="M12 7v5l3 2"/></svg>';
+        const clockText = document.createElement("span");
+        clock.appendChild(clockText);
+
+        topIn.append(back, meta, tabs, clock);
+        document.body.appendChild(top);
+        examTop = top;
+        document.documentElement.classList.add("is-exam-focus");
+        if (window.ResizeObserver) {
+            examTopSize = new ResizeObserver(function () {
+                document.documentElement.style.setProperty("--exam-top-h", top.offsetHeight + "px");
+            });
+            examTopSize.observe(top);
+        }
+
+        const TIME_KEY = "de-lesen-exam-" + LV + "-" + n;
+        const LIMIT = 90 * 60 * 1000;
+        let started = 0, frozen = null;
+        try { started = Number(sessionStorage.getItem(TIME_KEY)) || 0; } catch (e) { /* وضع خاص */ }
+        if (!started || Date.now() - started > 6 * 3600 * 1000) resetClock();
+        function resetClock() {
+            started = Date.now();
+            frozen = null;
+            try { sessionStorage.setItem(TIME_KEY, String(started)); } catch (e) { /* وضع خاص */ }
+        }
+        function tick() {
+            const left = frozen !== null ? frozen : Math.max(0, LIMIT - (Date.now() - started));
+            const sec = Math.ceil(left / 1000);
+            clockText.textContent = String(Math.floor(sec / 60)).padStart(2, "0") + ":" + String(sec % 60).padStart(2, "0");
+            clock.classList.toggle("is-low", frozen === null && left < 5 * 60 * 1000);
+            clock.classList.toggle("is-over", frozen === null && left === 0);
+            clock.classList.toggle("is-done", frozen !== null);
+            clock.title = frozen !== null ? "الوقت اللي بقا ليك ملي صححتي"
+                : left === 0 ? "سالا الوقت ديال الامتحان (90 دقيقة)" : "الوقت اللي باقي (90 دقيقة)";
+        }
+        tick();
+        examClock = setInterval(tick, 1000);
 
         if (examListener) window.removeEventListener("lesen-points", examListener);
         examListener = function (event) {
@@ -601,20 +679,34 @@
                 return;
             }
             const d = event.detail || {};
-            if (d.part !== current) return;
-            scores[current] = d.points;
+            if (!EXAM_MAX[d.part]) return;
+            scores[d.part] = d.points;
             paintScores();
         };
         window.addEventListener("lesen-points", examListener);
 
+        /* كل جزء فالحاوية ديالو، كيتبنا مرة وحدة وكيبقى (غير كيتخبى).
+           هكا الأجوبة ماكتضيعش ملي تدوز من جزء لجزء، وفالأخير
+           «صحح الامتحان كامل» كيصحح الخمسة دقة وحدة. */
         const stack = document.createElement("div");
-        stack.id = "lesen-stack";
-        stack.setAttribute("data-manual", "");
+        stack.className = "exam-parts";
         detail.appendChild(stack);
+        const boxes = {};
+        let graded = false;
+        PARTS.forEach(function (p) {
+            const box = document.createElement("div");
+            box.className = "exam-part";
+            box.hidden = true;
+            stack.appendChild(box);
+            boxes[p.key] = box;
+            renderPart(box, exam.parts[p.key], p.key, function () {
+                return !detail.hidden && document.body.contains(box);
+            });
+        });
 
-        const next = document.createElement("div");
-        next.className = "exam-next";
-        detail.appendChild(next);
+        /* الأزرار ديال الامتحان فالشريط الثابت تحت */
+        const nav = document.createElement("div");
+        nav.className = "lesen-actions exam-bar";
 
         const summary = document.createElement("div");
         summary.className = "exam-summary";
@@ -629,9 +721,13 @@
             Array.from(tabs.children).forEach(function (tab, i) {
                 const key = PARTS[i].key;
                 const badge = tab.querySelector(".exam-tab-pts");
-                if (scores[key] === undefined) { badge.hidden = true; return; }
-                badge.hidden = false;
+                if (scores[key] === undefined) {
+                    badge.textContent = EXAM_MAX[key] + "P";
+                    badge.classList.remove("has-score");
+                    return;
+                }
                 badge.textContent = fmtPts(scores[key]) + "/" + EXAM_MAX[key];
+                badge.classList.add("has-score");
             });
 
             const done = PARTS.filter(function (p) { return scores[p.key] !== undefined; });
@@ -673,8 +769,10 @@
 
             const note = document.createElement("p");
             note.className = "exam-summary-note";
-            note.textContent = done.length < PARTS.length
-                ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء. صحح كل جزء بـ «Antworten prüfen» باش تبان النتيجة الكاملة."
+            note.textContent = !graded
+                ? "صححتي " + done.length + " من " + PARTS.length + " ديال الأجزاء. كمل، وفالجزء الأخير «صحح الامتحان كامل» كيعطيك النتيجة كاملة."
+                : done.length < PARTS.length
+                ? "باقي " + (PARTS.length - done.length) + " ديال الأجزاء بلا تصحيح (مقفولين ولا ماتحملوش)."
                 : (total >= need
                     ? "🎉 ناجح! جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة)."
                     : "باقي شوية: جبتي " + Math.round(total / max * 100) + "٪ — خاصك على الأقل 60٪ (" + need + " نقطة). عاود الأجزاء الضعاف.");
@@ -688,30 +786,122 @@
             });
             history.replaceState({ pruefung: n, teil: current }, "", examUrl(n, current));
             paint();
-            tabs.scrollIntoView({ behavior: "smooth", block: "start" });
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
         function paint() {
-            const wanted = current;
-            renderPart(stack, exam.parts[current], current, function () {
-                return current === wanted && !detail.hidden;
-            });
+            PARTS.forEach(function (p) { boxes[p.key].hidden = p.key !== current; });
+            topTitle.textContent = exam.parts[current].title || "";
 
-            /* زر للجزء اللي من بعد */
-            next.textContent = "";
+            /* الشريط بحال Zertify: [↻ عاود] [السابق] [Lesen Teil 2 →]
+               — السمية ديال الجزء الجاي بالألمانية، و«السابق» ديما كاين
+               (مطفي ف Teil 1). فالجزء الأخير: «صحح الامتحان كامل». */
+            nav.textContent = "";
             const at = PARTS.findIndex(function (p) { return p.key === current; });
+            const before = PARTS[at - 1];
             const after = PARTS[at + 1];
-            const b = document.createElement("button");
-            b.type = "button";
-            b.className = "exam-next-btn";
-            if (after) {
-                b.textContent = "الجزء اللي من بعد: " + after.label + " ←";
-                b.addEventListener("click", function () { go(after.key); });
-            } else {
-                b.textContent = "✓ ساليتي الامتحان — رجع للائحة";
-                b.addEventListener("click", function () { close(true); });
+
+            function navButton(cls, text, dir, onClick) {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.className = "lesen-btn " + cls;
+                b.textContent = text;
+                b.dir = dir;
+                if (onClick) b.addEventListener("click", onClick);
+                nav.appendChild(b);
+                return b;
             }
-            next.appendChild(b);
+
+            /* من بعد النتيجة: الامتحان كامل من الأول (Teil 1 خاوي) */
+            /* بلا رسالة ديال المتصفح: الضغطة الأولى كتسول «متأكد؟» فالزر
+               نيت، والثانية (فـ4 ثواني) كتعاود — هاد الزر حدا «السابق». */
+            if (graded) {
+                const again = navButton("lesen-btn-retry exam-bar-again", "↻ عاود من الأول", "rtl", null);
+                let armed = null;
+                again.addEventListener("click", function () {
+                    if (armed) { clearTimeout(armed); armed = null; restartExam(); return; }
+                    again.textContent = "متأكد؟ كليكي مرة خرى";
+                    again.classList.add("is-armed");
+                    armed = setTimeout(function () {
+                        armed = null;
+                        again.textContent = "↻ عاود من الأول";
+                        again.classList.remove("is-armed");
+                    }, 4000);
+                });
+            }
+
+            const prev = navButton("lesen-btn-show exam-bar-prev", "السابق", "rtl",
+                before ? function () { go(before.key); } : null);
+            prev.disabled = !before;
+
+            if (after) {
+                navButton("lesen-btn-check exam-bar-main", PART_DE[after.key] + " →", "ltr",
+                    function () { go(after.key); });
+            } else if (EMBEDDED) {
+                /* داخل Modelltest: ماكاينش تصحيح هنا — كندوزو لـ Hören،
+                   والتصحيح كامل كيكون ف اللخر (modelltest.js). */
+                navButton("lesen-btn-check exam-bar-main", "Hören →", "ltr", function () {
+                    window.dispatchEvent(new CustomEvent("exam-next"));
+                });
+            } else if (!graded) {
+                navButton("lesen-btn-check exam-bar-main", "✓ صحح الامتحان كامل", "rtl", gradeAll);
+            } else {
+                navButton("lesen-btn-check exam-bar-main", "شوف النتيجة", "rtl", function () {
+                    summary.scrollIntoView({ behavior: "smooth", block: "center" });
+                });
+            }
+
+            /* قبل النتيجة: «تحقق» كيصحح غير الجزء اللي فيه.
+               من بعد: «شوف الحل» ديال الجزء + «عاود الامتحان من الأول». */
+            if (typeof window.__lesenBarExtra === "function") {
+                window.__lesenBarExtra(nav, stack, { mode: graded ? "done" : "live" });
+            }
+        }
+
+        function partButton(box, cls) {
+            const inPlace = box.querySelector(".lesen-actions ." + cls);
+            if (inPlace) return inPlace;
+            const anchor = box.querySelector(".lesen-actions-anchor");
+            return anchor && anchor.__actions
+                ? anchor.__actions.querySelector("." + cls) : null;
+        }
+        function checkButton(box) { return partButton(box, "lesen-btn-check"); }
+
+        function restartExam() {
+            PARTS.forEach(function (p) {
+                const btn = partButton(boxes[p.key], "lesen-btn-retry");
+                if (btn) btn.click();
+                delete scores[p.key];
+            });
+            graded = false;
+            resetClock();
+            tick();
+            paintScores();
+            go("teil1");
+        }
+
+        /* Modelltest كيعيط لهادي ملي كيدوز لـ Hören: كيصحح الأجزاء كاملين
+           (كيتصيفطو lesen-points) بلا ما نبدلو الصفحة. */
+        if (EMBEDDED) window.__examGradeAll = function () {
+            PARTS.forEach(function (p) {
+                const btn = checkButton(boxes[p.key]);
+                if (btn && scores[p.key] == null) btn.click();
+            });
+        };
+
+        function gradeAll() {
+            graded = true;
+            frozen = Math.max(0, LIMIT - (Date.now() - started));
+            tick();
+            PARTS.forEach(function (p) {
+                const btn = checkButton(boxes[p.key]);
+                if (btn) btn.click();
+            });
+            paint();
+            paintScores();
+            setTimeout(function () {
+                summary.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 60);
         }
     }
 
@@ -727,6 +917,7 @@
     function open(themaId, part, push) {
         const topic = topics.find(function (t) { return t.id === themaId; });
         if (!topic) { close(push); return; }
+        dropExamTop();
 
         if (push) history.pushState({ thema: themaId, teil: part }, "", pageUrl(themaId, part));
 
@@ -814,6 +1005,7 @@
     }
 
     function close(push) {
+        dropExamTop();
         if (push) history.pushState({}, "", location.pathname);
         detail.hidden = true;
         detail.textContent = "";

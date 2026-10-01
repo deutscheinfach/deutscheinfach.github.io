@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
+<script src="assets/theme-toggle.js?v=1e586e51"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script id="telc-theme-boot">(function(){const savedTheme=localStorage.getItem('theme');if(savedTheme==='dark'){document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,28 +12,29 @@
 <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-<link rel="stylesheet" href="assets/theme.css?v=82fd95b2">
+<link rel="stylesheet" href="assets/theme.css?v=04a185db">
 <script src="assets/stars.js?v=df3dede2" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
 <script src="assets/hoeren-premium.js?v=9a8df7cd"></script>
-<link rel="stylesheet" href="assets/site-header.css?v=be6560fe">
+<script src="assets/hoeren-keys.js?v=a46afc39" defer></script>
+<link rel="stylesheet" href="assets/site-header.css?v=3eb55250">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
 
   <title>Telc B1 Hören Teil 3 – Übungen online | Deutsch Einfach</title>
   <style>
     :root { --de-red: var(--gold); --de-red-dark: var(--gold-dark); --de-yellow: var(--gold-soft); --de-black: var(--surface-2); }
     body { background: radial-gradient(circle at 12% 6%, rgba(214,178,94,.10), transparent 40%),radial-gradient(circle at 88% 24%, rgba(214,178,94,.07), transparent 44%),#08090c; font-family: Arial, sans-serif; padding: 30px; }
-    .btn-check { margin-top: 20px; padding: 10px 18px; font-size: 16px; background-color: var(--de-red); color: white; border: none; border-radius: 8px; cursor: pointer; }
+    .btn-check { margin-top: 20px; padding: 10px 18px; font-size: 16px; background-color: var(--de-red); color: var(--on-brand); border: none; border-radius: 8px; cursor: pointer; }
     .btn-check:hover { background-color: var(--de-red-dark); }
     .correct { background-color: rgba(74,222,128,.14); }
     .wrong { background-color: rgba(255,107,107,.14); }
-    #warningBox { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--de-red); color: #fff; padding: 15px 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); font-size: 14px; font-weight: bold; z-index: 9999; }
+    #warningBox { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--de-red); color: var(--on-brand); padding: 15px 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); font-size: 14px; font-weight: bold; z-index: 9999; }
     .teil-nav-wrap { display: flex; justify-content: center; gap: 10px; margin: 0 auto 24px; flex-wrap: wrap; max-width: 7xl; }
-    .teil-nav-btn { padding: 10px 26px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; background: var(--surface); border: 2px solid var(--de-red); color: var(--de-red); transition: .22s; }
-    .teil-nav-btn:hover { background: var(--de-red); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(214,178,94,0.2); }
-    .teil-nav-btn.active { background: var(--de-red); color: #fff; box-shadow: 0 4px 12px rgba(214,178,94,0.25); }
+    .teil-nav-btn { padding: 10px 26px; border-radius: 10px; font-weight: 700; font-size: 15px; text-decoration: none; background: var(--surface); border: 2px solid var(--de-red); color: var(--accent-text); transition: .22s; }
+    .teil-nav-btn:hover { background: var(--de-red); color: var(--on-brand); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(214,178,94,0.2); }
+    .teil-nav-btn.active { background: var(--de-red); color: var(--on-brand); box-shadow: 0 4px 12px rgba(214,178,94,0.25); }
     html.dark .teil-nav-btn { background: #1f1f1f; border-color: var(--de-red); color: #f1f1f1; }
-    html.dark .teil-nav-btn.active { background: var(--de-red); color: #fff; }
+    html.dark .teil-nav-btn.active { background: var(--de-red); color: var(--on-brand); }
   </style>
 <!-- AUTO_NAV_START -->
 <style>
@@ -181,7 +183,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     height: 30px;
     border-radius: 50%;
     background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
-    color: #fff;
+    color: var(--on-brand);
     font-weight: 800;
     font-size: 13px;
     display: flex;
@@ -197,7 +199,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   html.dark .theme-item-title { color: #f1f1f1; }
   .theme-item-chevron {
     flex: 0 0 auto;
-    color: var(--de-red);
+    color: var(--accent-text);
     transition: transform .25s ease;
   }
   .theme-item.collapsed .theme-item-chevron { transform: rotate(-90deg); }
@@ -233,7 +235,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--de-red), var(--de-red-dark));
-    color: #fff;
+    color: var(--on-brand);
     font-size: 18px;
     box-shadow: 0 6px 14px rgba(214,178,94,0.16);
   }
@@ -250,7 +252,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     padding: 0 14px;
     border-radius: 11px;
     background: var(--de-red);
-    color: #fff !important;
+    color: var(--on-brand) !important;
     text-decoration: none;
     font-size: 12px;
     font-weight: 800;
@@ -278,7 +280,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     align-items: center;
     justify-content: center;
     gap: 10px;
-    color: var(--de-red);
+    color: var(--accent-text);
     font-weight: 700;
     font-size: 14px;
   }
@@ -328,7 +330,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   .nq-question-number {
     display: inline-flex; align-items: center; justify-content: center;
     width: 26px; height: 26px; border-radius: 8px;
-    background: var(--de-red); color: #fff; font-size: 12px; font-weight: 800; margin-right: 7px;
+    background: var(--de-red); color: var(--on-brand); font-size: 12px; font-weight: 800; margin-right: 7px;
   }
   .nq-answers { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
   .nq-radio-option {
@@ -357,7 +359,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
     transition: transform .2s, box-shadow .2s;
   }
   .nq-btn:hover { transform: translateY(-2px); }
-  .nq-btn-check { background: var(--de-red); color: #fff; box-shadow: 0 7px 18px rgba(214,178,94,0.22); }
+  .nq-btn-check { background: var(--de-red); color: var(--on-brand); box-shadow: 0 7px 18px rgba(214,178,94,0.22); }
   .nq-btn-show { background: var(--surface-2); color: var(--text); }
   html.dark .nq-btn-show { background: var(--surface-2); color: var(--text); }
   .nq-btn-retry { background: var(--de-yellow); color: var(--text); }
@@ -366,7 +368,7 @@ img, svg, video, canvas { display: block; max-width: 100%; }
   html.dark .nq-result-box:not(:empty) { border-color: #3a3a3a; }
   .nq-result-success { color: #16803c; }
   html.dark .nq-result-success { color: #51d88a; }
-  .nq-result-info { color: var(--de-red); }
+  .nq-result-info { color: var(--accent-text); }
   @media (max-width: 620px) {
     .nq-question-row { grid-template-columns: 1fr; gap: 10px; }
     .nq-answers { justify-content: flex-start; }
@@ -419,13 +421,13 @@ body{
 .teil-nav-btn:hover{
   background: rgba(214,178,94,.12) !important;
   border-color: var(--gold) !important;
-  color: var(--gold) !important;
+  color: var(--accent-text) !important;
   box-shadow: 0 10px 24px rgba(214,178,94,.13) !important;
 }
 .teil-nav-btn.active{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
   border-color: var(--gold) !important;
-  color: #fff !important;
+  color: var(--on-brand) !important;
   box-shadow: 0 9px 22px rgba(214,178,94,.25) !important;
 }
 
@@ -470,7 +472,7 @@ body{
   letter-spacing: .1px !important;
 }
 #hoeren-teil3-stack .theme-item-chevron{
-  color: var(--brand) !important;
+  color: var(--accent-text) !important;
 }
 #hoeren-teil3-stack .theme-item-index{
   background: linear-gradient(135deg,var(--gold),var(--gold-dark)) !important;
@@ -672,7 +674,7 @@ body{
 .hoeren-sticky-nav .hoeren-nav-back:hover,
 .hoeren-sticky-nav .hoeren-nav-start:hover{
   background: var(--surface) !important;
-  color: var(--brand) !important;
+  color: var(--accent-text) !important;
   transform: translateY(-2px) !important;
 }
 
@@ -682,7 +684,7 @@ body{
   border: 1px solid var(--border) !important;
 }
 .hoeren-sticky-nav .hoeren-nav-part:hover{
-  color: var(--gold) !important;
+  color: var(--accent-text) !important;
   border-color: var(--gold) !important;
   background: rgba(214,178,94,.12) !important;
   transform: translateY(-2px) !important;
@@ -831,12 +833,12 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
 }
 .premium-theme-icon{
   background: var(--surface-2) !important;
-  color: var(--brand) !important;
+  color: var(--accent-text) !important;
   box-shadow: 0 6px 14px rgba(23,23,23,.18) !important;
 }
 .premium-theme-open{
   background: var(--surface-2) !important;
-  color: var(--brand) !important;
+  color: var(--accent-text) !important;
   border: 1px solid var(--border) !important;
 }
 .premium-theme-open:hover{
@@ -847,7 +849,7 @@ html.dark .hoeren-sticky-nav .hoeren-nav-divider{
 html.dark .premium-theme-body{background: #1b1b1b !important;}
 html.dark .premium-theme-open{
   background: #111318 !important;
-  color: var(--brand) !important;
+  color: var(--accent-text) !important;
   border-color: #343842 !important;
 }
 html.dark .premium-theme-open:hover{
@@ -869,7 +871,7 @@ html.dark .premium-theme-open:hover{
 </style>
 
 
-<style id="hoeren-v4">
+<style id="hoeren-v4" media="not all">
 /* v4 — ذهبي وأسود: البطائق والشريط ديال فوق داكنين، والنص فاتح */
 html body .hoeren-sticky-nav,
 html body .telc-exercise-topbar {
@@ -966,13 +968,14 @@ html body #hoeren-teil3-stack .nq-note b { color: #6b4f14; font-weight: 900; }
 <meta property="og:locale" content="ar_MA">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#e3163f">
 <!-- seo:end -->
 </head>
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <div id="site-header" data-active="hoeren"></div>
-<script src="assets/site-header.js?v=ec4161ae"></script>
+<script src="assets/site-header.js?v=fcd9ed53"></script>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
   <a class="hoeren-nav-btn hoeren-nav-back" href="b1-hoeren.html">
@@ -1382,6 +1385,7 @@ window.__deutschEinfachPremiumReady = (async function () {
 
       row.appendChild(answers);
       wrap.appendChild(row);
+      row.dataset.answer = q.answer;   /* assets/hoeren-keys.js */
       rows.push({ row: row, textEl: textEl, name: qid + "_q" + (i + 1), answer: q.answer });
     });
 
@@ -1648,8 +1652,7 @@ function sendPing() {
     const now = Date.now();
     if (now - lastPing < 10000) return; 
     lastPing = now;
-    if (navigator.sendBeacon && navigator.sendBeacon("/ping")) { return; }
-    fetch("/ping", { keepalive: true }).catch(() => {});
+    /* GitHub Pages ماعندوش /ping، ف ما كنصيفطو والو: كنحسبو غير النشاط محليا. */
 }
 
 function resetTimers() {
@@ -1897,7 +1900,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 
     <a href="#" class="de-premium-whatsapp" onclick="chooseHoerenTeil3Offer(event,'Kontakt über WhatsApp')">
       <i class="fa-brands fa-whatsapp"></i>
-      <span>WhatsApp: 0653618205</span>
+      <span>WhatsApp: 0776551898</span>
     </a>
   </div>
 </div>
@@ -1988,7 +1991,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
   border-color: var(--gold);
 }
 .de-premium-offer strong{font-size: 15px;}
-.de-premium-offer span{font-size: 20px;font-weight: 900;color: var(--brand);}
+.de-premium-offer span{font-size: 20px;font-weight: 900;color: var(--accent-text);}
 .de-premium-offer small{font-size: 11px;opacity: .82;}
 .de-premium-whatsapp{
   margin-top: 14px;
@@ -2008,7 +2011,7 @@ html.dark .nq-summary-correct{color: #51d88a !important;}
 }
 .de-premium-whatsapp:hover{
   background: var(--gold);
-  color: #fff;
+  color: var(--on-brand);
   border-color: var(--gold);
 }
 html.dark .de-premium-box{background: #17191f;border-color: #30343d;}
@@ -2027,7 +2030,7 @@ html.dark .de-premium-offer:hover{background: var(--gold);border-color: var(--go
 
 <script>
 (function(){
-  const HOEREN_TEIL3_WHATSAPP_NUMBER = "212653618205";
+  const HOEREN_TEIL3_WHATSAPP_NUMBER = "212776551898";
   let selectedHoerenTeil3Topic = "";
 
   window.openHoerenTeil3Premium = function(topic){
@@ -2058,16 +2061,11 @@ html.dark .de-premium-offer:hover{background: var(--gold);border-color: var(--go
 
   window.chooseHoerenTeil3Offer = function(event, offer){
     event.preventDefault();
-    var message =
-      "Salam, bghit nفتح الولوج لـ Hören B1 Teil 3" +
-      "\nThema: " + selectedHoerenTeil3Topic +
-      "\nAngebot: " + offer;
-
-    window.open(
-      "https://wa.me/" + HOEREN_TEIL3_WHATSAPP_NUMBER +
-      "?text=" + encodeURIComponent(message),
-      "_blank"
-    );
+    window.open(deWhatsAppUrl({
+      offer: offer === "Kontakt über WhatsApp" ? "" : offer,
+      section: "Hören B1 · Teil 3",
+      topic: selectedHoerenTeil3Topic
+    }), "_blank");
   };
 
   document.addEventListener("keydown",function(event){
@@ -2201,7 +2199,7 @@ html[data-theme="light"] #hoeren-teil1-stack .nq-question-row{
 /* الأزرار اللي كان نصها أبيض مفروض */
 html[data-theme="light"] .auto-nav-btn.auto-nav-secondary{
   background: var(--gold) !important;
-  color: #fff !important;
+  color: var(--on-brand) !important;
 }
 /* الصح والغلط كيبقاو نفس المعنى */
 html[data-theme="light"] .nq-question-row.nq-wrong{ background: rgba(198,40,40,.09) !important; }
@@ -2237,5 +2235,6 @@ body{ padding-top: var(--site-header-h, 72px) !important; }
   .hoeren-sticky-nav .hoeren-nav-btn{ min-height: 44px !important; }
 }
 </style>
+<script src="assets/whatsapp.js?v=56de1cb7"></script>
 </body>
 </html>

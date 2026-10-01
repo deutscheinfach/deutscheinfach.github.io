@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deutsch-einfach.online/"
-IMAGE = SITE + "icon1.png"
+IMAGE = SITE + "assets/icon-512.png"
 BRAND = "Deutsch Einfach"
 
 # ---------------------------------------------------------------- الصفحات
@@ -92,8 +92,11 @@ PAGES = {
 
     # ---- أدوات
     "modelltest.html": ("Telc B2 Modelltest online mit Timer | Deutsch Einfach",
-        "امتحان تجريبي كامل ديال telc B2 بالوقت: Lesen، Sprachbausteine، Hören و Schreiben، والنتيجة من 225. "
+        "امتحان تجريبي ديال telc B2 بالوقت: Lesen، Sprachbausteine و Hören، والتصحيح والنتيجة ف اللخر. "
         "Telc B2 Modelltest online.", "0.8"),
+    "einstufungstest.html": ("Einstufungstest Deutsch kostenlos – A2, B1 oder B2? | Deutsch Einfach",
+        "اختبار مجاني يعرفك المستوى ديالك ف الألمانية ف 10 دقايق (A2، B1، B2) مع خطة 30 يوم لـ telc. "
+        "Deutsch Einstufungstest online kostenlos.", "0.9"),
     "wortschatz.html": ("Wortschatz B1/B2 – 1000 Wörter mit Karteikarten | Deutsch Einfach",
         "تعلم 1000 كلمة ألمانية مهمة لـ telc B1 و B2 بالبطاقات والمراجعة الذكية، مع الترجمة للعربية. Wortschatz trainieren.", "0.8"),
     "payment.html": ("Premium – Preise und Zahlung | Deutsch Einfach",
@@ -105,7 +108,7 @@ NOINDEX = [
     "login.html", "signup.html", "forgot-password.html", "premium-check.html",
     "fortschritt.html", "chat.html", "404.html",
     "50-euro.html", "europaeischen.html", "die-tschechische-stadt-pilsen.html",
-    "thema1.html", "lesen-teil1.html",
+    "thema1.html", "lesen-teil1.html", "admin.html",
 ]
 
 
@@ -186,7 +189,10 @@ def seo_block(f, title, desc, noindex):
         f'<meta property="og:image" content="{IMAGE}">',
         '<meta property="og:locale" content="ar_MA">',
         '<meta name="twitter:card" content="summary">',
-        '<link rel="icon" href="icon1.png">',
+        '<link rel="icon" href="assets/icon-32.png" sizes="32x32">',
+        '<link rel="apple-touch-icon" href="assets/icon-180.png">',
+        '<link rel="manifest" href="manifest.webmanifest">',
+        '<meta name="theme-color" content="#e3163f">',
     ]
     if f == "index.html":
         lines.append('<script type="application/ld+json">'

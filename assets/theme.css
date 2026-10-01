@@ -338,7 +338,7 @@ table { display: block; max-width: 100%; overflow-x: auto; }
     font-weight: 900;
     line-height: 1;
     background: color-mix(in srgb, var(--gold) 14%, transparent);
-    color: var(--gold);
+    color: var(--accent-text);
 }
 .ar-toggle.is-on {
     background: linear-gradient(135deg, var(--gold), var(--gold-dark));
@@ -378,7 +378,7 @@ table { display: block; max-width: 100%; overflow-x: auto; }
     margin-bottom: 4px;
     font-size: 12px;
     font-weight: 900;
-    color: var(--gold);
+    color: var(--accent-text);
 }
 .ar-block p {
     margin: 0;
@@ -442,7 +442,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-check, .quiz-btn.btn-check, .btn-check, .check-btn, .auto-nav-btn.auto-nav-secondary, .hoeren-nav-btn.active) {
     background: var(--grad-brand) !important;
-    color: #fff !important;
+    color: var(--on-brand) !important;
     border: 1.5px solid transparent !important;
     box-shadow: var(--shadow-brand) !important;
 }
@@ -453,8 +453,8 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
     box-shadow: var(--shadow-navy) !important;
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
-    background: #fff !important;
-    color: var(--navy) !important;
+    background: var(--surface) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
     border: 1.5px solid var(--navy) !important;
     box-shadow: 0 1px 2px rgba(16,26,54,.08) !important;
 }
@@ -557,7 +557,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
     background: #26262e !important;
-    color: var(--brand-light) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
     border: 1.5px solid var(--line-gold) !important;
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
@@ -567,7 +567,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)):hover {
     border-color: var(--brand) !important;
-    color: var(--brand-light) !important;
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
 }
 
 /* زر الترجمة */
@@ -627,6 +627,412 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     }
 }
 
+
+/* =====================================================================
+   v5 — أبيض White Dove (Benjamin Moore OC-17) + بوردو + أصفر العلم
+   =====================================================================
+   · الخلفية: #EFEDE6 (OC-17 White Dove)، البطائق بيضا صافية.
+   · جوج بندات رقاق بالبوردو على الجناب ديال الشاشة.
+   · تظليل (vignette) 45٪ فالزوايا — فالخلفية فقط، المحتوى صافي.
+   · كل حاجة كتكليكا (أزرار، تبويبات، اختيارات) بالأصفر ديال العلم
+     الألماني #FFCE00 وكتابة كحلة عليها.
+   · الكتابة الملونة (عناوين صغار، تسميات) بالبوردو — الأصفر على
+     الأبيض ماكيتقراش.
+   كيجي فالأخير، إذن كيغلب v3/v4 بلا ما نمسحوهم. */
+:root {
+    color-scheme: light;
+
+    --bordeaux: #7a1426;
+    --bordeaux-2: #8e1b30;
+    --accent-text: #7a1426;
+    --grad-text: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%);
+    --band-w: 10px;
+
+    --brand: #ffce00;
+    --brand-dark: #e6b800;
+    --brand-deep: #b38f00;
+    --brand-light: #ffdc4d;
+    --brand-soft: rgba(255,206,0,.20);
+    --brand-tint: rgba(255,206,0,.12);
+    --on-brand: #1e1b18;
+
+    --navy: #7a1426;
+    --navy-2: #8e1b30;
+    --navy-3: #a3243b;
+    --grad-navy: linear-gradient(145deg, #8e1b30 0%, #7a1426 55%, #5e0f1d 100%);
+    --sun: #ffce00;
+
+    --flag-gold: #ffce00;
+    --flag-black: #000000;
+
+    --grad-brand: linear-gradient(135deg, #ffe04d 0%, #ffce00 50%, #f2bc00 100%);
+    --grad-ink: linear-gradient(145deg, #8e1b30 0%, #5e0f1d 100%);
+
+    --ink: #1e1b18;
+    --paper: #efede6;
+    --surface: #ffffff;
+    --surface-2: #f6f4ee;
+    --bg: var(--paper);
+    --card: var(--surface);
+
+    --text: #1e1b18;
+    --muted: #5e574f;
+
+    --line: rgba(30,27,24,.12);
+    --line-gold: rgba(122,20,38,.22);
+
+    --ok: #15803d;
+    --danger: #c81e1e;
+
+    --shadow: 0 1px 2px rgba(30,27,24,.06), 0 10px 28px -12px rgba(30,27,24,.20);
+    --shadow-lg: 0 2px 4px rgba(30,27,24,.06), 0 28px 56px -20px rgba(30,27,24,.30);
+    --shadow-brand: 0 12px 26px -12px rgba(230,184,0,.60);
+    --shadow-navy: 0 12px 28px -14px rgba(94,15,29,.45);
+    --ring: 0 0 0 4px rgba(255,206,0,.35);
+}
+@media (max-width: 700px) { :root { --band-w: 6px; } }
+
+html body {
+    background: var(--paper) !important;
+    color: var(--text);
+}
+/* البندات + التظليل: طبقة ثابتة ورا المحتوى (كتخدم حتى فالتيليفون) */
+html::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    background:
+        linear-gradient(90deg,
+            var(--bordeaux) 0 var(--band-w),
+            transparent var(--band-w) calc(100% - var(--band-w)),
+            var(--bordeaux) calc(100% - var(--band-w)) 100%),
+        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.45) 100%) !important;
+}
+html::before {
+    height: 3px;
+    background: var(--bordeaux) !important;
+}
+.de-stars { display: none !important; }
+::selection { background: rgba(255,206,0,.45); color: var(--text); }
+* { scrollbar-color: rgba(122,20,38,.35) transparent; }
+::-webkit-scrollbar-thumb { background: rgba(30,27,24,.22); }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(122,20,38,.55); }
+:focus-visible { outline-color: var(--bordeaux); }
+input, textarea, select { color-scheme: light; }
+.gold-text {
+    background: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+}
+
+/* أزرار Hören (القديمة فيهم #id و!important) */
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    border: 1.5px solid var(--line) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)) {
+    border-color: var(--line) !important;
+}
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-retry, .quiz-btn.btn-retry, .hoeren-nav-btn:not(.active)):hover {
+    color: var(--accent-text) !important; font-weight: var(--accent-weight);
+}
+/* الهيدر: البار شفاف ورا الكبسولة — الـblur كان كيضبب البندات والتظليل */
+html body .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; }
+html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, body) :is(.nq-btn-show, .quiz-btn.btn-show, .auto-nav-btn:not(.auto-nav-secondary)) {
+    border-color: var(--brand) !important;
+}
+
+/* =====================================================================
+   v5 · الوضع المظلم — <html data-theme="dark"> (assets/theme-toggle.js)
+   =====================================================================
+   نفس الهوية: البندات بوردو، الكليكات صفرا. غير الخلفية والبطائق
+   كيوليو داكنين والكتابة فاتحة. الكتابة الملونة بوردو فاتح (وردي)
+   باش تتقرا على الأسود. */
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #121015;
+    --surface: #1c181e;
+    --surface-2: #262128;
+    --bg: var(--paper);
+    --card: var(--surface);
+    --text: #f1ebe4;
+    --muted: #b8ada3;
+    --line: rgba(255,255,255,.11);
+    --line-gold: rgba(232,137,154,.28);
+    /* الكتابة الملونة (عناوين، تسميات) فالمظلم: بيضا وغليظة */
+    --accent-text: #ffffff;
+    --accent-weight: 800;
+    --grad-text: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+    --brand-soft: rgba(255,206,0,.16);
+    --brand-tint: rgba(255,206,0,.10);
+    --shadow: 0 1px 2px rgba(0,0,0,.45), 0 12px 30px -12px rgba(0,0,0,.7);
+    --shadow-lg: 0 2px 4px rgba(0,0,0,.5), 0 30px 60px -22px rgba(0,0,0,.8);
+    --ok: #4ade80;
+    --danger: #f87171;
+}
+:root[data-theme="dark"]::after {
+    background:
+        linear-gradient(90deg,
+            var(--bordeaux) 0 var(--band-w),
+            transparent var(--band-w) calc(100% - var(--band-w)),
+            var(--bordeaux) calc(100% - var(--band-w)) 100%),
+        radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,.45) 100%) !important;
+}
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select { color-scheme: dark; }
+:root[data-theme="dark"] ::selection { color: #fff; }
+
+/* ---- زر الوضع ---- */
+.de-theme-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.de-theme-btn.is-floating {
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    left: calc(var(--band-w, 10px) + 10px);
+    z-index: 2147482000;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid var(--brand);
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+.de-theme-btn.is-floating:hover { background: var(--brand); color: var(--on-brand); }
+html.is-embed .de-theme-btn { display: none !important; }
+.de-theme-btn.is-chat {
+    margin-inline-start: auto;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.55);
+    background: rgba(255,255,255,.08);
+    color: #fff;
+}
+.de-theme-btn.is-chat:hover { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+
+/* ---- الوضع المظلم: الصفحات اللي عندها لوحة ديالها (الدخول، العروض…) ----
+   :root[data-theme] (0,2,0) كيغلب :root ديال الصفحة (0,1,0). */
+:root[data-theme="dark"] {
+    --dark: var(--text);
+    --gray: var(--muted);
+    --light: var(--surface-2);
+    --white: var(--surface);
+    --black: var(--text);
+    --bg-soft: var(--surface-2);
+    --text-dim: var(--muted);
+    --text-faint: #8f857c;
+    --border: var(--line);
+    --border-strong: var(--line-gold);
+    --sidebar-hover: rgba(255,255,255,.08);
+}
+:root[data-theme="dark"] body::before { background: none !important; }
+:root[data-theme="dark"] .hoeren-sticky-nav { background: color-mix(in srgb, var(--surface) 92%, transparent) !important; border-color: var(--line) !important; }
+:root[data-theme="dark"] :is(.back-button, .offer) { background: var(--surface); color: var(--text); }
+:root[data-theme="dark"] :is(input, textarea, select):not([type="radio"]):not([type="checkbox"]) { background-color: var(--surface-2); color: var(--text); border-color: var(--line); }
+/* مناطق «الورقة البيضا» (النصوص، الأسئلة، خانة الكتابة) كيبقاو فاتحين
+   بكتابة كحلة فحتى الوضع المظلم — كتقرا بحال فالكتاب. */
+:root[data-theme="dark"] :is(.editor, #editor, .writing-area) :is(textarea, [contenteditable]) { background-color: #fffdf8; color: #1c1a16; }
+:root[data-theme="dark"] .lesen-search input { background-color: transparent !important; border-color: transparent !important; }
+
+/* المظلم: كل كتابة ملونة (--accent-text) كتولي بيضا وغليظة — مولّد من الأوراق كاملين */
+:root[data-theme="dark"] .header-btn:hover,
+:root[data-theme="dark"] .breadcrumb a,
+:root[data-theme="dark"] .info-card i,
+:root[data-theme="dark"] .result-info,
+:root[data-theme="dark"] .page-footer strong,
+:root[data-theme="dark"] .btn-show,
+:root[data-theme="dark"] .task-title-block .sub,
+:root[data-theme="dark"] .translate-btn:hover,
+:root[data-theme="dark"] .umlaut-btns button:hover,
+:root[data-theme="dark"] .result-score .num,
+:root[data-theme="dark"] .result-close:hover,
+:root[data-theme="dark"] .premium-btn.ghost:hover,
+:root[data-theme="dark"] .offer-box h3,
+:root[data-theme="dark"] .timer-pill.low,
+:root[data-theme="dark"] .task-header .task-title-block .sub,
+:root[data-theme="dark"] .lesen-back:hover,
+:root[data-theme="dark"] .lesen-teil-btn:hover,
+:root[data-theme="dark"] .lesen-badge,
+:root[data-theme="dark"] .lesen-text h3,
+:root[data-theme="dark"] .lesen-text-label { font-weight: 800; }
+:root[data-theme="dark"] .lesen-sort:hover,
+:root[data-theme="dark"] .lesen-chip-level,
+:root[data-theme="dark"] .lesen-card:hover .lesen-card-go,
+:root[data-theme="dark"] .lesen-card.locked .lesen-card-go,
+:root[data-theme="dark"] .part-icon,
+:root[data-theme="dark"] .part-card.locked .part-cta,
+:root[data-theme="dark"] .chip-pro,
+:root[data-theme="dark"] .sp-btn-ghost:hover,
+:root[data-theme="dark"] .sp-btn-rec.on,
+:root[data-theme="dark"] .sp-point-num,
+:root[data-theme="dark"] .sp-phrase-head,
+:root[data-theme="dark"] .t1-text-num,
+:root[data-theme="dark"] .t1-summary > summary,
+:root[data-theme="dark"] .t1-progress,
+:root[data-theme="dark"] .pg-chip,
+:root[data-theme="dark"] .pg-btn-ghost:hover,
+:root[data-theme="dark"] .pg-peek-num,
+:root[data-theme="dark"] .lesen-card.locked .lesen-card-go::after,
+:root[data-theme="dark"] .t3-ad-key,
+:root[data-theme="dark"] .t3-ad-slot { font-weight: 800; }
+:root[data-theme="dark"] .t2-q-changed,
+:root[data-theme="dark"] .t2-sub,
+:root[data-theme="dark"] .lesen-stat b,
+:root[data-theme="dark"] .sp2-hint.is-on,
+:root[data-theme="dark"] .sp2-key,
+:root[data-theme="dark"] .sp2-pop-title,
+:root[data-theme="dark"] .e1-task-label,
+:root[data-theme="dark"] .e1-btn-soft,
+:root[data-theme="dark"] .e1-peek-label,
+:root[data-theme="dark"] .e1-examiner-who,
+:root[data-theme="dark"] .e1-answer-n,
+:root[data-theme="dark"] .e2-phase-hint,
+:root[data-theme="dark"] .e3-line-b .e3-who,
+:root[data-theme="dark"] .exam-card-parts b,
+:root[data-theme="dark"] .lesen-tab:hover,
+:root[data-theme="dark"] .lesen-card-title,
+:root[data-theme="dark"] .lesen-btn-retry,
+:root[data-theme="dark"] .e1-btn:not(.e1-btn-main):not(.e1-btn-soft),
+:root[data-theme="dark"] .sp-btn-ghost,
+:root[data-theme="dark"] .lesen-back { font-weight: 800; }
+:root[data-theme="dark"] .e1-btn-main.is-early,
+:root[data-theme="dark"] .ar-toggle,
+:root[data-theme="dark"] .t1-title,
+:root[data-theme="dark"] .e1-stage-title,
+:root[data-theme="dark"] .lesen-detail-title,
+:root[data-theme="dark"] .t1-kicker,
+:root[data-theme="dark"] .lesen-head-row .lesen-badge,
+:root[data-theme="dark"] .lesen-head-row .lesen-stat b,
+:root[data-theme="dark"] .lesen-card .lesen-card-go,
+:root[data-theme="dark"] .lesen-btn-show,
+:root[data-theme="dark"] .lesen-btn-retry:hover,
+:root[data-theme="dark"] .e1-btn:not(.e1-btn-main):not(.e1-btn-soft):hover,
+:root[data-theme="dark"] .t1-option-key,
+:root[data-theme="dark"] .t3-sit-num,
+:root[data-theme="dark"] .sp-gap-num,
+:root[data-theme="dark"] .e3-text.is-mine .e3-badge,
+:root[data-theme="dark"] .e3-add,
+:root[data-theme="dark"] .e3-who,
+:root[data-theme="dark"] .exam-top-back:hover,
+:root[data-theme="dark"] .exam-top-level { font-weight: 800; }
+:root[data-theme="dark"] .exam-tab-kind,
+:root[data-theme="dark"] .exam-top-clock svg,
+:root[data-theme="dark"] .site-brand-name span,
+:root[data-theme="dark"] .site-btn:hover,
+:root[data-theme="dark"] .site-premium,
+:root[data-theme="dark"] .site-menu-up,
+:root[data-theme="dark"] .site-bell.has-news,
+:root[data-theme="dark"] .site-news-wrap.is-open .site-bell,
+:root[data-theme="dark"] .site-news-link,
+:root[data-theme="dark"] .site-news-form-label,
+:root[data-theme="dark"] .tr-card h2 .ico,
+:root[data-theme="dark"] .tr-kpi-ico,
+:root[data-theme="dark"] .tr-btn:hover,
+:root[data-theme="dark"] .tr-ring-in b,
+:root[data-theme="dark"] .tr-plan-go,
+:root[data-theme="dark"] .tr-tag,
+:root[data-theme="dark"] .tr-score.is-mid,
+:root[data-theme="dark"] .mt-chip.prem,
+:root[data-theme="dark"] .mt-timer,
+:root[data-theme="dark"] .mt-sub button.is-on { font-weight: 800; }
+:root[data-theme="dark"] .mt-live b,
+:root[data-theme="dark"] .ws-ar,
+:root[data-theme="dark"] .ws-back .ws-speak,
+:root[data-theme="dark"] .tr-inline-ico,
+:root[data-theme="dark"] .training-page svg.ico,
+:root[data-theme="dark"] .ws-day-kicker,
+:root[data-theme="dark"] .ws-day-theme,
+:root[data-theme="dark"] .ws-bday,
+:root[data-theme="dark"] .teil-nav-btn,
+:root[data-theme="dark"] .theme-item-chevron,
+:root[data-theme="dark"] .theme-iframe-loading,
+:root[data-theme="dark"] .nq-result-info,
+:root[data-theme="dark"] .teil-nav-btn:hover,
+:root[data-theme="dark"] #hoeren-teil1-stack .theme-item-chevron,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-back:hover,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-start:hover,
+:root[data-theme="dark"] .hoeren-sticky-nav .hoeren-nav-part:hover,
+:root[data-theme="dark"] .premium-theme-icon,
+:root[data-theme="dark"] .premium-theme-open,
+:root[data-theme="dark"] .hoeren-offer-price { font-weight: 800; }
+:root[data-theme="dark"] #hoeren-teil2-stack .theme-item-chevron,
+html[data-theme="dark"].dark .premium-theme-open,
+:root[data-theme="dark"] .h2-offer-price,
+:root[data-theme="dark"] .h2-offer-btn,
+:root[data-theme="dark"] #hoeren-teil3-stack .theme-item-chevron,
+:root[data-theme="dark"] .de-premium-offer span,
+:root[data-theme="dark"] .message-name,
+:root[data-theme="dark"] .friend-limit-box strong,
+:root[data-theme="dark"] .message-text a,
+:root[data-theme="dark"] .message-text a:hover,
+:root[data-theme="dark"] .scroll-down,
+:root[data-theme="dark"] .upload-bar,
+:root[data-theme="dark"] .composer-btn:hover,
+:root[data-theme="dark"] .char-count.warn,
+:root[data-theme="dark"] .call-kind,
+:root[data-theme="dark"] .online-pill,
+:root[data-theme="dark"] .settings-row .ico,
+:root[data-theme="dark"] .tabbar button.active,
+:root[data-theme="dark"] #callAudioBtn,
+:root[data-theme="dark"] #callVideoBtn { font-weight: 800; }
+:root[data-theme="dark"] .mobile-back:hover,
+:root[data-theme="dark"] .reject,
+:root[data-theme="dark"] .modal-btn.secondary,
+:root[data-theme="dark"] .close-btn,
+:root[data-theme="dark"] .header-name,
+:root[data-theme="dark"] .header-btn,
+:root[data-theme="dark"] .composer-btn,
+:root[data-theme="dark"] .dx-word-use,
+:root[data-theme="dark"] .dx-key,
+:root[data-theme="dark"] .dx-starter,
+:root[data-theme="dark"] .dx-starter:hover,
+:root[data-theme="dark"] .dx-word-label,
+:root[data-theme="dark"] .back-button:hover,
+:root[data-theme="dark"] .resend-button,
+:root[data-theme="dark"] .login-text a,
+:root[data-theme="dark"] .links a,
+:root[data-theme="dark"] .back-home:hover,
+:root[data-theme="dark"] .brand span,
+:root[data-theme="dark"] .nav-links a:hover,
+:root[data-theme="dark"] .signup { font-weight: 800; }
+:root[data-theme="dark"] .user-name,
+:root[data-theme="dark"] .small-badge,
+:root[data-theme="dark"] .hero-secondary:hover,
+:root[data-theme="dark"] .stat strong,
+:root[data-theme="dark"] .showcase-eyebrow,
+:root[data-theme="dark"] .preview-tag,
+:root[data-theme="dark"] .preview-num,
+:root[data-theme="dark"] mark.hl2,
+:root[data-theme="dark"] .preview-score b,
+:root[data-theme="dark"] .section-title .mini,
+:root[data-theme="dark"] .card-link,
+:root[data-theme="dark"] .community-card h3,
+:root[data-theme="dark"] .promise h2 span,
+:root[data-theme="dark"] .footer-brand span,
+:root[data-theme="dark"] .footer-links a:hover,
+:root[data-theme="dark"] .hero .stat strong,
+:root[data-theme="dark"] .cta h2,
+:root[data-theme="dark"] header h1,
+:root[data-theme="dark"] .intro h2,
+:root[data-theme="dark"] .offer-title { font-weight: 800; }
+:root[data-theme="dark"] .check,
+:root[data-theme="dark"] .nav-home,
+:root[data-theme="dark"] .headings h2,
+:root[data-theme="dark"] .offer-box h2 { font-weight: 800; }
 /* ===== الترجمة العربية: غليظة وأصغر من النص الألماني =====
    الترجمة خاصها تبان بوضوح (bold) ولكن تبقى ثانوية — إذن
    حجم أصغر من السطر الألماني اللي فوقها، ماشي نفس الحجم. */
