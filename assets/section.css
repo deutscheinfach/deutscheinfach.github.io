@@ -3494,3 +3494,39 @@ html body .t2 .t1-texts > .t1-text {
    ماكاينش هنا تبديل ف العرض — .t1-board كيكفي. كان هنا
    override ملي كانو الإعلانات ف اللوحة، دابا ما بقاش
    خاصو. */
+
+/* ===== زر الكلمات المفتاحية (assets/keys-toggle.js) =====
+   ف رأس اللوحة حدا العداد. كيخدم بالـCSS برك — الـmark
+   كيبقى ف الصفحة، غير التلوين كيتحيد. */
+.t1-panel-head .keys-toggle {
+    margin-inline-start: auto;
+    flex: 0 0 auto;
+    display: inline-grid;
+    place-items: center;
+    min-width: 34px;
+    height: 24px;
+    padding: 0 7px;
+    border-radius: 999px;
+    border: 1px solid #f2c200;
+    background: #fff3a6;
+    color: #6b4f14;
+    cursor: pointer;
+    transition: background .16s ease, border-color .16s ease, opacity .16s ease;
+}
+.t1-panel-head .keys-toggle:hover { border-color: #d6b25e; }
+.t1-panel-head .keys-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.keys-toggle-ink { font-size: 11.5px; font-weight: 900; line-height: 1; }
+
+/* مطفي: بلا لون، باش تعرف من النظرة أن التلوين محيّد */
+.t1-panel-head .keys-toggle.is-off {
+    background: transparent;
+    border-color: var(--line);
+    color: var(--muted);
+}
+
+/* التلوين محيّد — الـmark كيبقى نص عادي */
+html.de-no-keys mark.kw {
+    background: transparent !important;
+    border-bottom-color: transparent !important;
+    padding: 0 !important;
+}
