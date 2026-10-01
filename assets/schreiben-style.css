@@ -828,3 +828,9 @@ textarea, input { background: transparent; color: var(--ink); }
 .wc-note { margin: 0 0 16px; font-size: 13.5px; font-weight: 700; }
 .wc-note.ok { color: #2e9e5b; }
 .wc-note.short { color: #d14343; }
+
+/* ===== بلاصة الكتابة: خلفية بيضا =====
+   كانت --card (كريمي 255,253,248). الكتابة الطويلة على
+   خلفية بيضا صافية أريح للعين وأقرب للورقة الحقيقية. */
+.panel-right { background: #ffffff; }
+#answer-text { background: #ffffff; }

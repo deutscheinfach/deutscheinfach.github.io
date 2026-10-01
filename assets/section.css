@@ -3116,3 +3116,31 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .e3-check { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); cursor: pointer; }
 .e3-check input { margin-top: 4px; width: 18px; height: 18px; accent-color: var(--gold); flex: 0 0 auto; }
 .e3-check input:checked + span .e3-de { text-decoration: line-through; opacity: .7; }
+
+/* ===== Teil 2: الفقرات ملصوقين ف بلوك واحد =====
+   قبل، كل فقرة كانت بطاقة بوحدها و.t1-texts كان فيه gap —
+   والنتيجة فراغ كبير بين الفقرة والفقرة، والنص كيتقطع.
+   دابا الحاوية هي البطاقة، والفقرات جواها بلا حدود. */
+.t2 .t1-texts {
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+.t2 .t1-texts > .t1-intro {
+    margin: 0;
+    padding: 14px 16px 0;
+}
+.t2 .t1-text {
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    padding: 14px 16px 0;
+}
+.t2 .t1-text:last-child { padding-bottom: 16px; }
+
+/* الترجمة كتجي ملصوقة ف آخر الفقرة ديالها */
+.t2 .t1-text .ar-block { margin-top: 8px; }

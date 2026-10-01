@@ -626,3 +626,39 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
         padding: 0 4px;
     }
 }
+
+/* ===== الترجمة العربية: غليظة وأصغر من النص الألماني =====
+   الترجمة خاصها تبان بوضوح (bold) ولكن تبقى ثانوية — إذن
+   حجم أصغر من السطر الألماني اللي فوقها، ماشي نفس الحجم. */
+
+/* تحت الخيارات والأسئلة — الألماني 13.5–14px */
+.t1-option-ar,
+.t2-q-ar,
+.t3-sit-ar {
+    font-weight: 700;
+    font-size: 12.5px;
+}
+
+/* تحت الفقرات — الألماني 15px */
+.ar-block p {
+    font-weight: 700;
+    font-size: 13.5px;
+    opacity: 1;
+}
+
+/* داخل الشرح (Lösung) — العنوان ديالو 13.5px */
+.t1-summary p { font-weight: 700; font-size: 12.5px; }
+
+@media (max-width: 700px) {
+    .ar-block p { font-size: 13px; }
+}
+
+/* ===== خبي عنوان الموضوع (assets/title-toggle.js) =====
+   العنوان كيفضح الجواب ف شي تمارين — مثلا Lesen Teil 1
+   فين سميّة الموضوع هي بحالها وحدة من الـÜberschriften. */
+html.de-hide-title .t1-title,
+html.de-hide-title .t1-kicker,
+html.de-hide-title .lesen-detail-title { display: none !important; }
+
+/* الرأس كيبقى فيه غير الأزرار — ما نخليوش فراغ كبير */
+html.de-hide-title .t1-head { gap: 0; }
