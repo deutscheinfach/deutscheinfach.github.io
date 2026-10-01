@@ -693,7 +693,12 @@
         });
     }
 
-    if (totalEl) totalEl.textContent = String(examList().length);
+    /* صفحة بلا تبويب Prüfungen (B2 دابا) ماعندها امتحانات كاملة،
+       ف العداد كيحسب المواضيع عوض الامتحانات — وإلا كيبان "0". */
+    const examTab = !tabsNav || !!tabsNav.querySelector('.lesen-tab[data-teil=""]');
+    if (totalEl) {
+        totalEl.textContent = String(examTab ? examList().length : topics.length);
+    }
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase. */
     document.addEventListener("de-premium", function () {
@@ -710,9 +715,8 @@
     /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
     const startParams = new URLSearchParams(location.search);
     const startThema = startParams.get("thema");
-    /* صفحة بلا تبويب Prüfungen (بحال B1 دابا) كتبدا من أول جزء. */
-    const hasExamTab = !tabsNav || !!tabsNav.querySelector('.lesen-tab[data-teil=""]');
-    const startTeil = startParams.get("teil") || (hasExamTab ? "" : "teil1");
+    /* صفحة بلا تبويب Prüfungen كتبدا من أول جزء. */
+    const startTeil = startParams.get("teil") || (examTab ? "" : "teil1");
 
     const startExam = parseInt(startParams.get("pruefung"), 10);
 

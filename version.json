@@ -1,5 +1,5 @@
 {
-  "build": "e6a8a78a2c02",
+  "build": "ad1dcf2285cc",
   "assets": {
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
@@ -42,7 +42,7 @@
     "assets/sprechen-b2-teil23.js": "73590481",
     "assets/sprechen-b2-topics.js": "9cbf43c2",
     "assets/sprechen-engine.js": "79eccaae",
-    "assets/sprechen-hub.js": "9c69e822",
+    "assets/sprechen-hub.js": "c56bb029",
     "assets/sprechen-teil1.js": "39194a12",
     "assets/sprechen-teil2.js": "3f8ea805",
     "assets/sprechen-teil3.js": "963c0915",
