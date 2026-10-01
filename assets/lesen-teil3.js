@@ -352,8 +352,8 @@
                     /* الكلمات المشتركين بين الوضعية والإعلان الصحيح */
                     const ad = adRows.find(function (a) { return a.key === expected; });
                     const sitText = row.box.querySelector(".t3-sit-de");
-                    /* «تحقق» كيبين غير ف الأجوبة الصحيحة، «شوف الحل» ف كلشي */
-                    if ((ok || reveal) && ad && sitText && window.__lesenKeys) {
+                    /* «تحقق» و «شوف الحل» بجوج كيبينو الكلمات المفتاحية */
+                    if (ad && sitText && window.__lesenKeys) {
                         const adBody = ad.node.querySelector(".t1-body");
                         const adHead = ad.node.querySelector(".t3-ad-head");
                         window.__lesenKeys.link([sitText], [adHead, adBody].filter(Boolean));
