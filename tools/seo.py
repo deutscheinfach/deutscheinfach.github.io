@@ -92,7 +92,7 @@ PAGES = {
 
     # ---- أدوات
     "modelltest.html": ("Telc B2 Modelltest online mit Timer | Deutsch Einfach",
-        "امتحان تجريبي كامل ديال telc B2 بالوقت: Lesen، Sprachbausteine، Hören و Schreiben، والنتيجة من 225. "
+        "امتحان تجريبي ديال telc B2 بالوقت: Lesen، Sprachbausteine و Hören، والتصحيح والنتيجة ف اللخر. "
         "Telc B2 Modelltest online.", "0.8"),
     "einstufungstest.html": ("Einstufungstest Deutsch kostenlos – A2, B1 oder B2? | Deutsch Einfach",
         "اختبار مجاني يعرفك المستوى ديالك ف الألمانية ف 10 دقايق (A2، B1، B2) مع خطة 30 يوم لـ telc. "

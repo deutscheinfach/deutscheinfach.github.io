@@ -1,13 +1,14 @@
-/* ===== Modelltest: امتحان كتابي كامل بحال telc B2 =====
+/* ===== Modelltest: Lesen + Hören بحال telc B2 =====
 
    Modelltest n = الصفحات الموجودة ديجا، داخل iframe (?embed=1):
      1) Lesen + Sprachbausteine → Lesen Prüfung n        90 دقيقة · 105 نقطة
      2) Hören Teil 1، 2، 3      → Thema n فكل جزء         20 دقيقة ·  75 نقطة
-     3) Schreiben               → Thema n (01…)           30 دقيقة ·  45 نقطة
-   المجموع 225، النجاح من 135 (60%).
+   المجموع 180، النجاح من 108 (60%). Schreiben عندو القسم ديالو بوحدو.
+   التصحيح كامل كيكون ف اللخر: ملي كيدوز من جزء للآخر، كنضغطو
+   على أزرار التصحيح ديال الجزء اللي سالا (بلا ما يبان).
 
    النقط كتجي من الأحداث اللي كتصيفطهم الصفحات (lesen-points،
-   hoeren-points، schreiben-points) — كنسمعو ليهم فـcontentWindow.
+   hoeren-points) — كنسمعو ليهم فـcontentWindow.
    الحالة كتتحفظ فـsessionStorage باش refresh ما يضيعش الامتحان. */
 
 (function () {
@@ -24,10 +25,9 @@
     const LESEN_MAX = { teil1: 25, teil2: 25, teil3: 25, sprach1: 15, sprach2: 15 };
     const STEPS = [
         { key: "lesen", name: "Lesen & Sprachbausteine", short: "Lesen", min: 90, max: 105 },
-        { key: "hoeren", name: "Hören", short: "Hören", min: 20, max: 75 },
-        { key: "schreiben", name: "Schreiben", short: "Schreiben", min: 30, max: 45 }
+        { key: "hoeren", name: "Hören", short: "Hören", min: 20, max: 75 }
     ];
-    const PASS = 135, TOTAL = 225;
+    const PASS = 108, TOTAL = 180;
 
     const ICON = {
         clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
@@ -64,19 +64,15 @@
         }
         return out;
     }
-    function schreibenId(n) { return pad(n); }
     function tests() {
         const lesen = lesenExams();
-        const sch = window.SCHREIBEN_B2_TOPICS || {};
-        const count = Math.min(lesen.length, Math.min.apply(null, HOEREN_COUNT), Object.keys(sch).length);
+        const count = Math.min(lesen.length, Math.min.apply(null, HOEREN_COUNT));
         const out = [];
         for (let n = 1; n <= count; n++) {
-            const s = sch[schreibenId(n)] || {};
             out.push({
                 n: n,
                 lesen: lesen[n - 1],
-                schreiben: { id: schreibenId(n), title: s.title || "", locked: !!s.locked },
-                locked: lesen[n - 1].locked || n > HOEREN_FREE || !!s.locked
+                locked: lesen[n - 1].locked || n > HOEREN_FREE
             });
         }
         return out;
@@ -95,8 +91,8 @@
         const list = tests();
         document.getElementById("mt-count").textContent = String(list.length);
         root.innerHTML = '<div class="tr-card tr-card-gold" style="margin-bottom:16px"><p class="tr-muted" style="margin:0">' +
-            "كل Modelltest فيه 3 أجزاء بالوقت ديالهم بحال الامتحان الحقيقي. فكل جزء، ملي تكمل، <b>ضغط على زر التصحيح</b> (Antworten prüfen / تصحيح) باش تتحسب النقط. " +
-            "فالآخر كتشوف واش <b>Bestanden</b> (من 135 نقطة لفوق).</p></div>" +
+            "كل Modelltest فيه جوج أجزاء بالوقت ديالهم بحال الامتحان الحقيقي: Lesen و Hören. جاوب ودوز — <b>التصحيح كامل كيكون ف اللخر</b>. " +
+            "فالآخر كتشوف واش <b>Bestanden</b> (من 108 نقطة لفوق). Schreiben تمرن عليه ف القسم ديالو.</p></div>" +
             '<div class="tr-grid tr-grid-3">' + list.map(function (t) {
                 const shut = t.locked && !premium();
                 const last = lastResult(t.n);
@@ -104,9 +100,8 @@
                     '<ul class="mt-parts">' +
                     "<li><span>Lesen</span><b>" + esc(t.lesen.parts.teil1.title) + " …</b></li>" +
                     "<li><span>Hören</span><b>Thema " + t.n + " · Teil 1–3</b></li>" +
-                    "<li><span>Schreiben</span><b>" + esc(t.schreiben.title) + "</b></li>" +
-                    '<li><span>Dauer</span><b>140 Min · 225 P</b></li></ul>' +
-                    (last ? '<p class="mt-last">آخر نتيجة: <b style="color:var(--accent-text)">' + fmtPts(last.points) + " / 225</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
+                    '<li><span>Dauer</span><b>110 Min · 180 P</b></li></ul>' +
+                    (last ? '<p class="mt-last">آخر نتيجة: <b style="color:var(--accent-text)">' + fmtPts(last.points) + " / " + (last.max || TOTAL) + "</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
                     '<div class="mt-foot"><span class="mt-chip ' + (t.locked ? "prem" : "free") + '">' + (t.locked ? "Premium" : "مجاني") + "</span>" +
                     (shut
                         ? '<a class="tr-btn" href="payment.html">' + svg("lock") + "Entsperren</a>"
@@ -129,7 +124,7 @@
     }
 
     function start(n) {
-        state = { n: n, step: 0, deadline: Date.now() + STEPS[0].min * 60000, lesen: {}, hoeren: {}, schreiben: null, sub: 0, saved: false };
+        state = { n: n, step: 0, deadline: Date.now() + STEPS[0].min * 60000, lesen: {}, hoeren: {}, sub: 0, saved: false };
         saveState();
         renderExam();
     }
@@ -140,8 +135,7 @@
         ["teil1", "teil2", "teil3"].forEach(function (k) { lesen += s.lesen[k] || 0; });
         ["sprach1", "sprach2"].forEach(function (k) { sprach += s.lesen[k] || 0; });
         ["teil1", "teil2", "teil3"].forEach(function (k) { hoeren += s.hoeren[k] || 0; });
-        const schreiben = s.schreiben || 0;
-        return { lesen: lesen, sprach: sprach, hoeren: hoeren, schreiben: schreiben, total: lesen + sprach + hoeren + schreiben };
+        return { lesen: lesen, sprach: sprach, hoeren: hoeren, total: lesen + sprach + hoeren };
     }
 
     /* ---------- الامتحان ---------- */
@@ -151,8 +145,7 @@
     function frameUrl(step, sub) {
         const n = state.n;
         if (step === 0) return "b2-lesen.html?pruefung=" + n + "&teil=teil1&embed=1";
-        if (step === 1) return "b2-hoeren-teil" + (sub + 1) + ".html?thema=" + n + "&embed=1";
-        return "b2-schreiben-" + schreibenId(n) + ".html?embed=1";
+        return "b2-hoeren-teil" + (sub + 1) + ".html?thema=" + n + "&embed=1";
     }
 
     function hook(frame) {
@@ -170,11 +163,8 @@
                     saveState(); live();
                 }
             });
-            w.addEventListener("schreiben-points", function (e) {
-                const d = e.detail || {};
-                state.schreiben = Math.max(0, Math.min(45, Number(d.score) || 0));
-                saveState(); live();
-            });
+            /* Lesen (embed): «Hören →» ف الجزء اللخر */
+            w.addEventListener("exam-next", function () { next(); });
         });
     }
 
@@ -186,7 +176,6 @@
         let now = 0;
         if (step && step.key === "lesen") now = s.lesen + s.sprach;
         if (step && step.key === "hoeren") now = s.hoeren;
-        if (step && step.key === "schreiben") now = s.schreiben;
         el.innerHTML = step ? "هاد الجزء: <b>" + fmtPts(now) + " / " + step.max + "</b> · المجموع: <b>" + fmtPts(s.total) + " / " + TOTAL + "</b>" : "";
         document.querySelectorAll(".mt-sub [data-sub]").forEach(function (b, i) {
             const k = "teil" + (i + 1);
@@ -215,35 +204,33 @@
     function timeUp() {
         const step = STEPS[state.step];
         const m = modal('<h2 style="justify-content:center">' + svg("clock") + "Die Zeit ist um!</h2>" +
-            '<p class="tr-muted">الوقت ديال ' + esc(step.name) + " سالا. النقط اللي صححتيهم تحسبو.</p>" +
+            '<p class="tr-muted">الوقت ديال ' + esc(step.name) + " سالا. الأجوبة اللي درتي كيتحسبو.</p>" +
             '<div class="tr-row" style="justify-content:center;margin-top:12px"><button class="tr-btn tr-btn-gold" type="button" id="mt-timeup">' +
             (state.step < STEPS.length - 1 ? "Weiter zu " + esc(STEPS[state.step + 1].short) : "Zum Ergebnis") + "</button></div>");
-        m.querySelector("#mt-timeup").addEventListener("click", function () { m.remove(); next(true); });
+        m.querySelector("#mt-timeup").addEventListener("click", function () { m.remove(); next(); });
     }
 
-    function next(force) {
-        if (!state) return;
-        const s = sums();
-        if (!force) {
-            const step = STEPS[state.step];
-            let missing = "";
-            if (step.key === "lesen") {
-                const left = LESEN_PARTS.filter(function (p) { return state.lesen[p] == null; });
-                if (left.length) missing = "مازال ما صححتيش: " + left.map(function (p) { return p.replace("teil", "Teil ").replace("sprach", "Sprach "); }).join("، ");
-            } else if (step.key === "hoeren") {
-                const left = ["teil1", "teil2", "teil3"].filter(function (p) { return state.hoeren[p] == null; });
-                if (left.length) missing = "مازال ما صححتيش Hören " + left.map(function (p) { return p.replace("teil", "Teil "); }).join("، ");
-            } else if (state.schreiben == null) {
-                missing = "مازال ما صححتيش Schreiben (زر تصحيح فوق). بلا تصحيح كتاخد 0 فهاد الجزء.";
-            }
-            if (missing && !confirm(missing + "\n\nWirklich weiter? · واش نكملو؟")) return;
-        }
+    /* التصحيح ديال الجزء اللي سالا، بلا ما يبان: كنضغطو على أزرار
+       التصحيح داخل الـiframes، والنقط كتجي بالأحداث العاديين. */
+    function gradeStep() {
+        const step = STEPS[state.step];
+        root.querySelectorAll("iframe.mt-frame").forEach(function (f) {
+            let w = null, doc = null;
+            try { w = f.contentWindow; doc = f.contentDocument; } catch (e) { return; }
+            if (!w || !doc) return;
+            if (step.key === "lesen" && typeof w.__examGradeAll === "function") w.__examGradeAll();
+            if (step.key === "hoeren") doc.querySelectorAll(".nq-btn-check").forEach(function (b) { b.click(); });
+        });
+    }
+
+    function next() {
+        if (!state || state.step >= STEPS.length) return;
+        gradeStep();
         state.step++;
         state.sub = 0;
         if (state.step < STEPS.length) state.deadline = Date.now() + STEPS[state.step].min * 60000;
         saveState();
         renderExam();
-        void s;
     }
 
     function renderExam() {
@@ -298,7 +285,7 @@
         window.scrollTo({ top: 0 });
     }
 
-    /* Hören: أسهم بين Teil 1 → 2 → 3، ومن Teil 3 «Weiter zu Schreiben».
+    /* Hören: أسهم بين Teil 1 → 2 → 3، ومن Teil 3 «Ergebnis →».
        نفس الزر لتحت (mt-next) كيتبدل حسب الجزء. */
     function paintSubNav() {
         const step = STEPS[state.step];
@@ -363,7 +350,7 @@
             window.DEProgress.add({
                 skill: "modelltest", part: "schriftlich", topic: "modelltest-" + state.n, title: "Modelltest " + state.n,
                 points: s.total, max: TOTAL,
-                detail: { lesen: s.lesen, sprach: s.sprach, hoeren: s.hoeren, schreiben: s.schreiben }
+                detail: { lesen: s.lesen, sprach: s.sprach, hoeren: s.hoeren }
             });
             state.saved = true;
             saveState();
@@ -371,14 +358,13 @@
         const rows = [
             ["Leseverstehen", s.lesen, 75, "b2-lesen.html?teil=teil1"],
             ["Sprachbausteine", s.sprach, 30, "b2-lesen.html?teil=sprach1"],
-            ["Hörverstehen", s.hoeren, 75, "b2-hoeren.html"],
-            ["Schriftlicher Ausdruck", s.schreiben, 45, "b2-schreiben.html"]
+            ["Hörverstehen", s.hoeren, 75, "b2-hoeren.html"]
         ];
         const weakest = rows.slice().sort(function (a, b) { return a[1] / a[2] - b[1] / b[2]; })[0];
         root.innerHTML = '<div class="tr-card tr-card-gold mt-result">' +
             '<span class="mt-verdict ' + (pass ? "pass" : "fail") + '">' + svg(pass ? "check" : "x").replace("<svg", '<svg width="18" height="18"') + (pass ? "Bestanden · نجحتي" : "Nicht bestanden · مازال") + "</span>" +
             '<div class="mt-total">' + fmtPts(s.total) + " <small>/ " + TOTAL + "</small></div>" +
-            '<p class="tr-muted">' + Math.round(s.total / TOTAL * 100) + "% — خاصك " + PASS + " نقطة (60%) باش تنجح فالجزء الكتابي.</p>" +
+            '<p class="tr-muted">' + Math.round(s.total / TOTAL * 100) + "% — خاصك " + PASS + " نقطة (60%) باش تنجح ف Lesen و Hören.</p>" +
             '<div class="mt-break">' + rows.map(function (r) {
                 const p = r[1] / r[2];
                 return '<div class="tr-skill"><div class="tr-skill-name">' + esc(r[0]) + '</div><div class="tr-bar"><i class="' + (p >= 0.8 ? "is-good" : p >= 0.6 ? "is-mid" : "is-low") + '" style="width:' + Math.round(p * 100) + '%"></i></div>' +
@@ -402,7 +388,7 @@
         if (startBtn) {
             const n = Number(startBtn.dataset.start);
             const m = modal('<h2 style="justify-content:center">' + svg("play") + "Modelltest " + n + " starten?</h2>" +
-                '<p class="tr-muted">3 أجزاء: Lesen & Sprachbausteine (90 د)، Hören (20 د)، Schreiben (30 د). الوقت كيبدا دابا. فكل جزء صحح قبل ما تدوز.</p>' +
+                '<p class="tr-muted">جوج أجزاء: Lesen & Sprachbausteine (90 د) و Hören (20 د). الوقت كيبدا دابا. جاوب ودوز — التصحيح كامل ف اللخر.</p>' +
                 '<div class="tr-row" style="justify-content:center;margin-top:12px"><button class="tr-btn" type="button" data-no>Später</button><button class="tr-btn tr-btn-gold" type="button" data-yes>Los geht\'s</button></div>');
             m.querySelector("[data-no]").addEventListener("click", function () { m.remove(); });
             m.querySelector("[data-yes]").addEventListener("click", function () { m.remove(); start(n); });
@@ -413,7 +399,7 @@
         const act = e.target.closest("[data-act]");
         if (!act) return;
         if (act.dataset.act === "share") { shareResult(); return; }
-        if (act.dataset.act === "next") next(false);
+        if (act.dataset.act === "next") next();
         if (act.dataset.act === "subnext" && state) setSub(state.sub + 1);
         if (act.dataset.act === "hcheck" && state) checkHoeren();
         if (act.dataset.act === "subprev" && state) setSub(state.sub - 1);
