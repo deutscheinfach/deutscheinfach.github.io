@@ -3898,6 +3898,13 @@ async user=>{
 
 if(!user){
 
+/* الحارس (session-guard.js) كيخرجنا ملي شي جهاز آخر
+   يدخل بنفس الحساب. ف داك الوقت هو اللي كيدير التنقل
+   وهو اللي عندو السبب — إلا سبقناه، login.html كتبان
+   بلا تفسير والمستخدم كيضن أن الموقع طاح. */
+if(window.__deSessionKick)
+return;
+
 location.href="login.html";
 
 return;
@@ -8336,6 +8343,11 @@ openModal(
 "requestsModal"
 );
 
+/* الـauth مازال ماوصلش: currentUser.uid كيطيح
+   وكيبان "Fehler beim Laden" بحال شي عطب حقيقي. */
+if(!currentUser)
+return;
+
 try{
 
 const fq=
@@ -8573,8 +8585,14 @@ console.error(
 error
 );
 
+/* السبب كيتكتب ف الشاشة. "Fehler beim Laden" بوحدو
+   ماكيقول والو — لا ليك لا للمستخدم اللي كيعيط ليك. */
 box.innerHTML=
-"<p style='color:red'>Fehler beim Laden.</p>";
+"<p style='color:red'>Fehler beim Laden."+
+(error&&error.code
+?" ("+escapeHtml(String(error.code))+")"
+:"")+
+"</p>";
 
 }
 
@@ -11375,7 +11393,7 @@ location.replace("login.html");
 
 <script src="assets/chat-extras.js?v=54c6cba9"></script>
 <script src="assets/chat-actions.js?v=1d332ce0"></script>
-<script src="assets/session-guard.js?v=d6dfc66e"></script>
+<script src="assets/session-guard.js?v=c28594ff"></script>
 
 </body>
 

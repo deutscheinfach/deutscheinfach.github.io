@@ -306,17 +306,23 @@ service cloud.firestore {
 
          الـ ID ثابت (uid_uid)، ف وجودها ماشي سر. */
 
+      /* .get() ماشي زيادة: ف قواعد Firestore، وثيقة ناقصة
+         فيها الحقل كترمي خطأ ماشي "false". وف الـ list،
+         وثيقة وحدة اللي كترمي كتطيح الاستعلام كامل — ف
+         "Anfragen" كان كيعطي "Fehler beim Laden" حتى ملي
+         الطلبات ديالك هوما هوما. */
+
       allow get: if request.auth != null
         && (
           resource == null
-          || resource.data.fromUid == request.auth.uid
-          || resource.data.toUid == request.auth.uid
+          || resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
         );
 
       allow list: if request.auth != null
         && (
-          resource.data.fromUid == request.auth.uid
-          || resource.data.toUid == request.auth.uid
+          resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
         );
 
       allow create: if request.auth != null
@@ -790,17 +796,23 @@ service cloud.firestore {
 
     match /groupInvites/{inviteId} {
 
+      /* .get() ماشي زيادة: ف قواعد Firestore، وثيقة ناقصة
+         فيها الحقل كترمي خطأ ماشي "false". وف الـ list،
+         وثيقة وحدة اللي كترمي كتطيح الاستعلام كامل — ف
+         "Anfragen" كان كيعطي "Fehler beim Laden" حتى ملي
+         الطلبات ديالك هوما هوما. */
+
       allow get: if request.auth != null
         && (
           resource == null
-          || resource.data.fromUid == request.auth.uid
-          || resource.data.toUid == request.auth.uid
+          || resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
         );
 
       allow list: if request.auth != null
         && (
-          resource.data.fromUid == request.auth.uid
-          || resource.data.toUid == request.auth.uid
+          resource.data.get("fromUid", "") == request.auth.uid
+          || resource.data.get("toUid", "") == request.auth.uid
         );
 
 

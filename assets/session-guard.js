@@ -4,11 +4,32 @@
    users/{uid}. كل جهاز آخر واقف فنفس الحساب كيشوف التبديل
    مباشرة (onSnapshot) وكيخرج بوحدو.
 
-   قبل، هاد الفحص كان غير ف صفحتين، إذن
-   شي واحد واقف ف chat ولا ف شي تمرين كان كيبقى داخل على طول.
    هاد الملف كيتزاد ف كل الصفحات المحمية.
 
-   ملاحظة: إلا ماكانش sessionId محلي (مثلا مستخدم دخل قبل ما
+   ---------------------------------------------------------
+   جوج تصليحات مهمين:
+
+   1) نفس المتصفح ما كيطردش راسو.
+      login.html كيكتب deviceId حدا sessionId. إلا كان الـ
+      deviceId اللي ف Firestore هو ديالنا، راه نفس الجهاز —
+      غير تبويب آخر دخل من جديد. فهاد الحالة كنحدثو الـ
+      sessionId المحلي وكنكملو، ماكنخرجوش.
+
+      قبل، كنا كنقارنو غير sessionId: تدخل من جديد ف تبويب،
+      وكل التبويبات الأخرى ديال نفس المتصفح كيتطردو.
+
+   2) الخروج ماكيبقاش بلا تفسير.
+      قبل كان alert() من بعد signOut(). ولكن signOut كيوقظ
+      onAuthStateChanged ديال الصفحة (chat.html مثلا) اللي
+      كيدير location.href="login.html" دغيا — إذن التنقل
+      كيسبق الـ alert والمستخدم كيلقى راسو ف صفحة الدخول
+      بلا ما يفهم علاش.
+
+      دابا: كنسجلو السبب ف sessionStorage قبل signOut،
+      وكنرفعو window.__deSessionKick باش الصفحة تخليه
+      ليا، وlogin.html هي اللي كتبين الرسالة.
+
+   ملاحظة: إلا ماكانش sessionId محلي (مستخدم دخل قبل ما
    نزيدو هاد الخاصية، ولا التخزين مسدود)، ماكنخرجوش حتى واحد —
    ماعندناش باش نتأكدو، والخروج بلا سبب أسوأ. */
 
@@ -16,6 +37,8 @@
     "use strict";
 
     var SESSION_KEY = "deutschEinfachSessionId";
+    var DEVICE_KEY = "deutschEinfachDeviceId";
+    var KICK_KEY = "deutschEinfachKicked";
     var LOGIN_PAGE = "login.html";
 
     /* الصفحات اللي خاصها تبقى بلا حارس: الدخول والتسجيل. */
@@ -24,24 +47,24 @@
         return;
     }
 
-    function readSessionId() {
-        try {
-            return localStorage.getItem(SESSION_KEY);
-        } catch (error) {
-            return null;
-        }
+    function read(key) {
+        try { return localStorage.getItem(key); }
+        catch (error) { return null; }
+    }
+    function write(key, value) {
+        try { localStorage.setItem(key, value); }
+        catch (error) { /* التصفح الخاص: ماشي مشكل */ }
+    }
+    function drop(key) {
+        try { localStorage.removeItem(key); }
+        catch (error) { /* التصفح الخاص: ماشي مشكل */ }
+    }
+    function markKick() {
+        try { sessionStorage.setItem(KICK_KEY, "1"); }
+        catch (error) { /* ماشي مشكل — غير الرسالة اللي ماغاتبانش */ }
     }
 
-    function clearSessionId() {
-        try {
-            localStorage.removeItem(SESSION_KEY);
-        } catch (error) {
-            /* التصفح الخاص: ماشي مشكل */
-        }
-    }
-
-    var mySessionId = readSessionId();
-    if (!mySessionId) return;
+    if (!read(SESSION_KEY)) return;
 
     (async function () {
         try {
@@ -73,24 +96,42 @@
                     stop = null;
                 }
                 if (!user) return;
-
-                /* الـ id يقدر يكون تبدل ملي كان الـ auth كيتحمل. */
-                mySessionId = readSessionId();
-                if (!mySessionId) return;
+                if (!read(SESSION_KEY)) return;
 
                 stop = fsMod.onSnapshot(
                     fsMod.doc(db, "users", user.uid),
                     async function (snapshot) {
                         if (!snapshot.exists()) return;
 
-                        var otherSessionId = snapshot.data().sessionId;
-                        if (!otherSessionId || otherSessionId === mySessionId) return;
+                        var data = snapshot.data();
+                        var theirSession = data.sessionId;
+                        var theirDevice = data.deviceId;
+
+                        /* الـ id يقدر يكون تبدل ملي كان الـ auth كيتحمل. */
+                        var mySession = read(SESSION_KEY);
+                        var myDevice = read(DEVICE_KEY);
+
+                        if (!mySession) return;
+                        if (!theirSession || theirSession === mySession) return;
+
+                        /* نفس المتصفح: تبويب آخر دخل من جديد.
+                           كنتماشاو معاه بدل ما نطردو راسنا. */
+                        if (theirDevice && myDevice && theirDevice === myDevice) {
+                            write(SESSION_KEY, theirSession);
+                            return;
+                        }
 
                         if (stop) {
                             stop();
                             stop = null;
                         }
-                        clearSessionId();
+                        drop(SESSION_KEY);
+
+                        /* السبب كيتسجل قبل signOut: signOut كيوقظ
+                           المستمعين ديال الصفحة وهوما كيديرو التنقل
+                           ديالهم قبل ما نكملو حنا. */
+                        markKick();
+                        window.__deSessionKick = true;
 
                         try {
                             await authMod.signOut(auth);
@@ -98,10 +139,6 @@
                             console.error("Auto logout error:", error);
                         }
 
-                        alert(
-                            "تم تسجيل الدخول من جهاز آخر.\n\n" +
-                            "تم تسجيل خروج هذا الجهاز تلقائياً."
-                        );
                         location.replace(LOGIN_PAGE);
                     },
                     function (error) {

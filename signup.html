@@ -708,6 +708,33 @@ body::before {
                     /* التصفح الخاص: الحارس غادي يتخطى، ماشي مشكل */
                 }
 
+
+                /* deviceId: المتصفح كيعرف راسو.
+
+                   الحارس كيقارن بيه باش ما يطردش نفس
+                   المتصفح ملي تدخل من جديد ف تبويب آخر.
+                   بلا هاد الحقل، الحساب الجديد كيبقى
+                   يطرد راسو حتى يدخل من login.html. */
+                let newDeviceId = null;
+
+                try {
+                    newDeviceId =
+                        localStorage.getItem(
+                            "deutschEinfachDeviceId"
+                        );
+
+                    if (!newDeviceId) {
+                        newDeviceId = newSessionId + "-dev";
+                        localStorage.setItem(
+                            "deutschEinfachDeviceId",
+                            newDeviceId
+                        );
+                    }
+                }
+                catch (storageError) {
+                    newDeviceId = null;
+                }
+
                 try {
 
                     await setDoc(
@@ -738,6 +765,9 @@ body::before {
                                sessionId والحارس ماعندو باش يقارن. */
                             sessionId:
                                 newSessionId,
+
+                            deviceId:
+                                newDeviceId,
 
                             sessionUpdatedAt:
                                 new Date()

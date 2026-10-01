@@ -1506,6 +1506,52 @@ loginForm.addEventListener(
 
 
 <script>
+/* ===== خرجناك؟ قول ليه علاش =====
+
+   session-guard.js كيخرج الجهاز ملي شي جهاز آخر يدخل
+   بنفس الحساب، وكيسجل السبب ف sessionStorage قبل ما
+   يصيفطنا لهنا. بلا هاد الرسالة، المستخدم كيلقى راسو
+   ف صفحة الدخول بلا سبب وكيضن أن الموقع خاسر.
+
+   هنا وماشي ف الـmodule ديال فوق: داك الـmodule كيطيح
+   كامل إلا ماوصلاتش Firebase، والرسالة هي أول حاجة
+   خاصها تبان حتى ف داك الوقت. */
+
+(function () {
+
+    var kicked = null;
+
+    try {
+
+        kicked = sessionStorage.getItem("deutschEinfachKicked");
+        sessionStorage.removeItem("deutschEinfachKicked");
+
+    }
+
+    catch (error) {
+
+        return;
+
+    }
+
+
+    if (!kicked) return;
+
+
+    var box = document.getElementById("errorMessage");
+
+    if (!box) return;
+
+
+    box.textContent =
+        "تم تسجيل الدخول من جهاز آخر، لهذا تم إخراجك من هنا. " +
+        "الحساب الواحد يخدم بجهاز واحد فقط.";
+
+    box.style.display = "block";
+
+})();
+
+
 /* عين إظهار كلمة المرور.
 
    كنبدلو type غير ديال الخانة اللي حدا الزر — بلا هادشي
