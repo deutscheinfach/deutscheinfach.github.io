@@ -351,7 +351,15 @@
                         const words = el("span", "kw-words", head.text || "");
                         title.appendChild(words);
                         body.parentNode.insertBefore(title, body);
-                        window.__lesenKeys.link([body], [words]);
+                        /* حتى ف لوحة الترويسات: الكلمات + «Text n» */
+                        const item = optionRows.find(function (o) { return String(o.value) === expected; });
+                        const de = item && item.node.querySelector(".t1-option-de");
+                        if (item) {
+                            item.node.classList.add("kw-answer");
+                            const tag = el("span", "kw-for", "Text " + (rows.indexOf(row) + 1));
+                            item.node.appendChild(tag);
+                        }
+                        window.__lesenKeys.link([body], de ? [words, de] : [words]);
                     }
                 });
 
@@ -367,6 +375,13 @@
                 const title = row.box.querySelector(".kw-title");
                 if (title) title.remove();
                 if (window.__lesenKeys) window.__lesenKeys.clear([row.box.querySelector(".t1-body")]);
+                const item = optionRows.find(function (o) { return String(o.value) === String(row.text.answer || ""); });
+                if (item) {
+                    item.node.classList.remove("kw-answer");
+                    const tag = item.node.querySelector(".kw-for");
+                    if (tag) tag.remove();
+                    if (window.__lesenKeys) window.__lesenKeys.clear([item.node.querySelector(".t1-option-de")]);
+                }
             }
 
             function reset() {
