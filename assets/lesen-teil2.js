@@ -249,11 +249,13 @@
                 /* الكلمات المفتاحية: الجواب الصحيح ديال كل سؤال ↔ النص */
                 if (window.__lesenKeys) {
                     const bodies = Array.from(column.querySelectorAll(".t1-body"));
-                    const answers = rows.map(function (r) {
+                    const answers = rows.filter(function (r) {
+                        return reveal || r.picked === Number(r.question.answer);
+                    }).map(function (r) {
                         const b = r.buttons[Number(r.question.answer)];
                         return b && b.querySelector(".t1-option-de");
                     }).filter(Boolean);
-                    window.__lesenKeys.link(bodies, answers);
+                    if (answers.length) window.__lesenKeys.link(bodies, answers);
                 }
 
                 window.__lesenScore(score, "teil2", right, rows.length, reveal,
