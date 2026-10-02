@@ -72,9 +72,12 @@
 
         const card = el("section", "e1-task");
         card.appendChild(el("span", "e1-task-label", "Aufgabe"));
-        card.appendChild(el("p", "e1-task-de",
+        /* الـAufgabe كتجي من الموضوع ملي تكون مكتوبة فيه —
+           كل نص عندو صيغة ديالو. وإلا كنرجعو للصيغة العامة. */
+        card.appendChild(el("p", "e1-task-de", task.aufgabe ||
             "Lesen Sie den Text. Fassen Sie den Inhalt zusammen, sagen Sie Ihre Meinung und berichten Sie von Ihren Erfahrungen."));
-        card.appendChild(K.arBlock("قرا النص، لخّص المحتوى ديالو، عطي رأيك، وحكي على التجربة ديالك. من بعد الـPrüfer يقدر يسولك على أي جزء.", "المطلوب"));
+        card.appendChild(K.arBlock(task.aufgabeAr ||
+            "قرا النص، لخّص المحتوى ديالو، عطي رأيك، وحكي على التجربة ديالك. من بعد الـPrüfer يقدر يسولك على أي جزء.", "المطلوب"));
         const facts = el("div", "e1-facts");
         PHASES.forEach(function (p) {
             const chip = el("span", "e1-fact");
