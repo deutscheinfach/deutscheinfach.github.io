@@ -94,9 +94,6 @@ PAGES = {
     "modelltest.html": ("Telc B2 Modelltest online mit Timer | Deutsch Einfach",
         "امتحان تجريبي ديال telc B2 بالوقت: Lesen، Sprachbausteine و Hören، والتصحيح والنتيجة ف اللخر. "
         "Telc B2 Modelltest online.", "0.8"),
-    "einstufungstest.html": ("Einstufungstest Deutsch kostenlos – A2, B1 oder B2? | Deutsch Einfach",
-        "اختبار مجاني يعرفك المستوى ديالك ف الألمانية ف 10 دقايق (A2، B1، B2) مع خطة 30 يوم لـ telc. "
-        "Deutsch Einstufungstest online kostenlos.", "0.9"),
     "wortschatz.html": ("Wortschatz B1/B2 – 1000 Wörter mit Karteikarten | Deutsch Einfach",
         "تعلم 1000 كلمة ألمانية مهمة لـ telc B1 و B2 بالبطاقات والمراجعة الذكية، مع الترجمة للعربية. Wortschatz trainieren.", "0.8"),
     "payment.html": ("Premium – Preise und Zahlung | Deutsch Einfach",
@@ -105,7 +102,7 @@ PAGES = {
 
 # صفحات ماخاصهاش تبان ف Google (خاصة، ولا قديمة)
 NOINDEX = [
-    "login.html", "signup.html", "forgot-password.html", "premium-check.html",
+    "login.html", "signup.html", "einstufungstest.html", "forgot-password.html", "premium-check.html",
     "fortschritt.html", "chat.html", "404.html",
     "50-euro.html", "europaeischen.html", "die-tschechische-stadt-pilsen.html",
     "thema1.html", "lesen-teil1.html", "admin.html",
