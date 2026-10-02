@@ -20,7 +20,9 @@
         { key: "hoeren",    href: "b2-hoeren.html",    label: "Hören" },
         { key: "schreiben", href: "b2-schreiben.html", label: "Schreiben" },
         { key: "sprechen",  href: "b2-sprechen.html",  label: "Sprechen" },
-        { key: "chat",      href: "chat.html",         label: "Community" },
+        /* Community مخبية من البار غير — الصفحة chat.html والكود ديالها باقيين خدامين.
+           باش ترجعها: حيد hidden: true. */
+        { key: "chat",      href: "chat.html",         label: "Community", hidden: true },
         /* Training (Fortschritt، Modelltest، Wortschatz) تحيد
            من البار. الصفحات باقية خدامة ومربوطة من بلايص
            أخرى فالموقع — غير البركة من هنا اللي تحيدات. */
@@ -59,6 +61,7 @@
         (location.pathname.split("/").pop() || "").indexOf("b1-") === 0 ? "b1" : "b2";
 
     NAV.forEach(function (item) {
+        if (item.hidden) return;
         const link = document.createElement("a");
         /* كانت الروابط ديما b2-*، حتى ملي تكون ف صفحة B1 — إذن
            من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
