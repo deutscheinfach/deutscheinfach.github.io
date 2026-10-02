@@ -479,6 +479,31 @@
             align-items: center;
             gap: 10px;
         }
+        .hv-box { position: relative; width: 100%; cursor: pointer; }
+        .hv-box video { cursor: pointer; }
+        /* زر التشغيل الكبير ف الوسط (بحال YouTube) */
+        .hv-play {
+            position: absolute; left: 50%; top: 50%;
+            width: 84px; height: 84px; margin: -42px 0 0 -42px;
+            border: 0; border-radius: 50%;
+            background: #ffce00;
+            box-shadow: 0 10px 30px rgba(0,0,0,.45), 0 0 0 10px rgba(255,206,0,.25);
+            cursor: pointer;
+            transition: transform .18s ease, opacity .2s ease;
+            animation: hv-pulse 2s ease-in-out infinite;
+        }
+        .hv-play::after {
+            content: ""; position: absolute; left: 33px; top: 25px;
+            border-style: solid; border-width: 17px 0 17px 28px;
+            border-color: transparent transparent transparent #2a0710;
+        }
+        .hero-video-pc .hv-play { left: 30%; }   /* فوق الصور، ماشي فوق العنوان ديال الغلاف */
+        .hv-box:hover .hv-play { transform: scale(1.08); }
+        .hv-box.is-playing .hv-play { opacity: 0; pointer-events: none; animation: none; }
+        @keyframes hv-pulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,.45), 0 0 0 0 rgba(255,206,0,.45); }
+            50% { box-shadow: 0 10px 30px rgba(0,0,0,.45), 0 0 0 16px rgba(255,206,0,0); }
+        }
         .hero-video video {
             display: block;
             width: 100%;
@@ -487,7 +512,7 @@
             border: 3px solid rgba(255,206,0,.55);
             box-shadow: 0 22px 50px rgba(0,0,0,.4);
         }
-        .hero-video-mobile { display: none !important; max-width: 260px; }
+        .hero-video-mobile { display: none !important; max-width: 280px; }
         .hero-video figcaption {
             direction: rtl;
             font-weight: 800;
@@ -1840,14 +1865,18 @@
             <!-- فيديو الشرح: نسخة PC ونسخة التيليفون — preload="none"
                  باش ماكيتحمل حتى يضغط عليه الزائر -->
             <figure class="hero-video">
-                <video class="hero-video-pc" controls playsinline preload="none"
-                       poster="assets/video/tutorial-pc.jpg">
-                    <source src="assets/video/tutorial-pc.mp4?v=2" type="video/mp4">
-                </video>
-                <video class="hero-video-mobile" controls playsinline preload="none"
-                       poster="assets/video/tutorial-mobile.jpg">
-                    <source src="assets/video/tutorial-mobile.mp4?v=2" type="video/mp4">
-                </video>
+                <div class="hv-box hero-video-pc">
+                    <video playsinline preload="none" poster="assets/video/tutorial-pc.jpg?v=3">
+                        <source src="assets/video/tutorial-pc.mp4?v=2" type="video/mp4">
+                    </video>
+                    <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
+                </div>
+                <div class="hv-box hero-video-mobile">
+                    <video playsinline preload="none" poster="assets/video/tutorial-mobile.jpg?v=3">
+                        <source src="assets/video/tutorial-mobile.mp4?v=2" type="video/mp4">
+                    </video>
+                    <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
+                </div>
                 <figcaption>🎬 شوف كيفاش تخدم بالموقع — خطوة بخطوة</figcaption>
             </figure>
 
@@ -2201,5 +2230,19 @@
 
 <script src="assets/session-guard.js?v=c28594ff"></script>
 <script src="assets/presence.js?v=0faee43d" defer></script>
+<script>
+/* فيديو الشرح: ضغطة ف أي بلاصة كتشغل/توقف، والزر الكبير كيغبر ملي يخدم */
+document.querySelectorAll(".hv-box").forEach(function (box) {
+    var v = box.querySelector("video");
+    function toggle() { if (v.paused) { v.play(); } else { v.pause(); } }
+    box.addEventListener("click", function (e) {
+        if (v.controls && e.target === v) return;   /* الأزرار ديال المتصفح خدامين */
+        toggle();
+    });
+    v.addEventListener("play", function () { box.classList.add("is-playing"); v.controls = true; });
+    v.addEventListener("pause", function () { box.classList.remove("is-playing"); });
+    v.addEventListener("ended", function () { box.classList.remove("is-playing"); v.controls = false; v.load(); });
+});
+</script>
 </body>
 </html>
