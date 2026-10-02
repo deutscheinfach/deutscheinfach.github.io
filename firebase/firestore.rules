@@ -223,6 +223,16 @@ service cloud.firestore {
        (users/{uid}.isAdmin = true) اللي كينشر ولا كيمسح.
        ===================================================== */
 
+    /* شحال من واحد ف الموقع دابا (assets/presence.js): كل متصفح كيكتب
+       غير الوقت ديال السيرفر ف الوثيقة ديالو. القراية (العدد) غير للأدمين. */
+    match /presence/{browserId} {
+      allow read: if isAdmin();
+      allow create, update: if browserId.size() >= 16 && browserId.size() <= 40
+        && request.resource.data.keys().hasOnly(["at"])
+        && request.resource.data.at == request.time;
+      allow delete: if false;
+    }
+
     match /news/{newsId} {
 
       allow read: if true;

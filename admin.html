@@ -34,6 +34,8 @@
 .adm-btn.danger { border-color: var(--danger); color: var(--danger); }
 .adm-btn:disabled { opacity: .5; cursor: default; }
 .adm-note { margin: 10px 0 0; font-size: 14px; line-height: 1.7; }
+.adm-live-row { display: flex; align-items: baseline; gap: 12px; margin: 4px 0; }
+.adm-live-row b { font-size: 48px; font-weight: 900; line-height: 1; color: var(--accent-text); }
 .adm-note.ok { color: var(--ok); font-weight: 800; }
 .adm-note.bad { color: var(--danger); font-weight: 800; }
 .adm-user { margin-top: 14px; padding: 14px; border-radius: 14px; border: 1px dashed var(--line-gold); background: var(--surface-2); }
@@ -93,6 +95,13 @@
     <div id="adm-gate" class="adm-card"><p class="adm-empty">كنتأكدو من الحساب…</p></div>
 
     <div id="adm-app" hidden>
+        <!-- 0) شكون ف الموقع دابا -->
+        <section class="adm-card adm-live">
+            <h2>ف الموقع دابا</h2>
+            <p class="adm-live-row"><b id="adm-live-n">…</b><span>زائر ف آخر 3 دقايق</span></p>
+            <p class="adm-note" id="adm-live-sub">كيتجدد بوحدو كل 30 ثانية.</p>
+        </section>
+
         <!-- 1) التفعيل -->
         <section class="adm-card">
             <h2>1) تفعيل / تجديد اشتراك</h2>
@@ -187,7 +196,27 @@ authMod.onAuthStateChanged(auth, async function (me) {
     $("adm-app").hidden = false;
     loadList("active");
     syncUsers(me);
+    liveCount();
+    setInterval(liveCount, 30000);
 });
+
+/* presence/{id} كيتكتب من assets/presence.js ف كل صفحة */
+async function liveCount() {
+    if (document.visibilityState !== "visible") return;
+    const n = $("adm-live-n"), sub = $("adm-live-sub");
+    try {
+        const since = fs.Timestamp.fromMillis(Date.now() - 3 * 60000);
+        const q = fs.query(fs.collection(db, "presence"), fs.where("at", ">", since));
+        const snap = await fs.getCountFromServer(q);
+        n.textContent = String(snap.data().count);
+        sub.className = "adm-note";
+        sub.textContent = "آخر تحديث: " + new Date().toLocaleTimeString("fr-MA") + " · كيتجدد كل 30 ثانية.";
+    } catch (e) {
+        n.textContent = "—";
+        sub.className = "adm-note bad";
+        sub.textContent = "ماقدرناش نحسبو: " + (e.code || e.message) + " — نشر firestore.rules الجديدة ف Firebase.";
+    }
+}
 
 /* الحسابات اللي ف Authentication وما عندهمش وثيقة كاملة ف users
    (تسجلو والتسجيل طاح، ولا دخلو للشات قبل) — الـWorker كيكمّلهم. */
@@ -457,5 +486,6 @@ async function loadList(kind) {
 }
 </script>
 <script src="assets/session-guard.js?v=c28594ff"></script>
+<script src="assets/presence.js?v=0faee43d" defer></script>
 </body>
 </html>
