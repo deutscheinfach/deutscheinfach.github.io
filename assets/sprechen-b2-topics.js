@@ -100,7 +100,7 @@ window.SPRECHEN_B2_TOPICS = [
     { id: "t3-spielemesse",              title: "Spielemesse organisieren",                                        ar: "تنظيم معرض الألعاب", parts: ["teil3"], locked: true },
     { id: "t3-reise-dach",               title: "Reise nach einem der deutschsprachigen Länder",                   ar: "سفر لبلد كيهضر بالألمانية", parts: ["teil3"], locked: true },
     { id: "t3-nachbarin",                title: "Nachbarin im Krankenhaus helfen",                                 ar: "مساعدة الجارة فالسبيطار", parts: ["teil3"], locked: true },
-    { id: "t3-freund-amerika",           title: "Freund aus Amerika hilft in Deutschland",                         ar: "صاحب من أمريكا كيعاون فألمانيا", parts: ["teil3"], locked: true },
+    { id: "t3-freund-amerika",           title: "Freund aus Amerika in Deutschland helfen",                        ar: "نعاونو صاحب جاي من أمريكا لألمانيا", parts: ["teil3"], locked: true },
     { id: "t3-museum-sprachkurs",        title: "Museumsbesuch mit Sprachkurs",                                    ar: "زيارة المتحف مع الكور", parts: ["teil3"], locked: true },
     { id: "t3-hochzeit-freund",          title: "Hochzeitsüberraschung für einen Freund",                          ar: "مفاجأة العرس لصاحب", parts: ["teil3"], locked: true },
     { id: "t3-theater-spenden",          title: "Theaterstück & Spenden für Wohltätigkeit",                        ar: "مسرحية وتبرعات للخير", parts: ["teil3"], locked: true },
