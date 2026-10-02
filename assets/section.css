@@ -2432,6 +2432,8 @@
     background: var(--surface-2);
     font-size: 13px; font-weight: 600;
 }
+.e3-idea:has(.e3-idea-ar) { flex-direction: column; align-items: flex-start; border-radius: 12px; }
+.e3-idea-ar { font-size: 12px; font-weight: 500; margin-top: 2px; }
 
 .e3-rm { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; width: 100%; }
 .e3-rm-group {

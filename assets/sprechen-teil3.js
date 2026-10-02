@@ -156,7 +156,12 @@
             (task.punkte || []).forEach(function (p) {
                 const row = el("div", "e3-idea-row");
                 row.appendChild(el("b", "e3-idea-label", p.label));
-                (p.ideen || []).forEach(function (i) { row.appendChild(el("span", "e3-idea", i)); });
+                (p.ideen || []).forEach(function (i, n) {
+                    const chip = el("span", "e3-idea", i);
+                    /* الترجمة كتبان غير ملي كيتشعل زر العربية */
+                    if (p.ideenAr && p.ideenAr[n]) chip.appendChild(el("span", "t1-option-ar e3-idea-ar", p.ideenAr[n]));
+                    row.appendChild(chip);
+                });
                 ideas.appendChild(row);
             });
             const d = document.createElement("details");
