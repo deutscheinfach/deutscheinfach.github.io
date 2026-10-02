@@ -165,7 +165,11 @@
             (t.de || "").split("\n").forEach(function (para) {
                 box.appendChild(glossed(para));
             });
-            if (t.ar) box.appendChild(K.arBlock(t.ar));
+            if (t.ar) {
+                const arText = K.arBlock(t.ar);
+                arText.classList.add("e2-ar-text");     /* نخليو الفقرات ديال الترجمة */
+                box.appendChild(arText);
+            }
             pane.appendChild(box);
 
             /* سؤال الفكرة الأساسية */

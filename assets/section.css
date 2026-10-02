@@ -2361,6 +2361,7 @@
     text-align: left; direction: ltr;
 }
 .e2-prep-text p { margin: 0; white-space: pre-wrap; line-height: 1.8; font-size: 14.5px; }
+.e2-ar-text p { white-space: pre-line; }
 
 .e2-phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; width: 100%; }
 .e2-phase {
