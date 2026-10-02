@@ -107,7 +107,7 @@ window.SPRECHEN_B2_TOPICS = [
     { id: "t3-valentin",                 title: "Freund Valentin im Krankenhaus aufmuntern",                       ar: "نفرّحو صاحبنا فالنتين فالسبيطار", parts: ["teil3"], locked: true },
     { id: "t3-kochnachmittag",           title: "Kochnachmittag-Party im Deutschkurs",                             ar: "عشية الطبخ فالكور", parts: ["teil3"], locked: true },
     { id: "t3-kursraum",                 title: "Kursraum freundlicher machen",                                    ar: "نزوقو القسم", parts: ["teil3"], locked: true },
-    { id: "t3-geburtstag-mitarbeiter",   title: "Geburtstag eines Kursmitarbeiters feiern",                        ar: "عيد ميلاد واحد من الخدامة", parts: ["teil3"], locked: true },
+    { id: "t3-geburtstag-mitarbeiter",   title: "Geburtstag eines Kursteilnehmers feiern",                        ar: "عيد ميلاد واحد من الكور", parts: ["teil3"], locked: true },
     { id: "t3-fremdsprachen",            title: "Präsentation über Fremdsprachenlernen",                           ar: "عرض على تعلم اللغات", parts: ["teil3"], locked: true },
     { id: "t3-flohmarkt",                title: "Flohmarkt im Stadtviertel organisieren",                          ar: "تنظيم جوطية فالحي", parts: ["teil3"], locked: true },
     { id: "t3-kino-kurstag",             title: "Kino-Besuch am letzten Kurstag",                                  ar: "السينما فآخر نهار ديال الكور", parts: ["teil3"], locked: true },
