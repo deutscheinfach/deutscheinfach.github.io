@@ -616,7 +616,8 @@
             Array.prototype.forEach.call(nav.querySelectorAll("a"), function (link) {
                 const mine = link.dataset.key === key;
                 /* بدلنا المستوى؟ الروابط خاصها تتبع */
-                if (link.dataset.key !== "chat" && link.dataset.key !== "training") {
+                /* غير الأقسام اللي عندها مستوى (Ultra/Community لا) */
+                if (isSection(link.dataset.key)) {
                     link.href = lvl + "-" + link.dataset.key + ".html";
                 }
                 link.classList.toggle("active", mine);
