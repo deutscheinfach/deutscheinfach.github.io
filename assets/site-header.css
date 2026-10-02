@@ -859,3 +859,21 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     .site-header .site-brand-name { overflow: hidden; text-overflow: ellipsis; }
     .site-header .site-actions { flex: 0 0 auto; flex-wrap: nowrap; }
 }
+
+/* ===== Ultra Premium فالبار =====
+
+   خاصو يبان مختلف على الأقسام ديال التمارين — هادا عرض
+   ماشي جزء من الامتحان. ذهبي خفيف، وماكيتقلبش ملي يكون
+   هو النشيط حيت الـpill كيمشي عليه بحال الباقي. */
+
+.site-nav a.site-nav-gold {
+    color: var(--gold);
+    font-weight: 800;
+}
+.site-nav a.site-nav-gold::before {
+    content: "★";
+    margin-inline-end: 5px;
+    font-size: .85em;
+}
+.site-nav a.site-nav-gold:hover { color: var(--gold-dark, #c79a2e); }
+.site-nav a.site-nav-gold.active { color: var(--on-brand, #fff); }

@@ -21,16 +21,6 @@
     const PREP_SEC = 60;
     const ANSWER_SEC = 60;
 
-    /* ===== العرض ديال التحضير المباشر (مرحلة 5) =====
-       الثمن والرقم هنا برك — بدلهم من هنا وكيتبدلو ف كل
-       المواضيع دفعة وحدة. */
-    const ANGEBOT = {
-        preis: "700 DH",
-        proWas: "فالشهر",
-        tel: "212776551898",
-        text: "سلام، بغيت نعرف على التحضير المباشر ديال Sprechen B2."
-    };
-
     const PHASES = [
         { key: "inhalt",    de: "Inhalt",    ar: "لخّص النص",       icon: "📄" },
         { key: "meinung",   de: "Meinung",   ar: "عطي رأيك",        icon: "💬" },
@@ -105,10 +95,9 @@
             { key: "read",  n: "1", de: "Text lesen",   ar: "القراية" },
             { key: "prep",  n: "2", de: "Vorbereiten",  ar: "التحضير" },
             { key: "model", n: "3", de: "Mustertext",   ar: "نموذج" },
-            { key: "sim",   n: "4", de: "Simulation",   ar: "المحاكاة" },
-            { key: "coach", n: "5", de: "Ultra Premium", ar: "تحضير مباشر" }
+            { key: "sim",   n: "4", de: "Simulation",   ar: "المحاكاة" }
         ];
-        const nav = el("nav", "e1-steps e1-steps-5");
+        const nav = el("nav", "e1-steps e1-steps-4");
         const panes = {};
         const tabs = {};
         STEPS.forEach(function (s) {
@@ -127,7 +116,6 @@
         panes.model = buildModel();
         const sim = buildSim();
         panes.sim = sim.node;
-        panes.coach = buildCoach();
         Object.keys(panes).forEach(function (k) { panes[k].hidden = true; body.appendChild(panes[k]); });
         into.appendChild(wrap);
         show("read", false);
@@ -337,61 +325,6 @@
             });
 
             pane.append(grid, cta("جاهز؟ دوز للمحاكاة ←", "sim"));
-            return pane;
-        }
-
-        /* ================= 5) تحضير مباشر =================
-
-           ماشي تمرين — هادي بلاصة كنعرضو فيها التحضير
-           المباشر. كتجي فاللخر عمداً: ملي يكون ديجا قرا،
-           حضّر، شاف النموذج وجرب المحاكاة، عاد يعرف فين
-           ناقصو وعلاش يحتاج واحد يهضر معاه. */
-
-        function buildCoach() {
-            const pane = el("div", "e1-pane");
-            const box = el("section", "e1-box e2-coach");
-
-            box.appendChild(el("span", "e2-coach-tag", "ULTRA PREMIUM"));
-            box.appendChild(el("h3", "e2-coach-h", "تحضير مباشر معانا أونلاين"));
-            box.appendChild(el("p", "e2-coach-lead",
-                "التمارين كيوجدوك بوحدك. ولكن Sprechen ماكيتعلمش بالقراية — " +
-                "كيتعلم ملي تهضر مع شي واحد كيرد عليك."));
-
-            const list = el("ul", "e2-coach-list");
-            [
-                ["🗣", "طلّق لسانك", "حصص مباشرة كتهضر فيها بالألمانية بلا ما تخاف من الغلط."],
-                ["🎯", "تريكات الامتحان", "كيفاش تبدا، كيفاش تربط، وشنو كيقلب عليه الـPrüfer بالضبط."],
-                ["🧩", "على قد المستوى ديالك", "كنشوفو فين ضعيف — Wortschatz، الوقت، ولا الثقة — وكنخدمو عليه."],
-                ["💬", "معاك ف أي حاجة", "سؤال ف أي وقت: Lesen، Schreiben، Hören ولا الأوراق ديال الامتحان."]
-            ].forEach(function (row) {
-                const li = el("li", "e2-coach-item");
-                li.appendChild(el("span", "e2-coach-ico", row[0]));
-                const txt = el("div", "e2-coach-txt");
-                txt.appendChild(el("b", "", row[1]));
-                txt.appendChild(el("span", "", row[2]));
-                li.appendChild(txt);
-                list.appendChild(li);
-            });
-            box.appendChild(list);
-
-            const price = el("div", "e2-coach-price");
-            price.appendChild(el("b", "e2-coach-num", ANGEBOT.preis));
-            price.appendChild(el("span", "e2-coach-per", ANGEBOT.proWas));
-            box.appendChild(price);
-
-            const cta = document.createElement("a");
-            cta.className = "e2-coach-cta";
-            cta.href = "https://wa.me/" + ANGEBOT.tel +
-                       "?text=" + encodeURIComponent(ANGEBOT.text);
-            cta.target = "_blank";
-            cta.rel = "noopener";
-            cta.textContent = "عيّط لينا ف WhatsApp";
-            box.appendChild(cta);
-
-            box.appendChild(el("p", "e2-coach-fine",
-                "كتجاوبك بنادم بصح، ماشي روبو."));
-
-            pane.appendChild(box);
             return pane;
         }
 

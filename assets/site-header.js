@@ -22,7 +22,10 @@
         { key: "sprechen",  href: "b2-sprechen.html",  label: "Sprechen" },
         { key: "chat",      href: "chat.html",         label: "Community" },
         /* Training: Fortschritt، Modelltest و Wortschatz — بلا مستوى */
-        { key: "training",  href: "fortschritt.html",  label: "Training" }
+        { key: "training",  href: "fortschritt.html",  label: "Training" },
+        /* التحضير المباشر. ماعندو مستوى، وكيتميز بكلاس
+           ديالو باش يبان ذهبي بين الباقي. */
+        { key: "ultra",     href: "ultra-premium.html", label: "Ultra Premium", gold: true }
     ];
 
     let active = mount.dataset.active || "";
@@ -60,10 +63,11 @@
            من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
            رابط كيتبع المستوى ديال الصفحة اللي راك فيها.
            Community ماعندهاش مستوى. */
-        link.href = (item.key === "chat" || item.key === "training")
+        link.href = (item.key === "chat" || item.key === "training" || item.key === "ultra")
             ? item.href
             : pageLevel + "-" + item.key + ".html";
         link.textContent = item.label;
+        if (item.gold) link.classList.add("site-nav-gold");
         /* الراوتر كيقارن بالمفتاح ماشي بالرابط: الروابط هنا ديما
            b2-*، حتى ملي تكون ف صفحة B1 (مبدّل المستوى هو اللي
            كيتكلف بالمستوى). */
@@ -409,7 +413,7 @@
        عمرو ما كيبان — الدخول من الصفحة الرئيسية لـ Lesen كان كيخلي
        الصفحة بلا Telc B1 / Telc B2. */
     function isSection(key) {
-        return !!key && key !== "training" && key !== "chat";
+        return !!key && key !== "training" && key !== "chat" && key !== "ultra";
     }
     {
         const file = (location.pathname.split("/").pop() || "").toLowerCase();
