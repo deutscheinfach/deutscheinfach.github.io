@@ -2259,6 +2259,7 @@
    Sprechen Teil 2 — Text · Meinung · Erfahrung (e2-*)
    ===================================================== */
 .e1-steps-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.e1-steps-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .e2-center { text-align: center; margin-top: 12px; }
 
 .e2-text { direction: ltr; text-align: left; }
@@ -2549,6 +2550,8 @@
 }
 @media (max-width: 600px) {
     .e1-steps-4 .e1-step-de { font-size: 11px; }
+    .e1-steps-5 .e1-step-de { font-size: 10.5px; }
+    .e1-steps-5 .e1-step-ar { font-size: 9.5px; }
     .e2-para { font-size: 15px; }
     .e2-dist-row { grid-template-columns: 92px 1fr 42px; }
     .e3-line { max-width: 100%; }
@@ -3530,4 +3533,145 @@ html.de-no-keys mark.kw {
     background: transparent !important;
     border-bottom-color: transparent !important;
     padding: 0 !important;
+}
+
+/* ===== مرحلة 5: التحضير المباشر =====
+
+   هادي ماشي تمرين، إذن خاصها تبان مختلفة على باقي
+   البطاقات — خلفية غامقة وحد ذهبي.
+
+   الـ"html body" ماشي زيادة: فوق كاين
+   html body .e1-box { background: ... } و
+   html body :is(.e1-box,.e1-task) :is(h3,p,li,...) { color: #1c1a16 }
+   اللي كيغلبو أي قاعدة بكلاس واحد. بلا نفس القوة،
+   البطاقة كتبقى بيضة والكتابة البيضا ماكتقراش. */
+
+html body .e1-box.e2-coach {
+    /* القاعدة ديال فوق كتستعمل !important، إذن خاصنا نفس
+       السلاح. وكنعاودو التوكنز حيت داكشي فوق كيحوّلهم
+       لألوان فاتحة. */
+    background: linear-gradient(160deg, #6b0d22, #3d0714) !important;
+    border: 1px solid var(--gold) !important;
+    --text: #fff;
+    --muted: rgba(255, 255, 255, .72);
+    --line: rgba(255, 255, 255, .16);
+    text-align: center;
+    padding: 26px 20px 22px;
+}
+html body .e1-box.e2-coach :is(h3, h4, p, li, b, span, a) { color: #fff; }
+
+html body .e1-box.e2-coach .e2-coach-tag {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 900;
+    letter-spacing: .14em;
+    color: #2b1a00;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 999px;
+    padding: 4px 12px;
+    color: #2b1a00 !important;
+}
+html body .e1-box.e2-coach .e2-coach-h {
+    margin: 14px 0 8px;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.4;
+}
+html body .e1-box.e2-coach .e2-coach-lead {
+    margin: 0 auto 20px;
+    max-width: 46ch;
+    font-size: 14px;
+    line-height: 1.85;
+    color: rgba(255, 255, 255, .82);
+}
+
+html body .e1-box.e2-coach .e2-coach-list {
+    list-style: none;
+    margin: 0 auto 22px;
+    padding: 0;
+    max-width: 560px;
+    display: grid;
+    gap: 12px;
+    direction: rtl;
+    text-align: right;
+}
+html body .e1-box.e2-coach .e2-coach-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+html body .e1-box.e2-coach .e2-coach-ico {
+    font-size: 19px;
+    line-height: 1.4;
+    flex: 0 0 auto;
+}
+html body .e1-box.e2-coach .e2-coach-txt {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+html body .e1-box.e2-coach .e2-coach-txt b {
+    font-size: 14.5px;
+    color: var(--gold);
+    color: var(--gold) !important;
+}
+html body .e1-box.e2-coach .e2-coach-txt span {
+    font-size: 13px;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, .82);
+}
+
+html body .e1-box.e2-coach .e2-coach-price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 9px;
+    margin-bottom: 16px;
+    direction: rtl;
+}
+html body .e1-box.e2-coach .e2-coach-num {
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1.15;
+    direction: ltr;
+    color: var(--gold) !important;
+}
+html body .e1-box.e2-coach .e2-coach-per {
+    font-size: 13px;
+    color: rgba(255, 255, 255, .72);
+}
+
+html body .e1-box.e2-coach .e2-coach-cta {
+    display: block;
+    max-width: 360px;
+    margin: 0 auto;
+    background: #25d366;
+    color: #06240f;
+    font-weight: 800;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 14px 18px;
+    border-radius: 11px;
+    transition: filter .16s ease, transform .16s ease;
+    color: #06240f !important;
+}
+html body .e1-box.e2-coach .e2-coach-cta:hover { filter: brightness(1.07); }
+html body .e1-box.e2-coach .e2-coach-cta:active { transform: translateY(1px); }
+html body .e1-box.e2-coach .e2-coach-cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+html body .e1-box.e2-coach .e2-coach-fine {
+    margin: 12px 0 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, .62);
+}
+
+@media (max-width: 700px) {
+    html body .e1-box.e2-coach { padding: 22px 15px 18px; }
+    html body .e1-box.e2-coach .e2-coach-h { font-size: 19px; }
+    html body .e1-box.e2-coach .e2-coach-num { font-size: 29px; }
 }
