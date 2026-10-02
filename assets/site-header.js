@@ -218,11 +218,12 @@
 
         const urls = [];
         NAV.forEach(function (item) {
-            if (item.key === active || item.key === "chat" || item.key === "training") return;
-            urls.push(level + "-" + item.key + ".html");
+            if (item.key === active || item.hidden) return;
+            /* Ultra/Community ماعندهمش مستوى: الرابط ديالهم كيف ما هو */
+            urls.push(isSection(item.key) ? level + "-" + item.key + ".html" : item.href);
         });
         /* والمستوى الآخر ديال نفس القسم */
-        if (active && active !== "chat" && active !== "training") urls.push((level === "b1" ? "b2" : "b1") + "-" + active + ".html");
+        if (isSection(active)) urls.push((level === "b1" ? "b2" : "b1") + "-" + active + ".html");
 
         if (!urls.length) return;
 
