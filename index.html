@@ -465,6 +465,41 @@
             align-items: center;
         }
 
+        /* اللوغو فوق (فنفس الستر ديال العنوان) والفيديو تحتو */
+        .hero { align-items: start; }
+        .hero-logo-area {
+            flex-direction: column;
+            gap: 26px;
+        }
+        .hero-video {
+            width: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-video video {
+            display: block;
+            width: 100%;
+            border-radius: 18px;
+            background: #2a0710;
+            border: 3px solid rgba(255,206,0,.55);
+            box-shadow: 0 22px 50px rgba(0,0,0,.4);
+        }
+        .hero-video-mobile { display: none !important; max-width: 260px; }
+        .hero-video figcaption {
+            direction: rtl;
+            font-weight: 800;
+            font-size: 15px;
+            color: #ffce00;
+            text-align: center;
+        }
+        @media (max-width: 900px) {
+            .hero-video-pc { display: none !important; }
+            .hero-video-mobile { display: block !important; }
+        }
+
         .logo-wrapper {
             position: relative;
             width: 300px;
@@ -1801,6 +1836,20 @@
                 >
 
             </div>
+
+            <!-- فيديو الشرح: نسخة PC ونسخة التيليفون — preload="none"
+                 باش ماكيتحمل حتى يضغط عليه الزائر -->
+            <figure class="hero-video">
+                <video class="hero-video-pc" controls playsinline preload="none"
+                       poster="assets/video/tutorial-pc.jpg">
+                    <source src="assets/video/tutorial-pc.mp4" type="video/mp4">
+                </video>
+                <video class="hero-video-mobile" controls playsinline preload="none"
+                       poster="assets/video/tutorial-mobile.jpg">
+                    <source src="assets/video/tutorial-mobile.mp4" type="video/mp4">
+                </video>
+                <figcaption>🎬 شوف كيفاش تخدم بالموقع — خطوة بخطوة</figcaption>
+            </figure>
 
         </div>
 
