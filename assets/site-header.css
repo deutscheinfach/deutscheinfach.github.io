@@ -141,6 +141,12 @@ body { padding-top: var(--site-header-h); }
 .site-nav::-webkit-scrollbar { display: none; }
 
 .site-nav a {
+    /* بلا هادي الروابط كيتقلصو ملي ما يسعهمش العرض،
+       والكلمات كيلتصقو ف بعضياتهم («LesenHörenSchreiben»).
+       الحاوية عندها overflow-x: auto — إذن خاصهم يحتافظو
+       بعرضهم وتزلق هي. بان المشكل ملي زدنا Ultra Premium:
+       سبع روابط ماعادش كيدخلو ف 390px. */
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -161,9 +167,24 @@ body { padding-top: var(--site-header-h); }
 }
 
 /* ---- الأزرار على اليمين ---- */
-.site-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+/* margin-inline-start: auto كيدفعهم لليمين ديما — حتى ملي
+   كيهبطو لسطر ثاني. بلاه كانو كيوقفو على ليسار ملي البار
+   كتلف (زدنا Ultra Premium فالتنقل، ف البار ولات كتلف
+   على شاشات أعرض من قبل). */
+.site-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+    margin-inline-start: auto;
+}
 
 .site-btn {
+    /* الزر فيه <span>تسجيل </span>الدخول. الحاوية LTR، ف
+       الـspan كان كيتحط على ليسار والباقي على اليمين —
+       والنتيجة كتقرا «الدخول تسجيل». rtl كترجع الترتيب
+       للي كيتقرا بيه العربية. */
+    direction: rtl;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -586,25 +607,26 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-nav.has-pill a.active { background: transparent !important; box-shadow: none; color: var(--on-brand); }
 .site-level { background: rgba(255,255,255,.9); box-shadow: var(--shadow); }
 
-/* التيليفون: الخمسة ديال الأقسام كيتقاسمو العرض — ما يبقاش
-   "Community" مقطوع فالطرف. */
+/* التيليفون: الأقسام كيزلقو أفقياً.
+
+   قبل كانو كيتقاسمو العرض (flex: 1 1 auto) — كانت خدامة
+   بستة. ملي زدنا Ultra Premium ولاو سبعة، و"Ultra Premium"
+   بوحدها طويلة: النتيجة كانت «LesenHörenSchreiben» ملتصقين
+   وماتقراوش.
+
+   دابا كل واحد كياخد العرض ديالو والشريط كيزلق. */
 @media (max-width: 560px) {
-    /* كل قسم كياخد العرض على قد الكلمة ديالو (Community أطول
-       من Lesen) — الأعمدة المتساوية كانو كيقطعو "Community". */
     .site-nav { display: flex; gap: 1px; }
     .site-nav a {
-        flex: 1 1 auto;
-        min-width: 0;
+        flex: 0 0 auto;
         justify-content: center;
-        padding: 0 5px;
+        padding: 0 10px;
         font-size: 12px;
         letter-spacing: -.01em;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 }
 @media (max-width: 380px) {
-    .site-nav a { font-size: 11px; padding: 0 3px; letter-spacing: -.02em; }
+    .site-nav a { font-size: 11px; padding: 0 8px; letter-spacing: -.02em; }
 }
 
 /* =====================================================

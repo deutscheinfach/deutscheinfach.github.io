@@ -21,8 +21,9 @@
         { key: "schreiben", href: "b2-schreiben.html", label: "Schreiben" },
         { key: "sprechen",  href: "b2-sprechen.html",  label: "Sprechen" },
         { key: "chat",      href: "chat.html",         label: "Community" },
-        /* Training: Fortschritt، Modelltest و Wortschatz — بلا مستوى */
-        { key: "training",  href: "fortschritt.html",  label: "Training" },
+        /* Training (Fortschritt، Modelltest، Wortschatz) تحيد
+           من البار. الصفحات باقية خدامة ومربوطة من بلايص
+           أخرى فالموقع — غير البركة من هنا اللي تحيدات. */
         /* التحضير المباشر. ماعندو مستوى، وكيتميز بكلاس
            ديالو باش يبان ذهبي بين الباقي. */
         { key: "ultra",     href: "ultra-premium.html", label: "Ultra Premium", gold: true }
