@@ -69,7 +69,27 @@
         ".de-app-btn{flex:0 0 auto;border:0;border-radius:999px;padding:9px 16px;background:#ffce00;color:#2a0710;font:inherit;font-weight:900;font-size:14px;cursor:pointer;white-space:nowrap;text-decoration:none}" +
         ".de-app-btn.ghost{background:transparent;color:#ffce00;border:1.5px solid rgba(255,206,0,.6)}" +
         ".de-app-ios{margin:10px 0 0;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.22);font-size:14px;line-height:1.9}" +
-        ".de-app-ios b{color:#ffce00}.de-app-msg{font-size:13.5px;color:#ffce00;font-weight:800}";
+        ".de-app-ios b{color:#ffce00}.de-app-msg{font-size:13.5px;color:#ffce00;font-weight:800}" +
+        /* نافذة الإذن (بحال اللي كتبين Google قبل الإذن ديال المتصفح) */
+        ".de-ask-bg{position:fixed;inset:0;z-index:1000;background:rgba(20,6,10,.55);display:flex;align-items:flex-start;justify-content:center;padding:calc(18px + env(safe-area-inset-top)) 14px;animation:de-fade .2s ease}" +
+        "@keyframes de-fade{from{opacity:0}to{opacity:1}}" +
+        ".de-ask{width:min(400px,100%);background:#fff;color:#1f1f1f;border-radius:22px;box-shadow:0 24px 60px rgba(0,0,0,.4);padding:22px 22px 16px;direction:rtl;font-family:Cairo,system-ui,sans-serif;animation:de-drop .3s cubic-bezier(.2,.9,.3,1.2)}" +
+        "@keyframes de-drop{from{transform:translateY(-24px);opacity:0}to{transform:none;opacity:1}}" +
+        ".de-ask-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}" +
+        ".de-ask-top img{width:46px;height:46px;border-radius:50%;box-shadow:0 4px 12px rgba(0,0,0,.2)}" +
+        ".de-ask-top small{display:block;color:#666;font-size:12.5px;font-weight:700;direction:ltr;text-align:right}" +
+        ".de-ask-top b{font-size:15px}" +
+        ".de-ask h3{margin:0 0 6px;font-size:19px;font-weight:900;line-height:1.35}" +
+        ".de-ask p{margin:0 0 14px;color:#444;font-size:14.5px;line-height:1.7}" +
+        ".de-ask-demo{display:flex;gap:10px;align-items:center;background:#f3f1ec;border-radius:14px;padding:10px 12px;margin-bottom:16px;font-size:13px;color:#333}" +
+        ".de-ask-demo img{width:30px;height:30px;border-radius:8px}.de-ask-demo b{display:block;font-size:13.5px}" +
+        ".de-ask-btns{display:flex;gap:10px;justify-content:flex-start}" +
+        ".de-ask-btns button{flex:1;border-radius:999px;padding:11px 14px;font:inherit;font-weight:900;font-size:15px;cursor:pointer}" +
+        ".de-ask-yes{border:0;background:#7a1426;color:#fff}.de-ask-no{border:1.5px solid #d8d4cc;background:#fff;color:#444}" +
+        ".de-ask-ok{text-align:center;font-weight:900;color:#15803d;font-size:15px;padding:6px 0}" +
+        "html[data-theme=dark] .de-ask{background:#1f1a1c;color:#f4f1ea}html[data-theme=dark] .de-ask p{color:#cfc8bd}" +
+        "html[data-theme=dark] .de-ask-demo{background:#2c2427;color:#e9e3d8}html[data-theme=dark] .de-ask-no{background:transparent;color:#e9e3d8;border-color:#4a4044}" +
+        "html[data-theme=dark] .de-ask-top small{color:#aaa}";
     document.head.appendChild(css);
 
     var card = null;
@@ -79,9 +99,10 @@
 
     function paint() {
         if (CARD_PAGES.indexOf(page) === -1) return;
+        if (document.querySelector(".de-ask-bg")) { setTimeout(paint, 3000); return; }
         var hidden = Number(read(DISMISS_KEY) || 0);
         if (hidden && Date.now() - hidden < 14 * 86400000) return;
-        var install = wantInstall(), daily = wantDaily();
+        var install = wantInstall(), daily = false;   /* التذكير عندو نافذة بوحدو (askDaily) */
         if (!install && !daily) { if (card) { card.remove(); card = null; } return; }
         if (!card) {
             card = document.createElement("div");
@@ -173,8 +194,90 @@
         });
     }
 
-    window.__deApp = { show: function () { store(DISMISS_KEY, null); paint(); } };
+    /* ===== «فكرني كل نهار»: نافذة الإذن =====
+       كتبان غير للي داخل بحسابو (الـ token كيتحفظ ف الحساب)، والإذن
+       ديال المتصفح مازال ما تسولش. ملي يضغط «سماح» عاد كيطلع
+       الإذن الحقيقي (Autoriser / Bloquer). «ماشي دابا» = 7 أيام. */
+    var ASK_KEY = "de-daily-asked";
+
+    function currentUser() {
+        return new Promise(function (resolve) {
+            var tries = 0;
+            (function wait() {
+                var a = window.__deutschEinfachAuth;
+                if (a && a.currentUser) return resolve(a.currentUser);
+                if (a && tries > 6) return resolve(a.currentUser || null);
+                if (++tries > 40) return resolve(null);
+                setTimeout(wait, 250);
+            })();
+        });
+    }
+
+    function askDaily(delay) {
+        if (!pushPossible() || read(DAILY_KEY) === "1") return;
+        if (isIOS && !standalone()) return;   /* iPhone: غير من التطبيق المزيد للشاشة */
+        setTimeout(function () {
+            currentUser().then(function (user) {
+                if (!user) return;
+                /* سبق قبل ف جهاز آخر ولا هنا: نعاودو نسجلو بلا ما نسولو */
+                if (Notification.permission === "granted") {
+                    loadPush().then(function () { return window.__dePushEnable({ daily: true }); })
+                        .then(function (r) { if (r && r.ok) store(DAILY_KEY, "1"); }).catch(function () {});
+                    return;
+                }
+                var last = Number(read(ASK_KEY) || 0);
+                if (last && Date.now() - last < 7 * 86400000) return;
+                showAsk();
+            });
+        }, delay);
+    }
+
+    function showAsk() {
+        if (document.querySelector(".de-ask-bg")) return;
+        var bg = document.createElement("div");
+        bg.className = "de-ask-bg";
+        bg.innerHTML =
+            '<div class="de-ask" role="dialog" aria-modal="true" aria-labelledby="de-ask-h">' +
+            '<div class="de-ask-top"><img src="assets/icon-192.png" alt=""><div><b>Deutsch Einfach</b><small>deutsch-einfach.online</small></div></div>' +
+            '<h3 id="de-ask-h">🔔 بغيتي نفكروك بالتمرين كل نهار؟</h3>' +
+            "<p>إشعار واحد ف النهار مع <b>7 د الليل</b> باش تبقى منتظم وتوجد لـ telc. بلا إزعاج، وتقدر توقفو فأي وقت.</p>" +
+            '<div class="de-ask-demo"><img src="assets/icon-192.png" alt=""><div><b>🔥 ما تقطعش اليوم!</b>10 دقايق ديال Lesen كيفرقو ف telc.</div></div>' +
+            '<div class="de-ask-btns"><button type="button" class="de-ask-yes">سماح</button><button type="button" class="de-ask-no">ماشي دابا</button></div>' +
+            "</div>";
+        document.body.appendChild(bg);
+        function close() { bg.remove(); }
+        bg.querySelector(".de-ask-no").addEventListener("click", function () { store(ASK_KEY, String(Date.now())); close(); });
+        bg.addEventListener("click", function (e) { if (e.target === bg) { store(ASK_KEY, String(Date.now())); close(); } });
+        bg.querySelector(".de-ask-yes").addEventListener("click", function () {
+            var box = bg.querySelector(".de-ask-btns");
+            box.innerHTML = '<div class="de-ask-ok">… ضغط «Autoriser» ف النافذة ديال المتصفح</div>';
+            loadPush().then(function () { return window.__dePushEnable({ daily: true }); }).then(function (r) {
+                if (r && r.ok) {
+                    store(DAILY_KEY, "1");
+                    box.innerHTML = '<div class="de-ask-ok">✅ صافي! نتلاقاو غدا مع 7 د الليل.</div>';
+                    setTimeout(close, 2200);
+                } else {
+                    store(ASK_KEY, String(Date.now()));
+                    box.innerHTML = '<div class="de-ask-ok" style="color:#b42318">' +
+                        (window.Notification && Notification.permission === "denied"
+                            ? "الإشعارات مسدودة — تقدر تحلها من 🔒 حدا العنوان ديال الموقع."
+                            : "ما تفعلاتش دابا — نعاودو نسولوك من بعد.") + "</div>";
+                    setTimeout(close, 3500);
+                }
+            }).catch(function () { close(); });
+        });
+    }
+
+    window.__deApp = {
+        show: function () { store(DISMISS_KEY, null); paint(); },
+        askDaily: function () { store(ASK_KEY, null); askDaily(0); }
+    };
 
     /* كنخليو الزائر يشوف الصفحة شوية عاد نبينو البطاقة */
     setTimeout(paint, 6000);
+
+    /* من بعد التسجيل: النافذة كتطلع دغيا ف الصفحة الرئيسية */
+    var justSigned = false;
+    try { justSigned = sessionStorage.getItem("de-just-signed-up") === "1"; sessionStorage.removeItem("de-just-signed-up"); } catch (e) { /* خاص */ }
+    if (CARD_PAGES.indexOf(page) !== -1) askDaily(justSigned ? 1500 : 4000);
 })();
