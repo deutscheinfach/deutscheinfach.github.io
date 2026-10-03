@@ -201,12 +201,32 @@
         leaveTo(link.href);
     });
 
+    /* الأقسام + صفحات الأجزاء ديال Lesen (نفس الملفات بالضبط،
+       غير data-teil كيتبدل) — هادو اللي الراوتر (لتحت) كيبدلهم
+       بـfetch بلا ما تتحمل الصفحة.
+
+       ماشي داخلين:
+         · chat.html — module كبير و WebRTC، إعادة تنفيذه
+           كتخلق مستمعين مكررين ومكالمات مزدوجة؛
+         · b2-hoeren-teil*.html — فيهم inline scripts فيهم
+           `const` ف الجذر، و`const` مرتين ف نفس الصفحة =
+           SyntaxError.
+       هادو كيتنقلو عادي، وهادشي ماشي مشكل: البار كتعاود
+       تتبنى غير تما، ماشي ف كل برْكة. */
+    const ROUTABLE =
+        /^(b1|b2)-(lesen|hoeren|schreiben|sprechen)\.html$|^(b1|b2)-lesen-(teil[123]|sprach[12])\.html$/;
+
     /* ---- نوجدو الصفحة الجاية قبل ما تبرك ----
 
-       هادي هي اللي كتخلي البار ما يغمضش: المتصفح كيحمل
-       وكيرسم الصفحة الجاية بالخفية ملي تحط الماوس على
-       التبويب. منين تبرك، كيبدلها ف 0 ثانية — الهيدر ديال
-       الصفحة الجديدة كيكون ديجا مرسوم ف نفس البلاصة.
+       هادي هي اللي كتخلي البار ما يغمضش. الـHTML ديال القسم
+       الجاي كيتجيب بالخفية (prefetch)، إذن منين تبرك الراوتر
+       كيلقاه ديجا ف الكاش.
+
+       الصفحات اللي الراوتر كيبدلها بـfetch ما كنرسموهاش بالخفية
+       (prerender): الراوتر كيوقف البركة، إذن الصفحة المرسومة
+       عمرها ما كتتفعّل — وكتبقى خدامة ف الخلفية (Firebase، عشرين
+       سكريبت، النجوم) وكتاكل المعالج ف نفس اللحظة اللي المستخدم
+       كيبرك فيها. prerender غير للصفحات اللي كيتنقلو عادي.
 
        اللي ماعندوش Speculation Rules (Safari/Firefox) كيتجاهل
        هاد السطور وكلشي كيبقى خدام عادي. */
@@ -241,10 +261,15 @@
         if (!HTMLScriptElement.supports
             || !HTMLScriptElement.supports("speculationrules")) return;
 
+        const rendered = urls.filter(function (url) {
+            return !ROUTABLE.test(url.split("?")[0].split("/").pop().toLowerCase());
+        });
+        if (!rendered.length) return;
+
         const rules = document.createElement("script");
         rules.type = "speculationrules";
         rules.textContent = JSON.stringify({
-            prerender: [{ source: "list", urls: urls, eagerness: "moderate" }]
+            prerender: [{ source: "list", urls: rendered, eagerness: "moderate" }]
         });
         document.head.appendChild(rules);
     }());
@@ -513,20 +538,6 @@
        العادي ديال المتصفح — ماكاين حتى طريق مسدود.
        =================================================================== */
     const routerOn = (function () {
-        /* الأقسام + صفحات الأجزاء ديال Lesen (نفس الملفات بالضبط،
-           غير data-teil كيتبدل).
-
-           ماشي داخلين:
-             · chat.html — module كبير و WebRTC، إعادة تنفيذه
-               كتخلق مستمعين مكررين ومكالمات مزدوجة؛
-             · b2-hoeren-teil*.html — فيهم inline scripts فيهم
-               `const` ف الجذر، و`const` مرتين ف نفس الصفحة =
-               SyntaxError.
-           هادو كيتنقلو عادي، وهادشي ماشي مشكل: البار كتعاود
-           تتبنى غير تما، ماشي ف كل برْكة. */
-        const ROUTABLE =
-            /^(b1|b2)-(lesen|hoeren|schreiben|sprechen)\.html$|^(b1|b2)-lesen-(teil[123]|sprach[12])\.html$/;
-
         /* عائلة Lesen: lesen-hub.js كيتكلف بتبديل الأجزاء فنفس
            الصفحة، إذن ملي يكون التنقل جوا هاد العائلة الراوتر
            خاصو يبعد وما يعاودش يجيب الصفحة. */
@@ -541,6 +552,22 @@
 
         if (!window.fetch || !window.DOMParser
             || !history.pushState || !window.Promise) return false;
+
+        /* المستمعين اللي كيسجلو الهوبات على window/document كيعيشو
+           برا الصفحة. stale() كيسكتهم، ولكن ماكيحيدهمش: كل تنقل كان
+           كيخلي وراه الـDOM القديم كامل محبوس ف الذاكرة (قريب ألف
+           عقدة ف كل رحلة Lesen ↔ Hören). الهوبات كيسجلو بـ
+           { signal: window.__deSignal }، والراوتر كيلغيه قبل ما يحيد
+           المحتوى — المتصفح كيمسح المستمعين بوحدو. */
+        let pageScope = window.AbortController ? new AbortController() : null;
+        window.__deSignal = pageScope ? pageScope.signal : undefined;
+
+        function leavePage() {
+            if (!pageScope) return;
+            pageScope.abort();
+            pageScope = new AbortController();
+            window.__deSignal = pageScope.signal;
+        }
 
         function fileOf(url) {
             try {
@@ -586,24 +613,42 @@
         }
 
         /* <script> اللي كيجي من innerHTML ماكيتنفذش — خاصنا نعاودو
-           نبنيوه. وكيخصهم يتنفذو واحد من بعد واحد: lesen-hub.js
-           محتاج الداتا اللي قبلو. */
+           نبنيوه. التنفيذ خاصو يبقى واحد من بعد واحد بنفس الترتيب:
+           lesen-hub.js محتاج الداتا اللي قبلو.
+
+           التحميل لا. قبل، كل سكريبت كان كيتسنى اللي قبلو يسالي
+           حتى يبدا تحميلو: ف Lesen هادي 21 رحلة ف الشبكة ورا بعضها
+           (ثانيتين ونص ملي الكاش كيكون منتاهي). async = false كيخلي
+           المتصفح يحمّل كلشي ف نفس الوقت وينفذ بالترتيب.
+
+           inline script (ماكايناش دابا ف هاد الصفحات) كيتسنى اللي
+           قبلو يتنفذ، وكيتسناه اللي من بعدو: نفس الترتيب القديم. */
         function runScripts(nodes) {
-            return nodes.reduce(function (chain, node) {
+            const groups = [];
+            nodes.forEach(function (node) {
+                const last = groups[groups.length - 1];
+                if (node.src && last && last.external) last.nodes.push(node);
+                else groups.push({ external: !!node.src, nodes: [node] });
+            });
+
+            return groups.reduce(function (chain, group) {
                 return chain.then(function () {
-                    return new Promise(function (done) {
-                        const tag = document.createElement("script");
-                        Array.prototype.forEach.call(node.attributes, function (a) {
-                            tag.setAttribute(a.name, a.value);
+                    return Promise.all(group.nodes.map(function (node) {
+                        return new Promise(function (done) {
+                            const tag = document.createElement("script");
+                            Array.prototype.forEach.call(node.attributes, function (a) {
+                                tag.setAttribute(a.name, a.value);
+                            });
+                            if (node.src) {
+                                tag.async = false;
+                                tag.onload = tag.onerror = done;
+                            } else {
+                                tag.textContent = node.textContent;
+                            }
+                            document.body.appendChild(tag);
+                            if (!node.src) done();
                         });
-                        if (node.src) {
-                            tag.onload = tag.onerror = done;
-                        } else {
-                            tag.textContent = node.textContent;
-                        }
-                        document.body.appendChild(tag);
-                        if (!node.src) done();
-                    });
+                    }));
                 });
             }, Promise.resolve());
         }
@@ -640,10 +685,35 @@
             placeLevel();
         }
 
+        /* busy = كنبدلو المحتوى دابا (swap + السكريبتات): ما كيتقبل والو.
+           قبل هادشي، كنتسناو غير الصفحة تجي: ضغطة جديدة كتغلب القديمة. */
         let busy = false;
+        let seq = 0;
+        let inflight = null;
+        let queued = null;
         let herefile = fileOf(location.pathname);
 
+        /* ما نبقاوش نتسناو شبكة ميتة: من بعد هاد المدة كنرجعو
+           للتنقل العادي ديال المتصفح. */
+        const FETCH_LIMIT = 8000;
+
+        /* القسم الجديد كيبان نشيط والمؤشر كيزلق ليه دغيا، قبل ما تجي
+           الصفحة. على شبكة بطيئة، بلا هادشي كتبرك وما كيوقع والو
+           حتى تجي — كيبان بحال الموقع تعلّق. إلا طاحت الشبكة،
+           bail() كيدير تنقل عادي وهاد الحالة ما كتهمش. */
+        function preview(link) {
+            Array.prototype.forEach.call(nav.querySelectorAll("a.active"), function (old) {
+                old.classList.remove("active");
+                old.removeAttribute("aria-current");
+            });
+            link.classList.add("active");
+            link.setAttribute("aria-current", "page");
+            movePill(link);
+        }
+
         function swap(doc) {
+            leavePage();
+
             /* كنحيدو المحتوى القديم — غير البار وشريط المستوى
                كيبقاو. هوما نفس العناصر، ماكيتبناوش من جديد. */
             const keep = [header, levelWrap];
@@ -678,19 +748,37 @@
             return scripts;
         }
 
-        function go(url, push) {
-            if (busy) return;
-            busy = true;
+        function go(url, push, link) {
+            if (busy) {
+                /* زر الرجوع وسط التبديل: الرابط تبدل والمحتوى لا.
+                   كنتسناو يسالي ومن بعد كنوجدوه. */
+                if (!push) queued = url;
+                return;
+            }
+            if (link) preview(link);
+
+            if (inflight) inflight.abort();
+            const mine = ++seq;
+            const ctrl = window.AbortController ? new AbortController() : null;
+            inflight = ctrl;
+            const timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, FETCH_LIMIT);
             herefile = fileOf(url);
 
             const bail = function () { location.href = url; };
+            /* ضغطة أحدث تفوقات علينا: هي اللي كتكمل، حنا كنسكتو */
+            const superseded = function () { return mine !== seq; };
 
-            fetch(url, { credentials: "same-origin" })
+            fetch(url, { credentials: "same-origin", signal: ctrl ? ctrl.signal : undefined })
                 .then(function (res) {
                     if (!res.ok) throw new Error("HTTP " + res.status);
                     return res.text();
                 })
                 .then(function (html) {
+                    clearTimeout(timer);
+                    if (superseded()) return;
+                    if (inflight === ctrl) inflight = null;
+                    busy = true;
+
                     const doc = new DOMParser().parseFromString(html, "text/html");
                     if (!doc || !doc.body) throw new Error("ما تقراش");
 
@@ -713,12 +801,21 @@
                                 .catch(function () {});
                         }
                         return paint();
+                    }).then(function () {
+                        busy = false;
+                        if (queued) {
+                            const next = queued;
+                            queued = null;
+                            go(next, false);
+                        }
                     });
                 })
-                .then(function () { busy = false; })
                 .catch(function (error) {
+                    clearTimeout(timer);
+                    if (superseded()) return;
                     console.warn("Router: رجعنا للتنقل العادي", error);
                     busy = false;
+                    queued = null;
                     bail();
                 });
         }
@@ -747,7 +844,7 @@
                 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
             if (!routable(link.getAttribute("href"))) return;
             event.preventDefault();
-            go(link.href, true);
+            go(link.href, true, link);
         }, true);
 
         /* مبدّل المستوى */

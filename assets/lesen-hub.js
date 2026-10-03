@@ -37,6 +37,10 @@
        ما زال فالصفحة، إذن أنا النسخة القديمة. */
     function stale() { return !document.body.contains(grid); }
 
+    /* الراوتر كيلغي هاد الـsignal ملي كيحيد الصفحة: المستمعين
+       على window/document كيتمسحو وماكيبقاوش يتراكمو. */
+    const scope = window.__deSignal ? { signal: window.__deSignal } : undefined;
+
     /* ===== التنقل بين Teil 1/2/3 بلا تحميل صفحة جديدة =====
 
        ست الصفحات (b2-lesen، teil1…sprach2) كيحمّلو نفس الملفات
@@ -1031,7 +1035,7 @@
         if (exam) openExam(exam, params.get("teil") || "teil1", false);
         else if (thema) open(thema, params.get("teil") || pagePart || "teil1", false);
         else close(false);
-    });
+    }, scope);
 
     if (search) search.addEventListener("input", function () { renderList(false); });
     if (sortBtn) {
@@ -1057,7 +1061,7 @@
         const exam = parseInt(params.get("pruefung"), 10);
         if (exam) openExam(exam, params.get("teil") || "teil1", false);
         else if (thema) open(thema, params.get("teil") || pagePart || "teil1", false);
-    });
+    }, scope);
 
     /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
     const startParams = new URLSearchParams(location.search);

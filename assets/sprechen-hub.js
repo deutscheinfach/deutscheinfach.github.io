@@ -31,6 +31,10 @@
        ما زال فالصفحة، إذن أنا النسخة القديمة. */
     function stale() { return !document.body.contains(grid); }
 
+    /* الراوتر كيلغي هاد الـsignal ملي كيحيد الصفحة: المستمعين
+       على window/document كيتمسحو وماكيبقاوش يتراكمو. */
+    const scope = window.__deSignal ? { signal: window.__deSignal } : undefined;
+
     /* المستوى كيتقرا من data-level ديال الصفحة (b1 / b2).
        المواضيع كيتجابو من SPRECHEN_B1_TOPICS ولا SPRECHEN_B2_TOPICS. */
     const shell = grid.closest("[data-level]");
@@ -681,7 +685,7 @@
         if (thema) { open(thema, params.get("teil") || "teil1", false); return; }
         close(false);
         setPart(params.get("teil") || (hasExamTab ? "" : "teil1"), false);
-    });
+    }, scope);
 
     if (search) search.addEventListener("input", renderList);
     if (sortBtn) {
@@ -710,7 +714,7 @@
         const exam = parseInt(params.get("pruefung"), 10);
         if (exam) openExam(exam, params.get("teil") || "teil1", false);
         else if (thema) open(thema, params.get("teil") || "teil1", false);
-    });
+    }, scope);
 
     /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
     const startParams = new URLSearchParams(location.search);
