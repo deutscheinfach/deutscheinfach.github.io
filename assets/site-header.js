@@ -119,6 +119,14 @@
     const still = window.matchMedia
         && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    /* التيليفون (شاشة صغيرة ولا لمس): الحركات هنا كتغلى. قياس على تيليفون
+       بطيء (CPU 6x، 4G): من 400 لـ600 ms ديال التبديل، نص 75٪ منها هي
+       الحركة ديال View Transition (لقطة قبل + مزج 300–470 ms)، والتبديل
+       نفسو 30–60 ms. إذن ف الشاشات الصغار كنبدلو المحتوى دغيا. */
+    const compact = window.matchMedia
+        ? window.matchMedia("(max-width: 820px), (pointer: coarse)")
+        : { matches: false };
+
     /* ---- واش المتصفح كيدير View Transitions بين الصفحات؟ ----
 
        إلا كان كيديرها، هو اللي خاصو يسوق الانتقال: كياخد صورة
@@ -170,7 +178,7 @@
         /* المتصفح كيسوق الانتقال بوحدو — ماخاصناش نوقفو الرابط.
            المؤشر ديال القسم الجديد كيكون ديجا فبلاصتو ف الصفحة
            الجاية، إذن حتى هو ماخاصوش تحريك بالـJS. */
-        if (still || crossDocVT) return;
+        if (still || crossDocVT || compact.matches) return;
         const link = plain(event);
         if (!link) return;
         event.preventDefault();
@@ -272,6 +280,79 @@
             prerender: [{ source: "list", urls: rendered, eagerness: "moderate" }]
         });
         document.head.appendChild(rules);
+    }());
+
+    /* ---- السكريبتات ديال الأقسام الأخرى: ف الكاش قبل ما تبرك ----
+
+       الـprefetch ديال فوق كيجيب غير الـHTML. السكريبتات كيتحملو ملي
+       كيبرك الطالب: ف Lesen هادي 13 ملف (107 KB gzip ف B1، 154 ف B2)،
+       وعلى 4G بطيء هادي هي التبديل الأول — 1.1 ثانية لـLesen و0.85 لـSprechen،
+       والتبديل الثاني 0.25 حيت الكاش واجد.
+
+       كنجيبوهم ملي المتصفح ما عندو ما يدير (بعد ما تتحمل الصفحة)، بأولوية
+       ناقصة، وللأقسام ديال نفس المستوى غير (147 KB ف B1). ما كنديرو والو
+       إلا كانت الشبكة بطيئة ولا الطالب مفعّل «توفير البيانات». */
+    (function warm() {
+        const link = navigator.connection || {};
+        if (!window.fetch || !window.DOMParser || link.saveData
+            || /^(slow-2g|2g|3g)$/.test(link.effectiveType || "")) return;
+        if (!isSection(active)) return;
+
+        const file = (location.pathname.split("/").pop() || "").toLowerCase();
+        const level = file.indexOf("b1-") === 0 ? "b1" : "b2";
+        const pages = [];
+        NAV.forEach(function (item) {
+            if (item.key === active || item.hidden || !isSection(item.key)) return;
+            pages.push(level + "-" + item.key + ".html");
+        });
+        if (!pages.length) return;
+
+        /* اللي ديجا فهاد الصفحة ما كنجيبوهش */
+        const have = {};
+        Array.prototype.forEach.call(
+            document.querySelectorAll("script[src], link[rel='stylesheet'][href]"),
+            function (node) { have[node.getAttribute("src") || node.getAttribute("href")] = true; });
+
+        function assetsOf(page) {
+            return fetch(page, { credentials: "same-origin" })
+                .then(function (res) { return res.ok ? res.text() : ""; })
+                .then(function (html) {
+                    const doc = new DOMParser().parseFromString(html, "text/html");
+                    const list = [];
+                    Array.prototype.forEach.call(
+                        doc.querySelectorAll("script[src], link[rel='stylesheet'][href]"),
+                        function (node) {
+                            const url = node.getAttribute("src") || node.getAttribute("href");
+                            if (/^assets\//.test(url) && !have[url]) { have[url] = true; list.push(url); }
+                        });
+                    return list;
+                });
+        }
+
+        /* الجسم خاصو يتقرا حتى لآخرو، وإلا المتصفح كيقطع التحميل
+           وما كيتخزنش ف الكاش */
+        function pull(url) {
+            return fetch(url, { credentials: "same-origin", priority: "low" })
+                .then(function (res) { return res.arrayBuffer(); });
+        }
+
+        function run() {
+            pages.reduce(function (chain, page) {
+                return chain.then(function () {
+                    if (document.hidden) return null;
+                    return assetsOf(page).then(function (list) {
+                        return Promise.all(list.map(pull));
+                    });
+                });
+            }, Promise.resolve()).catch(function () { /* تحسين غير: ماشي مشكل */ });
+        }
+
+        const later = function () {
+            if (window.requestIdleCallback) window.requestIdleCallback(run, { timeout: 5000 });
+            else setTimeout(run, 2500);
+        };
+        if (document.readyState === "complete") later();
+        else window.addEventListener("load", later);
     }());
 
     /* رجعتي لور؟ الصفحة كانت مطفية فالكاش — نرجعوها */
@@ -749,13 +830,14 @@
         }
 
         function go(url, push, link) {
+            if (link) preview(link);
             if (busy) {
-                /* زر الرجوع وسط التبديل: الرابط تبدل والمحتوى لا.
-                   كنتسناو يسالي ومن بعد كنوجدوه. */
-                if (!push) queued = url;
+                /* وسط التبديل (السكريبتات كتتحمل): بركة جديدة ولا زر الرجوع
+                 * ما كيتهملوش. الآخرة كتربح وكتتنفذ ملي يسالي التبديل — على
+                 * تيليفون بطيء هاد المدة كتوصل لثانية، والبركة كانت كتضيع. */
+                queued = { url: url, push: push, link: link };
                 return;
             }
-            if (link) preview(link);
 
             if (inflight) inflight.abort();
             const mine = ++seq;
@@ -794,7 +876,7 @@
                         /* المتصفح كياخد صورة قبل وبعد وكيمزج بيناتهم.
                            البار عندها view-transition-name ديالها، إذن
                            ما كتدخلش فالحركة — كتبقى واقفة. */
-                        if (document.startViewTransition
+                        if (document.startViewTransition && !compact.matches
                             && !(window.matchMedia
                                  && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
                             return document.startViewTransition(paint).finished
@@ -806,7 +888,7 @@
                         if (queued) {
                             const next = queued;
                             queued = null;
-                            go(next, false);
+                            go(next.url, next.push, next.link);
                         }
                     });
                 })
