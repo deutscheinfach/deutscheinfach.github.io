@@ -3684,3 +3684,14 @@ html.de-no-keys mark.kw {
 html.is-topic-focus .site-level-wrap,
 html.is-topic-focus .site-level { display: none !important; }
 html.is-topic-focus .lesen-detail-head { margin-top: 4px; margin-bottom: 6px; justify-content: space-between; }
+
+/* التيليفون: blur ف الشريط الثابت كيتقل السكرول — خلفية عادية */
+@media (max-width: 640px) {
+    .lesen-bar { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--surface); }
+}
+/* «إرسال ملاحظة» ف التيليفون: صغير وف نفس السطر مع «← اللائحة» */
+@media (max-width: 640px) {
+    .lesen-detail-head { flex-wrap: nowrap; align-items: center; }
+    .lesen-detail-head .rp-btn { padding: 6px 11px; font-size: 12.5px; }
+    .lesen-detail-head .rp-btn span { white-space: nowrap; }
+}

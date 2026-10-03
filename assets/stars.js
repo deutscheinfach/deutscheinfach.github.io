@@ -190,6 +190,11 @@
 
     function init() {
         document.documentElement.appendChild(canvas);
+        /* التصميم الحالي مخبي النجوم (theme.css: .de-stars {display:none}).
+           بلا هاد الفحص كانت الأنيميشن كتخدم 30 مرة ف الثانية بلا ما تبان،
+           وكتعاود تبني الـcanvas ف كل resize — ف التيليفون (البار ديال
+           العنوان كيبان ويغبر) هادشي كان كيدير lag وكيوقف السكرول. */
+        if (getComputedStyle(canvas).display === "none") { canvas.remove(); return; }
         build();
         nextMeteor = performance.now() + rand(2500, 6000);
         start();
