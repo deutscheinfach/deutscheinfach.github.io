@@ -1102,3 +1102,20 @@ html.de-hide-title .t1-head { gap: 0; }
 }
 .title-toggle-icon { font-size: 17px; line-height: 1; }
 .title-toggle.is-on .title-toggle-icon { opacity: .55; }
+
+/* ===== التيليفون: خفة =====
+
+   الخلفية الحية (أورورا) طبقة كبيرة كتتحرك بلا ما توقف، والـblur
+   كيعاود يحسب كل ما تحرك شي حاجة. ف iPhone قديم هادشي كيتقل
+   التبديل بين الصفحات والسكرول. ف التيليفون: نفس الألوان، واقفين. */
+@media (pointer: coarse) {
+    html::after {
+        animation: none;
+        will-change: auto;
+        filter: none;
+    }
+    *, *::before, *::after {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+}
