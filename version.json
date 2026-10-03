@@ -1,5 +1,5 @@
 {
-  "build": "11c65f9e908b",
+  "build": "4cb3f85a8e3c",
   "assets": {
     "assets/app-install.js": "98378334",
     "assets/chat-actions.js": "1d332ce0",
@@ -56,7 +56,6 @@
     "assets/training.css": "4fa4588c",
     "assets/ultra-premium.js": "f8103cb8",
     "assets/whatsapp.js": "56de1cb7",
-    "assets/word-tap.js": "2a08f2b1",
     "assets/wortschatz-1000.js": "1b72e9ed",
     "assets/wortschatz-b2.js": "856a61b2",
     "assets/wortschatz.js": "c9ae860b"
