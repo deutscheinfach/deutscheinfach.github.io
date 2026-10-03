@@ -899,3 +899,8 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 }
 .site-nav a.site-nav-gold:hover { color: var(--gold-dark, #c79a2e); }
 .site-nav a.site-nav-gold.active { color: var(--on-brand, #fff); }
+
+/* التيليفون: blur ديال البار الثابت كيتقل السكرول بزاف — بلاه */
+@media (max-width: 1000px) and (pointer: coarse) {
+    .site-header, .site-header-inner { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
