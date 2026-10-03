@@ -147,23 +147,11 @@
 
     /* كنطفيو المحتوى، ومنين تسالي الحركة كنمشيو. */
     function leaveTo(href) {
+        /* كنمشيو دغيا — ماكنتسناوش الحركة تسالي. المحتوى كيتلاشى
+           فنفس الوقت اللي كتجي فيه الصفحة الجديدة، إذن الحركة ما
+           كتزيد حتى جزء من الثانية فالانتظار. */
         document.documentElement.classList.add("de-leaving");
-
-        let gone = false;
-        const go = function () {
-            if (gone) return;
-            gone = true;
-            location.href = href;
-        };
-
-        /* إلا ما وصلاتش نهاية الحركة (تبويب مخبي مثلا) ما نبقاوش واقفين */
-        const guard = setTimeout(go, 320);
-        document.addEventListener("animationend", function once(e) {
-            if (e.animationName !== "de-page-out") return;
-            clearTimeout(guard);
-            document.removeEventListener("animationend", once);
-            go();
-        });
+        location.href = href;
     }
 
     nav.addEventListener("click", function (event) {
@@ -244,9 +232,40 @@
         const rules = document.createElement("script");
         rules.type = "speculationrules";
         rules.textContent = JSON.stringify({
-            prerender: [{ source: "list", urls: urls, eagerness: "moderate" }]
+            prerender: [
+                { source: "list", urls: urls, eagerness: "moderate" },
+                /* أي رابط آخر ف الموقع (Teil 1، موضوع، الامتحان...) كيبدا
+                   يترسم ملي تحط الصبع عليه — قبل ما تهز الصبع. */
+                {
+                    source: "document",
+                    where: { and: [
+                        { href_matches: "/*.html" },
+                        { not: { href_matches: "/chat.html" } },
+                        { not: { href_matches: "/admin.html" } },
+                        { not: { selector_matches: "[target], [download], [data-no-prerender]" } }
+                    ] },
+                    eagerness: "conservative"
+                }
+            ]
         });
         document.head.appendChild(rules);
+
+        /* ف التيليفون "moderate" ماكيخدمش بالـ hover (ماكاينش ماوس).
+           ملي تلمس شي قسم فالبار، كنقولو للمتصفح يبدا دابا نيشان. */
+        let touched = false;
+        nav.addEventListener("touchstart", function (event) {
+            if (touched) return;
+            const link = event.target.closest("a");
+            if (!link || link.classList.contains("active")) return;
+            touched = true;
+            const now = document.createElement("script");
+            now.type = "speculationrules";
+            now.textContent = JSON.stringify({
+                prerender: [{ source: "list", urls: [link.href], eagerness: "immediate" }]
+            });
+            document.head.appendChild(now);
+            setTimeout(function () { touched = false; }, 400);
+        }, { passive: true });
     }());
 
     /* رجعتي لور؟ الصفحة كانت مطفية فالكاش — نرجعوها */
