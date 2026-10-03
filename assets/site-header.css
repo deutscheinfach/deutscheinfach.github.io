@@ -64,17 +64,17 @@ body { padding-top: var(--site-header-h); }
    وكتبقى واقفة فبلاصتها. المؤشر الأحمر كيزلق بوحدو من Lesen
    ل Hören حيت المتصفح كيربط الجوج بنفس الاسم. */
 ::view-transition-old(root) {
-    animation: de-vt-out .18s cubic-bezier(.4, 0, 1, 1) both;
+    animation: de-vt-out .12s cubic-bezier(.4, 0, 1, 1) both;
 }
 ::view-transition-new(root) {
-    animation: de-vt-in .26s cubic-bezier(.22, .8, .3, 1) both;
+    animation: de-vt-in .16s cubic-bezier(.22, .8, .3, 1) both;
 }
 @keyframes de-vt-out { to   { opacity: 0; transform: translateY(-7px); } }
 @keyframes de-vt-in  { from { opacity: 0; transform: translateY(9px);  } }
 
 /* البار: بدل ما تغمض وتشعل، كتدوز بنعومة قصيرة */
 ::view-transition-old(de-bar),
-::view-transition-new(de-bar) { animation-duration: .2s; }
+::view-transition-new(de-bar) { animation-duration: .14s; }
 
 @media (prefers-reduced-motion: reduce) {
     ::view-transition-group(*),
@@ -555,10 +555,10 @@ body { padding-top: var(--site-header-h); }
    الهيدر ماشي داخل فهاد الحركة — كيبقى واقف.
    الدخول مكتوب فالـCSS نيت باش يبدا مع أول رسمة. */
 body > *:not(#site-header):not(.site-header):not(script):not(style) {
-    animation: de-page-in .34s cubic-bezier(.22, .8, .3, 1) backwards;
+    animation: de-page-in .18s cubic-bezier(.22, .8, .3, 1) backwards;
 }
 html.de-leaving body > *:not(#site-header):not(.site-header):not(script):not(style) {
-    animation: de-page-out .26s cubic-bezier(.4, 0, 1, 1) both;
+    animation: de-page-out .16s cubic-bezier(.4, 0, 1, 1) both;
 }
 
 /* المتصفح كيدعم View Transitions؟ إذن هو اللي كيدير الحركة،
