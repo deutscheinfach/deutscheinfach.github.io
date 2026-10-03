@@ -892,10 +892,19 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     color: var(--gold);
     font-weight: 800;
 }
-.site-nav a.site-nav-gold::before {
-    content: "★";
-    margin-inline-end: 5px;
-    font-size: .85em;
+/* بلا نجمة: «نبضة قلب» (بوم-بوم ومن بعد سكتة) باش يجبد العين */
+.site-nav a.site-nav-gold {
+    animation: de-heartbeat 1.6s ease-in-out infinite;
+    transform-origin: center;
+}
+@keyframes de-heartbeat {
+    0%, 40%, 100% { transform: scale(1); text-shadow: none; }
+    10% { transform: scale(1.12); text-shadow: 0 0 10px rgba(255, 206, 0, .75); }
+    20% { transform: scale(1); text-shadow: none; }
+    30% { transform: scale(1.09); text-shadow: 0 0 8px rgba(255, 206, 0, .6); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .site-nav a.site-nav-gold { animation: none; }
 }
 .site-nav a.site-nav-gold:hover { color: var(--gold-dark, #c79a2e); }
 .site-nav a.site-nav-gold.active { color: var(--on-brand, #fff); }
