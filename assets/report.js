@@ -224,6 +224,7 @@
         document.querySelectorAll(".exam-top-inner:not([data-rp])").forEach(function (bar) {
             bar.setAttribute("data-rp", "");
             var b = makeBtn(true);
+            b.title = "إرسال ملاحظة"; b.setAttribute("aria-label", "إرسال ملاحظة");
             b.addEventListener("click", function () { openModal({ exam: true }); });
             var clock = bar.querySelector(".exam-top-clock");
             bar.insertBefore(b, clock || null);
