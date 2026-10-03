@@ -102,6 +102,14 @@
             <p class="adm-note" id="adm-live-sub">كيتجدد بوحدو كل 30 ثانية.</p>
         </section>
 
+        <!-- التذكير اليومي: تجربة على الأجهزة ديال الأدمين -->
+        <section class="adm-card">
+            <h2>🔔 التذكير اليومي</h2>
+            <p class="adm-note">فعّل «فكرني كل نهار» ف الصفحة الرئيسية من التيليفون ديالك (بنفس الحساب)، ومن بعد جرب هنا.</p>
+            <div class="adm-row"><button class="adm-btn main" id="adm-push-test" type="button">📤 جرب التذكير</button></div>
+            <p class="adm-note" id="adm-push-note" hidden></p>
+        </section>
+
         <!-- 1) التفعيل -->
         <section class="adm-card">
             <h2>1) تفعيل / تجديد اشتراك</h2>
@@ -241,6 +249,29 @@ async function syncUsers(me) {
         note.textContent = "المزامنة ماخدماتش: " + e.message + " — تأكد بلي الـWorker الجديد منشور.";
     }
 }
+$("adm-push-test").addEventListener("click", async function () {
+    const note = $("adm-push-note");
+    note.hidden = false; note.className = "adm-note"; note.textContent = "كنصيفطو…";
+    try {
+        const res = await fetch(WORKER, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ adminTestDaily: true, idToken: await auth.currentUser.getIdToken() })
+        });
+        const data = await res.json().catch(function () { return {}; });
+        if (!res.ok) throw new Error(data.details || data.error || res.status);
+        if (!data.tokens) {
+            note.className = "adm-note bad";
+            note.textContent = "ماكاين حتى جهاز مسجل لهاد الحساب — فعّل «فكرني كل نهار» ف الصفحة الرئيسية أولا.";
+            return;
+        }
+        note.className = "adm-note ok";
+        note.textContent = "تصيفط ل " + data.sent + " من " + data.tokens + " جهاز ✅ — شوف التيليفون.";
+    } catch (e) {
+        note.className = "adm-note bad";
+        note.textContent = "ماخدمش: " + e.message + " — تأكد بلي الـWorker الجديد منشور.";
+    }
+});
 $("adm-sync").addEventListener("click", function () { if (auth.currentUser) syncUsers(auth.currentUser); });
 
 /* ================= 1) القلبان + التفعيل ================= */
@@ -487,6 +518,6 @@ async function loadList(kind) {
 </script>
 <script src="assets/session-guard.js?v=c28594ff"></script>
 <script src="assets/presence.js?v=0faee43d" defer></script>
-<script src="assets/app-install.js?v=7f793ec1" defer></script>
+<script src="assets/app-install.js?v=575ba51d" defer></script>
 </body>
 </html>
