@@ -15,7 +15,7 @@
 
     /* VAPID public key — Firebase Console → Paramètres du projet →
        Cloud Messaging → Certificats Web Push. عمومي، ماشي سر. */
-    window.__DE_VAPID_KEY = window.__DE_VAPID_KEY || "";
+    window.__DE_VAPID_KEY = window.__DE_VAPID_KEY || "BEUXkJWtTGvpCGRHIsr-yjUNTE4_3iXvCkjrXozcw4jxmFGBuwZNAsXp3HGo9W3KrEJGrmV-T41dDm5BnpJL8gc";
 
     if (window.__deApp) return;
 
