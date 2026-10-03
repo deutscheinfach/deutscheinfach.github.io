@@ -9,7 +9,8 @@
       - «فكرني كل نهار»: كيطلب الإذن ديال الإشعارات ويحفظ token
         ف users/{uid}/private/push مع daily: true. الـ Worker
         (scheduled) كيصيفط التذكير كل نهار.
-   البطاقة كتتسد 14 يوم إلا سدها المستخدم. */
+   البطاقة ديال التطبيق ماكتعاودش تبان إلا سدها (×) ولا زاد التطبيق.
+   نافذة التذكير غير للي عندو حساب وداخل. */
 (function () {
     "use strict";
 
@@ -23,6 +24,8 @@
     var CARD_PAGES = ["index.html", "", "fortschritt.html"];
     var DISMISS_KEY = "de-app-card-hide";
     var DAILY_KEY = "de-daily-on";
+    var INSTALLED_KEY = "de-app-installed";
+    var installedApp = false;   /* getInstalledRelatedApps (Chrome) */
     var deferred = null;
 
     function store(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { /* خاص */ } }
@@ -51,9 +54,17 @@
         paint();
     });
     window.addEventListener("appinstalled", function () {
+        store(INSTALLED_KEY, "1");
         deferred = null;
         paint();
     });
+    /* إلا تحل مرة من الأيقونة، راه مزيد — حتى ف المتصفح ماكنعاودوش نسولوه */
+    if (standalone()) store(INSTALLED_KEY, "1");
+    if (navigator.getInstalledRelatedApps) {
+        navigator.getInstalledRelatedApps().then(function (apps) {
+            if (apps && apps.length) { installedApp = true; store(INSTALLED_KEY, "1"); paint(); }
+        }).catch(function () { /* ماشي ضروري */ });
+    }
 
     /* ---- 2) البطاقة ---- */
     var css = document.createElement("style");
@@ -94,14 +105,17 @@
 
     var card = null;
 
-    function wantInstall() { return !standalone() && (deferred || isIOS); }
+    function wantInstall() {
+        if (standalone() || installedApp || read(INSTALLED_KEY) === "1") return false;
+        return !!(deferred || isIOS);
+    }
     function wantDaily() { return pushPossible() && read(DAILY_KEY) !== "1"; }
 
     function paint() {
         if (CARD_PAGES.indexOf(page) === -1) return;
         if (document.querySelector(".de-ask-bg")) { setTimeout(paint, 3000); return; }
-        var hidden = Number(read(DISMISS_KEY) || 0);
-        if (hidden && Date.now() - hidden < 14 * 86400000) return;
+        /* سدها مرة (×) = ماكتعاودش تبان */
+        if (read(DISMISS_KEY)) { if (card) { card.remove(); card = null; } return; }
         var install = wantInstall(), daily = false;   /* التذكير عندو نافذة بوحدو (askDaily) */
         if (!install && !daily) { if (card) { card.remove(); card = null; } return; }
         if (!card) {
@@ -124,7 +138,9 @@
             r.btn.addEventListener("click", function () {
                 if (deferred) {
                     deferred.prompt();
-                    deferred.userChoice.finally(function () { deferred = null; paint(); });
+                    deferred.userChoice.then(function (c) {
+                        if (c && c.outcome === "accepted") store(INSTALLED_KEY, "1");
+                    }).finally(function () { deferred = null; paint(); });
                     return;
                 }
                 if (!card.querySelector(".de-app-ios")) {
