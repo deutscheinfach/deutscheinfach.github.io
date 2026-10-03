@@ -1,5 +1,5 @@
 {
-  "build": "70db9d0efe4b",
+  "build": "83855cd55bd8",
   "assets": {
     "assets/app-install.js": "98378334",
     "assets/chat-actions.js": "1d332ce0",
@@ -33,7 +33,7 @@
     "assets/schreiben-style.css": "d63e82e8",
     "assets/schreiben-topics-b1.js": "5c35fe86",
     "assets/schreiben-topics-b2.js": "4b0aa04a",
-    "assets/section.css": "889d277f",
+    "assets/section.css": "a14eb855",
     "assets/session-guard.js": "c28594ff",
     "assets/share-card.js": "b26a5fe7",
     "assets/site-header.css": "c441d04b",
