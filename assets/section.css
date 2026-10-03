@@ -1078,7 +1078,7 @@
 /* اللوحة عندها max-height: بلا هادي العناصر كيتزيرو وكيتقطع النص ديالهم */
 .t1-panel > * { flex-shrink: 0; }
 @media (max-width: 1000px) {
-    .t1-panel { position: static; max-height: none; }
+    .t1-panel { position: static; max-height: none; overflow: visible; overscroll-behavior: auto; }
 }
 .t1-panel-head {
     display: flex;
@@ -3679,3 +3679,29 @@ html.de-no-keys mark.kw {
     .up-card { padding: 22px 16px 18px; }
     .up-new { font-size: 28px; }
 }
+
+/* ===== صفحة التمرين: بلا Telc B1/B2، «← اللائحة» لفوق ===== */
+html.is-topic-focus .site-level-wrap,
+html.is-topic-focus .site-level { display: none !important; }
+html.is-topic-focus .lesen-detail-head { margin-top: 4px; margin-bottom: 6px; justify-content: space-between; }
+
+/* التيليفون: blur ف الشريط الثابت كيتقل السكرول — خلفية عادية */
+@media (max-width: 640px) {
+    .lesen-bar { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--surface); }
+}
+/* «إرسال ملاحظة» ف التيليفون: صغير وف نفس السطر مع «← اللائحة» */
+@media (max-width: 640px) {
+    .lesen-detail-head { flex-wrap: nowrap; align-items: center; }
+    .lesen-detail-head .rp-btn { padding: 6px 11px; font-size: 12.5px; }
+    .lesen-detail-head .rp-btn span { white-space: nowrap; }
+}
+
+/* «إرسال ملاحظة» ف بار الامتحان: ف التيليفون غير العلامة 🚩 باش العنوان يبان */
+@media (max-width: 760px) {
+    .exam-top-inner .rp-btn { padding: 0; width: 40px; height: 40px; justify-content: center; flex: 0 0 auto; border-radius: 12px; }
+    .exam-top-inner .rp-btn span { display: none; }
+    .exam-top-inner .rp-btn svg { width: 18px; height: 18px; }
+}
+
+/* Ultra Premium: البادج «جديد» */
+.up-flag-new { background: #15803d; color: #fff; }

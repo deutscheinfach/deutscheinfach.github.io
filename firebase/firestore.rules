@@ -241,6 +241,22 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(["tokens", "on", "updatedAt"]);
     }
 
+    /* «إرسال ملاحظة» (assets/report.js): المستخدم كيكتب بلاغ باسمو،
+       الأدمين كيقرا وكيبدل غير status (admin.html). */
+    match /reports/{reportId} {
+      allow read: if isAdmin();
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(["uid","email","name","type","item","note","section","level","thema","teil","variant","url","status","createdAt"])
+        && request.resource.data.status == "new"
+        && request.resource.data.note is string && request.resource.data.note.size() <= 1000
+        && request.resource.data.type is string && request.resource.data.type.size() <= 80
+        && request.resource.data.url is string && request.resource.data.url.size() <= 300;
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["status"]);
+      allow delete: if isAdmin();
+    }
+
     match /news/{newsId} {
 
       allow read: if true;

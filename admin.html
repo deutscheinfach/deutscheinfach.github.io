@@ -8,8 +8,8 @@
 <title>Deutsch Einfach – لوحة الإدارة</title>
 <link rel="stylesheet" href="assets/theme.css?v=90e00e28">
 <script src="assets/progress.js?v=1f4ecf40"></script>
-<link rel="stylesheet" href="assets/site-header.css?v=091252a9">
-<link rel="stylesheet" href="assets/section.css?v=aa26008d">
+<link rel="stylesheet" href="assets/site-header.css?v=f9d0ae95">
+<link rel="stylesheet" href="assets/section.css?v=7905c837">
 <style>
 .adm { width: min(100% - 32px, 980px); margin: 28px auto 60px; }
 .adm h1 { font-size: var(--step-3); font-weight: 900; margin: 0 0 4px; color: var(--accent-text); }
@@ -43,6 +43,13 @@
 .adm-bc-preview img { width: 34px; height: 34px; border-radius: 8px; }
 .adm-bc-preview b { display: block; font-size: 14px; }
 .adm-bc-preview span { font-size: 13px; opacity: .8; }
+.adm-rep { border: 1px solid var(--line, #e5e5e5); border-radius: 14px; padding: 12px 14px; margin-top: 10px; }
+.adm-rep-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.adm-rep-top b { color: #e11d48; }
+.adm-rep-when { font-size: 12px; opacity: .7; }
+.adm-rep-where { margin: 6px 0; font-weight: 700; font-size: 13.5px; direction: ltr; text-align: right; }
+.adm-rep-note { margin: 6px 0; white-space: pre-wrap; background: rgba(0,0,0,.04); border-radius: 10px; padding: 8px 10px; }
+.adm-rep-who { margin: 4px 0 8px; font-size: 12.5px; opacity: .75; direction: ltr; text-align: right; }
 .adm-note.ok { color: var(--ok); font-weight: 800; }
 .adm-note.bad { color: var(--danger); font-weight: 800; }
 .adm-user { margin-top: 14px; padding: 14px; border-radius: 14px; border: 1px dashed var(--line-gold); background: var(--surface-2); }
@@ -107,6 +114,16 @@
             <h2>ف الموقع دابا</h2>
             <p class="adm-live-row"><b id="adm-live-n">…</b><span>زائر ف آخر 3 دقايق</span></p>
             <p class="adm-note" id="adm-live-sub">كيتجدد بوحدو كل 30 ثانية.</p>
+        </section>
+
+        <!-- الملاحظات ديال المستخدمين (assets/report.js) -->
+        <section class="adm-card">
+            <h2>🚩 الملاحظات (بلاغات على الأخطاء)</h2>
+            <div class="adm-tabs">
+                <button class="adm-btn adm-mini is-on" data-rep="new" type="button">الجداد</button>
+                <button class="adm-btn adm-mini" data-rep="done" type="button">اللي تصلحو</button>
+            </div>
+            <div id="adm-rep"><p class="adm-empty">كنجيبو الملاحظات…</p></div>
         </section>
 
         <!-- التذكير اليومي: تجربة على الأجهزة ديال الأدمين -->
@@ -245,7 +262,66 @@ authMod.onAuthStateChanged(auth, async function (me) {
     syncUsers(me);
     liveCount();
     setInterval(liveCount, 30000);
+    loadReports("new");
 });
+
+/* ===== الملاحظات ===== */
+let repKind = "new";
+document.querySelectorAll("[data-rep]").forEach(function (b) {
+    b.addEventListener("click", function () {
+        document.querySelectorAll("[data-rep]").forEach(function (x) { x.classList.toggle("is-on", x === b); });
+        loadReports(b.dataset.rep);
+    });
+});
+async function loadReports(kind) {
+    repKind = kind;
+    const box = $("adm-rep");
+    box.textContent = "";
+    box.appendChild(el("p", "adm-empty", "كنجيبو الملاحظات…"));
+    try {
+        const snap = await fs.getDocs(fs.query(fs.collection(db, "reports"), fs.where("status", "==", kind), fs.limit(100)));
+        const rows = snap.docs.map(function (d) { return { id: d.id, data: d.data() }; });
+        rows.sort(function (a, b) {
+            const t = function (r) { return r.data.createdAt && r.data.createdAt.toMillis ? r.data.createdAt.toMillis() : 0; };
+            return t(b) - t(a);
+        });
+        box.textContent = "";
+        if (!rows.length) { box.appendChild(el("p", "adm-empty", kind === "new" ? "ماكاين حتى ملاحظة جديدة 👌" : "ماكاين والو.")); return; }
+        box.appendChild(el("p", "adm-note", rows.length + " ملاحظة"));
+        rows.forEach(function (r) {
+            const d = r.data;
+            const card = el("div", "adm-rep");
+            const top = el("div", "adm-rep-top");
+            top.appendChild(el("b", "", d.type || "—"));
+            const when = d.createdAt && d.createdAt.toDate ? d.createdAt.toDate() : null;
+            top.appendChild(el("span", "adm-rep-when", when ? when.toLocaleString("fr-MA") : ""));
+            card.appendChild(top);
+            const where = [ (d.level || "").toUpperCase(), d.section, d.teil, d.thema, d.variant, d.item ? "رقم " + d.item : "" ].filter(Boolean).join(" · ");
+            card.appendChild(el("p", "adm-rep-where", where));
+            if (d.note) card.appendChild(el("p", "adm-rep-note", d.note));
+            card.appendChild(el("p", "adm-rep-who", (d.name || "") + " " + (d.email ? "<" + d.email + ">" : "")));
+            const row = el("div", "adm-row");
+            const open = el("a", "adm-btn adm-mini", "حل التمرين");
+            open.href = d.url || "#"; open.target = "_blank"; open.rel = "noopener";
+            row.appendChild(open);
+            const done = el("button", "adm-btn adm-mini" + (kind === "new" ? " main" : ""), kind === "new" ? "✓ تصلح" : "↺ رجعها جديدة");
+            done.type = "button";
+            done.addEventListener("click", async function () {
+                done.disabled = true;
+                try {
+                    await fs.updateDoc(fs.doc(db, "reports", r.id), { status: kind === "new" ? "done" : "new" });
+                    card.remove();
+                } catch (e) { done.disabled = false; done.textContent = "خطأ: " + (e.code || e.message); }
+            });
+            row.appendChild(done);
+            card.appendChild(row);
+            box.appendChild(card);
+        });
+    } catch (e) {
+        box.textContent = "";
+        box.appendChild(el("p", "adm-note bad", "ماقدرناش نجيبو الملاحظات: " + (e.code || e.message) + " — نشر firestore.rules الجديدة."));
+    }
+}
 
 /* presence/{id} كيتكتب من assets/presence.js ف كل صفحة */
 async function liveCount() {

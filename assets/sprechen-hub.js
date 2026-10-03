@@ -361,6 +361,7 @@
         h1.appendChild(ar);
         head.appendChild(h1);
         detail.appendChild(head);
+        document.documentElement.classList.add("is-topic-focus");
 
         const tabs = document.createElement("nav");
         tabs.className = "lesen-tabs lesen-part-tabs exam-tabs";
@@ -552,17 +553,12 @@
         back.addEventListener("click", function () { close(true); });
         head.appendChild(back);
 
-        const h1 = document.createElement("h1");
-        h1.className = "lesen-detail-title";
-        h1.appendChild(document.createTextNode(topic.title || topic.id));
-        if (topic.ar) {
-            const ar = document.createElement("span");
-            ar.className = "lesen-card-ar";
-            ar.textContent = "(" + topic.ar + ")";
-            h1.appendChild(ar);
-        }
-        head.appendChild(h1);
+        /* بلا عنوان كبير ولا Telc B1/B2: العنوان والنسخ (الأساسي / المعدل)
+           كيبانو مباشرة ف التمرين (html.is-topic-focus). «إرسال ملاحظة»
+           كيتزاد هنا من assets/report.js. */
+        head.dataset.reportTitle = topic.title || topic.id;
         detail.appendChild(head);
+        document.documentElement.classList.add("is-topic-focus");
 
         let content = CONTENT[themaId] || {};
         const available = (topic.parts && topic.parts.length)
@@ -643,6 +639,7 @@
     }
 
     function close(push) {
+        document.documentElement.classList.remove("is-topic-focus");
         if (push) history.pushState({}, "", pageUrl("", activePart));
         detail.hidden = true;
         detail.textContent = "";

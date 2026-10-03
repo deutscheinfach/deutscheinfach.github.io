@@ -892,10 +892,29 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     color: var(--gold);
     font-weight: 800;
 }
-.site-nav a.site-nav-gold::before {
-    content: "★";
-    margin-inline-end: 5px;
-    font-size: .85em;
+/* بلا نجمة وبلا حركة: لمعة ذهبية كتدوز على الكتابة كل شوية
+   (الزر ماكيتحركش) — كتجبد العين بلا ما تقلق. */
+.site-nav a.site-nav-gold:not(.active) {
+    background: linear-gradient(100deg, #ffce00 0%, #ffce00 42%, #ffffff 50%, #ffce00 58%, #ffce00 100%);
+    background-size: 250% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: de-shine 3.2s ease-in-out infinite;
+    text-shadow: none;
+}
+@keyframes de-shine {
+    0%, 55% { background-position: 100% 0; }
+    85%, 100% { background-position: 0% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .site-nav a.site-nav-gold:not(.active) { animation: none; }
 }
 .site-nav a.site-nav-gold:hover { color: var(--gold-dark, #c79a2e); }
 .site-nav a.site-nav-gold.active { color: var(--on-brand, #fff); }
+
+/* التيليفون: blur ديال البار الثابت كيتقل السكرول بزاف — بلاه */
+@media (max-width: 1000px) and (pointer: coarse) {
+    .site-header, .site-header-inner { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
