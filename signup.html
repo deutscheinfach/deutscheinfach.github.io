@@ -816,6 +816,8 @@ body::before {
                 الانتقال للصفحة.
                 */
 
+                /* الصفحة الرئيسية كتسول على التذكير اليومي دغيا (assets/app-install.js) */
+                try { sessionStorage.setItem("de-just-signed-up", "1"); } catch (e) {}
                 window.location.href =
                     "index.html";
 
@@ -942,6 +944,6 @@ document.querySelectorAll(".password-toggle").forEach(function (button) {
 </script>
 
 <script src="assets/presence.js?v=0faee43d" defer></script>
-<script src="assets/app-install.js?v=575ba51d" defer></script>
+<script src="assets/app-install.js?v=a816d387" defer></script>
 </body>
 </html>
