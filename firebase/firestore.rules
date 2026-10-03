@@ -233,6 +233,14 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    /* التذكير اليومي (assets/push-register.js): كل واحد كيكتب غير
+       الوثيقة ديالو. الـ Worker كيقرا بحساب الخدمة. */
+    match /reminders/{userId} {
+      allow read: if false;
+      allow write: if request.auth != null && request.auth.uid == userId
+        && request.resource.data.keys().hasOnly(["tokens", "on", "updatedAt"]);
+    }
+
     match /news/{newsId} {
 
       allow read: if true;

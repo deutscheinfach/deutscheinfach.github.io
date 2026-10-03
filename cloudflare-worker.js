@@ -15,6 +15,15 @@
 const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash";
 
 export default {
+  /* التذكير اليومي: Cloudflare → Paramètres → Déclencheurs → Cron
+     «0 18 * * *» (18:00 UTC = 19:00 ف المغرب). */
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(sendDailyReminders(env).then(
+      (r) => console.log("daily reminders:", JSON.stringify(r)),
+      (e) => console.log("daily reminders failed:", e.message)
+    ));
+  },
+
   async fetch(request, env) {
     /* ===== شكون مسموح ليه يعيّط =====
 
@@ -253,6 +262,32 @@ export default {
        * users/{uid} اللي ناقصين (بلا وثيقة، ولا بلا email/name).
        * الكليان ماكيقدرش يشوف لائحة Auth — غير حساب الخدمة.
        */
+      /* الأدمين كيجرب التذكير: كيوصل غير للأجهزة ديالو هو */
+      if (body.adminTestDaily === true) {
+        if (!env.FIREBASE_SERVICE_ACCOUNT) {
+          return jsonResponse({ error: "push_not_configured" }, 500, allowedOrigin);
+        }
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        try {
+          const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+          const me = await readUserFields(caller.sub, accessToken);
+          if (!me || me.isAdmin?.booleanValue !== true) {
+            return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+          }
+          const tokens = await readPushTokens(caller.sub, accessToken);
+          const msg = dailyMessage(new Date());
+          const sent = await Promise.all(tokens.slice(0, 10).map((t) => sendDailyFcm(accessToken, t, msg)));
+          return jsonResponse({ tokens: tokens.length, sent: sent.filter((x) => x === true).length }, 200, allowedOrigin);
+        } catch (e) {
+          return jsonResponse({ error: "test_failed", details: e.message }, 502, allowedOrigin);
+        }
+      }
+
       if (body.adminSyncUsers === true) {
         if (!env.FIREBASE_SERVICE_ACCOUNT) {
           return jsonResponse({ error: "sync_not_configured",
@@ -1082,6 +1117,81 @@ async function syncAuthUsers(accessToken) {
     docCount: docs.size,
     fixed: writes.length,
   };
+}
+
+
+/* =====================================================
+   التذكير اليومي (scheduled)
+   ===================================================== */
+
+const DAILY_MESSAGES = [
+  ["🔥 ما تقطعش اليوم!", "10 دقايق ديال Lesen ولا Wortschatz كيفرقو ف telc."],
+  ["🇩🇪 Hallo! وقت التمرين", "دير تمرين واحد اليوم — شوية كل نهار حسن من بزاف مرة وحدة."],
+  ["📚 Wortschatz ديال اليوم", "10 كلمات جداد كيتسناوك. 5 دقايق وسالي."],
+  ["🎧 جرب Hören اليوم", "تيما وحدة ديال Richtig/Falsch — والترجمة كاينة."],
+  ["✍️ كتب رسالة اليوم", "Schreiben + التصحيح: كتعرف الأخطاء ديالك دغيا."],
+  ["⏱ واش واجد للامتحان؟", "دوز جزء من Modelltest وشوف النقطة ديالك."],
+  ["💪 نتا قريب!", "كل تمرين كيقربك من Bestanden. دخل دابا."],
+];
+
+function dailyMessage(now) {
+  const day = Math.floor(now.getTime() / 86400000);
+  const [title, body] = DAILY_MESSAGES[day % DAILY_MESSAGES.length];
+  return { kind: "daily", title, body, url: "index.html" };
+}
+
+async function sendDailyFcm(accessToken, token, data) {
+  const res = await fetch(
+    `https://fcm.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/messages:send`,
+    {
+      method: "POST",
+      headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: {
+          token,
+          data,
+          webpush: { headers: { Urgency: "normal", TTL: String(6 * 3600) } },
+        },
+      }),
+    }
+  );
+  if (res.ok) return true;
+  /* الجهاز تمسح ولا لغا الإشعارات */
+  if (res.status === 404 || res.status === 410) return "gone";
+  return false;
+}
+
+/* reminders/{uid} = { tokens: {token: true}, on: true } — كيكتبها
+   assets/push-register.js ملي يضغط «فكرني كل نهار». */
+async function listDailySubscribers(accessToken) {
+  const out = [];
+  let page = "";
+  do {
+    const url = `${FIRESTORE_DOCS}/reminders?pageSize=300&mask.fieldPaths=tokens&mask.fieldPaths=on` +
+      (page ? "&pageToken=" + encodeURIComponent(page) : "");
+    const res = await fetch(url, { headers: { Authorization: "Bearer " + accessToken } });
+    const data = await res.json();
+    if (!res.ok) throw new Error("reminders list: " + (data?.error?.message || res.status));
+    for (const d of data.documents || []) {
+      if (d.fields?.on?.booleanValue !== true) continue;
+      for (const t of Object.keys(d.fields?.tokens?.mapValue?.fields || {})) out.push(t);
+    }
+    page = data.nextPageToken || "";
+  } while (page && out.length < 20000);
+  return out;
+}
+
+async function sendDailyReminders(env) {
+  if (!env.FIREBASE_SERVICE_ACCOUNT) return { skipped: "no service account" };
+  const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+  const tokens = Array.from(new Set(await listDailySubscribers(accessToken)));
+  const msg = dailyMessage(new Date());
+  let sent = 0, gone = 0, failed = 0;
+  for (let i = 0; i < tokens.length; i += 25) {
+    const results = await Promise.all(tokens.slice(i, i + 25).map((t) => sendDailyFcm(accessToken, t, msg)));
+    for (const r of results) { if (r === true) sent++; else if (r === "gone") gone++; else failed++; }
+  }
+  return { tokens: tokens.length, sent, gone, failed };
 }
 
 /* توقيع JWT بالمفتاح ديال service account، وتبديلو بـ access token.

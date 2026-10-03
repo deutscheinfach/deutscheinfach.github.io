@@ -1,6 +1,7 @@
 {
-  "build": "710e7097942f",
+  "build": "f237105f6151",
   "assets": {
+    "assets/app-install.js": "7f793ec1",
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
     "assets/einstufung.js": "4f3853ea",
