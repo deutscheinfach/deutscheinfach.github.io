@@ -54,7 +54,11 @@ body { padding-top: var(--site-header-h); }
 
    Chrome/Edge 126+ و Safari 18+ كيدعموها. Firefox ما زال —
    تما كلشي كيبقى خدام بحال قبل، غير بلا هاد النعومة. */
-@view-transition { navigation: auto; }
+/* غير ف PC: ف التيليفون (خصوصا iPhone قديم) الانتقال كياخد صورة
+   ديال الصفحة كاملة قبل وبعد — كيتقل. تما التبديل كيكون نيشان. */
+@media (pointer: fine) {
+    @view-transition { navigation: auto; }
+}
 
 .site-header { view-transition-name: de-bar; }
 .site-level-wrap { view-transition-name: de-level; }
@@ -917,4 +921,17 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 /* التيليفون: blur ديال البار الثابت كيتقل السكرول بزاف — بلاه */
 @media (max-width: 1000px) and (pointer: coarse) {
     .site-header, .site-header-inner { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
+
+/* ===== التيليفون: التبديل بين الأقسام نيشان، بلا حركة =====
+
+   ف iPhone SE وأمثالو، الـfade ديال المحتوى كيبان تقيل. الصفحة
+   كتبان مباشرة، والبار ديجا ف نفس البلاصة. */
+@media (pointer: coarse) {
+    body > *:not(#site-header):not(.site-header):not(script):not(style),
+    html.de-leaving body > *:not(#site-header):not(.site-header):not(script):not(style) {
+        animation: none !important;
+    }
+    /* اللمعة ديال Ultra كتبدا من بعد ما تتحل الصفحة، ماشي معاها */
+    .site-nav a.site-nav-gold:not(.active) { animation-delay: 1.2s; }
 }
