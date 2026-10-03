@@ -36,6 +36,13 @@
 .adm-note { margin: 10px 0 0; font-size: 14px; line-height: 1.7; }
 .adm-live-row { display: flex; align-items: baseline; gap: 12px; margin: 4px 0; }
 .adm-live-row b { font-size: 48px; font-weight: 900; line-height: 1; color: var(--accent-text); }
+.adm-bc { display: grid; gap: 10px; }
+.adm-bc input, .adm-bc textarea, .adm-bc select { width: 100%; font: inherit; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line, #ddd); background: var(--surface, #fff); color: var(--text, #222); box-sizing: border-box; }
+.adm-bc textarea { resize: vertical; }
+.adm-bc-preview { display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 14px; background: rgba(0,0,0,.05); }
+.adm-bc-preview img { width: 34px; height: 34px; border-radius: 8px; }
+.adm-bc-preview b { display: block; font-size: 14px; }
+.adm-bc-preview span { font-size: 13px; opacity: .8; }
 .adm-note.ok { color: var(--ok); font-weight: 800; }
 .adm-note.bad { color: var(--danger); font-weight: 800; }
 .adm-user { margin-top: 14px; padding: 14px; border-radius: 14px; border: 1px dashed var(--line-gold); background: var(--surface-2); }
@@ -108,6 +115,38 @@
             <p class="adm-note">فعّل «فكرني كل نهار» ف الصفحة الرئيسية من التيليفون ديالك (بنفس الحساب)، ومن بعد جرب هنا.</p>
             <div class="adm-row"><button class="adm-btn main" id="adm-push-test" type="button">📤 جرب التذكير</button></div>
             <p class="adm-note" id="adm-push-note" hidden></p>
+        </section>
+
+        <!-- إشعار من الأدمين -->
+        <section class="adm-card">
+            <h2>📣 صيفط إشعار للمستخدمين</h2>
+            <p class="adm-note">كيوصل للتيليفون ديال كل واحد فعّل «فكرني كل نهار» — حتى والموقع مسدود.</p>
+            <div class="adm-bc">
+                <input id="adm-bc-title" maxlength="70" placeholder="العنوان — مثلا: 🆕 زدنا تمرين جديد ف Hören">
+                <textarea id="adm-bc-body" maxlength="200" rows="2" placeholder="النص — مثلا: Teil 2: Sportverein. جربو دابا!"></textarea>
+                <select id="adm-bc-url">
+                    <option value="index.html">الصفحة الرئيسية</option>
+                    <option value="b1-lesen.html">Lesen B1</option>
+                    <option value="b2-lesen.html">Lesen B2</option>
+                    <option value="b1-hoeren.html">Hören B1</option>
+                    <option value="b2-hoeren.html">Hören B2</option>
+                    <option value="b1-schreiben.html">Schreiben B1</option>
+                    <option value="b2-schreiben.html">Schreiben B2</option>
+                    <option value="b1-sprechen.html">Sprechen B1</option>
+                    <option value="b2-sprechen.html">Sprechen B2</option>
+                    <option value="modelltest.html">Modelltest</option>
+                    <option value="wortschatz.html">Wortschatz</option>
+                    <option value="payment.html">العروض</option>
+                    <option value="custom">رابط آخر…</option>
+                </select>
+                <input id="adm-bc-custom" placeholder="مثلا: b2-hoeren-teil2.html?thema=20" hidden>
+                <div class="adm-bc-preview"><img src="assets/icon-192.png" alt=""><div><b id="adm-bc-pt">العنوان</b><span id="adm-bc-pb">النص</span></div></div>
+                <div class="adm-row">
+                    <button class="adm-btn" id="adm-bc-test" type="button">📱 جرب عليا أنا</button>
+                    <button class="adm-btn main" id="adm-bc-send" type="button">📣 صيفط للكل</button>
+                </div>
+                <p class="adm-note" id="adm-bc-note" hidden></p>
+            </div>
         </section>
 
         <!-- 1) التفعيل -->
@@ -249,6 +288,56 @@ async function syncUsers(me) {
         note.textContent = "المزامنة ماخدماتش: " + e.message + " — تأكد بلي الـWorker الجديد منشور.";
     }
 }
+/* ===== إشعار من الأدمين ===== */
+function bcValues() {
+    const sel = $("adm-bc-url").value;
+    return {
+        title: $("adm-bc-title").value.trim(),
+        body: $("adm-bc-body").value.trim(),
+        url: sel === "custom" ? $("adm-bc-custom").value.trim() : sel
+    };
+}
+function bcPreview() {
+    const v = bcValues();
+    $("adm-bc-pt").textContent = v.title || "العنوان";
+    $("adm-bc-pb").textContent = v.body || "النص";
+}
+["adm-bc-title", "adm-bc-body"].forEach(function (id) { $(id).addEventListener("input", bcPreview); });
+$("adm-bc-url").addEventListener("change", function () { $("adm-bc-custom").hidden = this.value !== "custom"; });
+async function bcSend(test, btn) {
+    const v = bcValues(), note = $("adm-bc-note");
+    note.hidden = false;
+    if (!v.title) { note.className = "adm-note bad"; note.textContent = "كتب العنوان أولا."; return; }
+    if (!test && !btn.dataset.armed) {
+        btn.dataset.armed = "1"; btn.textContent = "متأكد؟ ضغط مرة خرى";
+        setTimeout(function () { delete btn.dataset.armed; btn.textContent = "📣 صيفط للكل"; }, 4000);
+        return;
+    }
+    delete btn.dataset.armed; btn.textContent = test ? "📱 جرب عليا أنا" : "📣 صيفط للكل";
+    note.className = "adm-note"; note.textContent = "كنصيفطو…";
+    try {
+        const res = await fetch(WORKER, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ adminBroadcast: Object.assign({ test: test }, v), idToken: await auth.currentUser.getIdToken() })
+        });
+        const data = await res.json().catch(function () { return {}; });
+        if (!res.ok) throw new Error(data.details || data.error || res.status);
+        if (!data.tokens) {
+            note.className = "adm-note bad";
+            note.textContent = test ? "ماكاين حتى جهاز ديالك مسجل — فعّل التذكير من التيليفون أولا." : "مازال حتى واحد ما فعّل التذكير.";
+            return;
+        }
+        note.className = "adm-note ok";
+        note.textContent = "وصل ل " + data.sent + " من " + data.tokens + " جهاز ✅" + (data.gone ? " · " + data.gone + " جهاز ما بقاش" : "");
+    } catch (e) {
+        note.className = "adm-note bad";
+        note.textContent = "ماخدمش: " + e.message + " — تأكد بلي الـWorker الجديد منشور.";
+    }
+}
+$("adm-bc-test").addEventListener("click", function () { bcSend(true, this); });
+$("adm-bc-send").addEventListener("click", function () { bcSend(false, this); });
+
 $("adm-push-test").addEventListener("click", async function () {
     const note = $("adm-push-note");
     note.hidden = false; note.className = "adm-note"; note.textContent = "كنصيفطو…";

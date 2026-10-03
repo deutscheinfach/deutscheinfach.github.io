@@ -263,6 +263,45 @@ export default {
        * الكليان ماكيقدرش يشوف لائحة Auth — غير حساب الخدمة.
        */
       /* الأدمين كيجرب التذكير: كيوصل غير للأجهزة ديالو هو */
+      /* الأدمين كيصيفط إشعار ديالو (تمرين جديد، عرض…) للي فعلو التذكير.
+         test: true = غير للأجهزة ديال الأدمين. */
+      if (body.adminBroadcast && typeof body.adminBroadcast === "object") {
+        if (!env.FIREBASE_SERVICE_ACCOUNT) {
+          return jsonResponse({ error: "push_not_configured" }, 500, allowedOrigin);
+        }
+        const b = body.adminBroadcast;
+        const title = String(b.title || "").trim().slice(0, 70);
+        const text = String(b.body || "").trim().slice(0, 200);
+        let url = String(b.url || "index.html").trim();
+        if (!/^[A-Za-z0-9][A-Za-z0-9._\-\/?=&#%]*$/.test(url) || url.includes("//")) url = "index.html";
+        if (!title) return jsonResponse({ error: "empty_title" }, 400, allowedOrigin);
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        try {
+          const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+          const me = await readUserFields(caller.sub, accessToken);
+          if (!me || me.isAdmin?.booleanValue !== true) {
+            return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+          }
+          const tokens = b.test === true
+            ? await readPushTokens(caller.sub, accessToken)
+            : Array.from(new Set(await listDailySubscribers(accessToken)));
+          const msg = { kind: "news", title, body: text, url };
+          let sent = 0, gone = 0, failed = 0;
+          for (let i = 0; i < tokens.length; i += 25) {
+            const rs = await Promise.all(tokens.slice(i, i + 25).map((t) => sendDailyFcm(accessToken, t, msg)));
+            for (const r of rs) { if (r === true) sent++; else if (r === "gone") gone++; else failed++; }
+          }
+          return jsonResponse({ tokens: tokens.length, sent, gone, failed }, 200, allowedOrigin);
+        } catch (e) {
+          return jsonResponse({ error: "broadcast_failed", details: e.message }, 502, allowedOrigin);
+        }
+      }
+
       if (body.adminTestDaily === true) {
         if (!env.FIREBASE_SERVICE_ACCOUNT) {
           return jsonResponse({ error: "push_not_configured" }, 500, allowedOrigin);
