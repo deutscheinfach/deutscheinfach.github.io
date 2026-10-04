@@ -68,6 +68,7 @@
                 return {
                     body: text.body,
                     ar: text.ar,
+                    keys: text.keys,
                     answer: questions[i] ? questions[i].answer : ""
                 };
             })

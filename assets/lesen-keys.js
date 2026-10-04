@@ -20,6 +20,13 @@
    تقدر زيد حقل keys ف النص نفسو (texts[i].keys = ["…"]) بحال هادي. */
 
 window.LESEN_KEYS = {
+    b1: {
+        "b1-alex-cora": {
+            1: ["Mitarbeiter",            /* ↔ Angestellte */
+                "E-Bikes"]                /* ↔ Elektromobilität */
+        }
+    },
+
     b2: {
         umwelt: {
             1: ["seit den 80er Jahren",   /* سطر 1 */
@@ -63,7 +70,11 @@ window.LESEN_KEYS = {
         },
 
         keinezeit: {
-            2: ["Zweisamkeit"]            /* سطر 1 */
+            2: ["Zweisamkeit",            /* سطر 1 */
+                "Vermittlungsagenturen",  /* ↔ Kontaktagenturen */
+                "Partnervermittlungsagentur",
+                "schwarze Schafe",        /* ↔ zweifelhaft */
+                "Aufgepasst"]             /* ↔ Vorsicht */
         },
 
         aufdemweg: {
