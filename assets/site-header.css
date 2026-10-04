@@ -76,6 +76,12 @@ body { padding-top: var(--site-header-h); }
 @keyframes de-vt-out { to   { opacity: 0; transform: translateY(-7px); } }
 @keyframes de-vt-in  { from { opacity: 0; transform: translateY(9px);  } }
 
+/* التيليفون: ماكاينش انتقال بين الصفحات. لقطة الصفحة + المزج كيزيدو
+   300–600 ms على تيليفون بطيء، والصفحة الجاية كتبان دغيا بلاه. */
+@media (max-width: 820px), (pointer: coarse) {
+    @view-transition { navigation: none; }
+}
+
 /* البار: بدل ما تغمض وتشعل، كتدوز بنعومة قصيرة */
 ::view-transition-old(de-bar),
 ::view-transition-new(de-bar) { animation-duration: .14s; }
@@ -577,6 +583,12 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 @keyframes de-page-in  { from { opacity: 0; transform: translateY(9px); } }
 @keyframes de-page-out { to   { opacity: 0; transform: translateY(-7px); } }
 
+/* المتصفحات اللي ماعندهاش View Transitions (Safari ف iPhone…) كيعتمدو على
+   هاد الحركة: 340 ms ف التيليفون المحتوى كيبقى شفاف قبل ما يبان. */
+@media (max-width: 820px), (pointer: coarse) {
+    body > *:not(#site-header):not(.site-header):not(script):not(style) { animation-duration: .12s; }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .site-nav-pill { transition: none; }
     body > *:not(#site-header):not(.site-header):not(script):not(style),
@@ -913,6 +925,12 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     85%, 100% { background-position: 0% 0; }
 }
 @media (prefers-reduced-motion: reduce) {
+    .site-nav a.site-nav-gold:not(.active) { animation: none; }
+}
+/* التيليفون: background-position ماكيتحركش ف الـGPU، كل رسمة (60 ف الثانية)
+   كتعاود ترسم الكتابة. قياس: 5.6٪ من المعالج ف الراحة على تيليفون بطيء،
+   وكتبطئ التبديل والسكرول. بلاها هنا — الذهبي كيبقى ثابت. */
+@media (max-width: 820px), (pointer: coarse) {
     .site-nav a.site-nav-gold:not(.active) { animation: none; }
 }
 .site-nav a.site-nav-gold:hover { color: var(--gold-dark, #c79a2e); }

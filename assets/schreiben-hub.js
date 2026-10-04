@@ -29,6 +29,10 @@
        ما زال فالصفحة، إذن أنا النسخة القديمة. */
     function stale() { return !document.body.contains(grid); }
 
+    /* الراوتر كيلغي هاد الـsignal ملي كيحيد الصفحة: المستمعين
+       على window/document كيتمسحو وماكيبقاوش يتراكمو. */
+    const scope = window.__deSignal ? { signal: window.__deSignal } : undefined;
+
     const topics = Object.keys(source)
         .sort()
         .map(function (id) {
@@ -158,5 +162,5 @@
     document.addEventListener("de-premium", function () {
         if (stale()) return;
         render();
-    });
+    }, scope);
 })();

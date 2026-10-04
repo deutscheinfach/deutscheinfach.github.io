@@ -68,13 +68,14 @@
                 return {
                     body: text.body,
                     ar: text.ar,
+                    keys: text.keys,
                     answer: questions[i] ? questions[i].answer : ""
                 };
             })
         }];
     }
 
-    function render(into, task) {
+    function render(into, task, meta) {
         into.textContent = "";
         if (!task) {
             into.appendChild(el("div", "lesen-empty",
@@ -360,7 +361,9 @@
                             const tag = el("span", "kw-for", "Text " + (rows.indexOf(row) + 1));
                             item.node.appendChild(tag);
                         }
-                        window.__lesenKeys.link([body], de ? [words, de] : [words]);
+                        /* + اللي كتبناهم بالإيد لهاد النص (assets/lesen-keys.js) */
+                        const manual = window.__lesenKeys.manual(meta, rows.indexOf(row) + 1, row.text);
+                        window.__lesenKeys.link([body], de ? [words, de] : [words], [manual]);
                     }
                 });
 

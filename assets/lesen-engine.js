@@ -281,42 +281,234 @@
         });
         return Array.from(out);
     }
-    function kwHit(word, stems) {
+    /* ===== احتياط: الكلمات المركبة =====
+
+       المقارنة فوق بالجذر كامل، إذن Kontaktagenturen ↔ Vermittlungsagenturen
+       ماكيتلاقاوش: المشترك جزء من الكلمة (agentur). إلا ما لقات الخوارزمية
+       حتى كلمة ف نص كامل، كنجربو هاد المرحلة — كلمتين كيتشاركو قطعة من 6
+       حروف ولا أكثر. ماكنديروهاش ف النصوص اللي فيها كلمات مفتاحية ديجا، باش
+       ما نزيدوش تلوين ف نصوص خدامة. */
+    const KW_GENERIC = ["schaft", "lichkeit", "keiten", "heiten", "ungen", "tionen", "ierung", "ischen", "lichen", "ungs"];
+    function kwShares(a, b) {
+        if (a.length < 7 || b.length < 7) return false;
+        let best = 0, at = 0;
+        let prev = new Array(b.length + 1).fill(0);
+        for (let i = 1; i <= a.length; i++) {
+            const row = new Array(b.length + 1).fill(0);
+            for (let j = 1; j <= b.length; j++) {
+                if (a[i - 1] === b[j - 1]) {
+                    row[j] = prev[j - 1] + 1;
+                    if (row[j] > best) { best = row[j]; at = i; }
+                }
+            }
+            prev = row;
+        }
+        if (best < 6) return false;
+        const piece = a.slice(at - best, at);
+        /* نهاية عامة (-schaft، -keiten…) ماشي كلمة مشتركة */
+        return !KW_GENERIC.some(function (g) { return g.indexOf(piece) !== -1; });
+    }
+    function kwHit(word, stems, loose) {
         if (word.length < 4 || KW_STOP.has(kwFold(word))) return false;
         const s = kwStem(word);
         return stems.some(function (k) {
-            return s === k || (k.length >= 5 && s.indexOf(k) !== -1) || (s.length >= 5 && k.indexOf(s) !== -1);
+            return s === k || (k.length >= 5 && s.indexOf(k) !== -1) || (s.length >= 5 && k.indexOf(s) !== -1)
+                || (loose && kwShares(s, k));
         });
     }
-    function kwPaint(node, stems) {
+    /* ===== كلمات مفتاحية بالزز =====
+
+       الخوارزمية كتلقى غير الكلمات المشتركين بين النص والترويسة. ماكتلقاش:
+       جملة كاملة (seit den 80er Jahren)، رقم (1.000)، كلمة قصيرة، ولا
+       مرادف. هاد المواقع كنزيدوهم من لائحة (assets/lesen-keys.js، ولا
+       keys ف النص نفسو) وكنلونوهم مع الباقي، ف نفس الوقت.
+
+       الكلمات كتتقارن بالجذر (Tauschrings ↔ Tauschring)، وغلطة وحدة ف
+       كلمة طويلة كتتسمح (Abschlus ↔ Abschluss) — اللائحة كتكتب بالإيد. */
+    const KW_TOKEN = /\d+(?:[.,]\d+)+|[A-Za-zÄÖÜäöüß0-9]+/g;
+    function kwNorm(w) {
+        return kwFold(w).replace(/[^a-z0-9.,]/g, "");
+    }
+    /* غلطة وحدة: حرف زايد، ناقص، ولا بدّلناه */
+    function kwNear(a, b) {
+        if (Math.abs(a.length - b.length) > 1) return false;
+        let i = 0;
+        while (i < a.length && i < b.length && a[i] === b[i]) i++;
+        if (a.length === b.length) return a.slice(i + 1) === b.slice(i + 1);
+        const short = a.length < b.length ? a : b;
+        const long = a.length < b.length ? b : a;
+        return short.slice(i) === long.slice(i + 1);
+    }
+    /* تقريب: نفس الجذر (Tauschrings ↔ Tauschring) ولا غلطة وحدة ف كلمة طويلة */
+    function kwClose(a, b) {
+        if (a.length < 5 || b.length < 5) return false;
+        if (kwStem(a) === kwStem(b)) return true;
+        return a.length >= 7 && b.length >= 7 && kwNear(a, b);
+    }
+    function kwTokens(text) {
+        const out = [];
+        let m;
+        KW_TOKEN.lastIndex = 0;
+        while ((m = KW_TOKEN.exec(text))) {
+            out.push({ s: m.index, e: m.index + m[0].length, n: kwNorm(m[0]) });
+        }
+        return out;
+    }
+    /* كل ظهور ديال كل جملة: [بداية، نهاية]. الجمل اللي ماتلقاتش ف missing.
+
+       الأول بالكلمة بالضبط (الحروف الكبار والصغار ما كيهمّوش). إلا كاينة
+       بهاد الشكل ف النص، كنلونو غير هي: Extremsport ماشي Extremsports.
+       إلا ماكايناش، كنجربو التقريب — باش غلطة ف الكتابة ما تضيعش الكلمة. */
+    function kwPhraseSpans(text, phrases) {
+        const toks = kwTokens(text);
+        const spans = [];
+        const missing = [];
+
+        function scan(want, same) {
+            const hits = [];
+            for (let i = 0; i + want.length <= toks.length; i++) {
+                let ok = true;
+                for (let k = 0; k < want.length && ok; k++) ok = same(toks[i + k].n, want[k]);
+                if (!ok) continue;
+                hits.push([toks[i].s, toks[i + want.length - 1].e]);
+                i += want.length - 1;
+            }
+            return hits;
+        }
+
+        phrases.forEach(function (phrase) {
+            const want = (String(phrase).match(KW_TOKEN) || []).map(kwNorm).filter(Boolean);
+            if (!want.length) return;
+            let hits = scan(want, function (a, b) { return a === b; });
+            if (!hits.length) hits = scan(want, function (a, b) { return a === b || kwClose(a, b); });
+            if (!hits.length) missing.push(phrase);
+            hits.forEach(function (h) { spans.push(h); });
+        });
+        return { spans: spans, missing: missing };
+    }
+    function kwPaint(node, stems, extra, loose) {
         if (node.__kwText == null) node.__kwText = node.textContent;
         const text = node.__kwText;
         node.textContent = "";
-        let last = 0, hits = 0, m;
+
+        const spans = [];
+        let m;
         KW_WORD.lastIndex = 0;
         while ((m = KW_WORD.exec(text))) {
-            if (!kwHit(m[0], stems)) continue;
-            node.appendChild(document.createTextNode(text.slice(last, m.index)));
+            if (kwHit(m[0], stems, loose)) spans.push([m.index, m.index + m[0].length]);
+        }
+
+        if (extra && extra.phrases && extra.phrases.length) {
+            const found = kwPhraseSpans(text, extra.phrases);
+            found.spans.forEach(function (s) { spans.push(s); });
+            /* اللائحة بالإيد: إلا كلمة ما تلقاتش، غالبا الكتابة مختلفة */
+            if (found.missing.length && window.console) {
+                console.warn("Lesen: كلمات مفتاحية ما لقيناهاش ف " + (extra.label || "النص") + ":", found.missing);
+            }
+        }
+
+        /* الكلمات المتداخلة كتولي علامة وحدة */
+        spans.sort(function (a, b) { return a[0] - b[0] || b[1] - a[1]; });
+        const merged = [];
+        spans.forEach(function (s) {
+            const top = merged[merged.length - 1];
+            if (top && s[0] < top[1]) top[1] = Math.max(top[1], s[1]);
+            else merged.push([s[0], s[1]]);
+        });
+
+        let last = 0;
+        merged.forEach(function (s) {
+            node.appendChild(document.createTextNode(text.slice(last, s[0])));
             const mark = document.createElement("mark");
             mark.className = "kw";
-            mark.textContent = m[0];
+            mark.textContent = text.slice(s[0], s[1]);
             node.appendChild(mark);
-            last = m.index + m[0].length;
-            hits++;
-        }
+            last = s[1];
+        });
         node.appendChild(document.createTextNode(text.slice(last)));
-        return hits;
+        return merged.length;
     }
     window.__lesenKeys = {
         /* a و b: لائحتين ديال العناصر (نص عادي) — كنلونو ف a الكلمات
            اللي كاينين ف b، والعكس. */
-        link: function (a, b) {
+        link: function (a, b, extra) {
             const sa = kwStems(a.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
             const sb = kwStems(b.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
             let hits = 0;
-            a.forEach(function (n) { hits += kwPaint(n, sb); });
+            /* extra[i] = { phrases, label }: كلمات مفتاحية زايدين على النود i ديال a */
+            a.forEach(function (n, i) { hits += kwPaint(n, sb, extra && extra[i]); });
             b.forEach(function (n) { hits += kwPaint(n, sa); });
+            /* ولا كلمة؟ نجربو الكلمات المركبة */
+            if (!hits) {
+                a.forEach(function (n, i) { hits += kwPaint(n, sb, extra && extra[i], true); });
+                b.forEach(function (n) { hits += kwPaint(n, sa, null, true); });
+            }
             return hits;
+        },
+        /* شحال من كلمة كتتلون ف النص من هاد الترويسة (كيف ما غيبان للطالب،
+           بالكلمات اللي بالإيد والاحتياط) — للفحص ف audit */
+        count: function (body, heading, extra) {
+            const p = document.createElement("p");
+            const h = document.createElement("p");
+            p.textContent = body;
+            h.textContent = heading;
+            window.__lesenKeys.link([p], [h], [extra || null]);
+            return p.querySelectorAll("mark.kw").length;
+        },
+        /* فحص: أي نصوص Teil 1 ما كيتلونش فيها حتى كلمة؟
+
+           ف Console ديال صفحة Lesen (خاصك تكون داخل بحساب Premium):
+               copy(JSON.stringify(await __lesenKeys.audit("b2")))
+           كيجيب كل المواضيع (المدفوعة كذلك، من الـWorker) وكيرجع النصوص اللي
+           فيها <= max كلمة مفتاحية: الموضوع، رقم النص، الترويسة الصحيحة والنص. */
+        audit: async function (level, max) {
+            const limit = max == null ? 0 : max;
+            const lv = String(level || (location.pathname.indexOf("b1-") !== -1 ? "b1" : "b2")).toLowerCase();
+            const topics = (window["LESEN_" + lv.toUpperCase() + "_TOPICS"] || [])
+                .filter(function (t) { return !t.parts || t.parts.indexOf("teil1") !== -1; });
+            const free = window["LESEN_" + lv.toUpperCase() + "_CONTENT"] || {};
+            const out = { level: lv, topics: topics.length, checked: 0, problems: [], rows: [] };
+
+            for (let t = 0; t < topics.length; t++) {
+                const topic = topics[t];
+                let task = (free[topic.id] || {}).teil1;
+                if (!task && typeof window.__lesenPremiumFetch === "function") {
+                    const got = await window.__lesenPremiumFetch(topic.id);
+                    task = got && got.ok ? (got.data || {}).teil1 : null;
+                    if (!task) { out.problems.push(topic.id + ": " + ((got && got.why) || "ما وصلش المحتوى")); continue; }
+                }
+                if (!task) { out.problems.push(topic.id + ": ماكاينش المحتوى"); continue; }
+
+                const variants = Array.isArray(task.variants) && task.variants.length ? task.variants : [task];
+                variants.forEach(function (variant, vi) {
+                    const options = variant.options || task.options || [];
+                    const texts = variant.texts || task.texts || [];
+                    texts.forEach(function (text, i) {
+                        const answer = (variant.answers || [])[i] || text.answer
+                            || ((task.questions || [])[i] || {}).answer || "";
+                        const head = options.find(function (o) { return String(o.value) === String(answer); });
+                        if (!head) return;
+                        out.checked++;
+                        const marks = window.__lesenKeys.count(text.body || "", head.text || "",
+                            window.__lesenKeys.manual({ level: lv, id: topic.id }, i + 1, text));
+                        if (marks <= limit) {
+                            out.rows.push({ id: topic.id, variant: vi + 1, text: i + 1, marks: marks,
+                                heading: head.text, body: text.body });
+                        }
+                    });
+                });
+            }
+            return out;
+        },
+        /* الكلمات المفتاحية اللي كتبناهم بالإيد للنص رقم n (1…) ديال الموضوع id.
+           مصدرين: assets/lesen-keys.js، وحقل keys ف النص نفسو. */
+        manual: function (meta, n, text) {
+            const level = meta && meta.level;
+            const id = meta && meta.id;
+            const listed = ((((window.LESEN_KEYS || {})[level] || {})[id]) || {})[n] || [];
+            const inline = text && Array.isArray(text.keys) ? text.keys : [];
+            const phrases = listed.concat(inline);
+            return phrases.length ? { phrases: phrases, label: (id || "?") + " — Text " + n } : null;
         },
         clear: function (nodes) {
             nodes.forEach(function (n) {
