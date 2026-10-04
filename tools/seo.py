@@ -35,6 +35,10 @@ PAGES = {
         "Sprechen بالصوت، امتحانات تجريبية و Wortschatz. Telc Prüfung online üben – kostenlos starten.",
         "1.0"),
 
+    "telc-maroc.html": ("امتحان telc B1 و B2 ف المغرب 2026: الثمن، المراكز، التسجيل | Deutsch Einfach",
+        "كلشي على امتحان telc B1 و B2 ف المغرب بالدارجة: الثمن (220 €)، المراكز الستة (كازا، الرباط، مكناس، طنجة، أكادير)، "
+        "كيفاش تسجل، شنو كاين ف الامتحان، شحال خاصك باش تنجح، وخطة 30 يوم.", "0.9"),
+
     # ---- B1
     "b1-lesen.html": ("Telc B1 Lesen – Übungen mit Lösungen | Deutsch Einfach",
         "تمارين Lesen ديال telc B1 بالحلول والترجمة للعربية: Teil 1، 2، 3 و Sprachbausteine. Telc B1 Leseverstehen online üben.", "0.9"),
