@@ -70,6 +70,10 @@ window.LESEN_KEYS = {
         },
 
         keinezeit: {
+            4: ["den richtigen Partner",  /* ↔ Wer sucht, der findet */
+                "zu finden",
+                "den oder die Richtige",
+                "Ausgehen"],
             2: ["Zweisamkeit",            /* سطر 1 */
                 "Vermittlungsagenturen",  /* ↔ Kontaktagenturen */
                 "Partnervermittlungsagentur",
