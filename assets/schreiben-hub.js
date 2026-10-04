@@ -123,7 +123,35 @@
         foot.appendChild(go);
 
         node.appendChild(foot);
+
+        /* صفحة الموضوع كتتحمل من الصفر، وأول حاجة كتدير هي الطلب للـ Worker.
+           ملي المشترك كيقرب لبطاقة (hover / أول لمسة) كنفتحو الاتصال دابا،
+           باش ملي تتحل الصفحة يلقاه واجد (DNS + TLS = رحلتين أقل). */
+        if (topic.locked && !topic.soon) {
+            const warm = function () {
+                if (window.__deutschEinfachIsPremium) preconnectWorker();
+            };
+            node.addEventListener("pointerdown", warm, { passive: true });
+            node.addEventListener("pointerenter", function (event) {
+                if (event.pointerType === "mouse") warm();
+            }, { passive: true });
+        }
         return node;
+    }
+
+    let connected = false;
+    function preconnectWorker() {
+        if (connected) return;
+        connected = true;
+        try {
+            const href = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+            if (document.head.querySelector('link[rel="preconnect"][href="' + href + '"]')) return;
+            const link = document.createElement("link");
+            link.rel = "preconnect";
+            link.href = href;
+            link.crossOrigin = "";
+            document.head.appendChild(link);
+        } catch (error) { /* غير تسريع */ }
     }
 
     function render() {

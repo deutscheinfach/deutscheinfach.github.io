@@ -503,9 +503,12 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
     async function loadPremiumTopic(id) {
         const idToken = await (window.__deutschEinfachIdToken || Promise.resolve(null));
 
+        /* text/plain بدل application/json: المتصفح كيعتابرو "طلب بسيط" وما كيديرش
+           preflight (OPTIONS) قبل — رحلة كاملة أقل. الـ Worker كيقرا الجسم
+           بـ request.json() ومايهمّوش الـ Content-Type. */
         const res = await fetch(CORRECTION_ENDPOINT, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Content-Type": "text/plain;charset=UTF-8" },
             /* B2: topicId → KV "topic-NN" / "premium-topics".
                B1: الطريق ديال Lesen → KV "lesen-schreiben-b1-NN"
                (بلا ما نبدلو الـ Worker). */

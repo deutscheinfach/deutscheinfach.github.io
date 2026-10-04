@@ -7,13 +7,27 @@
    (نفس الطريق ديال Lesen: { lesenId: "hoeren-teil2", idToken }).
 
    window.__hoerenPremiumLoad("teil2") → { ok, data: { themes: { "6": {questions, note} } } }
-                                        ولا { ok: false, why } */
+                                        ولا { ok: false, why }
+
+   السرعة: الطلب text/plain (بلا preflight)، والاتصال بالـ Worker كيتحل
+   من قبل، و__hoerenPremiumEarly كيبدا الجلب ملي الحساب يتعرف، بلا ما
+   يتسنى فحص الاشتراك ديال الواجهة (Firestore) يسالي. */
 
 (function () {
     "use strict";
 
     const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
     const cache = {};
+
+    try {
+        if (!document.head.querySelector('link[rel="preconnect"][href="' + ENDPOINT + '"]')) {
+            const link = document.createElement("link");
+            link.rel = "preconnect";
+            link.href = ENDPOINT;
+            link.crossOrigin = "";
+            document.head.appendChild(link);
+        }
+    } catch (e) { /* غير تسريع */ }
 
     const WHY = {
         400: "الـ Worker ف Cloudflare قديم. خاصك تدير Deploy لـ cloudflare-worker.js.",
@@ -38,7 +52,7 @@
             try {
                 const res = await fetch(ENDPOINT, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "text/plain;charset=UTF-8" },
                     body: JSON.stringify({ lesenId: "hoeren-" + teil, idToken: idToken })
                 });
                 if (!res.ok) return { ok: false, status: res.status, why: WHY[res.status] || ("HTTP " + res.status) };
@@ -49,6 +63,20 @@
         })();
         cache[teil].then(function (r) { if (!r.ok) delete cache[teil]; });
         return cache[teil];
+    };
+
+    /* الصفحة كتناديه ملي auth كيجاوب (window.__hoerenUser)، قبل ما فحص
+       Firestore ديال الواجهة يسالي. كيخدم غير إلا آخر حالة معروفة كانت
+       Premium (site-header.js كيحطها ف __deutschEinfachIsPremium): غير
+       المشترك ما كنضربوش الـ Worker بـ 403. إلا الحدس كان غالط، الجواب
+       كيتنقص وصفحة المشترك العادية كتبقى كيف كانت. */
+    window.__hoerenPremiumEarly = function () {
+        try {
+            if (!window.__deutschEinfachIsPremium) return;
+            const match = /(?:^|\/)(b1|b2)-hoeren-(teil[123])(?:\.html)?$/.exec(location.pathname);
+            if (!match) return;
+            window.__hoerenPremiumLoad(match[1] === "b1" ? "b1-" + match[2] : match[2]);
+        } catch (e) { /* غير تسريع */ }
     };
 
     /* كتزيد الجمل للمواضيع المقفولين (premium: true) من الجواب ديال KV */

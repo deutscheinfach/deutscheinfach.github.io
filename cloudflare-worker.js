@@ -141,6 +141,10 @@ export default {
           );
         }
 
+        /* الـKV وFirestore ماكيتسناوش بعضياتهم */
+        const allPending = kvJson(env, "premium-topics");
+        allPending.catch(() => {}); /* الخطأ كيبان ملي كنتسناو الجواب، ماشي هنا */
+
         let subscribed;
         try {
           subscribed = await hasActiveSubscription(claims.sub, body.idToken);
@@ -161,8 +165,8 @@ export default {
          * فالـ dashboard بدل 36. وإلا ما كانش، كنقلبو على مفتاح خاص
          * بالموضوع، باش يمكن تحديث واحد بوحدو.
          */
-        const all = await env.TOPICS.get("premium-topics", "json");
-        const topic = all?.[topicId] || (await env.TOPICS.get("topic-" + topicId, "json"));
+        const all = await allPending;
+        const topic = all?.[topicId] || (await kvJson(env, "topic-" + topicId));
 
         if (!topic) {
           return jsonResponse({ error: "Topic not found." }, 404, allowedOrigin);
@@ -202,6 +206,10 @@ export default {
           );
         }
 
+        /* مفتاح الموضوع كيتقرا فنفس الوقت ديال التحقق من الاشتراك */
+        const ownPending = kvJson(env, "lesen-" + lesenId);
+        ownPending.catch(() => {}); /* نفس الشي: الخطأ كيبان ملي كنتسناو الجواب */
+
         let lesenSubscribed;
         try {
           lesenSubscribed = await hasActiveSubscription(lesenClaims.sub, body.idToken);
@@ -219,18 +227,18 @@ export default {
 
         /* مفتاح خاص بكل موضوع أولا — خفيف وسريع.
            الـ blobs الكبار كيبقاو غير كحل احتياطي. */
-        let lesenTopic = await env.TOPICS.get("lesen-" + lesenId, "json");
+        let lesenTopic = await ownPending;
 
         /* Sprechen عندو blob ديالو باش ما نخلطوش المحتوى ديالو
            مع premium-lesen — هادوك جوج لوائح مختلفة وكل وحدة
            كتتحدث بوحدها. */
         if (!lesenTopic && lesenId.startsWith("sprechen-")) {
-          const sprechenAll = await env.TOPICS.get("premium-sprechen", "json");
+          const sprechenAll = await kvJson(env, "premium-sprechen");
           lesenTopic = sprechenAll?.[lesenId];
         }
 
         if (!lesenTopic) {
-          const lesenAll = await env.TOPICS.get("premium-lesen", "json");
+          const lesenAll = await kvJson(env, "premium-lesen");
           lesenTopic = lesenAll?.[lesenId];
         }
 
@@ -804,6 +812,9 @@ function corsHeaders(origin) {
     "Vary": "Origin",
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
+    /* المتصفح يحفظ الـpreflight (Chrome حتى ساعتين). بلاها، كل طلب
+       JSON كيدير طلب OPTIONS قبل. */
+    "Access-Control-Max-Age": "7200",
     "Content-Type": "application/json; charset=utf-8",
   };
 }
@@ -999,7 +1010,71 @@ async function verifyIdToken(token) {
   return claims;
 }
 
-async function hasActiveSubscription(uid, idToken) {
+/* ===== ذاكرة قصيرة =====
+
+   كل طلب ديال محتوى مدفوع كان كيدير طلب لـFirestore باش يعرف واش الحساب
+   مشترك — نفس الجواب ف كل مرة. كنحفظوه ف ذاكرة الـisolate: دقيقتين
+   للمشترك، 15 ثانية لغير المشترك (باش اللي دفع للتو ما يتسناش). إلا الأدمين
+   وقف اشتراك، كيوقف ف ظرف دقيقتين. الأخطاء ما كنحفظوهاش. */
+const SUB_MEMO = new Map();
+const SUB_TTL_YES = 120 * 1000;
+const SUB_TTL_NO = 15 * 1000;
+
+/* الـKV: نفس الشي. وثيقة كبيرة (premium-lesen كتفوت 900 KB) كانت كتتقرا
+   وكتتحلل (JSON.parse) ف كل طلب. دابا كتتحلل مرة ف الدقيقة، وكنطلبو من
+   الـKV أن يحتفظ بيها 5 دقايق ف الحافة (cacheTtl). تبديل المحتوى ف KV
+   كيبان ف ظرف 5 دقايق. */
+const KV_MEMO = new Map();
+const KV_MEMO_TTL = 60 * 1000;
+const KV_EDGE_TTL = 300;
+
+/* طلبين ف نفس اللحظة لنفس الشي (الكليان كيطلب جوج مفاتيح بالتوازي)
+   كيتقاسمو نفس القراءة، ماشي كل واحد يقرا بوحدو. */
+const KV_PENDING = new Map();
+const SUB_PENDING = new Map();
+
+function kvJson(env, key) {
+  const hit = KV_MEMO.get(key);
+  if (hit && hit.exp > Date.now()) return Promise.resolve(hit.value);
+
+  const running = KV_PENDING.get(key);
+  if (running) return running;
+
+  const pending = (async () => {
+    const value = await env.TOPICS.get(key, { type: "json", cacheTtl: KV_EDGE_TTL });
+
+    /* الغايب ما كنحفظوهش: الموضوع الجديد خاصو يبان دغيا */
+    if (value != null) {
+      if (KV_MEMO.size >= 80) KV_MEMO.delete(KV_MEMO.keys().next().value);
+      KV_MEMO.set(key, { value, exp: Date.now() + KV_MEMO_TTL });
+    }
+    return value;
+  })().finally(() => KV_PENDING.delete(key));
+
+  KV_PENDING.set(key, pending);
+  return pending;
+}
+
+function hasActiveSubscription(uid, idToken) {
+  const memo = SUB_MEMO.get(uid);
+  if (memo && memo.exp > Date.now()) return Promise.resolve(memo.ok);
+
+  const running = SUB_PENDING.get(uid);
+  if (running) return running;
+
+  const pending = (async () => {
+    const ok = await lookupSubscription(uid, idToken);
+
+    if (SUB_MEMO.size >= 500) SUB_MEMO.delete(SUB_MEMO.keys().next().value);
+    SUB_MEMO.set(uid, { ok, exp: Date.now() + (ok ? SUB_TTL_YES : SUB_TTL_NO) });
+    return ok;
+  })().finally(() => SUB_PENDING.delete(uid));
+
+  SUB_PENDING.set(uid, pending);
+  return pending;
+}
+
+async function lookupSubscription(uid, idToken) {
   const url =
     `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}` +
     `/databases/(default)/documents/users/${uid}`;

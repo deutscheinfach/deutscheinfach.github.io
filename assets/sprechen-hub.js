@@ -161,6 +161,8 @@
 
         if (topic.soon) return node;
 
+        if (topic.locked) warmOnIntent(node, function () { return [topic]; });
+
         node.addEventListener("click", function (event) {
             /* فتح ف تبويب جديد خاصو يبقى خدام عادي */
             if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
@@ -191,10 +193,14 @@
         const topic = topics.find(function (t) { return t.id === themaId; });
         if (topic && topic.pack) {
             /* أولا المفتاح ديال الموضوع بوحدو (lesen-sprechen-<lvl>-<id>)،
-               وإلا ماكانش: الـpack اللي فيه كاملين. */
-            return window.__lesenPremiumFetch(lvl + themaId).then(function (own) {
+               وإلا ماكانش: الـpack اللي فيه كاملين. جوج الطلبات كيمشيو بالتوازي
+               (قبل: واحد من بعد واحد = ضعف الانتظار ملي كيكون الاحتياطي هو
+               اللي كيجاوب). الـpack كيتحفظ، يعني الموضوع الجاي كيجي دغيا. */
+            const ownReq = window.__lesenPremiumFetch(lvl + themaId);
+            const packReq = window.__lesenPremiumFetch(lvl + "pack");
+            return ownReq.then(function (own) {
                 if (own && own.ok && own.data) return own;
-                return window.__lesenPremiumFetch(lvl + "pack").then(function (r) {
+                return packReq.then(function (r) {
                     const one = r && r.ok && r.data && r.data[themaId];
                     return one ? { ok: true, data: one } : (own || r);
                 });
@@ -203,9 +209,16 @@
                 return out;
             });
         }
-        return window.__lesenPremiumFetch(lvl + themaId.split("-")[0]).then(function (r) {
+        /* الـbundle ديال الجزء. إلا ماكانش ف الذاكرة، المفتاح ديال الموضوع بوحدو
+           كيمشي معاه بالتوازي (إلا الـbundle ما فيهش الموضوع ما نتسناوش
+           رحلة أخرى). إلا كان الـbundle ديجا عندنا، ما كنطلبوش والو زايد. */
+        const bundleId = lvl + themaId.split("-")[0];
+        const seen = typeof window.__lesenPremiumPeek === "function" && window.__lesenPremiumPeek(bundleId);
+        const bundleReq = window.__lesenPremiumFetch(bundleId);
+        const soloReq = seen ? null : window.__lesenPremiumFetch(lvl + themaId);
+        return bundleReq.then(function (r) {
             const one = r && r.ok && r.data && r.data[themaId];
-            return one ? { ok: true, data: one } : window.__lesenPremiumFetch(lvl + themaId);
+            return one ? { ok: true, data: one } : (soloReq || window.__lesenPremiumFetch(lvl + themaId));
         }).then(function (r) {
             if (r && r.ok && r.data) CONTENT[themaId] = r.data;
             return r;
@@ -219,6 +232,24 @@
         return topic.locked && !CONTENT[topic.id]
             && typeof window.__lesenPremiumFetch === "function";
     }
+    /* كنبداو نجيبو المحتوى المدفوع قبل ما المستعمل يبرك: hover (120ms)
+       ولا أول لمسة. الضغطة كتجي من بعد، والطلب ديجا ماشي. لغير المشترك
+       ما كيدير والو. */
+    function warmOnIntent(node, topicsOf) {
+        let timer = 0;
+        const go = function () {
+            if (!window.__deutschEinfachIsPremium) return;
+            topicsOf().forEach(function (t) {
+                if (t && needsPremiumLoad(t)) premiumLoad(t.id).catch(function () {});
+            });
+        };
+        node.addEventListener("pointerdown", go, { passive: true });
+        node.addEventListener("pointerenter", function (event) {
+            if (event.pointerType === "mouse") timer = setTimeout(go, 120);
+        }, { passive: true });
+        node.addEventListener("pointerleave", function () { clearTimeout(timer); }, { passive: true });
+    }
+
     function waitBox(into) {
         const wait = document.createElement("div");
         wait.className = "lesen-empty";
@@ -308,6 +339,9 @@
         go.setAttribute("aria-hidden", "true");
         foot.appendChild(go);
         node.appendChild(foot);
+
+        /* الامتحان كيبدا بـ Teil 1: كنجيبو الموضوع ديالو قبل الضغطة */
+        if (exam.locked) warmOnIntent(node, function () { return [exam.parts.teil1]; });
 
         node.addEventListener("click", function (event) {
             if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
