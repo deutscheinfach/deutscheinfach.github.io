@@ -418,7 +418,7 @@
                 ads:      window.__lesenTeil3Render    /* Teil 3: إعلانات */
             };
             const fn = RENDER[task.kind];
-            if (typeof fn === "function") { fn(stack, task); return; }
+            if (typeof fn === "function") { fn(stack, task, { level: LV.toLowerCase(), id: themaId }); return; }
 
             window.LESEN_TOPICS = [Object.assign({ id: themaId + "-" + part }, task)];
             if (typeof window.__lesenRenderInto === "function") {
