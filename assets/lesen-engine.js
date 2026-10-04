@@ -284,11 +284,13 @@
     /* ===== احتياط: الكلمات المركبة =====
 
        المقارنة فوق بالجذر كامل، إذن Kontaktagenturen ↔ Vermittlungsagenturen
-       ماكيتلاقاوش: المشترك جزء من الكلمة (agentur). إلا ما لقات الخوارزمية
-       حتى كلمة ف نص كامل، كنجربو هاد المرحلة — كلمتين كيتشاركو قطعة من 6
-       حروف ولا أكثر. ماكنديروهاش ف النصوص اللي فيها كلمات مفتاحية ديجا، باش
-       ما نزيدوش تلوين ف نصوص خدامة. */
+       ماكيتلاقاوش: المشترك جزء من الكلمة (agentur). ولا findet ↔ finden.
+       إلا كانت الكلمات المفتاحية ف نص أقل من KW_MIN (3)، كنزيدو هاد
+       المرحلة: الأفعال المصرّفة، ذيل الكلمة المركبة، وقطعة مشتركة من 6
+       حروف. النصوص اللي فيها 3 ولا أكثر ما كتتبدلش. */
     const KW_GENERIC = ["schaft", "lichkeit", "keiten", "heiten", "ungen", "tionen", "ierung", "ischen", "lichen", "ungs"];
+    /* أقل من هاد العدد (الخوارزمية + اللي بالإيد) = نجربو المرحلة الثانية */
+    const KW_MIN = 3;
     function kwShares(a, b) {
         if (a.length < 7 || b.length < 7) return false;
         let best = 0, at = 0;
@@ -308,12 +310,26 @@
         /* نهاية عامة (-schaft، -keiten…) ماشي كلمة مشتركة */
         return !KW_GENERIC.some(function (g) { return g.indexOf(piece) !== -1; });
     }
+    /* الفعل: findet ↔ finden. kwStem كيحيد غير نهايات الأسماء والصفات
+       (-en، -er…)، ماشي نهايات الفعل (-t، -st، -te). */
+    function kwVerb(stem) {
+        const ends = ["tet", "ten", "est", "et", "st", "te", "t"];
+        for (let i = 0; i < ends.length; i++) {
+            if (stem.length - ends[i].length >= 4 && stem.endsWith(ends[i])) return stem.slice(0, -ends[i].length);
+        }
+        return stem;
+    }
     function kwHit(word, stems, loose) {
         if (word.length < 4 || KW_STOP.has(kwFold(word))) return false;
         const s = kwStem(word);
         return stems.some(function (k) {
-            return s === k || (k.length >= 5 && s.indexOf(k) !== -1) || (s.length >= 5 && k.indexOf(s) !== -1)
-                || (loose && kwShares(s, k));
+            if (s === k || (k.length >= 5 && s.indexOf(k) !== -1) || (s.length >= 5 && k.indexOf(s) !== -1)) return true;
+            if (!loose) return false;
+            return kwVerb(s) === kwVerb(k)
+                /* ذيل الكلمة المركبة: Freizeit ← Zeit، Hausbesuch ← Besuch */
+                || (s.length >= 7 && k.length >= 4 && s.endsWith(k))
+                || (k.length >= 7 && s.length >= 4 && k.endsWith(s))
+                || kwShares(s, k);
         });
     }
     /* ===== كلمات مفتاحية بالزز =====
@@ -435,11 +451,18 @@
             const sa = kwStems(a.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
             const sb = kwStems(b.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
             let hits = 0;
+            /* كنحسبو غير اللي ف النص (a): الكلمة كتبان مرتين ف الترويسة،
+               ولو حسبناهم، نص فيه كلمة وحدة كيبان فيه 3 وما كيتزادش. */
+            let inText = 0;
             /* extra[i] = { phrases, label }: كلمات مفتاحية زايدين على النود i ديال a */
-            a.forEach(function (n, i) { hits += kwPaint(n, sb, extra && extra[i]); });
+            a.forEach(function (n, i) { const h = kwPaint(n, sb, extra && extra[i]); hits += h; inText += h; });
             b.forEach(function (n) { hits += kwPaint(n, sa); });
-            /* ولا كلمة؟ نجربو الكلمات المركبة */
-            if (!hits) {
+            /* قليلين (أقل من KW_MIN)؟ نجربو الأفعال والكلمات المركبة.
+               غير ف النصوص اللي ما عندهاش لائحة بالإيد: إلا كتبناها،
+               هي المرجع وما كنزيدوش عليها. */
+            const listed = !!extra && extra.some(function (e) { return e && e.phrases && e.phrases.length; });
+            if (inText < KW_MIN && !listed) {
+                hits = 0;
                 a.forEach(function (n, i) { hits += kwPaint(n, sb, extra && extra[i], true); });
                 b.forEach(function (n) { hits += kwPaint(n, sa, null, true); });
             }
