@@ -314,6 +314,8 @@
 
         node.appendChild(foot);
 
+        if (topic.locked) warmOnIntent(node, function () { return [topic.id]; });
+
         node.addEventListener("click", function (event) {
             /* فتح ف تبويب جديد خاصو يبقى خدام عادي */
             if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
@@ -322,6 +324,23 @@
         });
 
         return node;
+    }
+
+    /* كنبداو نجيبو المحتوى المدفوع قبل ما المستعمل يبرك: hover (120ms باش
+       ما نجيبوش كل بطاقة غادي فيها الماوس) ولا أول لمسة ف التيليفون.
+       الضغطة كتجي من بعد بـ 80-150ms، والطلب ديجا ماشي. ما كيدير والو
+       لغير المشترك، وما كيبان ليه حتى خطأ. */
+    function warmOnIntent(node, ids) {
+        if (typeof window.__lesenPremiumWarm !== "function") return;
+        let timer = 0;
+        const go = function () {
+            ids().forEach(function (id) { window.__lesenPremiumWarm(id); });
+        };
+        node.addEventListener("pointerdown", go, { passive: true });
+        node.addEventListener("pointerenter", function (event) {
+            if (event.pointerType === "mouse") timer = setTimeout(go, 120);
+        }, { passive: true });
+        node.addEventListener("pointerleave", function () { clearTimeout(timer); }, { passive: true });
     }
 
     function chip(className, text) {
@@ -524,6 +543,16 @@
         go.setAttribute("aria-hidden", "true");
         foot.appendChild(go);
         node.appendChild(foot);
+
+        /* الامتحان كيحل Teil 1 الأول، ولكن كيعرض كاع الأجزاء: كنجيبو
+           المواضيع المقفولين ديالو (كل واحد ف طلب، بالتوازي). */
+        if (exam.locked) {
+            warmOnIntent(node, function () {
+                return PARTS.map(function (p) { return exam.parts[p.key]; })
+                    .filter(function (t) { return t && t.locked; })
+                    .map(function (t) { return t.id; });
+            });
+        }
 
         node.addEventListener("click", function (event) {
             if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;

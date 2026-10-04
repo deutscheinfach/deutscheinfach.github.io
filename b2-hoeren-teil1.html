@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="assets/theme.css?v=17b53b32">
 <script src="assets/stars.js?v=93c940c6" defer></script>
 <script src="assets/progress.js?v=1f4ecf40"></script>
-<script src="assets/hoeren-premium.js?v=9a8df7cd"></script>
+<script src="assets/hoeren-premium.js?v=8c3c5e03"></script>
 <script src="assets/hoeren-keys.js?v=a46afc39" defer></script>
 <link rel="stylesheet" href="assets/site-header.css?v=78847c93">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
@@ -1009,6 +1009,8 @@ window.__deutschEinfachPremiumReady = (async function () {
     return await new Promise(function (resolve) {
       onAuthStateChanged(auth, async function (user) {
         window.__hoerenUser = user || null;
+        /* الجلب ديال المحتوى المدفوع كيبدا دابا، ماشي من بعد فحص Firestore */
+        if (user && window.__hoerenPremiumEarly) window.__hoerenPremiumEarly();
         if (!user) {
           resolve(false);
           return;
