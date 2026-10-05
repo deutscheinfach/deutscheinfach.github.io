@@ -92,7 +92,13 @@ function staleWhileRevalidate(request) {
    اللي شفنا آخر مرة، وإلا offline.html. */
 function pageFromNetwork(event) {
     const request = event.request;
-    const net = fetch(request).then(function (res) {
+    /* cache: "no-cache": المتصفح كيخبي HTML ديال GitHub Pages 10 دقايق.
+       بلا هادي، تعديل جديد (ثمن، نص…) كان كيبقى ما بانش حتى بعد F5.
+       دابا كل صفحة كتسول السيرفر واش تبدلات (304 خفيف إلا لا). */
+    const fresh = fetch(request.url, { cache: "no-cache", credentials: "same-origin" })
+        .then(function (res) { return res.redirected ? fetch(request) : res; })
+        .catch(function () { return fetch(request); });
+    const net = fresh.then(function (res) {
         if (res && res.ok && res.type === "basic") {
             const copy = res.clone();
             caches.open(PAGE_CACHE).then(function (c) { c.put(request.url.split("#")[0], copy); });
