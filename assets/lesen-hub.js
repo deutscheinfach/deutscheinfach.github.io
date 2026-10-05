@@ -467,6 +467,27 @@
         return out;
     }
 
+    /* «اختبر نفسك» (modelltest.html): امتحان مخلط — كل جزء من موضوع
+       مختلف. ?pruefung=mix&mix=<teil1>,<teil2>,<teil3>,<sprach1>,<sprach2> */
+    function mixIds() {
+        return (new URLSearchParams(location.search).get("mix") || "").split(",");
+    }
+    function examFor(n) {
+        if (n !== "mix") return examList()[n - 1];
+        const ids = mixIds(), parts = {};
+        let ok = true;
+        PARTS.forEach(function (p, i) {
+            const t = topics.find(function (x) { return x.id === ids[i]; });
+            if (!t || (t.parts || []).indexOf(p.key) === -1) ok = false;
+            parts[p.key] = t;
+        });
+        return ok ? { n: "mix", parts: parts, locked: PARTS.some(function (p) { return parts[p.key].locked; }) } : null;
+    }
+    function examParam(params) {
+        const raw = params.get("pruefung");
+        return raw === "mix" ? "mix" : parseInt(raw, 10);
+    }
+
     function renderExams(animate) {
         const term = (search ? search.value : "").trim().toLowerCase();
         let list = examList().filter(function (exam) {
@@ -565,6 +586,7 @@
     function examUrl(n, part) {
         const params = new URLSearchParams();
         params.set("pruefung", String(n));
+        if (n === "mix") params.set("mix", mixIds().join(","));
         if (part) params.set("teil", part);
         return location.pathname + "?" + params.toString();
     }
@@ -587,7 +609,7 @@
     }
 
     function openExam(n, part, push) {
-        const exam = examList()[n - 1];
+        const exam = examFor(n);
         if (!exam) { close(push); return; }
         const scores = {};
         let current = PART_LABEL[part] ? part : "teil1";
@@ -630,7 +652,7 @@
         const lvl = document.createElement("b");
         lvl.className = "exam-top-level";
         lvl.textContent = LV;
-        kicker.append(lvl, document.createTextNode("Prüfung " + n));
+        kicker.append(lvl, document.createTextNode(n === "mix" ? "اختبر نفسك" : "Prüfung " + n));
         const topTitle = document.createElement("strong");
         topTitle.className = "exam-top-title";
         meta.append(kicker, topTitle);
@@ -1056,7 +1078,7 @@
 
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
-        const exam = parseInt(params.get("pruefung"), 10);
+        const exam = examParam(params);
         if (exam) openExam(exam, params.get("teil") || "teil1", false);
         else if (thema) open(thema, params.get("teil") || pagePart || "teil1", false);
         else close(false);
@@ -1083,15 +1105,15 @@
         if (detail.hidden) return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
-        const exam = parseInt(params.get("pruefung"), 10);
+        const exam = examParam(params);
         if (exam) openExam(exam, params.get("teil") || "teil1", false);
         else if (thema) open(thema, params.get("teil") || pagePart || "teil1", false);
     }, scope);
 
     /* الرابط جا فيه موضوع؟ نحلوه دغيا. */
     const startParams = new URLSearchParams(location.search);
-    if (parseInt(startParams.get("pruefung"), 10)) {
-        openExam(parseInt(startParams.get("pruefung"), 10), startParams.get("teil") || "teil1", false);
+    if (examParam(startParams)) {
+        openExam(examParam(startParams), startParams.get("teil") || "teil1", false);
     } else if (startParams.get("thema")) {
         open(startParams.get("thema"),
              startParams.get("teil") || pagePart || "teil1", false);

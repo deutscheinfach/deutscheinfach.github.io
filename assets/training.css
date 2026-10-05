@@ -313,3 +313,50 @@ body.mt-running .lesen-tabs { display: none; }
     font-size: 13px;
     color: var(--muted);
 }
+
+/* ===== «اختبر نفسك»: امتحان عشوائي ===== */
+.mt-rand {
+    position: relative; overflow: hidden; direction: rtl; text-align: right;
+    margin: 0 0 22px; padding: 30px 30px 26px; border-radius: 26px; color: #fff;
+    background:
+        radial-gradient(60% 90% at 10% 0%, rgba(242,183,5,.28), transparent 60%),
+        radial-gradient(60% 80% at 100% 100%, rgba(255,74,107,.4), transparent 60%),
+        linear-gradient(135deg, #2a0a14, #7a0d26 55%, #b30e30);
+    box-shadow: 0 34px 70px -38px rgba(122,13,38,.85);
+}
+.mt-rand::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px); background-size: 22px 22px;
+}
+.mt-rand > * { position: relative; z-index: 1; }
+.mt-rand-chip { display: inline-block; padding: 6px 14px; border-radius: 999px; font-weight: 900; font-size: 13px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.25); }
+.mt-rand h2 { margin: 14px 0 8px; font-size: clamp(1.45rem, 3vw, 2rem); font-weight: 900; color: #fff; }
+.mt-rand-lead { margin: 0 0 18px; color: rgba(255,255,255,.88); line-height: 1.9; max-width: 70ch; }
+.mt-rand-lead b { color: #ffce00; }
+.mt-rand-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0 0 18px; }
+.mt-rand-f { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border-radius: 16px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); }
+.mt-rand-f i { font-style: normal; font-size: 22px; line-height: 1; flex: none; }
+.mt-rand-f b { display: block; font-weight: 900; }
+.mt-rand-f span { display: block; font-size: 13.5px; color: rgba(255,255,255,.78); margin-top: 2px; }
+.mt-rand .mt-last { color: rgba(255,255,255,.85); }
+.mt-rand-go {
+    position: relative; overflow: hidden; width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+    padding: 17px 20px; border: 0; border-radius: 16px; cursor: pointer; font: inherit; font-weight: 900; font-size: 17px;
+    color: #3a1500; background: linear-gradient(135deg, #ffe07a, #f2b705); box-shadow: 0 18px 36px -16px rgba(242,183,5,.95);
+    transition: transform .15s ease;
+}
+.mt-rand-go:hover { transform: translateY(-2px); }
+.mt-rand-go svg { width: 22px; height: 22px; animation: mt-dice 2.4s ease-in-out infinite; }
+.mt-rand-go em { font-style: normal; }
+.mt-rand-go::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 35%; left: -50%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.65), transparent);
+    animation: mt-sweep 3.4s ease-in-out infinite;
+}
+@keyframes mt-dice { 0%, 70%, 100% { transform: rotate(0); } 78% { transform: rotate(-20deg); } 86% { transform: rotate(16deg); } 94% { transform: rotate(-6deg); } }
+@keyframes mt-sweep { 0%, 55% { left: -50%; } 85%, 100% { left: 130%; } }
+@media (max-width: 760px) {
+    .mt-rand { padding: 24px 18px 20px; }
+    .mt-rand-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .mt-rand-go svg, .mt-rand-go::after { animation: none; } }
