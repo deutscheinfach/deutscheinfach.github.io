@@ -1,0 +1,270 @@
+/* ===== الدخول / التسجيل / نسيت كلمة المرور — تصميم مشترك =====
+
+   كيتحمل من بعد الـ<style> ديال كل صفحة (body.au): البطاقة ديال
+   الفورم على اليمين، ولوحة Deutsch Einfach على اليسار (PC). ف
+   التيليفون: غير البطاقة، مع اللوگو فوق. */
+
+body.au {
+    --au-bg: #f6f2ea;
+    --au-card: #ffffff;
+    --au-ink: #1a1220;
+    --au-muted: #6b6274;
+    --au-line: rgba(26,18,32,.11);
+    --au-field: #faf8f4;
+    --au-wine: #7a0d26;
+    --au-red: #c2183f;
+    --au-gold: #f2b705;
+    display: block;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 !important;
+    background: var(--au-bg) !important;
+    color: var(--au-ink);
+    text-align: right;
+}
+html[data-theme="dark"] body.au {
+    --au-bg: #0e0b10;
+    --au-card: #17131b;
+    --au-ink: #f3eff6;
+    --au-muted: #a79fb0;
+    --au-line: rgba(255,255,255,.1);
+    --au-field: #1f1a24;
+}
+html:has(body.au) { background: var(--au-bg, #f6f2ea) !important; }
+html:has(body.au)::after { display: none; }
+body.au::before, body.au .bg-grid { display: none !important; }
+
+/* ---------- الهيكل ---------- */
+body.au .auth-wrap {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 28px 20px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+    align-content: center;
+}
+body.au .auth-card {
+    position: relative;
+    max-width: none;
+    width: 100%;
+    padding: 44px 46px 36px;
+    border-radius: 0 28px 28px 0;
+    border: 1px solid var(--au-line);
+    border-left: 0;
+    background: var(--au-card);
+    box-shadow: 0 40px 80px -50px rgba(40,10,20,.5);
+    animation: au-in .5s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes au-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* ---------- اللوحة ديال Deutsch Einfach ---------- */
+.au-side {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 40px 34px;
+    border-radius: 28px 0 0 28px;
+    color: #fff;
+    background:
+        radial-gradient(60% 50% at 0% 0%, rgba(242,183,5,.32), transparent 60%),
+        radial-gradient(70% 60% at 100% 100%, rgba(255,74,107,.45), transparent 60%),
+        linear-gradient(150deg, #22060f 0%, #5e0a1f 50%, #9c0f2e 100%);
+    box-shadow: 0 40px 80px -40px rgba(122,13,38,.8);
+    animation: au-in .5s .08s cubic-bezier(.2,.8,.2,1) both;
+}
+.au-side::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,.08) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+    -webkit-mask-image: linear-gradient(160deg, #000, transparent 70%);
+            mask-image: linear-gradient(160deg, #000, transparent 70%);
+    pointer-events: none;
+}
+.au-side::after {
+    content: "";
+    position: absolute; width: 340px; height: 340px; border-radius: 50%;
+    left: -120px; bottom: -150px;
+    background: radial-gradient(circle, rgba(242,183,5,.35), transparent 65%);
+    filter: blur(10px);
+    animation: au-glow 9s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+@keyframes au-glow { to { transform: translate(60px, -40px) scale(1.15); } }
+.au-side > * { position: relative; z-index: 1; }
+.au-brand { display: inline-flex; align-items: center; gap: 12px; color: #fff; text-decoration: none; direction: ltr; align-self: flex-end; }
+.au-brand img { width: 46px; height: 46px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.25); }
+.au-brand b { font-size: 18px; font-weight: 900; }
+.au-brand b span { color: #ffd75a; }
+.au-brand small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .12em; opacity: .7; }
+.au-side h2 { margin: 42px 0 10px; font-size: clamp(1.7rem, 2.6vw, 2.3rem); font-weight: 900; line-height: 1.3; color: #fff; }
+.au-side h2 em { font-style: normal; color: #ffd75a; }
+.au-side > p { margin: 0 0 26px; color: rgba(255,255,255,.82); line-height: 1.85; font-size: 15px; }
+.au-feats { list-style: none; margin: 0 0 auto; padding: 0; display: grid; gap: 12px; }
+.au-feats li { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 14px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); font-weight: 700; font-size: 14.5px; }
+.au-feats i { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; color: #2a1500; background: linear-gradient(135deg, #ffe58a, #f2b705); }
+.au-feats svg { width: 18px; height: 18px; }
+.au-feats b { direction: ltr; unicode-bidi: isolate; }
+.au-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.au-chips span { padding: 6px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 800; background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.14); direction: ltr; }
+
+/* ---------- البطاقة ---------- */
+body.au .auth-logo { display: flex; justify-content: flex-start; margin-bottom: 22px; }
+body.au .logo { width: 56px; height: 56px; object-fit: cover; border-radius: 50%; border: 0; box-shadow: 0 10px 24px -12px rgba(0,0,0,.5); }
+body.au h1 {
+    text-align: right;
+    margin: 0 0 6px;
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+    font-weight: 900;
+    background: none;
+    -webkit-background-clip: border-box;
+            background-clip: border-box;
+    color: var(--au-ink);
+}
+body.au .subtitle { text-align: right; margin: 0 0 28px; color: var(--au-muted); font-size: 14.5px; line-height: 1.8; }
+body.au label { color: var(--au-ink); font-size: 13.5px; font-weight: 800; margin-bottom: 8px; display: block; }
+body.au .form-group { margin-bottom: 18px; }
+body.au input[type="email"],
+body.au input[type="password"],
+body.au input[type="text"] {
+    height: 52px;
+    padding: 0 16px;
+    border-radius: 14px;
+    border: 1.5px solid var(--au-line);
+    background: var(--au-field);
+    color: var(--au-ink);
+    font-size: 15px;
+    transition: border-color .15s, box-shadow .15s, background .15s;
+}
+body.au input:focus {
+    border-color: var(--au-red);
+    background: var(--au-card);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--au-red) 14%, transparent);
+}
+body.au .password-wrap { position: relative; }
+body.au .password-toggle { color: var(--au-muted); }
+
+body.au .login-button,
+body.au .signup-submit,
+body.au .reset-button {
+    width: 100%;
+    height: 54px;
+    margin-top: 8px;
+    border: 0;
+    border-radius: 14px;
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--au-red), var(--au-wine));
+    box-shadow: 0 16px 30px -16px var(--au-wine);
+    transition: transform .2s, filter .2s, box-shadow .2s;
+}
+body.au .login-button:hover,
+body.au .signup-submit:hover,
+body.au .reset-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+body.au .login-button:disabled,
+body.au .signup-submit:disabled,
+body.au .reset-button:disabled { opacity: .6; transform: none; }
+body.au .resend-button { border-radius: 14px; }
+
+body.au .error, body.au .message.error { background: #fdecef; border: 1px solid #f5b5c2; color: #a3112f; }
+body.au .success, body.au .message.success { background: #e9f8ef; border: 1px solid #a7e3bf; color: #0f7a3d; }
+html[data-theme="dark"] body.au .error, html[data-theme="dark"] body.au .message.error { background: rgba(220,38,38,.12); border-color: rgba(220,38,38,.35); color: #fca5a5; }
+html[data-theme="dark"] body.au .success, html[data-theme="dark"] body.au .message.success { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.3); color: #86efac; }
+
+body.au .links, body.au .login-text { text-align: center; margin-top: 22px; color: var(--au-muted); font-size: 14px; line-height: 2.1; }
+body.au .links a, body.au .login-text a { color: var(--au-red); font-weight: 900; }
+html[data-theme="dark"] body.au .links a, html[data-theme="dark"] body.au .login-text a { color: #ffd75a; }
+body.au .back-home { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--au-line); color: var(--au-muted); font-weight: 700; }
+
+/* زر الرجوع (signup / forgot) */
+body.au .back-button {
+    position: fixed; top: 18px; right: 18px; z-index: 5;
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 16px; border-radius: 999px;
+    background: var(--au-card); color: var(--au-ink);
+    border: 1px solid var(--au-line); font-weight: 800; font-size: 13.5px;
+    box-shadow: 0 6px 18px -10px rgba(0,0,0,.3);
+}
+
+/* ---------- التيليفون والتابليت ---------- */
+@media (max-width: 900px) {
+    body.au .auth-wrap { grid-template-columns: 1fr; max-width: 480px; padding: 74px 14px 28px; }
+    body.au .auth-card { border-radius: 26px; border-left: 1px solid var(--au-line); padding: 34px 24px 28px; }
+    .au-side { display: none; }
+    body.au .auth-logo { justify-content: center; }
+    body.au h1, body.au .subtitle { text-align: center; }
+}
+@media (max-width: 900px) {
+    body.au .auth-card::before {
+        content: "";
+        position: absolute; inset: 0 0 auto 0; height: 6px; border-radius: 26px 26px 0 0;
+        background: linear-gradient(90deg, #22060f, #9c0f2e, #f2b705);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    body.au .auth-card, .au-side, .au-side::after { animation: none; }
+}
+
+/* signup: الحقول مباشرة ف الفورم */
+body.au form > input { margin-bottom: 18px; }
+body.au form > .password-wrap { margin-bottom: 18px; }
+body.au form > .password-wrap input { margin-bottom: 0 !important; }
+body.au .password-wrap .password-toggle { top: 50%; transform: translateY(-50%); }
+body.au .back-button { position: absolute; top: 16px; right: 16px; padding: 0 16px; }
+
+/* ===== الخلفية (نسخة pro): أضواء كيتحركو + كلمات ألمانية عايمين ===== */
+body.au {
+    background:
+        radial-gradient(1200px 700px at 85% -10%, rgba(242,183,5,.22), transparent 60%),
+        radial-gradient(900px 700px at -10% 110%, rgba(255,61,106,.28), transparent 60%),
+        linear-gradient(135deg, #12040a 0%, #3d0716 45%, #6d0c24 100%) !important;
+    background-attachment: fixed !important;
+}
+html:has(body.au) { background: #12040a !important; }
+.au-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+.au-bg::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 80%);
+            mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 20%, transparent 80%);
+}
+.au-blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .55; animation: au-blob 16s ease-in-out infinite alternate; }
+.au-blob.b1 { width: 520px; height: 520px; top: -160px; right: -120px; background: #f2b705; opacity: .28; }
+.au-blob.b2 { width: 560px; height: 560px; bottom: -220px; left: -160px; background: #ff3d6a; opacity: .35; animation-delay: -6s; }
+.au-blob.b3 { width: 380px; height: 380px; top: 40%; left: 45%; background: #9c0f2e; opacity: .45; animation-delay: -11s; }
+@keyframes au-blob { 50% { transform: translate(60px, -40px) scale(1.12); } 100% { transform: translate(-40px, 30px) scale(.95); } }
+.au-word {
+    position: absolute; font-weight: 900; color: rgba(255,255,255,.07); white-space: nowrap;
+    font-size: clamp(28px, 4vw, 56px); letter-spacing: -.02em; direction: ltr;
+    animation: au-drift 18s ease-in-out infinite alternate;
+}
+.au-word.w1 { top: 8%; left: 4%; }
+.au-word.w2 { top: 22%; right: 3%; animation-delay: -3s; }
+.au-word.w3 { bottom: 12%; left: 8%; animation-delay: -6s; }
+.au-word.w4 { bottom: 26%; right: 6%; animation-delay: -9s; }
+.au-word.w5 { top: 50%; left: 1%; font-size: clamp(20px, 2.4vw, 32px); color: rgba(242,183,5,.12); animation-delay: -2s; }
+.au-word.w6 { top: 4%; right: 30%; font-size: clamp(20px, 2.4vw, 32px); color: rgba(242,183,5,.12); animation-delay: -12s; }
+.au-word.w7 { bottom: 4%; right: 34%; font-size: clamp(18px, 2vw, 28px); animation-delay: -7s; }
+.au-word.w8 { top: 70%; left: 38%; font-size: clamp(20px, 2.4vw, 34px); animation-delay: -15s; }
+@keyframes au-drift { to { transform: translateY(-26px) rotate(-2deg); } }
+body.au .auth-wrap { position: relative; z-index: 1; }
+body.au .auth-card { border-color: rgba(255,255,255,.14); box-shadow: 0 50px 100px -40px rgba(0,0,0,.75); }
+.au-side { box-shadow: 0 50px 100px -40px rgba(0,0,0,.8), inset 0 0 0 1px rgba(255,255,255,.08); }
+body.au .back-button { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.2); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+@media (max-width: 900px) {
+    .au-word.w5, .au-word.w6, .au-word.w8 { display: none; }
+    body.au .auth-card { border: 1px solid rgba(255,255,255,.14); }
+}
+@media (pointer: coarse) { .au-blob, .au-word { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .au-blob, .au-word { animation: none; } }
+body.au:has(> .back-button) .auth-wrap { padding-top: 76px; }

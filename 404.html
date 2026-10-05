@@ -8,17 +8,34 @@
 <link rel="stylesheet" href="/assets/theme.css">
 <style>
     *, *::before, *::after { box-sizing: border-box; }
-    body { min-height: 100vh; display: grid; place-items: center; margin: 0; padding: 16px;
-           font-family: "Cairo", system-ui, sans-serif; background: var(--bg, #0e0f14); color: var(--text, #f3efe6); }
-    .box { max-width: 460px; width: 100%; text-align: center; padding: 36px 24px; border-radius: 22px;
-           border: 1px solid var(--line-gold, rgba(214,178,94,.35)); background: var(--surface, #16171e); }
-    .big { font-size: 64px; font-weight: 900; line-height: 1; color: var(--accent-text, #7a1426); }
-    h1 { font-size: 22px; margin: 14px 0 8px; }
-    p { color: var(--muted, #a8a39a); line-height: 1.8; margin: 0 0 20px; }
-    .links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-    a { display: inline-block; padding: 10px 18px; border-radius: 999px; text-decoration: none; font-weight: 800;
-        border: 1px solid var(--line-gold, rgba(214,178,94,.35)); color: var(--text, #f3efe6); }
-    a.main { background: var(--gold, #d6b25e); color: #1a1405; border-color: transparent; }
+    html:has(body) { background: #f6f2ea; }
+    html[data-theme="dark"] { background: #0e0b10; }
+    html::after { display: none; }
+    body { min-height: 100vh; display: grid; place-items: center; margin: 0; padding: 20px;
+           font-family: "Cairo", system-ui, sans-serif; background: transparent; color: #1a1220; }
+    html[data-theme="dark"] body { color: #f3eff6; }
+    .box { position: relative; overflow: hidden; max-width: 480px; width: 100%; text-align: center; padding: 34px 26px 28px;
+           border-radius: 28px; background: #fff; border: 1px solid rgba(26,18,32,.1);
+           box-shadow: 0 40px 80px -50px rgba(40,10,20,.55); animation: in .5s cubic-bezier(.2,.8,.2,1) both; }
+    html[data-theme="dark"] .box { background: #17131b; border-color: rgba(255,255,255,.1); }
+    .box::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 6px; background: linear-gradient(90deg, #22060f, #9c0f2e, #f2b705); }
+    @keyframes in { from { opacity: 0; transform: translateY(14px); } }
+    .logo { width: 64px; height: 64px; border-radius: 50%; margin: 6px auto 8px; display: block; box-shadow: 0 12px 26px -12px rgba(0,0,0,.5); }
+    .big { font-size: 104px; font-weight: 900; line-height: 1; letter-spacing: -.04em; margin: 4px 0 0;
+           background: linear-gradient(135deg, #c2183f, #7a0d26 50%, #f2b705); -webkit-background-clip: text; background-clip: text; color: transparent;
+           animation: float 4s ease-in-out infinite; }
+    @keyframes float { 50% { transform: translateY(-6px); } }
+    h1 { font-size: 22px; font-weight: 900; margin: 12px 0 6px; }
+    p { color: #6b6274; line-height: 1.85; margin: 0 0 22px; }
+    html[data-theme="dark"] p { color: #a79fb0; }
+    .links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; border-radius: 14px; text-decoration: none; font-weight: 900;
+        border: 1.5px solid rgba(26,18,32,.12); color: inherit; transition: transform .18s, border-color .18s; }
+    html[data-theme="dark"] a { border-color: rgba(255,255,255,.14); }
+    a:hover { transform: translateY(-2px); border-color: #c2183f; }
+    a.main { grid-column: 1 / -1; color: #fff; border: 0; background: linear-gradient(135deg, #c2183f, #7a0d26); box-shadow: 0 14px 28px -14px #7a0d26; }
+    a svg { width: 18px; height: 18px; }
+    @media (prefers-reduced-motion: reduce) { .box, .big { animation: none; } }
 </style>
 <script src="assets/theme-toggle.js?v=1e586e51"></script>
 <!-- seo:start (tools/seo.py) -->
@@ -38,11 +55,12 @@
 </head>
 <body>
 <main class="box">
+    <img class="logo" src="/assets/icon-192.png" alt="Deutsch Einfach">
     <div class="big">404</div>
     <h1>هاد الصفحة ماكايناش</h1>
     <p>يمكن الرابط تبدل ولا فيه غلطة. رجع للصفحة الرئيسية ولا ختار القسم ديالك:</p>
     <div class="links">
-        <a class="main" href="/">الصفحة الرئيسية</a>
+        <a class="main" href="/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>الصفحة الرئيسية</a>
         <a href="/b1-lesen.html">Telc B1</a>
         <a href="/b2-lesen.html">Telc B2</a>
     </div>
