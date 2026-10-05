@@ -247,12 +247,12 @@
 }
 </style>
 <!-- seo:start (tools/seo.py) -->
-<meta name="description" content="كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 300 درهم، وكنترجمو الوثائق ديالك للألمانية ب 150 درهم للورقة. Bewerbung schreiben lassen &amp; Übersetzung für Deutschland.">
+<meta name="description" content="كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 200 درهم، وكنترجمو الوثائق ديالك للألمانية ب 150 درهم للورقة. Bewerbung schreiben lassen &amp; Übersetzung für Deutschland.">
 <link rel="canonical" href="https://deutsch-einfach.online/bewerbung.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Deutsch Einfach">
 <meta property="og:title" content="Bewerbung و ترجمة الوثائق للألمانية – المغرب | Deutsch Einfach">
-<meta property="og:description" content="كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 300 درهم، وكنترجمو الوثائق ديالك للألمانية ب 150 درهم للورقة. Bewerbung schreiben lassen &amp; Übersetzung für Deutschland.">
+<meta property="og:description" content="كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 200 درهم، وكنترجمو الوثائق ديالك للألمانية ب 150 درهم للورقة. Bewerbung schreiben lassen &amp; Übersetzung für Deutschland.">
 <meta property="og:url" content="https://deutsch-einfach.online/bewerbung.html">
 <meta property="og:image" content="https://deutsch-einfach.online/assets/icon-512.png">
 <meta property="og:locale" content="ar_MA">
@@ -324,7 +324,7 @@
 
     <!-- ===== أرقام ===== -->
     <div class="bw-stats">
-        <div class="bw-stat bw-reveal"><b data-count="300">0</b><span>درهم · Bewerbung كاملة</span></div>
+        <div class="bw-stat bw-reveal"><b data-count="200">0</b><span>درهم · Bewerbung كاملة</span></div>
         <div class="bw-stat bw-reveal d1"><b data-count="150">0</b><span>درهم · للورقة المترجمة</span></div>
         <div class="bw-stat bw-reveal d2"><b>🇲🇦→🇩🇪</b><span>من الدار حتى ألمانيا</span></div>
     </div>
@@ -342,14 +342,14 @@
             <div class="bw-ico">📁</div>
             <h3>Bewerbung كاملة</h3>
             <p class="sub">الدوسي ديال الترشيح، مكتوب بالألمانية ومرتب</p>
-            <div class="bw-price"><b>300</b><span>DH</span><em>· مرة وحدة</em></div>
+            <div class="bw-price"><b>200</b><span>DH</span><em>· مرة وحدة</em></div>
             <ul class="bw-list">
                 <li><span><b>Lebenslauf</b> — CV على الطريقة الألمانية (tabellarisch)، منظم ونقي</span></li>
                 <li><span><b>Anschreiben</b> — رسالة التحفيز مكتوبة ليك على حساب الخدمة ولا الـ Ausbildung</span></li>
                 <li><span>تصميم احترافي و <b>PDF جاهز</b> تصيفطو مباشرة</span></li>
                 <li><span>تعديل حتى ترضى على النتيجة</span></li>
             </ul>
-            <a class="bw-btn bw-btn-gold" data-wa="Bewerbung كاملة – 300 DH">بغيت Bewerbung ←</a>
+            <a class="bw-btn bw-btn-gold" data-wa="Bewerbung كاملة – 200 DH">بغيت Bewerbung ←</a>
         </article>
 
         <article class="bw-card bw-reveal d1">
@@ -376,11 +376,11 @@
                 <input type="range" id="bw-pages" min="0" max="20" value="3" aria-label="عدد الأوراق">
                 <div class="bw-pages"><span id="bw-pages-n">3</span> ورقات</div>
             </div>
-            <label class="bw-check"><input type="checkbox" id="bw-with" checked> زيد Bewerbung كاملة (300 DH)</label>
+            <label class="bw-check"><input type="checkbox" id="bw-with" checked> زيد Bewerbung كاملة (200 DH)</label>
         </div>
         <div class="bw-total">
             <span>المجموع</span>
-            <b><span id="bw-total">750</span> DH</b>
+            <b><span id="bw-total">650</span> DH</b>
             <a class="bw-btn bw-btn-gold" id="bw-calc-go">صيفط الطلب ف WhatsApp</a>
         </div>
     </section>
@@ -476,7 +476,7 @@
     var go = document.getElementById("bw-calc-go");
     function calc() {
         var n = +range.value;
-        var total = n * 150 + (withB.checked ? 300 : 0);
+        var total = n * 150 + (withB.checked ? 200 : 0);
         nOut.textContent = n;
         out.textContent = total;
         out.parentNode.classList.remove("bump");
@@ -484,7 +484,7 @@
         out.parentNode.classList.add("bump");
         setTimeout(function () { out.parentNode.classList.remove("bump"); }, 200);
         var parts = [];
-        if (withB.checked) parts.push("Bewerbung كاملة (300 DH)");
+        if (withB.checked) parts.push("Bewerbung كاملة (200 DH)");
         if (n) parts.push("ترجمة " + n + " ورقات (" + (n * 150) + " DH)");
         go.href = wa((parts.join(" + ") || "سؤال") + (parts.length ? " — المجموع: " + total + " DH" : ""));
         go.target = "_blank";
