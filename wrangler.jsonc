@@ -5,9 +5,11 @@
 {
   "name": "deutsch-einfach-site",
   "compatibility_date": "2026-10-01",
+  // غير «/» (والدوسيات) كيدوزو من هنا → index.html. باقي الملفات مباشرة.
+  "main": "./site-worker.js",
   "assets": {
+    "binding": "ASSETS",
     "directory": "./dist",
-    "html_handling": "none",
-    "not_found_handling": "404-page"
+    "html_handling": "none"
   }
 }
