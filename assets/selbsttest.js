@@ -548,9 +548,8 @@
         }
     });
 
-    window.addEventListener("beforeunload", function (e) {
-        if (state && !state.done) { e.preventDefault(); e.returnValue = ""; }
-    });
+    /* بلا نافذة «Quitter le site ?» ملي كيخرج: الامتحان محفوظ ف sessionStorage
+       وكيكمل فين وقف إلا رجع. */
     document.addEventListener("de-premium", function () {
         if (!state) renderStart();
         else if (state.done) warmSoon();
