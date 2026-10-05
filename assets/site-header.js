@@ -1278,6 +1278,21 @@
                         menu.appendChild(adm);
                     }
 
+                    /* تحميل التطبيق: نافذة «ثبت كتطبيق» (assets/app-install.js) */
+                    const standaloneApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+                    if (!standaloneApp) {
+                        const app = item("app", "تحميل التطبيق");
+                        app.addEventListener("click", function () {
+                            openMenu(false);
+                            if (window.__deApp && window.__deApp.install) { window.__deApp.install(); return; }
+                            const script = document.createElement("script");
+                            script.src = "assets/app-install.js";
+                            script.onload = function () { if (window.__deApp && window.__deApp.install) window.__deApp.install(); };
+                            document.head.appendChild(script);
+                        });
+                        menu.appendChild(app);
+                    }
+
                     /* تسجيل الخروج */
                     const out = item("out", "تسجيل الخروج");
                     out.classList.add("site-menu-out");
@@ -1320,6 +1335,7 @@
                     const paths = {
                         user: ["M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z", "M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"],
                         out:  ["M15 17l5-5-5-5", "M20 12H9", "M12 20H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h6"],
+                        app:  ["M12 4v11", "M7 10l5 5 5-5", "M5 20h14"],
                         star: ["M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9L12 3.5Z"]
                     };
 
