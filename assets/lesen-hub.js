@@ -66,6 +66,23 @@
     const LEVEL = (SHELL && SHELL.dataset.level) || "b2";
     const LV = LEVEL.toUpperCase();
 
+    /* المواضيع المجانية كيجيو من Cloudflare (assets/lesen-free.js) */
+    function freeLoaded() {
+        const c = window["LESEN_" + LV + "_CONTENT"];
+        return !!(c && Object.keys(c).length);
+    }
+    function freeWait() {
+        return typeof window.__lesenFreeReady === "function"
+            ? window.__lesenFreeReady(LEVEL)
+            : Promise.resolve();
+    }
+    function freeLoading(box) {
+        const wait = document.createElement("div");
+        wait.className = "lesen-empty";
+        wait.textContent = "⏳ كنجيبو التمرين…";
+        box.appendChild(wait);
+    }
+
     /* الرأس ديال كل جزء: العنوان والسطر الصغير تحتيه. */
     const HEADS = {
         "":        { h1: "Leseverstehen",     lead: "امتحانات كاملة — كل امتحان فيه الأجزاء الخمسة ديال Lesen.",
@@ -365,6 +382,14 @@
     function renderPart(stack, topic, part, stillWanted) {
         stack.textContent = "";
         const themaId = topic.id;
+        if (!topic.locked && !freeLoaded()) {
+            freeLoading(stack);
+            freeWait().then(function () {
+                if (freeLoaded() && stillWanted()) renderPart(stack, topic, part, stillWanted);
+                else if (stillWanted()) { stack.textContent = ""; const e = document.createElement("div"); e.className = "lesen-empty"; e.textContent = "ما قدرناش نجيبو التمرين. شوف الأنترنت وعاود."; stack.appendChild(e); }
+            });
+            return;
+        }
         const content = (window["LESEN_" + LV + "_CONTENT"] || {})[themaId] || {};
 
         /* المواضيع المدفوعة ماكايناش نصوصهم فهاد الملف. كيتجابو من
@@ -1019,6 +1044,19 @@
         detail.hidden = false;
 
         detail.textContent = "";
+
+        /* موضوع مجاني والمحتوى باقي ما وصلش من Cloudflare */
+        if (!topic.locked && !freeLoaded()) {
+            freeLoading(detail);
+            freeWait().then(function () {
+                const now = new URLSearchParams(location.search).get("thema");
+                if (now === themaId && !detail.hidden) {
+                    if (freeLoaded()) open(themaId, part, false);
+                    else { detail.textContent = ""; const e = document.createElement("div"); e.className = "lesen-empty"; e.textContent = "ما قدرناش نجيبو التمرين. شوف الأنترنت وعاود."; detail.appendChild(e); }
+                }
+            });
+            return;
+        }
 
         /* رأس التمرين: رجوع + الاسم */
         const head = document.createElement("div");
