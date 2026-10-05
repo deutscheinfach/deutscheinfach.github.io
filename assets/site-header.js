@@ -1147,7 +1147,7 @@
                 window.__deutschEinfachIsPremium = premium;
 
                 /* باش المرة الجاية البار تبان صحيحة من أول رسمة */
-                remember({ name: name, premium: premium });
+                remember({ name: name, premium: premium, uid: person.uid });
 
                 paint(name, premium);
                 buildMenu(person, name, premium);
@@ -1411,7 +1411,16 @@
         /* «شفتهم» كيتحفظ لكل حساب بوحدو (ماشي للمتصفح كامل): إلا دخل
            حساب آخر فنفس المتصفح كيشوف النقطة الحمرا ديالو.
            أول مرة (حتى للزائر الجديد): الأخبار ديال آخر 14 يوم كتبان جديدة. */
-        let who = "guest";
+        /* الحساب ديال آخر مرة: بلا هادشي، ف كل refresh كان «guest» حتى
+           يجاوب Firebase → النقطة كتبان برقم ومن بعد كتختفى. */
+        let who = "guest", whoKnown = true;
+        try {
+            const lastAcc = JSON.parse(read("deutschEinfachLastAccount") || "null");
+            if (lastAcc && lastAcc.name) {
+                if (lastAcc.uid) who = lastAcc.uid;
+                else whoKnown = false;   /* كاش قديم بلا uid: نتسناو Firebase */
+            }
+        } catch (e) { /* كاش خايب */ }
         const FRESH = 14 * 86400000;
         function seenKey() { return SEEN + ":" + who; }
         function seenAt() {
@@ -1427,7 +1436,7 @@
 
         function paintDot() {
             const seen = seenAt();
-            const fresh = items.filter(function (n) { return n.at > seen; }).length;
+            const fresh = whoKnown ? items.filter(function (n) { return n.at > seen; }).length : 0;
             dot.hidden = !fresh;
             dot.textContent = fresh > 9 ? "9+" : String(fresh);
             bell.classList.toggle("has-news", !!fresh);
@@ -1612,6 +1621,7 @@
             },
             setUser: function (uid) {
                 who = uid || "guest";
+                whoKnown = true;
                 paintDot();
             },
             setAdmin: function (value) {
