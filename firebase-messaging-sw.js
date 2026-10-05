@@ -181,13 +181,13 @@ if (messaging) messaging.onBackgroundMessage(function (payload) {
             requireInteraction: isCall,
             /* الهزاز ديال الأندرويد كيخدم من هنا حتى والموقع مسدود */
             vibrate: isCall ? [400, 200, 400, 200, 400] : [200],
-            data: { url: data.url || (isCall ? "chat.html" : "./") }
+            data: { url: data.url || "./" }
         }
     );
 });
 
 
-/* برك على الإشعار → كيحل الشات، وإلا كان محلول كيجيبو لقدام */
+/* برك على الإشعار → كيحل الصفحة، وإلا كان محلول كيجيبو لقدام */
 self.addEventListener("notificationclick", function (event) {
     event.notification.close();
 

@@ -6,7 +6,7 @@
    الاستعمال:
      <div id="site-header" data-active="lesen"></div>
 
-   data-active: lesen · hoeren · schreiben · sprechen · chat
+   data-active: lesen · hoeren · schreiben · sprechen
 */
 
 (function () {
@@ -20,9 +20,6 @@
         { key: "hoeren",    href: "b2-hoeren.html",    label: "Hören" },
         { key: "schreiben", href: "b2-schreiben.html", label: "Schreiben" },
         { key: "sprechen",  href: "b2-sprechen.html",  label: "Sprechen" },
-        /* Community مخبية من البار غير — الصفحة chat.html والكود ديالها باقيين خدامين.
-           باش ترجعها: حيد hidden: true. */
-        { key: "chat",      href: "chat.html",         label: "Community", hidden: true },
         /* Training (Fortschritt، Modelltest، Wortschatz) تحيد
            من البار. الصفحات باقية خدامة ومربوطة من بلايص
            أخرى فالموقع — غير البركة من هنا اللي تحيدات. */
@@ -70,8 +67,8 @@
         /* كانت الروابط ديما b2-*، حتى ملي تكون ف صفحة B1 — إذن
            من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
            رابط كيتبع المستوى ديال الصفحة اللي راك فيها.
-           Community ماعندهاش مستوى. */
-        link.href = (item.key === "chat" || item.key === "training" || item.key === "ultra" || item.key === "selbsttest")
+           Ultra و Selbsttest ماعندهومش مستوى. */
+        link.href = (item.key === "training" || item.key === "ultra" || item.key === "selbsttest")
             ? item.href
             : pageLevel + "-" + item.key + ".html";
         link.textContent = item.label;
@@ -224,8 +221,6 @@
        بـfetch بلا ما تتحمل الصفحة.
 
        ماشي داخلين:
-         · chat.html — module كبير و WebRTC، إعادة تنفيذه
-           كتخلق مستمعين مكررين ومكالمات مزدوجة؛
          · b2-hoeren-teil*.html — فيهم inline scripts فيهم
            `const` ف الجذر، و`const` مرتين ف نفس الصفحة =
            SyntaxError.
@@ -257,7 +252,7 @@
         const urls = [];
         NAV.forEach(function (item) {
             if (item.key === active || item.hidden) return;
-            /* Ultra/Community ماعندهمش مستوى: الرابط ديالهم كيف ما هو */
+            /* Ultra ماعندو مستوى: الرابط ديالو كيف ما هو */
             urls.push(isSection(item.key) ? level + "-" + item.key + ".html" : item.href);
         });
         /* والمستوى الآخر ديال نفس القسم */
@@ -297,7 +292,6 @@
             source: "document",
             where: { and: [
                 { href_matches: "/*.html" },
-                { not: { href_matches: "/chat.html" } },
                 { not: { href_matches: "/admin.html" } },
                 { not: { selector_matches: "[target], [download], [data-no-prerender], .site-nav a, .site-level-wrap a" } }
             ] },
@@ -577,14 +571,14 @@
        مرة فالعام). إذن كيبقى ف التدفق العادي تحت البار. */
     let levelWrap = null;
 
-    /* Training و Chat ماعندهومش B1/B2.
+    /* Training و Ultra ماعندهومش B1/B2.
 
        ⚠ المبدّل كيتبنى ديما، حتى ف صفحة ماشي قسم (index، Training):
        البار كتبقى حية ملي كنتنقلو بلا تحميل، وإلا ما تبناش ف الأول
        عمرو ما كيبان — الدخول من الصفحة الرئيسية لـ Lesen كان كيخلي
        الصفحة بلا Telc B1 / Telc B2. */
     function isSection(key) {
-        return !!key && key !== "training" && key !== "chat" && key !== "ultra" && key !== "selbsttest";
+        return !!key && key !== "training" && key !== "ultra" && key !== "selbsttest";
     }
     {
         const file = (location.pathname.split("/").pop() || "").toLowerCase();
@@ -803,7 +797,7 @@
             Array.prototype.forEach.call(nav.querySelectorAll("a"), function (link) {
                 const mine = link.dataset.key === key;
                 /* بدلنا المستوى؟ الروابط خاصها تتبع */
-                /* غير الأقسام اللي عندها مستوى (Ultra/Community لا) */
+                /* غير الأقسام اللي عندها مستوى (Ultra لا) */
                 if (isSection(link.dataset.key)) {
                     link.href = lvl + "-" + link.dataset.key + ".html";
                 }
@@ -1024,7 +1018,7 @@
 
             if (routable(location.pathname)) { go(location.href, false); return; }
 
-            /* صفحة ماشي ف اللائحة (chat، Hören Teil…): الرابط ديجا
+            /* صفحة ماشي ف اللائحة (Hören Teil…): الرابط ديجا
                تبدل، إذن reload كيحمل الصفحة الصحيحة. */
             herefile = now;
             location.reload();

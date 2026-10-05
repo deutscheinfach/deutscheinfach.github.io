@@ -20,7 +20,7 @@
 
    2) الخروج ماكيبقاش بلا تفسير.
       قبل كان alert() من بعد signOut(). ولكن signOut كيوقظ
-      onAuthStateChanged ديال الصفحة (chat.html مثلا) اللي
+      onAuthStateChanged ديال الصفحة (صفحة فيها حارس الدخول مثلا) اللي
       كيدير location.href="login.html" دغيا — إذن التنقل
       كيسبق الـ alert والمستخدم كيلقى راسو ف صفحة الدخول
       بلا ما يفهم علاش.

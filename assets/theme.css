@@ -817,17 +817,6 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 .de-theme-btn.is-floating:hover { background: var(--brand); color: var(--on-brand); }
 html.is-embed .de-theme-btn { display: none !important; }
-.de-theme-btn.is-chat {
-    margin-inline-start: auto;
-    width: 40px;
-    height: 40px;
-    flex: 0 0 auto;
-    border-radius: 50%;
-    border: 1.5px solid rgba(255,255,255,.55);
-    background: rgba(255,255,255,.08);
-    color: #fff;
-}
-.de-theme-btn.is-chat:hover { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
 
 /* ---- الوضع المظلم: الصفحات اللي عندها لوحة ديالها (الدخول، العروض…) ----
    :root[data-theme] (0,2,0) كيغلب :root ديال الصفحة (0,1,0). */
