@@ -37,7 +37,18 @@
         500: "الـ KV binding سميتو TOPICS ماشي مربوط بالـ Worker."
     };
 
+    /* Firebase كيرجّع الحساب من بعد شوية (خصوصاً داخل «اختبر نفسك»
+       اللي كيتحضر بكري): كنتسناو حتى 10 ثواني قبل «ماشي داخل بحساب». */
     async function token() {
+        const end = Date.now() + 10000;
+        for (;;) {
+            const t = await tokenNow();
+            if (t || Date.now() > end) return t;
+            await new Promise(function (go) { setTimeout(go, 200); });
+        }
+    }
+
+    async function tokenNow() {
         let user = window.__hoerenUser
             || (window.__deutschEinfachAuth && window.__deutschEinfachAuth.currentUser);
         /* داخل «اختبر نفسك» / Modelltest: الحساب ديال الصفحة الأم */

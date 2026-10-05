@@ -133,8 +133,27 @@
         }
     }
 
+    /* Firebase كيرجّع الحساب من بعد شوية. إلا الاشتراك معروف (من الكاش)
+       ولا احنا داخل «اختبر نفسك»، كنتسناو الحساب حتى 10 ثواني بدل ما
+       نقولو «ماشي داخل بحساب» ف اللحظة. */
+    function waitUser(ms) {
+        return new Promise(function (done) {
+            const end = Date.now() + ms;
+            (function poll() {
+                const user = currentUser();
+                if (user || Date.now() > end) return done(user);
+                setTimeout(poll, 200);
+            })();
+        });
+    }
+
     window.__lesenPremiumFetch = function (themaId) {
         const user = currentUser();
+        if (!user && (window.__deutschEinfachIsPremium || window.parent !== window)) {
+            return waitUser(10000).then(function (late) {
+                return late ? window.__lesenPremiumFetch(themaId) : { ok: false, why: "ماشي داخل بحساب." };
+            });
+        }
         if (!user) {
             /* خرج من الحساب: ما نخليوش نصوص المشترك ف الذاكرة */
             state.done.clear();

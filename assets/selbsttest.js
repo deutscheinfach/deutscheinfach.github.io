@@ -193,6 +193,9 @@
     }
     function warm() {
         if ((state && !state.done) || !premium()) return;
+        /* الاشتراك كيتعرف من الكاش قبل Firebase: نتسناو الحساب */
+        const auth = window.__deutschEinfachAuth;
+        if (!auth || !auth.currentUser) { warmTimer = setTimeout(warm, 300); return; }
         const L = chosenLevel();
         if (pre && pre.level === L) return;
         pre = { level: L, mix: null };
