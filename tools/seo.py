@@ -36,7 +36,7 @@ PAGES = {
         "1.0"),
 
     "bewerbung.html": ("Bewerbung و ترجمة الوثائق للألمانية – المغرب | Deutsch Einfach",
-        "كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 300 درهم، وكنترجمو الوثائق ديالك "
+        "كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 200 درهم، وكنترجمو الوثائق ديالك "
         "للألمانية ب 150 درهم للورقة. Bewerbung schreiben lassen & Übersetzung für Deutschland.", "0.8"),
 
     "telc-maroc.html": ("امتحان telc B1 و B2 ف المغرب 2026: الثمن، المراكز، التسجيل | Deutsch Einfach",
