@@ -1,5 +1,5 @@
 {
-  "build": "cfb2cc015c30",
+  "build": "265f6e5b4d5d",
   "assets": {
     "assets/app-install.js": "98378334",
     "assets/chat-actions.js": "1d332ce0",
@@ -54,8 +54,8 @@
     "assets/sprechen-teil3.js": "1e795911",
     "assets/stars.js": "93c940c6",
     "assets/theme-toggle.js": "1e586e51",
-    "assets/theme.css": "1b269922",
-    "assets/title-toggle.js": "9fafce7d",
+    "assets/theme.css": "93cbae84",
+    "assets/title-toggle.js": "479dc890",
     "assets/training.css": "352b9933",
     "assets/ultra-premium.js": "f8103cb8",
     "assets/whatsapp.js": "56de1cb7",
