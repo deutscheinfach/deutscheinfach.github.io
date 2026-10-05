@@ -78,45 +78,6 @@
         return out;
     }
     function premium() { return window.__deutschEinfachIsPremium === true; }
-
-    /* ---------- «اختبر نفسك»: امتحان عشوائي ----------
-       كل Teil من موضوع مختلف، مختار بالقرعة من گاع المواضيع (المجانيين
-       و Premium): Lesen 1-3 + Sprach 1-2 من lesen-b2-topics، و Hören 1-3
-       من Thema عشوائي فكل جزء. كل مرة كوكتيل جديد. غير للمشتركين. */
-    function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
-    function mixPick() {
-        const topics = window.LESEN_B2_TOPICS || [];
-        const lesen = LESEN_PARTS.map(function (p) {
-            const pool = topics.filter(function (t) { return (t.parts || []).indexOf(p) !== -1; });
-            return pool.length ? pick(pool).id : "";
-        });
-        const hoeren = HOEREN_COUNT.map(function (count) { return 1 + Math.floor(Math.random() * count); });
-        return { lesen: lesen, hoeren: hoeren };
-    }
-    function label() { return state && state.n === "random" ? "اختبر نفسك" : "Modelltest " + (state ? state.n : ""); }
-
-    const DICE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-        + '<rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/><circle cx="16" cy="8" r="1.3" fill="currentColor"/>'
-        + '<circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="8" cy="16" r="1.3" fill="currentColor"/><circle cx="16" cy="16" r="1.3" fill="currentColor"/></svg>';
-
-    function randomCard() {
-        const last = (window.DEProgress && window.DEProgress.results().filter(function (r) {
-            return r.skill === "modelltest" && r.topic === "modelltest-random";
-        }).pop()) || null;
-        return '<section class="mt-rand">' +
-            '<span class="mt-rand-chip">امتحان كامل · ' + (premium() ? "Premium ✓" : "Premium 👑") + "</span>" +
-            "<h2>اختبر نفسك — محاكاة الامتحان الكامل</h2>" +
-            '<p class="mt-rand-lead">كل مرة كتضغط، كنصاوبو ليك <b>كوكتيل</b> ديال امتحان جديد: كل جزء ديال Lesen و Sprachbausteine و Hören جاي من موضوع مختلف. ' +
-            "هكا ما كتحفظش الأجوبة — كتواجه أسئلة جديدة بحال نهار الامتحان الحقيقي.</p>" +
-            '<div class="mt-rand-grid">' +
-            '<div class="mt-rand-f"><i>🔀</i><div><b>خلط عشوائي</b><span>كل Teil من نموذج امتحان مختلف</span></div></div>' +
-            '<div class="mt-rand-f"><i>⏱️</i><div><b>بالوقت بحال telc</b><span>Lesen 90 دقيقة · Hören 20 دقيقة</span></div></div>' +
-            '<div class="mt-rand-f"><i>🎯</i><div><b>نتيجة كاملة</b><span>من 180 نقطة · واش Bestanden؟</span></div></div>' +
-            "</div>" +
-            (last ? '<p class="mt-last">آخر محاولة: <b style="color:var(--accent-text)">' + fmtPts(last.points) + " / " + (last.max || TOTAL) + "</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
-            '<button class="mt-rand-go" type="button" data-random>' + DICE + "<span>بدا امتحان عشوائي</span><em>←</em></button>" +
-            "</section>";
-    }
     function lastResult(n) {
         const P = window.DEProgress;
         if (!P) return null;
@@ -129,7 +90,7 @@
         document.body.classList.remove("mt-running");
         const list = tests();
         document.getElementById("mt-count").textContent = String(list.length);
-        root.innerHTML = randomCard() + '<div class="tr-card tr-card-gold" style="margin-bottom:16px"><p class="tr-muted" style="margin:0">' +
+        root.innerHTML = '<div class="tr-card tr-card-gold" style="margin-bottom:16px"><p class="tr-muted" style="margin:0">' +
             "كل Modelltest فيه جوج أجزاء بالوقت ديالهم بحال الامتحان الحقيقي: Lesen و Hören. جاوب ودوز — <b>التصحيح كامل كيكون ف اللخر</b>. " +
             "فالآخر كتشوف واش <b>Bestanden</b> (من 108 نقطة لفوق). Schreiben تمرن عليه ف القسم ديالو.</p></div>" +
             '<div class="tr-grid tr-grid-3">' + list.map(function (t) {
@@ -164,7 +125,6 @@
 
     function start(n) {
         state = { n: n, step: 0, deadline: Date.now() + STEPS[0].min * 60000, lesen: {}, hoeren: {}, sub: 0, saved: false };
-        if (n === "random") state.mix = mixPick();
         saveState();
         renderExam();
     }
@@ -184,10 +144,6 @@
 
     function frameUrl(step, sub) {
         const n = state.n;
-        if (state.mix) {
-            if (step === 0) return "b2-lesen.html?pruefung=mix&mix=" + encodeURIComponent(state.mix.lesen.join(",")) + "&teil=teil1&embed=1";
-            return "b2-hoeren-teil" + (sub + 1) + ".html?thema=" + state.mix.hoeren[sub] + "&embed=1";
-        }
         if (step === 0) return "b2-lesen.html?pruefung=" + n + "&teil=teil1&embed=1";
         return "b2-hoeren-teil" + (sub + 1) + ".html?thema=" + n + "&embed=1";
     }
@@ -299,7 +255,7 @@
 
         root.innerHTML =
             '<div class="mt-bar"><button class="tr-btn mt-exit" type="button" data-act="exit" title="خرج من الامتحان" dir="ltr">← رجوع</button>' +
-            '<span class="mt-title">' + esc(label()) + '</span><div class="mt-steps">' +
+            '<span class="mt-title">Modelltest ' + state.n + '</span><div class="mt-steps">' +
             STEPS.map(function (s, i) {
                 return '<span class="mt-step ' + (i === state.step ? "is-now" : i < state.step ? "is-done" : "") + '">' + (i < state.step ? svg("check").replace("<svg", '<svg width="14" height="14"') : (i + 1) + ".") + " " + esc(s.short) + "</span>";
             }).join("") + '<span class="mt-step">4. Ergebnis</span></div>' +
@@ -375,13 +331,13 @@
         try { streak = (window.DEProgress && window.DEProgress.streak()) || 0; } catch (e) { /* */ }
         window.DEShare.open({
             kind: "modelltest-" + state.n,
-            title: label() + " · telc B2",
+            title: "Modelltest " + state.n + " · telc B2",
             score: Math.round(shareData.total * 2) / 2,
             max: TOTAL,
             pass: shareData.pass,
             rows: shareData.rows.map(function (r) { return [r[0], r[1], r[2]]; }),
             streak: streak,
-            shareText: (shareData.pass ? "نجحت ف " : "درت ") + label() +
+            shareText: (shareData.pass ? "نجحت ف Modelltest " : "درت Modelltest ") + state.n +
                 " — " + (Math.round(shareData.total * 2) / 2) + "/" + TOTAL + " 💪"
         });
     }
@@ -392,7 +348,7 @@
         const pass = s.total >= PASS;
         if (!state.saved && window.DEProgress) {
             window.DEProgress.add({
-                skill: "modelltest", part: "schriftlich", topic: "modelltest-" + state.n, title: label(),
+                skill: "modelltest", part: "schriftlich", topic: "modelltest-" + state.n, title: "Modelltest " + state.n,
                 points: s.total, max: TOTAL,
                 detail: { lesen: s.lesen, sprach: s.sprach, hoeren: s.hoeren }
             });
@@ -428,24 +384,6 @@
 
     /* ---------- الأحداث ---------- */
     root.addEventListener("click", function (e) {
-        const rnd = e.target.closest("[data-random]");
-        if (rnd) {
-            if (!premium()) {
-                if (typeof window.__deLocked === "function") {
-                    window.__deLocked({
-                        heading: "خاص بالمشتركين Premium",
-                        text: "اشترك ف Premium باش تفتح «اختبر نفسك» وتدوز امتحانات مخلطة وجديدة ف كل مرة: Lesen و Sprachbausteine و Hören بالوقت بحال telc."
-                    });
-                } else location.href = "payment.html";
-                return;
-            }
-            const m = modal('<h2 style="justify-content:center">' + DICE.replace("<svg", '<svg width="20" height="20"') + "نبداو امتحان عشوائي؟</h2>" +
-                '<p class="tr-muted">كوكتيل جديد: Lesen & Sprachbausteine (90 د) و Hören (20 د)، كل جزء من موضوع مختلف. الوقت كيبدا دابا — التصحيح كامل ف اللخر.</p>' +
-                '<div class="tr-row" style="justify-content:center;margin-top:12px"><button class="tr-btn" type="button" data-no>من بعد</button><button class="tr-btn tr-btn-gold" type="button" data-yes>يلاه نبداو</button></div>');
-            m.querySelector("[data-no]").addEventListener("click", function () { m.remove(); });
-            m.querySelector("[data-yes]").addEventListener("click", function () { m.remove(); start("random"); });
-            return;
-        }
         const startBtn = e.target.closest("[data-start]");
         if (startBtn) {
             const n = Number(startBtn.dataset.start);
@@ -491,12 +429,4 @@
     state = loadState();
     if (state && state.n) renderExam();
     else renderList();
-    /* الهيدر «اختبر نفسك» → modelltest.html#random */
-    if (!state && location.hash === "#random") {
-        const card = root.querySelector(".mt-rand");
-        const bar = document.querySelector(".site-header");
-        const tabs = document.querySelector(".lesen-tabs");
-        if (card) window.scrollTo({ top: Math.max(0, card.getBoundingClientRect().top + window.scrollY
-            - (bar ? bar.offsetHeight : 0) - (tabs ? tabs.offsetHeight : 0) - 24) });
-    }
 })();

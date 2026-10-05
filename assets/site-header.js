@@ -29,7 +29,7 @@
         /* التحضير المباشر. ماعندو مستوى، وكيتميز بكلاس
            ديالو باش يبان ذهبي بين الباقي. */
         /* «اختبر نفسك»: امتحان عشوائي (Premium) ف modelltest.html */
-        { key: "training",  href: "modelltest.html#random", label: "اختبر نفسك" },
+        { key: "selbsttest", href: "selbsttest.html", label: "اختبر نفسك" },
         { key: "ultra",     href: "ultra-premium.html", label: "Ultra Premium", gold: true }
     ];
 
@@ -69,7 +69,7 @@
            من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
            رابط كيتبع المستوى ديال الصفحة اللي راك فيها.
            Community ماعندهاش مستوى. */
-        link.href = (item.key === "chat" || item.key === "training" || item.key === "ultra")
+        link.href = (item.key === "chat" || item.key === "training" || item.key === "ultra" || item.key === "selbsttest")
             ? item.href
             : pageLevel + "-" + item.key + ".html";
         link.textContent = item.label;
@@ -582,7 +582,7 @@
        عمرو ما كيبان — الدخول من الصفحة الرئيسية لـ Lesen كان كيخلي
        الصفحة بلا Telc B1 / Telc B2. */
     function isSection(key) {
-        return !!key && key !== "training" && key !== "chat" && key !== "ultra";
+        return !!key && key !== "training" && key !== "chat" && key !== "ultra" && key !== "selbsttest";
     }
     {
         const file = (location.pathname.split("/").pop() || "").toLowerCase();

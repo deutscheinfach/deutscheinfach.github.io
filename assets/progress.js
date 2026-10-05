@@ -19,6 +19,10 @@
     try {
         if (new URLSearchParams(location.search).get("embed") === "1") {
             document.documentElement.classList.add("is-embed");
+            /* ?nav=0: «اختبر نفسك» (selbsttest.html) هو اللي كيسوق التنقل */
+            if (new URLSearchParams(location.search).get("nav") === "0") {
+                document.documentElement.classList.add("is-embed-nonav");
+            }
         }
     } catch (e) { /* */ }
 
