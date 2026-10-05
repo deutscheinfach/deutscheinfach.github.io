@@ -12,6 +12,14 @@
 
     /* ?embed=1: الصفحة داخل Modelltest (iframe) */
     const EMBEDDED = new URLSearchParams(location.search).get("embed") === "1";
+    /* داخل «اختبر نفسك» / Modelltest: الصفحة الأم ديجا عارفة واش الحساب
+       Premium — كناخدو الجواب ديالها دغيا بلا ما نتسناو Firebase ديال الـiframe. */
+    if (EMBEDDED && window.__deutschEinfachIsPremium === undefined) {
+        try {
+            const up = window.parent !== window ? window.parent.__deutschEinfachIsPremium : undefined;
+            if (up === true || up === false) window.__deutschEinfachIsPremium = up;
+        } catch (error) { /* */ }
+    }
 
     const grid = document.getElementById("lesen-grid");
     const toolbar = document.querySelector(".lesen-toolbar");

@@ -1,5 +1,5 @@
 {
-  "build": "33712bda8609",
+  "build": "77230fa33450",
   "assets": {
     "assets/app-install.js": "98378334",
     "assets/chat-actions.js": "1d332ce0",
@@ -7,7 +7,7 @@
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
     "assets/hoeren-keys.js": "a46afc39",
-    "assets/hoeren-premium.js": "8c3c5e03",
+    "assets/hoeren-premium.js": "5a48518b",
     "assets/https-upgrade.js": "473efbeb",
     "assets/keys-toggle.js": "c8b1eb02",
     "assets/lesen-b1-content.js": "a728c3f2",
@@ -15,9 +15,9 @@
     "assets/lesen-b2-content.js": "d98b120d",
     "assets/lesen-b2-topics.js": "940fb40d",
     "assets/lesen-engine.js": "11dd8345",
-    "assets/lesen-hub.js": "9acea3b0",
+    "assets/lesen-hub.js": "b1f96faf",
     "assets/lesen-keys.js": "fb3de18d",
-    "assets/lesen-premium.js": "08b846d6",
+    "assets/lesen-premium.js": "79965213",
     "assets/lesen-sprach.js": "4e48be62",
     "assets/lesen-sprach2.js": "20fa03ac",
     "assets/lesen-teil1.js": "0fbd180a",

@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="assets/theme.css?v=1b269922">
 <script src="assets/stars.js?v=93c940c6" defer></script>
 <script src="assets/progress.js?v=222ee4fc"></script>
-<script src="assets/hoeren-premium.js?v=8c3c5e03"></script>
+<script src="assets/hoeren-premium.js?v=5a48518b"></script>
 <script src="assets/hoeren-keys.js?v=a46afc39" defer></script>
 <link rel="stylesheet" href="assets/site-header.css?v=2b47faaa">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}</style>
@@ -1620,7 +1620,10 @@ window.__deutschEinfachPremiumReady = (async function () {
 
   boot();
 
-  (window.__deutschEinfachPremiumReady || Promise.resolve(false))
+  /* داخل «اختبر نفسك» / Modelltest: الصفحة الأم ديجا عارفة الاشتراك */
+  var parentPremium = false;
+  if (EMBED_PAGE) { try { parentPremium = window.parent !== window && window.parent.__deutschEinfachIsPremium === true; } catch (e) { /* */ } }
+  (parentPremium ? Promise.resolve(true) : (window.__deutschEinfachPremiumReady || Promise.resolve(false)))
     .then(function (premium) {
       premiumPending = false;
       if (!premium && EMBED_PAGE) boot();

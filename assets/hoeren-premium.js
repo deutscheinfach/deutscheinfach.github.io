@@ -38,8 +38,15 @@
     };
 
     async function token() {
-        const user = window.__hoerenUser
+        let user = window.__hoerenUser
             || (window.__deutschEinfachAuth && window.__deutschEinfachAuth.currentUser);
+        /* داخل «اختبر نفسك» / Modelltest: الحساب ديال الصفحة الأم */
+        if (!user) {
+            try {
+                const up = window.parent !== window && window.parent.__deutschEinfachAuth;
+                user = (up && up.currentUser) || null;
+            } catch (e) { user = null; }
+        }
         if (!user) return null;
         try { return await user.getIdToken(); } catch (e) { return null; }
     }

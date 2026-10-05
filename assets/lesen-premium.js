@@ -53,7 +53,15 @@
     function currentUser() {
         /* site-header.js عندو Firebase محمّل — كناخدو منو */
         const auth = window.__deutschEinfachAuth;
-        return (auth && auth.currentUser) || null;
+        if (auth && auth.currentUser) return auth.currentUser;
+        /* داخل «اختبر نفسك» / Modelltest (iframe): الصفحة الأم ديجا عارفة
+           الحساب — Firebase ديال الـiframe كيتعطل ومايلحقش. */
+        try {
+            const up = window.parent !== window && window.parent.__deutschEinfachAuth;
+            return (up && up.currentUser) || null;
+        } catch (error) {
+            return null;
+        }
     }
 
     async function idToken(user) {
