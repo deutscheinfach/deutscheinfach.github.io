@@ -483,11 +483,11 @@ body::before {
       </div>
     </div>
 
-    <a href="index.html" class="back-home">← العودة إلى الصفحة الرئيسية</a>
+    <a href="./" class="back-home">← العودة إلى الصفحة الرئيسية</a>
 
   </div>
   <aside class="au-side" aria-hidden="true">
-    <a class="au-brand" href="index.html" tabindex="-1"><img src="assets/icon-192.png" alt=""><span><b>Deutsch <span>Einfach</span></b><small>TELC PREP B1/B2</small></span></a>
+    <a class="au-brand" href="./" tabindex="-1"><img src="assets/icon-192.png" alt=""><span><b>Deutsch <span>Einfach</span></b><small>TELC PREP B1/B2</small></span></a>
     <h2>مرحبا بيك من جديد <em>👋</em></h2>
     <p>كمل التحضير ديالك فين حبستي — التقدم ديالك محفوظ ف الحساب.</p>
     <ul class="au-feats">
@@ -947,7 +947,7 @@ function normalizeReturnTo(value) {
 
     if (!value) {
 
-        return "index.html";
+        return "./";
 
     }
 
@@ -965,7 +965,7 @@ function normalizeReturnTo(value) {
             !isAllowedReturnPage(value)
         ) {
 
-            return "index.html";
+            return "./";
 
         }
 
@@ -995,7 +995,7 @@ function normalizeReturnTo(value) {
 
     catch (error) {
 
-        return "index.html";
+        return "./";
 
     }
 
