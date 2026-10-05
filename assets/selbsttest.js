@@ -16,6 +16,12 @@
 
     const root = document.getElementById("st-root");
     if (!root) return;
+    /* جوج بلايص: view (البداية / النتيجة) و exam (البار + الـiframes).
+       الامتحان كيتوجد ف الخفا وحنا ف صفحة البداية (warm)، والـiframes
+       ماخاصهومش يتحركو ف الـDOM — كل تحريك كيعاود يحملهم. */
+    root.innerHTML = '<div id="st-view"></div><div class="st-exam" id="st-exam" hidden></div>';
+    const view = document.getElementById("st-view");
+    const examBox = document.getElementById("st-exam");
 
     const STATE_KEY = "de-st-state";
     /* عدد المواضيع ف كل جزء ديال Hören (b1/b2-hoeren-teilN.html) */
@@ -103,7 +109,8 @@
         }).pop()) || null;
         const L = chosenLevel();
         paintLevel(true);
-        root.innerHTML = '<section class="mt-rand">' +
+        examBox.classList.add("is-pre");
+        view.innerHTML = '<section class="mt-rand">' +
             '<span class="mt-rand-chip">امتحان كامل · telc ' + L.toUpperCase() + " · " + (premium() ? "Premium ✓" : "Premium 👑") + "</span>" +
             "<h2>محاكاة الامتحان الكامل</h2>" +
             '<p class="mt-rand-lead">كل مرة كتضغط، كنصاوبو ليك <b>كوكتيل</b> ديال امتحان جديد: كل جزء ديال Lesen و Sprachbausteine و Hören جاي من موضوع مختلف. ' +
@@ -116,6 +123,7 @@
             (last ? '<p class="mt-last">آخر محاولة: <b>' + fmt(last.points) + " / " + (last.max || TOTAL) + "</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
             '<button class="mt-rand-go" type="button" data-act="start">' + svg("dice", 22) + "<span>بدا امتحان عشوائي</span><em>←</em></button>" +
             "</section>";
+        warmSoon();
     }
 
     /* B1 / B2 فوق «اختبر نفسك» (#st-level ف الصفحة) */
@@ -134,6 +142,7 @@
         const b = e.target.closest("[data-lv]");
         if (!b || state) return;
         try { localStorage.setItem(LEVEL_KEY, b.dataset.lv); } catch (err) { /* */ }
+        dropPre();
         renderStart();
     });
 
@@ -151,11 +160,43 @@
     }
 
     function start() {
-        state = { level: chosenLevel(), mix: null, at: 0, deadline: Date.now() + LIMIT_MIN * 60000, lesen: {}, hoeren: {}, titles: {}, done: false, saved: false };
-        state.mix = mixPick();
+        const L = chosenLevel();
+        state = { level: L, mix: null, at: 0, deadline: Date.now() + LIMIT_MIN * 60000, lesen: {}, hoeren: {}, titles: {}, done: false, saved: false };
+        /* الامتحان ديجا محضر ف الخفا؟ كنبينوه نيشان */
+        const ready = pre && pre.level === L;
+        state.mix = ready ? pre.mix : mixPick();
         state.mix.lesen.forEach(function (id, i) { state.titles[PARTS[i].key] = lesenTitle(id); });
+        pre = null;
         save();
-        renderExam();
+        renderExam(ready);
+    }
+
+    /* ---------- التحضير ف الخفا ----------
+       المشترك ف صفحة البداية: كنختارو الكوكتيل ونحلو الـiframes مخبيين،
+       وكيجيبو المواضيع من Cloudflare من دابا. ملي كيبرك «بدا» كيبان كلشي
+       ف اللحظة، بلا «كنجيبو التمرين…». الوقت ما كيبداش حتى يبرك. */
+    let pre = null, warmTimer = 0;
+    function warmSoon() {
+        clearTimeout(warmTimer);
+        warmTimer = setTimeout(warm, 250);
+    }
+    function warm() {
+        if (state || !premium()) return;
+        const L = chosenLevel();
+        if (pre && pre.level === L) return;
+        pre = { level: L, mix: null };
+        const keep = state;
+        state = { level: L };
+        pre.mix = mixPick();
+        state = keep;
+        buildExam(L, pre.mix);
+    }
+    function dropPre() {
+        pre = null;
+        clearTimeout(warmTimer);
+        examBox.innerHTML = "";
+        lesenFrame = null;
+        hoerenFrames.length = 0;
     }
 
     /* ---------- الامتحان ---------- */
@@ -163,11 +204,11 @@
     let lesenFrame = null;
     const hoerenFrames = [];
 
-    function frameSrc(p) {
+    function frameSrc(p, L, mix) {
         if (p.grp === "lesen") {
-            return lv() + "-lesen.html?pruefung=mix&mix=" + encodeURIComponent(state.mix.lesen.join(",")) + "&teil=teil1&embed=1&nav=0";
+            return L + "-lesen.html?pruefung=mix&mix=" + encodeURIComponent(mix.lesen.join(",")) + "&teil=teil1&embed=1&nav=0";
         }
-        return lv() + "-hoeren-teil" + (p.sub + 1) + ".html?thema=" + state.mix.hoeren[p.sub] + "&embed=1&nav=0";
+        return L + "-hoeren-teil" + (p.sub + 1) + ".html?thema=" + mix.hoeren[p.sub] + "&embed=1&nav=0";
     }
 
     function hook(frame, grp, sub) {
@@ -176,6 +217,7 @@
             try { w = frame.contentWindow; doc = frame.contentDocument; w.addEventListener; } catch (e) { return; }
             if (grp === "lesen") {
                 w.addEventListener("lesen-points", function (e) {
+                    if (!state || !state.lesen) return;
                     const d = e.detail || {};
                     const p = PARTS.find(function (x) { return x.key === d.part; });
                     if (p) { state.lesen[p.key] = Math.min(p.max, Number(d.points) || 0); save(); paintTabs(); }
@@ -183,6 +225,7 @@
                 syncLesen();
             } else {
                 w.addEventListener("hoeren-points", function (e) {
+                    if (!state || !state.hoeren) return;
                     const d = e.detail || {};
                     if (d.total > 0 && /^teil[123]$/.test(d.teil)) {
                         state.hoeren[d.teil] = Math.round(d.right / d.total * 25 * 2) / 2;
@@ -194,7 +237,7 @@
                 setTimeout(function () {
                     try {
                         const t = doc.querySelector(".theme-item-title");
-                        if (t && !state.titles["h" + (sub + 1)]) { state.titles["h" + (sub + 1)] = t.textContent.trim(); save(); }
+                        if (t && state && state.titles && !state.titles["h" + (sub + 1)]) { state.titles["h" + (sub + 1)] = t.textContent.trim(); save(); }
                     } catch (e) { /* */ }
                 }, 800);
             }
@@ -203,7 +246,7 @@
 
     /* الجزء ديال Lesen اللي باين خاصو يتبدل داخل الـiframe */
     function syncLesen() {
-        const p = PARTS[state.at];
+        const p = PARTS[(state && state.at) || 0];
         if (!lesenFrame || p.grp !== "lesen") return;
         let w = null;
         try { w = lesenFrame.contentWindow; } catch (e) { return; }
@@ -211,46 +254,53 @@
         else setTimeout(syncLesen, 300);
     }
 
-    function renderExam() {
-        clearInterval(timer);
+    function buildExam(L, mix) {
         hoerenFrames.length = 0;
-        document.documentElement.classList.add("is-exam-focus");
-        document.body.classList.add("st-running");
-        paintLevel(false);
-        const head = document.getElementById("st-head");
-        if (head) head.hidden = true;
-
-        root.innerHTML =
+        examBox.innerHTML =
             '<div class="st-bar"><div class="st-bar-in">' +
             '<button class="st-back" type="button" data-act="exit" title="خرج من الامتحان">' + svg("back", 20) + "</button>" +
-            '<div class="st-meta"><span class="st-lvl">' + lv().toUpperCase() + '</span><b>اختبر نفسك</b></div>' +
+            '<div class="st-meta"><span class="st-lvl">' + L.toUpperCase() + '</span><b>اختبر نفسك</b></div>' +
             '<nav class="st-tabs" aria-label="الأجزاء">' + PARTS.map(function (p, i) {
                 return '<button type="button" class="st-tab" data-tab="' + i + '"><small>' + p.kind + "</small><b>" + p.nr + "</b><em>" + p.max + "P</em></button>";
             }).join("") + "</nav>" +
             '<span class="st-timer" id="st-timer">' + svg("clock", 17) + '<span id="st-timer-t">--:--</span></span>' +
             "</div></div>" +
             '<div class="st-frames">' +
-            '<iframe class="st-frame" data-grp="lesen" title="Lesen" src="' + frameSrc(PARTS[0]) + '"></iframe>' +
+            '<iframe class="st-frame" data-grp="lesen" title="Lesen" src="' + frameSrc(PARTS[0], L, mix) + '"></iframe>' +
             [5, 6, 7].map(function (i) {
-                return '<iframe class="st-frame" data-grp="hoeren" data-sub="' + PARTS[i].sub + '" title="' + PARTS[i].name + '" hidden src="' + frameSrc(PARTS[i]) + '"></iframe>';
+                return '<iframe class="st-frame" data-grp="hoeren" data-sub="' + PARTS[i].sub + '" title="' + PARTS[i].name + '" hidden src="' + frameSrc(PARTS[i], L, mix) + '"></iframe>';
             }).join("") + "</div>" +
             '<div class="st-foot"><div class="st-foot-in">' +
             '<button class="tr-btn" type="button" data-act="prev">السابق</button>' +
             '<button class="tr-btn tr-btn-gold" type="button" data-act="next" id="st-next"></button>' +
             "</div></div>";
 
-        lesenFrame = root.querySelector('iframe[data-grp="lesen"]');
+        lesenFrame = examBox.querySelector('iframe[data-grp="lesen"]');
         hook(lesenFrame, "lesen", 0);
-        root.querySelectorAll('iframe[data-grp="hoeren"]').forEach(function (f) {
+        examBox.querySelectorAll('iframe[data-grp="hoeren"]').forEach(function (f) {
             const sub = Number(f.dataset.sub);
             hoerenFrames[sub] = f;
             hook(f, "hoeren", sub);
         });
         /* الإطار كيبدا نيشان تحت البار (البار كتبدل الطول ف التيليفون) */
-        const bar = root.querySelector(".st-bar");
-        const setH = function () { document.documentElement.style.setProperty("--st-bar-h", bar.offsetHeight + "px"); };
+        const bar = examBox.querySelector(".st-bar");
+        const setH = function () { if (bar.offsetHeight) document.documentElement.style.setProperty("--st-bar-h", bar.offsetHeight + "px"); };
         setH();
         if (window.ResizeObserver) new ResizeObserver(setH).observe(bar);
+        examBox.hidden = false;
+    }
+
+    function renderExam(ready) {
+        clearInterval(timer);
+        document.documentElement.classList.add("is-exam-focus");
+        document.body.classList.add("st-running");
+        paintLevel(false);
+        const head = document.getElementById("st-head");
+        if (head) head.hidden = true;
+        view.innerHTML = "";
+        if (!ready || !lesenFrame) buildExam(state.level || chosenLevel(), state.mix);
+        examBox.classList.remove("is-pre");
+        examBox.hidden = false;
         show(state.at);
         tick();
         timer = setInterval(tick, 1000);
@@ -320,7 +370,7 @@
         hoerenFrames.forEach(function (f) {
             try { f.contentDocument.querySelectorAll(".nq-btn-check").forEach(function (b) { b.click(); }); } catch (e) { /* */ }
         });
-        root.querySelector(".st-frames").insertAdjacentHTML("beforebegin", '<p class="st-grading">كنصححو…</p>');
+        examBox.querySelector(".st-frames").insertAdjacentHTML("beforebegin", '<p class="st-grading">كنصححو…</p>');
         setTimeout(function () {
             /* جزء ما تصححش (ماتحملش) = 0 */
             PARTS.forEach(function (p) {
@@ -341,6 +391,8 @@
         document.body.classList.remove("st-running");
         const head = document.getElementById("st-head");
         if (head) head.hidden = true;
+        dropPre();
+        examBox.hidden = true;
         const total = sums();
         const pass = total >= PASS;
         const pct = Math.round(total / TOTAL * 100);
@@ -357,7 +409,7 @@
             save();
         }
 
-        root.innerHTML =
+        view.innerHTML =
             '<section class="st-res ' + (pass ? "is-pass" : "is-fail") + '">' +
             '<span class="st-res-badge">' + svg(pass ? "check" : "alert", 15) + (pass ? "Bestanden · نجحتي" : "Nicht bestanden · ما نجحتيش") + "</span>" +
             "<h1>" + (pass ? "مبروك، نجحتي! 🎉" : "للأسف، ما نجحتيش هاد المرة.") + "</h1>" +
@@ -420,10 +472,10 @@
         else if (a === "prev" && state) show(state.at - 1);
         else if (a === "finish") askFinish();
         else if (a === "share") share();
-        else if (a === "again") { clear(); askStart(); }
+        else if (a === "again") { clear(); renderStart(); askStart(); }
         else if (a === "exit") {
             /* خروج نيشان بضغطة وحدة */
-            clearInterval(timer); clear(); renderStart(); window.scrollTo({ top: 0 });
+            clearInterval(timer); clear(); dropPre(); renderStart(); window.scrollTo({ top: 0 });
         }
     });
 
