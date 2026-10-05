@@ -363,7 +363,23 @@
            الـ Worker، اللي كيتحقق من الـ ID token ومن الاشتراك قبل
            ما يعطي حتى كلمة. */
         if (topic.locked) {
-            if (!window.__deutschEinfachIsPremium) { gate(); return; }
+            /* داخل «اختبر نفسك» / Modelltest: حتى يجي الجواب ديال الاشتراك
+               كنبينو «كنجيبو…» بدل القفل (de-premium كيعاود الرسم). */
+            if (window.__deutschEinfachIsPremium === undefined && EMBEDDED && !embedForce) {
+                const wait = document.createElement("div");
+                wait.className = "lesen-empty";
+                wait.textContent = "⏳ كنجيبو التمرين…";
+                stack.appendChild(wait);
+                /* Firebase تعطل؟ من بعد 6 ثواني كنسولو الـ Worker نيشان —
+                   هو اللي كيتحقق من الحساب والاشتراك على كل حال. */
+                setTimeout(function () {
+                    if (window.__deutschEinfachIsPremium !== undefined || !stillWanted()) return;
+                    embedForce = true;
+                    renderPart(stack, topic, part, stillWanted);
+                }, 6000);
+                return;
+            }
+            if (!window.__deutschEinfachIsPremium && !embedForce) { gate(); return; }
 
             const loading = document.createElement("div");
             loading.className = "lesen-empty";
@@ -608,7 +624,14 @@
         document.documentElement.classList.remove("is-exam-focus");
     }
 
+    let embedForce = false;
+
+    /* حالة الاشتراك اللي ترسم بيها الامتحان/الموضوع: إلا جا de-premium
+       بنفس القيمة، ماكنعاودوش الرسم — كان كيمسح الأجوبة ويرجع لـ Teil 1. */
+    let renderedPremium;
+
     function openExam(n, part, push) {
+        renderedPremium = window.__deutschEinfachIsPremium;
         const exam = examFor(n);
         if (!exam) { close(push); return; }
         const scores = {};
@@ -973,6 +996,7 @@
     }
 
     function open(themaId, part, push) {
+        renderedPremium = window.__deutschEinfachIsPremium;
         const topic = topics.find(function (t) { return t.id === themaId; });
         if (!topic) { close(push); return; }
         dropExamTop();
@@ -1106,6 +1130,7 @@
         renderList();
 
         if (detail.hidden) return;
+        if (window.__deutschEinfachIsPremium === renderedPremium) return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
         const exam = examParam(params);

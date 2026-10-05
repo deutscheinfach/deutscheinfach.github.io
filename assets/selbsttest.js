@@ -4,7 +4,7 @@
    (المجانيين و Premium):
      Lesen Teil 1-3 + Sprachbausteine 1-2 → b2-lesen.html?pruefung=mix (iframe)
      Hören Teil 1-3                      → b2-hoeren-teilN.html?thema=X (iframe)
-   بار واحد فوق فيه الأجزاء الثمانية بحال telc، ووقت واحد (110 دقيقة).
+   بار واحد فوق فيه الأجزاء الثمانية بحال telc، ووقت واحد (90 دقيقة).
    التصحيح كامل ف اللخر، ومن بعد صفحة النتيجة: المجموع، النسبة، كل جزء
    بوحدو، المشاركة، «امتحان عشوائي جديد» و «الصفحة الرئيسية».
 
@@ -19,7 +19,7 @@
 
     const STATE_KEY = "de-st-state";
     const HOEREN_COUNT = [62, 71, 56];
-    const LIMIT_MIN = 110;
+    const LIMIT_MIN = 90;
     const TOTAL = 180, PASS = 108;
     const PARTS = [
         { key: "teil1",   grp: "lesen",  kind: "Lesen",  nr: "Teil 1", max: 25, name: "Lesen Teil 1" },
@@ -101,7 +101,7 @@
             "هكا ما كتحفظش الأجوبة — كتواجه أسئلة جديدة بحال نهار الامتحان الحقيقي.</p>" +
             '<div class="mt-rand-grid">' +
             '<div class="mt-rand-f"><i>🔀</i><div><b>خلط عشوائي</b><span>كل Teil من نموذج امتحان مختلف</span></div></div>' +
-            '<div class="mt-rand-f"><i>⏱️</i><div><b>بالوقت بحال telc</b><span>110 دقيقة لـ Lesen و Hören</span></div></div>' +
+            '<div class="mt-rand-f"><i>⏱️</i><div><b>بالوقت بحال telc</b><span>90 دقيقة لـ Lesen و Hören</span></div></div>' +
             '<div class="mt-rand-f"><i>🎯</i><div><b>نتيجة كاملة</b><span>من 180 نقطة · كل جزء بوحدو</span></div></div>' +
             "</div>" +
             (last ? '<p class="mt-last">آخر محاولة: <b>' + fmt(last.points) + " / " + (last.max || TOTAL) + "</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
