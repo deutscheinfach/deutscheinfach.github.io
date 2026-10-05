@@ -41,19 +41,22 @@
     }
     apply(stored());
 
+    var SVG = '<svg class="title-toggle-icon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" '
+        + 'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+    var EYE = SVG + '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+    var EYE_OFF = SVG + '<path d="M9.9 4.24A9.1 9.1 0 0 1 12 4c6.4 0 10 7 10 7a18.5 18.5 0 0 1-2.16 3.19"/>'
+        + '<path d="M6.61 6.61A18.5 18.5 0 0 0 2 11s3.6 7 10 7a9.7 9.7 0 0 0 5.39-1.61"/>'
+        + '<path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M2 2l20 20"/></svg>';
+
     function build() {
         var button = document.createElement("button");
         button.type = "button";
         button.className = "title-toggle";
 
-        var icon = document.createElement("span");
-        icon.className = "title-toggle-icon";
-        icon.textContent = "👁";
-        icon.setAttribute("aria-hidden", "true");
-        button.appendChild(icon);
-
         function paint() {
             var on = document.documentElement.classList.contains(ON);
+            /* العنوان باين: عين مشطبة (خبي). مخبي: عين (بين). */
+            button.innerHTML = on ? EYE : EYE_OFF;
             var label = on ? "بين العنوان" : "خبي العنوان";
             button.classList.toggle("is-on", on);
             button.setAttribute("aria-pressed", on ? "true" : "false");

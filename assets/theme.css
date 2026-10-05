@@ -1089,24 +1089,21 @@ html.de-hide-title .t1-head { gap: 0; }
     flex: 0 0 auto;
     display: inline-grid;
     place-items: center;
-    width: 38px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     padding: 0;
     border-radius: 50%;
-    border: 1.5px solid var(--line-gold);
+    border: 1px solid var(--line);
     background: var(--surface);
-    color: var(--text);
+    color: var(--muted);
     cursor: pointer;
-    transition: background .16s ease, border-color .16s ease, transform .16s ease;
+    box-shadow: 0 1px 2px rgba(16,26,54,.06);
+    transition: color .16s ease, border-color .16s ease, background .16s ease;
 }
-.title-toggle:hover { border-color: var(--gold); transform: translateY(-1px); }
+.title-toggle:hover { color: var(--text); border-color: color-mix(in srgb, var(--text) 30%, var(--line)); }
 .title-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.title-toggle.is-on {
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    border-color: transparent;
-}
-.title-toggle-icon { font-size: 17px; line-height: 1; }
-.title-toggle.is-on .title-toggle-icon { opacity: .55; }
+.title-toggle.is-on { color: var(--accent-text); border-color: var(--line-gold); background: var(--surface-2); }
+.title-toggle-icon { display: block; width: 17px; height: 17px; }
 
 /* ===== التيليفون: خفة =====
 
