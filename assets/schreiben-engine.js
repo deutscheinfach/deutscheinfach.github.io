@@ -142,14 +142,17 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         }
     }
 
+    const CORRECT_LABEL = document.getElementById("correct-btn").innerHTML;
+
     // ---------- timer ----------
     const timerEl = document.getElementById("timer-pill");
     let totalSeconds = (parseInt(topic.time, 10) || 30) * 60;
     function tick() {
         const m = Math.floor(totalSeconds / 60);
         const s = totalSeconds % 60;
-        timerEl.textContent =
-            "⏱ " + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
+        const timerT = document.getElementById("timer-t") || timerEl;
+        timerT.textContent =
+            (timerT === timerEl ? "⏱ " : "") + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0");
         if (totalSeconds <= 120) timerEl.classList.add("low");
         if (totalSeconds > 0) totalSeconds--;
     }
@@ -369,7 +372,7 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
                 "</div>";
         } finally {
             correctBtn.disabled = false;
-            correctBtn.innerHTML = "✅ تصحيح";
+            correctBtn.innerHTML = CORRECT_LABEL;
         }
     });
 

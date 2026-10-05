@@ -837,3 +837,10 @@ textarea, input { background: transparent; color: var(--ink); }
    خلفية بيضا صافية أريح للعين وأقرب للورقة الحقيقية. */
 .panel-right { background: #ffffff; }
 #answer-text { background: #ffffff; }
+
+/* ===== الرأس: أيقونات بلاصة الإيموجي (نسخة 2) ===== */
+.back-btn svg, .icon-btn svg, .correct-btn svg, .timer-pill svg { flex: none; display: block; }
+.timer-pill { font-weight: 800; height: 40px; padding: 0 14px; }
+.icon-btn { width: 40px; height: 40px; border-radius: 12px; }
+.correct-btn { height: 42px; padding: 0 22px; border-radius: 12px; font-weight: 900; font-size: 15px; background: linear-gradient(135deg, #ffe58a, #f2b705); box-shadow: 0 10px 22px -12px #f2b705; transition: transform .18s, filter .18s; }
+.correct-btn:hover { background: linear-gradient(135deg, #ffe58a, #f2b705); filter: brightness(1.06); transform: translateY(-1px); }
