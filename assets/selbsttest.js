@@ -18,7 +18,14 @@
     if (!root) return;
 
     const STATE_KEY = "de-st-state";
-    const HOEREN_COUNT = [62, 71, 56];
+    /* عدد المواضيع ف كل جزء ديال Hören (b1/b2-hoeren-teilN.html) */
+    const HOEREN_COUNT = { b1: [23, 20, 22], b2: [62, 71, 59] };
+    const LEVEL_KEY = "de-st-level";
+    function chosenLevel() {
+        try { const v = localStorage.getItem(LEVEL_KEY); if (v === "b1" || v === "b2") return v; } catch (e) { /* */ }
+        return "b2";
+    }
+    function lv() { return (state && state.level) || chosenLevel(); }
     const LIMIT_MIN = 90;
     const TOTAL = 180, PASS = 108;
     const PARTS = [
@@ -57,16 +64,16 @@
     /* ---------- القرعة ---------- */
     function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
     function mixPick() {
-        const topics = window.LESEN_B2_TOPICS || [];
+        const topics = window["LESEN_" + lv().toUpperCase() + "_TOPICS"] || [];
         const lesen = PARTS.filter(function (p) { return p.grp === "lesen"; }).map(function (p) {
             const pool = topics.filter(function (t) { return (t.parts || []).indexOf(p.key) !== -1; });
             return pool.length ? pick(pool).id : "";
         });
-        const hoeren = HOEREN_COUNT.map(function (count) { return 1 + Math.floor(Math.random() * count); });
+        const hoeren = HOEREN_COUNT[lv()].map(function (count) { return 1 + Math.floor(Math.random() * count); });
         return { lesen: lesen, hoeren: hoeren };
     }
     function lesenTitle(id) {
-        const t = (window.LESEN_B2_TOPICS || []).find(function (x) { return x.id === id; });
+        const t = (window["LESEN_" + lv().toUpperCase() + "_TOPICS"] || []).find(function (x) { return x.id === id; });
         return t ? t.title : "";
     }
 
@@ -94,8 +101,10 @@
         const last = (window.DEProgress && window.DEProgress.results().filter(function (r) {
             return r.skill === "modelltest" && r.topic === "modelltest-random";
         }).pop()) || null;
+        const L = chosenLevel();
+        paintLevel(true);
         root.innerHTML = '<section class="mt-rand">' +
-            '<span class="mt-rand-chip">امتحان كامل · telc B2 · ' + (premium() ? "Premium ✓" : "Premium 👑") + "</span>" +
+            '<span class="mt-rand-chip">امتحان كامل · telc ' + L.toUpperCase() + " · " + (premium() ? "Premium ✓" : "Premium 👑") + "</span>" +
             "<h2>محاكاة الامتحان الكامل</h2>" +
             '<p class="mt-rand-lead">كل مرة كتضغط، كنصاوبو ليك <b>كوكتيل</b> ديال امتحان جديد: كل جزء ديال Lesen و Sprachbausteine و Hören جاي من موضوع مختلف. ' +
             "هكا ما كتحفظش الأجوبة — كتواجه أسئلة جديدة بحال نهار الامتحان الحقيقي.</p>" +
@@ -108,6 +117,25 @@
             '<button class="mt-rand-go" type="button" data-act="start">' + svg("dice", 22) + "<span>بدا امتحان عشوائي</span><em>←</em></button>" +
             "</section>";
     }
+
+    /* B1 / B2 فوق «اختبر نفسك» (#st-level ف الصفحة) */
+    function paintLevel(visible) {
+        const box = document.getElementById("st-level");
+        if (!box) return;
+        box.hidden = !visible;
+        if (!visible) return;
+        const L = chosenLevel();
+        box.innerHTML = ["b1", "b2"].map(function (x) {
+            return '<button type="button" role="tab" data-lv="' + x + '" class="' + (x === L ? "is-on" : "") + '" aria-selected="' + (x === L) + '">' + x.toUpperCase() + "</button>";
+        }).join("");
+    }
+    const levelBox = document.getElementById("st-level");
+    if (levelBox) levelBox.addEventListener("click", function (e) {
+        const b = e.target.closest("[data-lv]");
+        if (!b || state) return;
+        try { localStorage.setItem(LEVEL_KEY, b.dataset.lv); } catch (err) { /* */ }
+        renderStart();
+    });
 
     function askStart() {
         if (!premium()) {
@@ -123,7 +151,8 @@
     }
 
     function start() {
-        state = { mix: mixPick(), at: 0, deadline: Date.now() + LIMIT_MIN * 60000, lesen: {}, hoeren: {}, titles: {}, done: false, saved: false };
+        state = { level: chosenLevel(), mix: null, at: 0, deadline: Date.now() + LIMIT_MIN * 60000, lesen: {}, hoeren: {}, titles: {}, done: false, saved: false };
+        state.mix = mixPick();
         state.mix.lesen.forEach(function (id, i) { state.titles[PARTS[i].key] = lesenTitle(id); });
         save();
         renderExam();
@@ -136,9 +165,9 @@
 
     function frameSrc(p) {
         if (p.grp === "lesen") {
-            return "b2-lesen.html?pruefung=mix&mix=" + encodeURIComponent(state.mix.lesen.join(",")) + "&teil=teil1&embed=1&nav=0";
+            return lv() + "-lesen.html?pruefung=mix&mix=" + encodeURIComponent(state.mix.lesen.join(",")) + "&teil=teil1&embed=1&nav=0";
         }
-        return "b2-hoeren-teil" + (p.sub + 1) + ".html?thema=" + state.mix.hoeren[p.sub] + "&embed=1&nav=0";
+        return lv() + "-hoeren-teil" + (p.sub + 1) + ".html?thema=" + state.mix.hoeren[p.sub] + "&embed=1&nav=0";
     }
 
     function hook(frame, grp, sub) {
@@ -187,13 +216,14 @@
         hoerenFrames.length = 0;
         document.documentElement.classList.add("is-exam-focus");
         document.body.classList.add("st-running");
+        paintLevel(false);
         const head = document.getElementById("st-head");
         if (head) head.hidden = true;
 
         root.innerHTML =
             '<div class="st-bar"><div class="st-bar-in">' +
             '<button class="st-back" type="button" data-act="exit" title="خرج من الامتحان">' + svg("back", 20) + "</button>" +
-            '<div class="st-meta"><span class="st-lvl">B2</span><b>اختبر نفسك</b></div>' +
+            '<div class="st-meta"><span class="st-lvl">' + lv().toUpperCase() + '</span><b>اختبر نفسك</b></div>' +
             '<nav class="st-tabs" aria-label="الأجزاء">' + PARTS.map(function (p, i) {
                 return '<button type="button" class="st-tab" data-tab="' + i + '"><small>' + p.kind + "</small><b>" + p.nr + "</b><em>" + p.max + "P</em></button>";
             }).join("") + "</nav>" +
@@ -216,6 +246,11 @@
             hoerenFrames[sub] = f;
             hook(f, "hoeren", sub);
         });
+        /* الإطار كيبدا نيشان تحت البار (البار كتبدل الطول ف التيليفون) */
+        const bar = root.querySelector(".st-bar");
+        const setH = function () { document.documentElement.style.setProperty("--st-bar-h", bar.offsetHeight + "px"); };
+        setH();
+        if (window.ResizeObserver) new ResizeObserver(setH).observe(bar);
         show(state.at);
         tick();
         timer = setInterval(tick, 1000);
@@ -301,6 +336,7 @@
     /* ---------- النتيجة ---------- */
     function renderResult() {
         clearInterval(timer);
+        paintLevel(false);
         document.documentElement.classList.remove("is-exam-focus");
         document.body.classList.remove("st-running");
         const head = document.getElementById("st-head");
@@ -311,7 +347,7 @@
 
         if (!state.saved && window.DEProgress) {
             window.DEProgress.add({
-                skill: "modelltest", part: "schriftlich", topic: "modelltest-random", title: "اختبر نفسك",
+                skill: "modelltest", part: "schriftlich", topic: "modelltest-random", title: "اختبر نفسك " + lv().toUpperCase(),
                 points: total, max: TOTAL,
                 detail: { lesen: (state.lesen.teil1 || 0) + (state.lesen.teil2 || 0) + (state.lesen.teil3 || 0),
                           sprach: (state.lesen.sprach1 || 0) + (state.lesen.sprach2 || 0),
@@ -358,7 +394,7 @@
         try { streak = (window.DEProgress && window.DEProgress.streak()) || 0; } catch (e) { /* */ }
         window.DEShare.open({
             kind: "modelltest-random",
-            title: "اختبر نفسك · telc B2",
+            title: "اختبر نفسك · telc " + lv().toUpperCase(),
             score: Math.round(total * 2) / 2,
             max: TOTAL,
             pass: total >= PASS,
@@ -368,7 +404,7 @@
                 ["Hörverstehen", (state.hoeren.teil1 || 0) + (state.hoeren.teil2 || 0) + (state.hoeren.teil3 || 0), 75]
             ],
             streak: streak,
-            shareText: (total >= PASS ? "نجحت ف «اختبر نفسك» telc B2 — " : "درت «اختبر نفسك» telc B2 — ") + fmt(total) + "/" + TOTAL + " 💪"
+            shareText: (total >= PASS ? "نجحت ف «اختبر نفسك» telc " + lv().toUpperCase() + " — " : "درت «اختبر نفسك» telc " + lv().toUpperCase() + " — ") + fmt(total) + "/" + TOTAL + " 💪"
         });
     }
 
@@ -386,12 +422,8 @@
         else if (a === "share") share();
         else if (a === "again") { clear(); askStart(); }
         else if (a === "exit") {
-            /* الضغطة الأولى كتسول، الثانية (ف 4 ثواني) كتخرج وكتمسح الامتحان */
-            if (act.dataset.armed) { clearInterval(timer); clear(); renderStart(); window.scrollTo({ top: 0 }); return; }
-            act.dataset.armed = "1";
-            act.classList.add("is-armed");
-            act.title = "متأكد؟ كليكي مرة خرى باش تخرج";
-            setTimeout(function () { if (act.isConnected) { delete act.dataset.armed; act.classList.remove("is-armed"); } }, 4000);
+            /* خروج نيشان بضغطة وحدة */
+            clearInterval(timer); clear(); renderStart(); window.scrollTo({ top: 0 });
         }
     });
 
