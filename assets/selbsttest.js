@@ -45,9 +45,20 @@
         { key: "h3",      grp: "hoeren", kind: "Hören",  nr: "Teil 3", max: 25, name: "Hören Teil 3", sub: 2 }
     ];
 
+    const GROUPS = [
+        { kind: "Lesen", label: "Leseverstehen", short: "Lesen", icon: "book", max: 75 },
+        { kind: "SB", label: "Sprachbausteine", short: "Sprachb.", icon: "puzzle", max: 30 },
+        { kind: "Hören", label: "Hörverstehen", short: "Hören", icon: "ear", max: 75 }
+    ];
+
     const ICON = {
         clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
         back: '<path d="M15 18l-6-6 6-6"/>',
+        fwd: '<path d="M9 18l6-6-6-6"/>',
+        exit: '<path d="M10 17l-5-5 5-5"/><path d="M5 12h11"/><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/>',
+        book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5"/>',
+        puzzle: '<path d="M4 7h4a2 2 0 1 1 4 0h4v4a2 2 0 1 1 0 4v4H4z"/>',
+        ear: '<path d="M6 9a6 6 0 1 1 12 0c0 3-2 4-3 5.5S14 18 12 20a3 3 0 0 1-4-1"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0"/>',
         check: '<path d="m5 12 5 5 9-10"/>',
         x: '<path d="M18 6 6 18M6 6l12 12"/>',
         share: '<path d="M12 3v13"/><path d="m8 7 4-4 4 4"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/>',
@@ -181,7 +192,7 @@
         warmTimer = setTimeout(warm, 250);
     }
     function warm() {
-        if (state || !premium()) return;
+        if ((state && !state.done) || !premium()) return;
         const L = chosenLevel();
         if (pre && pre.level === L) return;
         pre = { level: L, mix: null };
@@ -217,7 +228,7 @@
             try { w = frame.contentWindow; doc = frame.contentDocument; w.addEventListener; } catch (e) { return; }
             if (grp === "lesen") {
                 w.addEventListener("lesen-points", function (e) {
-                    if (!state || !state.lesen) return;
+                    if (!state || !state.lesen || state.done) return;
                     const d = e.detail || {};
                     const p = PARTS.find(function (x) { return x.key === d.part; });
                     if (p) { state.lesen[p.key] = Math.min(p.max, Number(d.points) || 0); save(); paintTabs(); }
@@ -225,7 +236,7 @@
                 syncLesen();
             } else {
                 w.addEventListener("hoeren-points", function (e) {
-                    if (!state || !state.hoeren) return;
+                    if (!state || !state.hoeren || state.done) return;
                     const d = e.detail || {};
                     if (d.total > 0 && /^teil[123]$/.test(d.teil)) {
                         state.hoeren[d.teil] = Math.round(d.right / d.total * 25 * 2) / 2;
@@ -258,21 +269,29 @@
         hoerenFrames.length = 0;
         examBox.innerHTML =
             '<div class="st-bar"><div class="st-bar-in">' +
-            '<button class="st-back" type="button" data-act="exit" title="خرج من الامتحان">' + svg("back", 20) + "</button>" +
-            '<div class="st-meta"><span class="st-lvl">' + L.toUpperCase() + '</span><b>اختبر نفسك</b></div>' +
-            '<nav class="st-tabs" aria-label="الأجزاء">' + PARTS.map(function (p, i) {
-                return '<button type="button" class="st-tab" data-tab="' + i + '"><small>' + p.kind + "</small><b>" + p.nr + "</b><em>" + p.max + "P</em></button>";
+            '<button class="st-back" type="button" data-act="exit" title="خرج من الامتحان">' + svg("exit", 18) + "<span>خروج</span></button>" +
+            '<div class="st-meta"><span class="st-lvl">telc ' + L.toUpperCase() + '</span><b>اختبر نفسك</b></div>' +
+            '<nav class="st-tabs" aria-label="الأجزاء">' + GROUPS.map(function (g) {
+                return '<div class="st-grp"><span class="st-grp-t"><span class="st-full">' + g.label + '</span><span class="st-short">' + g.short + '</span></span><div class="st-grp-tabs">' +
+                    PARTS.map(function (p, i) {
+                        if (p.kind !== g.kind) return "";
+                        return '<button type="button" class="st-tab" data-tab="' + i + '"><b>' + p.nr.replace("Teil ", "") + "</b><em>" + p.max + "P</em></button>";
+                    }).join("") + "</div></div>";
             }).join("") + "</nav>" +
             '<span class="st-timer" id="st-timer">' + svg("clock", 17) + '<span id="st-timer-t">--:--</span></span>' +
-            "</div></div>" +
+            "</div>" +
+            '<i class="st-tprog" aria-hidden="true"><b id="st-tprog"></b></i>' +
+            "</div>" +
             '<div class="st-frames">' +
             '<iframe class="st-frame" data-grp="lesen" title="Lesen" src="' + frameSrc(PARTS[0], L, mix) + '"></iframe>' +
             [5, 6, 7].map(function (i) {
                 return '<iframe class="st-frame" data-grp="hoeren" data-sub="' + PARTS[i].sub + '" title="' + PARTS[i].name + '" hidden src="' + frameSrc(PARTS[i], L, mix) + '"></iframe>';
             }).join("") + "</div>" +
             '<div class="st-foot"><div class="st-foot-in">' +
-            '<button class="tr-btn" type="button" data-act="prev">السابق</button>' +
-            '<button class="tr-btn tr-btn-gold" type="button" data-act="next" id="st-next"></button>' +
+            '<button class="st-nav st-nav-prev" type="button" data-act="prev">' + svg("back", 18) + "<span>السابق</span></button>" +
+            '<div class="st-step"><b id="st-step-n"></b><span id="st-step-t"></span><i class="st-dots" id="st-dots">' +
+            PARTS.map(function () { return "<u></u>"; }).join("") + "</i></div>" +
+            '<button class="st-nav st-nav-next" type="button" data-act="next" id="st-next"></button>' +
             "</div></div>";
 
         lesenFrame = examBox.querySelector('iframe[data-grp="lesen"]');
@@ -316,7 +335,15 @@
         paintTabs();
         const next = document.getElementById("st-next");
         const last = state.at === PARTS.length - 1;
-        if (next) next.innerHTML = last ? svg("check", 17) + "صحح وشوف النتيجة" : PARTS[state.at + 1].name + " →";
+        if (next) next.innerHTML = last
+            ? svg("check", 18) + "<span>صحح وشوف النتيجة</span>"
+            : "<span><small>التالي</small>" + PARTS[state.at + 1].name + "</span>" + svg("fwd", 18);
+        if (next) next.classList.toggle("is-finish", last);
+        const stepN = document.getElementById("st-step-n");
+        if (stepN) {
+            stepN.textContent = (state.at + 1) + " / " + PARTS.length;
+            document.getElementById("st-step-t").textContent = p.name;
+        }
         if (next) next.dataset.act = last ? "finish" : "next";
         const prev = root.querySelector('[data-act="prev"]');
         if (prev) prev.disabled = state.at === 0;
@@ -326,9 +353,16 @@
     }
 
     function paintTabs() {
-        root.querySelectorAll(".st-tab").forEach(function (b, i) {
+        root.querySelectorAll(".st-tab").forEach(function (b) {
+            const i = Number(b.dataset.tab);
             b.classList.toggle("is-on", i === state.at);
             b.classList.toggle("is-seen", points(PARTS[i]) != null);
+        });
+        root.querySelectorAll(".st-grp").forEach(function (g, k) {
+            g.classList.toggle("is-on", PARTS[state.at].kind === GROUPS[k].kind);
+        });
+        root.querySelectorAll("#st-dots u").forEach(function (d, i) {
+            d.className = i === state.at ? "on" : (i < state.at ? "past" : "");
         });
     }
 
@@ -337,6 +371,8 @@
         if (!el || !state || state.done) return;
         const left = Math.max(0, Math.round((state.deadline - Date.now()) / 1000));
         el.textContent = pad(Math.floor(left / 60)) + ":" + pad(left % 60);
+        const tp = document.getElementById("st-tprog");
+        if (tp) tp.style.width = (left / (LIMIT_MIN * 60) * 100).toFixed(2) + "%";
         document.getElementById("st-timer").classList.toggle("is-low", left <= 300);
         if (left === 0 && !document.querySelector(".tr-modal[data-timeup]")) {
             const m = modal('<h2 style="justify-content:center">' + svg("clock") + " سالا الوقت!</h2>" +
@@ -409,33 +445,60 @@
             save();
         }
 
+        const R = 54, C = 2 * Math.PI * R;
+        const groups = GROUPS.map(function (g) {
+            let pts = 0;
+            PARTS.forEach(function (p) { if (p.kind === g.kind) pts += points(p) || 0; });
+            return { g: g, pts: pts, ok: pts / g.max >= 0.6 };
+        });
+        const row = function (p) {
+            const pts = points(p) || 0;
+            const ok = pts / p.max >= 0.6;
+            const title = state.titles[p.key] || (p.grp === "hoeren" ? "Thema " + state.mix.hoeren[p.sub] : "");
+            return '<div class="st-row"><div class="st-row-name"><b>' + esc(p.nr) + "</b>" +
+                (title ? "<small>" + esc(title) + "</small>" : "") + "</div>" +
+                '<div class="st-row-bar"><i class="' + (ok ? "ok" : "bad") + '" style="width:' + Math.round(pts / p.max * 100) + '%"></i></div>' +
+                '<div class="st-row-pts"><b>' + fmt(pts) + "</b> / " + p.max + "</div>" +
+                '<span class="st-chip ' + (ok ? "ok" : "bad") + '">' + (ok ? "ناجح" : "راسب") + "</span></div>";
+        };
+
         view.innerHTML =
             '<section class="st-res ' + (pass ? "is-pass" : "is-fail") + '">' +
-            '<span class="st-res-badge">' + svg(pass ? "check" : "alert", 15) + (pass ? "Bestanden · نجحتي" : "Nicht bestanden · ما نجحتيش") + "</span>" +
-            "<h1>" + (pass ? "مبروك، نجحتي! 🎉" : "للأسف، ما نجحتيش هاد المرة.") + "</h1>" +
+            '<div class="st-ring" style="--p:' + pct + '"><svg viewBox="0 0 128 128" aria-hidden="true">' +
+            '<circle cx="64" cy="64" r="' + R + '" class="st-ring-bg"/>' +
+            '<circle cx="64" cy="64" r="' + R + '" class="st-ring-fg" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - Math.min(100, pct) / 100)).toFixed(1) + '"/></svg>' +
+            '<div class="st-ring-in"><b>' + pct + "<small>%</small></b><span>" + fmt(total) + " / " + TOTAL + "</span></div></div>" +
+            '<div class="st-res-main">' +
+            '<span class="st-res-badge">' + svg(pass ? "check" : "alert", 15) + (pass ? "Bestanden · نجحتي" : "Nicht bestanden · ما نجحتيش") +
+            '</span><span class="st-res-lvl">telc ' + lv().toUpperCase() + " · اختبر نفسك</span>" +
+            "<h1>" + (pass ? "مبروك، نجحتي! 🎉" : "قريب! ما نجحتيش هاد المرة") + "</h1>" +
             "<p>" + (pass
                 ? "جبتي أكثر من 60٪ — بهاد المستوى غادي تدوز الامتحان الحقيقي. كمل هاكا!"
-                : "خاصك 60٪ (108 نقطة) باش تنجح. شوف التحليل لتحت وركز على الأجزاء الضعيفة.") + "</p>" +
-            '<div class="st-res-stats">' +
-            '<div><span>النتيجة الإجمالية</span><b>' + fmt(total) + " <small>/ " + TOTAL + "</small></b></div>" +
-            '<div><span>النسبة المئوية</span><b class="st-c">' + pct + "%</b></div>" +
-            '<div><span>التقييم</span><b class="st-c">' + (pass ? "ناجح" : "ما نجحش") + "</b></div>" +
+                : "خاصك 60٪ (" + PASS + " نقطة) باش تنجح — باقي ليك <b>" + fmt(PASS - total) + "</b> نقطة. ركز على الأجزاء الضعيفة لتحت.") + "</p>" +
+            '<div class="st-res-groups">' + groups.map(function (x) {
+                return '<div class="st-g ' + (x.ok ? "ok" : "bad") + '"><i>' + svg(x.g.icon, 18) + "</i><div><span><span class=\"st-full\">" + x.g.label + "</span><span class=\"st-short\">" + x.g.short + "</span>" +
+                    "</span><b>" + fmt(x.pts) + " <small>/ " + x.g.max + "</small></b></div></div>";
+            }).join("") + "</div>" +
             "</div></section>" +
-            '<div class="st-res-actions">' +
-            (window.DEShare ? '<button class="tr-btn tr-btn-gold" type="button" data-act="share">' + svg("share", 17) + "شارك النتيجة</button>" : "") +
-            '<button class="tr-btn" type="button" data-act="again">' + svg("dice", 17) + "امتحان عشوائي جديد</button>" +
-            '<a class="tr-btn" href="index.html">' + svg("home", 17) + "الصفحة الرئيسية</a>" +
+
+            '<div class="st-act">' +
+            '<button class="st-act-btn is-main" type="button" data-act="again"><i>' + svg("dice", 22) + "</i>" +
+            "<span><b>امتحان عشوائي جديد</b><small>مواضيع أخرى مخلطة · 90 دقيقة</small></span><em>" + svg("back", 18) + "</em></button>" +
+            '<a class="st-act-btn" href="index.html"><i>' + svg("home", 22) + "</i>" +
+            "<span><b>الصفحة الرئيسية</b><small>رجع للدروس والتمارين</small></span><em>" + svg("back", 18) + "</em></a>" +
+            (window.DEShare ? '<button class="st-act-btn is-share" type="button" data-act="share"><i>' + svg("share", 22) + "</i>" +
+            "<span><b>شارك النتيجة</b><small>صورة ديال النتيجة للأصحاب</small></span><em>" + svg("back", 18) + "</em></button>" : "") +
             "</div>" +
+
             '<h2 class="st-res-h">نتائج مفصلة</h2>' +
-            '<div class="st-res-list">' + PARTS.map(function (p) {
-                const pts = points(p) || 0;
-                const ok = pts / p.max >= 0.6;
-                const title = state.titles[p.key] || (p.grp === "hoeren" ? "Thema " + state.mix.hoeren[p.sub] : "");
-                return '<div class="st-row"><div class="st-row-name"><b>' + esc(p.name) + '</b><span class="st-chip ' + (ok ? "ok" : "bad") + '">' + (ok ? "ناجح" : "راسب") + "</span>" +
-                    (title ? "<small>" + esc(title) + "</small>" : "") + "</div>" +
-                    '<div class="st-row-bar"><i class="' + (ok ? "ok" : "bad") + '" style="width:' + Math.round(pts / p.max * 100) + '%"></i></div>' +
-                    '<div class="st-row-pts"><b>' + fmt(pts) + "</b> / " + p.max + "</div></div>";
+            '<div class="st-res-list">' + GROUPS.map(function (g, k) {
+                const x = groups[k];
+                return '<div class="st-sec"><div class="st-sec-h"><i>' + svg(g.icon, 18) + "</i><b>" + g.label + "</b><span>" + fmt(x.pts) + " / " + g.max + "</span></div>" +
+                    PARTS.filter(function (p) { return p.kind === g.kind; }).map(row).join("") + "</div>";
             }).join("") + "</div>";
+        /* «امتحان عشوائي جديد» كيبان نيشان: كنحضرو واحد جديد ف الخفا */
+        examBox.classList.add("is-pre");
+        warmSoon();
         window.scrollTo({ top: 0 });
     }
 
@@ -482,7 +545,10 @@
     window.addEventListener("beforeunload", function (e) {
         if (state && !state.done) { e.preventDefault(); e.returnValue = ""; }
     });
-    document.addEventListener("de-premium", function () { if (!state) renderStart(); });
+    document.addEventListener("de-premium", function () {
+        if (!state) renderStart();
+        else if (state.done) warmSoon();
+    });
 
     state = load();
     if (state && state.done) renderResult();
