@@ -1887,6 +1887,51 @@
 
 
     <!-- =========================================
+         فيديو العرض: Bewerbung + ترجمة الوثائق
+         (PC 16:9 و التيليفون 9:16 — preload="none")
+    ========================================== -->
+
+    <section class="bw-promo">
+        <a class="bw-promo-tag" href="bewerbung.html">✨ جديد · Bewerbung و ترجمة الوثائق</a>
+        <figure class="bw-promo-video">
+            <div class="hv-box bw-promo-pc">
+                <video playsinline preload="none" poster="assets/video/bewerbung-pc.jpg?v=1">
+                    <source src="assets/video/bewerbung-pc.mp4?v=1" type="video/mp4">
+                </video>
+                <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
+            </div>
+            <div class="hv-box bw-promo-mobile">
+                <video playsinline preload="none" poster="assets/video/bewerbung-mobile.jpg?v=1">
+                    <source src="assets/video/bewerbung-mobile.mp4?v=1" type="video/mp4">
+                </video>
+                <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
+            </div>
+            <figcaption><a href="bewerbung.html">📁 Bewerbung كاملة ب 300 DH · ترجمة ب 150 DH للورقة — شوف العرض ←</a></figcaption>
+        </figure>
+    </section>
+    <style>
+    .bw-promo { max-width: 980px; margin: 10px auto 40px; padding: 0 16px; text-align: center; }
+    .bw-promo-tag {
+        display: inline-block; margin-bottom: 14px; padding: 8px 18px; border-radius: 999px;
+        background: linear-gradient(135deg, #ffe07a, #f2b705); color: #3a1500; font-weight: 900; font-size: 14px;
+        text-decoration: none; box-shadow: 0 10px 22px -12px rgba(242,183,5,.9);
+    }
+    .bw-promo-video { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .bw-promo-video video {
+        display: block; width: 100%; border-radius: 20px; background: #2a0710;
+        border: 3px solid rgba(255,206,0,.55); box-shadow: 0 26px 60px -20px rgba(0,0,0,.45);
+    }
+    .bw-promo-mobile { display: none !important; max-width: 300px; }
+    .bw-promo-video figcaption { direction: rtl; font-weight: 800; font-size: 15px; }
+    .bw-promo-video figcaption a { color: var(--accent-text, #b30e30); text-decoration: none; }
+    @media (max-width: 900px) {
+        .bw-promo-pc { display: none !important; }
+        .bw-promo-mobile { display: block !important; }
+    }
+    </style>
+
+
+    <!-- =========================================
          SECTION TITLE
     ========================================== -->
 
