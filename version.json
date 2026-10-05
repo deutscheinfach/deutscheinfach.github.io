@@ -1,5 +1,5 @@
 {
-  "build": "8f5fb6310da5",
+  "build": "2a824ffc1b51",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "698b6ecb",
@@ -8,6 +8,7 @@
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
     "assets/hoeren-keys.js": "a46afc39",
+    "assets/hoeren-nav.css": "46bcbede",
     "assets/hoeren-premium.js": "1d9a9128",
     "assets/https-upgrade.js": "473efbeb",
     "assets/icons.css": "61993c15",
