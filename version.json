@@ -1,8 +1,8 @@
 {
-  "build": "d46ce327b5d9",
+  "build": "e953e84975c4",
   "assets": {
     "assets/app-install.js": "36375614",
-    "assets/auth.css": "33ceec16",
+    "assets/auth.css": "698b6ecb",
     "assets/chat-actions.js": "1d332ce0",
     "assets/chat-extras.js": "54c6cba9",
     "assets/einstufung.js": "4f3853ea",
