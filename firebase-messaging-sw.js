@@ -181,7 +181,7 @@ if (messaging) messaging.onBackgroundMessage(function (payload) {
             requireInteraction: isCall,
             /* الهزاز ديال الأندرويد كيخدم من هنا حتى والموقع مسدود */
             vibrate: isCall ? [400, 200, 400, 200, 400] : [200],
-            data: { url: data.url || (isCall ? "chat.html" : "index.html") }
+            data: { url: data.url || (isCall ? "chat.html" : "./") }
         }
     );
 });
@@ -191,7 +191,7 @@ if (messaging) messaging.onBackgroundMessage(function (payload) {
 self.addEventListener("notificationclick", function (event) {
     event.notification.close();
 
-    const target = (event.notification.data && event.notification.data.url) || "index.html";
+    const target = (event.notification.data && event.notification.data.url) || "./";
     const page = target.split("?")[0];
 
     event.waitUntil(

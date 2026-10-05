@@ -490,7 +490,7 @@
             '<div class="st-act">' +
             '<button class="st-act-btn is-main" type="button" data-act="again"><i>' + svg("dice", 22) + "</i>" +
             "<span><b>امتحان عشوائي جديد</b><small>مواضيع أخرى مخلطة · 90 دقيقة</small></span><em>" + svg("back", 18) + "</em></button>" +
-            '<a class="st-act-btn" href="index.html"><i>' + svg("home", 22) + "</i>" +
+            '<a class="st-act-btn" href="./"><i>' + svg("home", 22) + "</i>" +
             "<span><b>الصفحة الرئيسية</b><small>رجع للدروس والتمارين</small></span><em>" + svg("back", 18) + "</em></a>" +
             (window.DEShare ? '<button class="st-act-btn is-share" type="button" data-act="share"><i>' + svg("share", 22) + "</i>" +
             "<span><b>شارك النتيجة</b><small>صورة ديال النتيجة للأصحاب</small></span><em>" + svg("back", 18) + "</em></button>" : "") +

@@ -44,7 +44,7 @@
     /* ---- العلامة ---- */
     const brand = document.createElement("a");
     brand.className = "site-brand";
-    brand.href = "index.html";
+    brand.href = "./";
     brand.innerHTML =
         '<img src="assets/icon-192.png" alt="Deutsch Einfach" width="40" height="40">' +
         '<span class="site-brand-text">' +
@@ -1303,7 +1303,7 @@
                                index.html كتبدا برسم حساب خارج. */
                             remember(null);
                             await authMod.signOut(auth);
-                            location.href = "index.html";
+                            location.href="./";
                         } catch (error) {
                             console.warn("Header: ما خرجناش", error);
                             out.disabled = false;
