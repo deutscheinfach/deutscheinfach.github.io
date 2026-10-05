@@ -51,12 +51,11 @@
     window.addEventListener("beforeinstallprompt", function (e) {
         e.preventDefault();
         deferred = e;
-        paint();
     });
     window.addEventListener("appinstalled", function () {
         store(INSTALLED_KEY, "1");
         deferred = null;
-        paint();
+        if (sheet) sheet.done();
     });
     /* إلا تحل مرة من الأيقونة، راه مزيد — حتى ف المتصفح ماكنعاودوش نسولوه */
     if (standalone()) store(INSTALLED_KEY, "1");
@@ -284,13 +283,101 @@
         });
     }
 
+    /* ---- 3) نافذة «ثبت التطبيق» (من القائمة) ---- */
+    var sheet = null;
+    var DL = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>';
+    var sheetCss = document.createElement("style");
+    sheetCss.textContent =
+        ".de-inst-bg{position:fixed;inset:0;z-index:2147482000;display:flex;align-items:flex-start;justify-content:center;padding:calc(76px + env(safe-area-inset-top)) 14px 14px;" +
+        "background:rgba(15,10,20,.35);animation:de-fade .18s ease}" +
+        ".de-inst{position:relative;width:min(440px,100%);direction:rtl;background:#fff;color:#14141f;border-radius:26px;padding:20px 20px 18px;" +
+        "box-shadow:0 30px 70px -20px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.04);font-family:inherit;animation:de-drop .28s cubic-bezier(.2,.9,.3,1.15)}" +
+        ".de-inst-top{display:flex;align-items:center;gap:14px;padding-inline-end:26px}" +
+        ".de-inst-top img{width:56px;height:56px;border-radius:16px;flex:none;box-shadow:0 8px 18px -8px rgba(0,0,0,.45)}" +
+        ".de-inst-top b{display:block;font-size:17px;font-weight:900;line-height:1.35}" +
+        ".de-inst-top span{display:block;margin-top:2px;font-size:13.5px;color:#6b6b7b;line-height:1.5}" +
+        ".de-inst-x{position:absolute;top:14px;left:14px;width:30px;height:30px;border:0;border-radius:50%;background:transparent;color:#8a8a99;font-size:20px;line-height:1;cursor:pointer}" +
+        ".de-inst-x:hover{background:#f1f1f5;color:#14141f}" +
+        ".de-inst-btns{display:flex;gap:10px;margin-top:18px}" +
+        ".de-inst-btns button{min-height:48px;border-radius:14px;font:inherit;font-weight:900;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}" +
+        ".de-inst-go{flex:1.6;border:0;color:#fff;background:linear-gradient(135deg,#c2183f,#7a1426);box-shadow:0 12px 24px -12px #7a1426}" +
+        ".de-inst-go:hover{filter:brightness(1.07)}" +
+        ".de-inst-no{flex:1;border:0;background:#f1f1f5;color:#333}" +
+        ".de-inst-no:hover{background:#e7e7ee}" +
+        ".de-inst-tip{margin:14px 0 0;padding:12px 14px;border-radius:14px;background:#f6f4ef;font-size:14px;line-height:1.95;color:#333}" +
+        ".de-inst-tip b{color:#7a1426}.de-inst-ok{color:#15803d;font-weight:900}" +
+        "html[data-theme=dark] .de-inst{background:#1d1a22;color:#f2eff7;box-shadow:0 30px 70px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.06)}" +
+        "html[data-theme=dark] .de-inst-top span{color:#a9a3b5}html[data-theme=dark] .de-inst-no{background:#2c2833;color:#e9e5f0}" +
+        "html[data-theme=dark] .de-inst-x:hover{background:#2c2833;color:#fff}html[data-theme=dark] .de-inst-tip{background:#2a2530;color:#e9e5f0}" +
+        "html[data-theme=dark] .de-inst-tip b{color:#ffce00}" +
+        "@media (max-width:560px){.de-inst-bg{align-items:flex-end;padding:14px 12px calc(14px + env(safe-area-inset-bottom))}}";
+    document.head.appendChild(sheetCss);
+
+    function install() {
+        if (sheet) return;
+        var bg = document.createElement("div");
+        bg.className = "de-inst-bg";
+        bg.innerHTML =
+            '<div class="de-inst" role="dialog" aria-modal="true" aria-labelledby="de-inst-t">' +
+            '<button type="button" class="de-inst-x" aria-label="سد">×</button>' +
+            '<div class="de-inst-top"><img src="assets/icon-192.png" alt="">' +
+            '<div><b id="de-inst-t">ثبت Deutsch Einfach كتطبيق</b><span>وصول سريع بدون متصفح، بحال تطبيق حقيقي</span></div></div>' +
+            '<div class="de-inst-btns"><button type="button" class="de-inst-go">' + DL + "تثبيت</button>" +
+            '<button type="button" class="de-inst-no">ليس الآن</button></div>' +
+            "</div>";
+        document.body.appendChild(bg);
+        var box = bg.querySelector(".de-inst");
+        var go = bg.querySelector(".de-inst-go");
+
+        function close() { bg.remove(); sheet = null; document.removeEventListener("keydown", onKey); }
+        function onKey(e) { if (e.key === "Escape") close(); }
+        function tip(html) {
+            var t = box.querySelector(".de-inst-tip");
+            if (!t) { t = document.createElement("div"); t.className = "de-inst-tip"; box.appendChild(t); }
+            t.innerHTML = html;
+        }
+        sheet = {
+            done: function () {
+                tip('<span class="de-inst-ok">✓ التطبيق تزاد. لقاه ف الشاشة ديالك.</span>');
+                go.disabled = true;
+            }
+        };
+        document.addEventListener("keydown", onKey);
+        bg.querySelector(".de-inst-x").addEventListener("click", close);
+        bg.querySelector(".de-inst-no").addEventListener("click", close);
+        bg.addEventListener("click", function (e) { if (e.target === bg) close(); });
+
+        go.addEventListener("click", function () {
+            if (standalone()) { tip('<span class="de-inst-ok">✓ راك ديجا ف التطبيق.</span>'); return; }
+            if (deferred) {
+                deferred.prompt();
+                deferred.userChoice.then(function (c) {
+                    if (c && c.outcome === "accepted") { store(INSTALLED_KEY, "1"); if (sheet) sheet.done(); }
+                }).finally(function () { deferred = null; });
+                return;
+            }
+            if (isIOS) {
+                tip("1. ف Safari ضغط على <b>Partager</b> ⬆️ (لتحت)<br>2. ختار <b>Sur l'écran d'accueil</b> ➕<br>3. ضغط <b>Ajouter</b> — وصافي ✅");
+                return;
+            }
+            if (installedApp || read(INSTALLED_KEY) === "1") {
+                tip('<span class="de-inst-ok">✓ التطبيق ديجا مزيد ف هاد الجهاز.</span><br>حلو من الأيقونة ديال Deutsch Einfach.');
+                return;
+            }
+            tip(/Android/i.test(navigator.userAgent)
+                ? "ف Chrome: ضغط على <b>⋮</b> (فوق) ← <b>Installer l'application</b> ولا <b>Ajouter à l'écran d'accueil</b>."
+                : "ف Chrome ولا Edge: ضغط على الأيقونة <b>⊕</b> ف بار العنوان (فوق)، ولا <b>⋮</b> ← <b>Installer Deutsch Einfach</b>.");
+        });
+    }
+
     window.__deApp = {
+        install: install,
         show: function () { store(DISMISS_KEY, null); paint(); },
         askDaily: function () { store(ASK_KEY, null); askDaily(0); }
     };
 
-    /* كنخليو الزائر يشوف الصفحة شوية عاد نبينو البطاقة */
-    setTimeout(paint, 6000);
+    /* البطاقة ديال «زيد التطبيق» ما بقاتش كتبان بوحدها: المستعمل كيحل
+       «تحميل التطبيق» من القائمة ديال الحساب (site-header.js). */
 
     /* من بعد التسجيل: النافذة كتطلع دغيا ف الصفحة الرئيسية */
     var justSigned = false;
