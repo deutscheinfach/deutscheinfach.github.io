@@ -37,6 +37,8 @@
 
     const header = document.createElement("header");
     header.className = "site-header";
+    /* Google ما ياخدش كلمات المنيو (Lesen Hören…) ف الوصف ديال النتيجة */
+    header.setAttribute("data-nosnippet", "");
 
     const inner = document.createElement("div");
     inner.className = "site-header-inner";

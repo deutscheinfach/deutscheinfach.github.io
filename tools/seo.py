@@ -197,6 +197,8 @@ def seo_block(f, title, desc, noindex):
         f'<meta property="og:image" content="{IMAGE}">',
         '<meta property="og:locale" content="ar_MA">',
         '<meta name="twitter:card" content="summary">',
+        '<link rel="icon" href="assets/icon-48.png" sizes="48x48">',
+        '<link rel="icon" href="assets/icon-192.png" sizes="192x192">',
         '<link rel="icon" href="assets/icon-32.png" sizes="32x32">',
         '<link rel="apple-touch-icon" href="assets/icon-180.png">',
         '<link rel="manifest" href="manifest.webmanifest">',
