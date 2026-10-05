@@ -104,8 +104,10 @@
         box.className = "dl-box";
         box.innerHTML =
             '<div class="dl-ico">' + LOCK + '</div>'
-            + '<h2 class="dl-title" id="dl-title">محتوى مقفل</h2>'
-            + '<p class="dl-sub">هاد الموضوع كيتفتح مع الاشتراك ف Premium — مع گاع المواضيع ديال Lesen، Hören، Schreiben و Sprechen.</p>';
+            + '<h2 class="dl-title" id="dl-title"></h2><p class="dl-sub"></p>';
+        box.querySelector(".dl-title").textContent = config.heading || "محتوى مقفل";
+        box.querySelector(".dl-sub").textContent = config.text
+            || "هاد الموضوع كيتفتح مع الاشتراك ف Premium — مع گاع المواضيع ديال Lesen، Hören، Schreiben و Sprechen.";
 
         if (config.title) {
             var topic = document.createElement("div");

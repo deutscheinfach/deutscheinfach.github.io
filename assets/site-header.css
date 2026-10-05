@@ -986,3 +986,48 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     .site-header .site-brand-text { display: none; }
     .site-header .site-brand { flex: 0 0 auto; }
 }
+/* ست روابط فالتنقل (زدنا «اختبر نفسك»): ف PC متوسط (1001–1500px)
+   كنصغرو الحشو شوية باش الأزرار ديال اليمين يبقاو ف نفس السطر */
+@media (min-width: 1001px) and (max-width: 1500px) {
+    .site-nav a { padding: 0 12px; font-size: 13.5px; }
+    .site-header-inner { gap: 10px; }
+}
+@media (min-width: 1001px) and (max-width: 1200px) {
+    .site-brand-sub { display: none; }
+    .site-btn-label-long { display: none; }
+}
+
+/* ===== Ultra Premium: زر بوحدو حدا التنقل ===== */
+.site-navrow { display: flex; align-items: center; gap: 8px; min-width: 0; margin: 0 auto; }
+.site-header .site-navrow .site-nav { margin: 0; min-width: 0; }
+.site-ultra {
+    position: relative; overflow: hidden; flex: 0 0 auto;
+    display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 16px;
+    border-radius: 999px; text-decoration: none; white-space: nowrap;
+    font-weight: 900; font-size: 13.5px; color: #3a1500;
+    background: linear-gradient(135deg, #ffe07a, #f2b705);
+    border: 1px solid rgba(255,255,255,.55);
+    box-shadow: 0 10px 22px -12px rgba(242,183,5,.95);
+    transition: transform .15s ease, filter .15s ease;
+}
+.site-ultra:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.site-ultra.active { box-shadow: 0 0 0 3px rgba(255,255,255,.55), 0 10px 22px -12px rgba(242,183,5,.95); }
+.site-ultra::after {
+    content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.75), transparent);
+    animation: site-ultra-shine 3.6s ease-in-out infinite;
+}
+@keyframes site-ultra-shine { 0%, 60% { left: -60%; } 90%, 100% { left: 130%; } }
+.site-ultra-short { display: none; }
+@media (max-width: 1000px) {
+    .site-header .site-navrow { order: 3; width: 100%; margin: 4px 0 0; }
+    .site-header .site-navrow .site-nav { order: 0; width: auto; flex: 1 1 auto; margin: 0; }
+    .site-ultra { min-height: 38px; padding: 0 12px; font-size: 12.5px; }
+}
+@media (max-width: 560px) {
+    .site-ultra-long { display: none; }
+    .site-ultra-short { display: inline; }
+}
+@media (pointer: coarse) { .site-ultra { min-height: 44px; } }
+@media (pointer: coarse) { .site-ultra::after { animation-delay: 1.2s; } }
+@media (prefers-reduced-motion: reduce) { .site-ultra::after { animation: none; } }

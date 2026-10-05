@@ -28,6 +28,8 @@
            أخرى فالموقع — غير البركة من هنا اللي تحيدات. */
         /* التحضير المباشر. ماعندو مستوى، وكيتميز بكلاس
            ديالو باش يبان ذهبي بين الباقي. */
+        /* «اختبر نفسك»: امتحان عشوائي (Premium) ف modelltest.html */
+        { key: "training",  href: "modelltest.html#random", label: "اختبر نفسك" },
         { key: "ultra",     href: "ultra-premium.html", label: "Ultra Premium", gold: true }
     ];
 
@@ -61,7 +63,7 @@
         (location.pathname.split("/").pop() || "").indexOf("b1-") === 0 ? "b1" : "b2";
 
     NAV.forEach(function (item) {
-        if (item.hidden) return;
+        if (item.hidden || item.gold) return;   /* Ultra: زر بوحدو، تحت */
         const link = document.createElement("a");
         /* كانت الروابط ديما b2-*، حتى ملي تكون ف صفحة B1 — إذن
            من B1 Hören، البركة على Lesen كتوديك ل B2. دابا كل
@@ -82,7 +84,25 @@
         }
         nav.appendChild(link);
     });
-    inner.appendChild(nav);
+
+    /* Ultra Premium: زر ذهبي بوحدو حدا التنقل (ماشي داخلو) — بحال
+       Zertify. التنقل + الزر ف سطر واحد (site-navrow). */
+    const navRow = document.createElement("div");
+    navRow.className = "site-navrow";
+    navRow.appendChild(nav);
+    NAV.forEach(function (item) {
+        if (!item.gold || item.hidden) return;
+        const ultra = document.createElement("a");
+        ultra.className = "site-ultra" + (item.key === active ? " active" : "");
+        ultra.href = item.href;
+        ultra.dataset.key = item.key;
+        if (item.key === active) ultra.setAttribute("aria-current", "page");
+        ultra.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" '
+            + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>'
+            + '<span class="site-ultra-long">' + item.label + '</span><span class="site-ultra-short">Ultra</span>';
+        navRow.appendChild(ultra);
+    });
+    inner.appendChild(navRow);
 
     /* ---- المؤشر اللي كيزلق بين الأقسام ----
 
