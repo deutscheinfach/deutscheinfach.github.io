@@ -1895,13 +1895,13 @@
         <a class="bw-promo-tag" href="bewerbung.html">✨ جديد · Bewerbung و ترجمة الوثائق</a>
         <figure class="bw-promo-video">
             <div class="hv-box bw-promo-pc">
-                <video playsinline preload="none" poster="assets/video/bewerbung-pc.jpg?v=1">
+                <video playsinline preload="none" poster="assets/video/bewerbung-pc.jpg?v=2">
                     <source src="assets/video/bewerbung-pc.mp4?v=1" type="video/mp4">
                 </video>
                 <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
             </div>
             <div class="hv-box bw-promo-mobile">
-                <video playsinline preload="none" poster="assets/video/bewerbung-mobile.jpg?v=1">
+                <video playsinline preload="none" poster="assets/video/bewerbung-mobile.jpg?v=2">
                     <source src="assets/video/bewerbung-mobile.mp4?v=1" type="video/mp4">
                 </video>
                 <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
@@ -1922,6 +1922,7 @@
         border: 3px solid rgba(255,206,0,.55); box-shadow: 0 26px 60px -20px rgba(0,0,0,.45);
     }
     .bw-promo-mobile { display: none !important; max-width: 300px; }
+    .bw-promo-pc .hv-play { left: 30%; }   /* فوق الوثائق، ماشي فوق العنوان */
     .bw-promo-video figcaption { direction: rtl; font-weight: 800; font-size: 15px; }
     .bw-promo-video figcaption a { color: var(--accent-text, #b30e30); text-decoration: none; }
     @media (max-width: 900px) {
