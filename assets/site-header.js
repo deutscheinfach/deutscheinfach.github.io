@@ -395,6 +395,18 @@
        صاحب الموقع (users/{uid}.isAdmin = true) كيكتب الخبر من هنا،
        وكيبان لكاع الناس فالجرس مع رقم ديال اللي مازال ماشافوهش.
        الأخبار فـ Firestore: news/{id} = {title, body, link, createdAt}. */
+    /* ---- Bewerbung + ترجمة الوثائق (bewerbung.html) ---- */
+    const docs = document.createElement("a");
+    docs.href = "bewerbung.html";
+    docs.className = "site-btn site-btn-icon site-docs" + (/bewerbung\.html$/i.test(location.pathname) ? " is-here" : "");
+    docs.setAttribute("aria-label", "Bewerbung و ترجمة الوثائق");
+    docs.title = "Bewerbung و ترجمة الوثائق";
+    docs.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" '
+        + 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+        + '<path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5"/>'
+        + '<path d="M9 13h6M9 17h4"/></svg><span class="site-docs-dot" aria-hidden="true"></span>';
+    actions.appendChild(docs);
+
     const news = newsBell();
     actions.appendChild(news.root);
 
