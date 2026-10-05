@@ -391,22 +391,24 @@
         return m;
     }
 
-    function askFinish() {
-        const m = modal('<h2 style="justify-content:center">' + svg("check") + " نصححو الامتحان؟</h2>" +
-            '<p class="tr-muted">غادي نصححو الأجزاء الثمانية كاملين ونوريوك النتيجة. ماغاديش تقدر تبدل الأجوبة من بعد.</p>' +
-            '<div class="tr-row" style="justify-content:center;margin-top:12px"><button class="tr-btn" type="button" data-no>رجع للامتحان</button><button class="tr-btn tr-btn-gold" type="button" data-yes>صحح دابا</button></div>');
-        m.querySelector("[data-no]").addEventListener("click", function () { m.remove(); });
-        m.querySelector("[data-yes]").addEventListener("click", function () { m.remove(); finish(); });
-    }
-
+    let finishing = false;
     /* التصحيح: كنضغطو أزرار التصحيح داخل الـiframes، والنقط كتجي بالأحداث */
     function finish() {
+        if (!state || state.done || finishing) return;
+        finishing = true;
         clearInterval(timer);
+        /* الامتحان كيتخبى نيشان: التصحيح كيتدار ف الخفا، والمستعمل كيشوف
+           غير «كنصححو…» ومن بعد النتيجة — ماشي التصحيح ديال آخر Teil. */
+        examBox.classList.add("is-pre");
+        document.documentElement.classList.remove("is-exam-focus");
+        document.body.classList.remove("st-running");
+        view.innerHTML = '<section class="st-wait"><span class="st-wait-spin"></span><b>كنصححو الامتحان…</b><small>Lesen · Sprachbausteine · Hören</small></section>';
+        window.scrollTo({ top: 0 });
         try { if (lesenFrame && typeof lesenFrame.contentWindow.__examGradeAll === "function") lesenFrame.contentWindow.__examGradeAll(); } catch (e) { /* */ }
         hoerenFrames.forEach(function (f) {
             try { f.contentDocument.querySelectorAll(".nq-btn-check").forEach(function (b) { b.click(); }); } catch (e) { /* */ }
         });
-        examBox.querySelector(".st-frames").insertAdjacentHTML("beforebegin", '<p class="st-grading">كنصححو…</p>');
+
         setTimeout(function () {
             /* جزء ما تصححش (ماتحملش) = 0 */
             PARTS.forEach(function (p) {
@@ -414,6 +416,7 @@
                 if (p.grp === "hoeren" && state.hoeren["teil" + (p.sub + 1)] == null) state.hoeren["teil" + (p.sub + 1)] = 0;
             });
             state.done = true;
+            finishing = false;
             save();
             renderResult();
         }, 1200);
@@ -533,7 +536,7 @@
         if (a === "start") askStart();
         else if (a === "next" && state) show(state.at + 1);
         else if (a === "prev" && state) show(state.at - 1);
-        else if (a === "finish") askFinish();
+        else if (a === "finish") finish();
         else if (a === "share") share();
         else if (a === "again") { clear(); renderStart(); askStart(); }
         else if (a === "exit") {
