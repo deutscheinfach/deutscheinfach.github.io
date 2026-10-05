@@ -421,9 +421,8 @@
         if (act.dataset.act === "list") { clearState(); renderList(); }
     });
 
-    window.addEventListener("beforeunload", function (e) {
-        if (state && state.step < STEPS.length) { e.preventDefault(); e.returnValue = ""; }
-    });
+    /* بلا نافذة «Quitter le site ?» ملي كيخرج: الامتحان محفوظ ف sessionStorage
+       وكيكمل فين وقف إلا رجع. */
     document.addEventListener("de-premium", function () { if (!state) renderList(); });
 
     state = loadState();
