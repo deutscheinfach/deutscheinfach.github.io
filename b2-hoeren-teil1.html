@@ -1054,6 +1054,10 @@ window.__deutschEinfachPremiumReady = (async function () {
      دابا كنرسمو دغيا بـ "ماشي Premium" (وهو الأكثر أمانا)،
      ومنين يجي الجواب وكان Premium كنعاودو الرسم بالمواضيع محلولة. */
   var isPremiumUser = false;
+  /* داخل «اختبر نفسك» / Modelltest (?embed=1): حتى يجي الجواب ديال
+     الاشتراك، الموضوع المدفوع كيبان «كنجيبو…» ماشي مقفول. */
+  var premiumPending = true;
+  var EMBED_PAGE = /[?&]embed=1/.test(location.search);
 
   function boot() {
 
@@ -1159,7 +1163,12 @@ window.__deutschEinfachPremiumReady = (async function () {
     item.appendChild(header);
 
     /* ===== PREMIUM LOCK: Thema 06 und höher (غير إلا ماشي premium) ===== */
-    if (i >= 5 && !isPremiumUser) {
+    if (i >= 5 && !isPremiumUser && premiumPending && EMBED_PAGE) {
+      var waitBox = document.createElement("p");
+      waitBox.className = "nq-nokey";
+      waitBox.textContent = "⏳ كنجيبو الموضوع…";
+      item.appendChild(waitBox);
+    } else if (i >= 5 && !isPremiumUser) {
       var premiumBody = document.createElement("div");
       premiumBody.className = "theme-card-body premium-theme-body";
 
@@ -1617,6 +1626,8 @@ window.__deutschEinfachPremiumReady = (async function () {
 
   (window.__deutschEinfachPremiumReady || Promise.resolve(false))
     .then(function (premium) {
+      premiumPending = false;
+      if (!premium && EMBED_PAGE) boot();
       if (premium && !isPremiumUser) {
         isPremiumUser = true;
         /* الجمل ديال المواضيع المدفوعة كيجيو من Cloudflare KV */
@@ -1626,6 +1637,8 @@ window.__deutschEinfachPremiumReady = (async function () {
     })
     .catch(function (error) {
       console.error("Premium check failed:", error);
+      premiumPending = false;
+      if (EMBED_PAGE) boot();
     });
 
   window.addEventListener("resize", function () {
