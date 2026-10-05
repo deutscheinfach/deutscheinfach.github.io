@@ -1,9 +1,13 @@
 /* ===== شحال من واحد ف الموقع دابا =====
 
-   كل متصفح (داخل بحساب ولا لا) عندو id عشوائي، وكيكتب كل 90 ثانية
+   كل متصفح (داخل بحساب ولا لا) عندو id عشوائي، وكيكتب كل 5 دقايق
    presence/{id} = { at: وقت السيرفر } — غير ملي الصفحة باينة.
-   admin.html كيحسب الوثائق اللي at ديالهم ف آخر 3 دقايق
-   (getCountFromServer: قراية وحدة، ماشي وحدة لكل زائر). */
+   admin.html كيحسب الوثائق اللي at ديالهم ف آخر 7 دقايق (5 + 2 د ديال
+   الهامش) — getCountFromServer: قراية وحدة، ماشي وحدة لكل زائر.
+
+   ⚠ كل كتبة كتحسب ف الخطة المجانية ديال Firestore (20.000 ف النهار).
+   كنت كل 90 ثانية = 40 كتبة ف الساعة لكل زائر؛ دابا 12. إلا بدلتي
+   BEAT_MS، بدّل النافذة ف liveCount() ديال admin.html (BEAT_MS + 2 د). */
 (function () {
     "use strict";
     if (window.__dePresence) return;
@@ -35,15 +39,18 @@
             });
             var db = fsMod.getFirestore(app);
             var ref = fsMod.doc(db, "presence", id);
+            var BEAT_MS = 5 * 60000;
             var last = 0;
             function beat() {
                 if (document.visibilityState !== "visible") return;
-                if (Date.now() - last < 60000) return;
+                /* الـ interval كيجي كل BEAT_MS؛ الحاجز كيمنع غير الرجوع السريع
+                   للتبويب (visibilitychange) يكتب كل مرة. */
+                if (Date.now() - last < BEAT_MS - 60000) return;
                 last = Date.now();
                 fsMod.setDoc(ref, { at: fsMod.serverTimestamp() }).catch(function () { /* القواعد ماتنشراتش */ });
             }
             beat();
-            setInterval(beat, 90000);
+            setInterval(beat, BEAT_MS);
             document.addEventListener("visibilitychange", beat);
         } catch (e) { /* بلا انترنت */ }
     })();

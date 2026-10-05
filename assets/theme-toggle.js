@@ -7,7 +7,7 @@
    الزر:
    - الصفحات اللي فيها الهيدر المشترك: site-header.js كيزيد زر
      ☀️/🌙 حدا الجرس ويعيط لـ window.__deTheme.toggle().
-   - الصفحات بلا هيدر (الشات، الدخول، Schreiben…): زر صغير عايم
+   - الصفحات بلا هيدر (الدخول، Schreiben…): زر صغير عايم
      فالزاوية.
    theme.css كيقرا [data-theme="dark"] ويبدل الألوان. */
 
@@ -69,9 +69,6 @@
         apply(current(), false);
         if (document.querySelector(".site-header, .de-theme-btn")) return;
         if (root.classList.contains("is-embed")) return;
-        /* الشات: فالرأس ديال الجنب، حدا الاسم */
-        var chatHead = document.querySelector(".sidebar .logo-area");
-        if (chatHead) { chatHead.appendChild(makeButton("is-chat")); return; }
         document.body.appendChild(makeButton("is-floating"));
     }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", install);

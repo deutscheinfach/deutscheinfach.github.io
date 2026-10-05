@@ -114,7 +114,7 @@ PAGES = {
 # صفحات ماخاصهاش تبان ف Google (خاصة، ولا قديمة)
 NOINDEX = [
     "login.html", "signup.html", "einstufungstest.html", "forgot-password.html", "premium-check.html",
-    "fortschritt.html", "chat.html", "404.html",
+    "fortschritt.html", "404.html",
     "50-euro.html", "europaeischen.html", "die-tschechische-stadt-pilsen.html",
     "thema1.html", "lesen-teil1.html", "admin.html",
 ]
