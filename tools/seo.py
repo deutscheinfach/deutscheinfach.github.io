@@ -35,6 +35,9 @@ PAGES = {
         "Sprechen بالصوت، امتحانات تجريبية و Wortschatz. Telc Prüfung online üben – kostenlos starten.",
         "1.0"),
 
+    "selbsttest.html": ("اختبر نفسك – امتحان telc B2 كامل وعشوائي | Deutsch Einfach",
+        "امتحان telc B2 كامل وجديد ف كل مرة: Lesen، Sprachbausteine و Hören من مواضيع مخلطة، بالوقت، والنتيجة من 180 مع التحليل. Telc B2 Prüfung online testen.", "0.7"),
+
     "bewerbung.html": ("Bewerbung و ترجمة الوثائق للألمانية – المغرب | Deutsch Einfach",
         "كنكتبو ليك Bewerbung كاملة بالألمانية (Lebenslauf و Anschreiben) ب 200 درهم، وكنترجمو الوثائق ديالك "
         "للألمانية ب 150 درهم للورقة. Bewerbung schreiben lassen & Übersetzung für Deutschland.", "0.8"),

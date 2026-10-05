@@ -605,6 +605,11 @@ html.is-embed .lesen-toolbar,
 html.is-embed .lesen-count,
 html.is-embed .lesen-back { display: none !important; }
 html.is-embed body { padding-top: 0 !important; }
+/* ?nav=0 (اختبر نفسك): البار ديال الامتحان والأزرار ديال لتحت عند الصفحة الأم */
+html.is-embed-nonav .exam-top,
+html.is-embed-nonav .lesen-bar { display: none !important; }
+html.is-embed.is-embed-nonav.is-exam-focus body,
+html.is-embed.is-embed-nonav body { padding-top: 6px !important; padding-bottom: 20px !important; }
 html.is-embed::before, html.is-embed::after { display: none !important; }
 
 

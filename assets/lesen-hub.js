@@ -937,6 +937,9 @@
 
         /* Modelltest كيعيط لهادي ملي كيدوز لـ Hören: كيصحح الأجزاء كاملين
            (كيتصيفطو lesen-points) بلا ما نبدلو الصفحة. */
+        /* selbsttest.html (?nav=0) كيبدل الجزء من البار ديالو */
+        if (EMBEDDED) window.__examGo = function (key) { if (PART_LABEL[key]) go(key); };
+
         if (EMBEDDED) window.__examGradeAll = function () {
             PARTS.forEach(function (p) {
                 const btn = checkButton(boxes[p.key]);
