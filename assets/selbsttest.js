@@ -554,7 +554,9 @@
     });
 
     state = load();
-    if (state && state.done) renderResult();
+    /* النتيجة كتبان غير مرة وحدة: إلا خرج ورجع، كيلقى صفحة البداية
+       (آخر نتيجة مكتوبة فيها «آخر محاولة»). */
+    if (state && state.done) { clear(); renderStart(); }
     else if (state && state.mix) renderExam();
     else { state = null; renderStart(); }
 })();
