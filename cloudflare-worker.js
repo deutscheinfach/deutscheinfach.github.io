@@ -55,6 +55,26 @@ export default {
       });
     }
 
+    /* ===== المواضيع المجانية (GET ?free=lesen-b2) =====
+       كانو ف assets/lesen-b?-content.js — ولا واحد كيشوفهم ف View source.
+       دابا كيسكنو ف KV (free-lesen-b1 / free-lesen-b2) وكيتعطاو لأي واحد
+       بلا حساب، بحال API. الجواب كيتحفظ 10 دقايق ف المتصفح. */
+    if (request.method === "GET") {
+      const freeKey = new URL(request.url).searchParams.get("free") || "";
+      if (/^lesen-b[12]$/.test(freeKey)) {
+        if (!env.TOPICS) {
+          return jsonResponse({ error: "KV binding TOPICS is not configured." }, 500, allowedOrigin);
+        }
+        const text = await env.TOPICS.get("free-" + freeKey, { type: "text", cacheTtl: KV_EDGE_TTL });
+        if (!text) {
+          return jsonResponse({ error: "free_key_missing", key: "free-" + freeKey }, 404, allowedOrigin);
+        }
+        const headers = corsHeaders(allowedOrigin);
+        headers["Cache-Control"] = "public, max-age=600";
+        return new Response(text, { status: 200, headers });
+      }
+    }
+
     if (request.method !== "POST") {
       return jsonResponse(
         { error: "Method not allowed" },
@@ -810,7 +830,7 @@ function corsHeaders(origin) {
        فالطريق كيقدر يعطي جواب محفوظ لدومين آخر — والمتصفح
        كيرفضو. */
     "Vary": "Origin",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     /* المتصفح يحفظ الـpreflight (Chrome حتى ساعتين). بلاها، كل طلب
        JSON كيدير طلب OPTIONS قبل. */
