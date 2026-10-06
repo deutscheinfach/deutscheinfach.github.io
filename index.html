@@ -1894,37 +1894,87 @@
          + زر «شوف شنو كاين» ف التيليفون (كيختفي ملي تنزل)
     ========================================== -->
     <nav class="explore" id="explore" aria-label="شنو كاين ف الصفحة">
-        <p class="exp-title">👇 شنو كاين ف Deutsch Einfach؟</p>
+        <p class="exp-title"><span aria-hidden="true">👇</span> شنو كاين ف Deutsch Einfach؟</p>
         <div class="exp-grid">
-            <a class="exp-chip" href="#whatsapp-premium"><i aria-hidden="true">💬</i><b>مساعدة ف WhatsApp</b><small>مع Premium</small></a>
-            <a class="exp-chip" href="#bewerbung"><i aria-hidden="true">📁</i><b>Bewerbung و ترجمة</b><small>الوثائق للألمانية</small></a>
-            <a class="exp-chip" href="#demo"><i aria-hidden="true">📖</i><b>شوف كيفاش خدام</b><small>تمرين Lesen</small></a>
-            <a class="exp-chip" href="#why"><i aria-hidden="true">⭐</i><b>علاش Deutsch Einfach</b><small>شنو كيميزنا</small></a>
-            <a class="exp-chip" href="#telc-maroc"><i aria-hidden="true">🇲🇦</i><b>telc ف المغرب</b><small>المراكز والمواعيد</small></a>
-            <a class="exp-chip" href="payment.html"><i aria-hidden="true">🎁</i><b>العروض</b><small>Premium من 49 DH</small></a>
+            <a class="exp-chip is-main" href="#demo" style="--c:#f2b705;--i:0"><i aria-hidden="true">🎯</i><span><b>تحضير امتحان telc</b><small>B1 & B2 · Lesen، Hören، Schreiben، Sprechen</small></span></a>
+            <a class="exp-chip" href="#whatsapp-premium" style="--c:#25d366;--i:1"><i aria-hidden="true">💬</i><span><b>مساعدة ف WhatsApp</b><small>مع Premium</small></span></a>
+            <a class="exp-chip" href="#bewerbung" style="--c:#3b82f6;--i:2"><i aria-hidden="true">📁</i><span><b>Bewerbung و ترجمة</b><small>الوثائق للألمانية</small></span></a>
+            <a class="exp-chip" href="#telc-maroc" style="--c:#e11d48;--i:3"><i aria-hidden="true">🇲🇦</i><span><b>telc ف المغرب</b><small>المراكز والمواعيد</small></span></a>
+            <a class="exp-chip" href="payment.html" style="--c:#8b5cf6;--i:4"><i aria-hidden="true">🎁</i><span><b>العروض</b><small>Premium من 49 DH</small></span></a>
         </div>
     </nav>
     <a class="scroll-cue" href="#explore" aria-label="شوف شنو كاين تحت">شوف شنو كاين <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+
     <style>
-    .explore { max-width: 1120px; margin: 4px auto 30px; padding: 0 16px; direction: rtl; }
-    .exp-title { margin: 0 0 12px; text-align: center; font-weight: 900; font-size: 17px; color: var(--text, #1a1220); }
-    .exp-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+    .explore { max-width: 1120px; margin: 4px auto 34px; padding: 0 16px; direction: rtl; perspective: 900px; }
+    .exp-title { margin: 0 0 14px; text-align: center; font-weight: 900; font-size: 18px; color: var(--text, #1a1220); }
+    .exp-title span { display: inline-block; animation: exp-bob 1.6s ease-in-out infinite; }
+    .exp-grid { display: grid; grid-template-columns: 1.35fr repeat(4, minmax(0, 1fr)); gap: 12px; }
     .exp-chip {
-        display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 14px 8px 12px;
-        border-radius: 18px; text-align: center; text-decoration: none; color: var(--text, #1a1220);
-        background: var(--surface, #fff); border: 1px solid var(--line, rgba(26,18,32,.1));
-        box-shadow: 0 10px 24px -20px rgba(40,10,20,.6); transition: transform .18s, border-color .18s;
+        --c: #f2b705;
+        position: relative; overflow: hidden; isolation: isolate;
+        display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 10px 14px;
+        border-radius: 20px; text-align: center; text-decoration: none; color: var(--text, #1a1220);
+        background: var(--surface, #fff); border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line, rgba(26,18,32,.1)));
+        box-shadow: 0 14px 30px -24px color-mix(in srgb, var(--c) 80%, #000);
+        transition: transform .35s cubic-bezier(.2,.9,.3,1.3), box-shadow .35s, border-color .35s;
     }
-    .exp-chip:hover { transform: translateY(-3px); border-color: #f2b705; }
-    .exp-chip i { font-style: normal; font-size: 24px; line-height: 1.2; }
-    .exp-chip b { font-size: 14px; font-weight: 900; line-height: 1.35; }
-    .exp-chip small { font-size: 12px; font-weight: 700; color: var(--muted, #6b6274); }
+    .exp-chip span { display: flex; flex-direction: column; gap: 2px; }
+    .exp-chip i {
+        width: 50px; height: 50px; display: grid; place-items: center; border-radius: 16px;
+        font-style: normal; font-size: 25px; line-height: 1;
+        background: radial-gradient(circle at 30% 25%, #fff, color-mix(in srgb, var(--c) 28%, #fff) 70%);
+        box-shadow: 0 10px 22px -12px var(--c), inset 0 0 0 1px color-mix(in srgb, var(--c) 35%, transparent);
+        animation: exp-float 3.2s ease-in-out infinite; animation-delay: calc(var(--i) * -.6s);
+    }
+    .exp-chip b { font-size: 14.5px; font-weight: 900; line-height: 1.35; }
+    .exp-chip small { font-size: 12px; font-weight: 700; line-height: 1.5; color: var(--muted, #6b6274); }
+    /* لمعة كتدوز على البطاقات وحدة من بعد وحدة */
+    .exp-chip::after {
+        content: ""; position: absolute; z-index: -1; top: -20%; bottom: -20%; width: 45%; left: -70%;
+        background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--c) 22%, rgba(255,255,255,.7)), transparent);
+        transform: skewX(-18deg); animation: exp-shine 6s ease-in-out infinite; animation-delay: calc(var(--i) * .35s + 1.2s);
+    }
+    @media (hover: hover) {
+        .exp-chip:hover, .explore.anim.in .exp-chip:hover { transform: translateY(-7px) scale(1.03); border-color: var(--c); box-shadow: 0 24px 40px -22px var(--c), 0 0 0 4px color-mix(in srgb, var(--c) 14%, transparent); }
+        .exp-chip:hover i, .explore.anim.in .exp-chip:hover i { animation: exp-wiggle .6s ease; }
+    }
+    /* الأولى: تحضير الامتحان — خمري وذهبي، بإطار كيدور */
+    .exp-chip.is-main {
+        color: #fff; border: 2px solid transparent;
+        background:
+            radial-gradient(80% 120% at 100% 0%, rgba(242,183,5,.28), transparent 60%) padding-box,
+            linear-gradient(150deg, #5a0a1d, #8a1230 60%, #b3163a) padding-box,
+            conic-gradient(from var(--exp-a, 0deg), #f2b705, #fff1b8, #c98a00, #ff3d6a, #f2b705) border-box;
+        animation: exp-spin 5s linear infinite;
+        box-shadow: 0 22px 44px -24px #8a1230, 0 0 0 5px rgba(242,183,5,.10);
+    }
+    .exp-chip.is-main small { color: rgba(255,255,255,.78); }
+    .exp-chip.is-main b { font-size: 15.5px; color: #ffd75a; }
+    .exp-chip.is-main i { background: linear-gradient(135deg, #fff1b8, #f2b705); box-shadow: 0 12px 26px -10px #f2b705; }
+    .exp-chip.is-main::after { background: linear-gradient(100deg, transparent, rgba(255,230,140,.35), transparent); }
+    @property --exp-a { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+    @keyframes exp-spin { to { --exp-a: 360deg; } }
+    @keyframes exp-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-5px) rotate(-3deg); } }
+    @keyframes exp-wiggle { 0%, 100% { transform: rotate(0) scale(1); } 30% { transform: rotate(-12deg) scale(1.15); } 60% { transform: rotate(10deg) scale(1.1); } }
+    @keyframes exp-shine { 0%, 70% { left: -70%; } 100% { left: 140%; } }
+    @keyframes exp-bob { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(4px); } }
+    /* الدخلة: البطاقات كيطلعو وحدة بوحدة ملي توصل ليهم */
+    .explore.anim .exp-chip { opacity: 0; transform: translateY(34px) scale(.9) rotateX(18deg); }
+    .explore.anim.in .exp-chip {
+        opacity: 1; transform: none;
+        transition: opacity .6s ease, transform .75s cubic-bezier(.2,.9,.3,1.25), box-shadow .35s, border-color .35s;
+        transition-delay: calc(var(--i) * 110ms), calc(var(--i) * 110ms), 0s, 0s;
+    }
+    .explore.anim.in .exp-chip i { animation: exp-pop .7s cubic-bezier(.2,.9,.3,1.5) both, exp-float 3.2s ease-in-out infinite; animation-delay: calc(var(--i) * 110ms + .25s), calc(var(--i) * -.6s); }
+    @keyframes exp-pop { 0% { transform: scale(0) rotate(-30deg); } 100% { transform: scale(1) rotate(0); } }
     #explore, #whatsapp-premium, #bewerbung, #demo, #why, #telc-maroc { scroll-margin-top: calc(var(--site-header-h, 92px) + 14px); }
     .scroll-cue { display: none; }
     @media (max-width: 900px) {
-        .exp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-        .exp-chip { padding: 12px 6px 10px; border-radius: 16px; }
-        .exp-chip b { font-size: 13px; }
+        .exp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .exp-chip.is-main { grid-column: 1 / -1; flex-direction: row; justify-content: center; text-align: right; padding: 16px; gap: 14px; }
+        .exp-chip { padding: 14px 8px 12px; border-radius: 18px; }
+        .exp-chip b { font-size: 13.5px; }
         /* التيليفون: النص والأزرار هوما اللولين، واللوغو الكبير مخبي (كاين ف البار) */
         .hero-logo-area { order: 0 !important; }
         .hero .logo-wrapper { display: none !important; }
@@ -1942,15 +1992,30 @@
         .scroll-cue.is-gone { opacity: 0; pointer-events: none; transform: translate(-50%, 20px); }
     }
     @keyframes cue-bob { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
-    @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
+    @media (prefers-reduced-motion: reduce) {
+        .scroll-cue svg, .exp-title span, .exp-chip, .exp-chip i, .exp-chip::after { animation: none !important; }
+        .explore.anim .exp-chip { opacity: 1; transform: none; }
+    }
     </style>
     <script>
     (function () {
         var cue = document.querySelector(".scroll-cue");
-        if (!cue) return;
-        function paint() { cue.classList.toggle("is-gone", window.pageYOffset > 160); }
-        window.addEventListener("scroll", paint, { passive: true });
-        paint();
+        if (cue) {
+            var paint = function () { cue.classList.toggle("is-gone", window.pageYOffset > 160); };
+            window.addEventListener("scroll", paint, { passive: true });
+            paint();
+        }
+        /* البطاقات كيدخلو بالأنيماسيون غير ملي يبانو */
+        var box = document.getElementById("explore");
+        if (!box || !("IntersectionObserver" in window)) return;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        box.classList.add("anim");
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { box.classList.add("in"); io.disconnect(); }
+            });
+        }, { threshold: .25 });
+        io.observe(box);
     })();
     </script>
 
