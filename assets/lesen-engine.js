@@ -161,6 +161,38 @@
     });
     queueBar();
 
+    /* اللوحة اللاصقة (Überschriften…) ف PC: الطول ديالها = البلاصة الخاوية
+       بين الراس ديالها والشريط ديال الأزرار. ف الفوق ديال الصفحة (قبل ما
+       تلصق) كتكون قصيرة، وكتطول ملي تنزل — هكا آخر عنوان (J) ديما باين
+       فوق الشريط وماكيتخباش تحتو. */
+    let fitQueued = false;
+    function fitPanels() {
+        fitQueued = false;
+        const panels = document.querySelectorAll(".t1-panel");
+        if (!panels.length) return;
+        const on = WIDE.matches && document.body.classList.contains("has-lesen-bar") && !bar.hidden;
+        const limit = on ? bar.getBoundingClientRect().top - 14 : 0;
+        panels.forEach(function (panel) {
+            if (!on || !panel.getClientRects().length) {
+                if (panel.style.maxHeight) panel.style.maxHeight = "";
+                return;
+            }
+            const room = Math.max(220, Math.round(limit - panel.getBoundingClientRect().top));
+            const want = room + "px";
+            if (panel.style.maxHeight !== want) panel.style.maxHeight = want;
+        });
+    }
+    function queueFit() {
+        if (fitQueued) return;
+        fitQueued = true;
+        requestAnimationFrame(fitPanels);
+    }
+    window.addEventListener("scroll", queueFit, { passive: true });
+    window.addEventListener("resize", queueFit);
+    new MutationObserver(queueFit).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    setInterval(queueFit, 1500);   /* لوحة جديدة (تبديل النسخة / التمرين) */
+    queueFit();
+
     /* من بعد ما يختار جواب: فالـPC اللوحة كتسكرولي بوحدها للسؤال الجاي
        اللي مازال ماتجاوبش — ماكيحتاجش يقلب عليه. الصفحة ماكتتحركش. */
     window.__lesenNext = function (panel, rows, row) {
