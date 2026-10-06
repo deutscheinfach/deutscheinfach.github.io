@@ -25,13 +25,15 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://deutsch-einfach.online/"
 IMAGE = SITE + "assets/icon-512.png"
 BRAND = "Deutsch Einfach"
+ALT_NAMES = ["deutsch-einfach", "Deutsch-Einfach", "deutsch-einfach.online", "Deutsch Einfach telc"]
 
 # ---------------------------------------------------------------- الصفحات
 # file: (title, description, priority)
 PAGES = {
     "index.html": (
-        "Telc B1 & B2 Prüfungsvorbereitung | Deutsch Einfach",
-        "حضّر امتحان telc B1 و B2 بالدارجة: Lesen، Hören، Schreiben مع تصحيح بالذكاء الاصطناعي، "
+        # السمية ديال الموقع هي اللولة: باش يبان ملي يكتبو «deutsch einfach»
+        "Deutsch Einfach – Telc B1 & B2 Prüfungsvorbereitung online",
+        "Deutsch Einfach (deutsch-einfach.online): حضّر امتحان telc B1 و B2 بالدارجة: Lesen، Hören، Schreiben مع تصحيح بالذكاء الاصطناعي، "
         "Sprechen بالصوت، امتحانات تجريبية و Wortschatz. Telc Prüfung online üben – kostenlos starten.",
         "1.0"),
 
@@ -161,6 +163,8 @@ JSON_LD = {
             "@id": SITE + "#website",
             "url": SITE,
             "name": BRAND,
+            # Google كيستعمل name و alternateName باش يعرف سمية الموقع
+            "alternateName": ALT_NAMES,
             "inLanguage": ["ar", "de"],
             "description": "Telc B1 & B2 Prüfungsvorbereitung auf Arabisch und Darija.",
         },
@@ -168,6 +172,7 @@ JSON_LD = {
             "@type": "EducationalOrganization",
             "@id": SITE + "#org",
             "name": BRAND,
+            "alternateName": ALT_NAMES,
             "url": SITE,
             "logo": IMAGE,
             "areaServed": "MA",
