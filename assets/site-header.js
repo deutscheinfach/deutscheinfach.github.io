@@ -45,7 +45,8 @@
     brand.className = "site-brand";
     brand.href = "./";
     brand.innerHTML =
-        '<img src="assets/icon-192.png" alt="Deutsch Einfach" width="40" height="40">' +
+        /* logo-80.webp (~5KB) بلاصة icon-192.png (كان 82KB) — كيبان دغيا */
+        '<img src="assets/logo-80.webp" alt="Deutsch Einfach" width="40" height="40" fetchpriority="high" decoding="async">' +
         '<span class="site-brand-text">' +
         '<span class="site-brand-name">Deutsch <span>Einfach</span></span>' +
         '<span class="site-brand-sub">TELC PREP B1/B2</span>' +
