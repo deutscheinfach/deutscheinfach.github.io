@@ -156,98 +156,10 @@
         return Array.from(wrap.querySelectorAll("[data-answer]"));
     }
 
-    /* ===== زر الترجمة العربية =====
-       شي مواضيع عندهم الترجمة (q.ar) وزر ديالهم. للباقيين كنزيدو نفس
-       الزر، والترجمة كتجي من الـWorker (نفس translate ديال Schreiben،
-       مع كاش 30 يوم — كتترجم مرة وحدة للجميع). */
-    const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
-
-    function statementsOf(wrap) {
-        return rowsOf(wrap).map(function (row) {
-            const textEl = row.querySelector(".nq-question-text");
-            const span = textEl && sentence(textEl);
-            return { textEl: textEl, text: span ? (span.__kwText != null ? span.__kwText : span.textContent).trim() : "" };
-        });
-    }
-
-    async function translate(items) {
-        const source = items.map(function (it, i) { return (i + 1) + ". " + it.text; }).join("\n");
-        const res = await fetch(ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ translate: { text: source } })
-        });
-        const data = await res.json().catch(function () { return {}; });
-        if (!res.ok || !data.translation) throw new Error(data.error || ("HTTP " + res.status));
-        const out = [];
-        data.translation.split("\n").forEach(function (line) {
-            const m = line.match(/^\s*([0-9\u0660-\u0669]+)\s*[.)\-:]\s*(.+)$/);
-            if (!m) return;
-            const n = Number(m[1].replace(/[\u0660-\u0669]/g, function (d) { return d.charCodeAt(0) - 0x0660; }));
-            out[n - 1] = m[2].trim();
-        });
-        return out;
-    }
-
-    function addArButton(wrap) {
-        if (wrap.__arDone || wrap.querySelector(".ar-toggle")) return;
-        if (!rowsOf(wrap).length) return;
-        wrap.__arDone = true;
-
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = "ar-toggle";
-        btn.style.margin = "0 0 14px";
-        const icon = document.createElement("span");
-        icon.className = "ar-toggle-icon";
-        icon.setAttribute("aria-hidden", "true");
-        icon.textContent = "ع";
-        const label = document.createElement("span");
-        btn.append(icon, label);
-
-        let loaded = false, busy = false;
-        function show(on) {
-            wrap.classList.toggle("show-ar", on);
-            btn.classList.toggle("is-on", on);
-            btn.setAttribute("aria-pressed", on ? "true" : "false");
-            label.textContent = on ? "خبي الترجمة" : "بين الترجمة العربية";
-        }
-        show(false);
-
-        btn.addEventListener("click", async function () {
-            if (busy) return;
-            if (loaded) { show(!wrap.classList.contains("show-ar")); return; }
-            busy = true;
-            label.textContent = "كنترجمو…";
-            try {
-                const items = statementsOf(wrap);
-                const ar = await translate(items);
-                items.forEach(function (it, i) {
-                    if (!it.textEl || !ar[i]) return;
-                    const el = document.createElement("span");
-                    el.className = "nq-question-ar";
-                    el.dir = "rtl";
-                    el.textContent = ar[i];
-                    it.textEl.appendChild(el);
-                });
-                loaded = true;
-                show(true);
-            } catch (e) {
-                label.textContent = "ما قدرناش نترجمو — عاود";
-            }
-            busy = false;
-        });
-
-        const after = wrap.querySelector(".nq-note") || wrap.querySelector(".nq-intro");
-        if (after) after.insertAdjacentElement("afterend", btn);
-        else wrap.insertBefore(btn, wrap.firstChild);
-    }
-
-    function scan() {
-        document.querySelectorAll(".native-quiz-wrap").forEach(addArButton);
-    }
-    new MutationObserver(scan).observe(document.documentElement, { childList: true, subtree: true });
-    scan();
+    /* ===== الترجمة العربية =====
+       الترجمة (q.ar) كتجي مع الموضوع راسو، والزر ديالها كيترسم ف
+       الصفحة (buildNativeQuiz). Hören ماكيستعملش Gemini للترجمة —
+       Gemini غير لـ Schreiben (باش مايسالاش الـ limit). */
 
     document.addEventListener("click", function (event) {
         const btn = event.target.closest(".nq-btn-check, .nq-btn-show, .nq-btn-retry");
