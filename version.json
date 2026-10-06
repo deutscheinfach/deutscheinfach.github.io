@@ -1,5 +1,5 @@
 {
-  "build": "3362cd40973a",
+  "build": "9c28109f4d43",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
@@ -57,7 +57,7 @@
     "assets/theme-toggle.js": "582e5683",
     "assets/theme.css": "97151117",
     "assets/title-toggle.js": "479dc890",
-    "assets/training.css": "352b9933",
+    "assets/training.css": "20f326a3",
     "assets/ultra-premium.js": "f8103cb8",
     "assets/ultra.css": "4983e5da",
     "assets/whatsapp.js": "56de1cb7",

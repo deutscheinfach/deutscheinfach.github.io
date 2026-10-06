@@ -373,17 +373,17 @@ body.st-running .st-shell { max-width: none; padding: 0; }
 .st-lvl { padding: 2px 8px; border-radius: 6px; font-size: 10.5px; font-weight: 900; letter-spacing: .05em; color: var(--on-brand, #fff); background: var(--grad-brand); }
 .st-tabs { flex: 1 1 auto; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; justify-content: center; }
 .st-tabs::-webkit-scrollbar { display: none; }
-.st-grp { flex: none; display: flex; flex-direction: column; gap: 3px; padding: 4px 5px 5px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); transition: border-color .15s, box-shadow .15s; }
+.st-grp { flex: none; display: flex; flex-direction: column; gap: 4px; padding: 5px 6px 6px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); transition: border-color .15s, box-shadow .15s; }
 .st-grp.is-on { border-color: color-mix(in srgb, var(--brand) 45%, var(--line)); box-shadow: 0 6px 18px -12px var(--brand); }
 .st-grp-t { padding: 0 6px; font-size: 9.5px; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 .st-grp.is-on .st-grp-t { color: var(--accent-text); }
-.st-grp-tabs { display: flex; gap: 3px; }
-.st-tab { position: relative; min-width: 50px; display: flex; flex-direction: column; align-items: center; padding: 4px 10px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); font: inherit; cursor: pointer; line-height: 1.1; transition: background .15s, color .15s; }
-.st-tab:hover { background: var(--surface); }
+.st-grp-tabs { display: flex; gap: 5px; }
+.st-tab { position: relative; min-width: 50px; display: flex; flex-direction: column; align-items: center; padding: 4px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--muted); font: inherit; cursor: pointer; line-height: 1.1; box-shadow: 0 2px 6px -4px rgba(0,0,0,.25); transition: background .15s, color .15s, border-color .15s; }
+.st-tab:hover { border-color: color-mix(in srgb, var(--brand) 40%, var(--line)); }
 .st-tab b { font-size: 15px; font-weight: 900; color: var(--text); }
 .st-tab em { font-style: normal; font-size: 9.5px; font-weight: 800; opacity: .75; }
-.st-tab.is-seen::after { content: ""; position: absolute; top: 4px; right: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok, #0f9d58); box-shadow: 0 0 0 2px var(--surface-2); }
-.st-tab.is-on { background: var(--grad-brand); box-shadow: 0 8px 18px -10px var(--brand); }
+.st-tab.is-seen::after { content: ""; position: absolute; top: 4px; right: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok, #0f9d58); box-shadow: 0 0 0 2px var(--surface); }
+.st-tab.is-on { background: var(--grad-brand); border-color: transparent; box-shadow: 0 8px 18px -10px var(--brand); }
 .st-tab.is-on b, .st-tab.is-on em { color: var(--on-brand, #fff); opacity: 1; }
 .st-tab.is-on.is-seen::after { box-shadow: 0 0 0 2px #fff; }
 .st-timer { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 12px; background: var(--text); color: var(--surface); font-weight: 900; font-size: 17px; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
@@ -505,6 +505,7 @@ body.st-running .st-shell { max-width: none; padding: 0; }
     .st-grp-t { text-align: center; padding: 0; }
     .st-full { display: none; }
     .st-short { display: inline; }
+    .st-grp-tabs { gap: 3px; }
     .st-tab { min-width: 0; padding: 3px 2px; }
     .st-tab b { font-size: 14px; }
     .st-nav { min-height: 46px; padding: 0 12px; }
