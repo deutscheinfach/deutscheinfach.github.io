@@ -3174,6 +3174,15 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 .lesen-bar .lesen-btn-show { margin-left: auto; }
 .lesen-bar .lesen-btn { font-family: "Cairo", system-ui, sans-serif; font-size: 15px; }
 body.has-lesen-bar { padding-bottom: 84px; }
+/* اللوحة اللاصقة (Überschriften / Anzeigen…) كتسالى فوق الشريط ديال الأزرار،
+   وإلا آخر عنوان (J) كيتخبى تحتو. */
+@media (min-width: 1001px) {
+    body.has-lesen-bar .t1-panel {
+        box-sizing: border-box;
+        top: calc(var(--site-header-h, 92px) + 10px);
+        max-height: calc(100vh - var(--site-header-h, 92px) - 10px - 84px - 14px);
+    }
+}
 .lesen-score, .sp2-pop { scroll-margin: 110px 0; }
 .lesen-actions-anchor { display: inline; }
 @media (max-width: 640px) {
