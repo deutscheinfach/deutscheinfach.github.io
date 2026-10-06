@@ -5,7 +5,9 @@
 
    الاستعمال:
      <script src="assets/scroll-cue.js" data-target="#explore" defer></script>
-   data-target = القسم اللي كينزل ليه. */
+   data-target = القسم اللي كينزل ليه. ولا بزاف مفرقين بفاصلة
+   ("#plans,#whatsapp-premium,#ultra"): الزر كيدي للقسم الجاي، ومن بعد
+   كيبان عاوتاني للي من بعدو، حتى يساليو — عاد كيختفي. */
 (function () {
     "use strict";
 
@@ -14,8 +16,9 @@
     var label = (me && me.getAttribute("data-label")) || "شوف شنو كاين";
 
     function init() {
-        var to = target && document.querySelector(target);
-        if (!to) return;
+        var list = target.split(",").map(function (sel) { return document.querySelector(sel.trim()); })
+            .filter(Boolean);
+        if (!list.length) return;
 
         var css = document.createElement("style");
         css.textContent =
@@ -33,20 +36,44 @@
 
         var cue = document.createElement("a");
         cue.className = "scroll-cue";
-        cue.href = target;
+        cue.href = "#";
         cue.setAttribute("aria-label", label + " تحت");
         cue.innerHTML = label + ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
-        cue.addEventListener("click", function (e) {
-            e.preventDefault();
-            var head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--site-header-h")) || 0;
-            var y = to.getBoundingClientRect().top + window.pageYOffset - head - 14;
-            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-        });
         document.body.appendChild(cue);
 
-        function paint() { cue.classList.toggle("is-gone", window.pageYOffset > 160); }
-        window.addEventListener("scroll", paint, { passive: true });
+        function head() {
+            return parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--site-header-h")) || 0;
+        }
+        /* القسم الجاي: أول واحد مازال الراس ديالو تحت نص الشاشة */
+        function next() {
+            var line = window.innerHeight * 0.5;
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].getBoundingClientRect().top > line) return list[i];
+            }
+            return null;
+        }
+        cue.addEventListener("click", function (e) {
+            e.preventDefault();
+            var to = next();
+            if (!to) return;
+            var y = to.getBoundingClientRect().top + window.pageYOffset - head() - 14;
+            window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+        });
+
+        var ticking = false;
+        function paint() {
+            ticking = false;
+            var to = next();
+            /* قسم واحد (الصفحة الرئيسية): كيختفي ملي تبدا تنزل */
+            var gone = !to || (list.length === 1 && window.pageYOffset > 160);
+            cue.classList.toggle("is-gone", gone);
+            if (to && to.id) cue.href = "#" + to.id;
+        }
+        window.addEventListener("scroll", function () {
+            if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+        }, { passive: true });
+        window.addEventListener("resize", paint);
         paint();
     }
 
