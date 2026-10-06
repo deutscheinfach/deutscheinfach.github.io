@@ -101,7 +101,9 @@
     window.__hoerenPremiumMerge = function (themes, result) {
         if (!result || !result.ok || !result.data || !result.data.themes) return;
         themes.forEach(function (t, i) {
-            const p = result.data.themes[String(i + 1)];
+            /* "kv": الرقم ديال الموضوع ف KV ملي تحيد شي موضوع قبلو
+               (مثلاً Wanderung ف B2 Teil 3) — باش مانبدلوش KV. */
+            const p = result.data.themes[String(t.kv || i + 1)];
             if (t.premium && p && Array.isArray(p.questions)) {
                 t.questions = p.questions;
                 if (p.note) t.note = p.note;

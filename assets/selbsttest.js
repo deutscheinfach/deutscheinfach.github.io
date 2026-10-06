@@ -25,7 +25,7 @@
 
     const STATE_KEY = "de-st-state";
     /* عدد المواضيع ف كل جزء ديال Hören (b1/b2-hoeren-teilN.html) */
-    const HOEREN_COUNT = { b1: [23, 20, 22], b2: [62, 71, 59] };
+    const HOEREN_COUNT = { b1: [23, 20, 22], b2: [62, 71, 55] };
     const LEVEL_KEY = "de-st-level";
     function chosenLevel() {
         try { const v = localStorage.getItem(LEVEL_KEY); if (v === "b1" || v === "b2") return v; } catch (e) { /* */ }

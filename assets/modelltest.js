@@ -19,7 +19,7 @@
     if (!root) return;
 
     const STATE_KEY = "de-mt-state";
-    const HOEREN_COUNT = [62, 71, 56];
+    const HOEREN_COUNT = [62, 71, 55];
     const HOEREN_FREE = 5;
     const LESEN_PARTS = ["teil1", "teil2", "teil3", "sprach1", "sprach2"];
     const LESEN_MAX = { teil1: 25, teil2: 25, teil3: 25, sprach1: 15, sprach2: 15 };
