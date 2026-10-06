@@ -50,6 +50,10 @@
             "padding:11px 14px;margin:0 0 10px;border-radius:14px;background:var(--surface-2,#f4f6fb);",
             "border:1px solid var(--line,rgba(16,26,54,.11));font-weight:800;font-size:14.5px}",
             ".dl-topic b{direction:ltr;unicode-bidi:isolate}",
+            ".dl-wa{position:relative;display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:11px 13px;border-radius:14px;text-align:right;",
+            "background:color-mix(in srgb,#25d366 12%,transparent);border:1px solid color-mix(in srgb,#25d366 35%,transparent);font-size:13.5px;line-height:1.65;font-weight:700}",
+            ".dl-wa svg{flex:none;width:20px;height:20px;margin-top:2px;color:#16a34a}",
+            ".dl-wa b{display:block;font-weight:900}",
             ".dl-plan{display:inline-flex;align-items:center;gap:6px;margin:0 0 18px;font-size:13.5px;font-weight:800;color:var(--muted,#56607a)}",
             ".dl-plan span{padding:3px 10px;border-radius:999px;color:#fff;background:var(--brand,#e3163f);font-weight:900;letter-spacing:.02em}",
             ".dl-go{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 16px;border-radius:14px;",
@@ -69,6 +73,7 @@
 
     var CROWN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
         + 'stroke-linejoin="round" aria-hidden="true"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>';
+    var WA = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3z"/></svg>';
     var LOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
         + 'stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5"/>'
         + '<path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.4" fill="currentColor" stroke="none"/></svg>';
@@ -118,6 +123,13 @@
             topic.appendChild(name);
             box.appendChild(topic);
         }
+
+        /* Premium فيه حتى مساعدة شخصية ف WhatsApp */
+        var wa = document.createElement("div");
+        wa.className = "dl-wa";
+        wa.innerHTML = WA + "<div><b>+ مساعدة شخصية ف WhatsApp</b>"
+            + "أي سؤال على Lesen، Hören، Schreiben و Sprechen، كيفاش تخدم بالموقع، ولا نهار الامتحان — كنجاوبوك.</div>";
+        box.appendChild(wa);
 
         var plan = document.createElement("div");
         plan.className = "dl-plan";
