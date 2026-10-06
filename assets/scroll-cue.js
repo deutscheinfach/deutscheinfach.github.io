@@ -1,7 +1,8 @@
 /* ===== زر «شوف شنو كاين ↓» =====
 
    زر ذهبي صغير لتحت ف الوسط (PC والتيليفون) كيقول للزائر بلي كاين
-   محتوى تحت. ملي يبرك عليه كينزل للقسم، وكيختفي بوحدو ملي ينزل شوية.
+   محتوى تحت. ملي يبرك عليه كينزل للقسم. كيختفي ملي الزائر كيسكرولي،
+   وكيرجع ملي يحبس.
 
    الاستعمال:
      <script src="assets/scroll-cue.js" data-target="#explore" defer></script>
@@ -61,16 +62,18 @@
             window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
         });
 
-        var ticking = false;
+        /* كيختفي ملي الزائر كينزل/كيطلع، وكيرجع ملي يحبس */
+        var moving = false, idle = 0, ticking = false;
         function paint() {
             ticking = false;
             var to = next();
-            /* قسم واحد (الصفحة الرئيسية): كيختفي ملي تبدا تنزل */
-            var gone = !to || (list.length === 1 && window.pageYOffset > 160);
-            cue.classList.toggle("is-gone", gone);
+            cue.classList.toggle("is-gone", moving || !to);
             if (to && to.id) cue.href = "#" + to.id;
         }
         window.addEventListener("scroll", function () {
+            moving = true;
+            clearTimeout(idle);
+            idle = setTimeout(function () { moving = false; paint(); }, 450);
             if (!ticking) { ticking = true; requestAnimationFrame(paint); }
         }, { passive: true });
         window.addEventListener("resize", paint);
