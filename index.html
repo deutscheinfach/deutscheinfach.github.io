@@ -1889,6 +1889,72 @@
     </section>
 
 
+    <!-- =========================================
+         شنو كاين ف الصفحة: روابط سريعة للأقسام اللي تحت
+         + زر «شوف شنو كاين» ف التيليفون (كيختفي ملي تنزل)
+    ========================================== -->
+    <nav class="explore" id="explore" aria-label="شنو كاين ف الصفحة">
+        <p class="exp-title">👇 شنو كاين ف Deutsch Einfach؟</p>
+        <div class="exp-grid">
+            <a class="exp-chip" href="#whatsapp-premium"><i aria-hidden="true">💬</i><b>مساعدة ف WhatsApp</b><small>مع Premium</small></a>
+            <a class="exp-chip" href="#bewerbung"><i aria-hidden="true">📁</i><b>Bewerbung و ترجمة</b><small>الوثائق للألمانية</small></a>
+            <a class="exp-chip" href="#demo"><i aria-hidden="true">📖</i><b>شوف كيفاش خدام</b><small>تمرين Lesen</small></a>
+            <a class="exp-chip" href="#why"><i aria-hidden="true">⭐</i><b>علاش Deutsch Einfach</b><small>شنو كيميزنا</small></a>
+            <a class="exp-chip" href="#telc-maroc"><i aria-hidden="true">🇲🇦</i><b>telc ف المغرب</b><small>المراكز والمواعيد</small></a>
+            <a class="exp-chip" href="payment.html"><i aria-hidden="true">🎁</i><b>العروض</b><small>Premium من 49 DH</small></a>
+        </div>
+    </nav>
+    <a class="scroll-cue" href="#explore" aria-label="شوف شنو كاين تحت">شوف شنو كاين <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></a>
+    <style>
+    .explore { max-width: 1120px; margin: 4px auto 30px; padding: 0 16px; direction: rtl; }
+    .exp-title { margin: 0 0 12px; text-align: center; font-weight: 900; font-size: 17px; color: var(--text, #1a1220); }
+    .exp-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+    .exp-chip {
+        display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 14px 8px 12px;
+        border-radius: 18px; text-align: center; text-decoration: none; color: var(--text, #1a1220);
+        background: var(--surface, #fff); border: 1px solid var(--line, rgba(26,18,32,.1));
+        box-shadow: 0 10px 24px -20px rgba(40,10,20,.6); transition: transform .18s, border-color .18s;
+    }
+    .exp-chip:hover { transform: translateY(-3px); border-color: #f2b705; }
+    .exp-chip i { font-style: normal; font-size: 24px; line-height: 1.2; }
+    .exp-chip b { font-size: 14px; font-weight: 900; line-height: 1.35; }
+    .exp-chip small { font-size: 12px; font-weight: 700; color: var(--muted, #6b6274); }
+    #explore, #whatsapp-premium, #bewerbung, #demo, #why, #telc-maroc { scroll-margin-top: calc(var(--site-header-h, 92px) + 14px); }
+    .scroll-cue { display: none; }
+    @media (max-width: 900px) {
+        .exp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+        .exp-chip { padding: 12px 6px 10px; border-radius: 16px; }
+        .exp-chip b { font-size: 13px; }
+        /* التيليفون: النص والأزرار هوما اللولين، واللوغو الكبير مخبي (كاين ف البار) */
+        .hero-logo-area { order: 0 !important; }
+        .hero .logo-wrapper { display: none !important; }
+        /* باش الأزرار يبانو ف أول شاشة */
+        .hero-points, .hero-cta-line { display: none !important; }
+        .scroll-cue {
+            display: inline-flex; align-items: center; gap: 6px; position: fixed; z-index: 800;
+            left: 50%; bottom: calc(14px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+            padding: 10px 18px; border-radius: 999px; direction: rtl; white-space: nowrap;
+            font: 900 14px/1 'Cairo', system-ui, sans-serif; text-decoration: none; color: #2a1500;
+            background: linear-gradient(135deg, #ffe58a, #f2b705); box-shadow: 0 12px 26px -10px rgba(120,80,0,.7);
+            transition: opacity .25s, transform .25s;
+        }
+        .scroll-cue svg { width: 18px; height: 18px; animation: cue-bob 1.4s ease-in-out infinite; }
+        .scroll-cue.is-gone { opacity: 0; pointer-events: none; transform: translate(-50%, 20px); }
+    }
+    @keyframes cue-bob { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
+    @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } }
+    </style>
+    <script>
+    (function () {
+        var cue = document.querySelector(".scroll-cue");
+        if (!cue) return;
+        function paint() { cue.classList.toggle("is-gone", window.pageYOffset > 160); }
+        window.addEventListener("scroll", paint, { passive: true });
+        paint();
+    })();
+    </script>
+
+
     <!-- Premium: مساعدة شخصية ف WhatsApp (assets/premium-wa.css) -->
     <section class="pwa" id="whatsapp-premium" aria-label="مساعدة Premium ف WhatsApp">
         <div class="pwa-in">
@@ -1916,7 +1982,7 @@
          (PC 16:9 و التيليفون 9:16 — preload="none")
     ========================================== -->
 
-    <section class="bw-promo">
+    <section class="bw-promo" id="bewerbung">
         <a class="bw-promo-tag" href="bewerbung.html">✨ جديد · Bewerbung و ترجمة الوثائق</a>
         <figure class="bw-promo-video">
             <div class="hv-box bw-promo-pc">
@@ -1961,7 +2027,7 @@
          SECTION TITLE
     ========================================== -->
 
-    <div class="section-title">
+    <div class="section-title" id="demo">
 
         <span class="mini">
             🎯 Deine Prüfungsvorbereitung
@@ -2120,7 +2186,7 @@
          PROMISE
     ========================================== -->
 
-    <section class="promise">
+    <section class="promise" id="why">
 
 
         <div class="promise-content">
@@ -2213,7 +2279,7 @@
          دليل telc ف المغرب
     ========================================== -->
 
-    <a class="tm-home" href="telc-maroc.html">
+    <a class="tm-home" id="telc-maroc" href="telc-maroc.html">
         <span class="tm-home-ico" aria-hidden="true">🇲🇦</span>
         <span class="tm-home-txt">
             <small>دليل 2026</small>
