@@ -27,7 +27,7 @@
            ديالو باش يبان ذهبي بين الباقي. */
         /* «اختبر نفسك»: امتحان عشوائي (Premium) ف modelltest.html */
         { key: "selbsttest", href: "selbsttest.html", label: "اختبر نفسك" },
-        { key: "ultra",     href: "ultra-premium.html", label: "Ultra Premium", gold: true }
+        { key: "ultra",     href: "payment.html", label: "Premium", gold: true }
     ];
 
     let active = mount.dataset.active || "";
@@ -84,7 +84,7 @@
         nav.appendChild(link);
     });
 
-    /* Ultra Premium: زر ذهبي بوحدو حدا التنقل (ماشي داخلو) — بحال
+    /* Premium (payment.html، وتحتو Ultra Premium): زر ذهبي بوحدو حدا التنقل (ماشي داخلو) — بحال
        Zertify. التنقل + الزر ف سطر واحد (site-navrow). */
     const navRow = document.createElement("div");
     navRow.className = "site-navrow";
@@ -98,7 +98,7 @@
         if (item.key === active) ultra.setAttribute("aria-current", "page");
         ultra.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" '
             + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l4.5 4L12 4l4.5 7L21 7l-2 12H5z"/></svg>'
-            + '<span class="site-ultra-long">' + item.label + '</span><span class="site-ultra-short">Ultra</span>';
+            + '<span class="site-ultra-long">' + item.label + '</span><span class="site-ultra-short">' + item.label + '</span>';
         navRow.appendChild(ultra);
     });
     inner.appendChild(navRow);
