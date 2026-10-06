@@ -1,5 +1,5 @@
 {
-  "build": "34a0df46ea14",
+  "build": "fe85a61f1a7e",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
@@ -8,6 +8,7 @@
     "assets/hoeren-keys.js": "a46afc39",
     "assets/hoeren-nav.css": "46bcbede",
     "assets/hoeren-premium.js": "1d9a9128",
+    "assets/hoeren-toc.js": "28f13972",
     "assets/https-upgrade.js": "473efbeb",
     "assets/icons.css": "61993c15",
     "assets/keys-toggle.js": "c8b1eb02",
@@ -20,7 +21,7 @@
     "assets/lesen-premium.js": "b09949b2",
     "assets/lesen-sprach.js": "4e48be62",
     "assets/lesen-sprach2.js": "20fa03ac",
-    "assets/lesen-teil1.js": "0fbd180a",
+    "assets/lesen-teil1.js": "71659150",
     "assets/lesen-teil2.js": "a8346e3d",
     "assets/lesen-teil3.js": "69abd9c9",
     "assets/locked-modal.js": "b79fe913",
@@ -56,7 +57,7 @@
     "assets/theme-toggle.js": "582e5683",
     "assets/theme.css": "97151117",
     "assets/title-toggle.js": "479dc890",
-    "assets/training.css": "352b9933",
+    "assets/training.css": "20f326a3",
     "assets/ultra-premium.js": "f8103cb8",
     "assets/ultra.css": "4983e5da",
     "assets/whatsapp.js": "56de1cb7",

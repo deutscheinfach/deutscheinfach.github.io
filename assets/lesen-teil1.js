@@ -184,7 +184,8 @@
             /* ---- العمود ديال النصوص ---- */
             const column = el("div", "t1-texts");
 
-            if (variant.intro) column.appendChild(el("p", "t1-intro", variant.intro));
+            /* الجملة ديال التعليمات (Lesen Sie …) ماكتبانش: النصوص كيبداو
+               ف نفس المستوى ديال العمود ديال Überschriften. */
             if (variant.note) column.appendChild(el("p", "t1-note", variant.note));
 
             texts.forEach(function (text, i) {
