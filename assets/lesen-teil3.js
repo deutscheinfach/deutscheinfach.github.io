@@ -383,19 +383,25 @@
                     /* فوق نص الإعلان: رقم الوضعية الصحيحة ونصها */
                     const sitRow = sitRows.find(function (x) { return x.no === want; });
                     const adBody = row.box.querySelector(".t1-body");
+                    let words = null;
                     if (adBody && real && sitRow) {
                         const title = el("div", "kw-title");
                         title.appendChild(el("span", "kw-key", want));
-                        title.appendChild(el("span", "kw-words", sitRow.sit.de || ""));
+                        words = el("span", "kw-words", sitRow.sit.de || "");
+                        title.appendChild(words);
                         adBody.parentNode.insertBefore(title, adBody);
                     }
 
-                    /* الكلمات المشتركين بين الإعلان والوضعية الصحيحة */
+                    /* الكلمات المشتركين بين الإعلان والوضعية الصحيحة —
+                       ف اللائحة وحتى ف الوضعية اللي فوق نص الإعلان */
                     if (sitRow && adBody && window.__lesenKeys) {
                         const sitText = sitRow.node.querySelector(".t3-sit-de");
                         const adHead = row.box.querySelector(".t3-ad-head");
                         if (sitText) {
-                            window.__lesenKeys.link([sitText], [adHead, adBody].filter(Boolean));
+                            const ad = [adHead, adBody].filter(Boolean);
+                            window.__lesenKeys.link([sitText], ad);
+                            /* نفس النص → نفس الكلمات الصفر بحال اللي ف اللائحة */
+                            if (words) window.__lesenKeys.link([words], ad);
                         }
                     }
                 });
