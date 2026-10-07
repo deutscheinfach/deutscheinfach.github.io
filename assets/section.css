@@ -3732,3 +3732,13 @@ html.is-topic-focus .lesen-detail-head { margin-top: 4px; margin-bottom: 6px; ju
 .part-card:hover .part-cta { gap: 14px; }
 html[dir="ltr"] .part-cta svg, [dir="ltr"] .part-cta svg { transform: none; }
 @media (prefers-reduced-motion: reduce) { .part-card, .part-card::after { transition: none; } }
+
+/* ===== العربية ف الصفحات اللي مدايرين LTR =====
+   الجملة كتاخد الاتجاه من أول كلمة فيها: عربية → من اليمين، ألمانية →
+   من الشمال. قبل، «امتحانات كاملة: كل Prüfung فيها…» كانت كتخلط
+   والنقطة كتجي ف البداية. */
+.lesen-hero .lead,
+.lesen-count,
+.part-card p { unicode-bidi: plaintext; text-align: start; }
+/* ف PC الجملة كتبقى تحت العنوان (على الشمال)، ف التيليفون من اليمين */
+@media (min-width: 700px) { .lesen-hero .lead { text-align: left; } }

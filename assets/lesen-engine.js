@@ -230,7 +230,7 @@
 
         try {
             window.dispatchEvent(new CustomEvent("lesen-points",
-                { detail: { part: part, points: points, max: max, right: right, total: total } }));
+                { detail: { part: part, points: points, max: max, right: right, total: total, reveal: !!reveal } }));
         } catch (e) { /* متصفح قديم */ }
         return points;
     };
