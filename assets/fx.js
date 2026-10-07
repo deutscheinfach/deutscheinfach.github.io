@@ -7,12 +7,14 @@
    3) Confetti بالألوان ديال ألمانيا ملي الطالب كيجيب النقطة كاملة
       (lesen-points / hoeren-points)، غير ملي جاوب هو — ماشي «شوف الحل».
 
-   prefers-reduced-motion → والو. داخل Modelltest / اختبر نفسك (?embed=1)
-   ماكاينش confetti. */
+   4) صوت احتفال قصير مع confetti.
+
+   prefers-reduced-motion → بلا حركة (الصوت كيبقى). داخل Modelltest /
+   اختبر نفسك (?embed=1) ماكاينش confetti ولا صوت. */
 (function () {
     "use strict";
 
-    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var CALM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
     var EMBED = /[?&]embed=1/.test(location.search);
     var root = document.documentElement;
 
@@ -21,8 +23,10 @@
         "html.fx-on .fx-wait{opacity:0;transform:translateY(22px) scale(.97)}" +
         "html.fx-on .fx-anim{transition:opacity .55s ease,transform .7s cubic-bezier(.2,.9,.3,1.15)!important}" +
         ".fx-confetti{position:fixed;inset:0;z-index:2147483000;pointer-events:none}";
-    document.head.appendChild(css);
-    root.classList.add("fx-on");
+    if (!CALM) {
+        document.head.appendChild(css);
+        root.classList.add("fx-on");
+    }
 
     /* ---------- 2) البطاقات ---------- */
     var CARDS = ".lesen-card, .part-card";
@@ -49,7 +53,7 @@
         });
     }
     function watch(card) {
-        if (!io || card.__fx) return;
+        if (CALM || !io || card.__fx) return;
         card.__fx = true;
         card.classList.add("fx-wait");
         io.observe(card);
@@ -78,6 +82,7 @@
         requestAnimationFrame(step);
     }
     function scanCounters() {
+        if (CALM) return;
         document.querySelectorAll(".lesen-stat b").forEach(function (el) {
             if (!io) return countUp(el);
             var o = new IntersectionObserver(function (es) {
@@ -90,7 +95,7 @@
     /* ---------- 3) Confetti ---------- */
     var COLORS = ["#111111", "#dd0000", "#ffce00", "#f2b705", "#ffffff", "#b30e30"];
     function confetti() {
-        if (EMBED) return;
+        if (EMBED || CALM) return;
         var c = document.createElement("canvas");
         c.className = "fx-confetti";
         var dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -128,14 +133,45 @@
         }
         requestAnimationFrame(frame);
     }
-    window.__deConfetti = confetti;
+    /* ---------- 4) صوت الاحتفال ----------
+       نغمة قصيرة (أقل من ثانية) كتصاوب ف المتصفح — بلا ملف. كتخدم حيت
+       كتجي من البركة على «تحقق» (المتصفح كيسمح بالصوت من بعد ضغطة). */
+    var audio = null;
+    function cheer() {
+        if (EMBED) return;
+        try {
+            var AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return;
+            audio = audio || new AC();
+            if (audio.state === "suspended") audio.resume();
+            var t = audio.currentTime + 0.02;
+            var master = audio.createGain();
+            master.gain.value = 0.18;
+            master.connect(audio.destination);
+            /* أربيج ماجور (Do–Mi–Sol–Do) + لمعة فالآخر */
+            [[523.25, 0], [659.25, 0.09], [783.99, 0.18], [1046.5, 0.27], [1318.5, 0.42]].forEach(function (n, i) {
+                var o = audio.createOscillator(), g = audio.createGain();
+                o.type = i === 4 ? "sine" : "triangle";
+                o.frequency.value = n[0];
+                var start = t + n[1], len = i >= 3 ? 0.55 : 0.22;
+                g.gain.setValueAtTime(0.0001, start);
+                g.gain.exponentialRampToValueAtTime(i === 4 ? 0.5 : 0.9, start + 0.02);
+                g.gain.exponentialRampToValueAtTime(0.0001, start + len);
+                o.connect(g); g.connect(master);
+                o.start(start); o.stop(start + len + 0.05);
+            });
+        } catch (e) { /* بلا صوت */ }
+    }
+
+    function celebrate() { cheer(); confetti(); }
+    window.__deConfetti = celebrate;
     window.addEventListener("lesen-points", function (e) {
         var d = e.detail || {};
-        if (!d.reveal && d.total > 0 && d.right === d.total) confetti();
+        if (!d.reveal && d.total > 0 && d.right === d.total) celebrate();
     });
     window.addEventListener("hoeren-points", function (e) {
         var d = e.detail || {};
-        if (d.total > 0 && d.right === d.total) confetti();
+        if (d.total > 0 && d.right === d.total) celebrate();
     });
 
     function init() {
