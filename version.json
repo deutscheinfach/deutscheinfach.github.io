@@ -1,11 +1,11 @@
 {
-  "build": "1d9d456f12d8",
+  "build": "65ccada27264",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
-    "assets/fx.js": "4708034e",
+    "assets/fx.js": "e60a28d5",
     "assets/hoeren-keys.js": "870ac0de",
     "assets/hoeren-nav.css": "46bcbede",
     "assets/hoeren-premium.js": "db0b44b9",
