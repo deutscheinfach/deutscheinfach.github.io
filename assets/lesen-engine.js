@@ -183,17 +183,17 @@
             const stick = parseFloat(getComputedStyle(panel).top) || 0;
             const box = panel.getBoundingClientRect();
             let end = limit;
-            /* ف آخر النصوص اللوحة كتطلع تحت الهيدر وكيتخبى العنوان ديالها:
-               كنقصروها باش تبقى تحت الخط اللاصق. غير إلا النصوص أطول منها
-               (هي اللي كتحدد طول العمود) — وإلا كتصغر → العمود يقصر → … */
+            /* ف آخر النصوص اللوحة ماكتفوتش آخر نص — وإلا العمود كيدفعها
+               لفوق تحت الهيدر. آخر نص ماكيتعلقش بطول اللوحة، إذن ماكاينش
+               دوران (قبل: كتقصر → ماكتبقاش مدفوعة → كتطوال → كتتدفع…). */
             const side = panel.parentElement;
             const texts = side && side.parentElement && side.parentElement.querySelector(":scope > .t1-texts");
-            if (texts && box.top < stick - 0.5) {
+            if (texts) {
                 let textEnd = 0;   /* آخر نص باين (شي عناصر مخبيين وما عندهمش بلاصة) */
                 Array.prototype.forEach.call(texts.children, function (el) {
                     if (el.getClientRects().length) textEnd = Math.max(textEnd, el.getBoundingClientRect().bottom);
                 });
-                if (textEnd - side.getBoundingClientRect().top > panel.offsetHeight + 40) end = Math.min(end, textEnd);
+                if (textEnd) end = Math.min(end, textEnd);
             }
             const top = Math.max(box.top, stick);
             const room = Math.max(220, Math.round(end - top));
