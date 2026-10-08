@@ -4,25 +4,18 @@
       ملي كيبانو.
    2) البطاقات (.lesen-card، .part-card) كيطلعو وحدة بوحدة ملي كيوصلو
       ليهم — حتى اللي كيتزادو من بعد (البحث، تبديل B1/B2…).
-   3) Confetti بالألوان ديال ألمانيا ملي الطالب كيجيب النقطة كاملة
-      (lesen-points / hoeren-points)، غير ملي جاوب هو — ماشي «شوف الحل».
 
-   4) صوت احتفال قصير مع confetti.
-
-   prefers-reduced-motion → بلا حركة (الصوت كيبقى). داخل Modelltest /
-   اختبر نفسك (?embed=1) ماكاينش confetti ولا صوت. */
+   prefers-reduced-motion → بلا حركة. */
 (function () {
     "use strict";
 
     var CALM = !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
-    var EMBED = /[?&]embed=1/.test(location.search);
     var root = document.documentElement;
 
     var css = document.createElement("style");
     css.textContent =
         "html.fx-on .fx-wait{opacity:0;transform:translateY(22px) scale(.97)}" +
-        "html.fx-on .fx-anim{transition:opacity .55s ease,transform .7s cubic-bezier(.2,.9,.3,1.15)!important}" +
-        ".fx-confetti{position:fixed;inset:0;z-index:2147483000;pointer-events:none}";
+        "html.fx-on .fx-anim{transition:opacity .55s ease,transform .7s cubic-bezier(.2,.9,.3,1.15)!important}";
     if (!CALM) {
         document.head.appendChild(css);
         root.classList.add("fx-on");
@@ -91,88 +84,6 @@
             o.observe(el);
         });
     }
-
-    /* ---------- 3) Confetti ---------- */
-    var COLORS = ["#111111", "#dd0000", "#ffce00", "#f2b705", "#ffffff", "#b30e30"];
-    function confetti() {
-        if (EMBED || CALM) return;
-        var c = document.createElement("canvas");
-        c.className = "fx-confetti";
-        var dpr = Math.min(2, window.devicePixelRatio || 1);
-        var W = innerWidth, H = innerHeight;
-        c.width = W * dpr; c.height = H * dpr;
-        document.body.appendChild(c);
-        var ctx = c.getContext("2d");
-        ctx.scale(dpr, dpr);
-        var parts = [];
-        for (var i = 0; i < 140; i++) {
-            var fromLeft = i % 2 === 0;
-            parts.push({
-                x: fromLeft ? -10 : W + 10, y: H * (0.55 + Math.random() * 0.25),
-                vx: (fromLeft ? 1 : -1) * (4 + Math.random() * 7), vy: -(9 + Math.random() * 9),
-                w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
-                r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3,
-                c: COLORS[i % COLORS.length]
-            });
-        }
-        var t0 = 0;
-        function frame(now) {
-            if (!t0) t0 = now;
-            var t = now - t0;
-            ctx.clearRect(0, 0, W, H);
-            parts.forEach(function (p) {
-                p.vy += 0.32; p.vx *= 0.99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
-                ctx.save();
-                ctx.globalAlpha = Math.max(0, 1 - Math.max(0, t - 1600) / 700);
-                ctx.translate(p.x, p.y); ctx.rotate(p.r);
-                ctx.fillStyle = p.c;
-                ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h * Math.abs(Math.cos(p.r * 2)) + 2);
-                ctx.restore();
-            });
-            if (t < 2300) requestAnimationFrame(frame); else c.remove();
-        }
-        requestAnimationFrame(frame);
-    }
-    /* ---------- 4) صوت الاحتفال ----------
-       نغمة قصيرة (أقل من ثانية) كتصاوب ف المتصفح — بلا ملف. كتخدم حيت
-       كتجي من البركة على «تحقق» (المتصفح كيسمح بالصوت من بعد ضغطة). */
-    var audio = null;
-    function cheer() {
-        if (EMBED) return;
-        try {
-            var AC = window.AudioContext || window.webkitAudioContext;
-            if (!AC) return;
-            audio = audio || new AC();
-            if (audio.state === "suspended") audio.resume();
-            var t = audio.currentTime + 0.02;
-            var master = audio.createGain();
-            master.gain.value = 0.18;
-            master.connect(audio.destination);
-            /* أربيج ماجور (Do–Mi–Sol–Do) + لمعة فالآخر */
-            [[523.25, 0], [659.25, 0.09], [783.99, 0.18], [1046.5, 0.27], [1318.5, 0.42]].forEach(function (n, i) {
-                var o = audio.createOscillator(), g = audio.createGain();
-                o.type = i === 4 ? "sine" : "triangle";
-                o.frequency.value = n[0];
-                var start = t + n[1], len = i >= 3 ? 0.55 : 0.22;
-                g.gain.setValueAtTime(0.0001, start);
-                g.gain.exponentialRampToValueAtTime(i === 4 ? 0.5 : 0.9, start + 0.02);
-                g.gain.exponentialRampToValueAtTime(0.0001, start + len);
-                o.connect(g); g.connect(master);
-                o.start(start); o.stop(start + len + 0.05);
-            });
-        } catch (e) { /* بلا صوت */ }
-    }
-
-    function celebrate() { cheer(); confetti(); }
-    window.__deConfetti = celebrate;
-    window.addEventListener("lesen-points", function (e) {
-        var d = e.detail || {};
-        if (!d.reveal && d.total > 0 && d.right === d.total) celebrate();
-    });
-    window.addEventListener("hoeren-points", function (e) {
-        var d = e.detail || {};
-        if (d.total > 0 && d.right === d.total) celebrate();
-    });
 
     function init() {
         scanCards(document.body);
