@@ -177,7 +177,26 @@
                 if (panel.style.maxHeight) panel.style.maxHeight = "";
                 return;
             }
-            const room = Math.max(220, Math.round(limit - panel.getBoundingClientRect().top));
+            /* ف آخر الصفحة العمود كيدفع اللوحة اللاصقة لفوق: إلا حسبنا من
+               البلاصة ديالها دابا، كتطوال → كتطلع كثر → كتطوال… (كانت كتزحف).
+               كنحسبو ديما من الخط اللاصق (top ديال CSS) ولا من تحت منو. */
+            const stick = parseFloat(getComputedStyle(panel).top) || 0;
+            const box = panel.getBoundingClientRect();
+            let end = limit;
+            /* ف آخر النصوص اللوحة كتطلع تحت الهيدر وكيتخبى العنوان ديالها:
+               كنقصروها باش تبقى تحت الخط اللاصق. غير إلا النصوص أطول منها
+               (هي اللي كتحدد طول العمود) — وإلا كتصغر → العمود يقصر → … */
+            const side = panel.parentElement;
+            const texts = side && side.parentElement && side.parentElement.querySelector(":scope > .t1-texts");
+            if (texts && box.top < stick - 0.5) {
+                let textEnd = 0;   /* آخر نص باين (شي عناصر مخبيين وما عندهمش بلاصة) */
+                Array.prototype.forEach.call(texts.children, function (el) {
+                    if (el.getClientRects().length) textEnd = Math.max(textEnd, el.getBoundingClientRect().bottom);
+                });
+                if (textEnd - side.getBoundingClientRect().top > panel.offsetHeight + 40) end = Math.min(end, textEnd);
+            }
+            const top = Math.max(box.top, stick);
+            const room = Math.max(220, Math.round(end - top));
             const want = room + "px";
             if (panel.style.maxHeight !== want) panel.style.maxHeight = want;
         });
