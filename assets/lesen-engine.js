@@ -171,7 +171,10 @@
         const panels = document.querySelectorAll(".t1-panel");
         if (!panels.length) return;
         const on = WIDE.matches && document.body.classList.contains("has-lesen-bar") && !bar.hidden;
-        const limit = on ? bar.getBoundingClientRect().top - 14 : 0;
+        /* ?nav=0 (اختبر نفسك): الشريط مخبي بـ display:none والأزرار عند
+           الصفحة الأم — اللوحة كتاخد الطول ديال الـiframe كامل. */
+        const barShown = on && bar.getClientRects().length > 0;
+        const limit = on ? (barShown ? bar.getBoundingClientRect().top - 14 : window.innerHeight - 12) : 0;
         panels.forEach(function (panel) {
             if (!on || !panel.getClientRects().length) {
                 if (panel.style.maxHeight) panel.style.maxHeight = "";

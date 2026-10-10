@@ -610,6 +610,11 @@ html.is-embed-nonav .exam-top,
 html.is-embed-nonav .lesen-bar { display: none !important; }
 html.is-embed.is-embed-nonav.is-exam-focus body,
 html.is-embed.is-embed-nonav body { padding-top: 6px !important; padding-bottom: 20px !important; }
+/* ماكايناش بار فوق ولا لتحت داخل الـiframe: اللوحة اللاصقة (Überschriften…)
+   كتلصق ف الفوق وكتاخد الطول كامل، باش يبانو گاع العناوين. */
+@media (min-width: 1001px) {
+    html.is-embed-nonav body.has-lesen-bar .t1-panel { top: 12px; max-height: calc(100vh - 24px); }
+}
 html.is-embed::before, html.is-embed::after { display: none !important; }
 
 
