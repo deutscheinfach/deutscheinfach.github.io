@@ -18,7 +18,7 @@ window.SPRECHEN_B2_TOPICS = [
        كل موضوع مقفول وكيتسنى النص ديالو ف Cloudflare KV
        تحت lesen-sprechen-b2-<id>.
        Teil 3 تحت. */
-    { id: "t2-kleinen-wissen",          title: "Die Kleinen wollen's wissen",                                            ar: "الصغار بغاو يعرفو", parts: ["teil2"], locked: true },
+    { id: "t2-kleinen-wissen",          title: "Die Kleinen wollen's wissen",                                            ar: "الصغار بغاو يعرفو", parts: ["teil2"], locked: false, sample: true },
     { id: "t2-lebensform-alter",        title: "Alternative Lebensform im Alter",                                        ar: "أشكال العيش فالكبر", parts: ["teil2"], locked: true },
     { id: "t2-fast-food",               title: "Fast Food kann süchtig machen",                                          ar: "الوجبات السريعة كتدمن", parts: ["teil2"], locked: true },
     { id: "t2-englisch-unternehmen",    title: "Englisch als weltweite Unternehmenssprache",                             ar: "الإنجليزية لغة الشركات", parts: ["teil2"], locked: true },
@@ -76,7 +76,7 @@ window.SPRECHEN_B2_TOPICS = [
     { id: "t2-wo-einkaufen",            title: "Wo sollen wir einkaufen?",                                               ar: "فين نتسوقو؟", parts: ["teil2"], locked: true },
 
     /* Teil 3 — السميات كما وصلاتني (56). المحتوى مازال ماكاينش. */
-    { id: "t3-sportfest",                title: "Interkulturelles Sportfest",                                      ar: "مهرجان رياضي بين الثقافات", parts: ["teil3"], locked: true },
+    { id: "t3-sportfest",                title: "Interkulturelles Sportfest",                                      ar: "مهرجان رياضي بين الثقافات", parts: ["teil3"], locked: false, sample: true },
     { id: "t3-buchmesse",                title: "Buchmesse",                                                       ar: "معرض الكتاب", parts: ["teil3"], locked: true },
     { id: "t3-ueberraschung-lehrerin",   title: "Überraschungsfest für die Lehrerin",                              ar: "حفلة مفاجأة للأستاذة", parts: ["teil3"], locked: true },
     { id: "t3-buch-vorstellen",          title: "Buch in der Klasse vorstellen",                                   ar: "تقديم كتاب فالقسم", parts: ["teil3"], locked: true },
