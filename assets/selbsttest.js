@@ -64,6 +64,8 @@
         share: '<path d="M12 3v13"/><path d="m8 7 4-4 4 4"/><path d="M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/>',
         home: '<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
         alert: '<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>',
+        sliders: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
+        book: '<path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/>',
         dice: '<rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/><circle cx="16" cy="8" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="8" cy="16" r="1.3" fill="currentColor"/><circle cx="16" cy="16" r="1.3" fill="currentColor"/>'
     };
     function svg(name, size) {
@@ -78,12 +80,43 @@
     function pad(n) { return String(n).padStart(2, "0"); }
     function premium() { return window.__deutschEinfachIsPremium === true; }
 
+    /* ---------- اختيار المواضيع (⚙ حدا «بدا») ----------
+       كنخزنو اللي مسدودين (ماشي اللي مختارين): موضوع جديد كيتزاد
+       ف الموقع كيدخل ف القرعة بوحدو. */
+    const OFF_KEY = "de-st-off-";
+    function topicsOf(L) { return window["LESEN_" + L.toUpperCase() + "_TOPICS"] || []; }
+    function poolOf(L, key) {
+        return topicsOf(L).filter(function (t) { return (t.parts || []).indexOf(key) !== -1; });
+    }
+    function readOff(L) {
+        try {
+            const v = JSON.parse(localStorage.getItem(OFF_KEY + L) || "{}");
+            return v && typeof v === "object" ? v : {};
+        } catch (e) { return {}; }
+    }
+    function writeOff(L, off) {
+        try { localStorage.setItem(OFF_KEY + L, JSON.stringify(off)); } catch (e) { /* */ }
+    }
+    function offCount(L) {
+        const off = readOff(L);
+        let n = 0;
+        PARTS.forEach(function (p) {
+            if (p.grp !== "lesen") return;
+            const ids = poolOf(L, p.key).map(function (t) { return t.id; });
+            n += (off[p.key] || []).filter(function (id) { return ids.indexOf(id) !== -1; }).length;
+        });
+        return n;
+    }
+
     /* ---------- القرعة ---------- */
     function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
     function mixPick() {
-        const topics = window["LESEN_" + lv().toUpperCase() + "_TOPICS"] || [];
+        const off = readOff(lv());
         const lesen = PARTS.filter(function (p) { return p.grp === "lesen"; }).map(function (p) {
-            const pool = topics.filter(function (t) { return (t.parts || []).indexOf(p.key) !== -1; });
+            const all = poolOf(lv(), p.key);
+            const shut = off[p.key] || [];
+            const open = all.filter(function (t) { return shut.indexOf(t.id) === -1; });
+            const pool = open.length ? open : all;
             return pool.length ? pick(pool).id : "";
         });
         const hoeren = HOEREN_COUNT[lv()].map(function (count) { return 1 + Math.floor(Math.random() * count); });
@@ -132,7 +165,14 @@
             '<div class="mt-rand-f"><i>🎯</i><div><b>نتيجة كاملة</b><span>من 180 نقطة · كل جزء بوحدو</span></div></div>' +
             "</div>" +
             (last ? '<p class="mt-last">آخر محاولة: <b>' + fmt(last.points) + " / " + (last.max || TOTAL) + "</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
+            '<div class="mt-rand-row">' +
             '<button class="mt-rand-go" type="button" data-act="start">' + svg("dice", 22) + "<span>بدا امتحان عشوائي</span><em>←</em></button>" +
+            (function () {
+                const n = offCount(L);
+                return '<button class="mt-rand-set' + (n ? " is-custom" : "") + '" type="button" data-act="pick" title="اختار المواضيع" aria-label="اختار المواضيع">' +
+                    svg("sliders", 22) + (n ? "<b></b>" : "") + "</button>";
+            })() +
+            "</div>" +
             "</section>";
         warmSoon();
     }
@@ -180,6 +220,107 @@
         pre = null;
         save();
         renderExam(ready);
+    }
+
+    /* نافذة «اختار الامتحانات»: Lesen 1-3 و SB 1-2، وكل موضوع بعلامة */
+    const PICK_TABS = [
+        { key: "teil1", label: "Lesen 1", icon: "book" },
+        { key: "teil2", label: "Lesen 2", icon: "book" },
+        { key: "teil3", label: "Lesen 3", icon: "book" },
+        { key: "sprach1", label: "SB 1", icon: "puzzle" },
+        { key: "sprach2", label: "SB 2", icon: "puzzle" }
+    ];
+    function openPicker() {
+        const L = chosenLevel();
+        const before = JSON.stringify(readOff(L));
+        const off = readOff(L);
+        let tab = 0;
+        const m = document.createElement("div");
+        m.className = "st-pick";
+        m.setAttribute("role", "dialog");
+        m.setAttribute("aria-modal", "true");
+        m.innerHTML = '<div class="st-pick-box" dir="rtl">' +
+            '<header class="st-pick-head"><i>' + svg("sliders", 20) + "</i>" +
+            '<div><h2>اختار الامتحانات</h2><p>ختار منين يجي كل Teil — القرعة كتختار غير من اللي معلمين.</p></div>' +
+            '<button type="button" class="st-pick-x" data-pk="close" aria-label="سد">' + svg("x", 18) + "</button></header>" +
+            '<nav class="st-pick-tabs" role="tablist"></nav>' +
+            '<div class="st-pick-list"></div>' +
+            '<footer class="st-pick-foot"><button type="button" class="st-pick-all" data-pk="all"></button>' +
+            '<span class="st-pick-note" aria-live="polite"></span>' +
+            '<button type="button" class="st-pick-ok" data-pk="close">' + svg("check", 18) + "تم</button></footer></div>";
+        document.body.appendChild(m);
+        document.documentElement.classList.add("st-pick-open");
+        const tabsEl = m.querySelector(".st-pick-tabs");
+        const listEl = m.querySelector(".st-pick-list");
+        const allEl = m.querySelector(".st-pick-all");
+        const noteEl = m.querySelector(".st-pick-note");
+
+        function shut(key) { return off[key] || (off[key] = []); }
+        function paint() {
+            tabsEl.innerHTML = PICK_TABS.map(function (t, i) {
+                const all = poolOf(L, t.key);
+                const on = all.filter(function (x) { return shut(t.key).indexOf(x.id) === -1; }).length;
+                return '<button type="button" role="tab" data-tab-i="' + i + '" class="' + (i === tab ? "is-on" : "") + '" aria-selected="' + (i === tab) + '">' +
+                    svg(t.icon, 18) + "<b>" + t.label + "</b><small>" + on + "/" + all.length + "</small></button>";
+            }).join("");
+            const key = PICK_TABS[tab].key;
+            const all = poolOf(L, key);
+            listEl.innerHTML = all.map(function (t) {
+                const on = shut(key).indexOf(t.id) === -1;
+                return '<button type="button" class="st-pick-item' + (on ? " is-on" : "") + '" data-id="' + esc(t.id) + '" aria-pressed="' + on + '">' +
+                    "<i>" + svg("check", 16) + '</i><b dir="ltr">' + esc(t.title) + "</b>" +
+                    (t.locked ? '<span class="st-pick-prem">Premium</span>' : "") + "</button>";
+            }).join("");
+            const allOn = shut(key).length === 0;
+            allEl.innerHTML = svg(allOn ? "x" : "check", 16) + (allOn ? "إلغاء الكل" : "تفعيل الكل");
+            allEl.dataset.mode = allOn ? "none" : "all";
+            noteEl.textContent = "";
+        }
+        function close() {
+            m.remove();
+            document.documentElement.classList.remove("st-pick-open");
+            document.removeEventListener("keydown", onKey);
+            /* الكوكتيل اللي تحضر ف الخفا ممكن فيه موضوع تسد دابا */
+            if (JSON.stringify(off) !== before) { writeOff(L, off); dropPre(); renderStart(); }
+        }
+        function onKey(e) { if (e.key === "Escape") close(); }
+        document.addEventListener("keydown", onKey);
+
+        m.addEventListener("click", function (e) {
+            if (e.target === m) { close(); return; }
+            const t = e.target.closest("[data-tab-i]");
+            if (t) { tab = Number(t.dataset.tabI); paint(); listEl.scrollTop = 0; return; }
+            const key = PICK_TABS[tab].key;
+            const item = e.target.closest(".st-pick-item");
+            if (item) {
+                const list = shut(key);
+                const at = list.indexOf(item.dataset.id);
+                if (at !== -1) list.splice(at, 1);
+                else {
+                    /* خاص يبقى على الأقل موضوع واحد ف كل Teil */
+                    if (poolOf(L, key).length - list.length <= 1) { noteEl.textContent = "خاص يبقى موضوع واحد على الأقل"; return; }
+                    list.push(item.dataset.id);
+                }
+                paint();
+                return;
+            }
+            const pk = e.target.closest("[data-pk]");
+            if (!pk) return;
+            if (pk.dataset.pk === "close") close();
+            else if (pk.dataset.pk === "all") {
+                if (allEl.dataset.mode === "all") off[key] = [];
+                else {
+                    /* «إلغاء الكل»: كيبقى غير اللول باش القرعة تلقى شي حاجة */
+                    off[key] = poolOf(L, key).slice(1).map(function (x) { return x.id; });
+                    noteEl.textContent = "ختار المواضيع اللي بغيتي";
+                }
+                const keep = noteEl.textContent;
+                paint();
+                noteEl.textContent = keep;
+            }
+        });
+        paint();
+        m.querySelector(".st-pick-ok").focus();
     }
 
     /* ---------- التحضير ف الخفا ----------
@@ -537,6 +678,7 @@
         if (!act) return;
         const a = act.dataset.act;
         if (a === "start") askStart();
+        else if (a === "pick") openPicker();
         else if (a === "next" && state) show(state.at + 1);
         else if (a === "prev" && state) show(state.at - 1);
         else if (a === "finish") finish();
