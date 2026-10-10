@@ -1,5 +1,5 @@
 {
-  "build": "9511a8546e45",
+  "build": "3fb8b366f72b",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
@@ -15,7 +15,7 @@
     "assets/keys-toggle.js": "c8b1eb02",
     "assets/lesen-b1-topics.js": "abfe33b5",
     "assets/lesen-b2-topics.js": "940fb40d",
-    "assets/lesen-engine.js": "f8ef872f",
+    "assets/lesen-engine.js": "88fc65e1",
     "assets/lesen-free.js": "db1560fa",
     "assets/lesen-hub.js": "f77184cc",
     "assets/lesen-keys.js": "fb3de18d",
@@ -58,7 +58,7 @@
     "assets/sprechen-teil3.js": "1e795911",
     "assets/stars.js": "93c940c6",
     "assets/theme-toggle.js": "582e5683",
-    "assets/theme.css": "97151117",
+    "assets/theme.css": "aa908c1b",
     "assets/title-toggle.js": "479dc890",
     "assets/training.css": "20f326a3",
     "assets/ultra.css": "4983e5da",
