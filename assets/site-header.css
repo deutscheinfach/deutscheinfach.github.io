@@ -1045,3 +1045,22 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 @media (pointer: coarse) { .site-ultra { min-height: 44px; } }
 @media (pointer: coarse) { .site-ultra::after { animation-delay: 1.2s; } }
 @media (prefers-reduced-motion: reduce) { .site-ultra::after { animation: none; } }
+
+/* ===== مجموعة الواتساب: زر أخضر حدا الحساب (نفس حجم الجرس) ===== */
+.site-header .site-wa {
+    display: inline-grid; place-items: center; text-decoration: none;
+    width: 44px; min-height: 44px; padding: 0 !important; color: #fff !important;
+    border: 1.5px solid #25d366 !important; background: #25d366 !important;
+    box-shadow: 0 6px 16px -8px rgba(37, 211, 102, .8);
+}
+.site-header .site-wa svg { width: 23px; height: 23px; }
+.site-header .site-wa:hover { background: #1ebe5a !important; border-color: #1ebe5a !important; }
+@media (max-width: 560px) {
+    .site-header .site-wa { width: 34px; min-height: 34px; border-radius: 10px; }
+    .site-header .site-wa svg { width: 19px; height: 19px; }
+}
+/* زر الواتساب زاد بلاصة: ف التيليفون الصغير الاسم كيغبر (الحرف
+   الأول والشارة باقيين) باش الحساب مايخرجش من الشاشة. */
+@media (max-width: 420px) {
+    .site-header .site-account .site-user-name { display: none; }
+}
