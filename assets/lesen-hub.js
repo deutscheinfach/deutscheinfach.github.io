@@ -99,6 +99,10 @@
                      title: "Telc B2 Sprachbausteine Teil 2 – Übungen | Deutsch Einfach" }
     };
 
+    /* صفحة Prüfungen (امتحانات كاملة) مخبية دابا — الكود باقي.
+       باش ترجعها: ردّ هادي true وحيد القاعدة ديالها من section.css. */
+    const SHOW_EXAMS = false;
+
     /* b2-lesen-teil2.html → "teil2" · b2-lesen.html → "" */
     function partOfFile(name) {
         const match = new RegExp(LEVEL + "-lesen-(teil[123]|sprach[12])\\.html$").exec(name || "");
@@ -1146,7 +1150,8 @@
        ولا جزء آخر (المسار نفسو). خاصنا نتبعو بجوج. */
     window.addEventListener("popstate", function () {
         if (stale()) return;
-        const wanted = partOfFile(location.pathname.split("/").pop());
+        let wanted = partOfFile(location.pathname.split("/").pop());
+        if (wanted === "" && !SHOW_EXAMS) wanted = "teil1";
         if (wanted !== null && wanted !== pagePart) switchPart(wanted, null, false);
 
         const params = new URLSearchParams(location.search);
@@ -1166,7 +1171,14 @@
         });
     }
 
-    renderList(true);
+    /* Prüfungen مخبية: b2-lesen.html كيحل ديريكت على Teil 1. */
+    if (!pagePart && !SHOW_EXAMS && !examParam(new URLSearchParams(location.search))) {
+        switchPart("teil1", null, false);
+        history.replaceState({ teil: "teil1" }, "",
+            LEVEL + "-lesen-teil1.html" + location.search + location.hash);
+    } else {
+        renderList(true);
+    }
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase.
        إلا كان التمرين محلول وهو Premium، كنعاودو نرسموه. */
