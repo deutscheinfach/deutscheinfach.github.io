@@ -1,5 +1,5 @@
 {
-  "build": "236405157dc3",
+  "build": "879c27b8e7ad",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
@@ -40,7 +40,7 @@
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/scroll-cue.js": "4d23dcaf",
     "assets/section.css": "6b88ba3b",
-    "assets/selbsttest.js": "f2a8a9ad",
+    "assets/selbsttest.js": "a94153b6",
     "assets/session-guard.js": "c6f2e640",
     "assets/share-card.js": "b26a5fe7",
     "assets/site-header.css": "6cc8f439",
@@ -60,7 +60,7 @@
     "assets/theme-toggle.js": "582e5683",
     "assets/theme.css": "aa908c1b",
     "assets/title-toggle.js": "479dc890",
-    "assets/training.css": "20f326a3",
+    "assets/training.css": "a74e6049",
     "assets/ultra.css": "4983e5da",
     "assets/whatsapp.js": "56de1cb7",
     "assets/wortschatz-1000.js": "1b72e9ed",
