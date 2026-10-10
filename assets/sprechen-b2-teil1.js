@@ -25,8 +25,7 @@
     "use strict";
 
     const TOPICS = [
-        /* sample: مفتوح لكل واحد (عينة) — الـWorker كيعطيه بلا اشتراك */
-        { id: "e-buch",       title: "Buch",                      ar: "كتاب أو رواية",  parts: ["teil1"], locked: false, sample: true },
+        { id: "e-buch",       title: "Buch",                      ar: "كتاب أو رواية",  parts: ["teil1"], locked: true, pack: true },
         { id: "e-reise",      title: "Reise",                     ar: "رحلة أو عطلة",   parts: ["teil1"], locked: true, pack: true },
         { id: "e-film",       title: "Film",                      ar: "فيلم سينمائي",   parts: ["teil1"], locked: true, pack: true },
         { id: "e-sport",      title: "Sportereignis",             ar: "حدث رياضي",      parts: ["teil1"], locked: true, pack: true },

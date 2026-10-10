@@ -1,5 +1,5 @@
 {
-  "build": "ec3441079fc7",
+  "build": "236405157dc3",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
@@ -48,11 +48,11 @@
     "assets/sprechen-b1-teil2.js": "3ffe476e",
     "assets/sprechen-b1.js": "e2c3a8cd",
     "assets/sprechen-b2-content.js": "26f07c37",
-    "assets/sprechen-b2-teil1.js": "cc4bebc4",
+    "assets/sprechen-b2-teil1.js": "c0807017",
     "assets/sprechen-b2-teil23.js": "73590481",
-    "assets/sprechen-b2-topics.js": "89e1a8ff",
+    "assets/sprechen-b2-topics.js": "f61c7437",
     "assets/sprechen-engine.js": "79eccaae",
-    "assets/sprechen-hub.js": "e3be4131",
+    "assets/sprechen-hub.js": "ccd482c8",
     "assets/sprechen-teil1.js": "39194a12",
     "assets/sprechen-teil2.js": "a4ee9046",
     "assets/sprechen-teil3.js": "1e795911",

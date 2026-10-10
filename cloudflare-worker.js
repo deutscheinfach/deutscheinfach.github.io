@@ -73,28 +73,6 @@ export default {
         headers["Cache-Control"] = "public, max-age=600";
         return new Response(text, { status: 200, headers });
       }
-
-      /* ===== عينة Sprechen (GET ?sample=sprechen-b2-e-buch) =====
-         مواضيع قلال مفتوحين للزائر بلا حساب وبلا اشتراك، باش يشوف
-         كيفاش داير التمرين. المحتوى باقي ف KV فين ما كان (المفتاح
-         ديال الموضوع، ولا الـpack، ولا الـbundle ديال الجزء) —
-         كنرجعو غير الموضوع المطلوب، ماشي الـblob كامل. */
-      const sampleId = new URL(request.url).searchParams.get("sample") || "";
-      if (sampleId) {
-        if (!SPRECHEN_SAMPLES.has(sampleId)) {
-          return jsonResponse({ error: "not_a_sample" }, 403, allowedOrigin);
-        }
-        if (!env.TOPICS) {
-          return jsonResponse({ error: "KV binding TOPICS is not configured." }, 500, allowedOrigin);
-        }
-        const topic = await findSprechenTopic(env, sampleId);
-        if (!topic) {
-          return jsonResponse({ error: "sample_missing", key: "lesen-" + sampleId }, 404, allowedOrigin);
-        }
-        const headers = corsHeaders(allowedOrigin);
-        headers["Cache-Control"] = "public, max-age=600";
-        return new Response(JSON.stringify(topic), { status: 200, headers });
-      }
     }
 
     if (request.method !== "POST") {
@@ -1066,32 +1044,6 @@ const SUB_TTL_NO = 15 * 1000;
    وكتتحلل (JSON.parse) ف كل طلب. دابا كتتحلل مرة ف الدقيقة، وكنطلبو من
    الـKV أن يحتفظ بيها 5 دقايق ف الحافة (cacheTtl). تبديل المحتوى ف KV
    كيبان ف ظرف 5 دقايق. */
-/* العينة المجانية ديال Sprechen: هادو برك كيتعطاو بلا حساب.
-   خاصهم يكونو نفس المواضيع اللي فيهم sample: true ف
-   assets/sprechen-b2-*.js (Prüfung 1 = Teil 1 + Teil 2 + Teil 3). */
-const SPRECHEN_SAMPLES = new Set([
-  "sprechen-b2-e-buch",
-  "sprechen-b2-t2-kleinen-wissen",
-  "sprechen-b2-t3-sportfest"
-]);
-
-/* كنقلبو على الموضوع فين ما كان ف KV — نفس الترتيب ديال الـhub:
-   المفتاح ديالو بوحدو، الـpack (المواضيع اللي كانو مجانيين)،
-   الـbundle ديال الجزء (lesen-sprechen-b2-t2)، ومن بعد premium-sprechen. */
-async function findSprechenTopic(env, lesenId) {
-  const own = await kvJson(env, "lesen-" + lesenId);
-  if (own) return own;
-  const m = /^(sprechen-b[12]-)(([a-z0-9]+)-.+)$/.exec(lesenId);
-  if (!m) return null;
-  const [, lvl, themaId, part] = m;
-  for (const key of ["lesen-" + lvl + "pack", "lesen-" + lvl + part]) {
-    const blob = await kvJson(env, key);
-    if (blob && blob[themaId]) return blob[themaId];
-  }
-  const all = await kvJson(env, "premium-sprechen");
-  return all?.[lesenId] || null;
-}
-
 const KV_MEMO = new Map();
 const KV_MEMO_TTL = 60 * 1000;
 const KV_EDGE_TTL = 300;

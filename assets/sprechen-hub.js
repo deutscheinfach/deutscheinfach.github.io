@@ -150,7 +150,6 @@
         foot.appendChild(chip("lesen-chip-parts",
             activePart ? PART_NAME[activePart] : (parts.length + " أجزاء")));
         if (topic.soon) foot.appendChild(chip("lesen-chip-soon", "قريباً"));
-        if (topic.sample) foot.appendChild(chip("lesen-chip-free", "مجاني"));
 
         const go = document.createElement("span");
         go.className = "lesen-card-go";
@@ -186,36 +185,8 @@
     /* Premium ديال B1: المحتوى ف Cloudflare KV. الأول المفتاح الجامع
        (lesen-sprechen-b1-t2 = كاع المواضيع ديال الجزء ف value وحدة)،
        ومن بعد المفتاح ديال الموضوع بوحدو (lesen-sprechen-b1-t2-06). */
-    /* العينة (sample: true): مفتوحة لكل واحد، حتى بلا حساب.
-       GET ?sample=… — الـWorker كيعطي غير هاد المواضيع بلا اشتراك. */
-    const SAMPLE_ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
-    const sampleJobs = window.__sprechenSampleJobs || (window.__sprechenSampleJobs = {});
-    function sampleLoad(themaId) {
-        const key = "sprechen-" + LEVEL.toLowerCase() + "-" + themaId;
-        if (!sampleJobs[key]) {
-            sampleJobs[key] = fetch(SAMPLE_ENDPOINT + "?sample=" + encodeURIComponent(key), { credentials: "omit" })
-                .then(function (res) {
-                    if (!res.ok) return { ok: false, status: res.status, why: "الـ Worker رجع HTTP " + res.status };
-                    return res.json().then(function (data) { return { ok: true, data: data }; });
-                })
-                .catch(function () {
-                    return { ok: false, why: "ما وصلناش للـ Worker. شوف الأنترنت." };
-                })
-                .then(function (r) {
-                    if (!r.ok) delete sampleJobs[key];   /* فشل: المرة الجاية نعاودو */
-                    return r;
-                });
-        }
-        return sampleJobs[key].then(function (r) {
-            if (r && r.ok && r.data) CONTENT[themaId] = r.data;
-            return r;
-        });
-    }
-
     function premiumLoad(themaId) {
         const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
-        const sample = topics.find(function (t) { return t.id === themaId && t.sample; });
-        if (sample) return sampleLoad(themaId);
         /* المواضيع اللي كانو مجانيين (pack: true): كاملين فمفتاح واحد
            lesen-sprechen-<lvl>-pack. الباقي: الـbundle ديال الجزء، ومن بعد
            المفتاح ديال الموضوع بوحدو. */
@@ -258,7 +229,6 @@
            ف assets/sprechen-b2-content.js — يعني مقروء عند
            أي واحد، والريبو عام. دابا المدفوع ف KV بحال Lesen
            و Hören، إذن B2 خاصو يجيب من الـ Worker حتى هو. */
-        if (topic.sample) return !CONTENT[topic.id];
         return topic.locked && !CONTENT[topic.id]
             && typeof window.__lesenPremiumFetch === "function";
     }
