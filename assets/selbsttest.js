@@ -80,14 +80,190 @@
 
     /* ---------- القرعة ---------- */
     function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+    /* الفلتر: المستعمل كيختار المواضيع اللي بغا يدوز فيهم. جزء ما
+       ختار فيه والو (ولا ما قاسوش) = گاع المواضيع ديالو. */
     function mixPick() {
-        const topics = window["LESEN_" + lv().toUpperCase() + "_TOPICS"] || [];
+        const L = lv();
         const lesen = PARTS.filter(function (p) { return p.grp === "lesen"; }).map(function (p) {
-            const pool = topics.filter(function (t) { return (t.parts || []).indexOf(p.key) !== -1; });
+            const pool = chosenPool(L, p);
             return pool.length ? pick(pool).id : "";
         });
-        const hoeren = HOEREN_COUNT[lv()].map(function (count) { return 1 + Math.floor(Math.random() * count); });
+        const hoeren = PARTS.filter(function (p) { return p.grp === "hoeren"; }).map(function (p) {
+            return pick(chosenPool(L, p)).id;
+        });
         return { lesen: lesen, hoeren: hoeren };
+    }
+
+    /* ---------- فلتر المواضيع ---------- */
+    const FILTER_KEY = "de-st-filter-";
+    /* گاع المواضيع ديال جزء: Lesen من LESEN_Bx_TOPICS، Hören بالرقم */
+    function allPool(L, p) {
+        if (p.grp === "lesen") {
+            return (window["LESEN_" + L.toUpperCase() + "_TOPICS"] || [])
+                .filter(function (t) { return (t.parts || []).indexOf(p.key) !== -1; })
+                .map(function (t) { return { id: t.id, title: t.title, ar: t.ar || "" }; });
+        }
+        const out = [];
+        for (let n = 1; n <= HOEREN_COUNT[L][p.sub]; n++) out.push({ id: n, title: "Thema " + n, ar: "" });
+        return out;
+    }
+    function readFilter(L) {
+        try {
+            const v = JSON.parse(localStorage.getItem(FILTER_KEY + L) || "null");
+            return v && typeof v === "object" ? v : {};
+        } catch (e) { return {}; }
+    }
+    function writeFilter(L, f) {
+        try {
+            if (Object.keys(f).length) localStorage.setItem(FILTER_KEY + L, JSON.stringify(f));
+            else localStorage.removeItem(FILTER_KEY + L);
+        } catch (e) { /* */ }
+    }
+    function chosenPool(L, p) {
+        const all = allPool(L, p);
+        const keep = readFilter(L)[p.key];
+        if (!Array.isArray(keep)) return all;
+        const picked = all.filter(function (t) { return keep.indexOf(t.id) !== -1; });
+        return picked.length ? picked : all;
+    }
+    /* «X من Y موضوع» — للبطاقة ديال الفلتر */
+    function filterSummary(L) {
+        const f = readFilter(L);
+        let on = 0, all = 0, custom = false;
+        PARTS.forEach(function (p) {
+            const n = allPool(L, p).length;
+            all += n;
+            if (Array.isArray(f[p.key])) { custom = true; on += chosenPool(L, p).length; }
+            else on += n;
+        });
+        return custom ? on + " من " + all + " موضوع مختار" : "گاع المواضيع (" + all + ")";
+    }
+
+    let fltBox = null, fltPart = 0, fltDraft = null;
+    function openFilter() {
+        const L = chosenLevel();
+        fltDraft = {};
+        const saved = readFilter(L);
+        PARTS.forEach(function (p) {
+            const ids = allPool(L, p).map(function (t) { return t.id; });
+            const keep = Array.isArray(saved[p.key]) ? saved[p.key].filter(function (id) { return ids.indexOf(id) !== -1; }) : ids;
+            fltDraft[p.key] = keep.length ? keep : ids;
+        });
+        if (!fltBox) {
+            fltBox = document.createElement("div");
+            fltBox.className = "st-flt";
+            fltBox.setAttribute("role", "dialog");
+            fltBox.setAttribute("aria-modal", "true");
+            fltBox.setAttribute("aria-label", "ختار المواضيع");
+            document.body.appendChild(fltBox);
+            fltBox.addEventListener("click", onFilterClick);
+            fltBox.addEventListener("change", onFilterChange);
+            fltBox.addEventListener("input", function (e) {
+                if (e.target.classList.contains("st-flt-q")) paintFilterList();
+            });
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape" && fltBox && !fltBox.hidden) closeFilter();
+            });
+        }
+        fltBox.hidden = false;
+        document.documentElement.classList.add("st-flt-open");
+        paintFilter();
+    }
+    function closeFilter() {
+        if (!fltBox) return;
+        fltBox.hidden = true;
+        document.documentElement.classList.remove("st-flt-open");
+    }
+    function paintFilter() {
+        const L = chosenLevel();
+        fltBox.innerHTML =
+            '<div class="st-flt-back" data-flt="close"></div>' +
+            '<div class="st-flt-card">' +
+            '<div class="st-flt-head"><b>🎛️ ختار المواضيع · ' + L.toUpperCase() + '</b>' +
+            '<button type="button" class="st-flt-x" data-flt="close" aria-label="سد">' + svg("x", 18) + "</button></div>" +
+            '<p class="st-flt-note">الامتحان العشوائي غادي يختار غير من المواضيع اللي معلّمين. جزء ما علمتي فيه والو = گاع المواضيع.</p>' +
+            '<div class="st-flt-tabs" role="tablist">' + PARTS.map(function (p, i) {
+                return '<button type="button" role="tab" data-flt-tab="' + i + '" class="' + (i === fltPart ? "is-on" : "") + '" aria-selected="' + (i === fltPart) + '">' +
+                    esc(p.kind === "SB" ? "Sprachb." : p.kind) + " " + esc(p.nr.replace("Teil ", "")) + "<small></small></button>";
+            }).join("") + "</div>" +
+            '<div class="st-flt-tools">' +
+            '<input class="st-flt-q" type="search" placeholder="قلب على موضوع…" autocomplete="off" aria-label="قلب على موضوع">' +
+            '<button type="button" data-flt="all">الكل</button><button type="button" data-flt="none">والو</button></div>' +
+            '<ul class="st-flt-list"></ul>' +
+            '<div class="st-flt-foot"><button type="button" class="st-flt-reset" data-flt="reset">رجع گاع المواضيع</button>' +
+            '<button type="button" class="st-flt-save" data-flt="save">' + svg("check", 18) + "<span>حفظ</span></button></div>" +
+            "</div>";
+        paintFilterList();
+    }
+    function paintFilterList() {
+        const L = chosenLevel();
+        const p = PARTS[fltPart];
+        const q = (fltBox.querySelector(".st-flt-q").value || "").trim().toLowerCase();
+        const keep = fltDraft[p.key];
+        const list = allPool(L, p).filter(function (t) {
+            return !q || (t.title + " " + t.ar + " " + t.id).toLowerCase().indexOf(q) !== -1;
+        });
+        fltBox.querySelector(".st-flt-list").innerHTML = list.length ? list.map(function (t) {
+            return '<li><label><input type="checkbox" data-id="' + esc(t.id) + '"' + (keep.indexOf(t.id) !== -1 ? " checked" : "") + ">" +
+                "<span>" + esc(t.title) + (t.ar ? " <em>" + esc(t.ar) + "</em>" : "") + "</span></label></li>";
+        }).join("") : '<li class="st-flt-empty">ماكاين حتى موضوع بهاد الاسم.</li>';
+        paintFilterCounts();
+    }
+    function paintFilterCounts() {
+        const L = chosenLevel();
+        fltBox.querySelectorAll("[data-flt-tab]").forEach(function (b) {
+            const p = PARTS[Number(b.dataset.fltTab)];
+            b.querySelector("small").textContent = fltDraft[p.key].length + "/" + allPool(L, p).length;
+            b.classList.toggle("is-empty", !fltDraft[p.key].length);
+        });
+    }
+    function onFilterChange(e) {
+        const box = e.target.closest('input[type="checkbox"][data-id]');
+        if (!box) return;
+        const p = PARTS[fltPart];
+        const id = p.grp === "hoeren" ? Number(box.dataset.id) : box.dataset.id;
+        const keep = fltDraft[p.key];
+        const at = keep.indexOf(id);
+        if (box.checked && at === -1) keep.push(id);
+        else if (!box.checked && at !== -1) keep.splice(at, 1);
+        paintFilterCounts();
+    }
+    function onFilterClick(e) {
+        const tab = e.target.closest("[data-flt-tab]");
+        if (tab) { fltPart = Number(tab.dataset.fltTab); paintFilter(); return; }
+        const b = e.target.closest("[data-flt]");
+        if (!b) return;
+        const L = chosenLevel();
+        const p = PARTS[fltPart];
+        const a = b.dataset.flt;
+        if (a === "close") closeFilter();
+        else if (a === "all" || a === "none") {
+            /* الكل / والو: غير المواضيع اللي باينين (مع البحث) */
+            const q = (fltBox.querySelector(".st-flt-q").value || "").trim().toLowerCase();
+            const shown = allPool(L, p).filter(function (t) {
+                return !q || (t.title + " " + t.ar + " " + t.id).toLowerCase().indexOf(q) !== -1;
+            }).map(function (t) { return t.id; });
+            const keep = fltDraft[p.key];
+            if (a === "all") shown.forEach(function (id) { if (keep.indexOf(id) === -1) keep.push(id); });
+            else fltDraft[p.key] = keep.filter(function (id) { return shown.indexOf(id) === -1; });
+            paintFilterList();
+        } else if (a === "reset") {
+            PARTS.forEach(function (x) { fltDraft[x.key] = allPool(L, x).map(function (t) { return t.id; }); });
+            paintFilterList();
+        } else if (a === "save") {
+            const f = {};
+            PARTS.forEach(function (x) {
+                const n = allPool(L, x).length;
+                const keep = fltDraft[x.key];
+                /* الكل ولا والو = بلا فلتر ف هاد الجزء */
+                if (keep.length && keep.length < n) f[x.key] = keep.slice();
+            });
+            writeFilter(L, f);
+            closeFilter();
+            /* الامتحان المحضر ف الخفا تختار بالفلتر القديم */
+            dropPre();
+            renderStart();
+        }
     }
     function lesenTitle(id) {
         const t = (window["LESEN_" + lv().toUpperCase() + "_TOPICS"] || []).find(function (x) { return x.id === id; });
@@ -130,6 +306,7 @@
             '<div class="mt-rand-f"><i>🔀</i><div><b>خلط عشوائي</b><span>كل Teil من نموذج امتحان مختلف</span></div></div>' +
             '<div class="mt-rand-f"><i>⏱️</i><div><b>بالوقت بحال telc</b><span>90 دقيقة لـ Lesen و Hören</span></div></div>' +
             '<div class="mt-rand-f"><i>🎯</i><div><b>نتيجة كاملة</b><span>من 180 نقطة · كل جزء بوحدو</span></div></div>' +
+            '<button type="button" class="mt-rand-f mt-rand-flt" data-act="filter"><i>🎛️</i><div><b>ختار المواضيع</b><span>' + esc(filterSummary(L)) + "</span></div></button>" +
             "</div>" +
             (last ? '<p class="mt-last">آخر محاولة: <b>' + fmt(last.points) + " / " + (last.max || TOTAL) + "</b> · " + new Date(last.at).toLocaleDateString("de-DE") + "</p>" : "") +
             '<button class="mt-rand-go" type="button" data-act="start">' + svg("dice", 22) + "<span>بدا امتحان عشوائي</span><em>←</em></button>" +
@@ -537,6 +714,7 @@
         if (!act) return;
         const a = act.dataset.act;
         if (a === "start") askStart();
+        else if (a === "filter" && !state) openFilter();
         else if (a === "next" && state) show(state.at + 1);
         else if (a === "prev" && state) show(state.at - 1);
         else if (a === "finish") finish();
