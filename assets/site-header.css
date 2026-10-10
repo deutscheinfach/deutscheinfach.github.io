@@ -1045,3 +1045,53 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 @media (pointer: coarse) { .site-ultra { min-height: 44px; } }
 @media (pointer: coarse) { .site-ultra::after { animation-delay: 1.2s; } }
 @media (prefers-reduced-motion: reduce) { .site-ultra::after { animation: none; } }
+
+/* ===== زر الواتساب العائم (مجموعة الطلبة) ===== */
+.site-wa-fab {
+    position: fixed;
+    right: calc(18px + env(safe-area-inset-right));
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    z-index: 900;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #25d366;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 10px 24px -8px rgba(37, 211, 102, .65), 0 2px 6px rgba(0, 0, 0, .18);
+    transition: transform .18s ease, box-shadow .18s ease, bottom .2s ease;
+}
+.site-wa-fab:hover { transform: translateY(-2px) scale(1.04); }
+.site-wa-fab:focus-visible { outline: 3px solid var(--gold, #f5c518); outline-offset: 3px; }
+.site-wa-tip {
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: var(--surface, #fff);
+    color: var(--text, #111);
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .15);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease;
+}
+.site-wa-fab:hover .site-wa-tip,
+.site-wa-fab:focus-visible .site-wa-tip { opacity: 1; }
+/* فوق شريط الأزرار ديال التمرين، ماشي عليه */
+body.has-lesen-bar .site-wa-fab,
+body:has(.st-foot) .site-wa-fab { bottom: calc(92px + env(safe-area-inset-bottom)); }
+@media (max-width: 640px) {
+    .site-wa-fab { width: 50px; height: 50px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); }
+    .site-wa-fab svg { width: 25px; height: 25px; }
+    .site-wa-tip { display: none; }
+}
+html.is-embed .site-wa-fab { display: none !important; }
+@media print { .site-wa-fab { display: none; } }
