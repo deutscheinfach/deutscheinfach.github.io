@@ -1,5 +1,5 @@
 {
-  "build": "589385b3ef01",
+  "build": "535fd9b7d674",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
@@ -27,7 +27,7 @@
     "assets/lesen-teil2.js": "3c222b05",
     "assets/lesen-teil3.js": "1f0eb876",
     "assets/locked-modal.js": "551b2df3",
-    "assets/modelltest.js": "ec505f49",
+    "assets/modelltest.js": "2b951ee9",
     "assets/premium-gate.js": "623150d9",
     "assets/premium-wa.css": "b31eca04",
     "assets/presence.js": "009f9f73",
@@ -41,7 +41,7 @@
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/scroll-cue.js": "4d23dcaf",
     "assets/section.css": "b56d44f5",
-    "assets/selbsttest.js": "5c872558",
+    "assets/selbsttest.js": "966af378",
     "assets/session-guard.js": "c6f2e640",
     "assets/share-card.js": "b26a5fe7",
     "assets/site-header.css": "cfa51ec1",
