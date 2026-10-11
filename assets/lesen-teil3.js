@@ -71,7 +71,7 @@
         });
     }
 
-    function render(into, task) {
+    function render(into, task, meta) {
         const variants = toVariants(task);
         let index = 0;
 
@@ -399,9 +399,18 @@
                         const adHead = row.box.querySelector(".t3-ad-head");
                         if (sitText) {
                             const ad = [adHead, adBody].filter(Boolean);
-                            window.__lesenKeys.link([sitText], ad);
+                            /* الكلمات ديال الأدمين: مربوطين بالوضعية (مرادفات Pkw ↔ Auto) */
+                            const ctx = window.__kwCustom && meta && meta.id ? {
+                                doc: "lesen-" + String(meta.level || "b2").toLowerCase() + "-" + meta.id,
+                                items: [{
+                                    key: window.__kwCustom.key(sitRow.sit.de || ""),
+                                    box: row.box,
+                                    title: "كلمات مفتاحية — Situation " + want
+                                }]
+                            } : null;
+                            window.__lesenKeys.link([sitText], ad, null, ctx);
                             /* نفس النص → نفس الكلمات الصفر بحال اللي ف اللائحة */
-                            if (words) window.__lesenKeys.link([words], ad);
+                            if (words) window.__lesenKeys.link([words], ad, null, ctx);
                         }
                     }
                 });
