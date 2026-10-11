@@ -554,6 +554,45 @@
         if (last.premium === true) window.__deutschEinfachIsPremium = true;
     }
 
+    /* ---- واش الاشتراك تأكد ولا لا ----
+       "pending": Firebase ما زال ما جاوبش · "ok": جاوب · "error": الأنترنت.
+       قبل، إلا طاحت القراية ديال الحساب (أنترنت ضعيفة)، كنا كنعتبروه
+       ماشي مشترك — والمشترك كيشوف «خاصك Premium». دابا الصفحات
+       (locked-modal.js، premium-gate.js) كيقراو هاد الحالة وكيقولو
+       «مشكل ف الأنترنت» بلاصة القفل. */
+    function setPremiumState(state, signedIn) {
+        window.__dePremiumState = state;
+        /* الشريط غير لصاحب حساب — الزائر ماعندو حتى اشتراك يتأكد */
+        netNotice(state === "error" && (signedIn || !!recall()));
+        document.dispatchEvent(new CustomEvent("de-premium-state", { detail: state }));
+    }
+    window.__dePremiumState = "pending";
+
+    let netBar = null;
+    function netNotice(show) {
+        if (!show) { if (netBar) { netBar.remove(); netBar = null; } return; }
+        /* الراوتر كيمسح المحتوى ديال <body> ملي يتبدل القسم */
+        if (netBar && netBar.isConnected) return;
+        netBar = document.createElement("div");
+        netBar.className = "site-net";
+        netBar.setAttribute("role", "alert");
+        const text = document.createElement("span");
+        text.textContent = "⚠️ مشكل ف الأنترنت: ما قدرناش نتأكدو من الحساب ديالك. "
+            + "إلا كنتي مشترك، المواضيع غادي يتحلو غير يرجع الاتصال.";
+        const again = document.createElement("button");
+        again.type = "button";
+        again.textContent = "عاود المحاولة";
+        again.addEventListener("click", function () { location.reload(); });
+        const shut = document.createElement("button");
+        shut.type = "button";
+        shut.className = "site-net-x";
+        shut.setAttribute("aria-label", "سد");
+        shut.textContent = "✕";
+        shut.addEventListener("click", function () { if (netBar) { netBar.remove(); netBar = null; } });
+        netBar.append(text, again, shut);
+        document.body.appendChild(netBar);
+    }
+
     function openMenu(open) {
         menu.hidden = !open;
         account.classList.toggle("is-open", open);
@@ -865,7 +904,7 @@
 
             /* كنحيدو المحتوى القديم — غير البار وشريط المستوى
                كيبقاو. هوما نفس العناصر، ماكيتبناوش من جديد. */
-            const keep = [header, levelWrap];
+            const keep = [header, levelWrap, netBar];
             Array.prototype.slice.call(document.body.childNodes).forEach(function (node) {
                 if (keep.indexOf(node) === -1) node.remove();
             });
@@ -1105,6 +1144,7 @@
                     account.hidden = true;
                     openMenu(false);
                     window.__deutschEinfachIsPremium = false;
+                    setPremiumState("ok");
                     document.dispatchEvent(new CustomEvent("de-premium", { detail: false }));
                     return;
                 }
@@ -1118,16 +1158,33 @@
                     || "Student";
                 let premium = false;
                 let admin = false;
+                let failed = false;
+
+                /* القراية ديال الحساب. أنترنت ضعيفة = كتطيح مرة مرة،
+                   إذن كنعاودو جوج مرات قبل ما نقولو «مشكل ف الأنترنت». */
+                async function readUser() {
+                    for (let attempt = 0; ; attempt++) {
+                        try {
+                            return await fsMod.getDoc(fsMod.doc(db, "users", person.uid));
+                        } catch (error) {
+                            if (attempt >= 2) throw error;
+                            await new Promise(function (go) { setTimeout(go, 1500 * (attempt + 1)); });
+                        }
+                    }
+                }
+                function isActive(data) {
+                    const notExpired = !data.subscriptionEnd
+                        || (data.subscriptionEnd.toDate
+                            && data.subscriptionEnd.toDate().getTime() > Date.now());
+                    return data.subscriptionActive === true && notExpired;
+                }
 
                 try {
-                    const snap = await fsMod.getDoc(fsMod.doc(db, "users", person.uid));
+                    const snap = await readUser();
                     if (snap.exists()) {
                         const data = snap.data();
                         if (data.name) name = data.name;
-                        const notExpired = !data.subscriptionEnd
-                            || (data.subscriptionEnd.toDate
-                                && data.subscriptionEnd.toDate().getTime() > Date.now());
-                        premium = data.subscriptionActive === true && notExpired;
+                        premium = isActive(data);
                         admin = data.isAdmin === true;
                         news.setAdmin(admin);
                         /* وثيقة ناقصة (تخلقات من login بلا createdAt/email) */
@@ -1152,18 +1209,58 @@
                     }
                 } catch (error) {
                     console.warn("Header: ما قدرناش نقراو الحساب", error);
+                    /* ماشي «ماشي مشترك» — ما عرفناش. كنخليو آخر حالة
+                       معروفة لنفس الحساب، وما كنكتبوش فوقها. المحتوى
+                       المدفوع على كل حال كيتحقق منو الـWorker. */
+                    failed = true;
+                    const known = recall();
+                    if (known && known.uid === person.uid) {
+                        premium = known.premium === true;
+                        if (known.name) name = known.name;
+                    }
                 }
 
                 window.__deutschEinfachIsPremium = premium;
 
                 /* باش المرة الجاية البار تبان صحيحة من أول رسمة */
-                remember({ name: name, premium: premium, uid: person.uid });
+                if (!failed) remember({ name: name, premium: premium, uid: person.uid });
 
                 paint(name, premium);
                 buildMenu(person, name, premium);
+                setPremiumState(failed ? "error" : "ok", true);
 
                 /* صفحات فيها محتوى مقفول كتسنى هاد الخبر */
                 document.dispatchEvent(new CustomEvent("de-premium", { detail: premium }));
+
+                /* طاحت القراية؟ كنعاودو بوحدنا ملي يرجع الاتصال (ولا كل
+                   20 ثانية، 6 دالمرات) — بلا ما يحتاج المستعمل يبدل الصفحة. */
+                if (failed) {
+                    let tries = 0, busy = false, timer = 0;
+                    const again = async function () {
+                        if (busy || window.__dePremiumState !== "error") return;
+                        if (!auth.currentUser || auth.currentUser.uid !== person.uid) return;
+                        busy = true;
+                        try {
+                            const snap = await fsMod.getDoc(fsMod.doc(db, "users", person.uid));
+                            const data = snap.exists() ? snap.data() : {};
+                            if (data.name) name = data.name;
+                            premium = isActive(data);
+                            window.__deutschEinfachIsPremium = premium;
+                            remember({ name: name, premium: premium, uid: person.uid });
+                            paint(name, premium);
+                            buildMenu(person, name, premium);
+                            window.removeEventListener("online", again);
+                            clearInterval(timer);
+                            setPremiumState("ok");
+                            document.dispatchEvent(new CustomEvent("de-premium", { detail: premium }));
+                        } catch (error) {
+                            if (++tries >= 6) { clearInterval(timer); window.removeEventListener("online", again); }
+                        }
+                        busy = false;
+                    };
+                    window.addEventListener("online", again);
+                    timer = setInterval(again, 20000);
+                }
 
                 /* ---- القائمة ---- */
                 function buildMenu(who, label, isPremium) {
@@ -1359,6 +1456,7 @@
             });
         } catch (error) {
             console.warn("Header: Firebase ما تحملش", error);
+            setPremiumState("error");
 
             /* كان هنا غير `guest.hidden = false` — بلا ما يخبي
                الحساب. النتيجة: البار كتبين الزوج ف نفس الوقت،

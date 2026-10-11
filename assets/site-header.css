@@ -1064,3 +1064,41 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 @media (max-width: 420px) {
     .site-header .site-account .site-user-name { display: none; }
 }
+
+/* ===== مشكل ف الأنترنت: ما قدرناش نتأكدو من الحساب ===== */
+.site-net {
+    position: fixed;
+    left: 50%;
+    bottom: calc(16px + env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    z-index: 2147481000;
+    width: min(560px, calc(100% - 24px));
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    direction: rtl;
+    background: #fff4e5;
+    color: #7a3e00;
+    border: 1px solid #f5b46b;
+    box-shadow: 0 14px 34px -14px rgba(0, 0, 0, .45);
+    font-size: 13.5px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+.site-net span { flex: 1 1 auto; }
+.site-net button {
+    flex: 0 0 auto;
+    border: 0;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+    background: #c25e00;
+    color: #fff;
+}
+.site-net .site-net-x { background: transparent; color: inherit; padding: 6px 8px; }
+:root[data-theme="dark"] .site-net { background: #3a2410; color: #ffd8a8; border-color: #8a5a20; }
+body.has-lesen-bar .site-net { bottom: calc(92px + env(safe-area-inset-bottom)); }
