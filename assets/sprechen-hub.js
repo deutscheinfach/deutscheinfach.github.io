@@ -528,7 +528,7 @@
                 premiumLoad(topic.id).then(function (r) {
                     if (stale() || !stack.isConnected || current !== asked) return;
                     if (r && r.ok) paint();
-                    else wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. " + ((r && r.why) || "");
+                    else { if (r && r.why) console.warn("Sprechen premium:", r.why); wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. شوف الأنترنت وعاود المحاولة."; }
                 });
             } else if (typeof window.__sprechenRender === "function") {
                 const content = CONTENT[topic.id] || {};
@@ -661,7 +661,7 @@
                 premiumLoad(themaId).then(function (r) {
                     if (stale() || !stack.isConnected || current !== asked) return;
                     if (r && r.ok) { content = CONTENT[themaId]; paint(); }
-                    else wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. " + ((r && r.why) || "");
+                    else { if (r && r.why) console.warn("Sprechen premium:", r.why); wait.textContent = "⚠️ ما قدرناش نجيبو الموضوع. شوف الأنترنت وعاود المحاولة."; }
                 });
                 return;
             }

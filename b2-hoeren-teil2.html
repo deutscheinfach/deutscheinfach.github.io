@@ -1371,8 +1371,12 @@ window.__deutschEinfachPremiumReady = (async function () {
     } else if (theme.premium && !(theme.questions && theme.questions.length)) {
       var missing = document.createElement("p");
       missing.className = "nq-nokey";
-      var why = (window.__hoerenPremiumResult && window.__hoerenPremiumResult.why) || "كنجيبو الموضوع…";
-      missing.textContent = "ما قدرناش نجيبو هاد الموضوع دابا: " + why;
+      /* السبب التقني (Worker، KV…) كيمشي للـ console، ماشي للطالب */
+      var got = window.__hoerenPremiumResult;
+      if (got && got.why) console.warn("Hören premium:", got.why);
+      missing.textContent = got
+        ? "ما قدرناش نجيبو هاد الموضوع دابا. شوف الأنترنت وعاود المحاولة."
+        : "⏳ كنجيبو الموضوع…";
       item.appendChild(missing);
     } else if (theme.questions && theme.questions.length) {
       item.appendChild(buildNativeQuiz(theme));

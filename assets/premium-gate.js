@@ -39,7 +39,7 @@
 
     /* ماشي مشكل اشتراك، مشكل اتصال: الحساب ما تأكدش (الأنترنت)، ولا
        المشترك ما وصلوش المحتوى. «شوف العروض» هنا كيغلّط المشترك. */
-    function netCard(into, note) {
+    function netCard(into) {
         const card = el("section", "pg");
         const head = el("div", "pg-head");
         const badge = el("span", "pg-lock", "📶");
@@ -60,22 +60,18 @@
         actions.appendChild(again);
         card.appendChild(actions);
 
-        if (note) {
-            const box = el("div", "pg-note");
-            box.appendChild(el("b", "", "تفاصيل"));
-            box.appendChild(el("span", "", note));
-            card.appendChild(box);
-        }
         into.appendChild(card);
     }
 
     window.__premiumGate = function (into, options) {
         const config = options || {};
+        /* السبب التقني (Worker، KV…) للـ console برك — الطالب ماخصوش يشوفو */
+        if (config.note) console.warn("Premium:", config.note);
 
         /* site-header.js: "pending" · "ok" · "error" */
         const state = window.__dePremiumState || "ok";
         if (state === "error" || (window.__deutschEinfachIsPremium === true && config.note)) {
-            netCard(into, config.note);
+            netCard(into);
             return;
         }
         /* Firebase ما زال ما جاوبش: الصفحة كتعاود ترسم مع de-premium */
@@ -135,12 +131,6 @@
 
         /* هادي كتبان غير إلا كان المستعمل مشترك وما وصلوش المحتوى —
            يعني كاين شي حاجة خايبة فالإعداد، ماشي فالاشتراك ديالو. */
-        if (config.note) {
-            const note = el("div", "pg-note");
-            note.appendChild(el("b", "", "ملاحظة تقنية"));
-            note.appendChild(el("span", "", config.note));
-            card.appendChild(note);
-        }
 
         /* ---- نموذج مغبّش: كيوري الشكل بلا ما يعطي المحتوى ---- */
         const peek = el("div", "pg-peek");
