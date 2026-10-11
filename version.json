@@ -1,5 +1,5 @@
 {
-  "build": "418b118cfe99",
+  "build": "e760d6a07707",
   "assets": {
     "assets/app-install.js": "36375614",
     "assets/auth.css": "6feb4e9d",
@@ -13,7 +13,7 @@
     "assets/https-upgrade.js": "473efbeb",
     "assets/icons.css": "61993c15",
     "assets/keys-toggle.js": "c8b1eb02",
-    "assets/kw-custom.js": "ebf587e3",
+    "assets/kw-custom.js": "8f671aa3",
     "assets/lesen-b1-topics.js": "abfe33b5",
     "assets/lesen-b2-topics.js": "940fb40d",
     "assets/lesen-engine.js": "ba9d0fb1",
@@ -25,7 +25,7 @@
     "assets/lesen-sprach2.js": "20fa03ac",
     "assets/lesen-teil1.js": "54e868a9",
     "assets/lesen-teil2.js": "3c222b05",
-    "assets/lesen-teil3.js": "4da62f9f",
+    "assets/lesen-teil3.js": "1f0eb876",
     "assets/locked-modal.js": "551b2df3",
     "assets/modelltest.js": "ec505f49",
     "assets/premium-gate.js": "623150d9",

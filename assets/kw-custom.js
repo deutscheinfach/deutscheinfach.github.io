@@ -246,6 +246,7 @@
             ".kw-admin-add:disabled{opacity:.6;cursor:default}" +
             ".kw-admin-note{flex-basis:100%;font-size:12.5px;opacity:.8}.kw-admin-note:empty{display:none}" +
             ".kw-admin-note.is-bad{color:#c0392b;opacity:1;font-weight:700}" +
+            ".t3-sit-kw .kw-admin{margin:4px 0 8px;font-size:12.5px}" +
             ":root[data-theme=dark] .kw-admin-chip,html.dark .kw-admin-chip{background:rgba(255,206,0,.25);color:#ffe9a8;border-color:#a88400}";
         document.head.appendChild(style);
     }

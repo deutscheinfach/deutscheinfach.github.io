@@ -263,8 +263,14 @@
                 /* تبرك على الوضعية = كتمشي للإعلان الخدام */
                 item.addEventListener("click", function () { assign(no); });
 
-                sitRows.push({ node: item, no: no, sit: sit });
+                /* بلاصة الأدمين (كلمات مفتاحية) تحت الوضعية — برا الزر،
+                   حيت البركة على الزر كتمشي للإعلان */
+                const kwBox = el("div", "t3-sit-kw");
+                kwBox.setAttribute("data-kw-box", "");
+
+                sitRows.push({ node: item, no: no, sit: sit, kwBox: kwBox });
                 panel.appendChild(item);
+                panel.appendChild(kwBox);
             });
 
             side.appendChild(panel);
@@ -406,6 +412,11 @@
                                     key: window.__kwCustom.key(sitRow.sit.de || ""),
                                     box: row.box,
                                     title: "كلمات مفتاحية — Situation " + want
+                                }, {
+                                    /* نفس الكلمات، حتى تحت الوضعية ف اللائحة */
+                                    key: window.__kwCustom.key(sitRow.sit.de || ""),
+                                    box: sitRow.kwBox,
+                                    title: "كلمات مفتاحية — Situation " + want
                                 }]
                             } : null;
                             window.__lesenKeys.link([sitText], ad, null, ctx);
@@ -443,6 +454,7 @@
                 if (!window.__lesenKeys) return;
                 sitRows.forEach(function (x) {
                     window.__lesenKeys.clear([x.node.querySelector(".t3-sit-de")]);
+                    if (x.kwBox) x.kwBox.textContent = "";
                 });
             }
 
