@@ -462,6 +462,11 @@
                 console.warn("Lesen: كلمات مفتاحية ما لقيناهاش ف " + (extra.label || "النص") + ":", found.missing);
             }
         }
+        /* اللي زادهم الأدمين من الموقع (kw-custom.js): كيتلونو فين ما كانو —
+           ف النص ولا ف الجواب — وماشي غلطة إلا ما كانوش ف شي جهة */
+        if (extra && extra.custom && extra.custom.length) {
+            kwPhraseSpans(text, extra.custom).spans.forEach(function (s) { spans.push(s); });
+        }
 
         /* الكلمات المتداخلة كتولي علامة وحدة */
         spans.sort(function (a, b) { return a[0] - b[0] || b[1] - a[1]; });
@@ -487,7 +492,15 @@
     window.__lesenKeys = {
         /* a و b: لائحتين ديال العناصر (نص عادي) — كنلونو ف a الكلمات
            اللي كاينين ف b، والعكس. */
-        link: function (a, b, extra) {
+        link: function (a, b, extra, ctx) {
+            /* ctx = { doc, items: [{ key, box, title }] }: الكلمات اللي زادهم
+               الأدمين (kw-custom.js) + الأزرار ديالو تحت كل box */
+            const custom = kwCustomFor(ctx);
+            if (custom.length) {
+                extra = a.map(function (n, i) {
+                    return Object.assign({}, extra && extra[i], { custom: custom });
+                });
+            }
             const sa = kwStems(a.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
             const sb = kwStems(b.map(function (n) { return n.__kwText != null ? n.__kwText : n.textContent; }).join(" "));
             let hits = 0;
@@ -496,16 +509,18 @@
             let inText = 0;
             /* extra[i] = { phrases, label }: كلمات مفتاحية زايدين على النود i ديال a */
             a.forEach(function (n, i) { const h = kwPaint(n, sb, extra && extra[i]); hits += h; inText += h; });
-            b.forEach(function (n) { hits += kwPaint(n, sa); });
+            b.forEach(function (n) { hits += kwPaint(n, sa, custom.length ? { custom: custom } : null); });
             /* قليلين (أقل من KW_MIN)؟ نجربو الأفعال والكلمات المركبة.
                غير ف النصوص اللي ما عندهاش لائحة بالإيد: إلا كتبناها،
                هي المرجع وما كنزيدوش عليها. */
-            const listed = !!extra && extra.some(function (e) { return e && e.phrases && e.phrases.length; });
+            const listed = custom.length > 0
+                || (!!extra && extra.some(function (e) { return e && e.phrases && e.phrases.length; }));
             if (inText < KW_MIN && !listed) {
                 hits = 0;
                 a.forEach(function (n, i) { hits += kwPaint(n, sb, extra && extra[i], true); });
                 b.forEach(function (n) { hits += kwPaint(n, sa, null, true); });
             }
+            if (ctx) kwCustomAfter(a, b, extra, ctx);
             return hits;
         },
         /* شحال من كلمة كتتلون ف النص من هاد الترويسة (كيف ما غيبان للطالب،
@@ -575,10 +590,81 @@
         },
         clear: function (nodes) {
             nodes.forEach(function (n) {
-                if (n && n.__kwText != null) { n.textContent = n.__kwText; n.__kwText = null; }
+                if (!n) return;
+                if (n.__kwText != null) { n.textContent = n.__kwText; n.__kwText = null; }
+                kwLinks = kwLinks.filter(function (l) { return l.nodes.indexOf(n) === -1; });
+                const box = n.closest && n.closest("[data-kw-box]");
+                if (box) Array.prototype.forEach.call(box.querySelectorAll(".kw-admin"), function (x) { x.remove(); });
             });
         }
     };
+
+    /* ===== الكلمات ديال الأدمين (assets/kw-custom.js) =====
+       كل link() اللي عندو ctx كيتسجل هنا، باش ملي تتزاد ولا تتحيد
+       كلمة (ولا توصل من Firestore) نعاودو نلونو نفس العناصر. */
+    let kwLinks = [];
+    function kwCustomFor(ctx) {
+        const store = window.__kwCustom;
+        if (!ctx || !ctx.doc || !store) return [];
+        const out = [];
+        (ctx.items || []).forEach(function (item) {
+            store.phrases(ctx.doc, item.key).forEach(function (p) { if (out.indexOf(p) === -1) out.push(p); });
+        });
+        return out;
+    }
+    function kwCustomAfter(a, b, extra, ctx) {
+        const store = window.__kwCustom;
+        if (!store || !ctx.doc) return;
+        const nodes = a.concat(b);
+        kwLinks = kwLinks.filter(function (l) {
+            return l.nodes[0] !== nodes[0] || l.nodes[l.nodes.length - 1] !== nodes[nodes.length - 1];
+        });
+        kwLinks.push({ a: a, b: b, extra: extra, ctx: ctx, nodes: nodes });
+
+        (ctx.items || []).forEach(function (item) {
+            if (!item.box) return;
+            item.box.setAttribute("data-kw-box", "");
+            store.tools(item.box, {
+                doc: ctx.doc,
+                key: item.key,
+                title: item.title,
+                /* فين يقدر يحدد: كل العناصر ديال نفس الكلمة (Teil 3 كيربط جوج مرات) */
+                scope: function () {
+                    const all = [];
+                    kwLinks.forEach(function (l) {
+                        if (l.ctx.doc !== ctx.doc) return;
+                        if (!(l.ctx.items || []).some(function (x) { return x.key === item.key; })) return;
+                        l.nodes.forEach(function (n) { all.push(n); });
+                    });
+                    return all;
+                }
+            });
+        });
+
+        if (!store.loaded(ctx.doc)) {
+            store.load(ctx.doc).then(function () { kwRelink(ctx.doc); });
+        }
+    }
+    function kwRelink(doc) {
+        kwLinks = kwLinks.filter(function (l) { return l.nodes.every(function (n) { return n && n.isConnected; }); });
+        kwLinks.slice().forEach(function (l) {
+            if (doc && l.ctx.doc !== doc) return;
+            /* extra ديال النص كيتعاود يتبنى من الأصل (بلا custom القديمة) */
+            const base = l.extra && l.extra.map(function (e) {
+                if (!e) return e;
+                const copy = Object.assign({}, e);
+                delete copy.custom;
+                return (copy.phrases && copy.phrases.length) ? copy : null;
+            });
+            window.__lesenKeys.link(l.a, l.b, base, l.ctx);
+        });
+    }
+    /* الراوتر كيعاود ينفذ هاد الملف مع كل قسم: signal كيمسح القدام */
+    const kwScope = window.__deSignal ? { signal: window.__deSignal } : undefined;
+    document.addEventListener("de-kw-change", function (event) {
+        kwRelink(event.detail && event.detail.doc);
+    }, kwScope);
+    document.addEventListener("de-admin", function () { kwRelink(null); }, kwScope);
 
     /* الصفحات العادية كترسم دغيا. الصفحات اللي كتبدل
        التمرين بوحدها كتحط data-manual. */

@@ -161,6 +161,101 @@
        الصفحة (buildNativeQuiz). Hören ماكيستعملش Gemini للترجمة —
        Gemini غير لـ Schreiben (باش مايسالاش الـ limit). */
 
+    /* ===== الكلمات اللي زادهم الأدمين (assets/kw-custom.js) =====
+       وثيقة وحدة للصفحة: keywords/hoeren-b2-teil1، والجملة كتتعرف
+       بالـ hash ديال النص ديالها. كيتلونو زايدين على الكلمة
+       الأوتوماتيكية. */
+    const PAGE = /(b1|b2)-hoeren-(teil[123])/.exec(location.pathname);
+    const DOC = PAGE ? "hoeren-" + PAGE[1] + "-" + PAGE[2] : "";
+
+    function custom(span) {
+        const store = window.__kwCustom;
+        if (!store || !DOC) return [];
+        return store.phrases(DOC, store.key(span.__kwText != null ? span.__kwText : span.textContent));
+    }
+    /* كل ظهور ديال كل كلمة (الحروف الكبار والصغار ما كيهمّوش) */
+    function paintPhrases(span, list) {
+        if (span.__kwText == null) span.__kwText = span.textContent;
+        const text = span.__kwText;
+        const low = text.toLowerCase();
+        const spans = [];
+        list.forEach(function (p) {
+            const want = String(p).toLowerCase();
+            if (!want) return;
+            let at = low.indexOf(want);
+            while (at !== -1) { spans.push([at, at + want.length]); at = low.indexOf(want, at + want.length); }
+        });
+        spans.sort(function (a, b) { return a[0] - b[0] || b[1] - a[1]; });
+        const merged = [];
+        spans.forEach(function (x) {
+            const top = merged[merged.length - 1];
+            if (top && x[0] < top[1]) top[1] = Math.max(top[1], x[1]);
+            else merged.push([x[0], x[1]]);
+        });
+        span.textContent = "";
+        let last = 0;
+        merged.forEach(function (x) {
+            span.appendChild(document.createTextNode(text.slice(last, x[0])));
+            const mark = document.createElement("mark");
+            mark.className = "kw";
+            mark.textContent = text.slice(x[0], x[1]);
+            span.appendChild(mark);
+            last = x[1];
+        });
+        span.appendChild(document.createTextNode(text.slice(last)));
+    }
+
+    /* الكويزات اللي تصححو: نعاودو نلونوهم ملي تتبدل شي كلمة */
+    const checked = new Set();
+
+    function apply(wrap, retry) {
+        const noteSpan = wrap.querySelector(".nq-note span");
+        clear(noteSpan);
+        const phrases = noteSpan ? notePhrases(noteSpan.textContent) : [];
+        if (!retry && phrases.length) paintNote(noteSpan);
+        const used = new Set();
+        rowsOf(wrap).forEach(function (row) {
+            const textEl = row.querySelector(".nq-question-text");
+            Array.prototype.forEach.call(row.querySelectorAll(".kw-admin"), function (x) { x.remove(); });
+            if (!textEl) return;
+            const span = sentence(textEl);
+            if (!span) return;
+            clear(span);
+            if (retry || row.dataset.answer !== "richtig") return;
+            const mine = custom(span);
+            const best = phrases.length ? bestPhrase(span.textContent, phrases, used) : null;
+            if (!phrases.length) paint(span);
+            else if (best) paintFrom(span, best);
+            /* + اللي زادهم الأدمين، فوق الكلمة الأوتوماتيكية */
+            if (mine.length) {
+                const auto = span.querySelector("mark.kw");
+                paintPhrases(span, auto ? mine.concat([auto.textContent]) : mine);
+            }
+            if (window.__kwCustom && DOC) {
+                window.__kwCustom.tools(row, {
+                    doc: DOC,
+                    key: window.__kwCustom.key(span.__kwText != null ? span.__kwText : span.textContent),
+                    title: "كلمات مفتاحية",
+                    scope: [span]
+                });
+            }
+        });
+        if (retry) checked.delete(wrap); else checked.add(wrap);
+        if (!retry && window.__kwCustom && DOC && !window.__kwCustom.loaded(DOC)) {
+            window.__kwCustom.load(DOC).then(again);
+        }
+    }
+    function again() {
+        checked.forEach(function (wrap) {
+            if (!wrap.isConnected) { checked.delete(wrap); return; }
+            apply(wrap, false);
+        });
+    }
+    document.addEventListener("de-kw-change", function (event) {
+        if (!event.detail || event.detail.doc === DOC) again();
+    });
+    document.addEventListener("de-admin", again);
+
     document.addEventListener("click", function (event) {
         const btn = event.target.closest(".nq-btn-check, .nq-btn-show, .nq-btn-retry");
         if (!btn) return;
@@ -168,23 +263,6 @@
         if (!wrap) return;
         const retry = btn.classList.contains("nq-btn-retry");
         /* من بعد ما يخدم الكود ديال الصفحة */
-        setTimeout(function () {
-            const noteSpan = wrap.querySelector(".nq-note span");
-            clear(noteSpan);
-            const phrases = noteSpan ? notePhrases(noteSpan.textContent) : [];
-            if (!retry && phrases.length) paintNote(noteSpan);
-            const used = new Set();
-            rowsOf(wrap).forEach(function (row) {
-                const textEl = row.querySelector(".nq-question-text");
-                if (!textEl) return;
-                const span = sentence(textEl);
-                if (!span) return;
-                clear(span);
-                if (retry || row.dataset.answer !== "richtig") return;
-                if (!phrases.length) { paint(span); return; }
-                const best = bestPhrase(span.textContent, phrases, used);
-                if (best) paintFrom(span, best);
-            });
-        }, 0);
+        setTimeout(function () { apply(wrap, retry); }, 0);
     });
 }());

@@ -364,7 +364,8 @@
                         }
                         /* + اللي كتبناهم بالإيد لهاد النص (assets/lesen-keys.js) */
                         const manual = window.__lesenKeys.manual(meta, rows.indexOf(row) + 1, row.text);
-                        window.__lesenKeys.link([body], de ? [words, de] : [words], [manual]);
+                        window.__lesenKeys.link([body], de ? [words, de] : [words], [manual],
+                            kwCtx(meta, row.text.body, row.box, "Text " + (rows.indexOf(row) + 1)));
                     }
                 });
 
@@ -407,6 +408,15 @@
         node.className = className;
         node.textContent = text;
         return node;
+    }
+
+    /* الكلمات اللي كيزيدهم الأدمين من الموقع (assets/kw-custom.js) */
+    function kwCtx(meta, text, box, title) {
+        if (!window.__kwCustom || !meta || !meta.id) return null;
+        return {
+            doc: "lesen-" + String(meta.level || "b2").toLowerCase() + "-" + meta.id,
+            items: [{ key: window.__kwCustom.key(text), box: box, title: "كلمات مفتاحية — " + title }]
+        };
     }
 
     window.__lesenTeil1Render = render;

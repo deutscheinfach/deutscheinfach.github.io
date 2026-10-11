@@ -257,6 +257,20 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    /* =====================================================
+       الكلمات المفتاحية اللي كيزيدهم الأدمين من الموقع
+       (assets/kw-custom.js): وثيقة لكل موضوع Lesen ولا صفحة
+       Hören = { items: { <hash ديال النص>: ["كلمة", …] } }.
+       الكل كيقرا (حتى الضيف)، الأدمين برك كيكتب.
+       ===================================================== */
+    match /keywords/{docId} {
+      allow read: if true;
+      allow create, update: if isAdmin()
+        && request.resource.data.keys().hasOnly(["items", "updatedAt"])
+        && request.resource.data.items is map;
+      allow delete: if isAdmin();
+    }
+
     match /news/{newsId} {
 
       allow read: if true;

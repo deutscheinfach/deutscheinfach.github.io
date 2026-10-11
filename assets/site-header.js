@@ -568,6 +568,13 @@
     }
     window.__dePremiumState = "pending";
 
+    /* الأدمين: كيبان ليه زر «كلمة مفتاحية» ف Lesen و Hören */
+    function setAdmin(on) {
+        if (window.__deIsAdmin === on) return;
+        window.__deIsAdmin = on;
+        document.dispatchEvent(new CustomEvent("de-admin", { detail: on }));
+    }
+
     let netBar = null;
     function netNotice(show) {
         if (!show) { if (netBar) { netBar.remove(); netBar = null; } return; }
@@ -1131,6 +1138,11 @@
                Firebase من جديد. */
             window.__deutschEinfachAuth = auth;
 
+            /* الكلمات المفتاحية ديال الأدمين (assets/kw-custom.js) كيقراو
+               ويكتبو ف Firestore بنفس الاتصال */
+            window.__deFirebase = { fs: fsMod, db: db };
+            document.dispatchEvent(new CustomEvent("de-firebase"));
+
             news.start(fsMod, db);
 
             authMod.onAuthStateChanged(auth, async function (person) {
@@ -1140,6 +1152,7 @@
                     remember(null);
                     news.setUser(null);
                     news.setAdmin(false);
+                    setAdmin(false);
                     guest.hidden = false;
                     account.hidden = true;
                     openMenu(false);
@@ -1187,6 +1200,7 @@
                         premium = isActive(data);
                         admin = data.isAdmin === true;
                         news.setAdmin(admin);
+                        setAdmin(admin);
                         /* وثيقة ناقصة (تخلقات من login بلا createdAt/email) */
                         if (!data.createdAt || !data.email) repairUser(data);
                     } else {

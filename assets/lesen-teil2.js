@@ -65,7 +65,7 @@
         });
     }
 
-    function render(into, task) {
+    function render(into, task, meta) {
         into.textContent = "";
         if (!task) {
             into.appendChild(el("div", "lesen-empty",
@@ -257,7 +257,19 @@
                         const b = r.buttons[Number(r.question.answer)];
                         return b && b.querySelector(".t1-option-de");
                     }).filter(Boolean);
-                    if (answers.length) window.__lesenKeys.link(bodies, answers);
+                    /* كل سؤال عندو الكلمات ديالو (الأدمين) — كيتلونو ف النص وف الجواب */
+                    const ctx = window.__kwCustom && meta && meta.id ? {
+                        doc: "lesen-" + String(meta.level || "b2").toLowerCase() + "-" + meta.id,
+                        items: rows.map(function (r) {
+                            const right = (r.question.options || [])[Number(r.question.answer)] || {};
+                            return {
+                                key: window.__kwCustom.key((r.question.text || "") + " | " + (right.text || "")),
+                                box: r.box,
+                                title: "كلمات مفتاحية — Frage " + (r.question.num || rows.indexOf(r) + 1)
+                            };
+                        })
+                    } : null;
+                    if (answers.length) window.__lesenKeys.link(bodies, answers, null, ctx);
                 }
 
                 window.__lesenScore(score, "teil2", right, rows.length, reveal,
