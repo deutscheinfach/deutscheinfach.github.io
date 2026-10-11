@@ -37,8 +37,52 @@
         ];
     }
 
+    /* ماشي مشكل اشتراك، مشكل اتصال: الحساب ما تأكدش (الأنترنت)، ولا
+       المشترك ما وصلوش المحتوى. «شوف العروض» هنا كيغلّط المشترك. */
+    function netCard(into, note) {
+        const card = el("section", "pg");
+        const head = el("div", "pg-head");
+        const badge = el("span", "pg-lock", "📶");
+        badge.setAttribute("aria-hidden", "true");
+        head.appendChild(badge);
+        const titles = el("div", "pg-titles");
+        titles.appendChild(el("h2", "pg-title", "ما قدرناش نجيبو هاد الموضوع"));
+        titles.appendChild(el("p", "pg-lead",
+            "غالبا المشكل ف الأنترنت (ضعيفة ولا مقطوعة) — ماشي ف الاشتراك ديالك. "
+            + "تأكد من الاتصال وعاود المحاولة."));
+        head.appendChild(titles);
+        card.appendChild(head);
+
+        const actions = el("div", "pg-actions");
+        const again = el("button", "pg-btn pg-btn-main", "عاود المحاولة");
+        again.type = "button";
+        again.addEventListener("click", function () { location.reload(); });
+        actions.appendChild(again);
+        card.appendChild(actions);
+
+        if (note) {
+            const box = el("div", "pg-note");
+            box.appendChild(el("b", "", "تفاصيل"));
+            box.appendChild(el("span", "", note));
+            card.appendChild(box);
+        }
+        into.appendChild(card);
+    }
+
     window.__premiumGate = function (into, options) {
         const config = options || {};
+
+        /* site-header.js: "pending" · "ok" · "error" */
+        const state = window.__dePremiumState || "ok";
+        if (state === "error" || (window.__deutschEinfachIsPremium === true && config.note)) {
+            netCard(into, config.note);
+            return;
+        }
+        /* Firebase ما زال ما جاوبش: الصفحة كتعاود ترسم مع de-premium */
+        if (state === "pending") {
+            into.appendChild(el("div", "lesen-empty", "⏳ كنتأكدو من الحساب ديالك…"));
+            return;
+        }
 
         const card = el("section", "pg");
 

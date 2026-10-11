@@ -1322,6 +1322,8 @@
     font-size: 14.5px;
     text-decoration: none;
     border: 1px solid transparent;
+    font-family: inherit;
+    cursor: pointer;
     transition: transform .18s ease, border-color .18s ease;
 }
 .pg-btn-main {

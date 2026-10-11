@@ -665,10 +665,11 @@
 
     /* حالة الاشتراك اللي ترسم بيها الامتحان/الموضوع: إلا جا de-premium
        بنفس القيمة، ماكنعاودوش الرسم — كان كيمسح الأجوبة ويرجع لـ Teil 1. */
-    let renderedPremium;
+    let renderedPremium, renderedState;
 
     function openExam(n, part, push) {
         renderedPremium = window.__deutschEinfachIsPremium;
+        renderedState = window.__dePremiumState;
         const exam = examFor(n);
         if (!exam) { close(push); return; }
         const scores = {};
@@ -1034,6 +1035,7 @@
 
     function open(themaId, part, push) {
         renderedPremium = window.__deutschEinfachIsPremium;
+        renderedState = window.__dePremiumState;
         const topic = topics.find(function (t) { return t.id === themaId; });
         if (!topic) { close(push); return; }
         dropExamTop();
@@ -1188,7 +1190,9 @@
         renderList();
 
         if (detail.hidden) return;
-        if (window.__deutschEinfachIsPremium === renderedPremium) return;
+        /* نفس الاشتراك ونفس الحالة (ماشي «مشكل ف الأنترنت» اللي تصلح) → والو */
+        if (window.__deutschEinfachIsPremium === renderedPremium
+            && renderedState !== "error") return;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
         const exam = examParam(params);

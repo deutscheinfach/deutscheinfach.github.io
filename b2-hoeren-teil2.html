@@ -18,7 +18,7 @@
 <script src="assets/hoeren-premium.js?v=db0b44b9"></script>
 <script src="assets/hoeren-keys.js?v=870ac0de" defer></script>
 <script src="assets/hoeren-toc.js?v=f5f43865" defer></script>
-<link rel="stylesheet" href="assets/site-header.css?v=19e8ca4a">
+<link rel="stylesheet" href="assets/site-header.css?v=cfa51ec1">
 <style id="telc-score-anti-flicker">html: not(.telc-scores-ready) .score-dot:not(.score-static),html:not(.telc-scores-ready) .user-score-badge:not(.score-static){visibility: hidden!important;background: none!important;border: none!important;box-shadow: none!important;color: transparent!important}
 </style>
 
@@ -1101,7 +1101,7 @@ html body #hoeren-teil2-stack .nq-note b { color: #6b4f14; font-weight: 900; }
 <body data-exercise-id="8" data-section="Unknown" data-exercise-format="hoeren-drogen-grid-v1">
 <div id="site-header" data-active="hoeren"></div>
 <script src="assets/fx.js?v=e60a28d5" defer></script>
-<script src="assets/site-header.js?v=daf48144"></script>
+<script src="assets/site-header.js?v=796cf38a"></script>
 
 <nav class="hoeren-sticky-nav" aria-label="Hören Navigation">
   <a class="hoeren-nav-btn hoeren-nav-back" href="b2-hoeren.html">
@@ -1190,13 +1190,14 @@ window.__deutschEinfachPremiumReady = (async function () {
           resolve(active && notExpired);
         } catch (error) {
           console.error("Premium check error:", error);
-          resolve(false);
+          /* أنترنت ضعيفة ≠ ماشي مشترك: كنتبعو site-header.js (آخر حالة معروفة) */
+          resolve(window.__deutschEinfachIsPremium === true);
         }
       });
     });
   } catch (error) {
     console.error("Premium check load error:", error);
-    return false;
+    return window.__deutschEinfachIsPremium === true;
   }
 })();
 </script>
@@ -2330,7 +2331,7 @@ body{ padding-top: var(--site-header-h, 72px) !important; }
 }
 </style>
 <script src="assets/whatsapp.js?v=56de1cb7"></script>
-<script src="assets/locked-modal.js?v=c9e8b457" defer></script>
+<script src="assets/locked-modal.js?v=551b2df3" defer></script>
 <link rel="stylesheet" href="assets/hoeren-nav.css?v=46bcbede">
 </body>
 </html>

@@ -20,6 +20,8 @@
     var lastFocus = null;
 
     function isPremium() { return !!window.__deutschEinfachIsPremium; }
+    /* site-header.js: "pending" (Firebase ما جاوبش) · "ok" · "error" (الأنترنت) */
+    function premiumState() { return window.__dePremiumState || "ok"; }
 
     function css() {
         if (document.getElementById("de-locked-css")) return;
@@ -91,6 +93,100 @@
 
     function onKey(event) {
         if (event.key === "Escape") { event.stopPropagation(); close(); }
+    }
+
+    var WIFI = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+        + 'stroke-linejoin="round" aria-hidden="true"><path d="M2 8.8a15 15 0 0 1 20 0"/><path d="M5 12.6a10 10 0 0 1 14 0"/>'
+        + '<path d="M8.5 16.3a5 5 0 0 1 7 0"/><circle cx="12" cy="19.6" r="1" fill="currentColor"/><path d="M3 3l18 18"/></svg>';
+
+    /* نافذة صغيرة: «مشكل ف الأنترنت» ولا «كنتأكدو من الحساب…».
+       ماشي «خاصك Premium» — المستعمل يقدر يكون مشترك. */
+    function notice(kind) {
+        css();
+        if (modal) close();
+        lastFocus = document.activeElement;
+        var net = kind === "net";
+
+        var back = document.createElement("div");
+        back.className = "dl-back";
+        back.setAttribute("role", "dialog");
+        back.setAttribute("aria-modal", "true");
+        back.setAttribute("aria-labelledby", "dl-title");
+
+        var box = document.createElement("div");
+        box.className = "dl-box";
+        box.innerHTML = '<div class="dl-ico">' + (net ? WIFI : LOCK) + '</div>'
+            + '<h2 class="dl-title" id="dl-title"></h2><p class="dl-sub"></p>';
+        box.querySelector(".dl-title").textContent = net ? "مشكل ف الأنترنت" : "كنتأكدو من الحساب ديالك…";
+        box.querySelector(".dl-sub").textContent = net
+            ? "ما قدرناش نتأكدو من الاشتراك ديالك حيت الاتصال ضعيف ولا مقطوع. "
+              + "تأكد من الأنترنت (Wi-Fi / 4G) وعاود المحاولة."
+            : "لحظة صغيرة، كنشوفو واش الحساب ديالك Premium.";
+
+        var go = null;
+        if (net) {
+            go = document.createElement("button");
+            go.type = "button";
+            go.className = "dl-go";
+            go.style.border = "0";
+            go.style.cursor = "pointer";
+            go.textContent = "عاود المحاولة";
+            go.addEventListener("click", function () { location.reload(); });
+            box.appendChild(go);
+        }
+
+        var later = document.createElement("button");
+        later.type = "button";
+        later.className = "dl-later";
+        later.textContent = net ? "سد" : "إلغاء";
+        later.addEventListener("click", close);
+        box.appendChild(later);
+
+        back.appendChild(box);
+        back.addEventListener("click", function (event) { if (event.target === back) close(); });
+        document.body.appendChild(back);
+        document.documentElement.style.overflow = "hidden";
+        document.addEventListener("keydown", onKey, true);
+        modal = back;
+        requestAnimationFrame(function () {
+            back.classList.add("show");
+            (go || later).focus({ preventScroll: true });
+        });
+        return back;
+    }
+
+    /* Firebase ما زال ما جاوبش: كنتسناو الجواب (حتى 15 ثانية) قبل ما
+       نقررو. مشترك → كنحلو الموضوع · ماشي مشترك → القفل · طاح → الأنترنت. */
+    function waitThenOpen(onPremium, onLocked) {
+        var box = notice("wait");
+        var done = false;
+        function finish() {
+            if (done) return;
+            var state = premiumState();
+            if (state === "pending") return;
+            done = true;
+            document.removeEventListener("de-premium-state", finish);
+            clearTimeout(timer);
+            if (modal !== box) return;   /* سدها المستعمل */
+            if (isPremium()) { close(); onPremium(); }
+            else if (state === "error") notice("net");
+            else onLocked();
+        }
+        var timer = setTimeout(function () {
+            if (done) return;
+            done = true;
+            document.removeEventListener("de-premium-state", finish);
+            if (modal === box) notice("net");
+        }, 15000);
+        document.addEventListener("de-premium-state", finish);
+    }
+
+    /* الحالة قبل ما نوريو القفل: ok → القفل · error → الأنترنت · pending → نتسناو */
+    function guard(onPremium, onLocked) {
+        var state = premiumState();
+        if (state === "error") { notice("net"); return; }
+        if (state === "pending") { waitThenOpen(onPremium, onLocked); return; }
+        onLocked();
     }
 
     window.__deLocked = function (options) {
@@ -181,11 +277,15 @@
         var title = card.querySelector(".lesen-card-title");
         var text = title ? (title.firstChild && title.firstChild.nodeType === 3
             ? title.firstChild.nodeValue : title.textContent) : "";
-        window.__deLocked({ title: (text || "").trim() });
+        guard(function () { card.click(); },
+              function () { window.__deLocked({ title: (text || "").trim() }); });
     }, true);
 
     /* ---- Hören: نبدلو النوافذ القديمة ديال كل Teil ---- */
-    function hoeren(title) { window.__deLocked({ title: title }); }
+    function hoeren(title) {
+        /* مشترك تأكد من بعد الانتظار: الصفحة كتعاود ترسم مع de-premium */
+        guard(function () {}, function () { window.__deLocked({ title: title }); });
+    }
     function swap() {
         ["openHoerenPremium", "openHoerenTeil2Premium", "openHoerenTeil3Premium"].forEach(function (name) {
             if (typeof window[name] === "function" && window[name] !== hoeren) window[name] = hoeren;
