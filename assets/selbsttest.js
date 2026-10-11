@@ -21,7 +21,7 @@
        ماخاصهومش يتحركو ف الـDOM — كل تحريك كيعاود يحملهم. */
     root.innerHTML = '<div id="st-view"></div><div class="st-exam" id="st-exam" hidden></div>';
     const view = document.getElementById("st-view");
-    const examBox = document.getElementById("st-exam");
+    let examBox = document.getElementById("st-exam");
 
     const STATE_KEY = "de-st-state";
     /* عدد المواضيع ف كل جزء ديال Hören (b1/b2-hoeren-teilN.html) */
@@ -66,6 +66,7 @@
         alert: '<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>',
         sliders: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
         book: '<path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/>',
+        eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
         dice: '<rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.3" fill="currentColor"/><circle cx="16" cy="8" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="8" cy="16" r="1.3" fill="currentColor"/><circle cx="16" cy="16" r="1.3" fill="currentColor"/>'
     };
     function svg(name, size) {
@@ -144,6 +145,7 @@
 
     /* ---------- البداية ---------- */
     function renderStart() {
+        dropReview();
         document.documentElement.classList.remove("is-exam-focus");
         document.body.classList.remove("st-running");
         const head = document.getElementById("st-head");
@@ -566,6 +568,108 @@
         }, 1200);
     }
 
+    /* ---------- المراجعة (العين ف «نتائج مفصلة») ----------
+       الامتحان المصحح كيبقى كيف ما هو (الـiframes بالأجوبة والتصحيح)،
+       وكنحلوه ف نافذة كبيرة ملي يبرك على العين. ما كنحركوش الـiframes
+       ف الـDOM (كل تحريك كيعاود يحملهم ويضيع الأجوبة): examBox القديم
+       كيولي reviewBox، وكنصاوبو examBox جديد للامتحان الجاي. */
+    let reviewBox = null, reviewLesen = null, reviewHoeren = [];
+
+    function keepForReview() {
+        dropReview();
+        if (!lesenFrame && !hoerenFrames.some(Boolean)) { dropPre(); return; }
+        clearTimeout(warmTimer);
+        reviewBox = examBox;
+        reviewLesen = lesenFrame;
+        reviewHoeren = hoerenFrames.slice();
+        /* البار والأزرار ديال الامتحان (فيهم ids) ما بقاوش لازمين */
+        reviewBox.querySelectorAll(".st-bar, .st-foot").forEach(function (n) { n.remove(); });
+        reviewBox.removeAttribute("id");
+        reviewBox.classList.add("st-review", "is-pre");
+        reviewBox.hidden = true;
+        const head = document.createElement("div");
+        head.className = "st-rv-head";
+        head.innerHTML = '<div><small>مراجعة تفصيلية</small><b class="st-rv-title"></b></div>' +
+            '<button class="st-rv-x" type="button" data-rv-close aria-label="سد">✕</button>';
+        reviewBox.insertBefore(head, reviewBox.firstChild);
+
+        examBox = document.createElement("div");
+        examBox.className = "st-exam";
+        examBox.id = "st-exam";
+        examBox.hidden = true;
+        root.appendChild(examBox);
+        pre = null;
+        lesenFrame = null;
+        hoerenFrames.length = 0;
+    }
+
+    function dropReview() {
+        if (!reviewBox) return;
+        closeReview();
+        reviewBox.remove();
+        reviewBox = null;
+        reviewLesen = null;
+        reviewHoeren = [];
+    }
+
+    function openReview(i) {
+        const p = PARTS[i];
+        if (!reviewBox || !p) return;
+        const frame = p.grp === "lesen" ? reviewLesen : reviewHoeren[p.sub];
+        if (!frame) return;
+        reviewBox.querySelector(".st-rv-title").textContent = p.name;
+        if (reviewLesen) reviewLesen.hidden = frame !== reviewLesen;
+        reviewHoeren.forEach(function (f) { if (f) f.hidden = f !== frame; });
+        if (p.grp === "lesen") {
+            try { if (typeof frame.contentWindow.__examGo === "function") frame.contentWindow.__examGo(p.key); } catch (e) { /* */ }
+        }
+        /* Hören ما تصححش (الصفحة كانت باقا كتحمل ملي سالا)؟ نصححوه دابا —
+           النتيجة ديجا محسوبة، هادشي غير باش يبان الصحيح والغالط */
+        if (p.grp === "hoeren") {
+            try {
+                const doc = frame.contentDocument;
+                if (!doc.querySelector(".nq-correct, .nq-wrong")) {
+                    doc.querySelectorAll(".nq-btn-check").forEach(function (b) { b.click(); });
+                }
+                /* الصفحة كتخبي «Richtige Antwort» مع «Antworten prüfen» —
+                   ف المراجعة بغيناها تبان تحت كل جملة غالطة */
+                if (!doc.getElementById("st-rv-css")) {
+                    const css = doc.createElement("style");
+                    css.id = "st-rv-css";
+                    css.textContent = "html body .native-quiz-wrap .nq-question-row.nq-wrong .nq-solution-badge{display:inline-flex!important;margin:10px 0 0 8px!important}";
+                    doc.head.appendChild(css);
+                }
+                /* + ✓ على الاختيار الصحيح ف كل جملة غالطة */
+                doc.querySelectorAll(".nq-question-row.nq-wrong").forEach(function (row) {
+                    const want = row.dataset.answer;
+                    row.querySelectorAll("input").forEach(function (input) {
+                        const label = input.closest(".nq-radio-option");
+                        if (label && input.value === want) label.classList.add("nq-correct-opt");
+                    });
+                });
+            } catch (e) { /* */ }
+        }
+        try { frame.contentWindow.scrollTo(0, 0); } catch (e) { /* */ }
+        reviewBox.hidden = false;
+        reviewBox.classList.remove("is-pre");
+        reviewBox.classList.add("is-open");
+        document.documentElement.classList.add("st-rv-lock");
+        const x = reviewBox.querySelector(".st-rv-x");
+        if (x) x.focus({ preventScroll: true });
+    }
+
+    function closeReview() {
+        if (!reviewBox || !reviewBox.classList.contains("is-open")) return;
+        reviewBox.classList.remove("is-open");
+        reviewBox.classList.add("is-pre");
+        reviewBox.hidden = true;
+        document.documentElement.classList.remove("st-rv-lock");
+    }
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeReview();
+    });
+
     /* ---------- النتيجة ---------- */
     function renderResult() {
         clearInterval(timer);
@@ -574,7 +678,7 @@
         document.body.classList.remove("st-running");
         const head = document.getElementById("st-head");
         if (head) head.hidden = true;
-        dropPre();
+        keepForReview();
         examBox.hidden = true;
         const total = sums();
         const pass = total >= PASS;
@@ -599,6 +703,8 @@
             return { g: g, pts: pts, ok: pts / g.max >= 0.6 };
         });
         const row = function (p) {
+            const i = PARTS.indexOf(p);
+            const canSee = !!reviewBox && !!(p.grp === "lesen" ? reviewLesen : reviewHoeren[p.sub]);
             const pts = points(p) || 0;
             const ok = pts / p.max >= 0.6;
             const title = state.titles[p.key] || (p.grp === "hoeren" ? "Thema " + state.mix.hoeren[p.sub] : "");
@@ -606,7 +712,9 @@
                 (title ? "<small>" + esc(title) + "</small>" : "") + "</div>" +
                 '<div class="st-row-bar"><i class="' + (ok ? "ok" : "bad") + '" style="width:' + Math.round(pts / p.max * 100) + '%"></i></div>' +
                 '<div class="st-row-pts"><b>' + fmt(pts) + "</b> / " + p.max + "</div>" +
-                '<span class="st-chip ' + (ok ? "ok" : "bad") + '">' + (ok ? "ناجح" : "راسب") + "</span></div>";
+                '<span class="st-chip ' + (ok ? "ok" : "bad") + '">' + (ok ? "ناجح" : "راسب") + "</span>" +
+                (canSee ? '<button class="st-eye" type="button" data-review="' + i + '" title="شوف فين غلطتي" aria-label="شوف الأجوبة ديال ' + esc(p.name) + '">' + svg("eye", 18) + "</button>" : "") +
+                "</div>";
         };
 
         view.innerHTML =
@@ -637,7 +745,8 @@
             "<span><b>شارك النتيجة</b><small>صورة ديال النتيجة للأصحاب</small></span><em>" + svg("back", 18) + "</em></button>" : "") +
             "</div>" +
 
-            '<h2 class="st-res-h">نتائج مفصلة</h2>' +
+            '<h2 class="st-res-h">نتائج مفصلة' +
+            (reviewBox ? '<small>' + svg("eye", 15) + " برك على العين باش تشوف الأجوبة ديالك والحل</small>" : "") + "</h2>" +
             '<div class="st-res-list">' + GROUPS.map(function (g, k) {
                 const x = groups[k];
                 return '<div class="st-sec"><div class="st-sec-h"><i>' + svg(g.icon, 18) + "</i><b>" + g.label + "</b><span>" + fmt(x.pts) + " / " + g.max + "</span></div>" +
@@ -672,6 +781,9 @@
 
     /* ---------- الأحداث ---------- */
     root.addEventListener("click", function (e) {
+        const eye = e.target.closest("[data-review]");
+        if (eye) { openReview(Number(eye.dataset.review)); return; }
+        if (e.target.closest("[data-rv-close]") || e.target === reviewBox) { closeReview(); return; }
         const tab = e.target.closest("[data-tab]");
         if (tab && state) { show(Number(tab.dataset.tab)); return; }
         const act = e.target.closest("[data-act]");
