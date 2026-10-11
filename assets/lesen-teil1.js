@@ -365,7 +365,11 @@
                         /* + اللي كتبناهم بالإيد لهاد النص (assets/lesen-keys.js) */
                         const manual = window.__lesenKeys.manual(meta, rows.indexOf(row) + 1, row.text);
                         window.__lesenKeys.link([body], de ? [words, de] : [words], [manual],
-                            kwCtx(meta, row.text.body, row.box, "Text " + (rows.indexOf(row) + 1)));
+                            kwCtx(meta, row.box, [
+                                { text: row.text.body, title: "Text " + (rows.indexOf(row) + 1) },
+                                /* الترويسة عندها الكلمات ديالها (كتحدد ف الترويسة اللي فوق النص) */
+                                { text: "Überschrift: " + (head.text || ""), title: "Überschrift " + expected }
+                            ]));
                     }
                 });
 
@@ -411,11 +415,13 @@
     }
 
     /* الكلمات اللي كيزيدهم الأدمين من الموقع (assets/kw-custom.js) */
-    function kwCtx(meta, text, box, title) {
+    function kwCtx(meta, box, parts) {
         if (!window.__kwCustom || !meta || !meta.id) return null;
         return {
             doc: "lesen-" + String(meta.level || "b2").toLowerCase() + "-" + meta.id,
-            items: [{ key: window.__kwCustom.key(text), box: box, title: "كلمات مفتاحية — " + title }]
+            items: parts.map(function (part) {
+                return { key: window.__kwCustom.key(part.text), box: box, title: "كلمات مفتاحية — " + part.title };
+            })
         };
     }
 
