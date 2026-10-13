@@ -542,7 +542,14 @@
     /* كنرسمو آخر حالة معروفة دغيا — بلا ما نستناو Firebase.
        القائمة ما كتتبناش دابا: ماكاينش لعجلة، وهي محتاجة
        الإيميل الحقيقي. كتوجد ملي يجاوب Firebase. */
+    /* بلا أنترنت: Premium غير إلا التصريح (diag.js) باقي صالح — الاشتراك
+       ما سالاش وما فاتوش 7 أيام بلا ما نتأكدو */
+    function passOk(uid) {
+        if (navigator.onLine !== false) return true;
+        return !window.__deOfflinePass || window.__deOfflinePass.ok(uid);
+    }
     const last = recall();
+    if (last && last.premium === true && !passOk(last.uid)) last.premium = false;
     if (last) {
         guest.hidden = true;
         account.hidden = false;
@@ -1279,6 +1286,19 @@
                         }
                     }
                 }
+                /* التصريح ديال الاستعمال بلا أنترنت: حتى لنهاية الاشتراك (ولا 7 أيام).
+                   ماشي مشترك → كنمسحو المحتوى المدفوع من التيليفون. */
+                function grantOffline(data, isPremium) {
+                    const pass = window.__deOfflinePass;
+                    if (!pass) return;
+                    if (isPremium) {
+                        const end = data.subscriptionEnd && data.subscriptionEnd.toDate
+                            ? data.subscriptionEnd.toDate().getTime() : 0;
+                        pass.grant(person.uid, end);
+                    } else {
+                        pass.revoke(person.uid);
+                    }
+                }
                 function isActive(data) {
                     const notExpired = !data.subscriptionEnd
                         || (data.subscriptionEnd.toDate
@@ -1295,6 +1315,7 @@
                         const data = snap.data();
                         if (data.name) name = data.name;
                         premium = isActive(data);
+                        grantOffline(data, premium);
                         admin = data.isAdmin === true;
                         news.setAdmin(admin);
                         setAdmin(admin);
@@ -1326,7 +1347,8 @@
                     failed = true;
                     const known = recall();
                     if (known && known.uid === person.uid) {
-                        premium = known.premium === true;
+                        /* بلا أنترنت: غير إلا التصريح باقي صالح */
+                        premium = known.premium === true && passOk(person.uid);
                         if (known.name) name = known.name;
                     }
                 }
@@ -1356,6 +1378,7 @@
                             const data = snap.exists() ? snap.data() : {};
                             if (data.name) name = data.name;
                             premium = isActive(data);
+                            grantOffline(data, premium);
                             window.__deutschEinfachIsPremium = premium;
                             remember({ name: name, premium: premium, uid: person.uid });
                             paint(name, premium);
