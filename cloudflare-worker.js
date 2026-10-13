@@ -811,6 +811,15 @@ ${safeStudentText}
     } catch (error) {
       console.error("Worker error:", error);
 
+      /* JSON مكسور ف KV: كنقولو شمن مفتاح (الأدمين كيشوفو ف «مشاكل الطلبة») */
+      if (String(error && error.message).startsWith("bad_json ")) {
+        return jsonResponse(
+          { error: "bad_json", details: String(error.message).slice(9, 300) },
+          500,
+          allowedOrigin
+        );
+      }
+
       return jsonResponse(
         {
           error: "Internal server error.",
@@ -1062,7 +1071,18 @@ function kvJson(env, key) {
   if (running) return running;
 
   const pending = (async () => {
-    const value = await env.TOPICS.get(key, { type: "json", cacheTtl: KV_EDGE_TTL });
+    /* نص ونحللوه حنا: JSON مكسور ف KV (فاصلة ناقصة…) كان كيطيح الطلب
+       بـ "Internal server error" بلا ما نعرفو شمن مفتاح. دابا الخطأ كيقول
+       المفتاح باش يتصلح ف KV. */
+    const raw = await env.TOPICS.get(key, { type: "text", cacheTtl: KV_EDGE_TTL });
+    let value = null;
+    if (raw != null) {
+      try {
+        value = JSON.parse(raw);
+      } catch (parseError) {
+        throw new Error("bad_json " + key + ": " + parseError.message);
+      }
+    }
 
     /* الغايب ما كنحفظوهش: الموضوع الجديد خاصو يبان دغيا */
     if (value != null) {
