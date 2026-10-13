@@ -40,6 +40,7 @@
     /* ماشي مشكل اشتراك، مشكل اتصال: الحساب ما تأكدش (الأنترنت)، ولا
        المشترك ما وصلوش المحتوى. «شوف العروض» هنا كيغلّط المشترك. */
     function netCard(into) {
+        if (window.__deDiag) window.__deDiag("fail", "بان «ما قدرناش نجيبو هاد الموضوع» (" + (window.__dePremiumState || "?") + ")");
         const card = el("section", "pg");
         const head = el("div", "pg-head");
         const badge = el("span", "pg-lock", "📶");

@@ -79,7 +79,11 @@
                 return { ok: false, why: "ما وصلناش للـ Worker. شوف الأنترنت." };
             }
         })();
-        cache[teil].then(function (r) { if (!r.ok) delete cache[teil]; });
+        cache[teil].then(function (r) {
+            if (r.ok) return;
+            delete cache[teil];
+            if (window.__deDiag && r.status !== 403) window.__deDiag("fail", "Hören Worker (" + teil + "): " + (r.status || "") + " " + (r.why || ""));
+        });
         return cache[teil];
     };
 

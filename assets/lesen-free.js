@@ -24,6 +24,7 @@
                         .then(function () { return load(level, attempt + 1); });
                 }
                 console.warn("Lesen: المواضيع المجانية ما وصلوش", error);
+                if (window.__deDiag) window.__deDiag("fail", "Lesen مجاني ما وصلش (" + level + "): " + (error && error.message || error));
                 return null;
             });
     }

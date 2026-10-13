@@ -81,6 +81,20 @@
         wait.className = "lesen-empty";
         wait.textContent = "⏳ كنجيبو التمرين…";
         box.appendChild(wait);
+        watchLoading(wait, "مجاني");
+    }
+    /* «كنجيبو…» باقي باين من بعد 10 ثواني = الطالب كيشوف صفحة خاوية:
+       كنسجلوها ف «مشاكل الطلبة» (assets/diag.js) */
+    function watchLoading(node, kind) {
+        const t0 = Date.now();
+        setTimeout(function () {
+            if (node.isConnected && window.__deDiag) {
+                const p = new URLSearchParams(location.search);
+                window.__deDiag("slow", "Lesen " + kind + ": الموضوع باقي كيتحمل من بعد 10s [" +
+                    (p.get("thema") || p.get("pruefung") || "?") + " " + (p.get("teil") || pagePart || "") + "]",
+                    { ms: Date.now() - t0 });
+            }
+        }, 10000);
     }
 
     /* الرأس ديال كل جزء: العنوان والسطر الصغير تحتيه. */
@@ -433,6 +447,7 @@
             loading.className = "lesen-empty";
             loading.textContent = "كنجيبو التمرين…";
             stack.appendChild(loading);
+            watchLoading(loading, "Premium");
 
             const fetchPart = typeof window.__lesenPremiumFetch === "function"
                 ? window.__lesenPremiumFetch
