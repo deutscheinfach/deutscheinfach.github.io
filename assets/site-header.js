@@ -1112,11 +1112,26 @@
     if (window.ResizeObserver) new ResizeObserver(measure).observe(header);
 
     /* ---- حالة الحساب ---- */
+    /* Firebase كيبدا يتحمل دغيا (modulepreload)، فاش كتحل الصفحة، ماشي
+       حتى يوصل الكود لهنا */
+    const FB = "https://www.gstatic.com/firebasejs/12.18.0/";
+    ["firebase-app.js", "firebase-auth.js", "firebase-firestore.js"].forEach(function (f) {
+        try {
+            if (document.head.querySelector('link[href="' + FB + f + '"]')) return;
+            const link = document.createElement("link");
+            link.rel = "modulepreload";
+            link.href = FB + f;
+            link.crossOrigin = "anonymous";
+            document.head.appendChild(link);
+        } catch (e) { /* غير تسريع */ }
+    });
     (async function () {
         try {
-            const appMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
-            const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
-            const fsMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
+            /* التلاتة ف نفس الوقت (قبل كانو واحد من بعد واحد: ثانية زايدة
+               قبل ما يتعرف الحساب ويتحلو مواضيع Premium) */
+            const mods = await Promise.all([FB + "firebase-app.js", FB + "firebase-auth.js", FB + "firebase-firestore.js"]
+                .map(function (url) { return import(url); }));
+            const appMod = mods[0], authMod = mods[1], fsMod = mods[2];
 
             const app = appMod.getApps().length
                 ? appMod.getApp()

@@ -50,6 +50,65 @@
     }
     preconnect();
 
+    /* ===== كاش ف المتصفح (localStorage) =====
+       قبل، كل refresh كان كيعاود يسول الـ Worker — ومن قبل كيتسنى Firebase
+       يعرف الحساب (2-3 ثواني). دابا الموضوع اللي تجاب مرة كيبقى عند
+       المشترك 3 أيام، مربوط بالحساب ديالو (uid)، وكيبان دغيا ملي يرجع.
+       غير المشترك (حسب آخر حالة معروفة) اللي كيقرا منو. */
+    const DISK = "de-lp:";
+    const DISK_TTL = 3 * 24 * 3600 * 1000;
+    function lastUid() {
+        try {
+            const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+            return a && a.premium === true && a.uid ? a.uid : "";
+        } catch (e) { return ""; }
+    }
+    function diskGet(uid, id) {
+        if (!uid) return null;
+        try {
+            const v = JSON.parse(localStorage.getItem(DISK + uid + "|" + id) || "null");
+            if (v && v.data && Date.now() - v.t < DISK_TTL) return { ok: true, data: v.data };
+        } catch (e) { /* */ }
+        return null;
+    }
+    function diskSet(uid, id, data) {
+        const key = DISK + uid + "|" + id;
+        const value = JSON.stringify({ t: Date.now(), data: data });
+        for (let tries = 0; tries < 3; tries++) {
+            try { localStorage.setItem(key, value); return; } catch (e) { diskTrim(); }
+        }
+    }
+    /* المساحة تعمرات: كنمسحو القدام (ولا ديال حساب آخر) */
+    function diskTrim() {
+        try {
+            const rows = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && k.indexOf(DISK) === 0) {
+                    let t = 0;
+                    try { t = JSON.parse(localStorage.getItem(k)).t || 0; } catch (e) { /* */ }
+                    rows.push({ k: k, t: t });
+                }
+            }
+            rows.sort(function (a, b) { return a.t - b.t; });
+            rows.slice(0, Math.max(5, Math.ceil(rows.length / 3))).forEach(function (r) { localStorage.removeItem(r.k); });
+        } catch (e) { /* */ }
+    }
+    /* خرج من الحساب ولا ماشي مشترك: ما نخليوش النصوص ف المتصفح */
+    function diskClear() {
+        try {
+            const drop = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && k.indexOf(DISK) === 0) drop.push(k);
+            }
+            drop.forEach(function (k) { localStorage.removeItem(k); });
+        } catch (e) { /* */ }
+    }
+    document.addEventListener("de-premium", function (e) {
+        if (e.detail === false && window.__dePremiumState === "ok") diskClear();
+    });
+
     function currentUser() {
         /* site-header.js عندو Firebase محمّل — كناخدو منو */
         const auth = window.__deutschEinfachAuth;
@@ -149,6 +208,13 @@
 
     window.__lesenPremiumFetch = function (themaId) {
         const user = currentUser();
+        /* الكاش ديال المتصفح: ف اللحظة، بلا ما نتسناو Firebase */
+        const uid = user ? user.uid : (window.__deutschEinfachIsPremium ? lastUid() : "");
+        const saved = diskGet(uid, themaId);
+        if (saved) {
+            state.done.set(uid + "|" + themaId, saved);
+            return Promise.resolve(saved);
+        }
         if (!user && (window.__deutschEinfachIsPremium || window.parent !== window)) {
             return waitUser(10000).then(function (late) {
                 return late ? window.__lesenPremiumFetch(themaId) : { ok: false, why: "ماشي داخل بحساب." };
@@ -177,7 +243,7 @@
 
             const result = await ask(themaId, token);
 
-            if (result.ok) state.done.set(key, result);
+            if (result.ok) { state.done.set(key, result); diskSet(user.uid, themaId, result.data); }
             else if (result.status === 404) state.miss.set(key, { result: result, until: Date.now() + MISS_MS });
             return result;
         })().finally(function () { state.busy.delete(key); });
@@ -191,6 +257,31 @@
     window.__lesenPremiumPeek = function (themaId) {
         const user = currentUser();
         return user ? state.done.get(user.uid + "|" + themaId) : undefined;
+    };
+
+    /* ===== التحميل المسبق =====
+       المشترك ملي كيدخل لـ Lesen: المواضيع ديال الجزء اللي فيه كيتجابو
+       ف الخفا (3 ف نفس الوقت)، وكيتحفظو ف المتصفح. ملي يبرك على موضوع
+       كيبان دغيا. اللي ديجا محفوظ ما كيتعاودش. */
+    let prefetching = null;
+    window.__lesenPremiumPrefetch = function (ids) {
+        if (!window.__deutschEinfachIsPremium || !Array.isArray(ids) || !ids.length) return;
+        const user = currentUser();
+        if (!user) return;
+        const todo = ids.filter(function (id) {
+            return !diskGet(user.uid, id) && !state.done.has(user.uid + "|" + id);
+        });
+        if (!todo.length) return;
+        const run = { left: todo.slice() };
+        prefetching = run;
+        function next() {
+            if (prefetching !== run || !run.left.length || !window.__deutschEinfachIsPremium) return;
+            const id = run.left.shift();
+            Promise.resolve(window.__lesenPremiumFetch(id)).catch(function () {}).then(function () {
+                setTimeout(next, 120);
+            });
+        }
+        for (let i = 0; i < 3; i++) next();
     };
 
     /* كيبدا الجلب والمستعمل باقي ما بركش: hover ف الكمبيوتر، أول لمسة ف
