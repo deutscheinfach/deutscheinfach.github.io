@@ -66,11 +66,15 @@
 
     if (!read(SESSION_KEY)) return;
 
-    (async function () {
+    /* من بعد ما يبان المحتوى (assets/diag.js) — Firestore ثقيل */
+    (window.__deAfterContent || function (fn) { setTimeout(fn, 2500); })(async function () {
         try {
-            var appMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
-            var authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
-            var fsMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
+            var mods = await Promise.all([
+                import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js"),
+                import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js"),
+                import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js")
+            ]);
+            var appMod = mods[0], authMod = mods[1], fsMod = mods[2];
 
             /* الصفحة يمكن تكون ديجا دارت initializeApp. إلا عاودنا،
                Firebase كيرمي خطأ، إذن كنعاودو نستعملو اللي كاين. */
@@ -149,5 +153,5 @@
         } catch (error) {
             console.error("Session guard load error:", error);
         }
-    })();
+    });
 })();

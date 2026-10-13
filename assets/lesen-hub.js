@@ -272,6 +272,14 @@
     /* المشترك: المواضيع المقفولة ديال هاد الجزء كيتجابو ف الخفا من Cloudflare
        (assets/lesen-premium.js)، باش ملي يبرك على موضوع يبان دغيا. Firebase
        ما زال ما عرفش الحساب؟ كنعاودو ملي يجي de-premium. */
+    /* site-header.js كيتسنى هادي باش يحمل Firestore (ثقيل) من بعد المحتوى */
+    let contentSignaled = false;
+    function contentShown() {
+        if (contentSignaled) return;
+        contentSignaled = true;
+        document.dispatchEvent(new CustomEvent("de-content"));
+    }
+
     function prefetch(list) {
         if (EMBEDDED || typeof window.__lesenPremiumPrefetch !== "function") return;
         const ids = list.filter(function (t) { return t.locked; }).map(function (t) { return t.id; });
@@ -285,6 +293,8 @@
         const list = listed();
         grid.textContent = "";
         prefetch(list);
+        /* صفحة اللائحة بلا موضوع محلول: المحتوى هو اللائحة */
+        if (!new URLSearchParams(location.search).get("thema")) contentShown();
 
         if (countEl) countEl.textContent = list.length ? list.length + " موضوع" : "";
         /* الرقم ديال فوق كيتبع التبويب الحالي، ماشي رقم ثابت. */
@@ -508,6 +518,7 @@
         }
 
         function draw(task) {
+            contentShown();
             const RENDER = {
                 matching: window.__lesenTeil1Render,   /* Teil 1: ترويسات */
                 mc:       window.__lesenTeil2Render,   /* Teil 2: A/B/C */

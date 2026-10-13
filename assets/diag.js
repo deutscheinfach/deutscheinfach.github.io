@@ -12,6 +12,35 @@
    · ماكثرش من 6 ف الصفحة، وكل رسالة مرة وحدة.
    · غير ف الموقع الحقيقي (ماشي localhost).
    · ما كيتسجلش الإيميل ولا الاسم — غير واش مشترك ولا لا. */
+/* ===== من بعد المحتوى =====
+   window.__deAfterContent(fn): Firestore (178 KB) وأي حاجة ماشي ضرورية
+   كيتسناو حتى يبان المحتوى (Lesen كيصيفط de-content)، ولا 2.5 ثانية من
+   بعد load (6 ف صفحات Lesen). ف الأنترنت الضعيفة، المحتوى كياخد الشبكة
+   بوحدو. */
+(function () {
+    "use strict";
+    if (window.__deAfterContent) return;
+    let open = false;
+    const queue = [];
+    function release() {
+        if (open) return;
+        open = true;
+        queue.splice(0).forEach(function (fn) { try { fn(); } catch (e) { /* */ } });
+    }
+    document.addEventListener("de-content", function () { setTimeout(release, 300); }, { once: true });
+    /* موضوع Lesen محلول (كيتسنى المحتوى من Cloudflare): حتى 6 ث، ولا
+       de-content قبل. الصفحات الأخرى: 2.5 ث */
+    const waitTopic = /-lesen(-[a-z0-9]+)?\.html$/.test(location.pathname)
+        && /[?&](thema|pruefung)=/.test(location.search);
+    const later = function () { setTimeout(release, waitTopic ? 6000 : 2500); };
+    if (document.readyState === "complete") later();
+    else window.addEventListener("load", later, { once: true });
+    window.__deAfterContent = function (fn) {
+        if (open) fn(); else queue.push(fn);
+    };
+    window.__deAfterContent.now = release;
+})();
+
 (function () {
     "use strict";
     if (window.__deDiag) return;

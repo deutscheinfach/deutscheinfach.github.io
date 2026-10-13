@@ -1118,7 +1118,8 @@
     /* Firebase كيبدا يتحمل دغيا (modulepreload)، فاش كتحل الصفحة، ماشي
        حتى يوصل الكود لهنا */
     const FB = "https://www.gstatic.com/firebasejs/12.18.0/";
-    ["firebase-app.js", "firebase-auth.js", "firebase-firestore.js"].forEach(function (f) {
+    /* Firestore (178 KB) ماشي هنا: كيتحمل من بعد الصفحة (شوف fsReady) */
+    ["firebase-app.js", "firebase-auth.js"].forEach(function (f) {
         try {
             if (document.head.querySelector('link[href="' + FB + f + '"]')) return;
             const link = document.createElement("link");
@@ -1132,9 +1133,10 @@
         try {
             /* التلاتة ف نفس الوقت (قبل كانو واحد من بعد واحد: ثانية زايدة
                قبل ما يتعرف الحساب ويتحلو مواضيع Premium) */
-            const mods = await Promise.all([FB + "firebase-app.js", FB + "firebase-auth.js", FB + "firebase-firestore.js"]
+            const mods = await Promise.all([FB + "firebase-app.js", FB + "firebase-auth.js"]
                 .map(function (url) { return import(url); }));
-            const appMod = mods[0], authMod = mods[1], fsMod = mods[2];
+            const appMod = mods[0], authMod = mods[1];
+            let fsMod = null, db = null;
 
             const app = appMod.getApps().length
                 ? appMod.getApp()
@@ -1149,19 +1151,37 @@
                   });
 
             const auth = authMod.getAuth(app);
-            const db = fsMod.getFirestore(app);
 
             /* lesen-premium.js كيحتاج الـ ID token باش يجيب المواضيع
                المدفوعة من الـ Worker. كنعطيوه auth عوض ما يعاود يحمل
                Firebase من جديد. */
             window.__deutschEinfachAuth = auth;
 
-            /* الكلمات المفتاحية ديال الأدمين (assets/kw-custom.js) كيقراو
-               ويكتبو ف Firestore بنفس الاتصال */
-            window.__deFirebase = { fs: fsMod, db: db };
-            document.dispatchEvent(new CustomEvent("de-firebase"));
-
-            news.start(fsMod, db);
+            /* Firestore هو أثقل ملف ف الموقع (178 KB). ماخاصوش باش يبان
+               الموضوع (الحساب من Auth، والمحتوى من Cloudflare)، إذن كيتحمل
+               من بعد ما تكمل الصفحة — ف الأنترنت الضعيفة، المحتوى كياخد
+               الشبكة بوحدو بلا ما يتقاسمها معاه. */
+            /* كيبدا: 2.5 ثانية من بعد load (الوقت باش يوصل المحتوى)، ولا
+               دغيا إلا الحساب ما معروفش (أول دخول) — التأكد من الاشتراك
+               كيحتاجو. */
+            let kickFs = null;
+            const fsGate = new Promise(function (done) { kickFs = done; });
+            /* assets/diag.js: من بعد ما يبان المحتوى (ولا 2.5 ث من بعد load) */
+            if (window.__deAfterContent) window.__deAfterContent(kickFs);
+            else setTimeout(kickFs, 2500);
+            const fsReady = fsGate.then(function () {
+                return import(FB + "firebase-firestore.js");
+            }).then(function (mod) {
+                fsMod = mod;
+                db = mod.getFirestore(app);
+                /* الكلمات المفتاحية ديال الأدمين (assets/kw-custom.js) كيقراو
+                   ويكتبو ف Firestore بنفس الاتصال */
+                window.__deFirebase = { fs: fsMod, db: db };
+                document.dispatchEvent(new CustomEvent("de-firebase"));
+                news.start(fsMod, db);
+                return mod;
+            });
+            fsReady.catch(function (e) { console.warn("Header: Firestore ما تحملش", e); });
 
             authMod.onAuthStateChanged(auth, async function (person) {
                 if (!person) {
@@ -1211,6 +1231,9 @@
                 }
 
                 try {
+                    const known = recall();
+                    if (!known || known.uid !== person.uid) kickFs();
+                    await fsReady;
                     const snap = await readUser();
                     if (snap.exists()) {
                         const data = snap.data();
