@@ -259,8 +259,17 @@ function renderAd(box, text) {
     });
 
     // ---------- back ----------
+    /* جينا من اللائحة؟ نرجعو ليها بالـ history: المتصفح كيرجعها كيف ما
+       كانت (نفس البلاصة، بلا ما تتعاود تتحمل). وإلا (رابط مباشر):
+       كنحلو اللائحة، وهي كترجع للبلاصة المحفوظة (schreiben-hub.js). */
     document.getElementById("back-btn").addEventListener("click", function () {
-        window.location.href = HUB;
+        let fromHub = false;
+        try {
+            const ref = new URL(document.referrer);
+            fromHub = ref.origin === location.origin && ref.pathname.replace(/^\//, "") === HUB;
+        } catch (e) { /* ماكاينش referrer */ }
+        if (fromHub && history.length > 1) history.back();
+        else window.location.href = HUB;
     });
 
     // ---------- textarea + word count + placeholder ----------

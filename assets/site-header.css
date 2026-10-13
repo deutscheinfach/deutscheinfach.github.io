@@ -67,11 +67,11 @@ body { padding-top: var(--site-header-h); }
    ديالها، إذن ماشي جزء من root — ما كتشاركش فهاد الحركة
    وكتبقى واقفة فبلاصتها. المؤشر الأحمر كيزلق بوحدو من Lesen
    ل Hören حيت المتصفح كيربط الجوج بنفس الاسم. */
-::view-transition-old(root) {
-    animation: de-vt-out .12s cubic-bezier(.4, 0, 1, 1) both;
-}
+/* بلا حركة: المحتوى كيتبدل ف اللحظة والبار واقفة (ماشي fade/slide —
+   كانت كتبان بحال إلا الصفحة كتعاود تتحمل) */
+::view-transition-old(root),
 ::view-transition-new(root) {
-    animation: de-vt-in .16s cubic-bezier(.22, .8, .3, 1) both;
+    animation: none;
 }
 @keyframes de-vt-out { to   { opacity: 0; transform: translateY(-7px); } }
 @keyframes de-vt-in  { from { opacity: 0; transform: translateY(9px);  } }
@@ -564,11 +564,10 @@ body { padding-top: var(--site-header-h); }
 
    الهيدر ماشي داخل فهاد الحركة — كيبقى واقف.
    الدخول مكتوب فالـCSS نيت باش يبدا مع أول رسمة. */
-body > *:not(#site-header):not(.site-header):not(script):not(style) {
-    animation: de-page-in .18s cubic-bezier(.22, .8, .3, 1) backwards;
-}
+/* موقفة: المحتوى كيبان ف اللحظة (الحركة كانت كتبان بحال actualiser) */
+body > *:not(#site-header):not(.site-header):not(script):not(style),
 html.de-leaving body > *:not(#site-header):not(.site-header):not(script):not(style) {
-    animation: de-page-out .16s cubic-bezier(.4, 0, 1, 1) both;
+    animation: none;
 }
 
 /* المتصفح كيدعم View Transitions؟ إذن هو اللي كيدير الحركة،
