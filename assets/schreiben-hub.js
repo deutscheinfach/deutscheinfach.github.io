@@ -280,9 +280,21 @@
         } catch (error) { /* غير تسريع */ }
     }
 
+    /* كنعاودو نرسمو اللائحة (de-premium، البحث…): بلا هادي الصفحة كتقصار
+       للحظة → المتصفح كيطلع السكرول لفوق (كيبان بحال إلا الصفحة كترجع،
+       خصوصا من بعد زر الرجوع). كنحبسو الطول حتى ترسم الجديدة. */
+    function clearGrid() {
+        const h = grid.offsetHeight;
+        if (h) {
+            grid.style.minHeight = h + "px";
+            requestAnimationFrame(function () { grid.style.minHeight = ""; });
+        }
+        grid.textContent = "";
+    }
+
     function render() {
         const list = listed();
-        grid.textContent = "";
+        clearGrid();
 
         if (countEl) countEl.textContent = list.length ? list.length + " موضوع" : "";
 

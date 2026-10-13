@@ -29,6 +29,13 @@
        listeners ديال window/document وكتخدم على عناصر تحيدو
        من الصفحة. هاد الفحص كيسكتها: إلا ماكانش الـgrid ديالي
        ما زال فالصفحة، إذن أنا النسخة القديمة. */
+    /* زر الرجوع كيرجع لنفس البلاصة ف اللائحة: قبل ما نزيدو صفحة ف
+       الـ history، كنحفظو فين كان الطالب (deY) ف الصفحة اللي خارج منها */
+    function dePush(state, title, url) {
+        try { history.replaceState(Object.assign({}, history.state, { deY: Math.round(window.scrollY) }), ""); } catch (e) { /* */ }
+        history.pushState(state, title, url);
+    }
+
     function stale() { return !document.body.contains(grid); }
 
     /* الراوتر كيلغي هاد الـsignal ملي كيحيد الصفحة: المستمعين
@@ -96,11 +103,23 @@
         return list;
     }
 
+    /* كنعاودو نرسمو اللائحة (de-premium، البحث…): بلا هادي الصفحة كتقصار
+       للحظة → المتصفح كيطلع السكرول لفوق (كيبان بحال إلا الصفحة كترجع،
+       خصوصا من بعد زر الرجوع). كنحبسو الطول حتى ترسم الجديدة. */
+    function clearGrid() {
+        const h = grid.offsetHeight;
+        if (h) {
+            grid.style.minHeight = h + "px";
+            requestAnimationFrame(function () { grid.style.minHeight = ""; });
+        }
+        grid.textContent = "";
+    }
+
     function renderList() {
         /* تبويب Prüfungen: امتحانات كاملة (Teil 1 + 2 + 3) */
         if (!activePart) { renderExams(); return; }
         const list = listed();
-        grid.textContent = "";
+        clearGrid();
 
         if (countEl) countEl.textContent = list.length ? list.length + " موضوع" : "";
 
@@ -362,7 +381,7 @@
         if (SORTS[sortIndex].key === "free") {
             list = list.slice().sort(function (a, b) { return (a.locked === b.locked) ? 0 : (a.locked ? 1 : -1); });
         }
-        grid.textContent = "";
+        clearGrid();
         if (countEl) countEl.textContent = list.length ? list.length + " Prüfungen" : "";
         if (!list.length) {
             const empty = document.createElement("div");
@@ -441,7 +460,7 @@
         if (!exam) { close(push); return; }
         const scores = {};
         let current = PART_LABEL[part] ? part : "teil1";
-        if (push) history.pushState({ pruefung: n, teil: current }, "", examUrl(n, current));
+        if (push) dePush({ pruefung: n, teil: current }, "", examUrl(n, current));
 
         if (heroEl) heroEl.hidden = true;
         if (tabsNav) tabsNav.hidden = true;
@@ -639,7 +658,7 @@
         const topic = topics.find(function (t) { return t.id === themaId; });
         if (!topic) { close(push); return; }
 
-        if (push) history.pushState({ thema: themaId, teil: part }, "", pageUrl(themaId, part));
+        if (push) dePush({ thema: themaId, teil: part }, "", pageUrl(themaId, part));
 
         if (heroEl) heroEl.hidden = true;
         if (tabsNav) tabsNav.hidden = true;
@@ -747,7 +766,7 @@
 
     function close(push) {
         document.documentElement.classList.remove("is-topic-focus");
-        if (push) history.pushState({}, "", pageUrl("", activePart));
+        if (push) dePush({}, "", pageUrl("", activePart));
         detail.hidden = true;
         detail.textContent = "";
         if (heroEl) heroEl.hidden = false;
@@ -766,7 +785,7 @@
                 tab.classList.toggle("active", (tab.dataset.teil || "") === activePart);
             });
         }
-        if (push) history.pushState({ teil: activePart }, "", pageUrl("", activePart));
+        if (push) dePush({ teil: activePart }, "", pageUrl("", activePart));
         renderList();
     }
 
@@ -780,8 +799,12 @@
     }
 
     /* زر الرجوع ديال الـ navigateur */
+    const myPage = location.pathname;
     window.addEventListener("popstate", function () {
         if (stale()) return;
+        /* رجعنا لصفحة أخرى (Lesen…): الراوتر هو اللي كيتكلف */
+        if (location.pathname !== myPage) return;
+        const backY = history.state && typeof history.state.deY === "number" ? history.state.deY : 0;
         const params = new URLSearchParams(location.search);
         const thema = params.get("thema");
         const exam = parseInt(params.get("pruefung"), 10);
@@ -789,6 +812,8 @@
         if (thema) { open(thema, params.get("teil") || "teil1", false); return; }
         close(false);
         setPart(params.get("teil") || (examTab ? "" : "teil1"), false);
+        /* رجع للائحة: نفس البلاصة اللي كان فيها */
+        window.scrollTo(0, backY);
     }, scope);
 
     if (search) search.addEventListener("input", renderList);

@@ -75,7 +75,6 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
 /* الطالب كيخرج من الصفحة: الطلبات اللي باقين كيتقطعو («Failed to fetch») */
 let leaving = false;
 window.addEventListener("pagehide", function () { leaving = true; });
-window.addEventListener("beforeunload", function () { leaving = true; });
 window.addEventListener("pageshow", function () { leaving = false; });
 
 /* زر الوضع المظلم: ف الشريط ديال فوق (قبل كان عايم لتحت وكيغطي النص).
