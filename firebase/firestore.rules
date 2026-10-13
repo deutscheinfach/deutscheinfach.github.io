@@ -271,6 +271,22 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    /* =====================================================
+       مشاكل الطلبة (assets/diag.js): كل متصفح كيقدر يزيد سطر
+       (حتى بلا حساب — كيتكتب بـ REST)، بشكل محدد وطول محدود.
+       غير الأدمين كيقرا ويمسح (admin.html). ماكاينش update.
+       ===================================================== */
+    match /diag/{id} {
+      allow create: if request.resource.data.keys().hasOnly(["type", "msg", "page", "ua", "vw", "vh", "dpr", "ms", "net", "premium", "at"])
+        && request.resource.data.type is string && request.resource.data.type.size() <= 20
+        && request.resource.data.msg is string && request.resource.data.msg.size() <= 400
+        && request.resource.data.page is string && request.resource.data.page.size() <= 200
+        && request.resource.data.ua is string && request.resource.data.ua.size() <= 250
+        && request.resource.data.at is timestamp;
+      allow read, delete: if isAdmin();
+      allow update: if false;
+    }
+
     match /news/{newsId} {
 
       allow read: if true;

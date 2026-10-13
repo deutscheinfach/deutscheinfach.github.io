@@ -102,8 +102,10 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         if (saved) {
             topic = Object.assign({}, meta, saved);
         } else {
+            const t0 = Date.now();
             try {
                 const data = await loadPremiumTopic(TOPIC_ID);
+                if (window.__deDiag && Date.now() - t0 > 8000) window.__deDiag("slow", "Schreiben " + LEVEL + "-" + TOPIC_ID + " بطا: " + Math.round((Date.now() - t0) / 1000) + "s", { ms: Date.now() - t0 });
                 cacheSet(data);
                 topic = Object.assign({}, meta, data);
             } catch (error) {
@@ -667,6 +669,7 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
 
         /* السبب التقني (Worker…) للـ console برك */
         console.warn("Schreiben:", code, errorHint(code));
+        if (window.__deDiag) window.__deDiag("fail", "Schreiben " + LEVEL + "-" + TOPIC_ID + ": " + code);
         showNotice(
             "📶",
             "ما قدرناش نجيبو الموضوع",

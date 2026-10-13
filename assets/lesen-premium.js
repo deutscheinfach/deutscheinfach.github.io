@@ -241,7 +241,12 @@
             const token = await idToken(user);
             if (!token) return { ok: false, why: "ماشي داخل بحساب." };
 
+            const t0 = Date.now();
             const result = await ask(themaId, token);
+            if (window.__deDiag) {
+                if (!result.ok && result.status !== 404) window.__deDiag("fail", "Lesen Worker: " + (result.status || "") + " " + (result.why || "") + " [" + themaId + "]", { ms: Date.now() - t0 });
+                else if (Date.now() - t0 > 8000) window.__deDiag("slow", "Lesen Worker بطا: " + Math.round((Date.now() - t0) / 1000) + "s [" + themaId + "]", { ms: Date.now() - t0 });
+            }
 
             if (result.ok) { state.done.set(key, result); diskSet(user.uid, themaId, result.data); }
             else if (result.status === 404) state.miss.set(key, { result: result, until: Date.now() + MISS_MS });
