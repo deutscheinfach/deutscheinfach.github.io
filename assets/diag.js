@@ -111,12 +111,38 @@
         send("error", (e.message || "Error") + (where ? " @ " + where + ":" + e.lineno : ""));
     }, true);
 
+    /* أول سطر ف الـ stack فيه رابط: فين طاح الخطأ (ملف:سطر) */
+    function where(stack) {
+        const m = String(stack || "").match(/((?:https?|chrome-extension|moz-extension|safari-(?:web-)?extension):\/\/[^\s)]+?):(\d+)(?::\d+)?\)?\s*$/m)
+            || String(stack || "").match(/((?:https?|chrome-extension|moz-extension|safari-(?:web-)?extension):\/\/[^\s)]+?):(\d+)/);
+        return m ? { file: m[1], line: m[2] } : null;
+    }
+    /* انتقال الصفحات (View Transitions) تقطع ولا تخطى: الصفحة كتبان عادي */
+    function skippedTransition(text) {
+        return /Transition was (skipped|aborted)|ViewTransition/i.test(text || "");
+    }
+
     window.addEventListener("unhandledrejection", function (e) {
         const r = e.reason;
         const text = r && (r.message || r.code) ? (r.code ? r.code + " " : "") + (r.message || "") : String(r);
-        if (noise(text, r && r.stack)) return;
-        send("error", "Promise: " + text);
+        if (skippedTransition(text)) return;
+        const at = where(r && r.stack);
+        if (noise(text, at && at.file)) return;
+        const file = at ? at.file.split("/").pop().replace(/\?v=[0-9a-f]+/, "") : "";
+        send("error", "Promise: " + text + (file ? " @ " + file + ":" + at.line : ""));
     });
+
+    /* الانتقال بين الصفحات (@view-transition): إلا تخطاه المتصفح (برك بزربة،
+       الصفحة الجاية ما فيهاش نفس القاعدة…) الـ promises ديالو كيترفضو بلا
+       ما يشدهم حد. كنشدوهم هنا. */
+    function quietVT(e) {
+        const vt = e && e.viewTransition;
+        if (!vt) return;
+        const q = function () {};
+        try { vt.ready.catch(q); vt.updateCallbackDone.catch(q); vt.finished.catch(q); } catch (err) { /* */ }
+    }
+    window.addEventListener("pagereveal", quietVT);
+    window.addEventListener("pageswap", quietVT);
 })();
 
 /* ===== الأنترنت ضعيفة ولا مقطوعة: نقولوها للطالب =====
