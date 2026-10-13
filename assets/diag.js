@@ -361,6 +361,8 @@
             try {
                 const at = url(key);
                 if (!at || !window.caches) return Promise.resolve(null);
+                /* بلا تصريح صالح (الاشتراك سالا / بزاف بلا أنترنت): والو */
+                if (window.__deOfflinePass && !window.__deOfflinePass.ok(uid())) return Promise.resolve(null);
                 return caches.open(NAME).then(function (c) { return c.match(at); })
                     .then(function (res) { return res ? res.json() : null; })
                     .catch(function () { return null; });
@@ -373,6 +375,61 @@
                 return caches.open(NAME).then(function (c) { return c.match(at); })
                     .then(function (res) { return !!res; }, function () { return false; });
             } catch (e) { return Promise.resolve(false); }
+        }
+    };
+})();
+
+/* ===== بلا أنترنت: حتى لإمتى المشترك يقدر يخدم =====
+   ملي كيتأكد الموقع من الاشتراك (أونلاين، site-header.js) كيكتب «تصريح»:
+   صالح حتى لنهاية الاشتراك (subscriptionEnd) ولا 7 أيام — اللي جا الأول.
+   بلا أنترنت: Premium غير إلا التصريح باقي صالح. من بعد خاصو يدخل
+   للأنترنت مرة باش يتجدد (وإلا سالا الاشتراك → المحتوى كيتقفل ويتمسح).
+   الساعة ديال التيليفون رجعات لور (باش يطول المدة)؟ التصريح كيسقط. */
+(function () {
+    "use strict";
+    if (window.__deOfflinePass) return;
+    const KEY = "de-offline-pass";
+    const MAX = 7 * 24 * 3600 * 1000;
+    const SLACK = 10 * 60 * 1000;
+    function read() {
+        try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { return null; }
+    }
+    function write(v) {
+        try { if (v) localStorage.setItem(KEY, JSON.stringify(v)); else localStorage.removeItem(KEY); } catch (e) { /* */ }
+    }
+    window.__deOfflinePass = {
+        /* أونلاين، الاشتراك صالح: end = نهاية الاشتراك (ms) ولا 0 إلا ماكايناش */
+        grant: function (uid, end) {
+            const now = Date.now();
+            const until = Math.min(end > 0 ? end : Infinity, now + MAX);
+            write({ uid: uid, until: until, seen: now });
+        },
+        /* أونلاين، ماشي مشترك (سالا ولا توقف): كنمسحو كلشي ديالو من التيليفون */
+        revoke: function (uid) {
+            write(null);
+            try {
+                Object.keys(localStorage).forEach(function (k) {
+                    if (/^de-(lp|sp):/.test(k) && (!uid || k.indexOf(":" + uid + "|") !== -1)) localStorage.removeItem(k);
+                });
+            } catch (e) { /* */ }
+            try {
+                if (window.caches) caches.open("de-data-v1").then(function (c) {
+                    return c.keys().then(function (reqs) {
+                        reqs.forEach(function (r) {
+                            if (!uid || r.url.indexOf("/__data/" + encodeURIComponent(uid) + "/") !== -1) c.delete(r);
+                        });
+                    });
+                });
+            } catch (e) { /* */ }
+        },
+        ok: function (uid) {
+            const p = read();
+            if (!p || !uid || p.uid !== uid) return false;
+            const now = Date.now();
+            if (now + SLACK < p.seen) { write(null); return false; }   /* الساعة رجعات لور */
+            if (now >= p.until) return false;
+            if (now > p.seen) { p.seen = now; write(p); }
+            return true;
         }
     };
 })();

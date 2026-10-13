@@ -635,7 +635,10 @@ function renderAd(box, text) {
     function cacheKey() {
         try {
             const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
-            return a && a.premium === true && a.uid ? "de-sp:" + a.uid + "|" + LEVEL + "-" + TOPIC_ID : "";
+            if (!a || a.premium !== true || !a.uid) return "";
+            /* بلا أنترنت والتصريح سالا (diag.js): ما كنعطيوش المحفوظ */
+            if (navigator.onLine === false && window.__deOfflinePass && !window.__deOfflinePass.ok(a.uid)) return "";
+            return "de-sp:" + a.uid + "|" + LEVEL + "-" + TOPIC_ID;
         } catch (e) { return ""; }
     }
     function cacheGet() {

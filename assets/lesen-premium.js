@@ -65,6 +65,8 @@
     }
     function diskGet(uid, id) {
         if (!uid) return null;
+        /* بلا أنترنت والتصريح سالا (الاشتراك سالا / 7 أيام بلا أنترنت): والو */
+        if (navigator.onLine === false && window.__deOfflinePass && !window.__deOfflinePass.ok(uid)) return null;
         try {
             const v = JSON.parse(localStorage.getItem(DISK + uid + "|" + id) || "null");
             if (v && v.data && Date.now() - v.t < DISK_TTL) return { ok: true, data: v.data };
