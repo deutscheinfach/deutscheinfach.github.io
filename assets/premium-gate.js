@@ -77,7 +77,9 @@
         }
         /* Firebase ما زال ما جاوبش: الصفحة كتعاود ترسم مع de-premium */
         if (state === "pending") {
-            into.appendChild(el("div", "lesen-empty", "⏳ كنتأكدو من الحساب ديالك…"));
+            const wait = el("div", "lesen-empty", "⏳ كنتأكدو من الحساب ديالك…");
+            into.appendChild(wait);
+            if (window.__deNetHint) window.__deNetHint(wait);
             return;
         }
 
