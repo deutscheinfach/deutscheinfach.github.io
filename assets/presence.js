@@ -25,10 +25,14 @@
         try { localStorage.setItem(KEY, id); } catch (e) { /* خاص */ }
     }
 
-    (async function () {
+    /* من بعد ما يبان المحتوى (assets/diag.js) — Firestore ثقيل */
+    (window.__deAfterContent || function (fn) { setTimeout(fn, 2500); })(async function () {
         try {
-            var appMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
-            var fsMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js");
+            var mods = await Promise.all([
+                import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js"),
+                import("https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js")
+            ]);
+            var appMod = mods[0], fsMod = mods[1];
             var app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
                 apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
                 authDomain: "deutsch-einfach-4c81f.firebaseapp.com",
@@ -53,5 +57,5 @@
             setInterval(beat, BEAT_MS);
             document.addEventListener("visibilitychange", beat);
         } catch (e) { /* بلا انترنت */ }
-    })();
+    });
 })();
