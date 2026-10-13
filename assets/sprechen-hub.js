@@ -715,7 +715,7 @@
         if (exam) { openExam(exam, params.get("teil") || "teil1", false); return; }
         if (thema) { open(thema, params.get("teil") || "teil1", false); return; }
         close(false);
-        setPart(params.get("teil") || (hasExamTab ? "" : "teil1"), false);
+        setPart(params.get("teil") || (examTab ? "" : "teil1"), false);
     }, scope);
 
     if (search) search.addEventListener("input", renderList);
