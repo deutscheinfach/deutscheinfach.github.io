@@ -92,11 +92,24 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
     }
 
     if (!Array.isArray(meta.points) || meta.points.length === 0) {
-        try {
-            topic = Object.assign({}, meta, await loadPremiumTopic(TOPIC_ID));
-        } catch (error) {
-            showPremiumNotice(error.code || String(error.message || error));
-            return;
+        /* قبل كانت الصفحة كتبقى خاوية حتى يجاوب Firebase والـ Worker */
+        const titleEl = document.getElementById("task-title");
+        if (titleEl && meta.title) titleEl.textContent = meta.title;
+        const waitEl = document.getElementById("situation-text");
+        if (waitEl) waitEl.textContent = "⏳ كنجيبو الموضوع…";
+
+        const saved = cacheGet();
+        if (saved) {
+            topic = Object.assign({}, meta, saved);
+        } else {
+            try {
+                const data = await loadPremiumTopic(TOPIC_ID);
+                cacheSet(data);
+                topic = Object.assign({}, meta, data);
+            } catch (error) {
+                showPremiumNotice(error.code || String(error.message || error));
+                return;
+            }
         }
     }
 
@@ -503,15 +516,48 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         return "💡 عاود المحاولة، وإلا بقا المشكل شوف اللوغ ديال الـ Worker: npx wrangler tail";
     }
 
+    /* ===== كاش ف المتصفح =====
+       الموضوع اللي تجاب مرة كيبقى عند المشترك 3 أيام (مربوط بالحساب)،
+       وكيبان دغيا بلا ما نتسناو Firebase والـ Worker. */
+    function cacheKey() {
+        try {
+            const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+            return a && a.premium === true && a.uid ? "de-sp:" + a.uid + "|" + LEVEL + "-" + TOPIC_ID : "";
+        } catch (e) { return ""; }
+    }
+    function cacheGet() {
+        const key = cacheKey();
+        if (!key) return null;
+        try {
+            const v = JSON.parse(localStorage.getItem(key) || "null");
+            if (v && v.data && Array.isArray(v.data.points) && Date.now() - v.t < 3 * 24 * 3600 * 1000) return v.data;
+        } catch (e) { /* */ }
+        return null;
+    }
+    function cacheSet(data) {
+        const key = cacheKey();
+        if (!key) return;
+        try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), data: data })); } catch (e) { /* المساحة عامرة */ }
+    }
+
     async function loadPremiumTopic(id) {
-        const idToken = await (window.__deutschEinfachIdToken || Promise.resolve(null));
+        /* Firebase ما جاوبش ف 15 ثانية = مشكل ف الأنترنت (ماشي صفحة خاوية للأبد) */
+        const idToken = await Promise.race([
+            window.__deutschEinfachIdToken || Promise.resolve(null),
+            new Promise(function (_, fail) {
+                setTimeout(function () { const e = new Error("timeout"); e.code = "network"; fail(e); }, 15000);
+            })
+        ]);
 
         /* text/plain بدل application/json: المتصفح كيعتابرو "طلب بسيط" وما كيديرش
            preflight (OPTIONS) قبل — رحلة كاملة أقل. الـ Worker كيقرا الجسم
            بـ request.json() ومايهمّوش الـ Content-Type. */
+        const guard = typeof AbortController === "function" ? new AbortController() : null;
+        const timer = guard ? setTimeout(function () { guard.abort(); }, 20000) : 0;
         const res = await fetch(CORRECTION_ENDPOINT, {
             method: "POST",
             headers: { "Content-Type": "text/plain;charset=UTF-8" },
+            signal: guard ? guard.signal : undefined,
             /* B2: topicId → KV "topic-NN" / "premium-topics".
                B1: الطريق ديال Lesen → KV "lesen-schreiben-b1-NN"
                (بلا ما نبدلو الـ Worker). */
@@ -521,6 +567,7 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         });
 
         const raw = await res.text();
+        clearTimeout(timer);
         let data = null;
         try {
             data = JSON.parse(raw);
@@ -618,11 +665,13 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
             return;
         }
 
+        /* السبب التقني (Worker…) للـ console برك */
+        console.warn("Schreiben:", code, errorHint(code));
         showNotice(
-            "⚠️",
-            "ما قدرناش نحملو الموضوع",
-            escapeHtml(code) + " — " + escapeHtml(errorHint(code)),
-            back,
+            "📶",
+            "ما قدرناش نجيبو الموضوع",
+            "غالبا المشكل ف الأنترنت (ضعيفة ولا مقطوعة). تأكد من الاتصال وعاود المحاولة.",
+            '<button class="premium-btn gold" type="button" onclick="location.reload()">عاود المحاولة</button>' + back,
             false
         );
     }

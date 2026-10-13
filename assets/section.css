@@ -1119,7 +1119,9 @@
     font: inherit;
     text-align: start;
     cursor: pointer;
-    transition: .18s;
+    /* غير الألوان: transition على كلشي كان كيحرك العناوين (الطول والبلاصة)
+       ملي كتتزاد «Text 4» ولا الكلمات المفتاحية — كيبانو كيترعشو */
+    transition: border-color .18s, background-color .18s, opacity .18s, color .18s;
 }
 .t1-option:hover { border-color: var(--gold); }
 .t1-option.is-used {
@@ -1705,7 +1707,7 @@
     cursor: pointer;
     transition: border-color .18s ease, background .18s ease, transform .18s ease;
 }
-.sp-gap:hover { transform: translateY(-1px); border-color: var(--brand); }
+.sp-gap:hover { border-color: var(--brand); }   /* بلا translateY: الماوس ف الطرف كان كيخليها ترعش */
 .sp-gap-num {
     display: grid; place-items: center;
     min-width: 1.45rem; height: 1.45rem;
@@ -1779,7 +1781,7 @@
     cursor: pointer;
     transition: border-color .15s ease, background .15s ease, transform .15s ease, opacity .15s ease;
 }
-.sp2-word:hover { border-color: var(--brand); transform: translateY(-1px); }
+.sp2-word:hover { border-color: var(--brand); }   /* بلا translateY: الماوس ف الطرف كان كيخليها ترعش */
 .sp2-key {
     flex: none;
     display: grid; place-items: center;

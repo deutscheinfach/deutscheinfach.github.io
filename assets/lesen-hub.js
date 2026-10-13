@@ -255,11 +255,22 @@
 
     /* الحركة ديال البطائق كتبان ملي تحل اللائحة ولا تبدل الترتيب،
        ماشي مع كل حرف كيتكتب ف البحث. */
+    /* المشترك: المواضيع المقفولة ديال هاد الجزء كيتجابو ف الخفا من Cloudflare
+       (assets/lesen-premium.js)، باش ملي يبرك على موضوع يبان دغيا. Firebase
+       ما زال ما عرفش الحساب؟ كنعاودو ملي يجي de-premium. */
+    function prefetch(list) {
+        if (EMBEDDED || typeof window.__lesenPremiumPrefetch !== "function") return;
+        const ids = list.filter(function (t) { return t.locked; }).map(function (t) { return t.id; });
+        const go = function () { window.__lesenPremiumPrefetch(ids); };
+        if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 2000 }); else setTimeout(go, 600);
+    }
+
     function renderList(animate) {
         /* صفحة Prüfungen: امتحانات كاملة، ماشي مواضيع */
         if (!pagePart) { renderExams(animate); return; }
         const list = listed();
         grid.textContent = "";
+        prefetch(list);
 
         if (countEl) countEl.textContent = list.length ? list.length + " موضوع" : "";
         /* الرقم ديال فوق كيتبع التبويب الحالي، ماشي رقم ثابت. */
