@@ -59,6 +59,8 @@
             const text = cut(msg, 400);
             const sig = type + "|" + text;
             if (!text || sent.has(sig) || count >= MAX) return;
+            /* بلا أنترنت: «ما وصلش» / «بطا» عاديين — والتقرير ما غاديش يوصل */
+            if (navigator.onLine === false && (type === "fail" || type === "slow")) return;
             sent.add(sig);
             count++;
             if (!LIVE) { console.info("[diag]", type, text); return; }
@@ -320,4 +322,57 @@
         };
         [150, 500, 1200, 2500].forEach(function (t) { setTimeout(fix, t); });
     } catch (e) { /* ماشي ضروري */ }
+})();
+
+/* ===== المحتوى المدفوع ف التيليفون (بلا أنترنت) =====
+   window.__deStore.put(key, data) / get(key) → Promise
+   Cache Storage (ماشي localStorage: 5 MB ما كيكفيوش لكاع المواضيع).
+   المفتاح مربوط بالحساب (uid): حساب آخر ف نفس التيليفون ما كيشوفش
+   المحتوى ديال الأول. كيتستعمل ملي الـ Worker ما كيجاوبش (بلا wifi). */
+(function () {
+    "use strict";
+    if (window.__deStore) return;
+    const NAME = "de-data-v1";
+    function uid() {
+        try {
+            const auth = window.__deutschEinfachAuth;
+            if (auth && auth.currentUser) return auth.currentUser.uid;
+            const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+            return a && a.uid ? a.uid : "";
+        } catch (e) { return ""; }
+    }
+    function url(key) {
+        const u = uid();
+        return u ? location.origin + "/__data/" + encodeURIComponent(u) + "/" + encodeURIComponent(key) : "";
+    }
+    window.__deStore = {
+        put: function (key, data) {
+            try {
+                const at = url(key);
+                if (!at || !window.caches || data == null) return Promise.resolve(false);
+                return caches.open(NAME).then(function (c) {
+                    return c.put(at, new Response(JSON.stringify(data), {
+                        headers: { "Content-Type": "application/json", "x-saved": String(Date.now()) }
+                    }));
+                }).then(function () { return true; }, function () { return false; });
+            } catch (e) { return Promise.resolve(false); }
+        },
+        get: function (key) {
+            try {
+                const at = url(key);
+                if (!at || !window.caches) return Promise.resolve(null);
+                return caches.open(NAME).then(function (c) { return c.match(at); })
+                    .then(function (res) { return res ? res.json() : null; })
+                    .catch(function () { return null; });
+            } catch (e) { return Promise.resolve(null); }
+        },
+        has: function (key) {
+            try {
+                const at = url(key);
+                if (!at || !window.caches) return Promise.resolve(false);
+                return caches.open(NAME).then(function (c) { return c.match(at); })
+                    .then(function (res) { return !!res; }, function () { return false; });
+            } catch (e) { return Promise.resolve(false); }
+        }
+    };
 })();

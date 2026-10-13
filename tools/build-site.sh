@@ -16,7 +16,7 @@ mkdir -p dist
 
 cp ./*.html dist/
 cp -R assets dist/assets
-for f in manifest.webmanifest firebase-messaging-sw.js robots.txt sitemap.xml version.json; do
+for f in manifest.webmanifest firebase-messaging-sw.js robots.txt sitemap.xml version.json offline.json; do
     [ -f "$f" ] && cp "$f" dist/
 done
 # الصور اللي ف الجذر (إلا كانو)

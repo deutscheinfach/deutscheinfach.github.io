@@ -92,6 +92,44 @@ const manifest = {
 };
 if (!check) writeFileSync("version.json", JSON.stringify(manifest, null, 2) + "\n");
 
+/* offline.json — الاستعمال بلا أنترنت (firebase-messaging-sw.js و
+   assets/offline-prep.js): الصفحات اللي كتتخزن ف التيليفون، والمفاتيح
+   ديال المحتوى المدفوع اللي كيتجاب للمشترك باش يخدم بلا wifi. */
+{
+    const load = (file, name) => {
+        const sandbox = {};
+        new Function("window", readFileSync(file, "utf8"))(sandbox);
+        return sandbox[name];
+    };
+    const locked = (list) => (list || []).filter((t) => t.locked && !t.soon);
+    const ids = [];
+    /* Lesen: المفتاح ديال الموضوع (lesen-<id>)، والأجزاء اللي ماكايناش فيه
+       كيتقلب عليهم ف lesen-<id>-<part> — parts باش التحضير يعرف شنو يكمل */
+    const parts = {};
+    for (const lv of ["B1", "B2"]) {
+        locked(load(`assets/lesen-${lv.toLowerCase()}-topics.js`, `LESEN_${lv}_TOPICS`))
+            .forEach((t) => { ids.push(t.id); parts[t.id] = t.parts || []; });
+    }
+    /* Sprechen: B1 عندو bundle لكل جزء (t2/t3) + المواضيع «pack» بوحدهم؛ B2 كل موضوع بوحدو */
+    const sp = { b1: load("assets/sprechen-b1.js", "SPRECHEN_B1_TOPICS"), b2: load("assets/sprechen-b2-topics.js", "SPRECHEN_B2_TOPICS") };
+    ids.push("sprechen-b1-t2", "sprechen-b1-t3");
+    locked(sp.b1).filter((t) => t.pack).forEach((t) => ids.push("sprechen-b1-" + t.id));
+    locked(sp.b2).forEach((t) => ids.push("sprechen-b2-" + t.id));
+    /* Schreiben: B1 كيمشي من طريق Lesen، B2 عندو topicId */
+    const sch = { b1: load("assets/schreiben-topics-b1.js", "SCHREIBEN_B1_TOPICS"), b2: load("assets/schreiben-topics-b2.js", "SCHREIBEN_B2_TOPICS") };
+    const paid = (o) => Object.keys(o || {}).sort().filter((k) => o[k].locked && !o[k].soon && !(o[k].points || []).length);
+    paid(sch.b1).forEach((k) => ids.push("schreiben-b1-" + k));
+    ["teil1", "teil2", "teil3", "b1-teil1", "b1-teil2", "b1-teil3"].forEach((t) => ids.push("hoeren-" + t));
+    const offline = {
+        build: manifest.build,
+        pages: pages.filter((p) => !/^(admin|404|offline|premium-check)\.html$/.test(p)).sort(),
+        lesen: ids,
+        parts: parts,
+        schreibenB2: paid(sch.b2)
+    };
+    if (!check) writeFileSync("offline.json", JSON.stringify(offline) + "\n");
+}
+
 console.log(`\n${pages.length} صفحة · ${cache.size} ملف · ${changed} تبدلات`
           + (missing ? ` · ${missing} ملف ناقص` : "")
           + `\nbuild ${manifest.build}`);

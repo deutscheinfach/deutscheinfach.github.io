@@ -121,6 +121,105 @@ function pageFromNetwork(event) {
     });
 }
 
+/* ===== بلا أنترنت: الموقع كامل ف التيليفون =====
+
+   الصفحة كتصيفط {type: "de-precache"} (assets/app-install.js) ملي
+   الأنترنت مزيانة. كنجيبو offline.json (tools/bump.mjs): كاع الصفحات،
+   وversion.json: كاع الملفات (js/css بالـ ?v ديالهم)، و Firebase،
+   والمواضيع المجانية ديال Lesen. مرة وحدة لكل build (العلامة PRECACHE_MARK).
+   هكا الطالب يقدر يدخل للموقع ويتنقل بين الأقسام حتى بلا wifi. */
+const PRECACHE_MARK = self.location.origin + "/__precache-build";
+const WORKER = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+const FIREBASE_MODULES = ["app", "auth", "firestore"].map(function (m) {
+    return "https://www.gstatic.com/firebasejs/12.18.0/firebase-" + m + ".js";
+});
+const IMAGES = ["assets/icon-192.png", "assets/icon-48.png", "assets/icon-32.png",
+    "assets/logo-80.webp", "assets/logo-480.webp", "manifest.webmanifest"];
+
+function pool(list, size, work) {
+    let i = 0;
+    function next() {
+        if (i >= list.length) return Promise.resolve();
+        const item = list[i++];
+        return Promise.resolve().then(function () { return work(item); })
+            .catch(function () { /* واحد ما تجابش: نكملو */ })
+            .then(next);
+    }
+    const runners = [];
+    for (let k = 0; k < size; k++) runners.push(next());
+    return Promise.all(runners);
+}
+
+let precaching = null;
+function precache() {
+    if (precaching) return precaching;
+    precaching = (async function () {
+        const offRes = await fetch("offline.json?t=" + Date.now(), { cache: "no-store" });
+        if (!offRes.ok) return;
+        const off = await offRes.json();
+        const pages = await caches.open(PAGE_CACHE);
+        const mark = await pages.match(PRECACHE_MARK);
+        if (mark && (await mark.text()) === off.build) return;
+
+        const verRes = await fetch("version.json?t=" + Date.now(), { cache: "no-store" });
+        const ver = verRes.ok ? await verRes.json() : { assets: {} };
+        const assets = await caches.open(ASSET_CACHE);
+        const files = Object.keys(ver.assets || {}).map(function (p) {
+            return new URL(p + "?v=" + ver.assets[p], self.location.href).href;
+        }).concat(FIREBASE_MODULES);
+        await pool(files, 4, async function (href) {
+            if (await assets.match(href)) return;
+            const res = await fetch(href, { mode: href.indexOf(self.location.origin) === 0 ? "same-origin" : "cors" });
+            if (res.ok) { await assets.put(href, res); prune(assets, new URL(href)); }
+        });
+        await pool(IMAGES, 3, async function (p) {
+            const href = new URL(p, self.location.href).href;
+            const res = await fetch(href);
+            if (res.ok) await assets.put(href, res);
+        });
+        await pool(off.pages || [], 4, async function (p) {
+            const href = new URL(p, self.location.href).href;
+            const res = await fetch(href, { cache: "no-cache", credentials: "same-origin" });
+            if (res.ok && res.type === "basic" && !res.redirected) await pages.put(href, res);
+        });
+        /* «/» هي index.html */
+        const home = await pages.match(new URL("index.html", self.location.href).href);
+        if (home) await pages.put(self.location.origin + "/", home);
+        /* المواضيع المجانية ديال Lesen: نفس البلاصة اللي كيقرا منها assets/lesen-free.js */
+        const free = await caches.open("de-lesen-free-v1");
+        await pool(["b1", "b2"], 2, async function (lv) {
+            const res = await fetch(WORKER + "?free=lesen-" + lv, { credentials: "omit" });
+            if (!res.ok) return;
+            await free.put(self.location.origin + "/__lesen-free/" + lv, new Response(await res.text(), {
+                headers: { "Content-Type": "application/json", "x-saved": String(Date.now()) }
+            }));
+        });
+        await pages.put(PRECACHE_MARK, new Response(off.build));
+    })().catch(function () { /* المرة الجاية */ }).then(function () { precaching = null; });
+    return precaching;
+}
+
+self.addEventListener("message", function (event) {
+    if (event.data && event.data.type === "de-precache") event.waitUntil(precache());
+});
+
+/* الراوتر (site-header.js) كيجيب الصفحات بـ fetch (ماشي navigate):
+   بلا أنترنت كنعطيوه النسخة المحفوظة باش التنقل يبقى خدام */
+function htmlFetch(request) {
+    return fetch(request).then(function (res) {
+        if (res && res.ok && res.type === "basic") {
+            const copy = res.clone();
+            caches.open(PAGE_CACHE).then(function (c) { c.put(request.url.split("#")[0], copy); });
+        }
+        return res;
+    }).catch(function () {
+        return caches.match(request.url.split("#")[0], { ignoreSearch: true }).then(function (hit) {
+            if (hit) return hit;
+            throw new Error("offline");
+        });
+    });
+}
+
 self.addEventListener("fetch", function (event) {
     const request = event.request;
     if (request.method !== "GET") return;
@@ -132,6 +231,16 @@ self.addEventListener("fetch", function (event) {
 
     let url;
     try { url = new URL(request.url); } catch (e) { return; }
+
+    if (url.origin === self.location.origin && /\.html$/.test(url.pathname)) {
+        event.respondWith(htmlFetch(request));
+        return;
+    }
+    /* الصور ديال الموقع بلا ?v (اللوغو، الأيقونات): من الكاش ومن بعد كتتجدد */
+    if (url.origin === self.location.origin && /^\/(assets\/(?!video\/)[^/]+\.(png|webp|svg|jpe?g)|manifest\.webmanifest)$/.test(url.pathname) && !url.search) {
+        event.respondWith(staleWhileRevalidate(request).catch(function () { return fetch(request); }));
+        return;
+    }
 
     if (isImmutable(url)) {
         event.respondWith(cacheFirst(request, url).catch(function () { return fetch(request); }));
