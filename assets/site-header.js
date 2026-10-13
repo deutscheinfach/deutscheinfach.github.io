@@ -946,7 +946,39 @@
             return scripts;
         }
 
+        /* من بعد الرجوع: اللائحة تقدر تترسم شوية من بعد (de-premium…).
+           كنخليو الصفحة طويلة وكنبقاو ف البلاصة حتى يوصل المحتوى لتما
+           (ولا 1.5 ث، ولا الطالب حرك الصفحة بيدو). */
+        function holdPlace(y) {
+            const root = document.documentElement;
+            const t0 = Date.now();
+            let moved = false;
+            const stop = function () { moved = true; };
+            ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (ev) {
+                window.addEventListener(ev, stop, { once: true, passive: true });
+            });
+            (function tick() {
+                const ready = document.body.scrollHeight >= y + window.innerHeight * 0.6;
+                if (!moved && Math.abs(window.scrollY - y) > 2) window.scrollTo(0, y);
+                if (ready || moved || Date.now() - t0 > 1500) {
+                    root.style.minHeight = "";
+                    if (!moved && ready) window.scrollTo(0, y);
+                    return;
+                }
+                requestAnimationFrame(tick);
+            })();
+        }
+
         function go(url, push, link) {
+            /* صفحة ما كيعرفهاش الراوتر (Hören Teil، Schreiben…): كنمشيو عادي.
+               هكا المتصفح كيخليها ف الكاش ديال الرجوع (bfcache) — زر الرجوع
+               كيرجعها ف اللحظة وف نفس البلاصة. قبل: الرجوع كان كيعاود يحمل
+               الصفحة كاملة (reload) وكيطلع لفوق. */
+            if (push && !routable(location.pathname)) { location.href = url; return; }
+            /* زر الرجوع: البلاصة المحفوظة كنقراوها دابا — من بعد، الـhub ديال
+               الصفحة اللي خارجين منها يقدر يبدل history.state ف نفس الـpopstate */
+            const savedY = !push && history.state && typeof history.state.deY === "number"
+                ? history.state.deY : 0;
             if (link) preview(link);
             if (busy) {
                 /* وسط التبديل (السكريبتات كتتحمل): بركة جديدة ولا زر الرجوع
@@ -982,13 +1014,31 @@
                     if (!doc || !doc.body) throw new Error("ما تقراش");
 
                     return addStyles(doc).then(function () {
-                        if (push) history.pushState({ de: url }, "", url);
+                        /* البلاصة ف الصفحة كتتحفظ ف الـ history: زر الرجوع كيرجع ليها */
+                        if (push) {
+                            try {
+                                history.replaceState(Object.assign({}, history.state, { deY: Math.round(window.scrollY) }), "");
+                            } catch (e) { /* */ }
+                            history.pushState({ de: url }, "", url);
+                        }
+                        const backY = savedY;
 
+                        const root = document.documentElement;
                         const paint = function () {
+                            /* الرجوع: الصفحة كتبقى طويلة كفاية باش نوقفو ف البلاصة
+                               القديمة دغيا (اللائحة كتترسم من بعد السكريبتات) —
+                               بلا ما تبان لفوق وترجع تنزل */
+                            if (backY) root.style.minHeight = (backY + window.innerHeight) + "px";
                             const scripts = swap(doc);
-                            window.scrollTo(0, 0);
-                            return runScripts(scripts);
+                            window.scrollTo(0, backY);
+                            return Promise.resolve(runScripts(scripts)).then(function () {
+                                if (backY) holdPlace(backY);
+                            }, function (e) { root.style.minHeight = ""; throw e; });
                         };
+
+                        /* الرجوع: بلا حركة — الطالب كيعرف فين راجع، والحركة
+                           كتبان بحال إلا الصفحة كتقلب */
+                        if (!push) return paint();
 
                         /* المتصفح كياخد صورة قبل وبعد وكيمزج بيناتهم.
                            البار عندها view-transition-name ديالها، إذن

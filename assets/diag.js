@@ -145,6 +145,13 @@
         if (!vt) return;
         const q = function () {};
         try { vt.ready.catch(q); vt.updateCallbackDone.catch(q); vt.finished.catch(q); } catch (err) { /* */ }
+        /* زر الرجوع / القدام: بلا حركة بين الصفحات (كانت كتبان بحال
+           إلا الصفحة كتعلق وكترجع) */
+        try {
+            const act = e.type === "pageswap" ? e.activation
+                : (window.navigation && window.navigation.activation);
+            if (act && act.navigationType === "traverse") vt.skipTransition();
+        } catch (err) { /* */ }
     }
     window.addEventListener("pagereveal", quietVT);
     window.addEventListener("pageswap", quietVT);
@@ -273,4 +280,39 @@
         if (document.body) show(true);
         else document.addEventListener("DOMContentLoaded", function () { if (offline()) show(true); });
     }
+})();
+
+/* ===== زر الرجوع: نفس البلاصة ف الصفحة =====
+   ملي المتصفح ما كيخليش الصفحة ف الكاش ديال الرجوع (bfcache) كيعاود
+   يحملها، وكيحاول يرجع للبلاصة القديمة قبل ما يترسم المحتوى (اللوائح
+   كتترسم بالـ JS) → كتبان لفوق. كنحفظو البلاصة ملي الطالب كيخرج،
+   وملي يرجع كنرجعوه ليها (إلا ما تحركش هو). */
+(function () {
+    "use strict";
+    try {
+        /* الرجوع داخل نفس الصفحة (لائحة ↔ موضوع، Lesen ↔ Hören بالراوتر):
+           حنا اللي كنرجعو البلاصة (deY ف history.state). المتصفح كان
+           كيحاول هو تاني قبل ما تترسم اللائحة → كتبان كتطلع وكتنزل. */
+        if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+        const KEY = "de-y:" + location.pathname + location.search;
+        window.addEventListener("pagehide", function () {
+            try { sessionStorage.setItem("de-y:" + location.pathname + location.search, String(Math.round(window.scrollY))); } catch (e) { /* */ }
+        });
+        const nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+        if (!nav || nav.type !== "back_forward") return;
+        const want = Number(sessionStorage.getItem(KEY) || 0);
+        if (!want) return;
+        let moved = false;
+        ["wheel", "touchstart", "keydown", "mousedown"].forEach(function (ev) {
+            window.addEventListener(ev, function () { moved = true; }, { once: true, passive: true });
+        });
+        const fix = function () {
+            if (moved) return;
+            const root = document.documentElement;
+            if (Math.abs(window.scrollY - want) > 40 && root.scrollHeight >= want + window.innerHeight * 0.5) {
+                window.scrollTo(0, want);
+            }
+        };
+        [150, 500, 1200, 2500].forEach(function (t) { setTimeout(fix, t); });
+    } catch (e) { /* ماشي ضروري */ }
 })();
