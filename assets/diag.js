@@ -59,8 +59,16 @@
             const text = cut(msg, 400);
             const sig = type + "|" + text;
             if (!text || sent.has(sig) || count >= MAX) return;
-            /* بلا أنترنت: «ما وصلش» / «بطا» عاديين — والتقرير ما غاديش يوصل */
+            /* بلا أنترنت: «ما وصلش» / «بطا» عاديين. الباقي كيتخبا ويتصيفط ملي يرجع */
             if (navigator.onLine === false && (type === "fail" || type === "slow")) return;
+            if (navigator.onLine === false) {
+                try {
+                    const q = JSON.parse(localStorage.getItem("de-diag-queue") || "[]");
+                    if (q.length < 6) q.push([type, text, Date.now()]);
+                    localStorage.setItem("de-diag-queue", JSON.stringify(q));
+                } catch (e) { /* */ }
+                return;
+            }
             sent.add(sig);
             count++;
             if (!LIVE) { console.info("[diag]", type, text); return; }
@@ -88,6 +96,16 @@
         } catch (e) { /* التقرير ما خاصوش يطيح الصفحة */ }
     }
     window.__deDiag = send;
+
+    /* التقارير اللي تخباو بلا أنترنت */
+    function flush() {
+        if (navigator.onLine === false) return;
+        let q = [];
+        try { q = JSON.parse(localStorage.getItem("de-diag-queue") || "[]"); localStorage.removeItem("de-diag-queue"); } catch (e) { return; }
+        q.forEach(function (it) { send(it[0], "(بلا أنترنت) " + it[1]); });
+    }
+    window.addEventListener("online", flush);
+    setTimeout(flush, 4000);
 
     /* أخطاء ماشي ديالنا: إضافات المتصفح، والـ ResizeObserver (عادي) */
     function noise(text, file) {
@@ -422,9 +440,33 @@
                 });
             } catch (e) { /* */ }
         },
-        ok: function (uid) {
+        /* علاش ماشي صالح (للتقرير) */
+        why: function (uid) {
             const p = read();
-            if (!p || !uid || p.uid !== uid) return false;
+            if (!p) return "ما كاينش تصريح";
+            if (p.uid !== uid) return "تصريح ديال حساب آخر";
+            if (Date.now() + SLACK < p.seen) return "الساعة رجعات لور";
+            if (Date.now() >= p.until) return "سالا" + (p.grace ? " (مهلة)" : "");
+            return "صالح";
+        },
+        ok: function (uid) {
+            let p = read();
+            if (!uid) return false;
+            /* ما كاينش تصريح لهاد الحساب (ما زال ما تأكدناش أونلاين من بعد
+               هاد التحديث، ولا قطع الأنترنت قبل ما يجاوب Firebase): آخر حالة
+               معروفة كانت Premium → مهلة 3 أيام، مرة وحدة. المحتوى المحفوظ
+               ف التيليفون ما تجابش غير ملي كان الاشتراك صالح (الـ Worker). */
+            if (!p || p.uid !== uid) {
+                let last = null;
+                try { last = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null"); } catch (e) { /* */ }
+                let used = false;
+                try { used = localStorage.getItem(KEY + "-grace") === uid; } catch (e) { /* */ }
+                if (!last || last.uid !== uid || last.premium !== true || used) return false;
+                const now0 = Date.now();
+                p = { uid: uid, until: now0 + 3 * 24 * 3600 * 1000, seen: now0, grace: true };
+                write(p);
+                try { localStorage.setItem(KEY + "-grace", uid); } catch (e) { /* */ }
+            }
             const now = Date.now();
             if (now + SLACK < p.seen) { write(null); return false; }   /* الساعة رجعات لور */
             if (now >= p.until) return false;

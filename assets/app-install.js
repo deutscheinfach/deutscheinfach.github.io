@@ -63,8 +63,8 @@
         later(function () {
             setTimeout(function () {
                 if (navigator.onLine === false) return;
-                /* الصفحات: كل 6 سوايع كنسولو (الـ worker كيقارن الـ build) */
-                if (Date.now() - Number(read("de-precache-at") || 0) > 6 * 3600 * 1000) {
+                /* الصفحات: كل نص ساعة كنسولو (الـ worker كيقارن الـ build — رخيص) */
+                if (Date.now() - Number(read("de-precache-at") || 0) > 30 * 60 * 1000) {
                     navigator.serviceWorker.ready.then(function (reg) {
                         if (reg.active) { reg.active.postMessage({ type: "de-precache" }); store("de-precache-at", String(Date.now())); }
                     }).catch(function () { /* */ });
@@ -92,7 +92,30 @@
             if (!off) return;
             var jobs = (off.lesen || []).map(function (id) { return { key: "l:" + id, body: { lesenId: id } }; })
                 .concat((off.schreibenB2 || []).map(function (id) { return { key: "t:" + id, body: { topicId: id } }; }));
-            var i = 0, failures = 0;
+            var i = 0, failures = 0, fetched = 0;
+            /* شارة صغيرة لتحت: «كنحضرو الموقع بلا أنترنت — 45%». كتبان غير
+               ملي كاين بزاف ما يتجاب (أول مرة) — باش الطالب يعرف يتسنى. */
+            var pill = null, firstRun = !read("de-offline-ready:" + user.uid);
+            function progress(done) {
+                if (!firstRun) return;
+                if (!pill) {
+                    pill = document.createElement("div");
+                    pill.setAttribute("role", "status");
+                    pill.dir = "rtl";
+                    pill.style.cssText = "position:fixed;left:12px;bottom:12px;z-index:2147482500;padding:8px 14px;border-radius:999px;"
+                        + "background:#2a0710;color:#fff;font:700 13px/1.4 Cairo,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.3);"
+                        + "opacity:.92;pointer-events:none";
+                }
+                if (!pill.isConnected && document.body) document.body.appendChild(pill);   /* الراوتر بدل الصفحة */
+                if (done) {
+                    pill.textContent = "✅ الموقع واجد للاستعمال بلا أنترنت";
+                    pill.style.background = "#1e7d3a";
+                    setTimeout(function () { if (pill) pill.remove(); }, 4000);
+                    return;
+                }
+                var pct = Math.min(99, Math.round(i / Math.max(1, jobs.length) * 100));
+                pill.textContent = "⬇️ كنحضرو الموقع للاستعمال بلا أنترنت — " + pct + "%";
+            }
             function fresh(key) {
                 return caches.open("de-data-v1").then(function (c) {
                     return c.match(location.origin + "/__data/" + encodeURIComponent(user.uid) + "/" + encodeURIComponent(key));
@@ -104,6 +127,7 @@
                 if (i >= jobs.length || failures > 8 || navigator.onLine === false
                     || window.__deutschEinfachIsPremium !== true) return Promise.resolve();
                 var job = jobs[i++];
+                if (fetched > 3) progress(false);
                 return fresh(job.key).then(function (ok) {
                     if (ok) {
                         var sid = job.body.lesenId, sneed = sid && off.parts && off.parts[sid];
@@ -122,6 +146,7 @@
                             body: JSON.stringify(job.body)
                         });
                     }).then(function (res) {
+                        if (res.ok) fetched++;
                         if (res.ok) return res.json().then(function (data) {
                             /* Lesen: الأجزاء اللي ماكايناش ف المفتاح ديال الموضوع (lesen-<id>-<part>) */
                             var id = job.body.lesenId;
@@ -138,7 +163,11 @@
                 });
             }
             return Promise.all([next(), next()]).then(function () {
-                if (i >= jobs.length && failures <= 8) store(mark, String(Date.now()));
+                if (i >= jobs.length && failures <= 8) {
+                    store(mark, String(Date.now()));
+                    if (pill) progress(true);
+                    store("de-offline-ready:" + user.uid, "1");
+                } else if (pill) { pill.remove(); }
             });
         }).catch(function () { /* المرة الجاية */ }).then(function () { premiumRunning = false; });
     }
