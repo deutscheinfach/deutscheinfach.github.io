@@ -72,6 +72,12 @@ const HUB = LEVEL + "-schreiben.html";
 const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
     || (LEVEL === "b2" && typeof SCHREIBEN_B2_TOPICS !== "undefined" ? SCHREIBEN_B2_TOPICS : null);
 
+/* الطالب كيخرج من الصفحة: الطلبات اللي باقين كيتقطعو («Failed to fetch») */
+let leaving = false;
+window.addEventListener("pagehide", function () { leaving = true; });
+window.addEventListener("beforeunload", function () { leaving = true; });
+window.addEventListener("pageshow", function () { leaving = false; });
+
 /* زر الوضع المظلم: ف الشريط ديال فوق (قبل كان عايم لتحت وكيغطي النص).
    theme-toggle.js ما كيزيدش الزر العايم إلا لقا .de-theme-btn ف الصفحة. */
 (function headerTools() {
@@ -161,6 +167,13 @@ function renderAd(box, text) {
         if (saved) {
             topic = Object.assign({}, meta, saved);
         } else {
+            /* صفحة محضرة ف الخفا (prerender): ما كنسولوش الـ Worker حتى
+               يدخل الطالب بصح — ممكن ما يدخلش، والطلب كيتقطع ف الوسط. */
+            if (document.prerendering) {
+                await new Promise(function (go) {
+                    document.addEventListener("prerenderingchange", go, { once: true });
+                });
+            }
             const t0 = Date.now();
             try {
                 const data = await loadPremiumTopic(TOPIC_ID);
@@ -743,7 +756,8 @@ function renderAd(box, text) {
 
         /* السبب التقني (Worker…) للـ console برك */
         console.warn("Schreiben:", code, errorHint(code));
-        if (window.__deDiag) window.__deDiag("fail", "Schreiben " + LEVEL + "-" + TOPIC_ID + ": " + code);
+        /* الطالب خرج من الصفحة والطلب تقطع (Failed to fetch): ماشي مشكل */
+        if (window.__deDiag && !leaving) window.__deDiag("fail", "Schreiben " + LEVEL + "-" + TOPIC_ID + ": " + code);
         showNotice(
             "📶",
             "ما قدرناش نجيبو الموضوع",
