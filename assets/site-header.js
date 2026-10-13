@@ -996,8 +996,14 @@
                         if (document.startViewTransition && !compact.matches
                             && !(window.matchMedia
                                  && window.matchMedia("(prefers-reduced-motion: reduce)").matches)) {
-                            return document.startViewTransition(paint).finished
-                                .catch(function () {});
+                            /* إلا تقطعات الحركة (برك على رابط آخر، الصفحة
+                               تخبات…) المحتوى كيتبدل عادي — غير كنسكتو
+                               الـ promises اللي كيرفضو باش ما يبانوش خطأ. */
+                            const vt = document.startViewTransition(paint);
+                            const quiet = function () {};
+                            vt.ready.catch(quiet);
+                            vt.updateCallbackDone.catch(quiet);
+                            return vt.finished.catch(quiet);
                         }
                         return paint();
                     }).then(function () {
