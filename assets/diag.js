@@ -107,6 +107,11 @@
             return;
         }
         if (noise(e.message, e.filename)) return;
+        /* كود ماشي ديالنا: المتصفح ولا التطبيق كيزيد سكريبت ف الصفحة
+           (navigation_performance_logger_android…) — غير الملفات ديال
+           الموقع و Firebase كيتسجلو (inline: الرابط ديال الصفحة) */
+        if (e.filename && e.filename.indexOf(location.origin) !== 0
+            && e.filename.indexOf("https://www.gstatic.com/") !== 0) return;
         const where = (e.filename || "").split("/").pop().replace(/\?v=[0-9a-f]+/, "");
         send("error", (e.message || "Error") + (where ? " @ " + where + ":" + e.lineno : ""));
     }, true);

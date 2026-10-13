@@ -143,7 +143,9 @@
                 if (bundles.indexOf(b) === -1) bundles.push(b);
             });
             const got = {};
-            (await Promise.all(bundles.map(fetchOne))).forEach(function (r) {
+            const ask = bundles.filter(function (b) { return !bundleMissing(b); });
+            (await Promise.all(ask.map(fetchOne))).forEach(function (r, i) {
+                noteBundle(ask[i], r);
                 if (r && r.ok && r.data) Object.assign(got, r.data);
             });
             if (stale()) return;
@@ -233,6 +235,21 @@
     /* Premium ديال B1: المحتوى ف Cloudflare KV. الأول المفتاح الجامع
        (lesen-sprechen-b1-t2 = كاع المواضيع ديال الجزء ف value وحدة)،
        ومن بعد المفتاح ديال الموضوع بوحدو (lesen-sprechen-b1-t2-06). */
+    /* الـbundle ديال الجزء ماكاينش ف KV (B2 دابا): الـ Worker كيقلب عليه
+       ف premium-sprechen و premium-lesen (900 KB) قبل ما يقول 404 — طلب
+       بطيء بلا فايدة. كنتفكرو بلي ماكاينش 24 ساعة. */
+    const MISS_KEY = "de-sp-nobundle:";
+    function bundleMissing(id) {
+        try { return Date.now() - Number(localStorage.getItem(MISS_KEY + id) || 0) < 24 * 3600 * 1000; }
+        catch (e) { return false; }
+    }
+    function noteBundle(id, r) {
+        try {
+            if (r && r.status === 404) localStorage.setItem(MISS_KEY + id, String(Date.now()));
+            else if (r && r.ok) localStorage.removeItem(MISS_KEY + id);
+        } catch (e) { /* */ }
+    }
+
     function premiumLoad(themaId) {
         const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
         /* المواضيع اللي كانو مجانيين (pack: true): كاملين فمفتاح واحد
@@ -261,8 +278,15 @@
            كيمشي معاه بالتوازي (إلا الـbundle ما فيهش الموضوع ما نتسناوش
            رحلة أخرى). إلا كان الـbundle ديجا عندنا، ما كنطلبوش والو زايد. */
         const bundleId = lvl + themaId.split("-")[0];
+        if (bundleMissing(bundleId)) {
+            return window.__lesenPremiumFetch(lvl + themaId).then(function (r) {
+                if (r && r.ok && r.data) CONTENT[themaId] = r.data;
+                return r;
+            });
+        }
         const seen = typeof window.__lesenPremiumPeek === "function" && window.__lesenPremiumPeek(bundleId);
         const bundleReq = window.__lesenPremiumFetch(bundleId);
+        bundleReq.then(function (r) { noteBundle(bundleId, r); });
         const soloReq = seen ? null : window.__lesenPremiumFetch(lvl + themaId);
         return bundleReq.then(function (r) {
             const one = r && r.ok && r.data && r.data[themaId];
