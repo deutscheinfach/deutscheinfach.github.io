@@ -252,7 +252,14 @@
             rules.type = "speculationrules";
             rules.dataset.de = "schreiben";
             rules.textContent = JSON.stringify({
-                prerender: [{ where: { href_matches: "/" + LEVEL + "-schreiben-*.html" }, eagerness: "moderate" }]
+                /* غير البطائق المفتوحة: المقفولة (ماشي مشترك) كتحل نافذة ماشي الصفحة */
+                prerender: [{
+                    where: { and: [
+                        { href_matches: "/" + LEVEL + "-schreiben-*.html" },
+                        { not: { selector_matches: ".locked, .locked *" } }
+                    ] },
+                    eagerness: "moderate"
+                }]
             });
             document.head.appendChild(rules);
         } catch (e) { /* غير تسريع */ }
