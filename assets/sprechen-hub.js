@@ -255,6 +255,7 @@
         wait.className = "lesen-empty";
         wait.textContent = "⏳ كنجيبو الموضوع…";
         into.appendChild(wait);
+        if (window.__deNetHint) window.__deNetHint(wait);
         return wait;
     }
 

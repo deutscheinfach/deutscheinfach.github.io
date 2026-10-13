@@ -87,6 +87,7 @@
        كنسجلوها ف «مشاكل الطلبة» (assets/diag.js) */
     function watchLoading(node, kind) {
         const t0 = Date.now();
+        if (window.__deNetHint) window.__deNetHint(node);
         setTimeout(function () {
             if (node.isConnected && window.__deDiag) {
                 const p = new URLSearchParams(location.search);
@@ -442,6 +443,7 @@
                 wait.className = "lesen-empty";
                 wait.textContent = "⏳ كنجيبو التمرين…";
                 stack.appendChild(wait);
+                if (window.__deNetHint) window.__deNetHint(wait);
                 /* Firebase تعطل؟ من بعد 6 ثواني كنسولو الـ Worker نيشان —
                    هو اللي كيتحقق من الحساب والاشتراك على كل حال. */
                 setTimeout(function () {

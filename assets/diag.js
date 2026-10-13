@@ -118,3 +118,80 @@
         send("error", "Promise: " + text);
     });
 })();
+
+/* ===== الأنترنت ضعيفة ولا مقطوعة: نقولوها للطالب =====
+   · window.__deNetHint(node): «كنجيبو…» باقي باين من بعد 6 ثواني →
+     كنزيدو تحتو سطر: الأنترنت ضعيفة (ولا مقطوعة)، ومن بعد 20 ثانية زر «عاود».
+   · تقطع الأنترنت ف أي صفحة → بار صغير لتحت، وكيتبدل ملي ترجع. */
+(function () {
+    "use strict";
+    if (window.__deNetHint) return;
+
+    function offline() { return navigator.onLine === false; }
+    const TEXT_OFF  = "📵 ما كاينش الأنترنت — شوف الواي فاي ولا الـ data ديالك.";
+    const TEXT_SLOW = "📶 الأنترنت عندك ضعيفة شوية — كنكملو نجيبو، تسنى شوية.";
+
+    window.__deNetHint = function (node) {
+        if (!node) return;
+        let line = null;
+        /* العنصر نفسو يقدر يتعمر بالمحتوى (Schreiben): غير إلا باقي «كنجيبو…» */
+        const start = node.textContent;
+        function waiting() { return node.isConnected && node.textContent.indexOf(start) === 0; }
+        function paint() {
+            if (line) line.textContent = offline() ? TEXT_OFF : TEXT_SLOW;
+        }
+        setTimeout(function () {
+            if (!waiting()) return;
+            line = document.createElement("span");
+            line.className = "de-net-hint";
+            line.style.cssText = "display:block;margin-top:10px;font-size:14px;font-weight:700;opacity:.85";
+            paint();
+            node.appendChild(line);
+            window.addEventListener("offline", paint);
+            window.addEventListener("online", paint);
+        }, 6000);
+        setTimeout(function () {
+            if (!line || !waiting()) return;
+            const again = document.createElement("button");
+            again.type = "button";
+            again.textContent = "🔄 عاود المحاولة";
+            again.style.cssText = "display:inline-block;margin-top:10px;padding:8px 18px;border:0;border-radius:999px;"
+                + "background:#ffce00;color:#2a0710;font:inherit;font-weight:800;cursor:pointer";
+            again.addEventListener("click", function () { location.reload(); });
+            node.appendChild(again);
+        }, 20000);
+    };
+
+    let bar = null, hideTimer = 0;
+    function show(text, good) {
+        clearTimeout(hideTimer);
+        if (!document.body) return;
+        if (!bar) {
+            bar = document.createElement("div");
+            bar.setAttribute("role", "status");
+            bar.dir = "rtl";
+            bar.style.cssText = "position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:2147483000;"
+                + "max-width:calc(100% - 32px);padding:10px 18px;border-radius:14px;font:700 14px/1.5 system-ui,sans-serif;"
+                + "box-shadow:0 10px 30px rgba(0,0,0,.35);text-align:center";
+        }
+        bar.style.background = good ? "#1e7d3a" : "#2a0710";
+        bar.style.color = "#fff";
+        bar.textContent = text;
+        if (!bar.isConnected) document.body.appendChild(bar);
+    }
+    function hide(ms) {
+        hideTimer = setTimeout(function () { if (bar) bar.remove(); }, ms);
+    }
+    window.addEventListener("offline", function () { show("📵 تقطع الأنترنت — شوف الاتصال ديالك.", false); });
+    window.addEventListener("online", function () {
+        if (!bar || !bar.isConnected) return;
+        show("✅ رجع الأنترنت", true);
+        hide(2500);
+    });
+    if (offline()) {
+        if (document.body) show("📵 ما كاينش الأنترنت — شوف الاتصال ديالك.", false);
+        else document.addEventListener("DOMContentLoaded", function () {
+            if (offline()) show("📵 ما كاينش الأنترنت — شوف الاتصال ديالك.", false);
+        });
+    }
+})();

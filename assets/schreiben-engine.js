@@ -96,7 +96,10 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         const titleEl = document.getElementById("task-title");
         if (titleEl && meta.title) titleEl.textContent = meta.title;
         const waitEl = document.getElementById("situation-text");
-        if (waitEl) waitEl.textContent = "⏳ كنجيبو الموضوع…";
+        if (waitEl) {
+            waitEl.textContent = "⏳ كنجيبو الموضوع…";
+            if (window.__deNetHint) window.__deNetHint(waitEl);
+        }
 
         const saved = cacheGet();
         if (saved) {
