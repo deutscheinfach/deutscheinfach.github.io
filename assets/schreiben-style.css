@@ -844,3 +844,121 @@ textarea, input { background: transparent; color: var(--ink); }
 .icon-btn { width: 40px; height: 40px; border-radius: 12px; }
 .correct-btn { height: 42px; padding: 0 22px; border-radius: 12px; font-weight: 900; font-size: 15px; background: linear-gradient(135deg, #ffe58a, #f2b705); box-shadow: 0 10px 22px -12px #f2b705; transition: transform .18s, filter .18s; }
 .correct-btn:hover { background: linear-gradient(135deg, #ffe58a, #f2b705); filter: brightness(1.06); transform: translateY(-1px); }
+
+/* =====================================================
+   v6 — تصميم أنظف
+   · الشريط: العنوان + شارات (B2 · Beschwerde)، الأزرار كاملين ف جهة وحدة
+     (ملاحظة، الوضع المظلم، المؤقت، شاشة كاملة، تصحيح).
+   · الإعلان كيبان بحال إعلان (عنوان، لائحة، اتصال)، والرسالة بحال ورقة.
+   · خانة الكتابة: لاصقة ف PC، العداد «45 / 150» مع شريط، والنص
+     التوضيحي ف البلاصة فين كتبدا الكتابة.
+   ===================================================== */
+body { font-family: "Cairo", "Segoe UI", Arial, sans-serif; }
+.block, .panel-right, #answer-text, .point-row, .ad-flyer, .ad-letter { font-family: "Inter", "Segoe UI", Arial, Helvetica, sans-serif; }
+.block-head h2, .translate-btn, .word-count, .editor-placeholder { font-family: "Cairo", "Segoe UI", Arial, sans-serif; }
+
+/* ---- الشريط ---- */
+.task-header { padding: 12px 22px; gap: 14px; }
+.task-title-block { min-width: 0; }
+.task-header .task-title-block h1 { font-size: 19px; font-weight: 800; letter-spacing: .1px; }
+.task-header .task-title-block .sub {
+    display: inline-flex; align-items: center; margin-top: 5px; padding: 2px 10px;
+    border-radius: 999px; background: rgba(255,255,255,.14); color: #ffe3ea;
+    font-size: 12px; font-weight: 700; letter-spacing: .3px;
+}
+.task-header .right { gap: 8px; }
+.task-header .rp-head-btn {
+    height: 40px; padding: 0 14px; border-radius: 12px; font-size: 13px;
+    background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.22);
+}
+.task-header .rp-head-btn:hover { background: rgba(255,255,255,.18); }
+.task-header .de-theme-btn.icon-btn svg { width: 18px; height: 18px; }
+
+/* ---- الإعلان ---- */
+.ad-flyer {
+    position: relative; padding: 22px 20px 16px; border-radius: 14px;
+    background: #fff; border: 1.5px solid rgba(168,134,58,.45);
+    box-shadow: 0 1px 0 rgba(0,0,0,.02), 0 10px 24px -18px rgba(0,0,0,.5);
+    color: #1c1a16; font-size: 15px; line-height: 1.65; direction: ltr; text-align: left;
+}
+.ad-tag {
+    position: absolute; top: -10px; left: 16px; padding: 1px 10px; border-radius: 999px;
+    background: #f2b705; color: #2a1d00; font: 800 11px/1.8 "Inter", Arial, sans-serif;
+    letter-spacing: .08em; text-transform: uppercase;
+}
+.ad-title { margin: 0 0 8px; font-size: 18px; font-weight: 800; line-height: 1.35; color: #8a0f2b; }
+.ad-flyer p { margin: 0 0 8px; }
+.ad-shout { font-weight: 800; letter-spacing: .04em; color: #8a0f2b; }
+.ad-list { list-style: none; margin: 4px 0 12px; padding: 0; display: grid; gap: 6px; }
+.ad-list li { position: relative; padding-left: 26px; }
+.ad-list li::before {
+    content: ""; position: absolute; left: 4px; top: .5em; width: 12px; height: 7px;
+    border-left: 2.5px solid #2e9e5b; border-bottom: 2.5px solid #2e9e5b; transform: rotate(-45deg);
+}
+.ad-contact {
+    margin: 0 !important; font-size: 13px; color: #6b6458;
+}
+.ad-flyer p:not(.ad-contact) + .ad-contact { margin-top: 10px !important; padding-top: 10px; border-top: 1px dashed rgba(168,134,58,.45); }
+.ad-letter {
+    padding: 18px 20px; border-radius: 12px; background: #fff;
+    border: 1px solid rgba(28,26,22,.12); border-inline-start: 4px solid #f2b705;
+    color: #1c1a16; font-size: 15px; line-height: 1.75; direction: ltr; text-align: left;
+}
+.ad-letter p { margin: 0 0 10px; }
+.ad-letter p:last-child, .ad-flyer > :last-child { margin-bottom: 0; }
+#situation-text { font-size: 15px; line-height: 1.75; margin-top: 16px !important; padding: 14px 16px;
+    background: rgba(242,183,5,.10); border-radius: 12px; }
+.aufgabe-intro { font-size: 15px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.point-row { font-size: 15px; padding: 12px 14px; border-radius: 12px; align-items: center; }
+.point-num { width: 26px; height: 26px; min-width: 26px; font-size: 13px; }
+
+/* ---- خانة الكتابة ---- */
+/* overflow-x:hidden ف html/body كيخلي body يولي «scroll container» →
+   position:sticky ما كيخدمش (الشريط كان كيمشي مع السكرول). clip
+   كيقطع التمدد الأفقي بلا هاد المشكل (المتصفحات القديمة كيبقاو ف hidden). */
+html, body { overflow-x: clip; }
+@media (min-width: 901px) {
+    .panel-right {
+        position: sticky; top: var(--hdr, 68px);
+        height: calc(100vh - var(--hdr, 68px)); align-self: start;
+    }
+    .panel-left { min-height: calc(100vh - var(--hdr, 68px)); }
+}
+.editor-toolbar { padding: 10px 16px; gap: 10px; background: #faf6ec; }
+.umlaut-btns { gap: 6px; }
+.umlaut-btns button, :is(.block, .panel-right) .umlaut-btns button { width: 36px; height: 36px; border-radius: 10px; font-size: 16px; }
+.word-count { display: inline-flex; align-items: baseline; gap: 4px; font-size: 13px; font-weight: 700; color: #5e584c; margin-inline-start: auto; }
+.word-count b { font-size: 16px; color: #1c1a16; }
+.word-count.is-done b { color: #2e9e5b; }
+.wc-meter { flex: 0 0 90px; height: 6px; border-radius: 999px; background: rgba(28,26,22,.10); overflow: hidden; }
+.wc-meter-fill { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #f2b705, #e0a800); transition: width .25s ease; }
+.wc-meter.is-done .wc-meter-fill { background: #2e9e5b; }
+#answer-text { padding: 26px 28px; font-size: 16.5px; line-height: 1.9; }
+.editor-placeholder {
+    inset: 0 auto auto 0; right: 0; padding: 26px 28px; flex-direction: row;
+    justify-content: flex-start; align-items: center; gap: 10px; direction: rtl; text-align: right;
+    font-size: 15px; color: #8d8577;
+}
+.editor-placeholder svg { width: 22px; height: 22px; opacity: .55; }
+
+@media (max-width: 900px) {
+    .panel-right { min-height: 70vh; }
+    #answer-text { padding: 20px 16px; font-size: 16px; }
+    .editor-placeholder { padding: 20px 16px; }
+    .editor-toolbar { position: sticky; top: var(--hdr, 0px); z-index: 5; }
+}
+@media (max-width: 600px) {
+    .task-header { padding: 10px 12px; row-gap: 10px; }
+    .task-header .task-title-block h1 { font-size: 16px; }
+    .task-header .right { flex-wrap: nowrap; justify-content: flex-start; }
+    .task-header .rp-head-btn span { display: none; }
+    .task-header .rp-head-btn { width: 38px; height: 38px; padding: 0; justify-content: center; }
+    #fullscreen-toggle { display: none; }
+    .task-header .icon-btn { width: 38px; height: 38px; }
+    .timer-pill { height: 38px; }
+    .correct-btn { height: 40px; min-height: 40px; flex: 1 1 auto; justify-content: center; }
+    .ad-flyer { padding: 20px 14px 14px; font-size: 14.5px; }
+    .ad-title { font-size: 16.5px; }
+    .umlaut-btns button, :is(.block, .panel-right) .umlaut-btns button { width: 34px; height: 34px; }
+    .wc-meter { flex-basis: 100%; order: 3; }
+}
