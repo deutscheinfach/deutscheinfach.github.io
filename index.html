@@ -482,7 +482,7 @@
             gap: 10px;
         }
         .hv-box { position: relative; width: 100%; cursor: pointer; }
-        .hv-box video { cursor: pointer; }
+        .hv-box video { cursor: pointer; height: auto; }   /* النسبة من width/height قبل ما توصل الصورة */
         /* زر التشغيل الكبير ف الوسط (بحال YouTube) */
         .hv-play {
             position: absolute; left: 50%; top: 50%;
@@ -1872,13 +1872,13 @@
                  باش ماكيتحمل حتى يضغط عليه الزائر -->
             <figure class="hero-video">
                 <div class="hv-box hero-video-pc">
-                    <video playsinline preload="none" poster="assets/video/tutorial-pc.jpg?v=3">
+                    <video playsinline preload="none" width="1280" height="720" data-poster="assets/video/tutorial-pc.jpg?v=3">
                         <source src="assets/video/tutorial-pc.mp4?v=2" type="video/mp4">
                     </video>
                     <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
                 </div>
                 <div class="hv-box hero-video-mobile">
-                    <video playsinline preload="none" poster="assets/video/tutorial-mobile.jpg?v=3">
+                    <video playsinline preload="none" width="600" height="1067" data-poster="assets/video/tutorial-mobile.jpg?v=3">
                         <source src="assets/video/tutorial-mobile.mp4?v=2" type="video/mp4">
                     </video>
                     <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
@@ -2035,13 +2035,13 @@
         <a class="bw-promo-tag" href="bewerbung.html">✨ جديد · Bewerbung و ترجمة الوثائق</a>
         <figure class="bw-promo-video">
             <div class="hv-box bw-promo-pc">
-                <video playsinline preload="none" poster="assets/video/bewerbung-pc.jpg?v=3">
+                <video playsinline preload="none" width="1920" height="1080" data-poster="assets/video/bewerbung-pc.jpg?v=3">
                     <source src="assets/video/bewerbung-pc.mp4?v=2" type="video/mp4">
                 </video>
                 <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
             </div>
             <div class="hv-box bw-promo-mobile">
-                <video playsinline preload="none" poster="assets/video/bewerbung-mobile.jpg?v=3">
+                <video playsinline preload="none" width="1080" height="1920" data-poster="assets/video/bewerbung-mobile.jpg?v=3">
                     <source src="assets/video/bewerbung-mobile.mp4?v=2" type="video/mp4">
                 </video>
                 <button class="hv-play" type="button" aria-label="شغّل الفيديو"></button>
@@ -2695,8 +2695,18 @@
 <script src="assets/app-install.js?v=36375614" defer></script>
 <script>
 /* فيديو الشرح: ضغطة ف أي بلاصة كتشغل/توقف، والزر الكبير كيغبر ملي يخدم */
+/* صورة الغلاف: كل فيديو عندو نسخة PC ونسخة تيليفون، وحدة منهم مخبية.
+   كنحطو poster غير للي باينة وقربات توصل للشاشة — ف التيليفون ما
+   كتحملش صور PC (~250 KB) والعكس. */
+var hvShow = function (v) {
+    if (v.dataset.poster) { v.poster = v.dataset.poster; v.removeAttribute("data-poster"); }
+};
+var hvSeen = "IntersectionObserver" in window ? new IntersectionObserver(function (list) {
+    list.forEach(function (it) { if (it.isIntersecting) { hvShow(it.target); hvSeen.unobserve(it.target); } });
+}, { rootMargin: "600px 0px" }) : null;
 document.querySelectorAll(".hv-box").forEach(function (box) {
     var v = box.querySelector("video");
+    if (hvSeen) hvSeen.observe(v); else hvShow(v);
     function toggle() { if (v.paused) { v.play(); } else { v.pause(); } }
     box.addEventListener("click", function (e) {
         if (v.controls && e.target === v) return;   /* الأزرار ديال المتصفح خدامين */

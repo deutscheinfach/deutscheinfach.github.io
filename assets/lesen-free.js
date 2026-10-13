@@ -43,11 +43,27 @@
         return jobs[lv];
     };
 
-    /* كنبداو الجلب دغيا (الصفحة ديال Lesen) */
+    /* موضوع ف الرابط (?thema / ?pruefung): كنجيبو دغيا.
+       لائحة المواضيع: ما محتاجاش المحتوى — كنتسناو حتى تبان اللائحة
+       (__deAfterContent) باش ما تتزاحمش معاها ف الأنترنت الضعيفة،
+       ولا قبل ملي يقرب الطالب يدخل لشي موضوع (يحط الصبع / الفأرة). */
     try {
         const shell = document.querySelector(".lesen-shell");
         const lv = (shell && shell.dataset.level) || (/b1-/.test(location.pathname) ? "b1" : "b2");
-        window.__lesenFreeReady(lv);
+        const start = function () { window.__lesenFreeReady(lv); };
+        if (/[?&](thema|pruefung)=/.test(location.search) || !window.__deAfterContent) start();
+        else {
+            window.__deAfterContent(start);
+            const early = function () {
+                start();
+                ["pointerdown", "mouseover", "focusin"].forEach(function (ev) {
+                    document.removeEventListener(ev, early, true);
+                });
+            };
+            ["pointerdown", "mouseover", "focusin"].forEach(function (ev) {
+                document.addEventListener(ev, early, { capture: true, passive: true, signal: window.__deSignal });
+            });
+        }
         const link = document.createElement("link");
         link.rel = "preconnect"; link.href = ENDPOINT; link.crossOrigin = "";
         document.head.appendChild(link);
