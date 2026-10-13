@@ -178,36 +178,17 @@
             const still = window.matchMedia
                 && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-            if (still) {
-                switchPart(part, tab.href, true);
-                return;
+            /* التبديل ف اللحظة، بلا ما يغمض المحتوى (الصفحة ثابتة) */
+            switchPart(part, tab.href, true);
+            if (still) return;
+            /* اللائحة الجديدة كتبدا من فوق */
+            const tabsTop = tabsNav.getBoundingClientRect().top + window.scrollY;
+            const barH = parseInt(
+                getComputedStyle(document.documentElement)
+                    .getPropertyValue("--site-header-h"), 10) || 72;
+            if (window.scrollY > tabsTop - barH) {
+                window.scrollTo({ top: Math.max(0, tabsTop - barH) });
             }
-
-            /* المحتوى كيطفا، كيتبدل، وكيرجع. التبويبات والبار
-               ما كيتحركوش — هوما ديما مرسومين. */
-            SHELL.classList.add("lt-leaving");
-            let done = false;
-            const swap = function () {
-                if (done) return;
-                done = true;
-                switchPart(part, tab.href, true);
-                SHELL.classList.remove("lt-leaving");
-                /* اللائحة الجديدة كتبدا من فوق */
-                const tabsTop = tabsNav.getBoundingClientRect().top + window.scrollY;
-                const barH = parseInt(
-                    getComputedStyle(document.documentElement)
-                        .getPropertyValue("--site-header-h"), 10) || 72;
-                if (window.scrollY > tabsTop - barH) {
-                    window.scrollTo({ top: Math.max(0, tabsTop - barH) });
-                }
-            };
-            const guard = setTimeout(swap, 200);
-            SHELL.addEventListener("transitionend", function once(e) {
-                if (e.target !== grid) return;
-                clearTimeout(guard);
-                SHELL.removeEventListener("transitionend", once);
-                swap();
-            });
         });
     }
 

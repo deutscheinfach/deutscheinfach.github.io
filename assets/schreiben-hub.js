@@ -326,6 +326,23 @@
 
     render();
 
+    /* ===== الرجوع من موضوع: نفس البلاصة ف اللائحة =====
+       ملي كيدخل لموضوع كنحفظو فين كان. ملي كيرجع (زر ← ديال الموضوع
+       كيحل اللائحة من جديد إلا ما قدرش يرجع بالـ history) كنرجعوه ليها. */
+    const PLACE = "de-hub-y:" + location.pathname;
+    grid.addEventListener("click", function (event) {
+        if (!event.target.closest("a.lesen-card")) return;
+        try { sessionStorage.setItem(PLACE, String(Math.round(window.scrollY))); } catch (e) { /* */ }
+    }, true);
+    (function comeBack() {
+        let ref = "";
+        try { ref = new URL(document.referrer).pathname; } catch (e) { return; }
+        if (!new RegExp("/" + LEVEL + "-schreiben-\\d+\\.html$").test(ref)) return;
+        let y = 0;
+        try { y = Number(sessionStorage.getItem(PLACE) || 0); } catch (e) { /* */ }
+        if (y > 0) window.scrollTo(0, y);
+    })();
+
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase —
        اللائحة خاصها تتعاود باش الأقفال يطيحو. */
     document.addEventListener("de-premium", function () {

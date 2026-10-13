@@ -1426,12 +1426,13 @@
 .lesen-shell > .lesen-grid {
     transition: opacity .16s ease, transform .16s ease;
 }
+/* تبديل الجزء (Teil 1 → Teil 2): بلا ما يغمض المحتوى */
 .lesen-shell.lt-leaving > .lesen-head-row,
 .lesen-shell.lt-leaving > .lesen-toolbar,
 .lesen-shell.lt-leaving > .lesen-count,
 .lesen-shell.lt-leaving > .lesen-grid {
-    opacity: 0;
-    transform: translateY(-8px);
+    opacity: 1;
+    transform: none;
 }
 
 /* البطائق كيطلعو وحدة من بعد وحدة ملي تحل اللائحة */
@@ -1439,9 +1440,9 @@
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: none; }
 }
+/* موقفة: البطائق كيبانو ف اللحظة (الصفحة ثابتة) */
 .lesen-grid.lt-enter > .lesen-card {
-    animation: lt-card-rise .32s cubic-bezier(.4, 0, .2, 1) both;
-    animation-delay: calc(var(--lt-i, 0) * 22ms);
+    animation: none;
 }
 
 /* المؤشر ديال التبويب الخدام كينط شوية بحال ديال النسخ */
