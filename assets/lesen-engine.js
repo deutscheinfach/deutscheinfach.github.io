@@ -186,8 +186,10 @@
                الصفحة كانت كتطوال وتقصر بلا حبس.) */
             const stick = parseFloat(getComputedStyle(panel).top) || 0;
             const room = Math.max(220, Math.round(limit - stick));
-            const want = room + "px";
-            if (panel.style.maxHeight !== want) panel.style.maxHeight = want;
+            /* فرق صغير (pixels مكسورين ف شاشات 125%) ما كنبدلوش — وإلا
+               كيتبدل الطول بلا حبس واللوحة كترعش */
+            const now = parseFloat(panel.style.maxHeight) || 0;
+            if (Math.abs(now - room) >= 2) panel.style.maxHeight = room + "px";
         });
     }
     function queueFit() {

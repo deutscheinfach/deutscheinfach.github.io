@@ -6,8 +6,12 @@
 
 window.__deutschEinfachIdToken = (async function () {
   try {
-    const appMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js");
-    const authMod = await import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js");
+    /* جوج ف نفس الوقت (قبل كانو واحد من بعد واحد) */
+    const mods = await Promise.all([
+      import("https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js")
+    ]);
+    const appMod = mods[0], authMod = mods[1];
 
     const app = appMod.getApps().length ? appMod.getApp() : appMod.initializeApp({
       apiKey: "AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU",
