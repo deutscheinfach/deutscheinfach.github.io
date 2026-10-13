@@ -1349,6 +1349,9 @@
                     if (known && known.uid === person.uid) {
                         /* بلا أنترنت: غير إلا التصريح باقي صالح */
                         premium = known.premium === true && passOk(person.uid);
+                        if (known.premium === true && !premium && window.__deDiag && window.__deOfflinePass) {
+                            window.__deDiag("error", "Premium بلا أنترنت تسد: " + window.__deOfflinePass.why(person.uid));
+                        }
                         if (known.name) name = known.name;
                     }
                 }
