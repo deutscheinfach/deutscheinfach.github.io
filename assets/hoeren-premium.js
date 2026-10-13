@@ -34,7 +34,7 @@
         401: "الحساب ما تقبلش. خرج وعاود دخل.",
         403: "الحساب ماشي Premium (subscriptionActive خاصو يكون true).",
         404: "ماكاينش المفتاح ديال Hören فـ Cloudflare KV (lesen-hoeren-teil…).",
-        500: "الـ KV binding سميتو TOPICS ماشي مربوط بالـ Worker."
+        500: "خطأ ف الـ Worker."
     };
 
     /* Firebase كيرجّع الحساب من بعد شوية (خصوصاً داخل «اختبر نفسك»
@@ -64,9 +64,21 @@
 
     window.__hoerenPremiumLoad = function (teil) {
         if (cache[teil]) return cache[teil];
+        /* بلا أنترنت: النسخة المحفوظة ف التيليفون (__deStore، diag.js) */
+        const KEY = "l:hoeren-" + teil;
+        const stored = function () {
+            return window.__deStore ? window.__deStore.get(KEY) : Promise.resolve(null);
+        };
         cache[teil] = (async function () {
+            if (navigator.onLine === false) {
+                const off = await stored();
+                if (off) return { ok: true, data: off, offline: true };
+            }
             const idToken = await token();
-            if (!idToken) return { ok: false, why: "ماشي داخل بحساب." };
+            if (!idToken) {
+                const off = await stored();
+                return off ? { ok: true, data: off, offline: true } : { ok: false, why: "ماشي داخل بحساب." };
+            }
             try {
                 const res = await fetch(ENDPOINT, {
                     method: "POST",
@@ -74,8 +86,12 @@
                     body: JSON.stringify({ lesenId: "hoeren-" + teil, idToken: idToken })
                 });
                 if (!res.ok) return { ok: false, status: res.status, why: WHY[res.status] || ("HTTP " + res.status) };
-                return { ok: true, data: await res.json() };
+                const data = await res.json();
+                if (window.__deStore) window.__deStore.put(KEY, data);
+                return { ok: true, data: data };
             } catch (e) {
+                const off = await stored();
+                if (off) return { ok: true, data: off, offline: true };
                 return { ok: false, why: "ما وصلناش للـ Worker. شوف الأنترنت." };
             }
         })();

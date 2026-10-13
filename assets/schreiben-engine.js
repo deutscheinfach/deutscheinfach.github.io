@@ -174,10 +174,26 @@ function renderAd(box, text) {
                 });
             }
             const t0 = Date.now();
-            try {
-                const data = await loadPremiumTopic(TOPIC_ID);
+            /* بلا أنترنت: النسخة المحفوظة ف التيليفون (__deStore، diag.js) */
+            const KEY = LEVEL === "b2" ? "t:" + TOPIC_ID : "l:schreiben-" + LEVEL + "-" + TOPIC_ID;
+            const stored = function () {
+                return window.__deStore ? window.__deStore.get(KEY) : Promise.resolve(null);
+            };
+            const off = navigator.onLine === false ? await stored() : null;
+            if (off && Array.isArray(off.points)) {
+                topic = Object.assign({}, meta, off);
+            } else try {
+                const data = await loadPremiumTopic(TOPIC_ID).catch(async function (error) {
+                    /* الـ Worker ما جاوبش (الشبكة): المحفوظة إلا كاينة */
+                    if (error && (error.code === "network" || /fetch|network|abort|timeout/i.test(String(error.message || error)))) {
+                        const late = await stored();
+                        if (late && Array.isArray(late.points)) return Object.assign({ __offline: true }, late);
+                    }
+                    throw error;
+                });
+                if (window.__deStore && !data.__offline) window.__deStore.put(KEY, data);
                 if (window.__deDiag && Date.now() - t0 > 8000) window.__deDiag("slow", "Schreiben " + LEVEL + "-" + TOPIC_ID + " بطا: " + Math.round((Date.now() - t0) / 1000) + "s", { ms: Date.now() - t0 });
-                cacheSet(data);
+                if (!data.__offline) cacheSet(data);
                 topic = Object.assign({}, meta, data);
             } catch (error) {
                 showPremiumNotice(error.code || String(error.message || error));

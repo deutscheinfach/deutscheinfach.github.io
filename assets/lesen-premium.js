@@ -245,18 +245,41 @@
         const running = state.busy.get(key);
         if (running) return running;
 
+        /* بلا أنترنت: النسخة المحفوظة ف التيليفون (__deStore، diag.js) */
+        const stored = function () {
+            return window.__deStore ? window.__deStore.get("l:" + themaId) : Promise.resolve(null);
+        };
+
         const job = (async function () {
+            if (navigator.onLine === false) {
+                const off = await stored();
+                if (off) return { ok: true, data: off, offline: true };
+            }
             const token = await idToken(user);
-            if (!token) return { ok: false, why: "ماشي داخل بحساب." };
+            if (!token) {
+                const off = await stored();
+                return off ? { ok: true, data: off, offline: true } : { ok: false, why: "ماشي داخل بحساب." };
+            }
 
             const t0 = Date.now();
-            const result = await ask(themaId, token);
+            let result = await ask(themaId, token);
+            /* ما وصلناش للـ Worker (الشبكة): النسخة المحفوظة إلا كاينة */
+            if (!result.ok && !result.status) {
+                const off = await stored();
+                if (off) result = { ok: true, data: off, offline: true };
+            }
             if (window.__deDiag) {
                 if (!result.ok && result.status !== 404) window.__deDiag("fail", "Lesen Worker: " + (result.status || "") + " " + (result.why || "") + " [" + themaId + "]", { ms: Date.now() - t0 });
                 else if (Date.now() - t0 > 8000) window.__deDiag("slow", "Lesen Worker بطا: " + Math.round((Date.now() - t0) / 1000) + "s [" + themaId + "]", { ms: Date.now() - t0 });
             }
 
-            if (result.ok) { state.done.set(key, result); diskSet(user.uid, themaId, result.data); }
+            if (result.ok) {
+                state.done.set(key, result);
+                if (!result.offline) {
+                    diskSet(user.uid, themaId, result.data);
+                    if (window.__deStore) window.__deStore.put("l:" + themaId, result.data);
+                }
+            }
             else if (result.status === 404) state.miss.set(key, { result: result, until: Date.now() + MISS_MS });
             return result;
         })().finally(function () { state.busy.delete(key); });

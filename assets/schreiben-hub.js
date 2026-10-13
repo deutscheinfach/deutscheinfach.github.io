@@ -190,6 +190,8 @@
             const k = key(id);
             if (k && data && Array.isArray(data.points)) {
                 try { localStorage.setItem(k, JSON.stringify({ t: Date.now(), data: data })); } catch (e) { /* عامرة */ }
+                /* بلا أنترنت (diag.js) */
+                if (window.__deStore) window.__deStore.put(LEVEL === "b2" ? "t:" + id : "l:schreiben-" + LEVEL + "-" + id, data);
             }
         }
         function pump() {

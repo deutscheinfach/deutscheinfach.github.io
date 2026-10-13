@@ -46,6 +46,101 @@
         window.addEventListener("load", function () {
             navigator.serviceWorker.register("firebase-messaging-sw.js").catch(function () { /* ماشي ضروري */ });
         });
+        offlineReady();
+    }
+
+    /* ---- 1ب) بلا أنترنت: الموقع والمحتوى ف التيليفون ----
+       · الصفحات والملفات: الـ service worker كيجيبهم (firebase-messaging-sw.js،
+         مرة لكل build) — للجميع.
+       · المحتوى المدفوع (Lesen، Sprechen، Schreiben، Hören): للمشترك، كيتجاب
+         من الـ Worker وكيتحفظ ف __deStore (diag.js). كيكمل من فين حبس، وكل
+         موضوع كيتجدد من بعد 7 أيام. 2 ف نفس الوقت، من بعد ما يبان المحتوى.
+       ما كيدير والو ف «توفير البيانات» (Save-Data) ولا بلا أنترنت. */
+    function offlineReady() {
+        var conn = navigator.connection || {};
+        if (conn.saveData || navigator.onLine === false) return;
+        var later = window.__deAfterContent || function (fn) { setTimeout(fn, 3000); };
+        later(function () {
+            setTimeout(function () {
+                if (navigator.onLine === false) return;
+                /* الصفحات: كل 6 سوايع كنسولو (الـ worker كيقارن الـ build) */
+                if (Date.now() - Number(read("de-precache-at") || 0) > 6 * 3600 * 1000) {
+                    navigator.serviceWorker.ready.then(function (reg) {
+                        if (reg.active) { reg.active.postMessage({ type: "de-precache" }); store("de-precache-at", String(Date.now())); }
+                    }).catch(function () { /* */ });
+                }
+                if (window.__deutschEinfachIsPremium === true) premiumOffline();
+                else document.addEventListener("de-premium", function () {
+                    if (window.__deutschEinfachIsPremium === true) premiumOffline();
+                }, { once: true });
+            }, 1500);
+        });
+    }
+
+    var premiumRunning = false;
+    function premiumOffline() {
+        if (premiumRunning || !window.__deStore || !window.caches) return;
+        var auth = window.__deutschEinfachAuth;
+        var user = auth && auth.currentUser;
+        if (!user) return;
+        var mark = "de-offline-at:" + user.uid;
+        if (Date.now() - Number(read(mark) || 0) < 12 * 3600 * 1000) return;
+        premiumRunning = true;
+        var WORKER = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+        var WEEK = 7 * 24 * 3600 * 1000;
+        fetch("offline.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (off) {
+            if (!off) return;
+            var jobs = (off.lesen || []).map(function (id) { return { key: "l:" + id, body: { lesenId: id } }; })
+                .concat((off.schreibenB2 || []).map(function (id) { return { key: "t:" + id, body: { topicId: id } }; }));
+            var i = 0, failures = 0;
+            function fresh(key) {
+                return caches.open("de-data-v1").then(function (c) {
+                    return c.match(location.origin + "/__data/" + encodeURIComponent(user.uid) + "/" + encodeURIComponent(key));
+                }).then(function (res) {
+                    return !!res && Date.now() - Number(res.headers.get("x-saved") || 0) < WEEK;
+                }).catch(function () { return false; });
+            }
+            function next() {
+                if (i >= jobs.length || failures > 8 || navigator.onLine === false
+                    || window.__deutschEinfachIsPremium !== true) return Promise.resolve();
+                var job = jobs[i++];
+                return fresh(job.key).then(function (ok) {
+                    if (ok) {
+                        var sid = job.body.lesenId, sneed = sid && off.parts && off.parts[sid];
+                        if (!sneed) return next();
+                        return window.__deStore.get(job.key).then(function (data) {
+                            sneed.forEach(function (part) {
+                                if (!data || !data[part]) jobs.push({ key: "l:" + sid + "-" + part, body: { lesenId: sid + "-" + part } });
+                            });
+                        }).then(next);
+                    }
+                    return user.getIdToken().then(function (token) {
+                        job.body.idToken = token;
+                        return fetch(WORKER, {
+                            method: "POST",
+                            headers: { "Content-Type": "text/plain;charset=UTF-8" },
+                            body: JSON.stringify(job.body)
+                        });
+                    }).then(function (res) {
+                        if (res.ok) return res.json().then(function (data) {
+                            /* Lesen: الأجزاء اللي ماكايناش ف المفتاح ديال الموضوع (lesen-<id>-<part>) */
+                            var id = job.body.lesenId;
+                            var need = id && off.parts && off.parts[id];
+                            if (need) need.forEach(function (part) {
+                                if (!data || !data[part]) jobs.push({ key: "l:" + id + "-" + part, body: { lesenId: id + "-" + part } });
+                            });
+                            return window.__deStore.put(job.key, data);
+                        });
+                        if (res.status === 401 || res.status === 403) failures = 99;
+                    }).catch(function () { failures++; })
+                      .then(function () { return new Promise(function (go) { setTimeout(go, 120); }); })
+                      .then(next);
+                });
+            }
+            return Promise.all([next(), next()]).then(function () {
+                if (i >= jobs.length && failures <= 8) store(mark, String(Date.now()));
+            });
+        }).catch(function () { /* المرة الجاية */ }).then(function () { premiumRunning = false; });
     }
 
     window.addEventListener("beforeinstallprompt", function (e) {
