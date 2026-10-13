@@ -121,77 +121,125 @@
 
 /* ===== الأنترنت ضعيفة ولا مقطوعة: نقولوها للطالب =====
    · window.__deNetHint(node): «كنجيبو…» باقي باين من بعد 6 ثواني →
-     كنزيدو تحتو سطر: الأنترنت ضعيفة (ولا مقطوعة)، ومن بعد 20 ثانية زر «عاود».
+     كنبدلوه ببطاقة: أيقونة + عنوان + شرح قصير، وزر «عاود المحاولة»
+     (دغيا إلا الأنترنت مقطوعة، ولا من بعد 20 ثانية).
    · تقطع الأنترنت ف أي صفحة → بار صغير لتحت، وكيتبدل ملي ترجع. */
 (function () {
     "use strict";
     if (window.__deNetHint) return;
 
     function offline() { return navigator.onLine === false; }
-    const TEXT_OFF  = "📵 ما كاينش الأنترنت — شوف الواي فاي ولا الـ data ديالك.";
-    const TEXT_SLOW = "📶 الأنترنت عندك ضعيفة شوية — كنكملو نجيبو، تسنى شوية.";
+
+    const SVG = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+    const ICON_OFF  = '<svg ' + SVG + '><path d="M2 2l20 20"/><path d="M8.5 16.4a5 5 0 0 1 7 0"/><path d="M5 12.9a10 10 0 0 1 5.2-2.8"/><path d="M19 12.9a10 10 0 0 0-2.3-1.6"/><path d="M2 8.8a15 15 0 0 1 4.2-2.7"/><path d="M22 8.8A15 15 0 0 0 11 4.9"/><path d="M12 20h.01"/></svg>';
+    const ICON_SLOW = '<svg ' + SVG + '><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8" opacity=".35"/><path d="M17 20V8" opacity=".35"/><path d="M22 4v16" opacity=".35"/></svg>';
+    const ICON_AGAIN = '<svg ' + SVG + '><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>';
+
+    const TEXT = {
+        off:  { title: "ماكاينش اتصال بالأنترنت",
+                lead: "تأكد من الويفي ولا الأنترنت ديال التيليفون، ومن بعد برك على «عاود المحاولة»." },
+        slow: { title: "الاتصال ديالك ضعيف",
+                lead: "التمرين كيتحمل — غادي ياخد شوية ديال الوقت. خليك ف الصفحة." }
+    };
+
+    let styled = false;
+    function css() {
+        if (styled) return;
+        styled = true;
+        const st = document.createElement("style");
+        st.textContent =
+            ".de-net{display:flex;flex-direction:column;align-items:center;gap:8px;padding:6px 4px;text-align:center;direction:rtl}" +
+            ".de-net-ico{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;" +
+            "background:rgba(179,14,48,.1);color:#b30e30}" +
+            ".de-net.is-slow .de-net-ico{background:rgba(224,168,0,.16);color:#b7860b}" +
+            ".de-net-ico svg{width:26px;height:26px}" +
+            ".de-net-title{margin:4px 0 0;font-size:17px;font-weight:800;line-height:1.4;color:inherit;opacity:1}" +
+            ".de-net-lead{margin:0;max-width:360px;font-size:14px;font-weight:600;line-height:1.7;opacity:.75}" +
+            ".de-net-btn{display:inline-flex;align-items:center;gap:8px;margin-top:6px;padding:10px 22px;border:0;border-radius:999px;" +
+            "background:#ffce00;color:#2a0710;font:inherit;font-size:15px;font-weight:800;cursor:pointer;" +
+            "box-shadow:0 8px 20px -10px rgba(224,168,0,.9)}" +
+            ".de-net-btn svg{width:18px;height:18px}" +
+            ".de-net-btn:hover{filter:brightness(1.05)}" +
+            ":root[data-theme=dark] .de-net-ico,html.dark .de-net-ico{background:rgba(255,120,140,.14);color:#ff8a9c}" +
+            ":root[data-theme=dark] .de-net.is-slow .de-net-ico,html.dark .de-net.is-slow .de-net-ico{background:rgba(255,206,0,.14);color:#ffce00}" +
+            ".de-netbar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:2147483000;" +
+            "display:flex;align-items:center;gap:10px;max-width:calc(100% - 32px);padding:10px 18px;border-radius:14px;" +
+            "background:#2a0710;color:#fff;font-family:inherit;font-size:14px;font-weight:700;line-height:1.5;direction:rtl;" +
+            "border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 32px rgba(0,0,0,.35)}" +
+            ".de-netbar svg{width:20px;height:20px;flex:none}" +
+            ".de-netbar.is-good{background:#1e7d3a}";
+        document.head.appendChild(st);
+    }
 
     window.__deNetHint = function (node) {
         if (!node) return;
-        let line = null;
-        /* العنصر نفسو يقدر يتعمر بالمحتوى (Schreiben): غير إلا باقي «كنجيبو…» */
         const start = node.textContent;
-        function waiting() { return node.isConnected && node.textContent.indexOf(start) === 0; }
+        let card = null, btn = null;
+        /* العنصر نفسو يقدر يتعمر بالمحتوى (Schreiben): غير إلا باقي كيتسنى */
+        function waiting() {
+            return node.isConnected && (card ? node.contains(card) : node.textContent.indexOf(start) === 0);
+        }
+        function button() {
+            if (btn || !card) return;
+            btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "de-net-btn";
+            btn.innerHTML = ICON_AGAIN + "<span>عاود المحاولة</span>";
+            btn.addEventListener("click", function () { location.reload(); });
+            card.appendChild(btn);
+        }
         function paint() {
-            if (line) line.textContent = offline() ? TEXT_OFF : TEXT_SLOW;
+            if (!card) return;
+            if (!waiting()) {
+                window.removeEventListener("offline", paint);
+                window.removeEventListener("online", paint);
+                return;
+            }
+            const off = offline();
+            const t = off ? TEXT.off : TEXT.slow;
+            card.classList.toggle("is-slow", !off);
+            card.querySelector(".de-net-ico").innerHTML = off ? ICON_OFF : ICON_SLOW;
+            card.querySelector(".de-net-title").textContent = t.title;
+            card.querySelector(".de-net-lead").textContent = t.lead;
+            if (off) button();
         }
         setTimeout(function () {
             if (!waiting()) return;
-            line = document.createElement("span");
-            line.className = "de-net-hint";
-            line.style.cssText = "display:block;margin-top:10px;font-size:14px;font-weight:700;opacity:.85";
+            css();
+            card = document.createElement("div");
+            card.className = "de-net";
+            card.setAttribute("role", "status");
+            card.innerHTML = '<span class="de-net-ico"></span><p class="de-net-title"></p><p class="de-net-lead"></p>';
+            node.textContent = "";
+            node.appendChild(card);
             paint();
-            node.appendChild(line);
             window.addEventListener("offline", paint);
             window.addEventListener("online", paint);
         }, 6000);
-        setTimeout(function () {
-            if (!line || !waiting()) return;
-            const again = document.createElement("button");
-            again.type = "button";
-            again.textContent = "🔄 عاود المحاولة";
-            again.style.cssText = "display:inline-block;margin-top:10px;padding:8px 18px;border:0;border-radius:999px;"
-                + "background:#ffce00;color:#2a0710;font:inherit;font-weight:800;cursor:pointer";
-            again.addEventListener("click", function () { location.reload(); });
-            node.appendChild(again);
-        }, 20000);
+        setTimeout(function () { if (waiting()) button(); }, 20000);
     };
 
     let bar = null, hideTimer = 0;
-    function show(text, good) {
+    function show(off) {
         clearTimeout(hideTimer);
         if (!document.body) return;
+        css();
         if (!bar) {
             bar = document.createElement("div");
+            bar.className = "de-netbar";
             bar.setAttribute("role", "status");
-            bar.dir = "rtl";
-            bar.style.cssText = "position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:2147483000;"
-                + "max-width:calc(100% - 32px);padding:10px 18px;border-radius:14px;font:700 14px/1.5 system-ui,sans-serif;"
-                + "box-shadow:0 10px 30px rgba(0,0,0,.35);text-align:center";
         }
-        bar.style.background = good ? "#1e7d3a" : "#2a0710";
-        bar.style.color = "#fff";
-        bar.textContent = text;
+        bar.classList.toggle("is-good", !off);
+        bar.innerHTML = off
+            ? ICON_OFF + "<span>تقطع الاتصال بالأنترنت</span>"
+            : '<svg ' + SVG + '><path d="M20 6L9 17l-5-5"/></svg><span>رجع الاتصال</span>';
         if (!bar.isConnected) document.body.appendChild(bar);
+        if (!off) hideTimer = setTimeout(function () { if (bar) bar.remove(); }, 2500);
     }
-    function hide(ms) {
-        hideTimer = setTimeout(function () { if (bar) bar.remove(); }, ms);
-    }
-    window.addEventListener("offline", function () { show("📵 تقطع الأنترنت — شوف الاتصال ديالك.", false); });
-    window.addEventListener("online", function () {
-        if (!bar || !bar.isConnected) return;
-        show("✅ رجع الأنترنت", true);
-        hide(2500);
-    });
+    window.addEventListener("offline", function () { show(true); });
+    window.addEventListener("online", function () { if (bar && bar.isConnected) show(false); });
     if (offline()) {
-        if (document.body) show("📵 ما كاينش الأنترنت — شوف الاتصال ديالك.", false);
-        else document.addEventListener("DOMContentLoaded", function () {
-            if (offline()) show("📵 ما كاينش الأنترنت — شوف الاتصال ديالك.", false);
-        });
+        if (document.body) show(true);
+        else document.addEventListener("DOMContentLoaded", function () { if (offline()) show(true); });
     }
 })();
