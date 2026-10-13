@@ -90,7 +90,9 @@
     /* أخطاء ماشي ديالنا: إضافات المتصفح، والـ ResizeObserver (عادي) */
     function noise(text, file) {
         return /^(chrome|moz|safari|ms-browser)-extension:/.test(file || "")
-            || /ResizeObserver loop|Script error\.?$/.test(text || "");
+            || /ResizeObserver loop|Script error\.?$/.test(text || "")
+            /* كود كيزيدو التطبيق اللي محلول فيه الموقع (Instagram / Facebook ف iPhone) */
+            || /_AutofillCallbackHandler|webkit\.messageHandlers|__gCrWeb/.test(text || "");
     }
 
     window.addEventListener("error", function (e) {
@@ -133,6 +135,9 @@
         if (skippedTransition(text)) return;
         const at = where(r && r.stack);
         if (noise(text, at && at.file)) return;
+        /* Firestore كيقطع طلب ديالو (الصفحة تخبات، تبدلت، ولا الاتصال تقطع):
+           AbortError داخل المكتبة — كيعاود بوحدو، والطالب ما كيشوف والو */
+        if (r && r.name === "AbortError" && at && /gstatic\.com\/firebasejs\//.test(at.file)) return;
         const file = at ? at.file.split("/").pop().replace(/\?v=[0-9a-f]+/, "") : "";
         send("error", "Promise: " + text + (file ? " @ " + file + ":" + at.line : ""));
     });
