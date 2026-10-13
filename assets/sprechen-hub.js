@@ -116,6 +116,54 @@
         }
 
         list.forEach(function (topic) { grid.appendChild(card(topic)); });
+        prefetchAll();
+        /* اللائحة بانت: Firestore والجلب المسبق يقدرو يبداو (diag.js) */
+        if (!new URLSearchParams(location.search).get("thema")) document.dispatchEvent(new CustomEvent("de-content"));
+    }
+
+    /* ===== المشترك: المحتوى المدفوع كيتجاب من قبل =====
+       من بعد ما تبان اللائحة: الـbundle ديال كل جزء (طلب واحد = كاع
+       المواضيع ديالو)، ومن بعد المواضيع اللي ماكانوش فيه (3 ف نفس الوقت).
+       كلشي كيتحفظ ف المتصفح (lesen-premium.js، 3 أيام) → الضغطة على
+       الموضوع كتبان ف اللحظة بلا Worker. */
+    let prefetched = false;
+    function prefetchAll() {
+        if (prefetched || !window.__deutschEinfachIsPremium || typeof window.__lesenPremiumFetch !== "function") return;
+        prefetched = true;
+        (window.__deAfterContent || function (fn) { setTimeout(fn, 1500); })(async function () {
+            if (stale()) return;
+            const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
+            const fetchOne = function (id) {
+                return Promise.resolve(window.__lesenPremiumFetch(id)).catch(function () { return null; });
+            };
+            const locked = topics.filter(function (t) { return t.locked && !t.soon && !CONTENT[t.id]; });
+            const bundles = [];
+            locked.forEach(function (t) {
+                const b = t.pack ? lvl + "pack" : lvl + t.id.split("-")[0];
+                if (bundles.indexOf(b) === -1) bundles.push(b);
+            });
+            const got = {};
+            (await Promise.all(bundles.map(fetchOne))).forEach(function (r) {
+                if (r && r.ok && r.data) Object.assign(got, r.data);
+            });
+            if (stale()) return;
+            /* pack: المفتاح ديال الموضوع بوحدو هو الأول (premiumLoad) — إلا
+               ماكانش، الـpack هو اللي كيتستعمل، إذن كنحطوه ف الذاكرة دابا. */
+            /* الجزء اللي مفتوح دابا هو الأول */
+            const here = function (t) { return (t.parts || []).indexOf(activePart) !== -1 ? 0 : 1; };
+            const rest = locked.filter(function (t) { return t.pack || !got[t.id]; })
+                .sort(function (a, b) { return here(a) - here(b); })
+                .slice(0, 40);
+            const queue = rest.slice();
+            const worker = async function () {
+                while (queue.length && !stale()) {
+                    const t = queue.shift();
+                    const r = await fetchOne(lvl + t.id);
+                    if (!(r && r.ok && r.data) && t.pack && got[t.id]) CONTENT[t.id] = got[t.id];
+                }
+            };
+            await Promise.all([worker(), worker(), worker()]);
+        });
     }
 
     function card(topic) {

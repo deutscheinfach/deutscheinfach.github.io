@@ -230,8 +230,14 @@ function renderAd(box, text) {
         if (totalSeconds <= 120) timerEl.classList.add("low");
         if (totalSeconds > 0) totalSeconds--;
     }
-    tick();
-    setInterval(tick, 1000);
+    /* الصفحة تقدر تكون محضرة من قبل (prerender من اللائحة): المؤقت ما
+       كيبداش حتى يشوفها الطالب بصح. */
+    function startTimer() { tick(); setInterval(tick, 1000); }
+    if (document.prerendering) {
+        tick();
+        totalSeconds++;
+        document.addEventListener("prerenderingchange", startTimer, { once: true });
+    } else startTimer();
 
 
     // ---------- fullscreen ----------

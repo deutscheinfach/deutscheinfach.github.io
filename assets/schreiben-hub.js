@@ -240,6 +240,24 @@
         });
     }
 
+    /* ===== الصفحة ديال الموضوع كتتحضر من قبل (Chrome) =====
+       كل موضوع صفحة بوحدها. ملي الطالب كيقرب لبطاقة (الفأرة فوقها ولا
+       الصبع)، المتصفح كيحل الصفحة ف الخفا (prerender) — الضغطة كتوريها
+       ف اللحظة. المتصفحات اللي ما كتعرفش هادشي كيتجاهلوه. */
+    (function speculate() {
+        try {
+            if (!(HTMLScriptElement.supports && HTMLScriptElement.supports("speculationrules"))) return;
+            if (document.querySelector('script[type="speculationrules"][data-de="schreiben"]')) return;
+            const rules = document.createElement("script");
+            rules.type = "speculationrules";
+            rules.dataset.de = "schreiben";
+            rules.textContent = JSON.stringify({
+                prerender: [{ where: { href_matches: "/" + LEVEL + "-schreiben-*.html" }, eagerness: "moderate" }]
+            });
+            document.head.appendChild(rules);
+        } catch (e) { /* غير تسريع */ }
+    })();
+
     let connected = false;
     function preconnectWorker() {
         if (connected) return;
@@ -274,6 +292,8 @@
 
         list.forEach(function (topic) { grid.appendChild(card(topic)); });
         watchCards();
+        /* اللائحة بانت: Firestore والجلب المسبق يقدرو يبداو (diag.js) */
+        if (!new URLSearchParams(location.search).get("thema")) document.dispatchEvent(new CustomEvent("de-content"));
     }
 
     if (search) search.addEventListener("input", render);
