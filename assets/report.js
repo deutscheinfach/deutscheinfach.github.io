@@ -245,9 +245,18 @@
         if (SECTION === "schreiben" && tt && !tt.hasAttribute("data-rp")) {
             tt.setAttribute("data-rp", "");
             var b = makeBtn(true);
-            b.style.margin = "8px 0 0";
             b.addEventListener("click", function () { openModal({}); });
-            tt.insertAdjacentElement("afterend", b);
+            /* ف الشريط مع باقي الأزرار (قبل كان بين العنوان والسطر الصغير) */
+            var right = document.querySelector(".task-header .right");
+            if (right) {
+                b.classList.add("rp-head-btn");
+                b.title = "إرسال ملاحظة";
+                b.setAttribute("aria-label", "إرسال ملاحظة");
+                right.insertBefore(b, right.firstChild);
+            } else {
+                b.style.margin = "8px 0 0";
+                tt.insertAdjacentElement("afterend", b);
+            }
         }
     }
 

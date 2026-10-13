@@ -94,6 +94,7 @@
         const shut = topic.locked && !window.__deutschEinfachIsPremium;
         node.className = "lesen-card" + (shut ? " locked" : "") + (topic.soon ? " is-soon" : "");
         if (!topic.soon) node.href = LEVEL + "-schreiben-" + topic.id + ".html";
+        if (topic.locked && !topic.soon) node.dataset.topic = topic.id;
 
         const title = document.createElement("div");
         title.className = "lesen-card-title";
@@ -129,7 +130,9 @@
            باش ملي تتحل الصفحة يلقاه واجد (DNS + TLS = رحلتين أقل). */
         if (topic.locked && !topic.soon) {
             const warm = function () {
-                if (window.__deutschEinfachIsPremium) preconnectWorker();
+                if (!window.__deutschEinfachIsPremium) return;
+                preconnectWorker();
+                prefetch.now(topic.id);
             };
             node.addEventListener("pointerdown", warm, { passive: true });
             node.addEventListener("pointerenter", function (event) {
@@ -137,6 +140,104 @@
             }, { passive: true });
         }
         return node;
+    }
+
+    /* ===== المشترك: المواضيع كتتجاب من قبل =====
+       صفحة الموضوع كتقرا من localStorage (de-sp:<uid>|<lv>-<id>، 3 أيام —
+       schreiben-engine.js). ملي كيبان الـ grid، كنجيبو المواضيع اللي
+       باينين ف الشاشة (2 ف نفس الوقت، 12 ف الزيارة على الأكثر)، والبطاقة
+       اللي قرب ليها (hover / لمسة) كتدوز الأولى. هكا ملي كيدخل، الموضوع
+       كيبان دغيا بلا ما يتسنى Firebase والـ Worker. */
+    const prefetch = (function () {
+        const ENDPOINT = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+        const TTL = 3 * 24 * 3600 * 1000;
+        const MAX = 12;
+        const queue = [];
+        const seen = {};
+        let running = 0, started = 0;
+        function account() {
+            try {
+                const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+                return a && a.premium === true && a.uid ? a : null;
+            } catch (e) { return null; }
+        }
+        function key(id) {
+            const a = account();
+            return a ? "de-sp:" + a.uid + "|" + LEVEL + "-" + id : "";
+        }
+        function cached(id) {
+            const k = key(id);
+            if (!k) return true;
+            try {
+                const v = JSON.parse(localStorage.getItem(k) || "null");
+                return !!(v && v.data && Array.isArray(v.data.points) && Date.now() - v.t < TTL);
+            } catch (e) { return false; }
+        }
+        async function fetchOne(id) {
+            const auth = window.__deutschEinfachAuth;
+            const user = auth && auth.currentUser;
+            if (!user) return;
+            const token = await user.getIdToken();
+            const res = await fetch(ENDPOINT, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=UTF-8" },
+                body: JSON.stringify(LEVEL === "b2"
+                    ? { topicId: id, idToken: token }
+                    : { lesenId: "schreiben-" + LEVEL + "-" + id, idToken: token })
+            });
+            if (!res.ok) return;
+            const data = await res.json();
+            const k = key(id);
+            if (k && data && Array.isArray(data.points)) {
+                try { localStorage.setItem(k, JSON.stringify({ t: Date.now(), data: data })); } catch (e) { /* عامرة */ }
+            }
+        }
+        function pump() {
+            while (running < 2 && queue.length && started < MAX) {
+                const id = queue.shift();
+                if (cached(id)) continue;
+                running++; started++;
+                fetchOne(id).catch(function () { /* الصفحة ديال الموضوع كتعاود */ })
+                    .then(function () { running--; pump(); });
+            }
+        }
+        function wanted(id) {
+            const t = source[id];
+            return !!t && !t.soon && !(Array.isArray(t.points) && t.points.length);
+        }
+        return {
+            add: function (id) {
+                if (seen[id] || !wanted(id) || !window.__deutschEinfachIsPremium) return;
+                seen[id] = true;
+                queue.push(id);
+                pump();
+            },
+            now: function (id) {
+                if (!wanted(id) || !window.__deutschEinfachIsPremium || cached(id)) return;
+                const i = queue.indexOf(id);
+                if (i !== -1) queue.splice(i, 1);
+                if (seen[id] && i === -1) return;   /* كيتجاب دابا */
+                seen[id] = true;
+                queue.unshift(id);
+                if (started >= MAX) started = MAX - 1;   /* اللي بغا يدخل ليه ديما */
+                pump();
+            }
+        };
+    })();
+    /* من بعد ما يبان المحتوى: البطائق اللي ف الشاشة (ولا قراب) الأولين،
+       ومن بعد الباقي بالترتيب ديال اللائحة — حتى 12 ف الزيارة. */
+    let watching = false;
+    function watchCards() {
+        if (watching || !window.__deutschEinfachIsPremium) return;
+        watching = true;
+        (window.__deAfterContent || function (fn) { setTimeout(fn, 1500); })(function () {
+            if (stale()) return;
+            const cards = Array.prototype.slice.call(grid.querySelectorAll(".lesen-card[data-topic]"));
+            const near = window.innerHeight * 1.5;
+            cards.filter(function (n) { return n.getBoundingClientRect().top < near; })
+                .concat(cards.filter(function (n) { return n.getBoundingClientRect().top >= near; }))
+                .forEach(function (n) { prefetch.add(n.dataset.topic); });
+        });
     }
 
     let connected = false;
@@ -172,6 +273,7 @@
         }
 
         list.forEach(function (topic) { grid.appendChild(card(topic)); });
+        watchCards();
     }
 
     if (search) search.addEventListener("input", render);

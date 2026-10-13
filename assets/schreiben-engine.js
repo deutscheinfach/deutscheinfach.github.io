@@ -72,6 +72,62 @@ const HUB = LEVEL + "-schreiben.html";
 const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
     || (LEVEL === "b2" && typeof SCHREIBEN_B2_TOPICS !== "undefined" ? SCHREIBEN_B2_TOPICS : null);
 
+/* زر الوضع المظلم: ف الشريط ديال فوق (قبل كان عايم لتحت وكيغطي النص).
+   theme-toggle.js ما كيزيدش الزر العايم إلا لقا .de-theme-btn ف الصفحة. */
+(function headerTools() {
+    /* طول الشريط → --hdr (خانة الكتابة كتبقى لاصقة تحتو ف PC) */
+    const bar = document.querySelector(".task-header");
+    if (bar) {
+        const setH = function () { document.documentElement.style.setProperty("--hdr", bar.offsetHeight + "px"); };
+        setH();
+        if (window.ResizeObserver) new ResizeObserver(setH).observe(bar);
+    }
+    const right = document.querySelector(".task-header .right");
+    if (!right || !window.__deTheme || document.querySelector(".de-theme-btn")) return;
+    const btn = window.__deTheme.button("icon-btn");
+    right.insertBefore(btn, right.firstChild);
+})();
+
+/* نص الإعلان / الرسالة: بلا تنسيق كان كيبان سطور مكدسين.
+   B2: إعلان → عنوان، لائحة (•)، فقرات، ومعلومات الاتصال صغار لتحت.
+   B1: رسالة (Liebe…) → ورقة بخط عادي. */
+function renderAd(box, text) {
+    box.textContent = "";
+    const src = String(text || "").replace(/\r/g, "").trim();
+    if (!src) { box.hidden = true; return; }
+    const letter = /^(liebe|lieber|hallo|hi |sehr geehrte)/i.test(src);
+    box.className = letter ? "ad-letter" : "ad-flyer";
+    if (!letter) {
+        const tag = document.createElement("span");
+        tag.className = "ad-tag";
+        tag.textContent = "Anzeige";
+        box.appendChild(tag);
+    }
+    const contact = /(www\.|https?:|@|\+\d|\btel\.?|\btelefon|\b\d{5}\b)/i;
+    let first = !letter;
+    src.split(/\n\s*\n/).forEach(function (para) {
+        const lines = para.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
+        let list = null;
+        lines.forEach(function (line) {
+            if (/^[•·\-–]\s*/.test(line) && line.length > 2) {
+                if (!list) { list = document.createElement("ul"); list.className = "ad-list"; box.appendChild(list); }
+                const li = document.createElement("li");
+                li.textContent = line.replace(/^[•·\-–]\s*/, "");
+                list.appendChild(li);
+                return;
+            }
+            list = null;
+            const el = document.createElement(first ? "h3" : "p");
+            if (first) el.className = "ad-title";
+            else if (!letter && contact.test(line) && line.length < 90) el.className = "ad-contact";
+            else if (!letter && line.length < 60 && line === line.toUpperCase() && /[A-ZÄÖÜ]{3}/.test(line)) el.className = "ad-shout";
+            el.textContent = line;
+            box.appendChild(el);
+            first = false;
+        });
+    });
+}
+
 (async function () {
     const meta = (TOPICS || {})[TOPIC_ID];
     if (!meta) {
@@ -125,7 +181,7 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
         topic.level + " · " + topic.type;
 
     // ---------- render situation ----------
-    document.getElementById("situation-ad").textContent = topic.ad;
+    renderAd(document.getElementById("situation-ad"), topic.ad);
     document.getElementById("situation-text").textContent = topic.situation;
 
     // ---------- render aufgabe points ----------
@@ -194,10 +250,19 @@ const TOPICS = window["SCHREIBEN_" + LEVEL.toUpperCase() + "_TOPICS"]
     const placeholder = document.getElementById("editor-placeholder");
     const wordCountEl = document.getElementById("word-count");
 
+    /* الهدف ديال TELC (مثلا "150–180"): العداد كيولي «45 / 150» مع شريط */
+    const target = parseInt(String(topic.words || "").match(/\d+/) || "0", 10) || (LEVEL === "b2" ? 150 : 80);
+    const meter = document.createElement("span");
+    meter.className = "wc-meter";
+    meter.innerHTML = '<span class="wc-meter-fill"></span>';
+    wordCountEl.after(meter);
     function updateWordCount() {
         const text = textarea.value.trim();
         const words = text.length ? text.split(/\s+/).length : 0;
-        wordCountEl.textContent = words + " كلمة";
+        wordCountEl.innerHTML = "<b>" + words + "</b> / " + target + " كلمة";
+        wordCountEl.classList.toggle("is-done", words >= target);
+        meter.firstChild.style.width = Math.min(100, Math.round(words / target * 100)) + "%";
+        meter.classList.toggle("is-done", words >= target);
         placeholder.classList.toggle("hidden", text.length > 0);
     }
     textarea.addEventListener("input", updateWordCount);
