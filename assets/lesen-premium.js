@@ -141,7 +141,7 @@
              "ف Firestore خاص subscriptionActive يكون true بنوع boolean ماشي نص.",
         404: "الـ Worker خدام، ولكن ماكاينش المفتاح premium-lesen ف KV " +
              "— ولا كاين وماكاينش فيه هاد الموضوع.",
-        500: "الـ KV binding سميتو TOPICS ماشي مربوط بالـ Worker."
+        500: "خطأ ف الـ Worker."
     };
 
     /* طلب واحد للـ Worker. غلطة شبكة ولا 502/503/504 (Firestore تعطل
@@ -164,10 +164,18 @@
                     await new Promise(function (go) { setTimeout(go, 400); });
                     continue;
                 }
+                /* السبب اللي رجع الـ Worker (bad_json + المفتاح، sprechen_key_missing…)
+                   كيمشي لـ «مشاكل الطلبة» باش نعرفو شنو نصلحو ف KV */
+                let code = "";
+                try {
+                    const body = await response.json();
+                    code = [body.error, body.details].filter(Boolean).join(" — ").slice(0, 220);
+                } catch (e) { /* */ }
                 return {
                     ok: false,
                     status: response.status,
-                    why: WHY[response.status] || ("الـ Worker رجع HTTP " + response.status)
+                    why: (WHY[response.status] || ("الـ Worker رجع HTTP " + response.status))
+                        + (code ? " (" + code + ")" : "")
                 };
             } catch (error) {
                 if (attempt === 0 && !(guard && guard.signal.aborted)) {
