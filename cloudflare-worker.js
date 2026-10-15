@@ -355,6 +355,67 @@ export default {
         }
       }
 
+      /*
+       * الأدمين كيعطي كلمة سر مؤقتة لطالب نسا ديالو (admin.html).
+       * كلمات السر ما كتتخزنش ف حتى بلاصة — غير المؤقتة كترجع للأدمين
+       * مرة وحدة، وكنحطو mustChangePassword: true ف users/{uid} باش
+       * الطالب يبدلها بديالو ملي يدخل (site-header.js).
+       */
+      if (body.adminResetPassword && typeof body.adminResetPassword.uid === "string") {
+        if (!env.FIREBASE_SERVICE_ACCOUNT) {
+          return jsonResponse({ error: "reset_not_configured",
+            details: "FIREBASE_SERVICE_ACCOUNT secret is missing." }, 500, allowedOrigin);
+        }
+        const target = body.adminResetPassword.uid;
+        if (!/^[A-Za-z0-9]{6,128}$/.test(target)) {
+          return jsonResponse({ error: "Invalid uid." }, 400, allowedOrigin);
+        }
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        try {
+          const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+          const me = await readUserFields(caller.sub, accessToken);
+          if (!me || me.isAdmin?.booleanValue !== true) {
+            return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+          }
+          /* حساب أدمين آخر (ولا راسو): ما كنبدلوش من هنا */
+          const them = await readUserFields(target, accessToken);
+          if (target === caller.sub || them?.isAdmin?.booleanValue === true) {
+            return jsonResponse({ error: "admin_account" }, 403, allowedOrigin);
+          }
+          const password = tempPassword();
+          const res = await fetch(
+            `https://identitytoolkit.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/accounts:update`,
+            {
+              method: "POST",
+              headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
+              body: JSON.stringify({ localId: target, password }),
+            }
+          );
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error("Auth update: " + (data.error?.message || res.status));
+
+          await fetch(
+            `${FIRESTORE_DOCS}/users/${target}?updateMask.fieldPaths=mustChangePassword&updateMask.fieldPaths=passwordResetAt`,
+            {
+              method: "PATCH",
+              headers: { Authorization: "Bearer " + accessToken, "Content-Type": "application/json" },
+              body: JSON.stringify({ fields: {
+                mustChangePassword: { booleanValue: true },
+                passwordResetAt: { timestampValue: new Date().toISOString() },
+              } }),
+            }
+          );
+          return jsonResponse({ password, email: data.email || "" }, 200, allowedOrigin);
+        } catch (e) {
+          return jsonResponse({ error: "reset_failed", details: e.message }, 502, allowedOrigin);
+        }
+      }
+
       if (body.adminSyncUsers === true) {
         if (!env.FIREBASE_SERVICE_ACCOUNT) {
           return jsonResponse({ error: "sync_not_configured",
@@ -1218,6 +1279,16 @@ async function listUserDocs(accessToken) {
     page = data.nextPageToken || "";
   } while (page);
   return docs;
+}
+
+/* كلمة سر مؤقتة ساهلة تتقرا وتتكتب ف WhatsApp: Deutsch-4821-km */
+function tempPassword() {
+  const bytes = new Uint8Array(6);
+  crypto.getRandomValues(bytes);
+  const digits = Array.from(bytes.slice(0, 4), (b) => b % 10).join("");
+  const letters = "abcdefghjkmnpqrstuvwxyz";
+  const tail = Array.from(bytes.slice(4), (b) => letters[b % letters.length]).join("");
+  return "Deutsch-" + digits + "-" + tail;
 }
 
 async function syncAuthUsers(accessToken) {

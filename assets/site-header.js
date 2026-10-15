@@ -1286,6 +1286,60 @@
                         }
                     }
                 }
+                /* الأدمين عطاه كلمة سر مؤقتة (admin.html): خاصو يبدلها بديالو.
+                   نافذة ما كتسدش حتى يبدلها (ولا يخرج من الحساب). */
+                function askNewPassword() {
+                    if (document.getElementById("de-newpw")) return;
+                    const back = document.createElement("div");
+                    back.id = "de-newpw";
+                    back.setAttribute("role", "dialog");
+                    back.setAttribute("aria-modal", "true");
+                    back.style.cssText = "position:fixed;inset:0;z-index:2147483600;background:rgba(15,10,12,.6);display:flex;align-items:center;justify-content:center;padding:16px";
+                    back.innerHTML =
+                        '<form dir="rtl" style="width:min(420px,100%);background:#fff;color:#1c1a16;border-radius:20px;padding:22px 22px 18px;box-shadow:0 30px 80px rgba(0,0,0,.4);font-family:Cairo,system-ui,sans-serif">' +
+                        '<h2 style="margin:0 0 6px;font-size:20px;font-weight:900">🔑 ختار كلمة سر جديدة</h2>' +
+                        '<p style="margin:0 0 14px;color:#5e584c;font-size:14px;line-height:1.7">دخلتي بكلمة سر مؤقتة. كتب وحدة ديالك (8 حروف على الأقل) وحفظها مزيان.</p>' +
+                        '<input type="password" autocomplete="new-password" minlength="8" required placeholder="كلمة السر الجديدة" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid #ddd;border-radius:12px;font:inherit;font-size:16px;margin-bottom:10px;direction:ltr;text-align:left">' +
+                        '<input type="password" autocomplete="new-password" minlength="8" required placeholder="عاود كتبها" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid #ddd;border-radius:12px;font:inherit;font-size:16px;margin-bottom:12px;direction:ltr;text-align:left">' +
+                        '<p class="msg" style="margin:0 0 10px;font-size:13.5px;font-weight:700;min-height:1em"></p>' +
+                        '<button type="submit" style="width:100%;border:0;border-radius:14px;padding:13px;background:#8a0f2b;color:#fff;font:inherit;font-weight:900;font-size:16px;cursor:pointer">حفظ</button>' +
+                        '<button type="button" class="out" style="width:100%;border:0;background:transparent;color:#8a8f9c;font:inherit;font-size:13px;margin-top:8px;cursor:pointer">خروج من الحساب</button>' +
+                        '</form>';
+                    document.body.appendChild(back);
+                    const form = back.querySelector("form");
+                    const inputs = form.querySelectorAll("input");
+                    const msg = form.querySelector(".msg");
+                    const say = function (text, ok) { msg.textContent = text; msg.style.color = ok ? "#1e7d3a" : "#b42318"; };
+                    inputs[0].focus();
+                    form.querySelector(".out").addEventListener("click", function () {
+                        authMod.signOut(auth).then(function () { location.href = "login.html"; });
+                    });
+                    form.addEventListener("submit", async function (event) {
+                        event.preventDefault();
+                        const pw = inputs[0].value;
+                        if (pw.length < 8) { say("8 حروف على الأقل."); return; }
+                        if (pw !== inputs[1].value) { say("الجوج ماشي بحال بحال."); return; }
+                        if (/^Deutsch-\d{4}-[a-z]{2}$/.test(pw)) { say("هادي هي المؤقتة — كتب وحدة جديدة ديالك."); return; }
+                        const btn = form.querySelector("button[type=submit]");
+                        btn.disabled = true;
+                        try {
+                            await authMod.updatePassword(auth.currentUser, pw);
+                            if (fsMod && db) {
+                                await fsMod.updateDoc(fsMod.doc(db, "users", person.uid), { mustChangePassword: false })
+                                    .catch(function () { /* المرة الجاية */ });
+                            }
+                            say("✓ تبدلات. استعملها ف المرة الجاية.", true);
+                            setTimeout(function () { back.remove(); }, 1400);
+                        } catch (e) {
+                            btn.disabled = false;
+                            say(e && e.code === "auth/requires-recent-login"
+                                ? "خرج من الحساب ودخل بكلمة السر المؤقتة، ومن بعد بدلها."
+                                : e && e.code === "auth/weak-password" ? "ضعيفة بزاف — زيد أرقام وحروف."
+                                : "ما تبدلاتش: " + ((e && e.code) || e));
+                        }
+                    });
+                }
+
                 /* التصريح ديال الاستعمال بلا أنترنت: حتى لنهاية الاشتراك (ولا 7 أيام).
                    ماشي مشترك → كنمسحو المحتوى المدفوع من التيليفون. */
                 function grantOffline(data, isPremium) {
@@ -1316,6 +1370,7 @@
                         if (data.name) name = data.name;
                         premium = isActive(data);
                         grantOffline(data, premium);
+                        if (data.mustChangePassword === true) askNewPassword();
                         admin = data.isAdmin === true;
                         news.setAdmin(admin);
                         setAdmin(admin);
