@@ -112,7 +112,11 @@
         return /^(chrome|moz|safari|ms-browser)-extension:/.test(file || "")
             || /ResizeObserver loop|Script error\.?$/.test(text || "")
             /* كود كيزيدو التطبيق اللي محلول فيه الموقع (Instagram / Facebook ف iPhone) */
-            || /_AutofillCallbackHandler|webkit\.messageHandlers|__gCrWeb/.test(text || "");
+            || /_AutofillCallbackHandler|webkit\.messageHandlers|__gCrWeb/.test(text || "")
+            /* إضافات ومتصفحات ف iPhone (محافظ crypto، Firefox iOS، Dark Reader) */
+            || /window\.ethereum|selectedAddress|__firefox__|DarkReader/.test(text || "")
+            /* Firebase Auth: الأنترنت تقطعات ولا التبويب تسد — كيعاود بوحدو */
+            || /Database is closing|auth\/network-request-failed/.test(text || "");
     }
 
     window.addEventListener("error", function (e) {
@@ -158,6 +162,8 @@
         /* Firestore كيقطع طلب ديالو (الصفحة تخبات، تبدلت، ولا الاتصال تقطع):
            AbortError داخل المكتبة — كيعاود بوحدو، والطالب ما كيشوف والو */
         if (r && r.name === "AbortError" && at && /gstatic\.com\/firebasejs\//.test(at.file)) return;
+        /* AbortError بلا حتى سطر ف الـ stack: طلب تقطع (الصفحة تبدلات / الأنترنت) */
+        if (r && r.name === "AbortError" && !at) return;
         const file = at ? at.file.split("/").pop().replace(/\?v=[0-9a-f]+/, "") : "";
         send("error", "Promise: " + text + (file ? " @ " + file + ":" + at.line : ""));
     });

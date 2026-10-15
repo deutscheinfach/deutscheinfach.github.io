@@ -485,9 +485,12 @@
                 /* مشترك وما وصلوش المحتوى = كاين شي حاجة خايبة،
                    خاصو يعرف شنو هي بدل ما يشوف غير القفل. */
                 if (!remote) {
+                    /* الـ Worker جاوب ولكن هاد الجزء ماكاينش ف KV (404 ولا ناقص
+                       ف المفتاح): «كنوجدوه»، ماشي «الأنترنت» */
+                    const missing = result && (result.ok || result.status === 404);
                     gate(result && result.why
                         ? result.why
-                        : "ما لقيناش هاد الموضوع فالمحتوى المدفوع.");
+                        : "ما لقيناش هاد الموضوع فالمحتوى المدفوع.", missing ? themaId + " " + part : "");
                     return;
                 }
                 draw(remote);
@@ -507,10 +510,10 @@
 
         draw(task);
 
-        function gate(why) {
+        function gate(why, missingKey) {
             stack.textContent = "";
             if (typeof window.__premiumGate === "function") {
-                window.__premiumGate(stack, { title: topic.title, note: why });
+                window.__premiumGate(stack, { title: topic.title, note: why, missing: !!missingKey, key: missingKey });
             } else {
                 const box = document.createElement("div");
                 box.className = "lesen-empty";

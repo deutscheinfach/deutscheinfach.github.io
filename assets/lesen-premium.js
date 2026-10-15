@@ -263,8 +263,20 @@
                 return off ? { ok: true, data: off, offline: true } : { ok: false, why: "ماشي داخل بحساب." };
             }
 
+            /* الـ Worker طاح ف هاد المفتاح (500: JSON مكسور ف KV…) ف آخر 6 سوايع:
+               ما نعاودوش نضربوه ف كل صفحة (والتقرير وصل مرة) */
+            const ERR = "de-lp-err:" + themaId;
+            try {
+                const at = Number(localStorage.getItem(ERR) || 0);
+                if (Date.now() - at < 6 * 3600 * 1000) {
+                    const off = await stored();
+                    return off ? { ok: true, data: off, offline: true } : { ok: false, status: 500, why: WHY[500] };
+                }
+            } catch (e) { /* */ }
+
             const t0 = Date.now();
             let result = await ask(themaId, token);
+            if (result.status >= 500) { try { localStorage.setItem(ERR, String(Date.now())); } catch (e) { /* */ } }
             /* ما وصلناش للـ Worker (الشبكة): النسخة المحفوظة إلا كاينة */
             if (!result.ok && !result.status) {
                 const off = await stored();

@@ -209,11 +209,24 @@
             start: function () {
                 if (!stream) return;
                 chunks = [];
-                try {
-                    rec = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
-                } catch (e) { rec = new MediaRecorder(stream); }
-                rec.ondataavailable = function (ev) { if (ev.data && ev.data.size) chunks.push(ev.data); };
-                rec.start();
+                /* بعض المتصفحات (Chrome ف Mac مع شي ميكرو) كيرفضو start() بالنوع
+                   اللي اختارينا (NotSupportedError). كنجربو بلا نوع، وإلا كنكملو
+                   المحاكاة بلا تسجيل بلا ما تطيح الصفحة. */
+                const make = function (withMime) {
+                    const r = withMime && mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream);
+                    r.ondataavailable = function (ev) { if (ev.data && ev.data.size) chunks.push(ev.data); };
+                    r.start();
+                    return r;
+                };
+                try { rec = make(true); }
+                catch (e) {
+                    try { rec = make(false); }
+                    catch (e2) {
+                        rec = null;
+                        console.debug("REC:", e2 && e2.name);
+                        if (window.__deDiag) window.__deDiag("error", "التسجيل ما خدمش: " + (e2 && e2.name));
+                    }
+                }
             },
             stop: function () {
                 return new Promise(function (resolve) {
