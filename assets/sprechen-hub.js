@@ -82,6 +82,8 @@
                 const parts = topic.parts || [];
                 if (parts.length && parts.indexOf(activePart) === -1) return false;
             }
+            /* المحتوى ماكاينش ف KV (ولا مكسور): ما كنبينوش البطاقة */
+            if (topic.locked && window.__deMissing && window.__deMissing.has("sp:" + LEVEL.toLowerCase() + "-" + topic.id)) return false;
             if (!term) return true;
             return (topic.title || "").toLowerCase().includes(term)
                 || (topic.ar || "").includes(term)
@@ -181,6 +183,7 @@
                     const t = queue.shift();
                     const r = await fetchOne(lvl + t.id);
                     if (!(r && r.ok && r.data) && t.pack && got[t.id]) CONTENT[t.id] = got[t.id];
+                    else noteMissing(t.id, r);
                 }
             };
             await Promise.all([worker(), worker(), worker()]);
@@ -269,6 +272,14 @@
         } catch (e) { /* */ }
     }
 
+    /* الـ Worker جاوب: ماكاينش (404) ولا مكسور (5xx) → كنخبيو البطاقة (diag.js) */
+    function noteMissing(themaId, r) {
+        if (!window.__deMissing || !r) return;
+        const key = "sp:" + LEVEL.toLowerCase() + "-" + themaId;
+        if (r.ok && r.data) window.__deMissing.del(key);
+        else if (r.status === 404 || r.status >= 500) window.__deMissing.add(key);
+    }
+
     function premiumLoad(themaId) {
         const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
         /* المواضيع اللي كانو مجانيين (pack: true): كاملين فمفتاح واحد
@@ -300,6 +311,7 @@
         if (bundleMissing(bundleId)) {
             return window.__lesenPremiumFetch(lvl + themaId).then(function (r) {
                 if (r && r.ok && r.data) CONTENT[themaId] = r.data;
+                noteMissing(themaId, r);
                 return r;
             });
         }
@@ -312,6 +324,7 @@
             return one ? { ok: true, data: one } : (soloReq || window.__lesenPremiumFetch(lvl + themaId));
         }).then(function (r) {
             if (r && r.ok && r.data) CONTENT[themaId] = r.data;
+            noteMissing(themaId, r);
             return r;
         });
     }
@@ -342,9 +355,8 @@
     }
 
     function waitBox(into) {
-        const wait = document.createElement("div");
-        wait.className = "lesen-empty";
-        wait.textContent = "⏳ كنجيبو الموضوع…";
+        /* هيكل رمادي بلاصة «كنجيبو…» (diag.js) */
+        const wait = window.__deSkeleton ? window.__deSkeleton("topic") : document.createElement("div");
         into.appendChild(wait);
         if (window.__deNetHint) window.__deNetHint(wait);
         return wait;

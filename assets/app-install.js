@@ -123,6 +123,19 @@
                     return !!res && Date.now() - Number(res.headers.get("x-saved") || 0) < WEEK;
                 }).catch(function () { return false; });
             }
+            /* المواضيع اللي ماكاينش المحتوى ديالهم: كيتخباو من اللوائح (diag.js __deMissing) */
+            function missing(job, gone, part) {
+                var M = window.__deMissing;
+                if (!M) return;
+                var key = null, id = job.body.lesenId || "";
+                if (job.topic) key = "lesen:" + job.topic + "|" + job.part;
+                else if (part) key = "lesen:" + id + "|" + part;
+                else if (job.body.topicId) key = "sch:b2-" + job.body.topicId;
+                else if (/^schreiben-b1-/.test(id)) key = "sch:b1-" + id.slice(13);
+                else if (/^sprechen-b[12]-/.test(id)) key = "sp:" + id.slice(9);
+                if (!key) return;
+                if (gone) M.add(key); else M.del(key);
+            }
             function next() {
                 if (i >= jobs.length || failures > 8 || navigator.onLine === false
                     || window.__deutschEinfachIsPremium !== true) return Promise.resolve();
@@ -134,7 +147,7 @@
                         if (!sneed) return next();
                         return window.__deStore.get(job.key).then(function (data) {
                             sneed.forEach(function (part) {
-                                if (!data || !data[part]) jobs.push({ key: "l:" + sid + "-" + part, body: { lesenId: sid + "-" + part } });
+                                if (!data || !data[part]) jobs.push({ key: "l:" + sid + "-" + part, body: { lesenId: sid + "-" + part }, topic: sid, part: part });
                             });
                         }).then(next);
                     }
@@ -146,17 +159,26 @@
                             body: JSON.stringify(job.body)
                         });
                     }).then(function (res) {
+                        var id = job.body.lesenId;
+                        var need = id && off.parts && off.parts[id];
                         if (res.ok) fetched++;
                         if (res.ok) return res.json().then(function (data) {
                             /* Lesen: الأجزاء اللي ماكايناش ف المفتاح ديال الموضوع (lesen-<id>-<part>) */
-                            var id = job.body.lesenId;
-                            var need = id && off.parts && off.parts[id];
                             if (need) need.forEach(function (part) {
-                                if (!data || !data[part]) jobs.push({ key: "l:" + id + "-" + part, body: { lesenId: id + "-" + part } });
+                                if (!data || !data[part]) jobs.push({ key: "l:" + id + "-" + part, body: { lesenId: id + "-" + part }, topic: id, part: part });
+                                else missing(job, false, part);
                             });
+                            missing(job, false);
                             return window.__deStore.put(job.key, data);
                         });
                         if (res.status === 401 || res.status === 403) failures = 99;
+                        if (res.status === 404 || res.status >= 500) {
+                            /* المفتاح ديال الموضوع ماكاينش: يمكن الأجزاء بوحدهم */
+                            if (need) need.forEach(function (part) {
+                                jobs.push({ key: "l:" + id + "-" + part, body: { lesenId: id + "-" + part }, topic: id, part: part });
+                            });
+                            else missing(job, true);
+                        }
                     }).catch(function () { failures++; })
                       .then(function () { return new Promise(function (go) { setTimeout(go, 120); }); })
                       .then(next);

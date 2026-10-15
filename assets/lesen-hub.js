@@ -84,9 +84,8 @@
             : Promise.resolve();
     }
     function freeLoading(box) {
-        const wait = document.createElement("div");
-        wait.className = "lesen-empty";
-        wait.textContent = "⏳ كنجيبو التمرين…";
+        /* هيكل رمادي بلاصة «كنجيبو…» (diag.js) */
+        const wait = window.__deSkeleton ? window.__deSkeleton("topic") : document.createElement("div");
         box.appendChild(wait);
         watchLoading(wait, "مجاني");
     }
@@ -234,6 +233,8 @@
             if (pagePart) {
                 const parts = topic.parts || [];
                 if (parts.length && parts.indexOf(pagePart) === -1) return false;
+                /* المحتوى ديال هاد الجزء ماكاينش (KV): ما كنبينوش البطاقة */
+                if (topic.locked && window.__deMissing && window.__deMissing.has("lesen:" + topic.id + "|" + pagePart)) return false;
             }
             if (!term) return true;
             return (topic.title || "").toLowerCase().includes(term)
@@ -439,9 +440,7 @@
             /* داخل «اختبر نفسك» / Modelltest: حتى يجي الجواب ديال الاشتراك
                كنبينو «كنجيبو…» بدل القفل (de-premium كيعاود الرسم). */
             if (window.__deutschEinfachIsPremium === undefined && EMBEDDED && !embedForce) {
-                const wait = document.createElement("div");
-                wait.className = "lesen-empty";
-                wait.textContent = "⏳ كنجيبو التمرين…";
+                const wait = window.__deSkeleton ? window.__deSkeleton("topic") : document.createElement("div");
                 stack.appendChild(wait);
                 if (window.__deNetHint) window.__deNetHint(wait);
                 /* Firebase تعطل؟ من بعد 6 ثواني كنسولو الـ Worker نيشان —
@@ -455,9 +454,7 @@
             }
             if (!window.__deutschEinfachIsPremium && !embedForce) { gate(); return; }
 
-            const loading = document.createElement("div");
-            loading.className = "lesen-empty";
-            loading.textContent = "كنجيبو التمرين…";
+            const loading = window.__deSkeleton ? window.__deSkeleton("topic") : document.createElement("div");
             stack.appendChild(loading);
             watchLoading(loading, "Premium");
 
@@ -487,12 +484,15 @@
                 if (!remote) {
                     /* الـ Worker جاوب ولكن هاد الجزء ماكاينش ف KV (404 ولا ناقص
                        ف المفتاح): «كنوجدوه»، ماشي «الأنترنت» */
-                    const missing = result && (result.ok || result.status === 404);
+                    const missing = result && (result.ok || result.status === 404 || result.status >= 500);
+                    /* كنتفكرو: اللائحة ما كتبينوش من دابا (diag.js __deMissing) */
+                    if (missing && window.__deMissing) window.__deMissing.add("lesen:" + themaId + "|" + part);
                     gate(result && result.why
                         ? result.why
                         : "ما لقيناش هاد الموضوع فالمحتوى المدفوع.", missing ? themaId + " " + part : "");
                     return;
                 }
+                if (window.__deMissing) window.__deMissing.del("lesen:" + themaId + "|" + part);
                 draw(remote);
             });
             return;
