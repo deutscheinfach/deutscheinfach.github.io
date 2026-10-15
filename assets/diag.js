@@ -481,3 +481,57 @@
         }
     };
 })();
+
+/* ===== بلا «كنجيبو…»: هيكل رمادي ف بلاصة المحتوى =====
+   window.__deSkeleton(kind) → عنصر فيه سطور رمادية كتلمع شوية (بحال
+   Zertify / YouTube) — الطالب كيشوف شكل الصفحة دغيا، بلا كلام.
+   kind: "topic" (تمرين) · "text" (فقرة). */
+(function () {
+    "use strict";
+    if (window.__deSkeleton) return;
+    let styled = false;
+    function css() {
+        if (styled) return;
+        styled = true;
+        const st = document.createElement("style");
+        st.textContent =
+            ".de-skel{display:flex;flex-direction:column;gap:12px;padding:6px 0;direction:ltr}" +
+            ".de-skel i{display:block;height:14px;border-radius:8px;" +
+            "background:linear-gradient(90deg,rgba(128,128,128,.13) 25%,rgba(128,128,128,.24) 37%,rgba(128,128,128,.13) 63%);" +
+            "background-size:400% 100%;animation:de-skel 1.3s ease infinite}" +
+            ".de-skel i.h{height:26px;width:45%;margin-bottom:6px}" +
+            ".de-skel i.b{height:54px;border-radius:12px}" +
+            ".de-skel i.s{width:62%}.de-skel i.m{width:84%}" +
+            "@keyframes de-skel{0%{background-position:100% 50%}100%{background-position:0 50%}}" +
+            "@media (prefers-reduced-motion:reduce){.de-skel i{animation:none}}";
+        document.head.appendChild(st);
+    }
+    window.__deSkeleton = function (kind) {
+        css();
+        const box = document.createElement("div");
+        box.className = "de-skel";
+        box.setAttribute("aria-busy", "true");
+        box.setAttribute("aria-label", "…");
+        const rows = kind === "text" ? ["m", "", "s", "m", ""] : ["h", "m", "", "s", "b", "b", "b"];
+        rows.forEach(function (c) { const i = document.createElement("i"); if (c) i.className = c; box.appendChild(i); });
+        return box;
+    };
+})();
+
+/* ===== المواضيع اللي ماكاينش المحتوى ديالهم (KV 404 / مكسور) =====
+   كيتعلمو ملي كيتجابو (lesen-premium.js، التحضير بلا أنترنت ف
+   app-install.js) وكيتخباو من اللوائح — بلا «كنوجدوه». كيتعاود
+   الفحص من بعد 3 أيام (ولا ملي يجي المحتوى). */
+(function () {
+    "use strict";
+    if (window.__deMissing) return;
+    const KEY = "de-missing";
+    const TTL = 3 * 24 * 3600 * 1000;
+    function read() { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } }
+    function write(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) { /* */ } }
+    window.__deMissing = {
+        add: function (id) { const v = read(); v[id] = Date.now(); write(v); },
+        del: function (id) { const v = read(); if (v[id]) { delete v[id]; write(v); } },
+        has: function (id) { const t = read()[id]; return !!t && Date.now() - t < TTL; }
+    };
+})();

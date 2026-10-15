@@ -158,8 +158,13 @@ function renderAd(box, text) {
         if (titleEl && meta.title) titleEl.textContent = meta.title;
         const waitEl = document.getElementById("situation-text");
         if (waitEl) {
-            waitEl.textContent = "⏳ كنجيبو الموضوع…";
-            if (window.__deNetHint) window.__deNetHint(waitEl);
+            /* هيكل رمادي بلاصة «كنجيبو…» (diag.js) — كيتمسح ملي يوصل النص */
+            waitEl.textContent = "";
+            const skel = window.__deSkeleton ? window.__deSkeleton("text") : null;
+            if (skel) {
+                waitEl.appendChild(skel);
+                if (window.__deNetHint) window.__deNetHint(skel);
+            }
         }
 
         const saved = cacheGet();

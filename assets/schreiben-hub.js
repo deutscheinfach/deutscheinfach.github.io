@@ -50,6 +50,8 @@
         const term = (search ? search.value : "").trim().toLowerCase();
 
         let list = topics.filter(function (topic) {
+            /* المحتوى ماكاينش ف KV (التحضير بلا أنترنت تعلمها): ما كنبينوش البطاقة */
+            if (topic.locked && window.__deMissing && window.__deMissing.has("sch:" + LEVEL + "-" + topic.id)) return false;
             if (!term) return true;
             return (topic.title || "").toLowerCase().includes(term)
                 || (topic.type || "").toLowerCase().includes(term)
