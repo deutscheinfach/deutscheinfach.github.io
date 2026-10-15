@@ -87,6 +87,10 @@
     .adm-table tr { padding: 10px 0; border-bottom: 1px solid var(--line); }
     .adm-table td { border: 0; padding: 3px 0; }
 }
+.adm-pw{margin-top:12px;padding-top:12px;border-top:1px dashed rgba(0,0,0,.15)}
+.adm-pw-out{margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(30,125,58,.08);border:1px solid rgba(30,125,58,.3)}
+.adm-pw-out p{margin:0 0 6px;font-weight:700}
+.adm-pw-code{display:inline-block;font:800 18px/1.4 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.04em;padding:4px 12px;border-radius:8px;background:#fff;border:1px solid rgba(0,0,0,.15);direction:ltr;user-select:all;margin-bottom:8px}
 </style>
 <!-- seo:start (tools/seo.py) -->
 <meta name="robots" content="noindex, follow">
@@ -107,7 +111,7 @@
 </head>
 <body>
 <div id="site-header" data-active="training"></div>
-<script src="assets/site-header.js?v=610483ce"></script>
+<script src="assets/site-header.js?v=f512f48d"></script>
 
 <main class="adm">
     <h1>لوحة الإدارة</h1>
@@ -630,6 +634,74 @@ function paintUser() {
     stop.disabled = !on;
     row.append(go, stop);
     box.appendChild(row);
+
+    /* ---- نسا كلمة السر: كلمة مؤقتة كتعطيها ليه ف WhatsApp ----
+       ما كنشوفو حتى كلمة سر ديال حد. الـ Worker كيبدلها بوحدة مؤقتة،
+       والطالب كيتطلب منو يبدلها بديالو ملي يدخل. */
+    const pw = el("div", "adm-pw");
+    const pwBtn = el("button", "adm-btn", "🔑 عطيه كلمة سر جديدة");
+    pwBtn.type = "button";
+    const pwOut = el("div", "adm-pw-out");
+    pwOut.hidden = true;
+    pw.append(pwBtn, pwOut);
+    box.appendChild(pw);
+    pwBtn.addEventListener("click", async function () {
+        if (pwBtn.dataset.armed !== "1") {
+            pwBtn.dataset.armed = "1";
+            pwBtn.textContent = "متأكد؟ كلمة السر القديمة غادي تبطل — كليكي مرة خرى";
+            setTimeout(function () { pwBtn.dataset.armed = ""; pwBtn.textContent = "🔑 عطيه كلمة سر جديدة"; }, 5000);
+            return;
+        }
+        pwBtn.disabled = true;
+        pwBtn.textContent = "كنبدلو…";
+        try {
+            const res = await fetch(WORKER, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=UTF-8" },
+                body: JSON.stringify({ adminResetPassword: { uid: found.id }, idToken: await auth.currentUser.getIdToken() })
+            });
+            const data = await res.json().catch(function () { return {}; });
+            if (!res.ok || !data.password) {
+                throw new Error(data.error === "admin_account" ? "هادا حساب أدمين — ما كيتبدلش من هنا."
+                    : data.error === "not_admin" ? "ماشي أدمين."
+                    : (data.error || ("HTTP " + res.status)) + (data.details ? " — " + data.details : "")
+                      + (res.status === 400 ? " (دير Deploy لـ cloudflare-worker.js الجديد)" : ""));
+            }
+            const email = data.email || d.email || "";
+            const msg = "السلام 👋\nهادي كلمة السر الجديدة ديالك ف Deutsch Einfach:\n\n"
+                + "الإيميل: " + email + "\nكلمة السر: " + data.password
+                + "\n\nملي تدخل، الموقع غادي يطلب منك تبدلها بوحدة ديالك.";
+            pwOut.hidden = false;
+            pwOut.textContent = "";
+            pwOut.append(
+                el("p", "", "✓ كلمة السر المؤقتة (كتبان غير دابا):"),
+                el("code", "adm-pw-code", data.password)
+            );
+            const actions = el("div", "adm-row");
+            const copy = el("button", "adm-btn", "📋 نسخ الرسالة");
+            copy.type = "button";
+            copy.addEventListener("click", function () {
+                navigator.clipboard.writeText(msg).then(function () { copy.textContent = "✓ تنسخات"; });
+            });
+            const wa = el("a", "adm-btn main", "💬 صيفطها ف WhatsApp");
+            wa.href = "https://wa.me/?text=" + encodeURIComponent(msg);
+            wa.target = "_blank";
+            wa.rel = "noopener";
+            actions.append(copy, wa);
+            pwOut.appendChild(actions);
+            pwBtn.textContent = "🔑 عطيه كلمة سر جديدة";
+            pwBtn.dataset.armed = "";
+            pwBtn.disabled = false;
+        } catch (e) {
+            pwOut.hidden = false;
+            pwOut.textContent = "";
+            pwOut.appendChild(el("p", "adm-note bad", "ما تبدلاتش: " + (e.message || e)));
+            pwBtn.textContent = "🔑 عطيه كلمة سر جديدة";
+            pwBtn.dataset.armed = "";
+            pwBtn.disabled = false;
+        }
+    });
+
     const result = el("p", "adm-note");
     result.hidden = true;
     box.appendChild(result);
