@@ -374,7 +374,7 @@
         });
     }
 
-    function askDaily(delay) {
+    function askDaily(delay, silent) {
         if (!pushPossible() || read(DAILY_KEY) === "1") return;
         if (isIOS && !standalone()) return;   /* iPhone: غير من التطبيق المزيد للشاشة */
         setTimeout(function () {
@@ -386,6 +386,7 @@
                         .then(function (r) { if (r && r.ok) store(DAILY_KEY, "1"); }).catch(function () {});
                     return;
                 }
+                if (silent) return;   /* ما بقيناش نطلعو النافذة بوحدنا */
                 var last = Number(read(ASK_KEY) || 0);
                 if (last && Date.now() - last < 7 * 86400000) return;
                 showAsk();
@@ -528,5 +529,6 @@
     /* من بعد التسجيل: النافذة كتطلع دغيا ف الصفحة الرئيسية */
     var justSigned = false;
     try { justSigned = sessionStorage.getItem("de-just-signed-up") === "1"; sessionStorage.removeItem("de-just-signed-up"); } catch (e) { /* خاص */ }
-    if (CARD_PAGES.indexOf(page) !== -1) askDaily(justSigned ? 1500 : 4000);
+    /* نافذة «بغيتي نفكروك…» ما بقاتش كتطلع بوحدها؛ غير اللي سمح من قبل كنعاودو نسجلوه بلا سؤال */
+    if (CARD_PAGES.indexOf(page) !== -1) askDaily(justSigned ? 1500 : 4000, true);
 })();
