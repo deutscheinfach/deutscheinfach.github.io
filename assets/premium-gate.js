@@ -39,6 +39,22 @@
 
     /* ماشي مشكل اشتراك، مشكل اتصال: الحساب ما تأكدش (الأنترنت)، ولا
        المشترك ما وصلوش المحتوى. «شوف العروض» هنا كيغلّط المشترك. */
+    function soonCard(into, config) {
+        if (window.__deDiag) window.__deDiag("fail", "محتوى ناقص ف KV: " + (config.key || config.title || "?"));
+        const card = el("section", "pg");
+        const head = el("div", "pg-head");
+        const badge = el("span", "pg-lock", "⏳");
+        badge.setAttribute("aria-hidden", "true");
+        head.appendChild(badge);
+        const titles = el("div", "pg-titles");
+        titles.appendChild(el("h2", "pg-title", "هاد الموضوع كنوجدوه دابا"));
+        titles.appendChild(el("p", "pg-lead",
+            "المحتوى ديال هاد الجزء ما زال ما تزادش — قريباً. جرب موضوع آخر ف الوقت الحاضر."));
+        head.appendChild(titles);
+        card.appendChild(head);
+        into.appendChild(card);
+    }
+
     function netCard(into) {
         if (window.__deDiag) window.__deDiag("fail", "بان «ما قدرناش نجيبو هاد الموضوع» (" + (window.__dePremiumState || "?") + ")");
         const card = el("section", "pg");
@@ -68,6 +84,12 @@
         const config = options || {};
         /* السبب التقني (Worker، KV…) للـ console برك — الطالب ماخصوش يشوفو */
         if (config.note) console.warn("Premium:", config.note);
+
+        /* المشترك، والموضوع ما زال ماكاينش ف المحتوى (KV 404): ماشي «الأنترنت» */
+        if (config.missing && window.__deutschEinfachIsPremium === true) {
+            soonCard(into, config);
+            return;
+        }
 
         /* site-header.js: "pending" · "ok" · "error" */
         const state = window.__dePremiumState || "ok";
