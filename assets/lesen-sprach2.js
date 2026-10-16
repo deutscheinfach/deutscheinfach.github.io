@@ -294,6 +294,7 @@
                 });
                 hint.classList.toggle("is-on", !!active);
                 progress.textContent = Object.keys(picked).length + "/" + rows.length;
+                progress.style.setProperty("--p", rows.length ? (Object.keys(picked).length) / rows.length : 0);
             }
 
             function grade(reveal) {

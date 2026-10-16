@@ -114,8 +114,8 @@
         /* تبديل النسخة بانتقال — transitionend كيطلع من الوليدات،
            إذن كنقبلو غير اللي جا من board نفسو. */
         function swap(forward) {
-            const still = window.matchMedia
-                && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            /* بلا انتقال: النسخة الجديدة كتبان ف اللحظة (الانتقال كان كيدير lag) */
+            const still = true;
 
             if (still) { paint(); return; }
             if (board.dataset.busy === "1") return;
@@ -334,6 +334,7 @@
                 });
 
                 progress.textContent = Object.keys(used).length + "/" + sits.length;
+                progress.style.setProperty("--p", sits.length ? (Object.keys(used).length) / sits.length : 0);
             }
 
             /* ---- التصحيح ----
