@@ -85,7 +85,7 @@
         nav.appendChild(link);
     });
 
-    /* Premium (payment.html، وتحتو Ultra Premium): زر ذهبي بوحدو حدا التنقل (ماشي داخلو) — بحال
+    /* Premium (payment.html): زر ذهبي بوحدو حدا التنقل (ماشي داخلو) — بحال
        Zertify. التنقل + الزر ف سطر واحد (site-navrow). */
     const navRow = document.createElement("div");
     navRow.className = "site-navrow";

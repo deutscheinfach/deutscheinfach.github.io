@@ -1,8 +1,8 @@
 {
-  "build": "b1b27df35817",
+  "build": "4141c69638a8",
   "assets": {
     "assets/app-install.js": "800fada8",
-    "assets/auth.css": "46ce6198",
+    "assets/auth.css": "37532702",
     "assets/diag.js": "c22ac99e",
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
@@ -46,7 +46,7 @@
     "assets/session-guard.js": "f21ad6fd",
     "assets/share-card.js": "73834578",
     "assets/site-header.css": "6b2324cf",
-    "assets/site-header.js": "7b65129a",
+    "assets/site-header.js": "073ac350",
     "assets/sprechen-b1-teil2.js": "3ffe476e",
     "assets/sprechen-b1.js": "e2c3a8cd",
     "assets/sprechen-b2-content.js": "26f07c37",
@@ -63,7 +63,6 @@
     "assets/theme.css": "e6333c7e",
     "assets/title-toggle.js": "479dc890",
     "assets/training.css": "d448a8df",
-    "assets/ultra.css": "79eb2153",
     "assets/whatsapp.js": "56de1cb7",
     "assets/wortschatz-1000.js": "1b72e9ed",
     "assets/wortschatz-b2.js": "856a61b2",
