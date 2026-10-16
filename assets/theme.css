@@ -17,9 +17,9 @@
        الأسماء الجديدة --brand* هي اللي خاص يتستعملو
        ف أي كود جديد. */
 
-    --brand: #e3163f;
-    --brand-dark: #b30e30;
-    --brand-deep: #8a0b25;
+    --brand: #265be3;
+    --brand-dark: #1b46b3;
+    --brand-deep: #15368a;
 
     /* v3: الأزرق الليلي — لون البنية (البار، الرؤوس، الأزرار الثانوية) */
     --navy: #0f1b3d;
@@ -30,7 +30,7 @@
     /* الطرف الفاتح ديال التدرجات — أحمر حي، ماشي وردي باهت.
        قبل، التدرجات كانو كيبداو من --brand-soft (شبه أبيض)
        والعناوين والأزرار كانو كيختفيو فالنص ديالهم. */
-    --brand-light: #ff4a6b;
+    --brand-light: #5887ff;
     --brand-soft: #ffe1e5;
     --brand-tint: rgba(214,178,94,.08);
 
@@ -145,7 +145,7 @@ html::after {
     background:
         radial-gradient(38vmax 30vmax at 18% 22%, rgba(214,178,94,.17), transparent 62%),
         radial-gradient(32vmax 26vmax at 82% 18%, rgba(242,183,5,.14), transparent 62%),
-        radial-gradient(44vmax 34vmax at 72% 82%, rgba(255,79,100,.13), transparent 64%),
+        radial-gradient(44vmax 34vmax at 72% 82%, rgba(93,138,255,.13), transparent 64%),
         radial-gradient(36vmax 28vmax at 22% 86%, rgba(20,22,31,.07), transparent 62%),
         conic-gradient(from 210deg at 50% 50%, rgba(214,178,94,.05), rgba(242,183,5,.05), rgba(20,22,31,.03), rgba(214,178,94,.05));
     filter: saturate(1.1);
@@ -652,10 +652,10 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
 :root {
     color-scheme: light;
 
-    --bordeaux: #7a1426;
-    --bordeaux-2: #8e1b30;
-    --accent-text: #7a1426;
-    --grad-text: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%);
+    --bordeaux: #1c367a;
+    --bordeaux-2: #24428e;
+    --accent-text: #1c367a;
+    --grad-text: linear-gradient(135deg, #2e4fa3 0%, #1c367a 60%, #152a5e 100%);
     --band-w: 10px;
 
     --brand: #ffce00;
@@ -666,22 +666,22 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     --brand-tint: rgba(255,206,0,.12);
     --on-brand: #1e1b18;
 
-    --navy: #7a1426;
-    --navy-2: #8e1b30;
-    --navy-3: #a3243b;
-    --grad-navy: linear-gradient(145deg, #8e1b30 0%, #7a1426 55%, #5e0f1d 100%);
+    --navy: #1c367a;
+    --navy-2: #24428e;
+    --navy-3: #2e4fa3;
+    --grad-navy: linear-gradient(145deg, #24428e 0%, #1c367a 55%, #152a5e 100%);
     --sun: #ffce00;
 
     --flag-gold: #ffce00;
     --flag-black: #000000;
 
     --grad-brand: linear-gradient(135deg, #ffe04d 0%, #ffce00 50%, #f2bc00 100%);
-    --grad-ink: linear-gradient(145deg, #8e1b30 0%, #5e0f1d 100%);
+    --grad-ink: linear-gradient(145deg, #24428e 0%, #152a5e 100%);
 
     --ink: #1e1b18;
-    --paper: #efede6;
+    --paper: #f7f9fd;
     --surface: #ffffff;
-    --surface-2: #f6f4ee;
+    --surface-2: #f4f6fb;
     --bg: var(--paper);
     --card: var(--surface);
 
@@ -689,7 +689,7 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     --muted: #5e574f;
 
     --line: rgba(30,27,24,.12);
-    --line-gold: rgba(122,20,38,.22);
+    --line-gold: rgba(28,54,122,.22);
 
     --ok: #15803d;
     --danger: #c81e1e;
@@ -697,7 +697,7 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     --shadow: 0 1px 2px rgba(30,27,24,.06), 0 10px 28px -12px rgba(30,27,24,.20);
     --shadow-lg: 0 2px 4px rgba(30,27,24,.06), 0 28px 56px -20px rgba(30,27,24,.30);
     --shadow-brand: 0 12px 26px -12px rgba(230,184,0,.60);
-    --shadow-navy: 0 12px 28px -14px rgba(94,15,29,.45);
+    --shadow-navy: 0 12px 28px -14px rgba(21,42,94,.45);
     --ring: 0 0 0 4px rgba(255,206,0,.35);
 }
 @media (max-width: 700px) { :root { --band-w: 6px; } }
@@ -706,14 +706,14 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
 html body {
     background: var(--paper) !important;
     background-image:
-        linear-gradient(var(--grid-line, rgba(122,20,38,.055)) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line, rgba(122,20,38,.055)) 1px, transparent 1px) !important;
-    background-size: 32px 32px !important;
+        linear-gradient(var(--grid-line, rgba(37,70,180,.075)) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line, rgba(37,70,180,.075)) 1px, transparent 1px) !important;
+    background-size: 34px 34px !important;
     background-position: center top !important;
     color: var(--text);
 }
-:root[data-theme="dark"] { --grid-line: rgba(255,255,255,.045); }
-/* البندات + التظليل: طبقة ثابتة ورا المحتوى (كتخدم حتى فالتيليفون) */
+:root[data-theme="dark"] { --grid-line: rgba(160,185,255,.07); }
+/* ضو زرق خفيف من الفوق (طبقة ثابتة ورا المحتوى) */
 html::after {
     content: "";
     position: fixed;
@@ -724,11 +724,7 @@ html::after {
     animation: none !important;
     transform: none !important;
     background:
-        linear-gradient(90deg,
-            var(--bordeaux) 0 var(--band-w),
-            transparent var(--band-w) calc(100% - var(--band-w)),
-            var(--bordeaux) calc(100% - var(--band-w)) 100%),
-        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.45) 100%) !important;
+        radial-gradient(1200px 600px at 50% -10%, rgba(79,124,255,.10), transparent 70%) !important;
 }
 html::before {
     height: 3px;
@@ -736,13 +732,13 @@ html::before {
 }
 .de-stars { display: none !important; }
 ::selection { background: rgba(255,206,0,.45); color: var(--text); }
-* { scrollbar-color: rgba(122,20,38,.35) transparent; }
+* { scrollbar-color: rgba(28,54,122,.35) transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(30,27,24,.22); }
-::-webkit-scrollbar-thumb:hover { background-color: rgba(122,20,38,.55); }
+::-webkit-scrollbar-thumb:hover { background-color: rgba(28,54,122,.55); }
 :focus-visible { outline-color: var(--bordeaux); }
 input, textarea, select { color-scheme: light; }
 .gold-text {
-    background: linear-gradient(135deg, #a3243b 0%, #7a1426 60%, #5e0f1d 100%) !important;
+    background: linear-gradient(135deg, #2e4fa3 0%, #1c367a 60%, #152a5e 100%) !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     color: transparent !important;
@@ -774,15 +770,15 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
    باش تتقرا على الأسود. */
 :root[data-theme="dark"] {
     color-scheme: dark;
-    --paper: #121015;
-    --surface: #1c181e;
-    --surface-2: #262128;
+    --paper: #0d1120;
+    --surface: #151b2e;
+    --surface-2: #1d2439;
     --bg: var(--paper);
     --card: var(--surface);
     --text: #f1ebe4;
     --muted: #b8ada3;
     --line: rgba(255,255,255,.11);
-    --line-gold: rgba(232,137,154,.28);
+    --line-gold: rgba(146,168,228,.28);
     /* الكتابة الملونة (عناوين، تسميات) فالمظلم: بيضا وغليظة */
     --accent-text: #ffffff;
     --accent-weight: 800;
@@ -796,11 +792,7 @@ html body :is(#hoeren-teil1-stack, #hoeren-teil2-stack, #hoeren-teil3-stack, bod
 }
 :root[data-theme="dark"]::after {
     background:
-        linear-gradient(90deg,
-            var(--bordeaux) 0 var(--band-w),
-            transparent var(--band-w) calc(100% - var(--band-w)),
-            var(--bordeaux) calc(100% - var(--band-w)) 100%),
-        radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,.45) 100%) !important;
+        radial-gradient(1200px 600px at 50% -10%, rgba(79,124,255,.16), transparent 70%) !important;
 }
 :root[data-theme="dark"] input,
 :root[data-theme="dark"] textarea,

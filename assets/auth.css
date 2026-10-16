@@ -5,14 +5,14 @@
    التيليفون: غير البطاقة، مع اللوگو فوق. */
 
 body.au {
-    --au-bg: #f6f2ea;
+    --au-bg: #f7f9fd;
     --au-card: #ffffff;
     --au-ink: #1a1220;
     --au-muted: #6b6274;
     --au-line: rgba(26,18,32,.11);
     --au-field: #faf8f4;
-    --au-wine: #7a0d26;
-    --au-red: #c2183f;
+    --au-wine: #16327a;
+    --au-red: #2651c2;
     --au-gold: #f2b705;
     display: block;
     min-height: 100vh;
@@ -71,9 +71,9 @@ body.au .auth-card {
     color: #fff;
     background:
         radial-gradient(60% 50% at 0% 0%, rgba(242,183,5,.32), transparent 60%),
-        radial-gradient(70% 60% at 100% 100%, rgba(255,74,107,.45), transparent 60%),
-        linear-gradient(150deg, #22060f 0%, #5e0a1f 50%, #9c0f2e 100%);
-    box-shadow: 0 40px 80px -40px rgba(122,13,38,.8);
+        radial-gradient(70% 60% at 100% 100%, rgba(88,130,246,.45), transparent 60%),
+        linear-gradient(150deg, #22060f 0%, #0f245e 50%, #173a99 100%);
+    box-shadow: 0 40px 80px -40px rgba(19,46,121,.8);
     animation: au-in .5s .08s cubic-bezier(.2,.8,.2,1) both;
 }
 .au-side::before {
@@ -205,7 +205,7 @@ body.au .back-button {
     body.au .auth-card::before {
         content: "";
         position: absolute; inset: 0 0 auto 0; height: 6px; border-radius: 26px 26px 0 0;
-        background: linear-gradient(90deg, #22060f, #9c0f2e, #f2b705);
+        background: linear-gradient(90deg, #22060f, #173a99, #f2b705);
     }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -226,14 +226,14 @@ body.au {
     --au-bg: #f7f1e6;
     background:
         radial-gradient(900px 600px at 100% 0%, rgba(242,183,5,.30), transparent 60%),
-        radial-gradient(800px 700px at 0% 100%, rgba(227,22,63,.20), transparent 60%),
+        radial-gradient(800px 700px at 0% 100%, rgba(33,83,221,.20), transparent 60%),
         radial-gradient(700px 500px at 50% 50%, rgba(255,255,255,.7), transparent 70%),
         #f7f1e6 !important;
 }
 html[data-theme="dark"] body.au {
     background:
         radial-gradient(900px 600px at 100% 0%, rgba(242,183,5,.16), transparent 60%),
-        radial-gradient(800px 700px at 0% 100%, rgba(227,22,63,.22), transparent 60%),
+        radial-gradient(800px 700px at 0% 100%, rgba(33,83,221,.22), transparent 60%),
         #0d0a10 !important;
 }
 html:has(body.au) { background: #f7f1e6 !important; }
@@ -241,7 +241,7 @@ html[data-theme="dark"]:has(body.au) { background: #0d0a10 !important; }
 .au-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .au-bg::before {
     content: ""; position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(122,13,38,.16) 1.2px, transparent 1.2px);
+    background-image: radial-gradient(rgba(19,46,121,.16) 1.2px, transparent 1.2px);
     background-size: 22px 22px;
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, #000 85%);
             mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, #000 85%);
@@ -249,8 +249,8 @@ html[data-theme="dark"]:has(body.au) { background: #0d0a10 !important; }
 html[data-theme="dark"] .au-bg::before { background-image: radial-gradient(rgba(255,255,255,.08) 1.2px, transparent 1.2px); }
 .au-mesh { position: absolute; border-radius: 50%; filter: blur(80px); animation: au-mesh 18s ease-in-out infinite alternate; }
 .au-mesh.m1 { width: 520px; height: 520px; top: -180px; right: 8%; background: rgba(242,183,5,.35); }
-.au-mesh.m2 { width: 600px; height: 600px; bottom: -260px; left: -120px; background: rgba(227,22,63,.25); animation-delay: -7s; }
-.au-mesh.m3 { width: 420px; height: 420px; top: 30%; left: 30%; background: rgba(122,13,38,.12); animation-delay: -12s; }
+.au-mesh.m2 { width: 600px; height: 600px; bottom: -260px; left: -120px; background: rgba(33,83,221,.25); animation-delay: -7s; }
+.au-mesh.m3 { width: 420px; height: 420px; top: 30%; left: 30%; background: rgba(19,46,121,.12); animation-delay: -12s; }
 @keyframes au-mesh { to { transform: translate(70px, 50px) scale(1.15); } }
 /* حلقة رقيقة بألوان العلم */
 .au-ring { position: absolute; width: 900px; height: 900px; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%;
@@ -266,7 +266,7 @@ html[data-theme="dark"] .au-bg::before { background-image: radial-gradient(rgba(
     padding: 12px 14px; border-radius: 18px; direction: ltr;
     background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9);
     -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-    box-shadow: 0 20px 40px -22px rgba(60,15,25,.45);
+    box-shadow: 0 20px 40px -22px rgba(18,30,62,.45);
     color: #1a1220; font-family: inherit;
     animation: au-bob 7s ease-in-out infinite alternate;
 }
@@ -290,12 +290,12 @@ html[data-theme="dark"] .au-fl { background: rgba(30,24,36,.7); border-color: rg
 .au-score b { font-size: 11px; font-weight: 900; color: #0f9d58; }
 .au-rf { padding: 7px 14px; border-radius: 10px; font-weight: 900; font-size: 13px; background: rgba(26,18,32,.06); color: #8a7f8f; }
 .au-rf.ok { background: #0f9d58; color: #fff; box-shadow: 0 8px 16px -8px #0f9d58; }
-.au-fl kbd { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; font: 900 16px/1 inherit; color: #7a0d26; background: #fff; border: 1px solid rgba(26,18,32,.1); box-shadow: 0 3px 0 rgba(26,18,32,.12); }
+.au-fl kbd { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; font: 900 16px/1 inherit; color: #16327a; background: #fff; border: 1px solid rgba(26,18,32,.1); box-shadow: 0 3px 0 rgba(26,18,32,.12); }
 html[data-theme="dark"] .au-fl kbd { background: #2a2330; color: #ffd75a; border-color: rgba(255,255,255,.1); box-shadow: 0 3px 0 rgba(0,0,0,.4); }
-.au-play { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #c2183f, #7a0d26); box-shadow: 0 8px 18px -8px #7a0d26; }
+.au-play { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #2651c2, #16327a); box-shadow: 0 8px 18px -8px #16327a; }
 .au-play svg { width: 16px; height: 16px; margin-left: 2px; }
 .au-wave { display: flex; align-items: center; gap: 3px; height: 30px; }
-.au-wave i { width: 4px; border-radius: 4px; background: linear-gradient(#f2b705, #c2183f); animation: au-wave 1.1s ease-in-out infinite alternate; }
+.au-wave i { width: 4px; border-radius: 4px; background: linear-gradient(#f2b705, #2651c2); animation: au-wave 1.1s ease-in-out infinite alternate; }
 .au-wave i:nth-child(odd) { animation-delay: -.4s; } .au-wave i:nth-child(3n) { animation-delay: -.8s; }
 .au-wave i:nth-child(1) { height: 30%; } .au-wave i:nth-child(2) { height: 70%; } .au-wave i:nth-child(3) { height: 45%; } .au-wave i:nth-child(4) { height: 95%; }
 .au-wave i:nth-child(5) { height: 60%; } .au-wave i:nth-child(6) { height: 80%; } .au-wave i:nth-child(7) { height: 35%; } .au-wave i:nth-child(8) { height: 75%; }
@@ -311,8 +311,8 @@ html[data-theme="dark"] .au-fl kbd { background: #2a2330; color: #ffd75a; border
 .au-bar i { display: block; width: 84%; height: 100%; border-radius: 6px; background: linear-gradient(90deg, #f2b705, #0f9d58); }
 
 body.au .auth-wrap { position: relative; z-index: 1; }
-body.au .auth-card { border: 1px solid rgba(26,18,32,.08); box-shadow: 0 50px 100px -45px rgba(60,15,25,.55); }
-.au-side { box-shadow: 0 50px 100px -45px rgba(60,15,25,.7); }
+body.au .auth-card { border: 1px solid rgba(26,18,32,.08); box-shadow: 0 50px 100px -45px rgba(18,30,62,.55); }
+.au-side { box-shadow: 0 50px 100px -45px rgba(18,30,62,.7); }
 body.au .back-button { background: rgba(255,255,255,.8); color: #1a1220; border-color: rgba(26,18,32,.1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 html[data-theme="dark"] body.au .back-button { background: rgba(30,24,36,.8); color: #f3eff6; border-color: rgba(255,255,255,.1); }
 

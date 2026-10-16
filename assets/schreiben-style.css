@@ -697,7 +697,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     --muted: #56607a;
 }
 .task-header {
-    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #5e0f1d));
+    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #152a5e));
     color: #fff;
     border-bottom: 3px solid var(--red);
     box-shadow: 0 10px 30px -14px rgba(10,19,48,.6);
@@ -705,7 +705,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .task-header .back-btn { color: #fff; }
 .task-header .back-btn:hover { background: rgba(255,255,255,.12); }
 .task-header .task-title-block h1 { color: #fff; }
-.task-header .task-title-block .sub { color: #ff8aa0; }
+.task-header .task-title-block .sub { color: #95b0f9; }
 .task-header .timer-pill { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #fff; }
 .task-header .timer-pill.low { background: rgba(214,178,94,.3); border-color: var(--red); color: #fff; }
 .task-header .icon-btn { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); color: #fff; }
@@ -715,7 +715,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
     padding: 0 20px;
     border-radius: 12px;
     font-weight: 800;
-    background: var(--grad-brand, linear-gradient(135deg, #ff4a6b, #e3163f 45%, #b30e30));
+    background: var(--grad-brand, linear-gradient(135deg, #5887ff, #265be3 45%, #1b46b3));
     color: var(--on-brand);
     box-shadow: 0 10px 24px -10px rgba(214,178,94,.7);
 }
@@ -886,9 +886,9 @@ body { font-family: "Cairo", "Segoe UI", Arial, sans-serif; }
     background: #f2b705; color: #2a1d00; font: 800 11px/1.8 "Inter", Arial, sans-serif;
     letter-spacing: .08em; text-transform: uppercase;
 }
-.ad-title { margin: 0 0 8px; font-size: 18px; font-weight: 800; line-height: 1.35; color: #8a0f2b; }
+.ad-title { margin: 0 0 8px; font-size: 18px; font-weight: 800; line-height: 1.35; color: #163488; }
 .ad-flyer p { margin: 0 0 8px; }
-.ad-shout { font-weight: 800; letter-spacing: .04em; color: #8a0f2b; }
+.ad-shout { font-weight: 800; letter-spacing: .04em; color: #163488; }
 .ad-list { list-style: none; margin: 4px 0 12px; padding: 0; display: grid; gap: 6px; }
 .ad-list li { position: relative; padding-left: 26px; }
 .ad-list li::before {

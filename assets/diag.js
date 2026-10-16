@@ -219,7 +219,7 @@
         st.textContent =
             ".de-net{display:flex;flex-direction:column;align-items:center;gap:8px;padding:6px 4px;text-align:center;direction:rtl}" +
             ".de-net-ico{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;" +
-            "background:rgba(179,14,48,.1);color:#b30e30}" +
+            "background:rgba(23,63,175,.1);color:#1b46b3}" +
             ".de-net.is-slow .de-net-ico{background:rgba(224,168,0,.16);color:#b7860b}" +
             ".de-net-ico svg{width:26px;height:26px}" +
             ".de-net-title{margin:4px 0 0;font-size:17px;font-weight:800;line-height:1.4;color:inherit;opacity:1}" +
@@ -229,7 +229,7 @@
             "box-shadow:0 8px 20px -10px rgba(224,168,0,.9)}" +
             ".de-net-btn svg{width:18px;height:18px}" +
             ".de-net-btn:hover{filter:brightness(1.05)}" +
-            ":root[data-theme=dark] .de-net-ico,html.dark .de-net-ico{background:rgba(255,120,140,.14);color:#ff8a9c}" +
+            ":root[data-theme=dark] .de-net-ico,html.dark .de-net-ico{background:rgba(132,163,249,.14);color:#95b0f9}" +
             ":root[data-theme=dark] .de-net.is-slow .de-net-ico,html.dark .de-net.is-slow .de-net-ico{background:rgba(255,206,0,.14);color:#ffce00}" +
             ".de-netbar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:2147483000;" +
             "display:flex;align-items:center;gap:10px;max-width:calc(100% - 32px);padding:10px 18px;border-radius:14px;" +

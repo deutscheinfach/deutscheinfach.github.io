@@ -33,9 +33,9 @@
        var(--brand) ديال CSS. */
     var C = {
         navy: "#2a0710",
-        navy2: "#7a1426",
-        brand: "#e3163f",
-        brandLight: "#ff4a6b",
+        navy2: "#1c367a",
+        brand: "#265be3",
+        brandLight: "#5887ff",
         sun: "#ffce00",
         good: "#2fbf71",
         mid: "#ffb703",
@@ -102,8 +102,8 @@
 
         /* لمسة حمرا فالزاوية */
         var glow = ctx.createRadialGradient(W * 0.86, 90, 0, W * 0.86, 90, 520);
-        glow.addColorStop(0, "rgba(227,22,63,.34)");
-        glow.addColorStop(1, "rgba(227,22,63,0)");
+        glow.addColorStop(0, "rgba(33,83,221,.34)");
+        glow.addColorStop(1, "rgba(33,83,221,0)");
         ctx.fillStyle = glow;
         ctx.fillRect(0, 0, W, 620);
 
@@ -111,7 +111,7 @@
         var mx = 80, my = 84, ms = 92;
         var mg = ctx.createLinearGradient(mx, my, mx + ms, my + ms);
         mg.addColorStop(0, C.brandLight);
-        mg.addColorStop(1, "#b30e30");
+        mg.addColorStop(1, "#1b46b3");
         ctx.fillStyle = mg;
         roundRect(ctx, mx, my, ms, ms, 26);
         ctx.fill();
@@ -283,10 +283,10 @@
             ctx.font = font(900, 30);
             var lw = ctx.measureText(t).width;
             var pw = lw + 64, ph = 70, px = W - 80 - pw, py = 246;
-            ctx.fillStyle = "rgba(227,22,63,.18)";
+            ctx.fillStyle = "rgba(33,83,221,.18)";
             roundRect(ctx, px, py, pw, ph, 35);
             ctx.fill();
-            ctx.strokeStyle = "rgba(255,74,107,.55)";
+            ctx.strokeStyle = "rgba(88,130,246,.55)";
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.fillStyle = C.brandLight;
