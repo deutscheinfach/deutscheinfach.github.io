@@ -125,6 +125,9 @@
         const t = e.target;
         /* ملف ما تحملش (script / css / صورة) */
         if (t && t !== window && (t.src || t.href)) {
+            /* صورة / صوت / فيديو ما تحملش (أنترنت تقطعات لحظة): الصفحة خدامة
+               عادي. غير السكريبتات والـCSS كيهمّو. */
+            if (!/^(SCRIPT|LINK)$/.test(t.tagName || "")) return;
             const url = t.src || t.href;
             /* غير الملفات ديالنا و Firebase — الإحصائيات (Cloudflare Insights…)
                كيبلوكيوها مانعي الإعلانات، وماشي مشكل */
