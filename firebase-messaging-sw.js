@@ -88,8 +88,10 @@ function staleWhileRevalidate(request) {
     });
 }
 
-/* الصفحة من الشبكة. إلا طاحت (ولا بقات 4 ثواني بلا جواب) → النسخة
+/* الصفحة من الشبكة. إلا طاحت (ولا بقات ثانية بلا جواب) → النسخة
    اللي شفنا آخر مرة، وإلا offline.html. */
+const SLOW_MS = 1000;
+
 function pageFromNetwork(event) {
     const request = event.request;
     /* cache: "no-cache": المتصفح كيخبي HTML ديال GitHub Pages 10 دقايق.
@@ -110,10 +112,12 @@ function pageFromNetwork(event) {
     const cached = function () {
         return caches.match(request.url.split("#")[0], { ignoreSearch: true });
     };
+    /* أنترنت ضعيفة (4G/3G مقطعة): ما نتسناوش أكثر من ثانية — النسخة
+       المحفوظة كتبان دغيا، والجديدة كتتحفظ للمرة الجاية. بلا أنترنت: دغيا. */
     const slow = new Promise(function (resolve) {
         setTimeout(function () {
             cached().then(function (hit) { if (hit) resolve(hit); });
-        }, 4000);
+        }, self.navigator && self.navigator.onLine === false ? 0 : SLOW_MS);
     });
 
     return Promise.race([net, slow]).catch(function () {
@@ -206,14 +210,24 @@ self.addEventListener("message", function (event) {
 /* الراوتر (site-header.js) كيجيب الصفحات بـ fetch (ماشي navigate):
    بلا أنترنت كنعطيوه النسخة المحفوظة باش التنقل يبقى خدام */
 function htmlFetch(request) {
-    return fetch(request).then(function (res) {
+    const key = request.url.split("#")[0];
+    const cached = function () { return caches.match(key, { ignoreSearch: true }); };
+    const net = fetch(request).then(function (res) {
         if (res && res.ok && res.type === "basic") {
             const copy = res.clone();
-            caches.open(PAGE_CACHE).then(function (c) { c.put(request.url.split("#")[0], copy); });
+            caches.open(PAGE_CACHE).then(function (c) { c.put(key, copy); });
         }
         return res;
-    }).catch(function () {
-        return caches.match(request.url.split("#")[0], { ignoreSearch: true }).then(function (hit) {
+    });
+    /* نفس القاعدة ديال الصفحات: الراوتر (تبديل القسم) ما يبقاش واقف
+       على أنترنت ضعيفة */
+    const slow = new Promise(function (resolve) {
+        setTimeout(function () {
+            cached().then(function (hit) { if (hit) resolve(hit); });
+        }, self.navigator && self.navigator.onLine === false ? 0 : SLOW_MS);
+    });
+    return Promise.race([net, slow]).catch(function () {
+        return cached().then(function (hit) {
             if (hit) return hit;
             throw new Error("offline");
         });
