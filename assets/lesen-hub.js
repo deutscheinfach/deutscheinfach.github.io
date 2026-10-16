@@ -1122,7 +1122,7 @@
            كيتزاد هنا من assets/report.js. */
         head.dataset.reportTitle = topic.title || topic.id;
         detail.appendChild(head);
-        document.documentElement.classList.add("is-topic-focus");
+        document.documentElement.classList.add("is-topic-focus", "is-lesen-topic");
 
         const content = (window["LESEN_" + LV + "_CONTENT"] || {})[themaId] || {};
         const available = (topic.parts && topic.parts.length)
@@ -1176,7 +1176,7 @@
     }
 
     function close(push) {
-        document.documentElement.classList.remove("is-topic-focus");
+        document.documentElement.classList.remove("is-topic-focus", "is-lesen-topic");
         dropExamTop();
         if (push) dePush({}, "", location.pathname);
         detail.hidden = true;

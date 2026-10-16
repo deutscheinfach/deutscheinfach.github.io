@@ -131,8 +131,8 @@
            وكيقتل الانتقال قبل ما يبان. حيت هاكا كنقبلو غير الحدث
            اللي جا من board نفسو. */
         function swap(forward) {
-            const still = window.matchMedia
-                && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            /* بلا انتقال: النسخة الجديدة كتبان ف اللحظة (الانتقال كان كيدير lag) */
+            const still = true;
 
             if (still) { paint(); return; }
             if (board.dataset.busy === "1") return;
@@ -315,6 +315,7 @@
                     item.node.classList.toggle("is-used", used.indexOf(item.value) !== -1);
                 });
                 progress.textContent = used.length + "/" + rows.length;
+                progress.style.setProperty("--p", rows.length ? (used.length) / rows.length : 0);
             }
 
             /* ---- التصحيح ---- */

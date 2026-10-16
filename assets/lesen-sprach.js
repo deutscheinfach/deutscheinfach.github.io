@@ -306,6 +306,7 @@
             function paintProgress() {
                 const done = rows.filter(function (r) { return r.picked !== -1; }).length;
                 progress.textContent = done + "/" + rows.length;
+                progress.style.setProperty("--p", rows.length ? (done) / rows.length : 0);
             }
 
             function grade(reveal) {

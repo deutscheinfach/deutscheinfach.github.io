@@ -3749,3 +3749,130 @@ html[dir="ltr"] .part-cta svg, [dir="ltr"] .part-cta svg { transform: none; }
 .part-card p { unicode-bidi: plaintext; text-align: start; }
 /* ف PC الجملة كتبقى تحت العنوان (على الشمال)، ف التيليفون من اليمين */
 @media (min-width: 700px) { .lesen-hero .lead { text-align: left; } }
+
+/* =====================================================
+   v6 — صفحة الموضوع ف Lesen (html.is-lesen-topic): ستايل نقي
+   خلفية رمادية فاتحة، بطائق بيضا بإطار رقيق، ولوحة الترويسات
+   فيها عمود ديال الحرف. غير ف الوضع الفاتح؛ الداكن كيبقى كيف كان.
+   ===================================================== */
+html.is-lesen-topic:not([data-theme="dark"]) {
+    --tp-bg: #f5f6fa;
+    --tp-card: #ffffff;
+    --tp-line: #e3e6ee;
+    --tp-line-2: #eceef4;
+    --tp-ink: #161a2b;
+    --tp-muted: #8a91a3;
+    --tp-soft: #f7f8fb;
+    --tp-brand: #7a1426;
+    --tp-brand-soft: rgba(122,20,38,.08);
+}
+html.is-lesen-topic:not([data-theme="dark"]) body {
+    background: var(--tp-bg) !important;
+    background-image: none !important;
+}
+html.is-lesen-topic:not([data-theme="dark"])::after { display: none !important; }
+
+/* العنوان + الخطوط ديال الجنب */
+html.is-lesen-topic:not([data-theme="dark"]) .t1-title { color: var(--tp-ink) !important; font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -.02em; }
+html.is-lesen-topic:not([data-theme="dark"]) .t1-kicker {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    color: var(--tp-muted) !important; letter-spacing: 3px; font-size: 11px;
+}
+html.is-lesen-topic:not([data-theme="dark"]) .t1-kicker::before,
+html.is-lesen-topic:not([data-theme="dark"]) .t1-kicker::after {
+    content: ""; width: 40px; height: 1px; background: var(--tp-line);
+}
+
+/* تبويبات النسخ */
+html.is-lesen-topic:not([data-theme="dark"]) .t1-variants {
+    background: var(--tp-soft) !important; border: 1px solid var(--tp-line) !important; box-shadow: none !important;
+}
+html.is-lesen-topic:not([data-theme="dark"]) .t1-variant { color: var(--tp-muted); }
+html.is-lesen-topic:not([data-theme="dark"]) .t1-variant:hover { color: var(--tp-ink); }
+html.is-lesen-topic:not([data-theme="dark"]) .t1-variant.active {
+    background: var(--tp-brand) !important; color: #fff !important;
+    box-shadow: 0 6px 14px -6px rgba(122,20,38,.55) !important; animation: none;
+}
+
+/* البطائق ديال النصوص */
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text,
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel {
+    --text: var(--tp-ink);
+    background: var(--tp-card) !important;
+    border: 1px solid var(--tp-line) !important;
+    border-radius: 18px;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04) !important;
+    color: var(--tp-ink) !important;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text { padding: 22px 26px; transition: border-color .15s, box-shadow .15s; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text .t1-body { color: #2a2f40; font-size: 15.5px; line-height: 1.9; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text.is-active {
+    border-color: var(--tp-brand) !important;
+    box-shadow: 0 0 0 4px var(--tp-brand-soft), 0 1px 2px rgba(16,24,40,.04) !important;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text.correct { border-color: #1f9d63 !important; box-shadow: 0 0 0 4px rgba(31,157,99,.12) !important; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text.wrong { border-color: #d64545 !important; box-shadow: 0 0 0 4px rgba(214,69,69,.12) !important; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text .t1-text-num {
+    width: 32px; height: 32px; border-radius: 10px;
+    background: var(--tp-card); color: var(--tp-ink);
+    border: 1px solid var(--tp-line); font-size: 14px;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text .t1-select {
+    background: var(--tp-card); color: var(--tp-ink);
+    border: 1px solid var(--tp-line); border-radius: 12px;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text .t1-select:hover,
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-text .t1-select:focus { border-color: var(--tp-brand); }
+
+/* اللوحة ديال الترويسات */
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel { padding: 0; gap: 10px; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel > :not(.t1-panel-head) { margin-inline: 14px; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel > :last-child { margin-bottom: 14px; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-panel-head {
+    position: sticky; top: 0; z-index: 1;
+    background: var(--tp-card); padding: 16px; border-bottom: 1px solid var(--tp-line-2);
+    border-radius: 18px 18px 0 0;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-panel-title {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--tp-ink); font-size: 13px; letter-spacing: 1.4px;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-panel-title::before {
+    content: "✓"; display: grid; place-items: center; flex: 0 0 auto;
+    width: 34px; height: 34px; border-radius: 11px;
+    background: var(--tp-brand-soft); color: var(--tp-brand);
+    font-size: 16px; letter-spacing: 0;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-progress {
+    min-width: 64px; text-align: center;
+    color: var(--tp-ink); border: 1px solid var(--tp-line);
+    background:
+        linear-gradient(90deg, rgba(122,20,38,.16) calc(var(--p, 0) * 100%), transparent 0),
+        var(--tp-soft);
+}
+/* الترويسة: عمود الحرف + النص */
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option {
+    width: auto; align-items: stretch; gap: 0; padding: 0; overflow: hidden;
+    min-height: 58px; border-radius: 14px;
+    background: var(--tp-card); border: 1px solid var(--tp-line);
+    transition: border-color .12s, opacity .12s;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option:hover { border-color: var(--tp-brand); background: var(--tp-card); }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option .t1-option-key {
+    width: 50px; height: auto; border-radius: 0; flex: 0 0 50px;
+    background: var(--tp-soft); color: #5b6275;
+    border: 0; border-inline-end: 1px solid var(--tp-line-2);
+    font-size: 14px;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option .t1-option-text { justify-content: center; padding: 10px 14px; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option .t1-option-de { color: var(--tp-ink); font-size: 13.5px; font-weight: 800; }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option.is-used { opacity: .45; background: var(--tp-card); border-color: var(--tp-line); }
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option.is-used .t1-option-key { color: #1f9d63; }
+
+/* بلا حركات ملي كتبدل النسخة (هادي اللي كانت كتدير lag) */
+html.is-lesen-topic .t1-board { transition: none !important; will-change: auto; }
+html.is-lesen-topic .t1-stagger :is(.t1-text, .t1-option) { animation: none !important; }
+
+@media (max-width: 700px) {
+    html.is-lesen-topic:not([data-theme="dark"]) body .t1-text { padding: 16px; }
+}
