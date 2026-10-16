@@ -679,10 +679,9 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
     --grad-ink: linear-gradient(145deg, #8e1b30 0%, #5e0f1d 100%);
 
     --ink: #1e1b18;
-    --paper: #fdfdfd;
+    --paper: #efede6;
     --surface: #ffffff;
     --surface-2: #f6f4ee;
-    --vignette: rgba(30,27,24,.05);
     --bg: var(--paper);
     --card: var(--surface);
 
@@ -713,7 +712,7 @@ html body {
     background-position: center top !important;
     color: var(--text);
 }
-:root[data-theme="dark"] { --grid-line: rgba(255,255,255,.045); --vignette: rgba(60,40,34,.45); }
+:root[data-theme="dark"] { --grid-line: rgba(255,255,255,.045); }
 /* البندات + التظليل: طبقة ثابتة ورا المحتوى (كتخدم حتى فالتيليفون) */
 html::after {
     content: "";
@@ -729,7 +728,7 @@ html::after {
             var(--bordeaux) 0 var(--band-w),
             transparent var(--band-w) calc(100% - var(--band-w)),
             var(--bordeaux) calc(100% - var(--band-w)) 100%),
-        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, var(--vignette, rgba(60,40,34,.45)) 100%) !important;
+        radial-gradient(ellipse at 50% 45%, rgba(60,40,34,0) 50%, rgba(60,40,34,.45) 100%) !important;
 }
 html::before {
     height: 3px;
