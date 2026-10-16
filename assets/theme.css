@@ -702,10 +702,17 @@ html.is-embed::before, html.is-embed::after { display: none !important; }
 }
 @media (max-width: 700px) { :root { --band-w: 6px; } }
 
+/* شبكة مربعات رقيقة ورا الصفحة (بحال ورقة الكارو) */
 html body {
     background: var(--paper) !important;
+    background-image:
+        linear-gradient(var(--grid-line, rgba(122,20,38,.055)) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line, rgba(122,20,38,.055)) 1px, transparent 1px) !important;
+    background-size: 32px 32px !important;
+    background-position: center top !important;
     color: var(--text);
 }
+:root[data-theme="dark"] { --grid-line: rgba(255,255,255,.045); }
 /* البندات + التظليل: طبقة ثابتة ورا المحتوى (كتخدم حتى فالتيليفون) */
 html::after {
     content: "";
