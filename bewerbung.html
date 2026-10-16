@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/diag.js?v=c22ac99e"></script>
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=582e5683"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -10,11 +10,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" media="print" onload="this.media='all';this.onload=null"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap"></noscript>
-<link rel="stylesheet" href="assets/theme.css?v=999bdbe8">
+<link rel="stylesheet" href="assets/theme.css?v=e6333c7e">
 <script src="assets/stars.js?v=93c940c6" defer></script>
 <script src="assets/progress.js?v=222ee4fc"></script>
-<link rel="stylesheet" href="assets/site-header.css?v=35abe044">
-<link rel="stylesheet" href="assets/section.css?v=16957d37">
+<link rel="stylesheet" href="assets/site-header.css?v=6b2324cf">
+<link rel="stylesheet" href="assets/section.css?v=2e345025">
 <style>
 /* ===== صفحة Bewerbung + ترجمة ===== */
 .bw { direction: rtl; text-align: right; max-width: var(--shell, 1180px); margin: 0 auto; padding: 0 var(--gutter, 18px) 70px; }
@@ -28,9 +28,9 @@
     margin: 26px 0 26px; padding: 44px 40px; border-radius: 30px;
     background:
         radial-gradient(60% 80% at 15% 20%, rgba(242,183,5,.22), transparent 60%),
-        radial-gradient(50% 70% at 90% 90%, rgba(255,74,107,.35), transparent 60%),
-        linear-gradient(135deg, #2a0a14 0%, #7a0d26 48%, #b30e30 100%);
-    color: #fff; box-shadow: 0 40px 80px -40px rgba(122,13,38,.75);
+        radial-gradient(50% 70% at 90% 90%, rgba(88,130,246,.35), transparent 60%),
+        linear-gradient(135deg, #0d152c 0%, #16327a 48%, #1b46b3 100%);
+    color: #fff; box-shadow: 0 40px 80px -40px rgba(19,46,121,.75);
 }
 .bw-hero::after {
     content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -77,7 +77,7 @@
     background: #fff; color: #101a36; box-shadow: 0 30px 60px -25px rgba(0,0,0,.6);
     transform-origin: center; direction: ltr; text-align: left;
 }
-.bw-doc h5 { margin: 0 0 10px; font-size: 12px; font-weight: 900; letter-spacing: .04em; color: #b30e30; display: flex; align-items: center; gap: 6px; }
+.bw-doc h5 { margin: 0 0 10px; font-size: 12px; font-weight: 900; letter-spacing: .04em; color: #1b46b3; display: flex; align-items: center; gap: 6px; }
 .bw-doc .ln { height: 7px; border-radius: 4px; background: #e6e9f2; margin: 7px 0; transform-origin: left; }
 .bw-doc .ln.dark { background: #c7cdde; }
 .bw-doc-cv { right: 34%; top: 8px; z-index: 3; animation: bw-float1 6s ease-in-out infinite; }
@@ -94,7 +94,7 @@
 @keyframes bw-type { 0% { transform: scaleX(0); } 35%, 85% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: .9; } }
 .bw-lang { display: flex; align-items: center; gap: 6px; font-weight: 900; font-size: 12.5px; margin-top: 10px; }
 .bw-lang b { padding: 3px 8px; border-radius: 6px; background: #f4f6fb; }
-.bw-lang em { font-style: normal; color: #b30e30; animation: bw-arrow 1.4s ease-in-out infinite; display: inline-block; }
+.bw-lang em { font-style: normal; color: #1b46b3; animation: bw-arrow 1.4s ease-in-out infinite; display: inline-block; }
 @keyframes bw-arrow { 50% { transform: translateX(4px); } }
 .bw-stamp {
     position: absolute; left: 6%; bottom: 26px; z-index: 4;
@@ -130,10 +130,10 @@
     border: 1px solid var(--line); box-shadow: var(--shadow-lg, var(--shadow));
     transition: transform .25s ease, box-shadow .25s ease;
 }
-.bw-card:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -35px rgba(122,13,38,.55); }
+.bw-card:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -35px rgba(19,46,121,.55); }
 .bw-card.hot { border: 2px solid transparent; background:
     linear-gradient(var(--surface), var(--surface)) padding-box,
-    linear-gradient(135deg, #f2b705, #e3163f, #f2b705) border-box; background-size: 100% 100%, 300% 300%;
+    linear-gradient(135deg, #f2b705, #265be3, #f2b705) border-box; background-size: 100% 100%, 300% 300%;
     animation: bw-border 6s linear infinite; }
 @keyframes bw-border { 0% { background-position: 0 0, 0% 50%; } 100% { background-position: 0 0, 300% 50%; } }
 .bw-flag-tag { position: absolute; top: -14px; right: 26px; padding: 6px 14px; border-radius: 999px; font-weight: 900; font-size: 13px; color: #3a1500; background: linear-gradient(135deg, #ffe07a, #f2b705); box-shadow: 0 10px 20px -10px rgba(242,183,5,.9); }
@@ -166,7 +166,7 @@
 .bw-check input { width: 20px; height: 20px; accent-color: var(--brand); }
 .bw-total {
     text-align: center; border-radius: 20px; padding: 22px; color: #fff;
-    background: linear-gradient(135deg, #7a0d26, #e3163f);
+    background: linear-gradient(135deg, #16327a, #265be3);
 }
 .bw-total > span { display: block; font-weight: 800; opacity: .85; }
 .bw-total b { display: block; font-size: 2.8rem; font-weight: 900; direction: ltr; line-height: 1.2; transition: transform .2s; }
@@ -198,7 +198,7 @@
 /* ---------- آخر الصفحة ---------- */
 .bw-final {
     margin: 50px 0 0; text-align: center; border-radius: 30px; padding: 42px 22px; color: #fff; position: relative; overflow: hidden;
-    background: linear-gradient(135deg, #2a0a14, #7a0d26 55%, #e3163f);
+    background: linear-gradient(135deg, #0d152c, #16327a 55%, #265be3);
 }
 .bw-final h2 { margin: 0 0 8px; font-size: clamp(1.6rem, 3vw, 2.3rem); font-weight: 900; }
 .bw-final p { margin: 0 0 20px; color: rgba(255,255,255,.85); }
@@ -263,13 +263,13 @@
 <link rel="icon" href="assets/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e3163f">
+<meta name="theme-color" content="#265be3">
 <!-- seo:end -->
 </head>
 <body>
 
 <div id="site-header" data-active=""></div>
-<script src="assets/site-header.js?v=f512f48d"></script>
+<script src="assets/site-header.js?v=7b65129a"></script>
 
 <main class="bw">
 
@@ -529,6 +529,6 @@
 </script>
 <script src="assets/session-guard.js?v=f21ad6fd"></script>
 <script src="assets/presence.js?v=ea34c6d5" defer></script>
-<script src="assets/app-install.js?v=90458a45" defer></script>
+<script src="assets/app-install.js?v=800fada8" defer></script>
 </body>
 </html>

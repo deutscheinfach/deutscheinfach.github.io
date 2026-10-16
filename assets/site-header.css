@@ -615,7 +615,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-nav a.active,
 .site-level a.active,
 .site-nav-pill {
-    background: var(--grad-brand, linear-gradient(135deg, #ff4f64, #e11d33 45%, #b4142a)) !important;
+    background: var(--grad-brand, linear-gradient(135deg, #5d8aff, #e11d33 45%, #214ab4)) !important;
     color: var(--on-brand);
     box-shadow: var(--shadow-brand, 0 10px 26px -8px rgba(214,178,94,.55));
 }
@@ -654,7 +654,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-header-inner {
     position: relative;
     border: 1px solid rgba(255,255,255,.08);
-    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #5e0f1d));
+    background: var(--grad-navy, linear-gradient(135deg, var(--navy-2), var(--navy) 55%, #152a5e));
     box-shadow: 0 18px 40px -18px rgba(10,19,48,.65), inset 0 1px 0 rgba(255,255,255,.08);
     color: #fff;
 }
@@ -671,7 +671,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     pointer-events: none;
 }
 .site-brand { color: #fff; }
-.site-brand-name span { color: var(--brand-light, #ff4a6b); }
+.site-brand-name span { color: var(--brand-light, #5887ff); }
 .site-brand-sub { color: rgba(255,255,255,.62); }
 .site-brand img { box-shadow: 0 0 0 2px rgba(255,255,255,.9), 0 0 0 4px rgba(214,178,94,.55); }
 
@@ -787,7 +787,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     height: 18px;
     padding: 0 5px;
     border-radius: 999px;
-    background: #e3163f;
+    background: #265be3;
     color: #fff;
     font-size: 10.5px;
     font-weight: 800;
@@ -844,7 +844,7 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
     color: var(--muted);
     cursor: pointer;
 }
-.site-news-del:hover { background: color-mix(in srgb, #e3163f 15%, transparent); color: #e3163f; }
+.site-news-del:hover { background: color-mix(in srgb, #265be3 15%, transparent); color: #265be3; }
 .site-news-item:has(.site-news-del) .site-news-top { padding-left: 24px; }
 .site-news-form { display: grid; gap: 7px; padding: 10px; margin-bottom: 10px; border-radius: 12px; border: 1px dashed var(--gold); }
 .site-news-form-label { font-size: 12.5px; font-weight: 800; color: var(--accent-text); }
@@ -957,13 +957,13 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 .site-docs { position: relative; display: inline-grid; place-items: center; text-decoration: none; }
 .site-docs-dot {
     position: absolute; top: 7px; right: 7px; width: 8px; height: 8px; border-radius: 50%;
-    background: var(--flag-gold, #f2b705); box-shadow: 0 0 0 2px var(--brand-deep, #8a0b25);
+    background: var(--flag-gold, #f2b705); box-shadow: 0 0 0 2px var(--brand-deep, #15368a);
     animation: site-docs-ping 2s ease-out infinite;
 }
 .site-docs.is-here .site-docs-dot { display: none; }
 @keyframes site-docs-ping {
-    0% { box-shadow: 0 0 0 2px var(--brand-deep, #8a0b25), 0 0 0 2px rgba(242,183,5,.7); }
-    80%, 100% { box-shadow: 0 0 0 2px var(--brand-deep, #8a0b25), 0 0 0 9px rgba(242,183,5,0); }
+    0% { box-shadow: 0 0 0 2px var(--brand-deep, #15368a), 0 0 0 2px rgba(242,183,5,.7); }
+    80%, 100% { box-shadow: 0 0 0 2px var(--brand-deep, #15368a), 0 0 0 9px rgba(242,183,5,0); }
 }
 @media (prefers-reduced-motion: reduce) { .site-docs-dot { animation: none; } }
 /* نفس الحجم والشكل ديال الجرس وزر الوضع */

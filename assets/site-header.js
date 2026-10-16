@@ -1302,7 +1302,7 @@
                         '<input type="password" autocomplete="new-password" minlength="8" required placeholder="كلمة السر الجديدة" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid #ddd;border-radius:12px;font:inherit;font-size:16px;margin-bottom:10px;direction:ltr;text-align:left">' +
                         '<input type="password" autocomplete="new-password" minlength="8" required placeholder="عاود كتبها" style="width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid #ddd;border-radius:12px;font:inherit;font-size:16px;margin-bottom:12px;direction:ltr;text-align:left">' +
                         '<p class="msg" style="margin:0 0 10px;font-size:13.5px;font-weight:700;min-height:1em"></p>' +
-                        '<button type="submit" style="width:100%;border:0;border-radius:14px;padding:13px;background:#8a0f2b;color:#fff;font:inherit;font-weight:900;font-size:16px;cursor:pointer">حفظ</button>' +
+                        '<button type="submit" style="width:100%;border:0;border-radius:14px;padding:13px;background:#163488;color:#fff;font:inherit;font-weight:900;font-size:16px;cursor:pointer">حفظ</button>' +
                         '<button type="button" class="out" style="width:100%;border:0;background:transparent;color:#8a8f9c;font:inherit;font-size:13px;margin-top:8px;cursor:pointer">خروج من الحساب</button>' +
                         '</form>';
                     document.body.appendChild(back);

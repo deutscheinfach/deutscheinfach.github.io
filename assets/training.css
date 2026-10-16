@@ -320,9 +320,9 @@ body.mt-running .lesen-tabs { display: none; }
     margin: 0 0 22px; padding: 30px 30px 26px; border-radius: 26px; color: #fff;
     background:
         radial-gradient(60% 90% at 10% 0%, rgba(242,183,5,.28), transparent 60%),
-        radial-gradient(60% 80% at 100% 100%, rgba(255,74,107,.4), transparent 60%),
-        linear-gradient(135deg, #2a0a14, #7a0d26 55%, #b30e30);
-    box-shadow: 0 34px 70px -38px rgba(122,13,38,.85);
+        radial-gradient(60% 80% at 100% 100%, rgba(88,130,246,.4), transparent 60%),
+        linear-gradient(135deg, #0d152c, #16327a 55%, #1b46b3);
+    box-shadow: 0 34px 70px -38px rgba(19,46,121,.85);
 }
 .mt-rand::after {
     content: ""; position: absolute; inset: 0; pointer-events: none;
@@ -367,7 +367,7 @@ body.mt-running .lesen-tabs { display: none; }
 .mt-rand-set.is-custom { border-color: #ffce00; color: #ffce00; }
 .mt-rand-set b {
     position: absolute; top: -4px; left: -4px; width: 14px; height: 14px;
-    border-radius: 50%; background: #ffce00; box-shadow: 0 0 0 3px #7a0d26;
+    border-radius: 50%; background: #ffce00; box-shadow: 0 0 0 3px #16327a;
 }
 
 html.st-pick-open { overflow: hidden; }
@@ -413,7 +413,7 @@ html.st-pick-open { overflow: hidden; }
 .st-pick-tabs button:hover { color: var(--text); }
 .st-pick-tabs button.is-on {
     background: var(--surface); color: var(--brand-dark); border-color: var(--line-gold);
-    box-shadow: 0 6px 16px -10px rgba(122,13,38,.45);
+    box-shadow: 0 6px 16px -10px rgba(19,46,121,.45);
 }
 .st-pick-list { flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; padding: 14px; display: grid; gap: 8px; align-content: start; }
 .st-pick-item {
@@ -532,8 +532,8 @@ body.st-running .st-shell { max-width: none; padding: 0; }
 @keyframes st-spin { to { transform: rotate(360deg); } }
 /* النتيجة */
 .st-res { position: relative; overflow: hidden; margin: 26px auto 18px; max-width: 1000px; display: grid; grid-template-columns: auto 1fr; gap: 34px; align-items: center; padding: 34px 36px; border-radius: 28px; color: #fff; direction: rtl;
-  background: radial-gradient(60% 90% at 0% 0%, rgba(242,183,5,.28), transparent 60%), radial-gradient(70% 90% at 100% 100%, rgba(255,74,107,.4), transparent 60%), linear-gradient(135deg, #2a0a14, #7a0d26 55%, #b30e30);
-  box-shadow: 0 30px 70px -34px rgba(122,13,38,.9); }
+  background: radial-gradient(60% 90% at 0% 0%, rgba(242,183,5,.28), transparent 60%), radial-gradient(70% 90% at 100% 100%, rgba(88,130,246,.4), transparent 60%), linear-gradient(135deg, #0d152c, #16327a 55%, #1b46b3);
+  box-shadow: 0 30px 70px -34px rgba(19,46,121,.9); }
 .st-res::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.07) 1.5px, transparent 1.5px); background-size: 22px 22px; pointer-events: none; }
 .st-res > * { position: relative; z-index: 1; }
 .st-ring { position: relative; width: 250px; height: 250px; }
@@ -653,7 +653,7 @@ body.st-running .st-shell { margin: 0; }
 /* ===== «نتائج مفصلة»: العين + نافذة المراجعة ===== */
 .st-res-h small { display: inline-flex; align-items: center; gap: 6px; margin-inline-start: 12px; font-size: 13px; font-weight: 700; color: var(--muted); }
 .st-eye { display: inline-grid; place-items: center; width: 44px; height: 34px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease; }
-.st-eye:hover, .st-eye:focus-visible { border-color: var(--brand, #e3163f); color: var(--brand, #e3163f); background: color-mix(in srgb, var(--brand, #e3163f) 8%, var(--surface)); }
+.st-eye:hover, .st-eye:focus-visible { border-color: var(--brand, #265be3); color: var(--brand, #265be3); background: color-mix(in srgb, var(--brand, #265be3) 8%, var(--surface)); }
 .st-review.is-open { position: fixed; inset: 0; z-index: 3000; display: flex; flex-direction: column; padding: max(16px, 3vh) max(12px, 3vw); background: rgba(8, 10, 20, .62); visibility: visible; pointer-events: auto; contain: none; }
 .st-review.is-open * { visibility: visible !important; }
 .st-review.is-open .st-frame[hidden] { display: none; }
@@ -662,7 +662,7 @@ body.st-running .st-shell { margin: 0; }
 .st-rv-head small { display: block; color: var(--muted); font-size: 12.5px; font-weight: 700; }
 .st-rv-head b { font-size: 1.15rem; font-weight: 900; }
 .st-rv-x { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface-2); color: var(--text); font: inherit; font-size: 16px; cursor: pointer; }
-.st-rv-x:hover { border-color: var(--brand, #e3163f); color: var(--brand, #e3163f); }
+.st-rv-x:hover { border-color: var(--brand, #265be3); color: var(--brand, #265be3); }
 .st-review.is-open .st-frames { box-sizing: border-box; flex: 1; min-height: 0; width: 100%; max-width: 1150px; margin: 0 auto; padding: 0; border-radius: 0 0 20px 20px; overflow: hidden; background: var(--paper); box-shadow: 0 30px 80px -20px rgba(0,0,0,.6); }
 .st-review.is-open .st-frame { height: 100%; }
 html.st-rv-lock, html.st-rv-lock body { overflow: hidden; }

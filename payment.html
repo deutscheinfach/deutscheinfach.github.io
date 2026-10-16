@@ -4,7 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
-<script src="assets/diag.js?v=da69f87d"></script>
+<script src="assets/diag.js?v=c22ac99e"></script>
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=582e5683"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,9 +15,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="assets/theme.css?v=999bdbe8">
-<link rel="stylesheet" href="assets/premium-wa.css?v=b31eca04">
-<link rel="stylesheet" href="assets/ultra.css?v=4983e5da">
+<link rel="stylesheet" href="assets/theme.css?v=e6333c7e">
+<link rel="stylesheet" href="assets/premium-wa.css?v=6d49a4b0">
+<link rel="stylesheet" href="assets/ultra.css?v=79eb2153">
 <script src="assets/stars.js?v=93c940c6" defer></script>
 <script src="assets/progress.js?v=222ee4fc"></script>
 <style>
@@ -28,8 +28,8 @@
     --pp-muted: #6b6274;
     --pp-card: #ffffff;
     --pp-line: rgba(26,18,32,.09);
-    --pp-wine: #7a0d26;
-    --pp-wine-2: #b30e30;
+    --pp-wine: #16327a;
+    --pp-wine-2: #1b46b3;
     --pp-gold: #f2b705;
     --pp-gold-2: #ffd75a;
     --pp-ok: #12a150;
@@ -64,8 +64,8 @@ html:has(body.pp)::after { display: none; }
     text-align: center;
     background:
         radial-gradient(55% 70% at 15% 0%, rgba(242,183,5,.32), transparent 60%),
-        radial-gradient(60% 80% at 100% 100%, rgba(255,74,107,.45), transparent 60%),
-        linear-gradient(140deg, #22060f 0%, #5e0a1f 45%, #9c0f2e 100%);
+        radial-gradient(60% 80% at 100% 100%, rgba(88,130,246,.45), transparent 60%),
+        linear-gradient(140deg, #22060f 0%, #0f245e 45%, #173a99 100%);
 }
 .pp-hero::before {
     content: "";
@@ -79,7 +79,7 @@ html:has(body.pp)::after { display: none; }
 .pp-sparks { position: absolute; inset: 0; pointer-events: none; }
 .pp-orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; pointer-events: none; animation: pp-float 14s ease-in-out infinite; }
 .pp-orb.a { width: 380px; height: 380px; background: #f2b705; top: -160px; left: -120px; opacity: .28; }
-.pp-orb.b { width: 420px; height: 420px; background: #ff3d6a; bottom: -220px; right: -140px; opacity: .35; animation-delay: -6s; }
+.pp-orb.b { width: 420px; height: 420px; background: #4c79f6; bottom: -220px; right: -140px; opacity: .35; animation-delay: -6s; }
 @keyframes pp-float { 50% { transform: translate(40px, 30px) scale(1.08); } }
 .pp-spark { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: #ffd75a; box-shadow: 0 0 10px #ffd75a; opacity: 0; animation: pp-spark 6s ease-in-out infinite; pointer-events: none; }
 @keyframes pp-spark { 0% { opacity: 0; transform: translateY(20px) scale(.5); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(-120px) scale(1); } }
@@ -123,7 +123,7 @@ html:has(body.pp)::after { display: none; }
 @media (hover: hover) { .pp-card:hover { transform: translateY(-8px); box-shadow: 0 40px 70px -34px rgba(40,10,20,.55); } }
 
 /* العرض المميز: إطار ذهبي كيدور */
-.pp-card.is-best { border: 0; padding: 32px 28px 28px; background: linear-gradient(var(--pp-card), var(--pp-card)) padding-box, conic-gradient(from var(--pp-a, 0deg), #f2b705, #ff3d6a, #ffe58a, #b30e30, #f2b705) border-box; border: 2.5px solid transparent; animation: pp-in .7s cubic-bezier(.2,.8,.2,1) forwards, pp-spin 5s linear infinite; box-shadow: 0 40px 80px -30px rgba(179,14,48,.55), 0 0 0 6px rgba(242,183,5,.08); }
+.pp-card.is-best { border: 0; padding: 32px 28px 28px; background: linear-gradient(var(--pp-card), var(--pp-card)) padding-box, conic-gradient(from var(--pp-a, 0deg), #f2b705, #4c79f6, #ffe58a, #1b46b3, #f2b705) border-box; border: 2.5px solid transparent; animation: pp-in .7s cubic-bezier(.2,.8,.2,1) forwards, pp-spin 5s linear infinite; box-shadow: 0 40px 80px -30px rgba(23,63,175,.55), 0 0 0 6px rgba(242,183,5,.08); }
 @property --pp-a { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
 @keyframes pp-spin { to { --pp-a: 360deg; } }
 @media (min-width: 981px) { .pp-card.is-best { transform: scale(1.04); } .pp-card.is-best:hover { transform: scale(1.04) translateY(-8px); } }
@@ -131,7 +131,7 @@ html:has(body.pp)::after { display: none; }
 .pp-ribbon svg { width: 15px; height: 15px; }
 
 .pp-ico { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; margin-bottom: 16px; color: var(--pp-wine-2); background: color-mix(in srgb, var(--pp-wine-2) 10%, transparent); }
-html[data-theme="dark"] .pp-ico { color: #ff7a95; }
+html[data-theme="dark"] .pp-ico { color: #85a4f9; }
 .is-best .pp-ico { color: #2a1500; background: linear-gradient(135deg, #ffe58a, #f2b705); box-shadow: 0 10px 22px -10px #f2b705; }
 .pp-ico svg { width: 26px; height: 26px; }
 .pp-name { margin: 0; font-size: 1.35rem; font-weight: 900; }
@@ -157,11 +157,11 @@ html[data-theme="dark"] .pp-feat li.wa { color: #3ddc84; }
     display: flex; align-items: center; justify-content: center; gap: 10px;
     min-height: 56px; border-radius: 16px;
     font-weight: 900; font-size: 16px; text-decoration: none;
-    color: #fff; background: linear-gradient(135deg, #c2183f, #7a0d26);
-    box-shadow: 0 16px 30px -16px #7a0d26;
+    color: #fff; background: linear-gradient(135deg, #2651c2, #16327a);
+    box-shadow: 0 16px 30px -16px #16327a;
     transition: transform .2s, box-shadow .2s, filter .2s;
 }
-.pp-go:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 20px 36px -16px #7a0d26; }
+.pp-go:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 20px 36px -16px #16327a; }
 .pp-go svg { width: 20px; height: 20px; flex: none; }
 .pp-go::after { content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.4), transparent); transform: skewX(-18deg); animation: pp-sweep 3.4s ease-in-out infinite; }
 @keyframes pp-sweep { 0%, 55% { left: -60%; } 100% { left: 130%; } }
@@ -176,7 +176,7 @@ html[data-theme="dark"] .pp-feat li.wa { color: #3ddc84; }
 .pp-step { position: relative; padding: 24px 22px; border-radius: 22px; background: var(--pp-card); border: 1px solid var(--pp-line); }
 .pp-step::before { counter-increment: st; content: counter(st); position: absolute; top: 18px; left: 20px; font-size: 2.6rem; font-weight: 900; line-height: 1; color: color-mix(in srgb, var(--pp-wine-2) 14%, transparent); }
 html[data-theme="dark"] .pp-step::before { color: rgba(255,255,255,.08); }
-.pp-step i { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; margin-bottom: 12px; color: #fff; background: linear-gradient(135deg, #c2183f, #7a0d26); }
+.pp-step i { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; margin-bottom: 12px; color: #fff; background: linear-gradient(135deg, #2651c2, #16327a); }
 .pp-step i svg { width: 22px; height: 22px; }
 .pp-step b { display: block; font-size: 1.05rem; font-weight: 900; margin-bottom: 4px; }
 .pp-step span { color: var(--pp-muted); font-size: 14px; line-height: 1.75; }
@@ -228,7 +228,7 @@ html[data-theme="dark"] .pp-step::before { color: rgba(255,255,255,.08); }
 <link rel="icon" href="assets/icon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e3163f">
+<meta name="theme-color" content="#265be3">
 <!-- seo:end -->
 </head>
 
@@ -445,7 +445,7 @@ html[data-theme="dark"] .pp-step::before { color: rgba(255,255,255,.08); }
 
 <script src="assets/session-guard.js?v=f21ad6fd"></script>
 <script src="assets/presence.js?v=ea34c6d5" defer></script>
-<script src="assets/app-install.js?v=90458a45" defer></script>
+<script src="assets/app-install.js?v=800fada8" defer></script>
 <script src="assets/scroll-cue.js?v=4d23dcaf" data-target="#plans,#whatsapp-premium,#ultra" defer></script>
 <script src="assets/whatsapp.js?v=56de1cb7"></script>
 </body>

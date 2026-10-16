@@ -9,8 +9,8 @@
     background:
         radial-gradient(60% 90% at 0% 0%, rgba(37,211,102,.22), transparent 60%),
         radial-gradient(50% 80% at 100% 100%, rgba(242,183,5,.18), transparent 65%),
-        linear-gradient(150deg, #3d0614 0%, #7a0d26 55%, #a3122f 100%);
-    box-shadow: 0 30px 70px -36px rgba(80,6,24,.9), inset 0 0 0 1px rgba(255,255,255,.08);
+        linear-gradient(150deg, #09183f 0%, #16327a 55%, #1a3ea0 100%);
+    box-shadow: 0 30px 70px -36px rgba(10,29,81,.9), inset 0 0 0 1px rgba(255,255,255,.08);
 }
 .pwa-head { max-width: 760px; }
 .pwa-badge {
