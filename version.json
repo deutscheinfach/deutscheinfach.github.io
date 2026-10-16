@@ -1,9 +1,9 @@
 {
-  "build": "d5ac1d9d2d50",
+  "build": "4a881c44c50d",
   "assets": {
     "assets/app-install.js": "800fada8",
     "assets/auth.css": "37532702",
-    "assets/diag.js": "7dc11c77",
+    "assets/diag.js": "a075ed8c",
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
     "assets/fx.js": "0438fb69",
@@ -46,7 +46,7 @@
     "assets/session-guard.js": "f21ad6fd",
     "assets/share-card.js": "73834578",
     "assets/site-header.css": "6b2324cf",
-    "assets/site-header.js": "073ac350",
+    "assets/site-header.js": "1ccfe76b",
     "assets/sprechen-b1-teil2.js": "3ffe476e",
     "assets/sprechen-b1.js": "e2c3a8cd",
     "assets/sprechen-b2-content.js": "26f07c37",
