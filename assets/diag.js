@@ -46,7 +46,7 @@
     if (window.__deDiag) return;
 
     const LIVE = /(^|\.)deutsch-einfach\.online$/.test(location.hostname);
-    const URL = "https://firestore.googleapis.com/v1/projects/deutsch-einfach-4c81f/databases/(default)/documents/diag"
+    const DIAG_URL = "https://firestore.googleapis.com/v1/projects/deutsch-einfach-4c81f/databases/(default)/documents/diag"
         + "?key=AIzaSyDHMmaHLYRRHfdRDj-hf7s5LOqeWPTiOxU";
     const MAX = 6;
     const sent = new Set();
@@ -87,7 +87,7 @@
                 premium: { booleanValue: window.__deutschEinfachIsPremium === true },
                 at:      { timestampValue: new Date().toISOString() }
             };
-            fetch(URL, {
+            fetch(DIAG_URL, {
                 method: "POST",
                 keepalive: true,
                 headers: { "Content-Type": "application/json" },
@@ -138,11 +138,20 @@
            الموقع و Firebase كيتسجلو (inline: الرابط ديال الصفحة) */
         if (e.filename && e.filename.indexOf(location.origin) !== 0
             && e.filename.indexOf("https://www.gstatic.com/") !== 0) return;
-        const where = (e.filename || "").split("/").pop().replace(/\?v=[0-9a-f]+/, "");
-        send("error", (e.message || "Error") + (where ? " @ " + where + ":" + e.lineno : ""));
+        let where = (e.filename || "").split("/").pop().replace(/\?v=[0-9a-f]+/, "");
+        let line = e.lineno;
+        /* Safari كيعطي الصفحة كـfilename (بسطر ماكاينش) ف بعض الأخطاء
+           (Maximum call stack…): الـstack كيقول الملف الحقيقي */
+        const st = where && /\.html/.test(where) && e.error && e.error.stack ? whereOf(e.error.stack) : null;
+        if (st && !/\.html/.test(st.file)) {
+            where = st.file.split("/").pop().replace(/\?v=[0-9a-f]+/, "") + " (" + where + ")";
+            line = st.line;
+        }
+        send("error", (e.message || "Error") + (where ? " @ " + where + ":" + line : ""));
     }, true);
 
     /* أول سطر ف الـ stack فيه رابط: فين طاح الخطأ (ملف:سطر) */
+    function whereOf(stack) { return where(stack); }
     function where(stack) {
         const m = String(stack || "").match(/((?:https?|chrome-extension|moz-extension|safari-(?:web-)?extension):\/\/[^\s)]+?):(\d+)(?::\d+)?\)?\s*$/m)
             || String(stack || "").match(/((?:https?|chrome-extension|moz-extension|safari-(?:web-)?extension):\/\/[^\s)]+?):(\d+)/);
