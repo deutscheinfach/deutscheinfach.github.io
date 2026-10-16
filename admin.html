@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="assets/diag.js?v=c22ac99e"></script>
+<script src="assets/diag.js?v=7dc11c77"></script>
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=582e5683"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -607,17 +607,19 @@ function paintUser() {
 
     const lab = el("label", "adm-check");
     const extend = document.createElement("input");
+    /* Premium بلا تاريخ نهاية (subscriptionEnd خاوي): ما كاينش منين نزيدو */
+    const canExtend = on && !!endOf(d);
     extend.type = "checkbox";
-    extend.checked = on;
-    extend.disabled = !on;
-    lab.append(extend, document.createTextNode(on
+    extend.checked = canExtend;
+    extend.disabled = !canExtend;
+    lab.append(extend, document.createTextNode(canExtend
         ? "زيد المدة من بعد نهاية الاشتراك الحالي (" + fmt(endOf(d)) + ")"
         : "كيبدا من اليوم"));
     box.appendChild(lab);
 
     const preview = el("p", "adm-note");
     function paintPreview() {
-        const start = extend.checked && on ? endOf(d) : new Date();
+        const start = extend.checked && canExtend ? endOf(d) : new Date();
         const end = new Date(start.getTime() + offer.days * DAY);
         preview.textContent = "غادي يولي Premium حتى: " + fmt(end);
         return end;
