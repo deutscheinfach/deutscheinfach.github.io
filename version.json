@@ -1,9 +1,9 @@
 {
-  "build": "4a881c44c50d",
+  "build": "8316ce8bb899",
   "assets": {
     "assets/app-install.js": "800fada8",
     "assets/auth.css": "37532702",
-    "assets/diag.js": "a075ed8c",
+    "assets/diag.js": "fd8b47e0",
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
     "assets/fx.js": "0438fb69",
