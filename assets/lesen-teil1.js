@@ -180,6 +180,7 @@
 
             const rows = [];        /* { select, box, text }  */
             let activeRow = null;
+            let dragJustEnded = false;
 
             /* ---- العمود ديال النصوص ---- */
             const column = el("div", "t1-texts");
@@ -260,30 +261,126 @@
                 item.appendChild(textWrap);
 
                 item.addEventListener("click", function () {
-                    const target = activeRow || rows[0];
-                    if (!target) return;
-                    /* نفس الترويسة مرتين ماشي ممكن — كنحيدوها من اللخرين */
-                    rows.forEach(function (other) {
-                        if (other !== target && other.select.value === option.value) {
-                            other.select.value = "";
-                        }
-                    });
-                    target.select.value = option.value;
-                    paintUsed();
-                    /* نمشيو للنص اللي من بعد باش ما يبقاش يتبرك بزاف */
-                    const at = rows.indexOf(target);
-                    const next = rows[at + 1];
-                    if (next) {
-                        activeRow = next;
-                        rows.forEach(function (other) {
-                            other.box.classList.toggle("is-active", other === next);
-                        });
-                    }
+                    if (dragJustEnded) return;   /* السحب كيطلق click من بعدو */
+                    assign(activeRow || rows[0], option.value);
                 });
+
+                makeDraggable(item, option);
 
                 optionRows.push({ node: item, value: option.value });
                 panel.appendChild(item);
             });
+
+            /* ---- نحطو ترويسة ف نص (بالكليك ولا بالسحب) ---- */
+            function assign(target, value) {
+                if (!target) return;
+                /* نفس الترويسة مرتين ماشي ممكن — كنحيدوها من اللخرين */
+                rows.forEach(function (other) {
+                    if (other !== target && other.select.value === value) other.select.value = "";
+                });
+                target.select.value = value;
+                paintUsed();
+                /* نمشيو للنص اللي من بعد اللي باقي خاوي */
+                const at = rows.indexOf(target);
+                const next = rows.slice(at + 1).find(function (r) { return !r.select.value; })
+                          || rows[at + 1];
+                if (next) {
+                    activeRow = next;
+                    rows.forEach(function (other) {
+                        other.box.classList.toggle("is-active", other === next);
+                    });
+                }
+            }
+
+            /* ---- السحب: هز الترويسة وحطها فوق النص ----
+               الماوس: كيبدا ملي تحرك شوية. التيليفون: ضغطة طويلة
+               (باش السكرول العادي يبقى خدام). */
+            function makeDraggable(item, option) {
+                item.addEventListener("pointerdown", function (down) {
+                    if (down.button !== 0 || item.classList.contains("is-locked")) return;
+                    const touch = down.pointerType !== "mouse";
+                    const sx = down.clientX, sy = down.clientY;
+                    let drag = null, timer = 0, lastX = sx, lastY = sy, over = null, raf = 0;
+
+                    function begin() {
+                        const r = item.getBoundingClientRect();
+                        const ghost = item.cloneNode(true);
+                        ghost.className = "t1-option t1-ghost";
+                        ghost.style.width = r.width + "px";
+                        document.body.appendChild(ghost);
+                        drag = { ghost: ghost, dx: sx - r.left, dy: sy - r.top };
+                        item.classList.add("is-dragging");
+                        document.documentElement.classList.add("t1-dragging");
+                        if (touch && navigator.vibrate) { try { navigator.vibrate(15); } catch (e) { /* */ } }
+                        place();
+                        tick();
+                    }
+                    function place() {
+                        if (!drag) return;
+                        drag.ghost.style.transform = "translate(" + (lastX - drag.dx) + "px," + (lastY - drag.dy) + "px)";
+                        const hit = document.elementFromPoint(lastX, lastY);
+                        const box = hit && hit.closest ? hit.closest(".t1-text") : null;
+                        const row = box ? rows.find(function (r) { return r.box === box; }) : null;
+                        if (over && over !== row) over.box.classList.remove("is-drop");
+                        over = row || null;
+                        if (over) over.box.classList.add("is-drop");
+                    }
+                    /* سكرول أوتوماتيكي ملي تقرب للفوق ولا للتحت */
+                    function tick() {
+                        if (!drag) return;
+                        const edge = 90, h = window.innerHeight;
+                        let v = 0;
+                        if (lastY < edge) v = -Math.ceil((edge - lastY) / 6);
+                        else if (lastY > h - edge) v = Math.ceil((lastY - (h - edge)) / 6);
+                        if (v) { window.scrollBy(0, v); place(); }
+                        raf = requestAnimationFrame(tick);
+                    }
+                    function move(ev) {
+                        if (ev.pointerId !== down.pointerId) return;
+                        lastX = ev.clientX; lastY = ev.clientY;
+                        const far = Math.abs(lastX - sx) + Math.abs(lastY - sy);
+                        if (!drag) {
+                            if (touch) { if (far > 10) stop(); return; }   /* سكرول، ماشي سحب */
+                            if (far > 6) begin();
+                            return;
+                        }
+                        place();
+                    }
+                    function blockScroll(ev) { if (drag) ev.preventDefault(); }
+                    function up(ev) {
+                        if (ev.pointerId !== down.pointerId) return;
+                        if (drag && over && ev.type === "pointerup") {
+                            assign(over, option.value);
+                        }
+                        stop();
+                    }
+                    function stop() {
+                        clearTimeout(timer);
+                        cancelAnimationFrame(raf);
+                        window.removeEventListener("pointermove", move);
+                        window.removeEventListener("pointerup", up);
+                        window.removeEventListener("pointercancel", up);
+                        document.removeEventListener("touchmove", blockScroll, { passive: false });
+                        if (over) over.box.classList.remove("is-drop");
+                        if (drag) {
+                            drag.ghost.remove();
+                            item.classList.remove("is-dragging");
+                            document.documentElement.classList.remove("t1-dragging");
+                            dragJustEnded = true;
+                            setTimeout(function () { dragJustEnded = false; }, 0);
+                        }
+                        drag = null; over = null;
+                    }
+
+                    window.addEventListener("pointermove", move);
+                    window.addEventListener("pointerup", up);
+                    window.addEventListener("pointercancel", up);
+                    document.addEventListener("touchmove", blockScroll, { passive: false });
+                    if (touch) timer = setTimeout(begin, 320);
+                });
+                /* الضغطة الطويلة ف التيليفون ما تحلّش القائمة ديال النظام */
+                item.addEventListener("contextmenu", function (ev) { ev.preventDefault(); });
+            }
 
             side.appendChild(panel);
 
@@ -313,6 +410,9 @@
                                  .filter(Boolean);
                 optionRows.forEach(function (item) {
                     item.node.classList.toggle("is-used", used.indexOf(item.value) !== -1);
+                });
+                rows.forEach(function (row) {
+                    row.box.classList.toggle("has-pick", !!row.select.value);
                 });
                 progress.textContent = used.length + "/" + rows.length;
                 progress.style.setProperty("--p", rows.length ? (used.length) / rows.length : 0);
