@@ -568,7 +568,8 @@
        (locked-modal.js، premium-gate.js) كيقراو هاد الحالة وكيقولو
        «مشكل ف الأنترنت» بلاصة القفل. */
     function setPremiumState(state, signedIn) {
-        if (state === "error" && window.__deDiag) {
+        /* زائر بلا حساب (Firebase ما تحملش ف Facebook/Instagram…): ماكاين حتى اشتراك نتأكدو منو */
+        if (state === "error" && window.__deDiag && (signedIn || !!recall())) {
             window.__deDiag("fail", "الحساب: Firebase ما قدرش يتأكد من الاشتراك" + (signedIn ? "" : " (ما تحملش)"));
         }
         window.__dePremiumState = state;
