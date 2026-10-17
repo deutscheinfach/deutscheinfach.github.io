@@ -216,7 +216,9 @@
         });
     }
 
-    window.__lesenPremiumFetch = function (themaId) {
+    window.__lesenPremiumFetch = function (themaId, opts) {
+        /* opts.bg: تحميل ف الخفا (prefetch) — البطء ديالو ما كيتسجلش، الطالب ما تسناه */
+        const bg = !!(opts && opts.bg);
         const user = currentUser();
         /* الكاش ديال المتصفح: ف اللحظة، بلا ما نتسناو Firebase */
         const uid = user ? user.uid : (window.__deutschEinfachIsPremium ? lastUid() : "");
@@ -227,7 +229,7 @@
         }
         if (!user && (window.__deutschEinfachIsPremium || window.parent !== window)) {
             return waitUser(10000).then(function (late) {
-                return late ? window.__lesenPremiumFetch(themaId) : { ok: false, why: "ماشي داخل بحساب." };
+                return late ? window.__lesenPremiumFetch(themaId, opts) : { ok: false, why: "ماشي داخل بحساب." };
             });
         }
         if (!user) {
@@ -284,7 +286,7 @@
             }
             if (window.__deDiag) {
                 if (!result.ok && result.status !== 404) window.__deDiag("fail", "Lesen Worker: " + (result.status || "") + " " + (result.why || "") + " [" + themaId + "]", { ms: Date.now() - t0 });
-                else if (Date.now() - t0 > 8000) window.__deDiag("slow", "Lesen Worker بطا: " + Math.round((Date.now() - t0) / 1000) + "s [" + themaId + "]", { ms: Date.now() - t0 });
+                else if (!bg && Date.now() - t0 > 8000) window.__deDiag("slow", "Lesen Worker بطا: " + Math.round((Date.now() - t0) / 1000) + "s [" + themaId + "]", { ms: Date.now() - t0 });
             }
 
             if (result.ok) {
@@ -327,7 +329,7 @@
         function next() {
             if (prefetching !== run || !run.left.length || !window.__deutschEinfachIsPremium) return;
             const id = run.left.shift();
-            Promise.resolve(window.__lesenPremiumFetch(id)).catch(function () {}).then(function () {
+            Promise.resolve(window.__lesenPremiumFetch(id, { bg: true })).catch(function () {}).then(function () {
                 setTimeout(next, 120);
             });
         }
@@ -340,7 +342,7 @@
     window.__lesenPremiumWarm = function (themaId) {
         try {
             if (!window.__deutschEinfachIsPremium || !currentUser()) return;
-            window.__lesenPremiumFetch(themaId);
+            window.__lesenPremiumFetch(themaId, { bg: true });
         } catch (error) { /* غير تسريع */ }
     };
 })();

@@ -61,6 +61,8 @@
             if (!text || sent.has(sig) || count >= MAX) return;
             /* بلا أنترنت: «ما وصلش» / «بطا» عاديين. الباقي كيتخبا ويتصيفط ملي يرجع */
             if (navigator.onLine === false && (type === "fail" || type === "slow")) return;
+            /* 3G / 2G: البطء عادي ف هاد الشبكة، ماشي مشكل ف الموقع */
+            if (type === "slow" && /(^|-)(2g|3g)$/.test((navigator.connection || {}).effectiveType || "")) return;
             /* بلا أنترنت، طلب طاح = عادي (ماشي خطأ ف الكود) */
             if (navigator.onLine === false && /NetworkError|Failed to fetch|Load failed|network ?error|offline/i.test(text)) return;
             if (navigator.onLine === false) {
