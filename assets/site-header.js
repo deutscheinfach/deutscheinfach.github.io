@@ -2038,6 +2038,12 @@
                 sessionStorage.setItem("de-build", manifest.build);
             } catch (error) { return; }
 
+            /* الصفحات المحفوظة ف التيليفون (offline) قدام حتى هي: نجددوهم */
+            try {
+                const sw = navigator.serviceWorker && navigator.serviceWorker.controller;
+                if (sw) sw.postMessage({ type: "de-precache" });
+            } catch (error) { /* */ }
+
             const next = new URL(location.href);
             next.searchParams.set("_v", manifest.build);
             location.replace(next.toString());
