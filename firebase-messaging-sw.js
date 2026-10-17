@@ -91,6 +91,9 @@ function staleWhileRevalidate(request) {
 /* الصفحة من الشبكة. إلا طاحت (ولا بقات ثانية بلا جواب) → النسخة
    اللي شفنا آخر مرة، وإلا offline.html. */
 const SLOW_MS = 1000;
+/* الراوتر (تبديل القسم) ما كيمرش من فحص النسخة (version.json):
+   كنعطيو الشبكة وقت أكثر باش ما نركبوش HTML قديم */
+const ROUTER_SLOW_MS = 3500;
 
 function pageFromNetwork(event) {
     const request = event.request;
@@ -114,7 +117,11 @@ function pageFromNetwork(event) {
     };
     /* أنترنت ضعيفة (4G/3G مقطعة): ما نتسناوش أكثر من ثانية — النسخة
        المحفوظة كتبان دغيا، والجديدة كتتحفظ للمرة الجاية. بلا أنترنت: دغيا. */
-    const slow = new Promise(function (resolve) {
+    /* ?_v=<build>: الصفحة لقات راسها قديمة (site-header.js) وكتطلب الجديدة.
+       هنا ما نعطيوهاش القديمة من الكاش — غير إلا الشبكة طاحت نيشان.
+       (بلا هادي: الصفحة القديمة، باللون القديم، كانت كترجع مرة أخرى.) */
+    const wantsFresh = /[?&]_v=/.test(request.url);
+    const slow = wantsFresh ? new Promise(function () {}) : new Promise(function (resolve) {
         setTimeout(function () {
             cached().then(function (hit) { if (hit) resolve(hit); });
         }, self.navigator && self.navigator.onLine === false ? 0 : SLOW_MS);
@@ -224,7 +231,7 @@ function htmlFetch(request) {
     const slow = new Promise(function (resolve) {
         setTimeout(function () {
             cached().then(function (hit) { if (hit) resolve(hit); });
-        }, self.navigator && self.navigator.onLine === false ? 0 : SLOW_MS);
+        }, self.navigator && self.navigator.onLine === false ? 0 : ROUTER_SLOW_MS);
     });
     return Promise.race([net, slow]).catch(function () {
         return cached().then(function (hit) {
@@ -257,7 +264,13 @@ self.addEventListener("fetch", function (event) {
     }
 
     if (isImmutable(url)) {
-        event.respondWith(cacheFirst(request, url).catch(function () { return fetch(request); }));
+        /* ملف بـ ?v جديد ما وصلش (الأنترنت طاحت ف وسط التحميل): النسخة اللي
+           عندنا من نفس الملف (?v قديم) حسن من صفحة بلا CSS/JS */
+        event.respondWith(cacheFirst(request, url).catch(function () {
+            return caches.open(ASSET_CACHE).then(function (cache) {
+                return cache.match(request, { ignoreSearch: true });
+            }).then(function (hit) { return hit || fetch(request); });
+        }));
     } else if (url.hostname === "fonts.googleapis.com") {
         event.respondWith(staleWhileRevalidate(request).catch(function () { return fetch(request); }));
     }
