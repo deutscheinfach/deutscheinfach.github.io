@@ -264,7 +264,13 @@ self.addEventListener("fetch", function (event) {
     }
 
     if (isImmutable(url)) {
-        event.respondWith(cacheFirst(request, url).catch(function () { return fetch(request); }));
+        /* ملف بـ ?v جديد ما وصلش (الأنترنت طاحت ف وسط التحميل): النسخة اللي
+           عندنا من نفس الملف (?v قديم) حسن من صفحة بلا CSS/JS */
+        event.respondWith(cacheFirst(request, url).catch(function () {
+            return caches.open(ASSET_CACHE).then(function (cache) {
+                return cache.match(request, { ignoreSearch: true });
+            }).then(function (hit) { return hit || fetch(request); });
+        }));
     } else if (url.hostname === "fonts.googleapis.com") {
         event.respondWith(staleWhileRevalidate(request).catch(function () { return fetch(request); }));
     }
