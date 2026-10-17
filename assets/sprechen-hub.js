@@ -155,7 +155,7 @@
             if (stale()) return;
             const lvl = "sprechen-" + LEVEL.toLowerCase() + "-";
             const fetchOne = function (id) {
-                return Promise.resolve(window.__lesenPremiumFetch(id)).catch(function () { return null; });
+                return Promise.resolve(window.__lesenPremiumFetch(id, { bg: true })).catch(function () { return null; });
             };
             const locked = topics.filter(function (t) { return t.locked && !t.soon && !CONTENT[t.id]; });
             const bundles = [];
