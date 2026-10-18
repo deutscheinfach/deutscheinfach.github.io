@@ -75,6 +75,18 @@ export default {
       }
     }
 
+    /* ===== فيديوهات الشرح (GET ?videos=1) =====
+       خريطة وحدة ف KV («videos»): { "<مفتاح الموضوع>": "<YouTube ID>" }.
+       عامة (ماشي سر): غير IDs ديال YouTube. الأدمين كيبدلها من الموقع
+       (POST adminSetVideo تحت). */
+    if (request.method === "GET" && new URL(request.url).searchParams.get("videos") === "1") {
+      if (!env.TOPICS) return jsonResponse({}, 200, allowedOrigin);
+      const text = await env.TOPICS.get("videos", { type: "text", cacheTtl: 60 });
+      const headers = corsHeaders(allowedOrigin);
+      headers["Cache-Control"] = "public, max-age=120";
+      return new Response(text || "{}", { status: 200, headers });
+    }
+
     if (request.method !== "POST") {
       return jsonResponse(
         { error: "Method not allowed" },
@@ -414,6 +426,35 @@ export default {
         } catch (e) {
           return jsonResponse({ error: "reset_failed", details: e.message }, 502, allowedOrigin);
         }
+      }
+
+      /* الأدمين كيزيد / كيحيد فيديو ديال موضوع: { adminSetVideo: { key, yt }, idToken }
+         yt خاوي = نحيدو الفيديو */
+      if (body.adminSetVideo && typeof body.adminSetVideo.key === "string") {
+        const key = body.adminSetVideo.key;
+        const yt = String(body.adminSetVideo.yt || "");
+        if (!/^[a-z0-9][a-z0-9._-]{2,120}$/i.test(key) || (yt && !/^[A-Za-z0-9_-]{11}$/.test(yt))) {
+          return jsonResponse({ error: "bad_video" }, 400, allowedOrigin);
+        }
+        if (!env.FIREBASE_SERVICE_ACCOUNT || !env.TOPICS) {
+          return jsonResponse({ error: "video_not_configured" }, 500, allowedOrigin);
+        }
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+        const me = await readUserFields(caller.sub, accessToken);
+        if (!me || me.isAdmin?.booleanValue !== true) {
+          return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+        }
+        let map = {};
+        try { map = JSON.parse((await env.TOPICS.get("videos", { type: "text" })) || "{}") || {}; } catch (e) { map = {}; }
+        if (yt) map[key] = yt; else delete map[key];
+        await env.TOPICS.put("videos", JSON.stringify(map));
+        return jsonResponse({ ok: true, videos: map }, 200, allowedOrigin);
       }
 
       if (body.adminSyncUsers === true) {

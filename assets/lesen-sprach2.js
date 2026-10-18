@@ -80,6 +80,8 @@
         head.appendChild(titleEl);
         head.appendChild(el("div", "t1-kicker", task.kicker || "SPRACHBAUSTEINE TEIL 2"));
         wrap.appendChild(head);
+        /* فيديو الشرح ديال هاد الجزء (assets/topic-video.js) */
+        if (window.__deVideo) window.__deVideo.mountLesen(wrap, "sprach2", task && task.title);
 
         const board = el("div", "t1-board t1-stagger");
         wrap.appendChild(board);
