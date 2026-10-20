@@ -199,7 +199,10 @@
                 box.appendChild(top);
                 if (window.__deStory) {
                     const want = sits.find(function (sit, i) { return String(sit.no || (i + 11)) === String(wantFor[ad.key]); });
-                    window.__deStory.attach(top, (ad.head || "") + " " + (ad.body || ""), { head: want ? want.de : "" });
+                    const baseAds = index > 0 ? (variants[0].ads || []) : [];
+                    const base = baseAds.find(function (x) { return x.key === ad.key; });
+                    window.__deStory.attach(top, (ad.head || "") + " " + (ad.body || ""), { head: want ? want.de : "" },
+                        { variant: index, pos: ad.key, baseText: base ? (base.head || "") + " " + (base.body || "") : "" });
                 }
 
                 box.appendChild(el("span", "t3-ad-head", ad.head || ""));
