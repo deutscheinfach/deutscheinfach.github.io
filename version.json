@@ -1,5 +1,5 @@
 {
-  "build": "bdcafe9408a4",
+  "build": "45f6dc890d8f",
   "assets": {
     "assets/app-install.js": "800fada8",
     "assets/auth.css": "37532702",
@@ -42,7 +42,7 @@
     "assets/schreiben-topics-b1.js": "5c35fe86",
     "assets/schreiben-topics-b2.js": "4b0aa04a",
     "assets/scroll-cue.js": "4d23dcaf",
-    "assets/section.css": "652ccc60",
+    "assets/section.css": "4e508082",
     "assets/selbsttest.js": "966af378",
     "assets/session-guard.js": "f21ad6fd",
     "assets/share-card.js": "73834578",
