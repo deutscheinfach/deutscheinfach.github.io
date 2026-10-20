@@ -428,6 +428,61 @@ export default {
         }
       }
 
+      /* ===== قصص الربط (Keyword story) =====
+         KV «stories:<doc>» = { "<key ديال النص>": { h, t, story } }
+         القراية: { storiesGet: doc, idToken } → غير Premium (ولا الأدمين).
+         الكتابة: { adminSetStory: { doc, key, h, t, story }, idToken } → غير الأدمين
+         (story خاوية = نحيدو القصة). */
+      const STORY_DOC = /^[a-z0-9][a-z0-9._-]{2,120}$/i;
+      if (typeof body.storiesGet === "string" || body.adminSetStory) {
+        if (!env.TOPICS) return jsonResponse({ error: "kv_missing" }, 500, allowedOrigin);
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        const isAdminCaller = async () => {
+          if (!env.FIREBASE_SERVICE_ACCOUNT) return false;
+          const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+          const me = await readUserFields(caller.sub, accessToken);
+          return !!me && me.isAdmin?.booleanValue === true;
+        };
+        const readMap = async (doc) => {
+          try { return JSON.parse((await env.TOPICS.get("stories:" + doc, { type: "text" })) || "{}") || {}; } catch (e) { return {}; }
+        };
+
+        if (typeof body.storiesGet === "string") {
+          const doc = body.storiesGet;
+          if (!STORY_DOC.test(doc)) return jsonResponse({ error: "bad_doc" }, 400, allowedOrigin);
+          let ok = false;
+          try { ok = await hasActiveSubscription(caller.sub, body.idToken); } catch (e) { ok = false; }
+          if (!ok) ok = await isAdminCaller();
+          if (!ok) return jsonResponse({ error: "not_subscribed" }, 403, allowedOrigin);
+          return jsonResponse({ stories: await readMap(doc) }, 200, allowedOrigin);
+        }
+
+        const st = body.adminSetStory || {};
+        const doc = String(st.doc || ""), key = String(st.key || "");
+        if (!STORY_DOC.test(doc) || !/^[a-z0-9_-]{2,64}$/i.test(key)) {
+          return jsonResponse({ error: "bad_story" }, 400, allowedOrigin);
+        }
+        if (!(await isAdminCaller())) return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+        const map = await readMap(doc);
+        const story = String(st.story || "").trim().slice(0, 1500);
+        if (story) {
+          map[key] = {
+            h: String(st.h || "").trim().slice(0, 120),
+            t: String(st.t || "").trim().slice(0, 120),
+            story: story
+          };
+        } else {
+          delete map[key];
+        }
+        await env.TOPICS.put("stories:" + doc, JSON.stringify(map));
+        return jsonResponse({ ok: true, stories: map }, 200, allowedOrigin);
+      }
+
       /* الأدمين كيزيد / كيحيد فيديو ديال موضوع: { adminSetVideo: { key, yt }, idToken }
          yt خاوي = نحيدو الفيديو */
       if (body.adminSetVideo && typeof body.adminSetVideo.key === "string") {
