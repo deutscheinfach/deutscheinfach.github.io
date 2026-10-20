@@ -18,6 +18,7 @@
 <script src="assets/progress.js?v=222ee4fc"></script>
 <script src="assets/hoeren-premium.js?v=fd4e4d09"></script>
 <script src="assets/topic-video.js?v=f0b1cfa8"></script>
+<script src="assets/keyword-story.js?v=e85e10d6"></script>
 <script src="assets/kw-custom.js?v=8f671aa3" defer></script>
 <script src="assets/hoeren-keys.js?v=91afef95" defer></script>
 <script src="assets/hoeren-toc.js?v=f5f43865" defer></script>
@@ -1351,6 +1352,8 @@ window.__deutschEinfachPremiumReady = (async function () {
     wrap.appendChild(intro);
     /* فيديو الشرح (assets/topic-video.js) */
     if (window.__deVideo) window.__deVideo.mount(wrap, window.__deVideo.key("hoeren", "b2", "teil3", theme.quizId || theme.title), { title: theme.title });
+    /* 🧠 قصة الربط (assets/keyword-story.js): وحدة لكل موضوع، الأدمين كيكتبها */
+    if (window.__deStory) window.__deStory.attachTheme(wrap, { doc: "hoeren-b2-teil3", id: theme.quizId || theme.title });
 
     /* ملاحظة هامة (مثلاً: الجواب كيتبدل مع شي موضوع ديال Lesen) */
     if (theme.note) {
