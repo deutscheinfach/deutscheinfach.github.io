@@ -3946,3 +3946,18 @@ html[data-theme="dark"] body .t2 .t1-texts {
     color: #1c1a16;
 }
 html[data-theme="dark"] body .t2 .t1-texts > .t1-intro { color: #5e584c; }
+
+/* Sprachbausteine Teil 1 ف الوضع الفاتح: النص والاختيارات ف نفس «الورقة البيج»
+   ديال الوضع الداكن (بلاصة الأبيض) — كنبدلو غير التوكنز ديال v6 داخل اللوحة. */
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-board:has(.sp-choices) {
+    --tp-card: #fffdf8;
+    --tp-soft: #f3eddf;
+    --tp-line: rgba(214,178,94,.55);
+    --tp-line-2: rgba(28,26,22,.12);
+    --tp-ink: #1c1a16;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-board:has(.sp-choices) :is(.t1-texts, .t1-panel) {
+    background: linear-gradient(180deg, #fffdf8, #faf6ec) !important;
+    border-color: rgba(214,178,94,.55) !important;
+}
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-board:has(.sp-choices) .t1-panel .t1-option .t1-option-key { color: #6b4f14; }
