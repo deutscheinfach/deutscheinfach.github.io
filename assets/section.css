@@ -3910,3 +3910,19 @@ html body .t1-text.is-drop {
 html.is-lesen-topic:not([data-theme="dark"]) body .t1-text.has-pick .t1-select {
     background: #fbf3f4; border: 1px solid rgba(28,54,122,.35); color: #161a2b; font-weight: 800;
 }
+
+/* Sprachbausteine 1: الاختيار بلا .t1-option-text (النص نيشان ف الزر) —
+   كان كيطلع لفوق وبلا هامش ف الستايل الجديد */
+html.is-lesen-topic body .t1-panel .t1-option > .t1-option-de {
+    align-self: center;
+    padding: 8px 12px;
+}
+
+/* Teil 2 و Sprachbausteine ف الوضع الداكن: الفقرات كتبقى ف «ورقة بيضا»
+   (الكتابة ديالها كحلة) — الحاوية كانت داكنة والنص ما كيبانش */
+html[data-theme="dark"] body .t2 .t1-texts {
+    background: linear-gradient(180deg, #fffdf8, #faf6ec) !important;
+    border-color: rgba(214,178,94,.55) !important;
+    color: #1c1a16;
+}
+html[data-theme="dark"] body .t2 .t1-texts > .t1-intro { color: #5e584c; }
