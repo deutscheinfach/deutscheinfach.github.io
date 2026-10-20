@@ -16,8 +16,12 @@
    ملي الأدمين كيبدلها ف المعدل كتتحفظ ف key ديال النسخة (v<رقم>-<بلاصة>)،
    والأساسي ما كيتقاسش. قصة خاوية ف المعدل = يرجع يورث من الأساسي.
 
-   Hören: قصة وحدة لكل موضوع — attachTheme(container, { doc, id, title })
-   doc = hoeren-b2-teil1 · key = hash(quizId ولا العنوان). الكلمات: ف السؤال ↔ ف الأوديو.
+   Hören: قصة وحدة لكل موضوع — attachTheme(container, { doc, id, rows })
+   doc = hoeren-b2-teil1 · key = hash(quizId ولا العنوان).
+   rows = الجمل اللي جوابها Richtig ({ n, text }): الأدمين كيكتب كلمة مفتاحية لكل
+   جملة، والطالب كيشوف «رقم الجملة → الكلمة» ومن تحت القصة.
+   الكلمات كيتخزنو ف h و t ديال الـWorker بحال «1=Bundesbank|4=Lehrer»
+   (120 حرف لكل واحد، إذن كنعمرو h عاد t).
 
    غير المشترك: الزر كيبان بقفل 🔒، والبركة كتحل نافذة Premium. */
 (function () {
@@ -146,12 +150,53 @@
         return body;
     }
 
-    /* السميات ديال الكلمتين: Lesen (العنوان ↔ النص) ولا Hören (السؤال ↔ الأوديو) */
+    /* السميات ديال الكلمتين ف Lesen (العنوان ↔ النص) */
     const LESEN = { h: "العنوان", t: "النص" };
-    const HOEREN = { h: "السؤال", t: "الأوديو" };
 
-    function showStory(s, labels) {
-        labels = labels || LESEN;
+    /* Hören: { رقم الجملة: كلمة } ⇄ h + t */
+    function kwDecode(s) {
+        const map = {};
+        String((s && s.h) || "").concat("|", (s && s.t) || "").split("|").forEach(function (part) {
+            const m = /^\s*(\d+)\s*=(.*)$/.exec(part);
+            if (m && m[2].trim()) map[m[1]] = m[2].trim();
+        });
+        return map;
+    }
+    function kwEncode(pairs) {
+        const out = ["", ""];
+        let slot = 0;
+        pairs.forEach(function (p) {
+            const one = p.n + "=" + p.kw.replace(/[|=]/g, " ").trim();
+            while (slot < 2 && (out[slot] ? out[slot].length + 1 : 0) + one.length > 120) slot++;
+            if (slot > 1) throw new Error("الكلمات طوال بزاف — قصرهم شوية");
+            out[slot] = out[slot] ? out[slot] + "|" + one : one;
+        });
+        return { h: out[0], t: out[1] };
+    }
+    function kwList(b, map, editable) {
+        const list = el("div", "ks-rows");
+        const inputs = [];
+        b.rows.forEach(function (r) {
+            const line = el("div", "ks-r");
+            line.append(el("span", "ks-n", String(r.n)));
+            if (editable) {
+                const box = el("div", "ks-r-in");
+                box.append(el("small", "", r.text));
+                const inp = document.createElement("input");
+                inp.dir = "ltr"; inp.value = map[r.n] || ""; inp.placeholder = "الكلمة المفتاحية";
+                box.append(inp);
+                line.append(box);
+                inputs.push({ n: r.n, inp: inp });
+            } else {
+                line.append(el("span", "ks-chip", map[r.n] || "—"));
+            }
+            list.append(line);
+        });
+        return { list: list, inputs: inputs };
+    }
+
+    function showStory(s, b) {
+        const labels = LESEN;
         const body = shell("قصة الربط بالدارجة 🧠");
         /* كل كلمة فوقها منين جات: العنوان ولا النص */
         function chip(label, word) {
@@ -159,8 +204,13 @@
             box.append(el("small", "", label), el("span", "ks-chip", word || "—"));
             return box;
         }
-        const chips = el("div", "ks-chips");
-        if (s.h || s.t || labels === LESEN) {
+        let chips = el("div", "ks-chips");
+        if (b && b.rows) {
+            const map = kwDecode(s);
+            chips = b.rows.some(function (r) { return map[r.n]; })
+                ? kwList({ rows: b.rows.filter(function (r) { return map[r.n]; }) }, map, false).list
+                : el("div");
+        } else {
             chips.append(chip("من " + labels.h, s.h), el("i", "ks-link", "↔"), chip("من " + labels.t, s.t));
         }
         const scene = el("div", "ks-scene");
@@ -185,10 +235,19 @@
             f.appendChild(l);
             return inp;
         }
-        const L = b.labels || LESEN;
-        const lesen = L === LESEN;
-        const h = field("الكلمة المفتاحية ف " + L.h, "h", s ? s.h : "", b.hint.head ? "مثلا: " + b.hint.head : (lesen ? "Leistungssport" : ""));
-        const t = field("الكلمة المفتاحية ف " + L.t, "t", s ? s.t : "", lesen ? "42,2 km · Marathon" : "");
+        let h = null, t = null, kws = null;
+        if (b.rows) {
+            /* Hören: الجمل الصحيحة، وقدام كل وحدة الكلمة المفتاحية */
+            const head = el("p", "ks-field");
+            head.append(el("span", "", b.rows.length ? "الجمل الصحيحة (Richtig) — الكلمة المفتاحية ديال كل وحدة" : "ما لقيناش الأجوبة ديال هاد الموضوع (Richtig) — كتب غير القصة"));
+            f.appendChild(head);
+            const built = kwList(b, kwDecode(s), true);
+            f.appendChild(built.list);
+            kws = built.inputs;
+        } else {
+            h = field("الكلمة المفتاحية ف العنوان", "h", s ? s.h : "", b.hint.head ? "مثلا: " + b.hint.head : "Leistungssport");
+            t = field("الكلمة المفتاحية ف النص", "t", s ? s.t : "", "42,2 km · Marathon");
+        }
         const story = field(b.inherits ? "القصة بالدارجة (خليها خاوية باش ترجع ديال الأساسي)" : "القصة بالدارجة (خليها خاوية باش تحيدها)",
             "story", s ? s.story : "", "تخيل واحد…", true);
         story.dir = "rtl";
@@ -201,7 +260,10 @@
             e.preventDefault();
             save.disabled = true; msg.textContent = "كنحفظو…";
             try {
-                const out = await call({ adminSetStory: { doc: b.doc, key: b.key, h: h.value, t: t.value, story: story.value } });
+                const ht = kws
+                    ? kwEncode(kws.filter(function (k) { return k.inp.value.trim(); }).map(function (k) { return { n: k.n, kw: k.inp.value }; }))
+                    : { h: h.value, t: t.value };
+                const out = await call({ adminSetStory: { doc: b.doc, key: b.key, h: ht.h, t: ht.t, story: story.value } });
                 const d = docs[b.doc] || (docs[b.doc] = {});
                 d.map = out.stories || {};
                 try { localStorage.setItem("de-story:" + b.doc, JSON.stringify({ t: Date.now(), map: d.map })); } catch (e2) { /* */ }
@@ -216,7 +278,7 @@
         if (s) {
             const view = el("button", "ks-btn", "شوف كيف كتبان للطلبة 👀");
             view.type = "button";
-            view.addEventListener("click", function () { showStory(s, b.labels); });
+            view.addEventListener("click", function () { showStory(s, b); });
             body.appendChild(view);
         }
     }
@@ -230,7 +292,7 @@
             return;
         }
         if (!s) { showSoon(); return; }
-        showStory(s, b.labels);
+        showStory(s, b);
     }
 
     /* القصة ما زال ما تكتبات */
@@ -266,7 +328,8 @@
             btn.type = "button";
             btn.hidden = true;
             const key = keyOf(info.id);
-            mount(row, { btn: btn, doc: doc, key: key, keys: [key], inherits: false, hint: {}, labels: HOEREN });
+            const rows = (info.rows || []).map(function (r) { return { n: r.n, text: String(r.text || "") }; });
+            mount(row, { btn: btn, doc: doc, key: key, keys: [key], inherits: false, hint: {}, rows: rows });
         },
 
         /* top: البلاصة فين كيتزاد الزر · text: النص (للمفتاح) · hint: { head }
@@ -306,6 +369,13 @@
         ".ks-open{margin-inline-start:auto;flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:6px 10px 6px 12px;background:linear-gradient(135deg,#1c367a,#265be3);color:#fff;font:800 13px Cairo,system-ui,sans-serif;cursor:pointer;box-shadow:0 6px 14px -8px rgba(38,91,227,.8)}" +
         ".ks-open[hidden]{display:none}" +
         ".ks-row{display:flex;justify-content:flex-end;margin:8px 0}" +
+        ".ks-rows{display:flex;flex-direction:column;gap:8px;direction:ltr}" +
+        ".ks-r{display:flex;align-items:center;gap:10px}" +
+        ".ks-n{flex:0 0 30px;height:30px;border-radius:10px;display:grid;place-items:center;background:#1c367a;color:#fff;font-weight:900;font-size:14px}" +
+        ".ks-r-in{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}" +
+        ".ks-r-in small{font-size:12.5px;color:#5b6275;font-weight:600;text-align:left;line-height:1.5}" +
+        ".ks-r-in input{font:700 15px Cairo,system-ui,sans-serif;border:1.5px solid #d6deef;border-radius:12px;padding:8px 12px;color:#14204a;background:#fbfcff}" +
+        "html[data-theme=dark] .ks-r-in input{background:#1d2439;color:#e8ecf7;border-color:#2b3655}html[data-theme=dark] .ks-r-in small{color:#a9b1c6}" +
         ".ks-open .ks-pro{background:#ffce00;color:#3a2700;border-radius:999px;padding:0 6px;font-size:10px;letter-spacing:.06em}" +
         ".ks-open.is-locked{background:#e9edf7;color:#1c367a;box-shadow:none}" +
         ".ks-open.is-soon{background:#eef2fb;color:#1b46b3;box-shadow:none}" +
