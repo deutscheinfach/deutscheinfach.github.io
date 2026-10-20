@@ -1737,7 +1737,7 @@
    (bestimmt / unbedingt / völlig) ماكينزلوش لسطر جديد وما كيبقاش فراغ فالجنب. */
 .sp-choices:not(:has(.sp-option:nth-child(4))) { grid-template-columns: repeat(3, minmax(0, 1fr)); direction: ltr; }
 .sp-choices:not(:has(.sp-option:nth-child(4))) .sp-option { min-width: 0; min-height: 40px; padding: 8px; gap: 6px; align-items: center; }
-.sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option-de { min-width: 0; overflow-wrap: anywhere; }
+.sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option-de { min-width: 0; overflow-wrap: normal; word-break: keep-all; }
 .sp-option { justify-content: flex-start; direction: ltr; text-align: left; }
 .sp-option .t1-option-de { overflow-wrap: normal; word-break: normal; hyphens: none; }
 
@@ -3141,6 +3141,8 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 @media (min-width: 1001px) {
     /* الأسئلة ديال Teil 2 و Sprach طوال: اللوحة كتوسع شوية فالـPC */
     .t1-board:has(.t2-panel) { grid-template-columns: minmax(0, 1fr) 400px; }
+    /* Sprach 1: 3 اختيارات فسطر واحد — اللوحة أعرض باش الكلمة (unbedingt…) تدخل كاملة */
+    .t1-board:has(.sp-choices) { grid-template-columns: minmax(0, 1fr) 460px; }
 }
 
 /* ===== Lesen: شريط الأزرار الثابت تحت الشاشة =====
@@ -3869,6 +3871,23 @@ html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option .t1-optio
 html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option .t1-option-de { color: var(--tp-ink); font-size: 13.5px; font-weight: 800; }
 html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option.is-used { opacity: .45; background: var(--tp-card); border-color: var(--tp-line); }
 html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .t1-option.is-used .t1-option-key { color: #1f9d63; }
+/* Sprach 1 (3 فسطر): عمود الحرف أضيق والكلمة كتاخد البلاصة كاملة — ماكتتقسمش */
+html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option .t1-option-key { width: 30px; flex-basis: 30px; }
+html.is-lesen-topic body .t1-panel .sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option > .t1-option-de { padding: 8px; }
+@media (max-width: 600px) {
+    .sp-choices:not(:has(.sp-option:nth-child(4))) { gap: 5px; }
+    html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option .t1-option-key { width: 22px; flex-basis: 22px; font-size: 12px; }
+    html.is-lesen-topic body .t1-panel .sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option > .t1-option-de { padding: 6px 5px; font-size: 12.5px; }
+}
+@media (max-width: 380px) {
+    html.is-lesen-topic:not([data-theme="dark"]) body .t1-panel .sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option .t1-option-key { width: 18px; flex-basis: 18px; font-size: 11px; }
+    html.is-lesen-topic body .t1-panel .sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option > .t1-option-de { padding: 6px 4px; font-size: 12px; }
+}
+/* تيليفون صغير بزاف (320px): حسن الكلمة تنزل لسطر جديد من أنها تتقطع */
+@media (max-width: 340px) {
+    .sp-choices:not(:has(.sp-option:nth-child(4))) { display: flex; flex-wrap: wrap; }
+    .sp-choices:not(:has(.sp-option:nth-child(4))) .sp-option { flex: 1 1 auto; }
+}
 
 /* بلا حركات ملي كتبدل النسخة (هادي اللي كانت كتدير lag) */
 html.is-lesen-topic .t1-board { transition: none !important; will-change: auto; }
