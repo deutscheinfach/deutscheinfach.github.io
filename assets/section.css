@@ -1733,10 +1733,11 @@
 .sp-gap.is-wrong .sp-gap-num { background: var(--danger); }
 
 .sp-choices { display: grid; grid-template-columns: 1fr; gap: 6px; }
-/* الاختيارات القصار (arbeite / arbeiten / …) كيتجمعو فسطر واحد:
-   اللوحة كتقصار بزاف وكتشوف اللاكونة كاملة بلا سكرول. الطوال كينزلو لسطر جديد. */
-.sp-choices:not(:has(.sp-option:nth-child(4))) { display: flex; flex-wrap: wrap; }
-.sp-choices:not(:has(.sp-option:nth-child(4))) .sp-option { flex: 1 1 auto; width: auto; min-height: 40px; padding: 8px 10px; align-items: center; }
+/* 3 اختيارات (a / b / c) ديما فسطر واحد، 3 أعمدة قد قد — حتى الطوال
+   (bestimmt / unbedingt / völlig) ماكينزلوش لسطر جديد وما كيبقاش فراغ فالجنب. */
+.sp-choices:not(:has(.sp-option:nth-child(4))) { grid-template-columns: repeat(3, minmax(0, 1fr)); direction: ltr; }
+.sp-choices:not(:has(.sp-option:nth-child(4))) .sp-option { min-width: 0; min-height: 40px; padding: 8px; gap: 6px; align-items: center; }
+.sp-choices:not(:has(.sp-option:nth-child(4))) .t1-option-de { min-width: 0; overflow-wrap: anywhere; }
 .sp-option { justify-content: flex-start; direction: ltr; text-align: left; }
 .sp-option .t1-option-de { overflow-wrap: normal; word-break: normal; hyphens: none; }
 
