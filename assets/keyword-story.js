@@ -10,7 +10,11 @@
    التخزين (الـ Worker → KV «stories:<doc>»):
      { storiesGet: doc, idToken }                       → Premium ولا الأدمين
      { adminSetStory: { doc, key, h, t, story }, idToken } → الأدمين
-   doc  = lesen-b2-<الموضوع>  ·  key = __kwCustom.key(نص)  (كيبقى صحيح ف كل نسخة)
+   doc  = lesen-b2-<الموضوع>  ·  key = __kwCustom.key(نص)  (الأساسي)
+
+   النسخ المعدلة (المعدل 1، 2…): كتورث القصة ديال نفس النص ف الأساسي.
+   ملي الأدمين كيبدلها ف المعدل كتتحفظ ف key ديال النسخة (v<رقم>-<بلاصة>)،
+   والأساسي ما كيتقاسش. قصة خاوية ف المعدل = يرجع يورث من الأساسي.
 
    غير المشترك: الزر كيبان بقفل 🔒، والبركة كتحل نافذة Premium. */
 (function () {
@@ -80,10 +84,18 @@
         return d.promise;
     }
 
+    /* القصة ديال هاد الزر: ديال النسخة، ولا (ف المعدل) الموروثة من الأساسي */
+    function find(b) {
+        const map = (docs[b.doc] || {}).map || {};
+        for (let i = 0; i < b.keys.length; i++) {
+            if (map[b.keys[i]]) return { s: map[b.keys[i]], inherited: i === b.keys.length - 1 && i > 0 && b.inherits };
+        }
+        return { s: null, inherited: false };
+    }
+
     function paintButton(b) {
         if (!b.btn.isConnected) return false;
-        const d = docs[b.doc] || {};
-        const has = !!(d.map && d.map[b.key]);
+        const has = !!find(b).s;
         const admin = isAdmin();
         const prem = isPremium();
         /* الزر كيبان ديما. الأدمين: «زيد قصة» إلا ما كايناش.
@@ -147,9 +159,12 @@
         body.append(chips, scene, tip);
     }
 
-    function showEditor(b, s) {
+    function showEditor(b, s, inherited) {
         const body = shell(s ? "بدّل القصة ✍️" : "زيد قصة ✍️");
         const f = el("form", "ks-form");
+        if (inherited) {
+            f.appendChild(el("p", "ks-note", "📋 هادي القصة ديال «الأساسي». إلا بدلتيها هنا، كتبدل غير ف هاد النسخة المعدلة — الأساسي كيبقى كيف هو."));
+        }
         function field(label, name, value, ph, multi) {
             const l = el("label", "ks-field");
             l.append(el("span", "", label));
@@ -162,7 +177,8 @@
         }
         const h = field("الكلمة المفتاحية ف العنوان", "h", s ? s.h : "", b.hint.head ? "مثلا: " + b.hint.head : "Leistungssport");
         const t = field("الكلمة المفتاحية ف النص", "t", s ? s.t : "", "42,2 km · Marathon");
-        const story = field("القصة بالدارجة (خليها خاوية باش تحيدها)", "story", s ? s.story : "", "تخيل واحد…", true);
+        const story = field(b.inherits ? "القصة بالدارجة (خليها خاوية باش ترجع ديال الأساسي)" : "القصة بالدارجة (خليها خاوية باش تحيدها)",
+            "story", s ? s.story : "", "تخيل واحد…", true);
         story.dir = "rtl";
         if (b.hint.head) f.appendChild(el("p", "ks-hint", "العنوان الصحيح: " + b.hint.head));
         const msg = el("p", "ks-msg");
@@ -194,9 +210,9 @@
     }
 
     function open(b) {
-        const d = docs[b.doc] || {};
-        const s = d.map && d.map[b.key];
-        if (isAdmin()) { showEditor(b, s); return; }
+        const found = find(b);
+        const s = found.s;
+        if (isAdmin()) { showEditor(b, s, found.inherited); return; }
         if (!isPremium()) {
             if (window.__deLocked) window.__deLocked({ title: "قصة الربط بالدارجة 🧠" });
             return;
@@ -218,14 +234,26 @@
     }
 
     window.__deStory = {
-        /* top: البلاصة فين كيتزاد الزر · text: النص (للمفتاح) · hint: { head } */
-        attach: function (top, text, hint) {
+        /* top: البلاصة فين كيتزاد الزر · text: النص (للمفتاح) · hint: { head }
+           ctx (اختياري): { variant, pos, baseText } — variant > 0 = نسخة معدلة */
+        attach: function (top, text, hint, ctx) {
             const doc = docOf();
             if (!top || !doc || /[?&]embed=1/.test(location.search)) return;
             const btn = el("button", "ks-open");
             btn.type = "button";
             btn.hidden = true;
-            const b = { btn: btn, doc: doc, key: keyOf(text), hint: hint || {} };
+            const own = keyOf(text);
+            const b = { btn: btn, doc: doc, key: own, keys: [own], inherits: false, hint: hint || {} };
+            if (ctx && ctx.variant > 0) {
+                /* المعدل: كنحفظو ف key ديال النسخة؛ كنقراو: ديال النسخة ← القديم (hash ديال النص) ← الأساسي */
+                b.key = ("v" + ctx.variant + "-" + String(ctx.pos).toLowerCase().replace(/[^a-z0-9]+/g, "")).slice(0, 64);
+                b.keys = [b.key, own];
+                if (ctx.baseText) {
+                    const base = keyOf(ctx.baseText);
+                    if (base !== own) b.keys.push(base);
+                    b.inherits = true;
+                }
+            }
             btn.addEventListener("click", function (e) { e.stopPropagation(); open(b); });
             top.appendChild(btn);
             buttons.push(b);
@@ -272,6 +300,7 @@
         ".ks-form{display:flex;flex-direction:column;gap:12px}" +
         ".ks-field{display:flex;flex-direction:column;gap:5px;font-weight:800;font-size:14px}" +
         ".ks-field input,.ks-field textarea{font:600 15px Cairo,system-ui,sans-serif;border:1.5px solid #d6deef;border-radius:12px;padding:10px 12px;color:#14204a;background:#fbfcff}" +
+        ".ks-note{font-size:13px;font-weight:700;color:#7a5a00;background:#fff6d6;border:1px solid #ffe08a;border-radius:12px;padding:8px 12px}" +
         ".ks-hint{font-size:13px;color:#1b46b3;font-weight:700;direction:ltr;text-align:right}" +
         ".ks-msg{font-size:13px;color:#b42318;min-height:1em}" +
         "html[data-theme=dark] .ks-box{background:#151b2e;color:#e8ecf7}html[data-theme=dark] .ks-scene{background:#1d2439;border-color:#2b3655}" +

@@ -210,7 +210,9 @@
                 /* 🧠 قصة الربط (assets/keyword-story.js): Premium، الأدمين كيكتبها */
                 if (window.__deStory) {
                     const right = options.find(function (o) { return o.value === text.answer; });
-                    window.__deStory.attach(top, text.body, { head: right ? right.text : "" });
+                    const base = index > 0 && variants[0].texts ? variants[0].texts[i] : null;
+                    window.__deStory.attach(top, text.body, { head: right ? right.text : "" },
+                        { variant: index, pos: i, baseText: base ? base.body : "" });
                 }
 
                 box.appendChild(el("p", "t1-body", text.body || ""));
