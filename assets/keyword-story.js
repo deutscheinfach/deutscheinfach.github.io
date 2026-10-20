@@ -104,7 +104,7 @@
 
     /* ---------- النافذة ---------- */
     let modal = null;
-    function close() { if (modal) { modal.remove(); modal = null; } try { speechSynthesis.cancel(); } catch (e) { /* */ } }
+    function close() { if (modal) { modal.remove(); modal = null; } }
 
     function shell(title) {
         close();
@@ -131,51 +131,20 @@
         return body;
     }
 
-    function speak(text, btn) {
-        try {
-            if (!("speechSynthesis" in window)) throw new Error("no");
-            speechSynthesis.cancel();
-            const u = new SpeechSynthesisUtterance(text);
-            const voices = speechSynthesis.getVoices();
-            const v = voices.find(function (x) { return /^ar-MA/i.test(x.lang); })
-                || voices.find(function (x) { return /^ar/i.test(x.lang); });
-            if (v) u.voice = v;
-            u.lang = v ? v.lang : "ar-MA";
-            u.rate = 0.95;
-            btn.classList.add("is-on");
-            u.onend = u.onerror = function () { btn.classList.remove("is-on"); };
-            speechSynthesis.speak(u);
-        } catch (e) {
-            btn.textContent = "الصوت ماكاينش ف هاد المتصفح";
-        }
-    }
-
     function showStory(s) {
         const body = shell("قصة الربط بالدارجة 🧠");
+        /* كل كلمة فوقها منين جات: العنوان ولا النص */
+        function chip(label, word) {
+            const box = el("div", "ks-kw");
+            box.append(el("small", "", label), el("span", "ks-chip", word || "—"));
+            return box;
+        }
         const chips = el("div", "ks-chips");
-        const hChip = el("span", "ks-chip", s.h || "—");
-        chips.append(hChip, el("i", "ks-link", "↔"), el("span", "ks-chip", s.t || "—"));
+        chips.append(chip("من العنوان", s.h), el("i", "ks-link", "↔"), chip("من النص", s.t));
         const scene = el("div", "ks-scene");
         scene.append(el("small", "", "🎬 تخيل هاد المشهد"), el("p", "", s.story));
         const tip = el("p", "ks-tip", "💡 هادي طريقة باش تربط الكلمات فذاكرتك، ماشي ترجمة حرفية. الجواب خاصو يبقى مبني على معنى النص كامل.");
-        const row = el("div", "ks-actions");
-        const listen = el("button", "ks-btn ks-main", "سمع القصة 🔊");
-        listen.type = "button";
-        listen.addEventListener("click", function () { speak(s.story, listen); });
-        const quiz = el("button", "ks-btn", "جرّب الذاكرة 🧩");
-        quiz.type = "button";
-        quiz.addEventListener("click", function () {
-            /* نخبيو كلمة العنوان: واش عقلتي عليها من كلمة النص؟ */
-            if (hChip.dataset.hidden === "1") {
-                hChip.textContent = s.h || "—"; hChip.dataset.hidden = ""; hChip.classList.remove("is-hidden");
-                quiz.textContent = "جرّب الذاكرة 🧩";
-            } else {
-                hChip.textContent = "؟؟؟"; hChip.dataset.hidden = "1"; hChip.classList.add("is-hidden");
-                quiz.textContent = "بيّن الجواب 👀";
-            }
-        });
-        row.append(quiz, listen);
-        body.append(chips, scene, tip, row, el("p", "ks-foot", "الصوت كيعتمد على الأصوات المتوفرة فالمتصفح."));
+        body.append(chips, scene, tip);
     }
 
     function showEditor(b, s) {
@@ -289,26 +258,24 @@
         ".ks-head b{font-size:21px;font-weight:900}" +
         ".ks-x{flex:0 0 40px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer}" +
         ".ks-body{padding:20px 22px 18px;display:flex;flex-direction:column;gap:14px}" +
-        ".ks-chips{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;direction:ltr}" +
+        ".ks-chips{display:flex;align-items:flex-end;justify-content:center;gap:12px;flex-wrap:wrap;direction:ltr}" +
+        ".ks-kw{display:flex;flex-direction:column;align-items:center;gap:4px}" +
+        ".ks-kw small{font-size:12px;font-weight:800;color:#1b46b3}" +
         ".ks-chip{background:#fff3b0;border:1.5px solid #ffce00;border-radius:12px;padding:8px 14px;font-weight:800;font-size:15px}" +
-        ".ks-chip.is-hidden{background:#eef2fb;border-color:#c8d3ee;color:#8a91a3}" +
-        ".ks-link{font-style:normal;color:#265be3;font-size:20px;font-weight:900}" +
+        ".ks-link{font-style:normal;color:#265be3;font-size:20px;font-weight:900;padding-bottom:8px}" +
         ".ks-scene{background:#f2f6ff;border:1px solid #dbe5fb;border-radius:18px;padding:14px 18px}" +
         ".ks-scene small{display:block;color:#1b46b3;font-weight:800;margin-bottom:6px}" +
         ".ks-scene p{font-size:17px;font-weight:800;line-height:1.9;white-space:pre-line}" +
         ".ks-tip{font-size:12.5px;color:#7a8299;text-align:center}" +
-        ".ks-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}" +
         ".ks-btn{border:0;border-radius:16px;padding:13px 14px;font:900 15px Cairo,system-ui,sans-serif;cursor:pointer;background:#eef2fb;color:#152a5e}" +
         ".ks-main{background:linear-gradient(135deg,#ffe04d,#f2bc00);color:#3a2700}" +
-        ".ks-main.is-on{outline:3px solid #265be3}" +
-        ".ks-foot{font-size:11.5px;color:#9aa1b2;text-align:center}" +
         ".ks-form{display:flex;flex-direction:column;gap:12px}" +
         ".ks-field{display:flex;flex-direction:column;gap:5px;font-weight:800;font-size:14px}" +
         ".ks-field input,.ks-field textarea{font:600 15px Cairo,system-ui,sans-serif;border:1.5px solid #d6deef;border-radius:12px;padding:10px 12px;color:#14204a;background:#fbfcff}" +
         ".ks-hint{font-size:13px;color:#1b46b3;font-weight:700;direction:ltr;text-align:right}" +
         ".ks-msg{font-size:13px;color:#b42318;min-height:1em}" +
         "html[data-theme=dark] .ks-box{background:#151b2e;color:#e8ecf7}html[data-theme=dark] .ks-scene{background:#1d2439;border-color:#2b3655}" +
-        "html[data-theme=dark] .ks-btn:not(.ks-main){background:#1d2439;color:#e8ecf7}html[data-theme=dark] .ks-chip{color:#3a2700}" +
+        "html[data-theme=dark] .ks-btn:not(.ks-main){background:#1d2439;color:#e8ecf7}html[data-theme=dark] .ks-chip{color:#3a2700}html[data-theme=dark] .ks-kw small{color:#9db8ff}" +
         "html[data-theme=dark] .ks-field input,html[data-theme=dark] .ks-field textarea{background:#1d2439;color:#e8ecf7;border-color:#2b3655}";
     document.head.appendChild(css);
 })();
