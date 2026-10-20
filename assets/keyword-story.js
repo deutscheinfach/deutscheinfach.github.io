@@ -86,14 +86,16 @@
         const has = !!(d.map && d.map[b.key]);
         const admin = isAdmin();
         const prem = isPremium();
-        /* الطالب: الزر غير إلا كاينة قصة. الأدمين: ديما (باش يكتب). */
-        b.btn.hidden = !(has || admin);
-        b.btn.classList.toggle("is-locked", has && !prem);
-        b.btn.classList.toggle("is-empty", !has);
+        /* الزر كيبان ديما. الأدمين: «زيد قصة» إلا ما كايناش.
+           الطالب: «قصة» ولا «قريبا» إلا ما زال ما تكتبات. */
+        b.btn.hidden = false;
+        b.btn.classList.toggle("is-locked", !prem);
+        b.btn.classList.toggle("is-empty", admin && !has);
+        b.btn.classList.toggle("is-soon", !admin && !has && prem);
         b.btn.innerHTML = "";
-        b.btn.append(el("span", "ks-ico", !has ? "✍️" : (prem ? "🧠" : "🔒")),
-            el("span", "ks-txt", !has ? "زيد قصة" : "قصة"));
-        if (has || admin) b.btn.append(el("span", "ks-pro", "PRO"));
+        b.btn.append(el("span", "ks-ico", admin ? (has ? "🧠" : "✍️") : (prem ? "🧠" : "🔒")),
+            el("span", "ks-txt", admin ? (has ? "قصة" : "زيد قصة") : (has ? "قصة" : "قصة · قريبا")));
+        b.btn.append(el("span", "ks-pro", "PRO"));
         return true;
     }
     function repaint() {
@@ -226,12 +228,24 @@
         const d = docs[b.doc] || {};
         const s = d.map && d.map[b.key];
         if (isAdmin()) { showEditor(b, s); return; }
-        if (!s) return;
         if (!isPremium()) {
             if (window.__deLocked) window.__deLocked({ title: "قصة الربط بالدارجة 🧠" });
             return;
         }
+        if (!s) { showSoon(); return; }
         showStory(s);
+    }
+
+    /* القصة ما زال ما تكتبات */
+    function showSoon() {
+        const body = shell("قصة الربط بالدارجة 🧠");
+        const box = el("div", "ks-soon");
+        box.append(el("b", "", "✍️ هاد القصة غادي تكون مكتوبة قريبا"),
+            el("p", "", "كنكتبو قصة صغيرة بالدارجة لكل نص باش تعقل على الكلمة المفتاحية. رجع من بعد شوية!"));
+        const ok = el("button", "ks-btn ks-main", "واخا 👍");
+        ok.type = "button";
+        ok.addEventListener("click", close);
+        body.append(box, ok);
     }
 
     window.__deStory = {
@@ -265,6 +279,8 @@
         ".ks-open[hidden]{display:none}" +
         ".ks-open .ks-pro{background:#ffce00;color:#3a2700;border-radius:999px;padding:0 6px;font-size:10px;letter-spacing:.06em}" +
         ".ks-open.is-locked{background:#e9edf7;color:#1c367a;box-shadow:none}" +
+        ".ks-open.is-soon{background:#eef2fb;color:#1b46b3;box-shadow:none}" +
+        ".ks-soon{text-align:center;background:#f2f6ff;border:1px dashed #9fb5ee;border-radius:18px;padding:22px 18px}.ks-soon b{display:block;font-size:19px;font-weight:900;color:#1b46b3;margin-bottom:8px}.ks-soon p{font-size:15px;font-weight:700;line-height:1.8;color:#3c4766}" +
         ".ks-open.is-empty{background:#fff;color:#1b46b3;border:1.5px dashed #265be3;box-shadow:none}" +
         ".ks-bg{position:fixed;inset:0;z-index:2147483500;background:rgba(10,18,40,.55);display:flex;align-items:center;justify-content:center;padding:16px}" +
         ".ks-box{width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);direction:rtl;font-family:Cairo,system-ui,sans-serif;color:#14204a}" +
