@@ -102,6 +102,8 @@
         head.appendChild(el("div", "t1-kicker", "LESEVERSTEHEN TEIL 2"));
         if (window.__lesenArToggle) window.__lesenArToggle(head, wrap, task);
         wrap.appendChild(head);
+        /* فيديو الشرح ديال هاد الجزء (assets/topic-video.js) */
+        if (window.__deVideo) window.__deVideo.mountLesen(wrap, "teil2", task && task.title);
 
         const board = el("div", "t1-board t1-stagger");
         wrap.appendChild(board);

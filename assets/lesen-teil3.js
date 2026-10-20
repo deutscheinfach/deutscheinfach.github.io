@@ -104,6 +104,8 @@
         head.appendChild(el("div", "t1-kicker", "LESEVERSTEHEN TEIL 3"));
         if (window.__lesenArToggle) window.__lesenArToggle(head, wrap, task);
         wrap.appendChild(head);
+        /* فيديو الشرح ديال هاد الجزء (assets/topic-video.js) */
+        if (window.__deVideo) window.__deVideo.mountLesen(wrap, "teil3", task && task.title);
 
         const board = el("div", "t1-board");
         wrap.appendChild(board);
@@ -195,6 +197,10 @@
                 select.appendChild(new Option(NONE + " — keine Situation", NONE));
                 top.appendChild(select);
                 box.appendChild(top);
+                if (window.__deStory) {
+                    const want = sits.find(function (sit, i) { return String(sit.no || (i + 11)) === String(wantFor[ad.key]); });
+                    window.__deStory.attach(top, (ad.head || "") + " " + (ad.body || ""), { head: want ? want.de : "" });
+                }
 
                 box.appendChild(el("span", "t3-ad-head", ad.head || ""));
                 box.appendChild(el("p", "t1-body", ad.body || ""));
