@@ -8,6 +8,8 @@
      doc:  lesen-b2-<id الموضوع>  ·  hoeren-b2-teil1 (صفحة Hören كاملة)
      key:  hash ديال النص اللي كتخصو الكلمات (النص، السؤال، الوضعية،
            الجملة) — كيبقى صحيح حتى إلا تبدل الترتيب ولا النسخة.
+     «!كلمة» ف نفس اللائحة = كلمة ملونة (حتى الأوتوماتيكية) حيدها الأدمين:
+           كتبان عادية لكاع الطلبة. الأدمين كيبرك عليها ف النص باش يحيدها.
 
    القراية: وثيقة وحدة لكل موضوع، محفوظة ف المتصفح 30 دقيقة (الخطة
    المجانية ديال Firestore). الأدمين ديما كيقرا الجديد.
@@ -77,10 +79,33 @@
         return docs[id];
     }
 
-    function phrases(id, k) {
+    function raw(id, k) {
         const d = entry(id);
         const list = d.items && d.items[k];
         return Array.isArray(list) ? list : [];
+    }
+    function phrases(id, k) {
+        return raw(id, k).filter(function (p) { return p.charAt(0) !== "!"; });
+    }
+    /* الكلمات الملونة اللي حيدها الأدمين */
+    function hidden(id, k) {
+        return raw(id, k).filter(function (p) { return p.charAt(0) === "!"; }).map(function (p) { return p.slice(1); });
+    }
+    function norm(w) { return String(w || "").replace(/\s+/g, " ").trim().toLowerCase(); }
+
+    /* كنرجعو الكلمات المحيدة نص عادي (من بعد ما كيلون الـengine) */
+    function unmark(nodes, list) {
+        if (!list.length) return;
+        const want = list.map(norm);
+        nodes.forEach(function (n) {
+            if (!n || !n.querySelectorAll) return;
+            Array.prototype.forEach.call(n.querySelectorAll("mark.kw"), function (m) {
+                if (want.indexOf(norm(m.textContent)) === -1) return;
+                const parent = m.parentNode;
+                parent.replaceChild(document.createTextNode(m.textContent), m);
+                parent.normalize();
+            });
+        });
     }
 
     function loaded(id) {
@@ -148,6 +173,33 @@
         return null;
     }
 
+    /* الأدمين كيبرك على كلمة ملونة ف النص → كيحيدها */
+    const boxes = [];   /* { box, opts } */
+    document.addEventListener("click", async function (event) {
+        if (!isAdmin()) return;
+        const mark = event.target.closest && event.target.closest("mark.kw");
+        if (!mark) return;
+        const sel = window.getSelection && window.getSelection();
+        if (sel && String(sel).trim()) return;   /* كيحدد باش يزيد، ماشي باش يحيد */
+        const hit = boxes.filter(function (b) { return b.box.isConnected && b.box.contains(mark); }).pop();
+        if (!hit) return;
+        const word = mark.textContent.trim();
+        if (!word) return;
+        event.preventDefault();
+        event.stopPropagation();
+        const k = hit.opts.key, id = hit.opts.doc;
+        if (!confirm("نحيدو «" + word + "» من الكلمات الملونة؟\n(كتبان عادية لكاع الطلبة — تقدر ترجعها من ↩)")) return;
+        try {
+            if (phrases(id, k).some(function (p) { return norm(p) === norm(word); })) {
+                const own = phrases(id, k).filter(function (p) { return norm(p) === norm(word); });
+                for (let i = 0; i < own.length; i++) await save(id, k, own[i], false);
+            }
+            await save(id, k, "!" + word, true);
+        } catch (error) {
+            alert("ما تحيداتش: " + (error.code || error.message));
+        }
+    }, true);
+
     /* ===== أزرار الأدمين =====
        opts = { doc, key, scope: () => [عناصر فين يقدر يحدد], title } */
     function tools(box, opts) {
@@ -155,8 +207,15 @@
         Array.prototype.forEach.call(box.querySelectorAll(".kw-admin"), function (old) {
             if (old.dataset.key === opts.key) old.remove();
         });
+        /* الكلمات المحيدة: لكاع الناس */
+        const scope = (typeof opts.scope === "function" ? opts.scope() : opts.scope) || [];
+        unmark(scope.concat([box]), hidden(opts.doc, opts.key));
         if (!isAdmin()) return;
         css();
+        for (let i = boxes.length - 1; i >= 0; i--) {
+            if (!boxes[i].box.isConnected || (boxes[i].box === box && boxes[i].opts.key === opts.key)) boxes.splice(i, 1);
+        }
+        boxes.push({ box: box, opts: opts });
 
         const bar = document.createElement("div");
         bar.className = "kw-admin";
@@ -188,6 +247,27 @@
             bar.appendChild(chip);
         });
 
+        /* المحيدين: ↩ كترجعها ملونة */
+        hidden(opts.doc, opts.key).forEach(function (word) {
+            const chip = document.createElement("span");
+            chip.className = "kw-admin-chip is-off";
+            chip.dir = "ltr";
+            chip.title = "محيدة";
+            chip.appendChild(document.createTextNode(word));
+            const back = document.createElement("button");
+            back.type = "button";
+            back.title = "رجعها ملونة";
+            back.setAttribute("aria-label", "رجع " + word);
+            back.textContent = "↩";
+            back.addEventListener("click", async function () {
+                back.disabled = true;
+                try { await save(opts.doc, opts.key, "!" + word, false); }
+                catch (error) { say("ما رجعاتش: " + (error.code || error.message), true); back.disabled = false; }
+            });
+            chip.appendChild(back);
+            bar.appendChild(chip);
+        });
+
         const add = document.createElement("button");
         add.type = "button";
         add.className = "kw-admin-add";
@@ -208,6 +288,9 @@
             add.disabled = true;
             say("كنسجلو…", false);
             try {
+                /* كانت محيدة؟ نرجعوها */
+                const off = hidden(opts.doc, opts.key).filter(function (w) { return norm(w) === norm(phrase); });
+                for (let i = 0; i < off.length; i++) await save(opts.doc, opts.key, "!" + off[i], false);
                 await save(opts.doc, opts.key, phrase, true);
                 try { window.getSelection().removeAllRanges(); } catch (e) { /* */ }
                 lastSel = null;
@@ -218,6 +301,11 @@
             }
         });
         bar.appendChild(add);
+
+        const tip = document.createElement("span");
+        tip.className = "kw-admin-tip";
+        tip.textContent = "💡 برك على أي كلمة ملونة ف النص باش تحيدها.";
+        bar.appendChild(tip);
 
         const note = document.createElement("span");
         note.className = "kw-admin-note";
@@ -244,6 +332,10 @@
             ".kw-admin-chip button{border:0;background:transparent;color:#8a5a00;cursor:pointer;font:inherit;font-size:12px;padding:0 4px;line-height:1}" +
             ".kw-admin-add{border:0;border-radius:999px;padding:5px 12px;background:#e0a800;color:#1a1300;font:inherit;font-weight:800;cursor:pointer}" +
             ".kw-admin-add:disabled{opacity:.6;cursor:default}" +
+            ".kw-admin-chip.is-off{background:transparent;color:#8a8f9c;border-style:dashed;text-decoration:line-through}" +
+            ".kw-admin-chip.is-off button{text-decoration:none;color:#1c367a;font-weight:900}" +
+            ".kw-admin-tip{flex-basis:100%;font-size:12px;opacity:.75}" +
+            "[data-kw-box] mark.kw,.nq-question mark.kw{cursor:pointer}" +
             ".kw-admin-note{flex-basis:100%;font-size:12.5px;opacity:.8}.kw-admin-note:empty{display:none}" +
             ".kw-admin-note.is-bad{color:#c0392b;opacity:1;font-weight:700}" +
             ".t3-sit-kw .kw-admin{margin:4px 0 8px;font-size:12.5px}" +
@@ -257,6 +349,7 @@
         loaded: loaded,
         load: load,
         tools: tools,
+        hidden: hidden,
         isAdmin: isAdmin
     };
 })();
