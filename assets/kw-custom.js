@@ -10,6 +10,9 @@
            الجملة) — كيبقى صحيح حتى إلا تبدل الترتيب ولا النسخة.
      «!كلمة» ف نفس اللائحة = كلمة ملونة (حتى الأوتوماتيكية) حيدها الأدمين:
            كتبان عادية لكاع الطلبة. الأدمين كيبرك عليها ف النص باش يحيدها.
+     «كلمة#kNODE:2» = غير هاد البلاصة: النص اللي فيه (hash ديالو) والمرة
+           الشحال (0، 1، 2…) اللي كتجي فيها الكلمة ف داك النص. بلا #… = كل
+           المرات (القديم). نفس الشي لـ«!كلمة#kNODE:2».
 
    القراية: وثيقة وحدة لكل موضوع، محفوظة ف المتصفح 30 دقيقة (الخطة
    المجانية ديال Firestore). الأدمين ديما كيقرا الجديد.
@@ -84,27 +87,66 @@
         const list = d.items && d.items[k];
         return Array.isArray(list) ? list : [];
     }
-    function phrases(id, k) {
-        return raw(id, k).filter(function (p) { return p.charAt(0) !== "!"; });
+    const SPEC = /#(k[0-9a-z]+):(\d+)$/;
+    function parse(r) {
+        const off = r.charAt(0) === "!";
+        let word = off ? r.slice(1) : r;
+        const m = SPEC.exec(word);
+        if (m) word = word.slice(0, m.index);
+        return { raw: r, off: off, word: word, node: m ? m[1] : "", n: m ? +m[2] : -1 };
     }
-    /* الكلمات الملونة اللي حيدها الأدمين */
+    function entries(id, k) { return raw(id, k).map(parse); }
+    /* الكلمات اللي كيلونهم الـengine (من بعد refine كيخلي غير البلاصة المختارة) */
+    function phrases(id, k) {
+        const out = [];
+        entries(id, k).forEach(function (e) { if (!e.off && out.indexOf(e.word) === -1) out.push(e.word); });
+        return out;
+    }
+    /* المحيدين ف كل البلايص (القديم، بلا #…) */
     function hidden(id, k) {
-        return raw(id, k).filter(function (p) { return p.charAt(0) === "!"; }).map(function (p) { return p.slice(1); });
+        return entries(id, k).filter(function (e) { return e.off && !e.node; }).map(function (e) { return e.word; });
     }
     function norm(w) { return String(w || "").replace(/\s+/g, " ").trim().toLowerCase(); }
 
-    /* كنرجعو الكلمات المحيدة نص عادي (من بعد ما كيلون الـengine) */
-    function unmark(nodes, list) {
+    /* شحال من مرة جات الكلمة ف node قبل البلاصة (container, offset) ولا قبل عنصر */
+    function occ(node, word, before) {
+        const r = document.createRange();
+        r.setStart(node, 0);
+        if (before.nodeType === 1 && before !== node) r.setEndBefore(before);
+        else r.setEnd(before.container, before.offset);
+        const text = r.toString().toLowerCase(), want = norm(word);
+        if (!want) return 0;
+        let n = 0, at = text.indexOf(want);
+        while (at !== -1) { n++; at = text.indexOf(want, at + want.length); }
+        return n;
+    }
+    function unwrap(m) {
+        const parent = m.parentNode;
+        parent.replaceChild(document.createTextNode(m.textContent), m);
+        parent.normalize();
+    }
+
+    /* من بعد ما كيلون الـengine: كنحيدو المحيدين، والكلمات اللي تختارت
+       ف بلاصة وحدة كيبقاو غير ف ديك البلاصة */
+    function refine(id, k, nodes) {
+        const list = entries(id, k);
         if (!list.length) return;
-        const want = list.map(norm);
-        nodes.forEach(function (n) {
-            if (!n || !n.querySelectorAll) return;
-            Array.prototype.forEach.call(n.querySelectorAll("mark.kw"), function (m) {
-                if (want.indexOf(norm(m.textContent)) === -1) return;
-                const parent = m.parentNode;
-                parent.replaceChild(document.createTextNode(m.textContent), m);
-                parent.normalize();
+        const offs = list.filter(function (e) { return e.off; });
+        const pins = list.filter(function (e) { return !e.off && e.node; });
+        const plain = list.filter(function (e) { return !e.off && !e.node; }).map(function (e) { return norm(e.word); });
+        nodes.forEach(function (node) {
+            if (!node || !node.querySelectorAll) return;
+            const nk = key(node.textContent);
+            const drop = [];
+            Array.prototype.forEach.call(node.querySelectorAll("mark.kw"), function (m) {
+                const w = norm(m.textContent);
+                const i = occ(node, w, m);
+                const off = offs.some(function (e) { return norm(e.word) === w && (!e.node || (e.node === nk && e.n === i)); });
+                const mine = pins.filter(function (e) { return norm(e.word) === w; });
+                const here = mine.some(function (e) { return e.node === nk && e.n === i; });
+                if (off || (mine.length && !here && plain.indexOf(w) === -1)) drop.push(m);
             });
+            drop.forEach(unwrap);
         });
     }
 
@@ -160,20 +202,25 @@
        ف التيليفون، البركة على الزر كتمسح التحديد قبل ما يوصل الحدث.
        إذن كنحفظو آخر تحديد ماشي خاوي. */
     let lastSel = null;
-    document.addEventListener("selectionchange", function () {
-        const sel = window.getSelection && window.getSelection();
+    function grab(sel) {
         const text = sel ? String(sel).replace(/\s+/g, " ").trim() : "";
-        if (text) lastSel = { text: text, node: sel.anchorNode, at: Date.now() };
+        if (!text) return null;
+        const r = sel.rangeCount ? sel.getRangeAt(0) : null;
+        return { text: text, node: sel.anchorNode, range: r ? r.cloneRange() : null, at: Date.now() };
+    }
+    document.addEventListener("selectionchange", function () {
+        const got = grab(window.getSelection && window.getSelection());
+        if (got) lastSel = got;
     });
     function selection() {
-        const sel = window.getSelection && window.getSelection();
-        const text = sel ? String(sel).replace(/\s+/g, " ").trim() : "";
-        if (text) return { text: text, node: sel.anchorNode };
+        const got = grab(window.getSelection && window.getSelection());
+        if (got) return got;
         if (lastSel && Date.now() - lastSel.at < 60000) return lastSel;
         return null;
     }
+    function scopeOf(opts) { return (typeof opts.scope === "function" ? opts.scope() : opts.scope) || []; }
 
-    /* الأدمين كيبرك على كلمة ملونة ف النص → كيحيدها */
+    /* الأدمين كيبرك على كلمة ملونة ف النص → كتحيد غير هادي (ماشي كاع المرات) */
     const boxes = [];   /* { box, opts } */
     document.addEventListener("click", async function (event) {
         if (!isAdmin()) return;
@@ -188,13 +235,14 @@
         event.preventDefault();
         event.stopPropagation();
         const k = hit.opts.key, id = hit.opts.doc;
-        if (!confirm("نحيدو «" + word + "» من الكلمات الملونة؟\n(كتبان عادية لكاع الطلبة — تقدر ترجعها من ↩)")) return;
+        if (!confirm("نحيدو «" + word + "» من هاد البلاصة؟\n(غير هادي — تقدر ترجعها من ↩)")) return;
         try {
-            if (phrases(id, k).some(function (p) { return norm(p) === norm(word); })) {
-                const own = phrases(id, k).filter(function (p) { return norm(p) === norm(word); });
-                for (let i = 0; i < own.length; i++) await save(id, k, own[i], false);
-            }
-            await save(id, k, "!" + word, true);
+            const node = scopeOf(hit.opts).filter(function (n) { return n && n.contains(mark); })[0];
+            if (!node) { await save(id, k, "!" + word, true); return; }
+            const nk = key(node.textContent), i = occ(node, word, mark);
+            const pin = entries(id, k).filter(function (e) { return !e.off && e.node === nk && e.n === i && norm(e.word) === norm(word); })[0];
+            if (pin) await save(id, k, pin.raw, false);
+            else await save(id, k, "!" + word + "#" + nk + ":" + i, true);
         } catch (error) {
             alert("ما تحيداتش: " + (error.code || error.message));
         }
@@ -207,9 +255,9 @@
         Array.prototype.forEach.call(box.querySelectorAll(".kw-admin"), function (old) {
             if (old.dataset.key === opts.key) old.remove();
         });
-        /* الكلمات المحيدة: لكاع الناس */
-        const scope = (typeof opts.scope === "function" ? opts.scope() : opts.scope) || [];
-        unmark(scope.concat([box]), hidden(opts.doc, opts.key));
+        /* المحيدين والبلايص المختارة: لكاع الناس */
+        const scope = scopeOf(opts);
+        refine(opts.doc, opts.key, scope.length ? scope : [box]);
         if (!isAdmin()) return;
         css();
         for (let i = boxes.length - 1; i >= 0; i--) {
@@ -227,44 +275,24 @@
         label.textContent = "✏️ " + (opts.title || "كلمات مفتاحية") + ":";
         bar.appendChild(label);
 
-        phrases(opts.doc, opts.key).forEach(function (phrase) {
+        entries(opts.doc, opts.key).forEach(function (e) {
             const chip = document.createElement("span");
-            chip.className = "kw-admin-chip";
+            chip.className = "kw-admin-chip" + (e.off ? " is-off" : "");
             chip.dir = "ltr";
-            chip.appendChild(document.createTextNode(phrase));
+            chip.title = e.off ? "محيدة" : (e.node ? "غير ف هاد البلاصة" : "ف كل البلايص");
+            chip.appendChild(document.createTextNode(e.word));
             const x = document.createElement("button");
             x.type = "button";
-            x.title = "حيد";
-            x.setAttribute("aria-label", "حيد " + phrase);
-            x.textContent = "✕";
+            x.title = e.off ? "رجعها ملونة" : "حيد";
+            x.setAttribute("aria-label", (e.off ? "رجع " : "حيد ") + e.word);
+            x.textContent = e.off ? "↩" : "✕";
             x.addEventListener("click", async function () {
-                if (!confirm("نحيدو «" + phrase + "» من الكلمات المفتاحية؟")) return;
+                if (!e.off && !confirm("نحيدو «" + e.word + "» من الكلمات المفتاحية؟")) return;
                 x.disabled = true;
-                try { await save(opts.doc, opts.key, phrase, false); }
-                catch (error) { say("ما تحيداتش: " + (error.code || error.message), true); x.disabled = false; }
+                try { await save(opts.doc, opts.key, e.raw, false); }
+                catch (error) { say("ما تبدلاتش: " + (error.code || error.message), true); x.disabled = false; }
             });
             chip.appendChild(x);
-            bar.appendChild(chip);
-        });
-
-        /* المحيدين: ↩ كترجعها ملونة */
-        hidden(opts.doc, opts.key).forEach(function (word) {
-            const chip = document.createElement("span");
-            chip.className = "kw-admin-chip is-off";
-            chip.dir = "ltr";
-            chip.title = "محيدة";
-            chip.appendChild(document.createTextNode(word));
-            const back = document.createElement("button");
-            back.type = "button";
-            back.title = "رجعها ملونة";
-            back.setAttribute("aria-label", "رجع " + word);
-            back.textContent = "↩";
-            back.addEventListener("click", async function () {
-                back.disabled = true;
-                try { await save(opts.doc, opts.key, "!" + word, false); }
-                catch (error) { say("ما رجعاتش: " + (error.code || error.message), true); back.disabled = false; }
-            });
-            chip.appendChild(back);
             bar.appendChild(chip);
         });
 
@@ -277,21 +305,27 @@
         add.addEventListener("click", async function () {
             const sel = selection();
             if (!sel) { say("حدد (selectionner) كلمة ولا جملة ف النص، ومن بعد برك هنا.", true); return; }
-            const scope = (typeof opts.scope === "function" ? opts.scope() : opts.scope) || [];
+            const scope = scopeOf(opts);
             const node = sel.node && sel.node.nodeType === 3 ? sel.node.parentNode : sel.node;
-            const inside = scope.some(function (n) { return n && node && n.contains(node); });
-            if (!inside) { say("الكلمة اللي حددتي ماشي من هاد النص ولا الجواب ديالو.", true); return; }
+            const owner = scope.filter(function (n) { return n && node && n.contains(node); })[0];
+            if (!owner) { say("الكلمة اللي حددتي ماشي من هاد النص ولا الجواب ديالو.", true); return; }
             const phrase = sel.text.replace(/^[^\wÄÖÜäöüß0-9]+|[^\wÄÖÜäöüß0-9]+$/g, "");
             if (!phrase) { say("حدد كلمة.", true); return; }
             if (phrase.length > MAX) { say("طويلة بزاف — حدد كلمة ولا جملة قصيرة (" + MAX + " حرف).", true); return; }
-            if (phrases(opts.doc, opts.key).indexOf(phrase) !== -1) { say("«" + phrase + "» ديجا كاينة.", true); return; }
+            /* غير البلاصة اللي تحددات: النص ديالها + شحال من مرة جات الكلمة قبلها */
+            const nk = key(owner.textContent);
+            const i = sel.range ? occ(owner, phrase, { container: sel.range.startContainer, offset: sel.range.startOffset }) : 0;
+            const rawNew = phrase + "#" + nk + ":" + i;
+            if (raw(opts.doc, opts.key).indexOf(rawNew) !== -1) { say("«" + phrase + "» ديجا كاينة هنا.", true); return; }
             add.disabled = true;
             say("كنسجلو…", false);
             try {
-                /* كانت محيدة؟ نرجعوها */
-                const off = hidden(opts.doc, opts.key).filter(function (w) { return norm(w) === norm(phrase); });
-                for (let i = 0; i < off.length; i++) await save(opts.doc, opts.key, "!" + off[i], false);
-                await save(opts.doc, opts.key, phrase, true);
+                /* كانت محيدة (ف كل البلايص ولا ف هادي)؟ نرجعوها */
+                const off = entries(opts.doc, opts.key).filter(function (e) {
+                    return e.off && norm(e.word) === norm(phrase) && (!e.node || (e.node === nk && e.n === i));
+                });
+                for (let j = 0; j < off.length; j++) await save(opts.doc, opts.key, off[j].raw, false);
+                await save(opts.doc, opts.key, rawNew, true);
                 try { window.getSelection().removeAllRanges(); } catch (e) { /* */ }
                 lastSel = null;
             } catch (error) {
@@ -304,7 +338,7 @@
 
         const tip = document.createElement("span");
         tip.className = "kw-admin-tip";
-        tip.textContent = "💡 برك على أي كلمة ملونة ف النص باش تحيدها.";
+        tip.textContent = "💡 الكلمة اللي كتزيد كتتلون غير ف البلاصة اللي حددتي. برك على أي كلمة ملونة ف النص باش تحيد غير هادي.";
         bar.appendChild(tip);
 
         const note = document.createElement("span");
