@@ -1,5 +1,5 @@
 {
-  "build": "2a5c6a111393",
+  "build": "8b4f6ded6393",
   "assets": {
     "assets/app-install.js": "800fada8",
     "assets/auth.css": "37532702",
@@ -15,7 +15,7 @@
     "assets/icons.css": "61993c15",
     "assets/keys-toggle.js": "c8b1eb02",
     "assets/keyword-story.js": "670ce840",
-    "assets/kw-custom.js": "446a5a90",
+    "assets/kw-custom.js": "5771e48d",
     "assets/lesen-b1-topics.js": "abfe33b5",
     "assets/lesen-b2-topics.js": "940fb40d",
     "assets/lesen-engine.js": "c3c4fa86",
