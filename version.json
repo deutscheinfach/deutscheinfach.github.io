@@ -1,6 +1,7 @@
 {
-  "build": "66427bac3f9c",
+  "build": "cd620ece40ec",
   "assets": {
+    "assets/admin-templates.js": "3391025d",
     "assets/app-install.js": "800fada8",
     "assets/auth.css": "37532702",
     "assets/diag.js": "3f0d902b",
@@ -14,7 +15,7 @@
     "assets/https-upgrade.js": "473efbeb",
     "assets/icons.css": "61993c15",
     "assets/keys-toggle.js": "c8b1eb02",
-    "assets/keyword-story.js": "8bbb272d",
+    "assets/keyword-story.js": "5836060e",
     "assets/kw-custom.js": "da488092",
     "assets/lesen-b1-topics.js": "abfe33b5",
     "assets/lesen-b2-topics.js": "940fb40d",
