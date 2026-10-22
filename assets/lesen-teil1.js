@@ -233,6 +233,10 @@
                 select.addEventListener("focus", focusRow);
                 select.addEventListener("change", function () {
                     focusRow();
+                    /* احتياط: القائمة كتسد الترويسات المستعملين (paintUsed) */
+                    if (select.value && rows.some(function (other) { return other.select !== select && other.select.value === select.value; })) {
+                        select.value = "";
+                    }
                     paintUsed();
                 });
 
@@ -283,10 +287,9 @@
             /* ---- نحطو ترويسة ف نص (بالكليك ولا بالسحب) ---- */
             function assign(target, value) {
                 if (!target) return;
-                /* نفس الترويسة مرتين ماشي ممكن — كنحيدوها من اللخرين */
-                rows.forEach(function (other) {
-                    if (other !== target && other.select.value === value) other.select.value = "";
-                });
+                /* نفس الترويسة مرتين ماشي ممكن: إلا مختارة لنص آخر، ماكتتحطش
+                   (خاص الطالب يحيدها من النص الأول) */
+                if (rows.some(function (other) { return other !== target && other.select.value === value; })) return;
                 target.select.value = value;
                 paintUsed();
                 /* نمشيو للنص اللي من بعد اللي باقي خاوي */
@@ -422,6 +425,10 @@
                 });
                 rows.forEach(function (row) {
                     row.box.classList.toggle("has-pick", !!row.select.value);
+                    /* ف القائمة: الترويسات ديال النصوص الخرين مسدودين */
+                    Array.prototype.forEach.call(row.select.options, function (opt) {
+                        opt.disabled = !!opt.value && opt.value !== row.select.value && used.indexOf(opt.value) !== -1;
+                    });
                 });
                 progress.textContent = used.length + "/" + rows.length;
                 progress.style.setProperty("--p", rows.length ? (used.length) / rows.length : 0);

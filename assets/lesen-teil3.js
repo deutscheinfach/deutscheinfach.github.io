@@ -226,13 +226,11 @@
                 select.addEventListener("focus", focusRow);
                 select.addEventListener("change", function () {
                     focusRow();
-                    /* نفس الوضعية ماشي ف جوج إعلانات — غير X كيتعاود */
-                    if (select.value && select.value !== NONE) {
-                        rows.forEach(function (other) {
-                            if (other !== row && other.select.value === select.value) {
-                                other.select.value = "";
-                            }
-                        });
+                    /* نفس الوضعية ماشي ف جوج إعلانات — غير X كيتعاود.
+                       القائمة كتسد المستعملين (paintUsed)، وهادي احتياط. */
+                    if (select.value && select.value !== NONE &&
+                        rows.some(function (other) { return other !== row && other.select.value === select.value; })) {
+                        select.value = "";
                     }
                     paintUsed();
                 });
@@ -309,12 +307,8 @@
                 const target = activeRow || rows[0];
                 if (!target) return;
 
-                /* نفس الوضعية ماشي ف جوج إعلانات */
-                rows.forEach(function (other) {
-                    if (other !== target && other.select.value === no) {
-                        other.select.value = "";
-                    }
-                });
+                /* نفس الوضعية ماشي ف جوج إعلانات: إلا مختارة لإعلان آخر ماكتتحطش */
+                if (no !== NONE && rows.some(function (other) { return other !== target && other.select.value === no; })) return;
                 target.select.value = no;
                 paintUsed();
 
@@ -340,6 +334,12 @@
 
                 sitRows.forEach(function (item) {
                     item.node.classList.toggle("is-used", !!used[item.no]);
+                });
+                /* ف القائمة: الوضعيات ديال الإعلانات الخرين مسدودين (X ديما مفتوح) */
+                rows.forEach(function (row) {
+                    Array.prototype.forEach.call(row.select.options, function (opt) {
+                        opt.disabled = !!opt.value && opt.value !== NONE && opt.value !== row.select.value && !!used[opt.value];
+                    });
                 });
 
                 progress.textContent = Object.keys(used).length + "/" + sits.length;
