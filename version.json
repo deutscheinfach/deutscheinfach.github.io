@@ -1,5 +1,5 @@
 {
-  "build": "cd620ece40ec",
+  "build": "e79a779ecdcb",
   "assets": {
     "assets/admin-templates.js": "3391025d",
     "assets/app-install.js": "800fada8",
@@ -22,8 +22,9 @@
     "assets/lesen-edit.js": "6ced1e62",
     "assets/lesen-engine.js": "c3c4fa86",
     "assets/lesen-free.js": "a7239ec4",
-    "assets/lesen-hub.js": "84b8cc48",
+    "assets/lesen-hub.js": "814bd819",
     "assets/lesen-keys.js": "fb3de18d",
+    "assets/lesen-new-topic.js": "be2724a6",
     "assets/lesen-premium.js": "af1df8aa",
     "assets/lesen-sprach.js": "ae55f1db",
     "assets/lesen-sprach2.js": "65a62ba0",

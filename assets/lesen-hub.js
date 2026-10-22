@@ -328,6 +328,19 @@
         });
 
         if (animate) grid.classList.add("lt-enter");
+        /* الأدمين: بطاقة «+» باش يزيد موضوع (assets/lesen-new-topic.js) */
+        if (pagePart === "teil1" && window.__deIsAdmin === true && window.__lesenNewTopic && !EMBEDDED) {
+            grid.appendChild(window.__lesenNewTopic.addCard(function () {
+                window.__lesenNewTopic.open({
+                    level: LEVEL,
+                    part: "teil1",
+                    onSaved: function (entry) {
+                        if (entry && !topics.some(function (t) { return t.id === entry.id; })) topics.push(entry);
+                        renderList(false);
+                    }
+                });
+            }));
+        }
     }
 
     function card(topic) {
@@ -1230,6 +1243,28 @@
     } else {
         renderList(true);
     }
+
+    /* المواضيع اللي زادهم الأدمين من الموقع (KV) كيتزادو للائحة */
+    if (window.__lesenNewTopic) {
+        window.__lesenNewTopic.list(LEVEL).then(function (extra) {
+            let added = false;
+            extra.forEach(function (entry) {
+                if (entry && entry.id && !topics.some(function (t) { return t.id === entry.id; })) {
+                    topics.push(entry);
+                    added = true;
+                }
+            });
+            if (!added || stale()) return;
+            if (grid.hidden === false) renderList(false);
+            /* رابط مباشر لموضوع ديال الأدمين: ما كانش ف اللائحة ملي تحلات الصفحة */
+            const params = new URLSearchParams(location.search);
+            const thema = params.get("thema");
+            if (thema && detail.hidden && extra.some(function (e) { return e.id === thema; })) {
+                open(thema, params.get("teil") || pagePart || "teil1", false);
+            }
+        });
+    }
+    document.addEventListener("de-admin", function () { if (!stale() && !grid.hidden) renderList(false); }, scope);
 
     /* حالة الاشتراك كتوصل من الهيدر من بعد ما يجاوب Firebase.
        إلا كان التمرين محلول وهو Premium، كنعاودو نرسموه. */
