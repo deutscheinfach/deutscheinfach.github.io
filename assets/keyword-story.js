@@ -113,8 +113,13 @@
         b.btn.classList.toggle("is-empty", admin && !has);
         b.btn.classList.toggle("is-soon", !admin && !has && prem);
         b.btn.innerHTML = "";
-        b.btn.append(el("span", "ks-ico", admin ? (has ? "🧠" : "✍️") : (prem ? "🧠" : "🔒")),
-            el("span", "ks-txt", admin ? (has ? "قصة" : "زيد قصة") : (has ? "قصة" : "قصة · قريبا")));
+        /* بلا emoji (كتبان احترافية): غير قفل SVG لغير المشترك */
+        if (!admin && !prem) {
+            const ico = el("span", "ks-ico");
+            ico.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+            b.btn.append(ico);
+        }
+        b.btn.append(el("span", "ks-txt", admin ? (has ? "قصة" : "زيد قصة") : (has ? "قصة" : "قصة · قريبا")));
         b.btn.append(el("span", "ks-pro", "PRO"));
         return true;
     }
@@ -240,7 +245,7 @@
 
     function showStory(s, b) {
         const labels = LESEN;
-        const body = shell("قصة الربط بالدارجة 🧠");
+        const body = shell("قصة الربط بالدارجة");
         /* كل كلمة فوقها منين جات: العنوان ولا النص */
         function chip(label, word) {
             const box = el("div", "ks-kw");
@@ -333,7 +338,7 @@
         const s = found.s;
         if (isAdmin()) { showEditor(b, s, found.inherited); return; }
         if (!isPremium()) {
-            if (window.__deLocked) window.__deLocked({ title: "قصة الربط بالدارجة 🧠" });
+            if (window.__deLocked) window.__deLocked({ title: "قصة الربط بالدارجة" });
             return;
         }
         if (!s) { showSoon(); return; }
@@ -342,7 +347,7 @@
 
     /* القصة ما زال ما تكتبات */
     function showSoon() {
-        const body = shell("قصة الربط بالدارجة 🧠");
+        const body = shell("قصة الربط بالدارجة");
         const box = el("div", "ks-soon");
         box.append(el("b", "", "✍️ هاد القصة غادي تكون مكتوبة قريبا"),
             el("p", "", "كنكتبو قصة صغيرة بالدارجة لكل نص باش تعقل على الكلمة المفتاحية. رجع من بعد شوية!"));
