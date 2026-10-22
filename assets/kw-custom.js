@@ -66,7 +66,9 @@
         });
     }
 
-    /* FNV-1a على النص بلا فراغات زايدين */
+    /* FNV-1a على النص بلا فراغات زايدين.
+       نص بدلو الأدمين (lesen-edit.js): الـWorker كيعطي __aliases
+       (key الجديد → key الأصل) — الكلمات والقصص كيبقاو مربوطين بالأصل. */
     function key(text) {
         const s = String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
         let h = 0x811c9dc5;
@@ -74,7 +76,9 @@
             h ^= s.charCodeAt(i);
             h = Math.imul(h, 0x01000193) >>> 0;
         }
-        return "k" + h.toString(36);
+        const k = "k" + h.toString(36);
+        const alias = window.__deKeyAlias;
+        return (alias && alias[k]) || k;
     }
 
     function entry(id) {

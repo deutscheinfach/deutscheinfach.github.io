@@ -48,7 +48,8 @@
         const s = String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
         let h = 0x811c9dc5;
         for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
-        return "k" + h.toString(36);
+        const k = "k" + h.toString(36);
+        return (window.__deKeyAlias && window.__deKeyAlias[k]) || k;
     }
     function docOf() {
         const lv = /(^|\/)b1-/.test(location.pathname) ? "b1" : "b2";

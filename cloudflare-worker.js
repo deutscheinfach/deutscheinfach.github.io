@@ -71,7 +71,21 @@ export default {
         }
         const headers = corsHeaders(allowedOrigin);
         headers["Cache-Control"] = "public, max-age=600";
-        return new Response(text, { status: 200, headers });
+        /* تعديلات الأدمين (lesen-edits) كتطبق على النصوص قبل ما يتعطاو */
+        const edits = await lesenEdits(env);
+        if (!Object.keys(edits.map).length) return new Response(text, { status: 200, headers });
+        let all;
+        try { all = JSON.parse(text); } catch (e) { return new Response(text, { status: 200, headers }); }
+        for (const id of Object.keys(all)) all[id] = withEdits(all[id], edits.map);
+        return new Response(JSON.stringify(all), { status: 200, headers });
+      }
+      /* GET ?editsv=1 → { v }: الكليان كيمسح الكاش ديال Lesen ملي يتبدل */
+      if (new URL(request.url).searchParams.get("editsv") === "1" && env.TOPICS) {
+        const edits = await lesenEdits(env);
+        const headers = corsHeaders(allowedOrigin);
+        headers["Content-Type"] = "application/json; charset=utf-8";
+        headers["Cache-Control"] = "public, max-age=60";
+        return new Response(JSON.stringify({ v: edits.v }), { status: 200, headers });
       }
     }
 
@@ -289,6 +303,10 @@ export default {
           return jsonResponse({ error: "Topic not found." }, 404, allowedOrigin);
         }
 
+        if (!lesenId.startsWith("sprechen-")) {
+          const edits = await lesenEdits(env);
+          if (Object.keys(edits.map).length) lesenTopic = withEdits(lesenTopic, edits.map);
+        }
         return jsonResponse(lesenTopic, 200, allowedOrigin);
       }
 
@@ -426,6 +444,35 @@ export default {
         } catch (e) {
           return jsonResponse({ error: "reset_failed", details: e.message }, 502, allowedOrigin);
         }
+      }
+
+      /* ===== الأدمين كيعدل نص ولا عنوان ف Lesen =====
+         { adminSetEdit: { orig: "النص كيف كيبان دابا", text: "الجديد" }, idToken }
+         KV «lesen-edits» = { v, map: { <key ديال النص الأصلي>: "الجديد" } }
+         text خاوي (ولا رجع بحال الأصل) = نحيدو التعديل. */
+      if (body.adminSetEdit && typeof body.adminSetEdit === "object") {
+        if (!env.TOPICS || !env.FIREBASE_SERVICE_ACCOUNT) return jsonResponse({ error: "edit_not_configured" }, 500, allowedOrigin);
+        const cur = String(body.adminSetEdit.orig || "");
+        const next = String(body.adminSetEdit.text || "");
+        if (!cur.trim() || cur.length > 8000 || next.length > 8000) return jsonResponse({ error: "bad_edit" }, 400, allowedOrigin);
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+        const me = await readUserFields(caller.sub, accessToken);
+        if (!me || me.isAdmin?.booleanValue !== true) return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+        const edits = await lesenEdits(env, true);
+        const map = edits.map;
+        /* إلا النص اللي كيبان راه معدل من قبل، كنبدلو نفس التعديل */
+        const curNorm = editNorm(cur);
+        const key = Object.keys(map).find((k) => editNorm(map[k]) === curNorm) || editKey(cur);
+        if (!next.trim() || editKey(next) === key) delete map[key];
+        else map[key] = next;
+        await env.TOPICS.put("lesen-edits", JSON.stringify({ v: Date.now(), map }));
+        return jsonResponse({ ok: true, key, alias: next.trim() ? editKey(next) : null }, 200, allowedOrigin);
       }
 
       /* ===== قصص الربط (Keyword story) =====
@@ -1632,4 +1679,55 @@ async function sendFcm(accessToken, token, data) {
   }
 
   return true;
+}
+
+/* ===== تعديلات الأدمين على نصوص Lesen =====
+   نفس الـkey ديال الكليان (assets/kw-custom.js): FNV-1a على النص
+   بلا فراغات زايدين، بحروف صغار. */
+function editNorm(text) {
+  return String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+function editKey(text) {
+  const s = editNorm(text);
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return "k" + h.toString(36);
+}
+async function lesenEdits(env, fresh) {
+  try {
+    const raw = await env.TOPICS.get("lesen-edits", fresh ? { type: "text" } : { type: "text", cacheTtl: 60 });
+    const v = raw ? JSON.parse(raw) : null;
+    return { v: (v && v.v) || 0, map: (v && v.map) || {} };
+  } catch (e) {
+    return { v: 0, map: {} };
+  }
+}
+/* كنبدلو كل string عندو تعديل. __aliases: key(الجديد) → key(الأصل)، باش
+   الكلمات المفتاحية والقصص ديال النص يبقاو مربوطين بيه. */
+function withEdits(topic, map) {
+  const aliases = {};
+  function walk(node) {
+    if (Array.isArray(node)) return node.map(walk);
+    if (node && typeof node === "object") {
+      const out = {};
+      for (const k of Object.keys(node)) out[k] = k === "__aliases" ? node[k] : walk(node[k]);
+      return out;
+    }
+    if (typeof node === "string" && node.length > 1) {
+      const k = editKey(node);
+      if (typeof map[k] === "string") {
+        aliases[editKey(map[k])] = k;
+        return map[k];
+      }
+    }
+    return node;
+  }
+  const out = walk(topic);
+  if (out && typeof out === "object" && !Array.isArray(out) && Object.keys(aliases).length) {
+    out.__aliases = Object.assign({}, out.__aliases || {}, aliases);
+  }
+  return out;
 }
