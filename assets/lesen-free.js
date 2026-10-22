@@ -84,6 +84,11 @@
             });
             jobs[lv] = first.then(function (data) {
                 window[key] = Object.assign(window[key] || {}, data || {});
+                /* نصوص بدلهم الأدمين: key الجديد → key الأصل (kw-custom.js) */
+                Object.keys(data || {}).forEach(function (id) {
+                    const a = data[id] && data[id].__aliases;
+                    if (a) window.__deKeyAlias = Object.assign(window.__deKeyAlias || {}, a);
+                });
                 if (!data) delete jobs[lv];   /* فشل: المرة الجاية نعاودو */
                 return window[key];
             });

@@ -345,4 +345,13 @@
             window.__lesenPremiumFetch(themaId, { bg: true });
         } catch (error) { /* غير تسريع */ }
     };
+    /* نصوص بدلهم الأدمين: key الجديد → key الأصل (kw-custom.js) */
+    const fetchTopic = window.__lesenPremiumFetch;
+    window.__lesenPremiumFetch = function () {
+        return fetchTopic.apply(this, arguments).then(function (r) {
+            const a = r && r.data && r.data.__aliases;
+            if (a) window.__deKeyAlias = Object.assign(window.__deKeyAlias || {}, a);
+            return r;
+        });
+    };
 })();
