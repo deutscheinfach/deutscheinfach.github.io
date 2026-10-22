@@ -19,6 +19,7 @@
 <script src="assets/hoeren-premium.js?v=fd4e4d09"></script>
 <script src="assets/topic-video.js?v=f0b1cfa8"></script>
 <script src="assets/keyword-story.js?v=5836060e"></script>
+<script src="assets/hoeren-new-topic.js?v=d4c83d96"></script>
 <script src="assets/kw-custom.js?v=da488092" defer></script>
 <script src="assets/hoeren-keys.js?v=91afef95" defer></script>
 <script src="assets/hoeren-toc.js?v=f5f43865" defer></script>
@@ -1247,6 +1248,8 @@ window.__deutschEinfachPremiumReady = (async function () {
   {"href": "", "title": "Sportverein", "quizId": "b1-t2-20-sportverein", "premium": true, "questions": []}
   ] 
 
+  /* المواضيع اللي زادهم الأدمين من الموقع (assets/hoeren-new-topic.js) */
+  if (window.__hoerenExtra && window.__hoerenExtra.length) THEMES = THEMES.concat(window.__hoerenExtra);
   if (window.__hoerenPremiumMerge) window.__hoerenPremiumMerge(THEMES, window.__hoerenPremiumResult);
 
   var stack = document.getElementById("hoeren-teil2-stack");
@@ -1751,6 +1754,7 @@ window.__deutschEinfachPremiumReady = (async function () {
   }
 
   boot();
+  window.__hoerenReboot = boot;
 
   /* داخل «اختبر نفسك» / Modelltest: الصفحة الأم ديجا عارفة الاشتراك */
   var parentPremium = false;

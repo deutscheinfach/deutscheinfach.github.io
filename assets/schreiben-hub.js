@@ -95,7 +95,8 @@
         /* المشترك عندو گاع المواضيع — ماعندوش علاش يشوف القفل */
         const shut = topic.locked && !window.__deutschEinfachIsPremium;
         node.className = "lesen-card" + (shut ? " locked" : "") + (topic.soon ? " is-soon" : "");
-        if (!topic.soon) node.href = LEVEL + "-schreiben-" + topic.id + ".html";
+        /* مواضيع الأدمين (schreiben-new-topic.js): صفحة وحدة للكل */
+        if (!topic.soon) node.href = topic.admin ? LEVEL + "-schreiben-x.html?t=" + topic.id : LEVEL + "-schreiben-" + topic.id + ".html";
         if (topic.locked && !topic.soon) node.dataset.topic = topic.id;
 
         const title = document.createElement("div");
@@ -314,6 +315,20 @@
         }
 
         list.forEach(function (topic) { grid.appendChild(card(topic)); });
+        /* الأدمين: «+» باش يزيد موضوع */
+        if (window.__deIsAdmin === true && window.__schreibenNewTopic) {
+            grid.appendChild(window.__schreibenNewTopic.addCard(function () {
+                const next = topics.reduce(function (m, t) { return Math.max(m, parseInt(t.id, 10) || 0); }, 0) + 1;
+                window.__schreibenNewTopic.open({
+                    level: LEVEL,
+                    id: String(next).padStart(2, "0"),
+                    onSaved: function (entry) {
+                        if (entry && !topics.some(function (t) { return t.id === entry.id; })) topics.push(entry);
+                        render();
+                    }
+                });
+            }));
+        }
         watchCards();
         /* اللائحة بانت: Firestore والجلب المسبق يقدرو يبداو (diag.js) */
         if (!new URLSearchParams(location.search).get("thema")) document.dispatchEvent(new CustomEvent("de-content"));
@@ -329,6 +344,18 @@
     }
 
     render();
+
+    /* المواضيع اللي زادهم الأدمين من الموقع (KV) */
+    if (window.__schreibenNewTopic) {
+        window.__schreibenNewTopic.list(LEVEL).then(function (extra) {
+            let added = false;
+            extra.forEach(function (e) {
+                if (e && e.id && !topics.some(function (t) { return t.id === e.id; })) { topics.push(e); added = true; }
+            });
+            if (added && !stale()) render();
+        });
+    }
+    document.addEventListener("de-admin", function () { if (!stale()) render(); }, scope);
 
     /* ===== الرجوع من موضوع: نفس البلاصة ف اللائحة =====
        ملي كيدخل لموضوع كنحفظو فين كان. ملي كيرجع (زر ← ديال الموضوع
