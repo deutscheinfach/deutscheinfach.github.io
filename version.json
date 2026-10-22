@@ -1,5 +1,5 @@
 {
-  "build": "8b4f6ded6393",
+  "build": "9d1b8fba54bc",
   "assets": {
     "assets/app-install.js": "800fada8",
     "assets/auth.css": "37532702",
@@ -29,7 +29,7 @@
     "assets/lesen-teil2.js": "3588cbfb",
     "assets/lesen-teil3.js": "b78dc4f2",
     "assets/locked-modal.js": "c78a55aa",
-    "assets/modelltest.js": "d43f13f9",
+    "assets/modelltest.js": "5903c129",
     "assets/premium-gate.js": "2b48456e",
     "assets/premium-wa.css": "6d49a4b0",
     "assets/presence.js": "ea34c6d5",
