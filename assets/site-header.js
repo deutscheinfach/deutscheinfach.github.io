@@ -1924,6 +1924,24 @@
             if (newest > Number(read(seenKey()) || 0)) store(seenKey(), String(newest));
         }
 
+        /* مباشر: كنسمعو لآخر إشعار (onSnapshot، قراءة وحدة ف البداية ووحدة
+           ملي يتبدل). ملي الأدمين كينشر ولا «نبّه الكل»، النقطة الحمرا كتبان
+           للي داخلين دابا بلا refresh. */
+        let listening = false;
+        function live() {
+            if (listening || !fs || !fs.onSnapshot) return;
+            listening = true;
+            try {
+                fs.onSnapshot(fs.query(fs.collection(db, "news"), fs.orderBy("createdAt", "desc"), fs.limit(1)), function (snap) {
+                    if (snap.metadata && snap.metadata.hasPendingWrites) return;
+                    const d0 = snap.docs[0];
+                    const top = d0 ? d0.id + "@" + stamp(d0.data()) : null;
+                    const known = items[0] ? items[0].id + "@" + items[0].at : null;
+                    if (top !== known) refresh(true);
+                }, function (e) { console.warn("Header: الإشعارات المباشرة", e && (e.code || e.message)); });
+            } catch (e) { /* كنبقاو على التشييك العادي */ }
+        }
+
         function open(show) {
             if (show) {
                 /* كنحفظو شنو كان جديد قبل ما نعلمو عليه مشاف، باش يبان مميز */
@@ -1954,6 +1972,7 @@
                 fs = fsMod;
                 db = database;
                 refresh(false);
+                live();
             },
             setUser: function (uid) {
                 who = uid || "guest";
