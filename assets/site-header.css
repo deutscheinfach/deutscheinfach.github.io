@@ -863,6 +863,9 @@ html.de-vt.de-leaving body > *:not(#site-header):not(.site-header):not(script):n
 }
 .site-news-del:hover { background: color-mix(in srgb, #265be3 15%, transparent); color: #265be3; }
 .site-news-item:has(.site-news-del) .site-news-top { padding-left: 24px; }
+.site-news-ping { margin-top: 8px; border: 1px dashed #e5243b; border-radius: 999px; padding: 4px 10px; background: transparent; color: #e5243b; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
+.site-news-ping:hover { background: rgba(229,36,59,.08); }
+.site-news-ping:disabled { opacity: .5; cursor: default; }
 .site-news-form { display: grid; gap: 7px; padding: 10px; margin-bottom: 10px; border-radius: 12px; border: 1px dashed var(--gold); }
 .site-news-form-label { font-size: 12.5px; font-weight: 800; color: var(--accent-text); }
 .site-news-text { resize: vertical; min-height: 64px; font-family: inherit; }

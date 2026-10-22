@@ -1797,6 +1797,26 @@
                         } catch (e) { alert("ماقدرناش نمسحوه: " + (e.code || e.message)); }
                     });
                     item.appendChild(del);
+                    /* «نبّه الكل»: كنردو التاريخ ديالو دابا → كيولي جديد عند الكل
+                       (حتى اللي شافوه)، والنقطة الحمرا كترجع */
+                    const ping = el("button", "site-news-ping", "🔔 نبّه الكل من جديد");
+                    ping.type = "button";
+                    ping.addEventListener("click", async function () {
+                        if (!confirm("نرجعو النقطة الحمرا لهاد الإشعار عند كاع المستخدمين؟")) return;
+                        ping.disabled = true;
+                        try {
+                            /* نسخة جديدة بتاريخ دابا ومن بعد كنمسحو القديمة
+                               (نفس الصلاحيات ديال «نشر» و«مسح» — بلا update) */
+                            const copy = { title: n.title, createdAt: fs.serverTimestamp() };
+                            if (n.body) copy.body = n.body;
+                            if (n.link) copy.link = n.link;
+                            await fs.addDoc(fs.collection(db, "news"), copy);
+                            await fs.deleteDoc(fs.doc(db, "news", n.id));
+                            store(seenKey(), String(Date.now() + 5000));
+                            await refresh(true);
+                        } catch (e) { ping.disabled = false; alert("ماقدرناش: " + (e.code || e.message)); }
+                    });
+                    item.appendChild(ping);
                 }
                 list.appendChild(item);
             });
@@ -1850,6 +1870,10 @@
              اللي عندنا، الكاش صالح وماكنقراو والو آخر.
            - اللائحة كاملة (10) غير ملي يتزاد خبر جديد، ولا مرة فالنهار
              (باش الخبر اللي تمسح يغبر حتى هو). */
+        function stamp(v) {
+            return v.createdAt && v.createdAt.toMillis ? v.createdAt.toMillis() : Date.now();
+        }
+
         async function refresh(force, check) {
             if (!fs) return;
             let cached = null;
@@ -1862,8 +1886,9 @@
             try {
                 if (!force && cached && Array.isArray(cached.items) && fullAge < DAY) {
                     const top = await fs.getDocs(fs.query(col, fs.orderBy("createdAt", "desc"), fs.limit(1)));
-                    const newest = top.docs[0] ? top.docs[0].id : null;
-                    const known = cached.items[0] ? cached.items[0].id : null;
+                    const d0 = top.docs[0];
+                    const newest = d0 ? d0.id + "@" + stamp(d0.data()) : null;
+                    const known = cached.items[0] ? cached.items[0].id + "@" + cached.items[0].at : null;
                     if (newest === known) {
                         cached.t = Date.now();
                         store(CACHE, JSON.stringify(cached));
@@ -1879,7 +1904,7 @@
                         title: String(v.title || ""),
                         body: String(v.body || ""),
                         link: String(v.link || ""),
-                        at: v.createdAt && v.createdAt.toMillis ? v.createdAt.toMillis() : Date.now()
+                        at: stamp(v)
                     };
                 });
                 loaded = true;
@@ -1892,15 +1917,22 @@
             if (!panel.hidden) paint();
         }
 
+        /* «شفتهم» = آخر إشعار بان ف اللوحة (ماشي «دابا»): قبل، اللي حل الجرس
+           واللائحة ديالو قديمة كان كيتحسب شاف حتى الإشعار اللي ما بانش ليه */
+        function markSeen() {
+            const newest = items.reduce(function (m, n) { return Math.max(m, n.at); }, 0);
+            if (newest > Number(read(seenKey()) || 0)) store(seenKey(), String(newest));
+        }
+
         function open(show) {
             if (show) {
                 /* كنحفظو شنو كان جديد قبل ما نعلمو عليه مشاف، باش يبان مميز */
                 panel.dataset.seen = String(seenAt());
                 paint();
-                const newest = items.reduce(function (m, n) { return Math.max(m, n.at); }, 0);
-                store(seenKey(), String(Math.max(Date.now(), newest)));
+                markSeen();
                 paintDot();
-                refresh(false, true);
+                /* إلا جا شي جديد واللوحة محلولة، كيبان فيها وكيتحسب مشاف */
+                refresh(false, true).then(function () { if (!panel.hidden) { markSeen(); paintDot(); } });
             }
             panel.hidden = !show;
             root.classList.toggle("is-open", show);
