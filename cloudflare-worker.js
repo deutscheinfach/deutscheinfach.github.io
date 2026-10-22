@@ -79,6 +79,15 @@ export default {
         for (const id of Object.keys(all)) all[id] = withEdits(all[id], edits.map);
         return new Response(JSON.stringify(all), { status: 200, headers });
       }
+      /* GET ?lesenlist=b2 → المواضيع اللي زادهم الأدمين من الموقع (غير العناوين) */
+      const listLv = new URL(request.url).searchParams.get("lesenlist") || "";
+      if (/^b[12]$/.test(listLv) && env.TOPICS) {
+        const headers = corsHeaders(allowedOrigin);
+        headers["Content-Type"] = "application/json; charset=utf-8";
+        headers["Cache-Control"] = "public, max-age=60";
+        const raw = await env.TOPICS.get("lesen-custom-" + listLv, { type: "text", cacheTtl: 60 });
+        return new Response(raw || "[]", { status: 200, headers });
+      }
       /* GET ?editsv=1 → { v }: الكليان كيمسح الكاش ديال Lesen ملي يتبدل */
       if (new URL(request.url).searchParams.get("editsv") === "1" && env.TOPICS) {
         const edits = await lesenEdits(env);
@@ -473,6 +482,69 @@ export default {
         else map[key] = next;
         await env.TOPICS.put("lesen-edits", JSON.stringify({ v: Date.now(), map }));
         return jsonResponse({ ok: true, key, alias: next.trim() ? editKey(next) : null }, 200, allowedOrigin);
+      }
+
+      /* ===== الأدمين كيزيد موضوع Lesen من الموقع =====
+         { adminSaveTopic: { level: "b2", part: "teil1", id?, title, ar, data }, idToken }
+         المحتوى → KV «lesen-<id>» ({ <part>: data })، والعنوان → «lesen-custom-<level>».
+         المواضيع ديال الأدمين Premium (locked). adminDeleteTopic: { level, id } كيحيدو من اللائحة. */
+      if ((body.adminSaveTopic && typeof body.adminSaveTopic === "object") ||
+          (body.adminDeleteTopic && typeof body.adminDeleteTopic === "object")) {
+        if (!env.TOPICS || !env.FIREBASE_SERVICE_ACCOUNT) return jsonResponse({ error: "topic_not_configured" }, 500, allowedOrigin);
+        let caller;
+        try {
+          caller = await verifyIdToken(body.idToken);
+        } catch (authError) {
+          return jsonResponse({ error: "not_signed_in", details: authError.message }, 401, allowedOrigin);
+        }
+        const accessToken = await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT);
+        const me = await readUserFields(caller.sub, accessToken);
+        if (!me || me.isAdmin?.booleanValue !== true) return jsonResponse({ error: "not_admin" }, 403, allowedOrigin);
+
+        const t = body.adminSaveTopic || body.adminDeleteTopic;
+        const level = String(t.level || "");
+        if (!/^b[12]$/.test(level)) return jsonResponse({ error: "bad_level" }, 400, allowedOrigin);
+        const listKey = "lesen-custom-" + level;
+        let list;
+        try { list = JSON.parse((await env.TOPICS.get(listKey, { type: "text" })) || "[]"); } catch (e) { list = []; }
+        if (!Array.isArray(list)) list = [];
+
+        if (body.adminDeleteTopic) {
+          const id = String(t.id || "");
+          list = list.filter((x) => x.id !== id);
+          await env.TOPICS.put(listKey, JSON.stringify(list));
+          return jsonResponse({ ok: true, list }, 200, allowedOrigin);
+        }
+
+        const part = String(t.part || "");
+        if (!/^(teil[123]|sprach[12])$/.test(part)) return jsonResponse({ error: "bad_part" }, 400, allowedOrigin);
+        const title = String(t.title || "").trim().slice(0, 120);
+        const ar = String(t.ar || "").trim().slice(0, 120);
+        if (!title || !t.data || typeof t.data !== "object") return jsonResponse({ error: "bad_topic" }, 400, allowedOrigin);
+        const raw = JSON.stringify(t.data);
+        if (raw.length > 200000) return jsonResponse({ error: "too_big" }, 400, allowedOrigin);
+
+        let id = String(t.id || "");
+        if (!id) {
+          const slug = title.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/ß/g, "ss")
+            .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 24) || "thema";
+          id = "a-" + slug + "-" + Date.now().toString(36).slice(-4);
+        }
+        if (!/^[a-z0-9-]{2,40}$/.test(id)) return jsonResponse({ error: "bad_id" }, 400, allowedOrigin);
+
+        let topic;
+        try { topic = JSON.parse((await env.TOPICS.get("lesen-" + id, { type: "text" })) || "{}"); } catch (e) { topic = {}; }
+        topic[part] = t.data;
+        await env.TOPICS.put("lesen-" + id, JSON.stringify(topic));
+
+        const at = list.findIndex((x) => x.id === id);
+        const entry = at === -1 ? { id, title, ar, parts: [], locked: true, admin: true } : list[at];
+        entry.title = title;
+        entry.ar = ar;
+        if (entry.parts.indexOf(part) === -1) entry.parts.push(part);
+        if (at === -1) list.push(entry);
+        await env.TOPICS.put(listKey, JSON.stringify(list));
+        return jsonResponse({ ok: true, id, entry }, 200, allowedOrigin);
       }
 
       /* ===== قصص الربط (Keyword story) =====
