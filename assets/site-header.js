@@ -1676,7 +1676,9 @@
     function newsBell() {
         const CACHE = "de-news-cache";
         const SEEN = "de-news-seen";
-        const TTL = 30 * 60 * 1000;
+        /* 5 دقايق (كان 30): الإشعار الجديد كان كيتعطل حتى نص ساعة عند اللي
+           داخلين. كل تشييك = قراءة وحدة (آخر خبر)، إذن ما كيغلاش. */
+        const TTL = 5 * 60 * 1000;
         const DAY = 24 * 3600 * 1000;
 
         let fs = null, db = null, items = [], admin = false, loaded = false;
@@ -1844,17 +1846,18 @@
 
         /* القراية ديال Firestore محسوبة (50.000 فالنهار فالخطة المجانية)
            وكل زائر كيشوف الجرس. إذن:
-           - كل 30 دقيقة: كنقراو غير آخر خبر (قراءة وحدة). إلا هو نفسو
+           - كل 5 دقايق (وكل مرة كيتحل الجرس): كنقراو غير آخر خبر (قراءة وحدة). إلا هو نفسو
              اللي عندنا، الكاش صالح وماكنقراو والو آخر.
            - اللائحة كاملة (10) غير ملي يتزاد خبر جديد، ولا مرة فالنهار
              (باش الخبر اللي تمسح يغبر حتى هو). */
-        async function refresh(force) {
+        async function refresh(force, check) {
             if (!fs) return;
             let cached = null;
             try { cached = JSON.parse(read(CACHE) || "null"); } catch (e) { cached = null; }
             const age = cached ? Date.now() - cached.t : Infinity;
             const fullAge = cached ? Date.now() - (cached.full || 0) : Infinity;
-            if (!force && age < TTL) return;
+            /* check: الجرس تحل — نشوفو آخر خبر حتى ولو الكاش جديد */
+            if (!force && !check && age < TTL) return;
             const col = fs.collection(db, "news");
             try {
                 if (!force && cached && Array.isArray(cached.items) && fullAge < DAY) {
@@ -1897,7 +1900,7 @@
                 const newest = items.reduce(function (m, n) { return Math.max(m, n.at); }, 0);
                 store(seenKey(), String(Math.max(Date.now(), newest)));
                 paintDot();
-                refresh(false);
+                refresh(false, true);
             }
             panel.hidden = !show;
             root.classList.toggle("is-open", show);
