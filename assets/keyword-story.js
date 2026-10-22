@@ -123,7 +123,61 @@
 
     /* ---------- النافذة ---------- */
     let modal = null;
-    function close() { if (modal) { modal.remove(); modal = null; } }
+    let unguard = null;
+    function close() {
+        if (unguard) { unguard(); unguard = null; }
+        if (modal) { modal.remove(); modal = null; }
+    }
+
+    /* ===== حماية القصة (غير ف نافذة الطالب) =====
+       بلا تحديد، بلا copie، بلا clic droit، بلا طباعة. الـ capture
+       ماكيتمنعش 100% ف المتصفح (خصوصا ف التيليفون) — إذن: القصة كتضبّب
+       ملي الصفحة كتفقد الـfocus (أداة capture ف PC) ولا ملي كيتبرك
+       PrintScreen، وفوقها علامة مائية بالحساب ديال الطالب. */
+    function who() {
+        const auth = window.__deutschEinfachAuth;
+        const u = auth && auth.currentUser;
+        return u ? (u.email || u.displayName || u.uid || "") : "";
+    }
+    function guard(box) {
+        box.classList.add("ks-guard");
+        const mark = who();
+        if (mark) {
+            const wm = el("div", "ks-wm");
+            wm.setAttribute("aria-hidden", "true");
+            wm.textContent = Array(40).join(mark + " · Deutsch Einfach   ");
+            box.appendChild(wm);
+        }
+        const stop = function (e) { if (box.contains(e.target)) e.preventDefault(); };
+        const hide = function () { box.classList.add("is-veiled"); };
+        const show = function () { if (document.hasFocus()) box.classList.remove("is-veiled"); };
+        const key = function (e) {
+            const k = (e.key || "").toLowerCase();
+            if (k === "printscreen" || ((e.ctrlKey || e.metaKey) && (k === "c" || k === "p" || k === "s" || k === "a")) ||
+                (e.metaKey && e.shiftKey)) {
+                e.preventDefault();
+                hide();
+                if (k === "printscreen") { try { navigator.clipboard.writeText(""); } catch (x) { /* */ } }
+                setTimeout(show, 1500);
+            }
+        };
+        const vis = function () { if (document.hidden) hide(); else show(); };
+        ["copy", "cut", "contextmenu", "selectstart", "dragstart"].forEach(function (t) { document.addEventListener(t, stop, true); });
+        document.addEventListener("keydown", key, true);
+        document.addEventListener("keyup", key, true);
+        document.addEventListener("visibilitychange", vis);
+        window.addEventListener("blur", hide);
+        window.addEventListener("focus", show);
+        box.addEventListener("click", show);
+        return function () {
+            ["copy", "cut", "contextmenu", "selectstart", "dragstart"].forEach(function (t) { document.removeEventListener(t, stop, true); });
+            document.removeEventListener("keydown", key, true);
+            document.removeEventListener("keyup", key, true);
+            document.removeEventListener("visibilitychange", vis);
+            window.removeEventListener("blur", hide);
+            window.removeEventListener("focus", show);
+        };
+    }
 
     function shell(title) {
         close();
@@ -217,6 +271,8 @@
         scene.append(el("small", "", "🎬 تخيل هاد المشهد"), el("p", "", s.story));
         const tip = el("p", "ks-tip", "💡 هادي طريقة باش تربط الكلمات فذاكرتك، ماشي ترجمة حرفية. الجواب خاصو يبقى مبني على معنى النص كامل.");
         body.append(chips, scene, tip);
+        /* الأدمين (معاينة «شوف كيف كتبان للطلبة») كيبقى حر */
+        if (!isAdmin()) unguard = guard(body.parentNode);
     }
 
     function showEditor(b, s, inherited) {
@@ -393,6 +449,12 @@
         ".ks-kw small{font-size:12px;font-weight:800;color:#1b46b3}" +
         ".ks-chip{background:#fff3b0;border:1.5px solid #ffce00;border-radius:12px;padding:8px 14px;font-weight:800;font-size:15px}" +
         ".ks-link{font-style:normal;color:#265be3;font-size:20px;font-weight:900;padding-bottom:8px}" +
+        ".ks-guard,.ks-guard *{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important}" +
+        ".ks-guard{position:relative}.ks-guard .ks-body{position:relative;transition:filter .15s}" +
+        ".ks-guard.is-veiled .ks-body{filter:blur(14px)}" +
+        ".ks-wm{position:absolute;inset:72px 0 0;overflow:hidden;pointer-events:none;z-index:2;font:700 12px Cairo,system-ui,sans-serif;color:rgba(28,54,122,.09);line-height:46px;transform:rotate(-18deg) scale(1.4);transform-origin:center;word-break:break-all;direction:ltr}" +
+        "html[data-theme=dark] .ks-wm{color:rgba(255,255,255,.07)}" +
+        "@media print{.ks-bg{display:none!important}}" +
         ".ks-scene{background:#f2f6ff;border:1px solid #dbe5fb;border-radius:18px;padding:14px 18px}" +
         ".ks-scene small{display:block;color:#1b46b3;font-weight:800;margin-bottom:6px}" +
         ".ks-scene p{font-size:17px;font-weight:800;line-height:1.9;white-space:pre-line}" +
