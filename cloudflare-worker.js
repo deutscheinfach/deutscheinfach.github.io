@@ -88,6 +88,17 @@ export default {
         const raw = await env.TOPICS.get("lesen-custom-" + listLv, { type: "text", cacheTtl: 60 });
         return new Response(raw || "[]", { status: 200, headers });
       }
+      /* GET ?hoerenlist=b2-teil2 / ?schreibenlist=b2 → اللي زادهم الأدمين (غير العناوين) */
+      const hList = new URL(request.url).searchParams.get("hoerenlist") || "";
+      const sList = new URL(request.url).searchParams.get("schreibenlist") || "";
+      if ((/^b[12]-teil[123]$/.test(hList) || /^b[12]$/.test(sList)) && env.TOPICS) {
+        const headers = corsHeaders(allowedOrigin);
+        headers["Content-Type"] = "application/json; charset=utf-8";
+        headers["Cache-Control"] = "public, max-age=60";
+        const key = hList ? "hoeren-custom-" + hList : "schreiben-custom-" + sList;
+        const raw = await env.TOPICS.get(key, { type: "text", cacheTtl: 60 });
+        return new Response(raw || "[]", { status: 200, headers });
+      }
       /* GET ?editsv=1 → { v }: الكليان كيمسح الكاش ديال Lesen ملي يتبدل */
       if (new URL(request.url).searchParams.get("editsv") === "1" && env.TOPICS) {
         const edits = await lesenEdits(env);
@@ -504,6 +515,82 @@ export default {
         const t = body.adminSaveTopic || body.adminDeleteTopic;
         const level = String(t.level || "");
         if (!/^b[12]$/.test(level)) return jsonResponse({ error: "bad_level" }, 400, allowedOrigin);
+        const kind = String(t.kind || "lesen");
+        const readList = async (key) => {
+          try { const v = JSON.parse((await env.TOPICS.get(key, { type: "text" })) || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; }
+        };
+        const slugId = (title) => {
+          const slug = String(title).toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/ß/g, "ss")
+            .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 20) || "thema";
+          return slug + "-" + Date.now().toString(36).slice(-4);
+        };
+
+        /* Hören: الموضوع كيتسجل ف مفتاح ديالو «lesen-hoeren-x-<id>» (كيتجاب بـ lesenId
+           «hoeren-x-<id>»)، والعنوان ف «hoeren-custom-<level>-<teil>» */
+        if (kind === "hoeren") {
+          const teil = String(t.teil || "");
+          if (!/^teil[123]$/.test(teil)) return jsonResponse({ error: "bad_part" }, 400, allowedOrigin);
+          const hKey = "hoeren-custom-" + level + "-" + teil;
+          let hl = await readList(hKey);
+          if (body.adminDeleteTopic) {
+            hl = hl.filter((x) => x.kv !== String(t.id || ""));
+            await env.TOPICS.put(hKey, JSON.stringify(hl));
+            return jsonResponse({ ok: true, list: hl }, 200, allowedOrigin);
+          }
+          const title = String(t.title || "").trim().slice(0, 120);
+          const qs = Array.isArray(t.questions) ? t.questions : [];
+          if (!title || !qs.length || qs.length > 20) return jsonResponse({ error: "bad_topic" }, 400, allowedOrigin);
+          const questions = qs.map((q) => {
+            const o = { text: String(q.text || "").trim().slice(0, 600), answer: q.answer === "falsch" ? "falsch" : "richtig" };
+            if (q.ar) o.ar = String(q.ar).trim().slice(0, 600);
+            return o;
+          });
+          if (questions.some((q) => !q.text)) return jsonResponse({ error: "bad_topic" }, 400, allowedOrigin);
+          const id = String(t.id || "") || "x-" + slugId(title);
+          if (!/^x-[a-z0-9-]{2,36}$/.test(id)) return jsonResponse({ error: "bad_id" }, 400, allowedOrigin);
+          await env.TOPICS.put("lesen-hoeren-" + id, JSON.stringify({ questions }));
+          const at = hl.findIndex((x) => x.kv === id);
+          const entry = { href: "", title, quizId: title, premium: true, kv: id, questions: [], admin: true };
+          if (at === -1) hl.push(entry); else hl[at] = entry;
+          await env.TOPICS.put(hKey, JSON.stringify(hl));
+          return jsonResponse({ ok: true, id, entry }, 200, allowedOrigin);
+        }
+
+        /* Schreiben: رقم (NN) جديد. B2 → «topic-NN»، B1 → «lesen-schreiben-b1-NN»
+           (نفس الطريق اللي كيقرا بيه الموقع). ما كنكتبوش فوق موضوع كاين. */
+        if (kind === "schreiben") {
+          const sKey = "schreiben-custom-" + level;
+          let sl = await readList(sKey);
+          const id = String(t.id || "");
+          if (!/^\d{2}$/.test(id)) return jsonResponse({ error: "bad_id" }, 400, allowedOrigin);
+          if (body.adminDeleteTopic) {
+            sl = sl.filter((x) => x.id !== id);
+            await env.TOPICS.put(sKey, JSON.stringify(sl));
+            return jsonResponse({ ok: true, list: sl }, 200, allowedOrigin);
+          }
+          const c = t.content || {};
+          const title = String(t.title || "").trim().slice(0, 120);
+          const points = (Array.isArray(c.points) ? c.points : []).map((x) => String(x || "").trim()).filter(Boolean);
+          if (!title || !String(c.ad || "").trim() || points.length < 3 || points.length > 4) {
+            return jsonResponse({ error: "bad_topic" }, 400, allowedOrigin);
+          }
+          const contentKey = level === "b2" ? "topic-" + id : "lesen-schreiben-b1-" + id;
+          const mine = sl.some((x) => x.id === id);
+          if (!mine) {
+            const all = level === "b2" ? await kvJson(env, "premium-topics") : null;
+            if ((all && all[id]) || (await env.TOPICS.get(contentKey))) return jsonResponse({ error: "id_taken" }, 409, allowedOrigin);
+          }
+          const content = { title, ad: String(c.ad).trim(), situation: String(c.situation || "").trim(), points };
+          if (c.intro) content.intro = String(c.intro).trim();
+          if (c.words) content.words = String(c.words).trim();
+          await env.TOPICS.put(contentKey, JSON.stringify(content));
+          const entry = { id, title, type: level === "b2" ? "Beschwerde" : "Brief", level: level.toUpperCase(), time: "30 min", locked: true, admin: true };
+          const at = sl.findIndex((x) => x.id === id);
+          if (at === -1) sl.push(entry); else sl[at] = entry;
+          await env.TOPICS.put(sKey, JSON.stringify(sl));
+          return jsonResponse({ ok: true, id, entry }, 200, allowedOrigin);
+        }
+
         const listKey = "lesen-custom-" + level;
         let list;
         try { list = JSON.parse((await env.TOPICS.get(listKey, { type: "text" })) || "[]"); } catch (e) { list = []; }

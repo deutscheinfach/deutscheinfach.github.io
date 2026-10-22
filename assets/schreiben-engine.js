@@ -134,7 +134,9 @@ function renderAd(box, text) {
 }
 
 (async function () {
-    const meta = (TOPICS || {})[TOPIC_ID];
+    /* موضوع زادو الأدمين من الموقع (b?-schreiben-x.html?t=NN): العنوان من الـWorker */
+    const meta = (TOPICS || {})[TOPIC_ID]
+        || (window.__schreibenCustomMeta ? await window.__schreibenCustomMeta(LEVEL, TOPIC_ID) : null);
     if (!meta) {
         showNotice("❓", "Thema nicht gefunden.", "هاد الموضوع ماكاينش.", '<a class="premium-btn ghost" href="' + HUB + '">← رجع للمواضيع</a>', false);
         return;
