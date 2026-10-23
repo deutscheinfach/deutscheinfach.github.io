@@ -247,7 +247,7 @@ function renderAd(box, text) {
         if (intro) {
             const badge = document.createElement("span");
             badge.className = "words-badge";
-            badge.textContent = LEVEL === "b1" ? "mind. 80 Wörter" : "150–200 Wörter";
+            badge.textContent = LEVEL === "b1" ? "ca. 80 Wörter" : "150–200 Wörter";
             intro.appendChild(badge);
         }
     }
@@ -302,9 +302,9 @@ function renderAd(box, text) {
     const wordCountEl = document.getElementById("word-count");
 
     /* الهدف ديال TELC (مثلا "150–180"): العداد كيولي «45 / 150» مع شريط */
-    /* بحال telc حسب المستوى: B1 ≥ 80 كلمة، B2 = 150–200 (الـWorker كينقص النقطة) */
+    /* بحال telc حسب المستوى: B1 ≈ 80 (حتى 130)، B2 = 150–200 (الـWorker كينقص النقطة) */
     const target = LEVEL === "b1" ? 80 : 150;
-    const maxWords = LEVEL === "b1" ? 0 : 200;
+    const maxWords = LEVEL === "b1" ? 130 : 200;
     const meter = document.createElement("span");
     meter.className = "wc-meter";
     meter.innerHTML = '<span class="wc-meter-fill"></span>';
