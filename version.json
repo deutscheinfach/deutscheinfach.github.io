@@ -1,5 +1,5 @@
 {
-  "build": "e3239ee38628",
+  "build": "dc3a65f36e7a",
   "assets": {
     "assets/admin-templates.js": "47410b77",
     "assets/app-install.js": "800fada8",
@@ -40,12 +40,12 @@
     "assets/progress.js": "222ee4fc",
     "assets/report.js": "c13e01ac",
     "assets/schreiben-auth.js": "9fae8527",
-    "assets/schreiben-engine.js": "d79a89f3",
+    "assets/schreiben-engine.js": "72fa62e7",
     "assets/schreiben-hub.js": "b2e406e8",
     "assets/schreiben-new-topic.js": "d0744e0c",
     "assets/schreiben-style.css": "92369e02",
-    "assets/schreiben-topics-b1.js": "5c35fe86",
-    "assets/schreiben-topics-b2.js": "4b0aa04a",
+    "assets/schreiben-topics-b1.js": "99954537",
+    "assets/schreiben-topics-b2.js": "575a76e9",
     "assets/scroll-cue.js": "4d23dcaf",
     "assets/section.css": "41743e0f",
     "assets/selbsttest.js": "966af378",

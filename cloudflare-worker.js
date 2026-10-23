@@ -911,6 +911,7 @@ export default {
         points,
         words,
         studentText,
+        idToken,
       } = body;
 
       // Basic validation
@@ -920,6 +921,26 @@ export default {
           400,
           allowedOrigin
         );
+      }
+
+      /* التصحيح (Gemini) غير للمشتركين Premium (ولا الأدمين): بلا هادي،
+         شي واحد كيدير بزاف ديال الحسابات المجانية وكيسالي الحد */
+      let corrUid;
+      try {
+        corrUid = (await verifyIdToken(idToken)).sub;
+      } catch (authError) {
+        return jsonResponse({ error: "not_signed_in", details: "دخل لحسابك باش تصحح." }, 401, allowedOrigin);
+      }
+      let corrOk = false;
+      try { corrOk = await hasActiveSubscription(corrUid, idToken); } catch (e) { corrOk = false; }
+      if (!corrOk && env.FIREBASE_SERVICE_ACCOUNT) {
+        try {
+          const me = await readUserFields(corrUid, await getGoogleAccessToken(env.FIREBASE_SERVICE_ACCOUNT));
+          corrOk = !!me && me.isAdmin?.booleanValue === true;
+        } catch (e) { /* */ }
+      }
+      if (!corrOk) {
+        return jsonResponse({ error: "not_subscribed", details: "التصحيح بالذكاء الاصطناعي غير للمشتركين Premium." }, 403, allowedOrigin);
       }
 
       if (!env.GEMINI_API_KEY) {
@@ -1005,8 +1026,8 @@ Regeln:
 - Sei konsistent: derselbe Text muss immer dieselben Stufen bekommen.
 - summary, strengths, improvements, fehler.warum und alle "reason"-Felder auf Marokkanischem
   Darija (arabische Schrift), kurz und konkret, mit Beispielen aus dem Text.
-- fehler: ALLE Fehler im Text (Grammatik, Wortschatz, Rechtschreibung, Satzbau), höchstens 25,
-  in der Reihenfolge des Textes. Für jeden Fehler: falsch = die genaue falsche Stelle aus dem Text
+- fehler: die 5 wichtigsten Fehler im Text (Grammatik, Wortschatz, Rechtschreibung, Satzbau),
+  höchstens 5, in der Reihenfolge des Textes. Für jeden Fehler: falsch = die genaue falsche Stelle aus dem Text
   (wörtlich kopiert, kurz), richtig = die korrigierte Form, warum = sehr kurze Erklärung auf Darija.
   Schreibe KEINE korrigierte Version des ganzen Textes.
 - improvements: höchstens 3 kurze allgemeine Tipps auf Darija (keine Fehlerliste).
@@ -1036,7 +1057,7 @@ ${safeStudentText}
          1) نفس النص لنفس المهمة → النتيجة المحفوظة (بلا Gemini)
          2) حالات واضحة (طويل 3 مرات، قصير بزاف، ماشي ألمانية) → 0 بلا Gemini
          3) حد ف النهار لكل IP: CORRECTION_DAILY_LIMIT (افتراضي 10) */
-      const corrKey = "https://cache.internal/corr2/" + await sha256Hex(JSON.stringify([
+      const corrKey = "https://cache.internal/corr3/" + await sha256Hex(JSON.stringify([
         level || "", safeSituation, safeAd, safePoints, safeStudentText.replace(/\s+/g, " ")
       ]));
       const cachedCorr = await cacheGet(corrKey);
@@ -1069,10 +1090,9 @@ ${safeStudentText}
         return ruleOnly("النص ماشي بالألمانية ولا ماعندو حتى معنى — ف telc هادي = 0 نقطة");
       }
 
-      /* الحد ف النهار (Cache API: بلا كتابة ف KV) */
+      /* الحد ف النهار لكل حساب (Cache API: بلا كتابة ف KV) */
       const dailyLimit = parseInt(env.CORRECTION_DAILY_LIMIT || "10", 10) || 10;
-      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-      const quotaKey = "https://cache.internal/quota/" + new Date().toISOString().slice(0, 10) + "/" + encodeURIComponent(ip);
+      const quotaKey = "https://cache.internal/quota/" + new Date().toISOString().slice(0, 10) + "/u/" + encodeURIComponent(corrUid);
       const used = parseInt((await cacheGet(quotaKey)) || "0", 10) || 0;
       if (used >= dailyLimit) {
         return jsonResponse({
@@ -1125,6 +1145,7 @@ ${safeStudentText}
                 strengths: { type: "ARRAY", items: { type: "STRING" } },
                 fehler: {
                   type: "ARRAY",
+                  maxItems: 5,
                   items: {
                     type: "OBJECT",
                     properties: { falsch: { type: "STRING" }, richtig: { type: "STRING" }, warum: { type: "STRING" } },
@@ -1296,7 +1317,7 @@ ${safeStudentText}
           ? result.improvements.map(String)
           : [],
         fehler: Array.isArray(result.fehler)
-          ? result.fehler.slice(0, 25).map((f) => ({
+          ? result.fehler.slice(0, 5).map((f) => ({
               falsch: String(f?.falsch || ""), richtig: String(f?.richtig || ""), warum: String(f?.warum || ""),
             })).filter((f) => f.falsch || f.richtig)
           : [],

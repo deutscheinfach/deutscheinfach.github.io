@@ -471,6 +471,8 @@ function renderAd(box, text) {
                     points: topic.points,
                     words: topic.words || "",
                     studentText: studentText,
+                    /* التصحيح غير للمشتركين: الـWorker كيتحقق من الحساب */
+                    idToken: (await (window.__deutschEinfachIdToken || Promise.resolve(null))) || "",
                 }),
             });
 
@@ -483,6 +485,15 @@ function renderAd(box, text) {
                 data = JSON.parse(raw);
             } catch (parseError) {
                 data = null;
+            }
+
+            /* التصحيح غير لـ Premium */
+            if ((res.status === 401 || res.status === 403) && data && (data.error === "not_signed_in" || data.error === "not_subscribed")) {
+                const login = data.error === "not_signed_in";
+                resultBody.innerHTML = '<div class="error-banner"><strong>🔒 ' + (login ? "خاصك تسجل الدخول" : "التصحيح غير لـ Premium") + "</strong><br>" +
+                    (login ? "دخل لحسابك باش تصحح النص ديالك." : "التصحيح بالذكاء الاصطناعي متوفر غير للمشتركين. فعّل الاشتراك باش تصحح بلا حدود.") +
+                    '<br><br><a class="premium-btn gold" href="' + (login ? "login.html" : "payment.html") + '">' + (login ? "تسجيل الدخول" : "📦 شوف العروض") + "</a></div>";
+                return;
             }
 
             /* الحد ديال النهار: رسالة واضحة، ماشي «مشكل تقني» */
