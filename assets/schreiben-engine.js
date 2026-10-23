@@ -541,7 +541,7 @@ function renderAd(box, text) {
         // Expected shape from the worker/AI:
         // { score: number (0-45), summary: string,
         //   strengths: string[], improvements: string[],
-        //   corrected_text: string }
+        //   fehler: [{ falsch, richtig, warum }] }
         const score = Math.max(0, Math.min(45, Number(data.score) || 0));
         const pct = Math.round((score / 45) * 100);
 
@@ -611,9 +611,16 @@ function renderAd(box, text) {
                 data.improvements.map((s) => "<li>" + escapeHtml(s) + "</li>").join("") +
                 "</ul></div>";
         }
-        if (data.corrected_text) {
-            html += '<div class="result-section"><h3>✍️ نسخة مصححة</h3><p style="white-space:pre-wrap">' +
-                escapeHtml(data.corrected_text) + "</p></div>";
+        /* الأخطاء اللي دار (بلا نسخة مصححة كاملة): غلط → صحيح، وعلاش */
+        if (Array.isArray(data.fehler) && data.fehler.length) {
+            html += '<div class="result-section"><h3>❌ الأخطاء ديالك (' + data.fehler.length + ')</h3><ol class="fehler-list">' +
+                data.fehler.map(function (f) {
+                    return '<li><div class="fehler-pair" dir="ltr"><s class="fehler-falsch">' + escapeHtml(f.falsch) +
+                        '</s> <span class="fehler-arrow">→</span> <b class="fehler-richtig">' + escapeHtml(f.richtig) + "</b></div>" +
+                        (f.warum ? '<small class="fehler-warum">' + escapeHtml(f.warum) + "</small>" : "") + "</li>";
+                }).join("") + "</ol></div>";
+        } else if (Array.isArray(data.fehler) && !data.no_ai) {
+            html += '<div class="result-section"><h3>❌ الأخطاء ديالك</h3><p>ما لقيناش أخطاء واضحين. مزيان! 👏</p></div>';
         }
         html += '<button class="result-close-btn result-close" id="result-close-2">فهمت، شكراً</button>';
 
