@@ -948,7 +948,9 @@ export default {
       /* عدد الكلمات كنحسبوه حنا (دقيق)، وكنعطيوه لـ Gemini */
       const wordCount = (safeStudentText.match(/[A-Za-zÄÖÜäöüß0-9]+(?:[-'][A-Za-zÄÖÜäöüß0-9]+)*/g) || []).length;
       const wordsHint = String(words || "").slice(0, 40);
-      const minWords = parseInt((wordsHint.match(/\d+/) || [0])[0], 10) || 0;
+      /* بحال telc: الطول المطلوب 150–200 كلمة (ولا اللي ف الموضوع) */
+      const minWords = parseInt((wordsHint.match(/\d+/) || [0])[0], 10) || 150;
+      const maxWords = 200;
 
       /* النقطة كتتحسب بحال telc: 3 معايير، كل واحد A/B/C/D
          (A=5، B=3، C=1، D=0) × 3 = من 0 حتى 45.
@@ -983,8 +985,15 @@ III. Formale Richtigkeit (Grammatik, Wortschatz, Rechtschreibung)
 Regeln:
 - Bewerte NUR den tatsächlich geschriebenen Text. Erfinde nichts.
 - Prüfe jeden Leitpunkt einzeln: "ja" (angemessen), "teilweise" (zu knapp), "nein" (fehlt).
-- Die Wortanzahl ist vorgegeben (vom System gezählt). Ist der Text deutlich
-  zu kurz (unter der Hälfte des erwarteten Umfangs), kann Kriterium I höchstens C sein.
+- Die Wortanzahl ist vorgegeben (vom System gezählt). Erwartet: ${minWords}–${maxWords} Wörter.
+- thema_verfehlt = true, wenn der Text nicht zur Aufgabe passt (anderes Thema,
+  auswendig gelernter Standardtext ohne Bezug zur Situation/Anzeige, Kopie der
+  Aufgabenstellung, sinnlose Wörter). Dann alle Kriterien D.
+- textsorte: prüfe den Brief / die E-Mail:
+  anrede = es gibt eine passende Anrede (z. B. «Sehr geehrte Damen und Herren,» / «Liebe Anna,»),
+  gruss = es gibt eine passende Grußformel (z. B. «Mit freundlichen Grüßen» / «Viele Grüße») mit Namen,
+  register = das Register passt (Beschwerde / offizieller Brief → «Sie», persönlicher Brief → «du»).
+  Fehlt etwas davon, darf Kriterium II nicht A sein.
 - Sei konsistent: derselbe Text muss immer dieselben Stufen bekommen.
 - summary, strengths, improvements und alle "reason"-Felder auf Marokkanischem
   Darija (arabische Schrift), kurz und konkret, mit Beispielen aus dem Text.
@@ -1047,12 +1056,18 @@ ${safeStudentText}
                     required: ["punkt", "status"],
                   },
                 },
+                thema_verfehlt: { type: "BOOLEAN" },
+                textsorte: {
+                  type: "OBJECT",
+                  properties: { anrede: { type: "BOOLEAN" }, gruss: { type: "BOOLEAN" }, register: { type: "BOOLEAN" } },
+                  required: ["anrede", "gruss", "register"],
+                },
                 summary: { type: "STRING" },
                 strengths: { type: "ARRAY", items: { type: "STRING" } },
                 improvements: { type: "ARRAY", items: { type: "STRING" } },
                 corrected_text: { type: "STRING" },
               },
-              required: ["inhalt", "kommunikation", "form", "leitpunkte",
+              required: ["inhalt", "kommunikation", "form", "leitpunkte", "thema_verfehlt", "textsorte",
                          "summary", "strengths", "improvements", "corrected_text"],
             },
           },
@@ -1137,6 +1152,49 @@ ${safeStudentText}
           reason: String(result?.[k]?.reason || ""),
         };
       }
+      /* ===== قواعد telc ثابتة (الـWorker كيفرضهم، ماشي غير Gemini) =====
+         كل قاعدة كتحط سقف للمعيار (A > B > C > D) وكتزيد السبب بالدارجة. */
+      const RANK = { A: 3, B: 2, C: 1, D: 0 };
+      const penalties = [];
+      function cap(k, max, why) {
+        if (RANK[crit[k].grade] > RANK[max]) {
+          crit[k].grade = max;
+          crit[k].points = PTS[max] * 3;
+        }
+        if (penalties.indexOf(why) === -1) penalties.push(why);
+        crit[k].reason = "⚠️ " + why + (crit[k].reason ? " — " + crit[k].reason : "");
+      }
+      const lp = Array.isArray(result?.leitpunkte) ? result.leitpunkte : [];
+      const missing = lp.filter((x) => x?.status === "nein").length;
+      const ts = result?.textsorte || {};
+      const offTopic = result?.thema_verfehlt === true;
+
+      if (offTopic) {
+        for (const k of ["inhalt", "kommunikation", "form"]) cap(k, "D", "النص خارج على الموضوع (Thema verfehlt) — ف telc هادي = 0 نقطة");
+      } else {
+        /* الطول */
+        if (wordCount < Math.round(minWords * 2 / 3)) {
+          cap("inhalt", "D", "النص قصير بزاف: " + wordCount + " كلمة (خاص على الأقل " + minWords + ")");
+          cap("kommunikation", "C", "النص قصير بزاف: " + wordCount + " كلمة (خاص على الأقل " + minWords + ")");
+        } else if (wordCount < minWords) {
+          cap("inhalt", "C", "ما وصلتيش " + minWords + " كلمة (كتبتي " + wordCount + ")");
+          cap("kommunikation", "B", "ما وصلتيش " + minWords + " كلمة (كتبتي " + wordCount + ")");
+        } else if (wordCount > maxWords + 60) {
+          cap("kommunikation", "C", "النص طويل بزاف: " + wordCount + " كلمة (الحد " + maxWords + ")");
+        } else if (wordCount > maxWords) {
+          cap("kommunikation", "B", "فتّي " + maxWords + " كلمة (كتبتي " + wordCount + ")");
+        }
+        /* النقط ديال المهمة */
+        if (missing >= 3) cap("inhalt", "D", missing + " ديال النقط ماجاوبتيش عليهم");
+        else if (missing === 2) cap("inhalt", "C", "جوج نقط ماجاوبتيش عليهم");
+        else if (missing === 1) cap("inhalt", "B", "نقطة وحدة ماجاوبتيش عليها");
+        /* شكل الرسالة / الإيميل */
+        if (ts.anrede === false && ts.gruss === false) cap("kommunikation", "D", "الإيميل بلا تحية (Anrede) وبلا خاتمة (Grußformel)");
+        else if (ts.anrede === false) cap("kommunikation", "C", "ناقصة التحية ف البداية (Anrede)");
+        else if (ts.gruss === false) cap("kommunikation", "C", "ناقصة الخاتمة (Grußformel) والسمية");
+        if (ts.register === false) cap("kommunikation", "C", "الأسلوب ماشي مناسب (Sie / du)");
+      }
+
       let score = crit.inhalt.points + crit.kommunikation.points + crit.form.points;
 
       /* موديل قديم رجع score مباشرة؟ كنقبلوه (0–45) */
@@ -1155,7 +1213,11 @@ ${safeStudentText}
           : [],
         word_count: wordCount,
         min_words: minWords,
-        summary: String(result.summary || ""),
+        max_words: maxWords,
+        off_topic: offTopic,
+        textsorte: { anrede: ts.anrede !== false, gruss: ts.gruss !== false, register: ts.register !== false },
+        penalties,
+        summary: (penalties.length ? "⚠️ " + penalties.join(" · ") + "\n\n" : "") + String(result.summary || ""),
         strengths: Array.isArray(result.strengths)
           ? result.strengths.map(String)
           : [],

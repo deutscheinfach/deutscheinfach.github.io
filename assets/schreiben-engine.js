@@ -301,7 +301,9 @@ function renderAd(box, text) {
     const wordCountEl = document.getElementById("word-count");
 
     /* الهدف ديال TELC (مثلا "150–180"): العداد كيولي «45 / 150» مع شريط */
-    const target = parseInt(String(topic.words || "").match(/\d+/) || "0", 10) || (LEVEL === "b2" ? 150 : 80);
+    /* بحال telc: 150–200 كلمة (الـWorker كينقص النقطة إلا كان أقل ولا كثر) */
+    const target = parseInt(String(topic.words || "").match(/\d+/) || "0", 10) || 150;
+    const maxWords = 200;
     const meter = document.createElement("span");
     meter.className = "wc-meter";
     meter.innerHTML = '<span class="wc-meter-fill"></span>';
@@ -309,8 +311,9 @@ function renderAd(box, text) {
     function updateWordCount() {
         const text = textarea.value.trim();
         const words = text.length ? text.split(/\s+/).length : 0;
-        wordCountEl.innerHTML = "<b>" + words + "</b> / " + target + " كلمة";
-        wordCountEl.classList.toggle("is-done", words >= target);
+        wordCountEl.innerHTML = "<b>" + words + "</b> / " + target + "–" + maxWords + " كلمة" +
+            (words > maxWords ? ' <span style="color:#d64545;font-weight:800">· كثر من ' + maxWords + "</span>" : "");
+        wordCountEl.classList.toggle("is-done", words >= target && words <= maxWords);
         meter.firstChild.style.width = Math.min(100, Math.round(words / target * 100)) + "%";
         meter.classList.toggle("is-done", words >= target);
         placeholder.classList.toggle("hidden", text.length > 0);
@@ -578,10 +581,12 @@ function renderAd(box, text) {
         }
 
         if (Number(data.word_count) > 0) {
-            const wc = Number(data.word_count), min = Number(data.min_words) || 0;
-            const ok = !min || wc >= min;
-            html += '<p class="wc-note ' + (ok ? "ok" : "short") + '">📝 ' + wc + " كلمة" +
-                (min ? (ok ? " — العدد مزيان." : " — خاصك على الأقل " + min + " كلمة.") : "") + "</p>";
+            const wc = Number(data.word_count), min = Number(data.min_words) || 0, max = Number(data.max_words) || 0;
+            const short = min && wc < min, long = max && wc > max;
+            html += '<p class="wc-note ' + (short || long ? "short" : "ok") + '">📝 ' + wc + " كلمة" +
+                (short ? " — خاصك على الأقل " + min + " كلمة (ف telc كتنقص النقطة)."
+                    : long ? " — فتّي " + max + " كلمة (ف telc كتنقص النقطة)."
+                    : (min ? " — العدد مزيان (" + min + (max ? "–" + max : "") + ")." : "")) + "</p>";
         }
 
         if (data.summary) {
