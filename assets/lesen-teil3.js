@@ -217,6 +217,8 @@
                     rows.forEach(function (other) {
                         other.box.classList.toggle("is-active", other === row);
                     });
+                    const xBox = column.querySelector(".t3-x");
+                    if (xBox) xBox.classList.remove("is-active");
                 }
 
                 box.addEventListener("click", function (event) {
@@ -237,6 +239,51 @@
 
                 column.appendChild(box);
             });
+
+            /* ---- «Anzeige X»: الوضعيات اللي ماعندهم حتى إعلان مناسب ----
+               (بحال الامتحان الجديد). كتبرك عليها ومن بعد على الوضعيات
+               ف اللوحة؛ تقدر تحط فيها بزاف. الوضعية اللي ما حطيتيها ف
+               حتى بلاصة كتبقى كتحسب X بحال قبل. */
+            const xRow = { box: el("article", "t1-text t3-ad t3-x"), set: new Set(), isX: true };
+            {
+                const top = el("div", "t1-text-top");
+                top.appendChild(el("span", "t3-x-label", "ANZEIGE X"));
+                xRow.box.appendChild(top);
+                xRow.list = el("div", "t3-x-list");
+                xRow.box.appendChild(xRow.list);
+                xRow.box.addEventListener("click", function (event) {
+                    if (event.target.closest(".t3-x-chip")) return;
+                    activeRow = xRow;
+                    rows.concat([xRow]).forEach(function (other) {
+                        other.box.classList.toggle("is-active", other === xRow);
+                    });
+                });
+                column.appendChild(xRow.box);
+            }
+            function paintX(marks) {
+                xRow.list.textContent = "";
+                if (!xRow.set.size) {
+                    const empty = el("div", "t3-x-empty");
+                    empty.append(el("span", "t3-x-icon", "✕"), el("span", "", "لا يوجد اعلان مناسب"));
+                    xRow.list.appendChild(empty);
+                    return;
+                }
+                Array.from(xRow.set).sort().forEach(function (no) {
+                    const sitRow = sitRows.find(function (x) { return x.no === no; });
+                    const chip = el("div", "t3-x-chip" + (marks && marks[no] ? " " + marks[no] : ""));
+                    chip.append(el("b", "", no), el("span", "", sitRow ? (sitRow.sit.de || "") : ""));
+                    const x = el("button", "t3-x-del", "✕");
+                    x.type = "button";
+                    x.setAttribute("aria-label", "حيد " + no);
+                    x.addEventListener("click", function (event) {
+                        event.stopPropagation();
+                        xRow.set.delete(no);
+                        paintUsed();
+                    });
+                    chip.appendChild(x);
+                    xRow.list.appendChild(chip);
+                });
+            }
 
             if (rows.length) {
                 activeRow = rows[0];
@@ -307,6 +354,15 @@
                 const target = activeRow || rows[0];
                 if (!target) return;
 
+                /* Anzeige X: الوضعية كتزاد (ولا كتحيد) — ولكن ماشي إلا كانت عند إعلان */
+                if (target === xRow) {
+                    if (rows.some(function (other) { return other.select.value === no; })) return;
+                    if (xRow.set.has(no)) xRow.set.delete(no); else xRow.set.add(no);
+                    paintUsed();
+                    return;
+                }
+                if (xRow.set.has(no)) return;
+
                 /* نفس الوضعية ماشي ف جوج إعلانات: إلا مختارة لإعلان آخر ماكتتحطش */
                 if (no !== NONE && rows.some(function (other) { return other !== target && other.select.value === no; })) return;
                 target.select.value = no;
@@ -331,6 +387,8 @@
                         used[row.select.value] = true;
                     }
                 });
+                xRow.set.forEach(function (no) { used[no] = true; });
+                paintX();
 
                 sitRows.forEach(function (item) {
                     item.node.classList.toggle("is-used", !!used[item.no]);
@@ -360,6 +418,10 @@
 
                 if (reveal) {
                     rows.forEach(function (row) { row.select.value = row.want; });
+                    xRow.set.clear();
+                    sits.forEach(function (sit, i) {
+                        if (String(sit.answer === undefined ? NONE : sit.answer).toUpperCase() === NONE) xRow.set.add(String(sit.no || (i + 11)));
+                    });
                 }
 
                 /* شمن إعلان خدا كل وضعية */
@@ -437,6 +499,13 @@
                 });
 
                 paintUsed();
+                /* علامة على كل وضعية ف Anzeige X */
+                const xMarks = {};
+                sits.forEach(function (sit, i) {
+                    const no = String(sit.no || (i + 11));
+                    if (xRow.set.has(no)) xMarks[no] = String(sit.answer === undefined ? NONE : sit.answer).toUpperCase() === NONE ? "ok" : "no";
+                });
+                paintX(xMarks);
 
                 /* "بلا جواب" = إعلان ما خترتي ليه والو — ماشي وضعية
                    خاوية، حيت الخاوية ممكن تكون هي الجواب الصحيح (X). */
@@ -474,6 +543,8 @@
                     clear(row);
                     row.select.value = "";
                 });
+                xRow.set.clear();
+                xRow.box.classList.remove("is-active");
                 /* نرجعو للوضعية الأولى، ماشي نبقاو واقفين فين كنا */
                 activeRow = rows[0] || null;
                 rows.forEach(function (other) {
