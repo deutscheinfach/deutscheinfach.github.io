@@ -1,5 +1,5 @@
 {
-  "build": "dc3a65f36e7a",
+  "build": "39c8bcac19de",
   "assets": {
     "assets/admin-templates.js": "47410b77",
     "assets/app-install.js": "800fada8",
@@ -40,7 +40,7 @@
     "assets/progress.js": "222ee4fc",
     "assets/report.js": "c13e01ac",
     "assets/schreiben-auth.js": "9fae8527",
-    "assets/schreiben-engine.js": "72fa62e7",
+    "assets/schreiben-engine.js": "89a73e15",
     "assets/schreiben-hub.js": "b2e406e8",
     "assets/schreiben-new-topic.js": "d0744e0c",
     "assets/schreiben-style.css": "92369e02",
