@@ -1030,6 +1030,55 @@ Text des Studenten:
 ${safeStudentText}
 `;
 
+      /* ===== التوفير ف Gemini (الحد والثمن) =====
+         1) نفس النص لنفس المهمة → النتيجة المحفوظة (بلا Gemini)
+         2) حالات واضحة (طويل 3 مرات، قصير بزاف، ماشي ألمانية) → 0 بلا Gemini
+         3) حد ف النهار لكل IP: CORRECTION_DAILY_LIMIT (افتراضي 10) */
+      const corrKey = "https://cache.internal/corr/" + await sha256Hex(JSON.stringify([
+        level || "", safeSituation, safeAd, safePoints, safeStudentText.replace(/\s+/g, " ")
+      ]));
+      const cachedCorr = await cacheGet(corrKey);
+      if (cachedCorr) {
+        try { return jsonResponse(Object.assign(JSON.parse(cachedCorr), { cached: true }), 200, allowedOrigin); } catch (e) { /* */ }
+      }
+
+      const ruleOnly = (why) => {
+        const D = { grade: "D", points: 0, reason: "⚠️ " + why };
+        return jsonResponse({
+          score: 0,
+          criteria: { inhalt: D, kommunikation: D, form: D },
+          leitpunkte: safePoints.map((p) => ({ punkt: String(p), status: "nein" })),
+          word_count: wordCount, min_words: minWords, max_words: maxWords,
+          off_topic: true, textsorte: { anrede: true, gruss: true, register: true },
+          penalties: [why],
+          summary: "⚠️ " + why,
+          strengths: [], improvements: [], corrected_text: "", no_ai: true,
+        }, 200, allowedOrigin);
+      };
+      const GERMAN = /\b(ich|und|der|die|das|ist|nicht|sie|wir|mit|für|ein|eine|zu|in|auf|habe|haben|sehr|mein|ihr|bitte|danke|grüße|liebe|geehrte)\b/gi;
+      const germanHits = (safeStudentText.match(GERMAN) || []).length;
+      if (wordCount >= absurdWords) {
+        return ruleOnly("كتبتي " + wordCount + " كلمة والمطلوب " + (isB1 ? "تقريبا " + minWords : minWords + "–" + maxWords) + " — بزاف على المهمة = 0 نقطة");
+      }
+      if (wordCount < Math.round(minWords / 3)) {
+        return ruleOnly("النص قصير بزاف (" + wordCount + " كلمة) — المطلوب " + (isB1 ? "تقريبا " + minWords : minWords + "–" + maxWords) + " كلمة");
+      }
+      if (wordCount >= 15 && germanHits / wordCount < 0.06) {
+        return ruleOnly("النص ماشي بالألمانية ولا ماعندو حتى معنى — ف telc هادي = 0 نقطة");
+      }
+
+      /* الحد ف النهار (Cache API: بلا كتابة ف KV) */
+      const dailyLimit = parseInt(env.CORRECTION_DAILY_LIMIT || "10", 10) || 10;
+      const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+      const quotaKey = "https://cache.internal/quota/" + new Date().toISOString().slice(0, 10) + "/" + encodeURIComponent(ip);
+      const used = parseInt((await cacheGet(quotaKey)) || "0", 10) || 0;
+      if (used >= dailyLimit) {
+        return jsonResponse({
+          error: "daily_limit",
+          details: "وصلتي للحد ديال اليوم (" + dailyLimit + " تصحيحات). رجع غدا إن شاء الله.",
+        }, 429, allowedOrigin);
+      }
+
       const GRADE = { type: "STRING", enum: ["A", "B", "C", "D"] };
       const CRIT = {
         type: "OBJECT",
@@ -1240,6 +1289,8 @@ ${safeStudentText}
         corrected_text: String(result.corrected_text || ""),
       };
 
+      await cachePut(corrKey, JSON.stringify(finalResult));
+      await cachePut(quotaKey, String(used + 1));
       return jsonResponse(
         finalResult,
         200,
@@ -1964,4 +2015,9 @@ function withEdits(topic, map) {
     out.__aliases = Object.assign({}, out.__aliases || {}, aliases);
   }
   return out;
+}
+
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
 }
