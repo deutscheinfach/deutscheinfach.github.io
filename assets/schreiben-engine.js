@@ -241,12 +241,13 @@ function renderAd(box, text) {
 
     // ---------- expected length ----------
     /* TELC كيحدد عدد الكلمات، والتصحيح كيحسبو. */
-    if (topic.words) {
+    /* حسب المستوى بحال telc (ماشي «words» ديال الموضوع): B1 ≥ 80، B2 = 150–200 */
+    {
         const intro = document.querySelector(".aufgabe-intro");
         if (intro) {
             const badge = document.createElement("span");
             badge.className = "words-badge";
-            badge.textContent = topic.words + " Wörter";
+            badge.textContent = LEVEL === "b1" ? "mind. 80 Wörter" : "150–200 Wörter";
             intro.appendChild(badge);
         }
     }
@@ -301,9 +302,9 @@ function renderAd(box, text) {
     const wordCountEl = document.getElementById("word-count");
 
     /* الهدف ديال TELC (مثلا "150–180"): العداد كيولي «45 / 150» مع شريط */
-    /* بحال telc: 150–200 كلمة (الـWorker كينقص النقطة إلا كان أقل ولا كثر) */
-    const target = parseInt(String(topic.words || "").match(/\d+/) || "0", 10) || 150;
-    const maxWords = 200;
+    /* بحال telc حسب المستوى: B1 ≥ 80 كلمة، B2 = 150–200 (الـWorker كينقص النقطة) */
+    const target = LEVEL === "b1" ? 80 : 150;
+    const maxWords = LEVEL === "b1" ? 0 : 200;
     const meter = document.createElement("span");
     meter.className = "wc-meter";
     meter.innerHTML = '<span class="wc-meter-fill"></span>';
@@ -311,9 +312,9 @@ function renderAd(box, text) {
     function updateWordCount() {
         const text = textarea.value.trim();
         const words = text.length ? text.split(/\s+/).length : 0;
-        wordCountEl.innerHTML = "<b>" + words + "</b> / " + target + "–" + maxWords + " كلمة" +
-            (words > maxWords ? ' <span style="color:#d64545;font-weight:800">· كثر من ' + maxWords + "</span>" : "");
-        wordCountEl.classList.toggle("is-done", words >= target && words <= maxWords);
+        wordCountEl.innerHTML = "<b>" + words + "</b> / " + target + (maxWords ? "–" + maxWords : "+") + " كلمة" +
+            (maxWords && words > maxWords ? ' <span style="color:#d64545;font-weight:800">· كثر من ' + maxWords + "</span>" : "");
+        wordCountEl.classList.toggle("is-done", words >= target && (!maxWords || words <= maxWords));
         meter.firstChild.style.width = Math.min(100, Math.round(words / target * 100)) + "%";
         meter.classList.toggle("is-done", words >= target);
         placeholder.classList.toggle("hidden", text.length > 0);
@@ -463,7 +464,7 @@ function renderAd(box, text) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    level: topic.level,
+                    level: topic.level || LEVEL.toUpperCase(),
                     taskType: topic.type,
                     situation: topic.situation,
                     ad: topic.ad,

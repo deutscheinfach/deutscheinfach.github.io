@@ -92,7 +92,7 @@
         box.appendChild(el("span", "sn-label", "النقط (3 ولا 4)"));
         const points = [1, 2, 3, 4].map(function (n) { const p = inp("Punkt " + n); box.appendChild(p); return p; });
         const words = b2 ? null : field("عدد الكلمات", inp(""));
-        if (words) words.value = "150–180";
+        if (words) words.value = "80";
         const foot = el("div", "sn-foot");
         const save = el("button", "sn-save", "حفظ الموضوع ✓");
         save.type = "button";
