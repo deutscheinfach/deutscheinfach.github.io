@@ -329,7 +329,7 @@
 
         if (animate) grid.classList.add("lt-enter");
         /* الأدمين: بطاقة «+» باش يزيد موضوع (assets/lesen-new-topic.js) */
-        if (/^teil[123]$/.test(pagePart) && window.__deIsAdmin === true && window.__lesenNewTopic && !EMBEDDED) {
+        if (/^(teil[123]|sprach[12])$/.test(pagePart) && window.__deIsAdmin === true && window.__lesenNewTopic && !EMBEDDED) {
             grid.appendChild(window.__lesenNewTopic.addCard(function () {
                 window.__lesenNewTopic.open({
                     level: LEVEL,
