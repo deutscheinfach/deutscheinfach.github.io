@@ -1003,11 +1003,13 @@ Regeln:
   register = das Register passt (Beschwerde / offizieller Brief → «Sie», persönlicher Brief → «du»).
   Fehlt etwas davon, darf Kriterium II nicht A sein.
 - Sei konsistent: derselbe Text muss immer dieselben Stufen bekommen.
-- summary, strengths, improvements und alle "reason"-Felder auf Marokkanischem
+- summary, strengths, improvements, fehler.warum und alle "reason"-Felder auf Marokkanischem
   Darija (arabische Schrift), kurz und konkret, mit Beispielen aus dem Text.
-- improvements: die wichtigsten Fehler mit Korrektur, z. B. «ich habe gegangen» ← «ich bin gegangen».
-- corrected_text: verbesserte, natürliche deutsche Version des Textes, gleiche
-  Aussage und Absicht, gleiches Niveau. Vollständig auf Deutsch.
+- fehler: ALLE Fehler im Text (Grammatik, Wortschatz, Rechtschreibung, Satzbau), höchstens 25,
+  in der Reihenfolge des Textes. Für jeden Fehler: falsch = die genaue falsche Stelle aus dem Text
+  (wörtlich kopiert, kurz), richtig = die korrigierte Form, warum = sehr kurze Erklärung auf Darija.
+  Schreibe KEINE korrigierte Version des ganzen Textes.
+- improvements: höchstens 3 kurze allgemeine Tipps auf Darija (keine Fehlerliste).
 - Gib ausschließlich JSON gemäß Schema zurück.
 `;
 
@@ -1034,7 +1036,7 @@ ${safeStudentText}
          1) نفس النص لنفس المهمة → النتيجة المحفوظة (بلا Gemini)
          2) حالات واضحة (طويل 3 مرات، قصير بزاف، ماشي ألمانية) → 0 بلا Gemini
          3) حد ف النهار لكل IP: CORRECTION_DAILY_LIMIT (افتراضي 10) */
-      const corrKey = "https://cache.internal/corr/" + await sha256Hex(JSON.stringify([
+      const corrKey = "https://cache.internal/corr2/" + await sha256Hex(JSON.stringify([
         level || "", safeSituation, safeAd, safePoints, safeStudentText.replace(/\s+/g, " ")
       ]));
       const cachedCorr = await cacheGet(corrKey);
@@ -1052,7 +1054,7 @@ ${safeStudentText}
           off_topic: true, textsorte: { anrede: true, gruss: true, register: true },
           penalties: [why],
           summary: "⚠️ " + why,
-          strengths: [], improvements: [], corrected_text: "", no_ai: true,
+          strengths: [], improvements: [], fehler: [], no_ai: true,
         }, 200, allowedOrigin);
       };
       const GERMAN = /\b(ich|und|der|die|das|ist|nicht|sie|wir|mit|für|ein|eine|zu|in|auf|habe|haben|sehr|mein|ihr|bitte|danke|grüße|liebe|geehrte)\b/gi;
@@ -1121,11 +1123,18 @@ ${safeStudentText}
                 },
                 summary: { type: "STRING" },
                 strengths: { type: "ARRAY", items: { type: "STRING" } },
+                fehler: {
+                  type: "ARRAY",
+                  items: {
+                    type: "OBJECT",
+                    properties: { falsch: { type: "STRING" }, richtig: { type: "STRING" }, warum: { type: "STRING" } },
+                    required: ["falsch", "richtig", "warum"],
+                  },
+                },
                 improvements: { type: "ARRAY", items: { type: "STRING" } },
-                corrected_text: { type: "STRING" },
               },
               required: ["inhalt", "kommunikation", "form", "leitpunkte", "thema_verfehlt", "textsorte",
-                         "summary", "strengths", "improvements", "corrected_text"],
+                         "summary", "strengths", "fehler", "improvements"],
             },
           },
         };
@@ -1286,7 +1295,11 @@ ${safeStudentText}
         improvements: Array.isArray(result.improvements)
           ? result.improvements.map(String)
           : [],
-        corrected_text: String(result.corrected_text || ""),
+        fehler: Array.isArray(result.fehler)
+          ? result.fehler.slice(0, 25).map((f) => ({
+              falsch: String(f?.falsch || ""), richtig: String(f?.richtig || ""), warum: String(f?.warum || ""),
+            })).filter((f) => f.falsch || f.richtig)
+          : [],
       };
 
       await cachePut(corrKey, JSON.stringify(finalResult));

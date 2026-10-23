@@ -338,6 +338,14 @@ body {
 .result-section { margin-bottom: 16px; }
 .result-section h3 { font-size: 14px; margin-bottom: 8px; }
 .result-section p, .result-section li { font-size: 14px; line-height: 1.7; color: var(--ink); }
+/* الأخطاء: غلط → صحيح، والسبب تحت */
+.fehler-list { padding-inline-start: 22px; display: flex; flex-direction: column; gap: 8px; }
+.fehler-list li { padding: 8px 10px; border: 1px solid var(--line, #e3e6ee); border-radius: 12px; }
+.fehler-pair { text-align: left; font-size: 14.5px; }
+.fehler-falsch { color: #d64545; text-decoration-thickness: 2px; }
+.fehler-arrow { color: #8a91a3; margin: 0 4px; }
+.fehler-richtig { color: #1f9d63; }
+.fehler-warum { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted, #5b6275); }
 .result-close {
     margin-top: 10px;
     /* كانت بيضا على بطاقة كحلة. البطاقة ولات بيضا، إذن خاصها
