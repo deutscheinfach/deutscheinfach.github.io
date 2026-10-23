@@ -98,7 +98,7 @@
             note: "رقم الموضوع (\"35\") هو المفتاح ف assets/schreiben-topics-b1.js. points = 4 نقط.",
             data: { "35": { title: "Titel", type: "Brief", level: "B1", time: "30 min", locked: true,
                 ad: "Der Brief / die E-Mail …", situation: "", intro: "Antworten Sie auf den Brief. Schreiben Sie etwas zu den folgenden Punkten:",
-                words: "150–180", points: ["Punkt 1", "Punkt 2", "Punkt 3", "Punkt 4"] } }
+                words: "80", points: ["Punkt 1", "Punkt 2", "Punkt 3", "Punkt 4"] } }
         }
     } : {
         "B2 Schreiben": {

@@ -948,9 +948,11 @@ export default {
       /* عدد الكلمات كنحسبوه حنا (دقيق)، وكنعطيوه لـ Gemini */
       const wordCount = (safeStudentText.match(/[A-Za-zÄÖÜäöüß0-9]+(?:[-'][A-Za-zÄÖÜäöüß0-9]+)*/g) || []).length;
       const wordsHint = String(words || "").slice(0, 40);
-      /* بحال telc: الطول المطلوب 150–200 كلمة (ولا اللي ف الموضوع) */
-      const minWords = parseInt((wordsHint.match(/\d+/) || [0])[0], 10) || 150;
-      const maxWords = 200;
+      /* بحال telc، حسب المستوى (ماشي اللي ف الموضوع):
+         B1 = على الأقل 80 كلمة (بلا حد فوق)، B2 = 150–200 كلمة */
+      const isB1 = /b1/i.test(String(level || ""));
+      const minWords = isB1 ? 80 : 150;
+      const maxWords = isB1 ? 0 : 200;
 
       /* النقطة كتتحسب بحال telc: 3 معايير، كل واحد A/B/C/D
          (A=5، B=3، C=1، D=0) × 3 = من 0 حتى 45.
@@ -985,7 +987,7 @@ III. Formale Richtigkeit (Grammatik, Wortschatz, Rechtschreibung)
 Regeln:
 - Bewerte NUR den tatsächlich geschriebenen Text. Erfinde nichts.
 - Prüfe jeden Leitpunkt einzeln: "ja" (angemessen), "teilweise" (zu knapp), "nein" (fehlt).
-- Die Wortanzahl ist vorgegeben (vom System gezählt). Erwartet: ${minWords}–${maxWords} Wörter.
+- Die Wortanzahl ist vorgegeben (vom System gezählt). Erwartet: ${maxWords ? minWords + "–" + maxWords : "mindestens " + minWords} Wörter.
 - thema_verfehlt = true, wenn der Text nicht zur Aufgabe passt (anderes Thema,
   auswendig gelernter Standardtext ohne Bezug zur Situation/Anzeige, Kopie der
   Aufgabenstellung, sinnlose Wörter). Dann alle Kriterien D.
@@ -1179,9 +1181,9 @@ ${safeStudentText}
         } else if (wordCount < minWords) {
           cap("inhalt", "C", "ما وصلتيش " + minWords + " كلمة (كتبتي " + wordCount + ")");
           cap("kommunikation", "B", "ما وصلتيش " + minWords + " كلمة (كتبتي " + wordCount + ")");
-        } else if (wordCount > maxWords + 60) {
+        } else if (maxWords && wordCount > maxWords + 60) {
           cap("kommunikation", "C", "النص طويل بزاف: " + wordCount + " كلمة (الحد " + maxWords + ")");
-        } else if (wordCount > maxWords) {
+        } else if (maxWords && wordCount > maxWords) {
           cap("kommunikation", "B", "فتّي " + maxWords + " كلمة (كتبتي " + wordCount + ")");
         }
         /* النقط ديال المهمة */
