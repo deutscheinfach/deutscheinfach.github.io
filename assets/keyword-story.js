@@ -269,6 +269,71 @@
         if (!isAdmin()) unguard = guard(body.parentNode);
     }
 
+    /* ===== ⌨️ كلافيي عربي (الأدمين يكتب القصة بلا ما يبدل الكلافيي) =====
+       كيكتب ف آخر خانة كان فيها (القصة، الكلمة، الترجمة) ف بلاصة الـcurseur. */
+    const AR_ROWS = [
+        ["ض", "ص", "ث", "ق", "ف", "غ", "ع", "ه", "خ", "ح", "ج", "د"],
+        ["ش", "س", "ي", "ب", "ل", "ا", "ت", "ن", "م", "ك", "ط", "ذ"],
+        ["ئ", "ء", "ؤ", "ر", "لا", "ى", "ة", "و", "ز", "ظ", "أ", "إ"],
+        ["آ", "ڭ", "ڤ", "پ", "،", "؟", "!", ".", "«", "»", "=", "ـ"]
+    ];
+    function arabicKeyboard(form) {
+        let target = null;
+        form.addEventListener("focusin", function (e) {
+            if (e.target.matches("input, textarea")) target = e.target;
+        });
+        const wrap = el("div", "ks-kb");
+        const toggle = el("button", "ks-kb-toggle", "⌨️ كلافيي عربي");
+        toggle.type = "button";
+        const pad = el("div", "ks-kb-pad");
+        pad.hidden = true;
+        toggle.addEventListener("click", function () {
+            pad.hidden = !pad.hidden;
+            toggle.classList.toggle("is-on", !pad.hidden);
+            if (!target) target = form.querySelector("textarea") || form.querySelector("input");
+            if (target) target.focus();
+        });
+        function insert(text) {
+            const t = target || form.querySelector("textarea");
+            if (!t) return;
+            const a = t.selectionStart == null ? t.value.length : t.selectionStart;
+            const z = t.selectionEnd == null ? t.value.length : t.selectionEnd;
+            if (text === "⌫") {
+                const from = a === z ? Math.max(0, a - 1) : a;
+                t.value = t.value.slice(0, from) + t.value.slice(z);
+                t.selectionStart = t.selectionEnd = from;
+            } else {
+                t.value = t.value.slice(0, a) + text + t.value.slice(z);
+                t.selectionStart = t.selectionEnd = a + text.length;
+            }
+            t.dispatchEvent(new Event("input", { bubbles: true }));
+            t.focus();
+        }
+        AR_ROWS.forEach(function (row) {
+            const line = el("div", "ks-kb-row");
+            row.forEach(function (ch) {
+                const k = el("button", "ks-kb-key", ch);
+                k.type = "button";
+                /* البركة ما تديش الـfocus من الخانة (ف PC والتيليفون) */
+                k.addEventListener("mousedown", function (e) { e.preventDefault(); });
+                k.addEventListener("click", function () { insert(ch); });
+                line.appendChild(k);
+            });
+            pad.appendChild(line);
+        });
+        const last = el("div", "ks-kb-row");
+        [["⌫", "⌫", "ks-kb-wide"], ["مسافة", " ", "ks-kb-space"], ["↵", "\n", "ks-kb-wide"]].forEach(function (x) {
+            const k = el("button", "ks-kb-key " + x[2], x[0]);
+            k.type = "button";
+            k.addEventListener("mousedown", function (e) { e.preventDefault(); });
+            k.addEventListener("click", function () { insert(x[1]); });
+            last.appendChild(k);
+        });
+        pad.appendChild(last);
+        wrap.append(toggle, pad);
+        return wrap;
+    }
+
     function showEditor(b, s, inherited) {
         const body = shell(s ? "بدّل القصة ✍️" : "زيد قصة ✍️");
         const f = el("form", "ks-form");
@@ -305,7 +370,7 @@
         const msg = el("p", "ks-msg");
         const save = el("button", "ks-btn ks-main", "حفظ ✓");
         save.type = "submit";
-        f.append(save, msg);
+        f.append(arabicKeyboard(f), save, msg);
         f.addEventListener("submit", async function (e) {
             e.preventDefault();
             save.disabled = true; msg.textContent = "كنحفظو…";
@@ -456,6 +521,17 @@
         ".ks-form{display:flex;flex-direction:column;gap:12px}" +
         ".ks-field{display:flex;flex-direction:column;gap:5px;font-weight:800;font-size:14px}" +
         ".ks-field input,.ks-field textarea{font:600 15px Cairo,system-ui,sans-serif;border:1.5px solid #d6deef;border-radius:12px;padding:10px 12px;color:#14204a;background:#fbfcff}" +
+        ".ks-kb{display:flex;flex-direction:column;gap:6px}" +
+        ".ks-kb-toggle{align-self:flex-start;border:1px dashed #1c367a;background:transparent;color:#1c367a;border-radius:999px;padding:6px 14px;font:800 13px Cairo,system-ui,sans-serif;cursor:pointer}" +
+        ".ks-kb-toggle.is-on{background:#1c367a;color:#fff}" +
+        ".ks-kb-pad{display:flex;flex-direction:column;gap:4px;padding:8px;border-radius:14px;background:#eef2fb;direction:rtl}" +
+        ".ks-kb-pad[hidden]{display:none}" +
+        ".ks-kb-row{display:flex;gap:4px;justify-content:center}" +
+        ".ks-kb-key{flex:1 1 0;min-width:0;height:38px;border:1px solid #d6deef;border-radius:9px;background:#fff;color:#14204a;font:700 17px Cairo,system-ui,sans-serif;cursor:pointer;padding:0}" +
+        ".ks-kb-key:active{background:#ffe9a0}" +
+        ".ks-kb-wide{flex:1.6 1 0;font-size:15px}.ks-kb-space{flex:5 1 0;font-size:13px}" +
+        "html[data-theme=dark] .ks-kb-pad{background:#1d2439}html[data-theme=dark] .ks-kb-key{background:#151b2e;color:#e8ecf7;border-color:#2b3655}" +
+        "@media (max-width:480px){.ks-kb-key{height:34px;font-size:15px;border-radius:7px}.ks-kb-row{gap:3px}}" +
         ".ks-note{font-size:13px;font-weight:700;color:#7a5a00;background:#fff6d6;border:1px solid #ffe08a;border-radius:12px;padding:8px 12px}" +
         ".ks-hint{font-size:13px;color:#1b46b3;font-weight:700;direction:ltr;text-align:right}" +
         ".ks-msg{font-size:13px;color:#b42318;min-height:1em}" +
