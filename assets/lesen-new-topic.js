@@ -1,4 +1,4 @@
-/* ===== ➕ الأدمين كيزيد موضوع Lesen من الموقع (Teil 1، 2، 3) =====
+/* ===== ➕ الأدمين كيزيد موضوع Lesen من الموقع (Teil 1، 2، 3 و Sprachbausteine) =====
 
    ف لائحة Teil 1/2/3 كتبان للأدمين بطاقة «+». كتحل فورم بنفس الشكل
    ديال الموضوع: Teil 1 = 10 عناوين و5 نصوص؛ Teil 2 = النص و5 أسئلة
@@ -257,9 +257,102 @@
                     intro: "Lesen Sie die Situationen 11–20 und die Anzeigen A–L. Welche Anzeige passt zu welcher Situation? Jede Anzeige können Sie nur einmal verwenden. Gibt es zu einer Situation keine passende Anzeige, markieren Sie X.",
                     ads: adList, situations: situations, variants: [{ label: "الأساسي", answers: answers }] };
             };
+        }        ,
+
+        /* Sprachbausteine 1: النص فيه [21] … [30]، كل فراغ 3 اختيارات */
+        sprach1: function (box) {
+            const grid = el("div", "nt-grid");
+            const left = el("div", "nt-col");
+            const right = el("div", "nt-col");
+            grid.append(left, right);
+            box.appendChild(grid);
+            const textCard = el("div", "nt-card");
+            textCard.appendChild(el("span", "nt-label", "النص — حط الفراغات بحال [21] … [30]"));
+            const body = area("Liebe …, ich habe [21] dir … [22] …", 420);
+            textCard.appendChild(body);
+            left.appendChild(textCard);
+            const rows = [];
+            for (let i = 0; i < 10; i++) {
+                const card = el("div", "nt-card");
+                const head = el("div", "nt-card-head");
+                const ans = select("— الجواب الصحيح —", ["a", "b", "c"]);
+                head.append(el("span", "nt-num", String(21 + i)), ans);
+                const opts = el("div", "nt-opt");
+                const o = ["a", "b", "c"].map(function (k) { const t = input(k); opts.appendChild(t); return t; });
+                const why = input("علاش (اختياري)", "rtl", "nt-small");
+                card.append(head, opts, why);
+                right.appendChild(card);
+                rows.push({ o: o, ans: ans, why: why });
+            }
+            return function collect(title) {
+                const text = body.value.trim();
+                if (!text) throw "عمّر النص.";
+                for (let n = 21; n <= 30; n++) if (text.indexOf("[" + n + "]") === -1) throw "الفراغ [" + n + "] ماكاينش ف النص.";
+                const questions = rows.map(function (r, i) {
+                    const options = r.o.map(function (t) { return t.value.trim(); });
+                    if (options.some(function (x) { return !x; })) throw "عمّر الاختيارات الثلاثة ديال " + (21 + i) + ".";
+                    if (!r.ans.value) throw "ختار الجواب ديال " + (21 + i) + ".";
+                    return opt({ num: 21 + i, options: options, answer: "abc".indexOf(r.ans.value) }, "why", r.why);
+                });
+                return { title: title, kind: "gaps", variants: [{ label: "الأساسي", texts: [{ body: text }], questions: questions }] };
+            };
+        },
+
+        /* Sprachbausteine 2: النص فيه [31] … [40]، و15 كلمة (A–O) */
+        sprach2: function (box) {
+            const WORDS = "ABCDEFGHIJKLMNO";
+            const grid = el("div", "nt-grid");
+            const left = el("div", "nt-col");
+            const right = el("div", "nt-col");
+            grid.append(left, right);
+            box.appendChild(grid);
+            const textCard = el("div", "nt-card");
+            textCard.appendChild(el("span", "nt-label", "النص — حط الفراغات بحال [31] … [40]"));
+            const body = area("Text mit [31] … [40]", 420);
+            textCard.appendChild(body);
+            left.appendChild(textCard);
+            const wordCard = el("div", "nt-card");
+            wordCard.appendChild(el("span", "nt-label", "الكلمات (A–O)"));
+            const words = WORDS.split("").map(function (k) {
+                const row = el("div", "nt-opt");
+                const t = input("Wort " + k);
+                row.append(el("span", "nt-num", k), t);
+                wordCard.appendChild(row);
+                return t;
+            });
+            right.appendChild(wordCard);
+            const ansCard = el("div", "nt-card");
+            ansCard.appendChild(el("span", "nt-label", "الأجوبة (31–40)"));
+            const rows = [];
+            for (let i = 0; i < 10; i++) {
+                const row = el("div", "nt-opt");
+                const ans = select("—", WORDS.split(""));
+                ans.style.flex = "0 0 80px";
+                const why = input("علاش (اختياري)", "rtl", "nt-small");
+                row.append(el("span", "nt-num", String(31 + i)), ans, why);
+                ansCard.appendChild(row);
+                rows.push({ ans: ans, why: why });
+            }
+            left.appendChild(ansCard);
+            return function collect(title) {
+                const text = body.value.trim();
+                if (!text) throw "عمّر النص.";
+                for (let n = 31; n <= 40; n++) if (text.indexOf("[" + n + "]") === -1) throw "الفراغ [" + n + "] ماكاينش ف النص.";
+                const list = words.map(function (t) { return t.value.trim(); });
+                if (list.some(function (w) { return !w; })) throw "عمّر الكلمات الخمستاش (A–O).";
+                const used = {};
+                const questions = rows.map(function (r, i) {
+                    if (!r.ans.value) throw "ختار الجواب ديال " + (31 + i) + ".";
+                    if (used[r.ans.value]) throw "الكلمة " + r.ans.value + " مختارة لجوج فراغات.";
+                    used[r.ans.value] = true;
+                    return opt({ num: 31 + i, answer: r.ans.value }, "why", r.why);
+                });
+                return { title: title, kind: "bank", variants: [{ label: "الأساسي", texts: [{ body: text }], words: list, questions: questions }] };
+            };
         }
     };
-    const PART_NAME = { teil1: "Lesen Teil 1", teil2: "Lesen Teil 2", teil3: "Lesen Teil 3" };
+    const PART_NAME = { teil1: "Lesen Teil 1", teil2: "Lesen Teil 2", teil3: "Lesen Teil 3",
+        sprach1: "Sprachbausteine Teil 1", sprach2: "Sprachbausteine Teil 2" };
 
     function open(opts) {
         css();
