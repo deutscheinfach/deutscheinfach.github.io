@@ -3961,3 +3961,27 @@ html.is-lesen-topic:not([data-theme="dark"]) body .t1-board:has(.sp-choices) :is
     border-color: rgba(214,178,94,.55) !important;
 }
 html.is-lesen-topic:not([data-theme="dark"]) body .t1-board:has(.sp-choices) .t1-panel .t1-option .t1-option-key { color: #6b4f14; }
+
+/* ===== Lesen Teil 3: «Anzeige X» (ما كاين حتى إعلان مناسب) ===== */
+.t3-x { cursor: pointer; min-height: 200px; }
+.t3-x-label {
+    display: inline-block; padding: 4px 10px; border-radius: 8px;
+    background: #eef1f6; color: #5b6275; font-size: 12px; font-weight: 800; letter-spacing: 1.2px;
+}
+.t3-x-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.t3-x-empty {
+    min-height: 130px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+    color: #8a91a3; font-size: 15px; font-weight: 700; direction: rtl;
+}
+.t3-x-icon { font-size: 30px; line-height: 1; color: #b9c0cf; font-weight: 300; }
+.t3-x-chip {
+    display: flex; align-items: center; gap: 10px; direction: ltr; text-align: left;
+    padding: 8px 10px; border: 1px solid #e3e6ee; border-radius: 12px; background: #f7f8fb; font-size: 14px;
+}
+.t3-x-chip b { flex: 0 0 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: #fff; border: 1px solid #e3e6ee; }
+.t3-x-chip span { flex: 1; }
+.t3-x-chip.ok { border-color: #1f9d63; background: #e5f6ec; }
+.t3-x-chip.no { border-color: #d64545; background: #fbe7e7; }
+.t3-x-del { border: 0; background: transparent; color: #8a91a3; cursor: pointer; font-size: 13px; padding: 4px 6px; border-radius: 8px; }
+.t3-x-del:hover { background: rgba(214,69,69,.1); color: #d64545; }
+html[data-theme="dark"] .t3-x-chip { background: #fbf8f0; color: #1c1a16; }
