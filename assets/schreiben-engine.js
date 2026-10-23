@@ -485,6 +485,13 @@ function renderAd(box, text) {
                 data = null;
             }
 
+            /* الحد ديال النهار: رسالة واضحة، ماشي «مشكل تقني» */
+            if (res.status === 429 && data && data.error === "daily_limit") {
+                resultBody.innerHTML = '<div class="error-banner"><strong>⏳ الحد ديال اليوم</strong><br>' +
+                    escapeHtml(data.details || "رجع غدا إن شاء الله.") + "</div>";
+                return;
+            }
+
             if (!res.ok) {
                 const serverMessage = data
                     ? [data.error, data.details].filter(Boolean).join(" — ")
