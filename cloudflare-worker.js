@@ -949,10 +949,12 @@ export default {
       const wordCount = (safeStudentText.match(/[A-Za-zÄÖÜäöüß0-9]+(?:[-'][A-Za-zÄÖÜäöüß0-9]+)*/g) || []).length;
       const wordsHint = String(words || "").slice(0, 40);
       /* بحال telc، حسب المستوى (ماشي اللي ف الموضوع):
-         B1 = على الأقل 80 كلمة (بلا حد فوق)، B2 = 150–200 كلمة */
+         B1 = 80 كلمة (مقبول حتى 130)، B2 = 150–200 كلمة.
+         3 مرات المطلوب ولا كثر (B1 ≥ 240) = نص محفوظ / ماشي المهمة → 0 */
       const isB1 = /b1/i.test(String(level || ""));
       const minWords = isB1 ? 80 : 150;
-      const maxWords = isB1 ? 0 : 200;
+      const maxWords = isB1 ? 130 : 200;
+      const absurdWords = minWords * 3;
 
       /* النقطة كتتحسب بحال telc: 3 معايير، كل واحد A/B/C/D
          (A=5، B=3، C=1، D=0) × 3 = من 0 حتى 45.
@@ -987,7 +989,11 @@ III. Formale Richtigkeit (Grammatik, Wortschatz, Rechtschreibung)
 Regeln:
 - Bewerte NUR den tatsächlich geschriebenen Text. Erfinde nichts.
 - Prüfe jeden Leitpunkt einzeln: "ja" (angemessen), "teilweise" (zu knapp), "nein" (fehlt).
-- Die Wortanzahl ist vorgegeben (vom System gezählt). Erwartet: ${maxWords ? minWords + "–" + maxWords : "mindestens " + minWords} Wörter.
+- Die Wortanzahl ist vorgegeben (vom System gezählt). Erwartet: ${isB1 ? "ca. " + minWords : minWords + "–" + maxWords} Wörter.
+- Bewerte vor allem den INHALT: Geht der Text wirklich auf die Situation und auf jeden
+  Leitpunkt ein? Die Länge allein ist kein Qualitätsmerkmal. Ein Text, der viel länger
+  ist als verlangt, ist oft auswendig gelernt — prüfe dann besonders streng, ob er
+  zur Aufgabe passt (sonst thema_verfehlt = true).
 - thema_verfehlt = true, wenn der Text nicht zur Aufgabe passt (anderes Thema,
   auswendig gelernter Standardtext ohne Bezug zur Situation/Anzeige, Kopie der
   Aufgabenstellung, sinnlose Wörter). Dann alle Kriterien D.
@@ -1173,6 +1179,10 @@ ${safeStudentText}
 
       if (offTopic) {
         for (const k of ["inhalt", "kommunikation", "form"]) cap(k, "D", "النص خارج على الموضوع (Thema verfehlt) — ف telc هادي = 0 نقطة");
+      } else if (wordCount >= absurdWords) {
+        for (const k of ["inhalt", "kommunikation", "form"]) {
+          cap(k, "D", "كتبتي " + wordCount + " كلمة والمطلوب " + (isB1 ? "تقريبا " + minWords : minWords + "–" + maxWords) + " — بزاف على المهمة = 0 نقطة");
+        }
       } else {
         /* الطول */
         if (wordCount < Math.round(minWords * 2 / 3)) {
@@ -1181,9 +1191,10 @@ ${safeStudentText}
         } else if (wordCount < minWords) {
           cap("inhalt", "C", "ما وصلتيش " + minWords + " كلمة (كتبتي " + wordCount + ")");
           cap("kommunikation", "B", "ما وصلتيش " + minWords + " كلمة (كتبتي " + wordCount + ")");
-        } else if (maxWords && wordCount > maxWords + 60) {
+        } else if (wordCount > maxWords + (isB1 ? 50 : 60)) {
+          cap("inhalt", "C", "النص طويل بزاف: " + wordCount + " كلمة (الحد " + maxWords + ")");
           cap("kommunikation", "C", "النص طويل بزاف: " + wordCount + " كلمة (الحد " + maxWords + ")");
-        } else if (maxWords && wordCount > maxWords) {
+        } else if (wordCount > maxWords) {
           cap("kommunikation", "B", "فتّي " + maxWords + " كلمة (كتبتي " + wordCount + ")");
         }
         /* النقط ديال المهمة */
