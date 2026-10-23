@@ -818,6 +818,11 @@ export default {
       }
 
       /* ترجمة الـ Anzeige والمهام للدارجة. ماشي محتاجة حساب. */
+      /* الترجمة تحيدات من Schreiben (كانت كتستهلك الحد والثمن ديال Gemini):
+         صفحات قدام ف الكاش ما يبقاوش يضربو Gemini */
+      if (body.translate) {
+        return jsonResponse({ error: "translation_disabled", details: "الترجمة ماكايناش دابا." }, 410, allowedOrigin);
+      }
       if (body.translate && typeof body.translate.text === "string") {
         if (!env.GEMINI_API_KEY) {
           return jsonResponse(
