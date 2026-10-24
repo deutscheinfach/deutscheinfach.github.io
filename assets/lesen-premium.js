@@ -386,11 +386,14 @@
         return Promise.race([net, slow]);
     }
     window.__lesenPremiumFetch = function (themaId, opts) {
-        if ((opts && opts.bg) || !window.__deStore || navigator.onLine === false
-            || !(window.__deOfflineMode && window.__deOfflineMode())) return online(themaId, opts);
+        /* بلا أنترنت حتى هو: المحفوظة دغيا، حتى إلا Firebase باقي ما عرف الحساب
+           (قبل: كنا كنتسناو 10 ثواني ومن بعد «ماشي داخل بحساب») */
+        const off0 = navigator.onLine === false;
+        if ((opts && opts.bg) || !window.__deStore
+            || !(off0 || (window.__deOfflineMode && window.__deOfflineMode()))) return online(themaId, opts);
         return window.__deStore.get("l:" + themaId).then(function (off) {
             if (!off) return online(themaId, opts);
-            setTimeout(function () { refreshLater(themaId); }, 4000);
+            if (!off0) setTimeout(function () { refreshLater(themaId); }, 4000);
             return { ok: true, data: off, offline: true };
         }, function () { return online(themaId, opts); });
     };
