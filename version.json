@@ -1,8 +1,8 @@
 {
-  "build": "8d3d2aca7d3a",
+  "build": "003872acb4bd",
   "assets": {
     "assets/admin-templates.js": "47410b77",
-    "assets/app-install.js": "6e044997",
+    "assets/app-install.js": "e0be8860",
     "assets/auth.css": "37532702",
     "assets/diag.js": "d5e0a7ba",
     "assets/einstufung.js": "4f3853ea",

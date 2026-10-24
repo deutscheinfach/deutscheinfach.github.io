@@ -77,6 +77,73 @@
         if (state) pill._t = setTimeout(function () { if (pill) pill.remove(); }, state === "ok" ? 4000 : 6000);
     }
 
+    /* ===== التحميل بلا أنترنت كيتجدد بوحدو =====
+       اللي برك على «تحميل للاستعمال بلا أنترنت»: ملي كتكون الأنترنت (فتح
+       الموقع، ولا رجعات من بعد ما تقطعات) كنجيبو ف الخفا، بلا شارة، غير
+       الجديد: الصفحات ديال build جديد، المواضيع الجداد (حتى اللي زادهم
+       الأدمين بـ «+»)، النصوص اللي تبدلو (✏️)، والقصص. مرة كل 6 سوايع. */
+    var SYNC_MS = 6 * 3600 * 1000;
+    var WORKER_URL = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
+    function getJson(url) {
+        return fetch(url, { credentials: "omit" }).then(function (r) { return r.ok ? r.json() : null; })
+            .catch(function () { return null; });
+    }
+    /* المواضيع اللي زادهم الأدمين + واش تبدل شي نص من آخر مرة */
+    function extras(off) {
+        var lists = [
+            ["lesenlist=b1", "lesen"], ["lesenlist=b2", "lesen"],
+            ["schreibenlist=b1", "sch-b1"], ["schreibenlist=b2", "sch-b2"]
+        ];
+        ["b1", "b2"].forEach(function (lv) {
+            ["teil1", "teil2", "teil3"].forEach(function (t) { lists.push(["hoerenlist=" + lv + "-" + t, "hoeren"]); });
+        });
+        return Promise.all(lists.map(function (l) { return getJson(WORKER_URL + "?" + l[0]); })
+            .concat([getJson(WORKER_URL + "?editsv=1")])).then(function (res) {
+            var jobs = [];
+            lists.forEach(function (l, n) {
+                (Array.isArray(res[n]) ? res[n] : []).forEach(function (e) {
+                    if (!e) return;
+                    if (l[1] === "lesen" && e.id) jobs.push({ key: "l:" + e.id, body: { lesenId: e.id } });
+                    if (l[1] === "hoeren" && e.kv) jobs.push({ key: "l:hoeren-" + e.kv, body: { lesenId: "hoeren-" + e.kv } });
+                    if (l[1] === "sch-b1" && e.id) jobs.push({ key: "l:schreiben-b1-" + e.id, body: { lesenId: "schreiben-b1-" + e.id } });
+                    if (l[1] === "sch-b2" && e.id) jobs.push({ key: "t:" + e.id, body: { topicId: e.id } });
+                });
+            });
+            off.extraJobs = jobs;
+            /* رقم التعديلات تبدل → كاع اللي تحفظ قبل هاد اللحظة كيتعاود */
+            var ed = res[res.length - 1];
+            if (ed && typeof ed.v === "number") {
+                if (read("de-sync-editsv") !== String(ed.v)) {
+                    if (read("de-sync-editsv") !== null) store("de-sync-edits-at", String(Date.now()));
+                    store("de-sync-editsv", String(ed.v));
+                }
+            }
+            off.editsAt = Number(read("de-sync-edits-at") || 0);
+            return off;
+        });
+    }
+    function autoSync() {
+        if (read("de-offline-on") !== "1" || navigator.onLine === false) return;
+        if ((navigator.connection || {}).saveData) return;
+        if (Date.now() - Number(read("de-sync-at") || 0) < SYNC_MS) return;
+        store("de-sync-at", String(Date.now()));
+        /* الصفحات والملفات: الـ service worker كيقارن الـ build (رخيص إلا ما تبدل والو) */
+        try {
+            navigator.serviceWorker.ready.then(function (reg) {
+                if (reg.active) reg.active.postMessage({ type: "de-precache" });
+            }).catch(function () { /* */ });
+        } catch (e) { /* */ }
+        /* المحتوى المدفوع + القصص: غير الجديد (premiumOffline بلا force = بلا شارة) */
+        var go = function () { if (window.__deutschEinfachIsPremium === true) premiumOffline(false); };
+        if (window.__deutschEinfachIsPremium === true && window.__deutschEinfachAuth && window.__deutschEinfachAuth.currentUser) go();
+        else document.addEventListener("de-premium", go, { once: true });
+    }
+    if ("serviceWorker" in navigator && location.protocol !== "file:") {
+        (window.__deAfterContent || function (fn) { setTimeout(fn, 3000); })(function () { setTimeout(autoSync, 2000); });
+        /* رجعات الأنترنت: دغيا (إلا داز الوقت) */
+        window.addEventListener("online", function () { setTimeout(autoSync, 3000); });
+    }
+
     var premiumRunning = false;
     function premiumOffline(force) {
         if (!window.__deStore || !window.caches) return Promise.resolve(false);
@@ -85,13 +152,16 @@
         var user = auth && auth.currentUser;
         if (!user) return Promise.resolve(false);
         var mark = "de-offline-at:" + user.uid;
-        if (!force && Date.now() - Number(read(mark) || 0) < 12 * 3600 * 1000) return Promise.resolve(true);
+        if (!force && Date.now() - Number(read(mark) || 0) < SYNC_MS) return Promise.resolve(true);
         var WORKER = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
         var WEEK = 7 * 24 * 3600 * 1000;
         premiumRunning = fetch("offline.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (off) {
+            return off ? extras(off) : off;
+        }).then(function (off) {
             if (!off) return;
             var jobs = (off.lesen || []).map(function (id) { return { key: "l:" + id, body: { lesenId: id } }; })
-                .concat((off.schreibenB2 || []).map(function (id) { return { key: "t:" + id, body: { topicId: id } }; }));
+                .concat((off.schreibenB2 || []).map(function (id) { return { key: "t:" + id, body: { topicId: id } }; }))
+                .concat(off.extraJobs || []);
             var i = 0, failures = 0, fetched = 0;
             /* شارة صغيرة لتحت: «كنحضرو الموقع بلا أنترنت — 45%». كتبان غير
                ملي كاين بزاف ما يتجاب (أول مرة) — باش الطالب يعرف يتسنى. */
@@ -107,7 +177,11 @@
                 return caches.open("de-data-v1").then(function (c) {
                     return c.match(location.origin + "/__data/" + encodeURIComponent(user.uid) + "/" + encodeURIComponent(key));
                 }).then(function (res) {
-                    return !!res && Date.now() - Number(res.headers.get("x-saved") || 0) < WEEK;
+                    var at = Number(res && res.headers.get("x-saved") || 0);
+                    /* الأدمين بدل شي نص (✏️) من بعد ما تحفظ: نعاودو نجيبوه */
+                    /* ✏️ كيبدل غير نصوص Lesen — Sprechen / Hören / Schreiben ما كيتعاودوش */
+                    var lesen = /^l:/.test(key) && !/^l:(sprechen|hoeren|schreiben)-/.test(key);
+                    return !!res && Date.now() - at < WEEK && (!lesen || at > (off.editsAt || 0));
                 }).catch(function () { return false; });
             }
             /* المواضيع اللي ماكاينش المحتوى ديالهم: كيتخباو من اللوائح (diag.js __deMissing) */
