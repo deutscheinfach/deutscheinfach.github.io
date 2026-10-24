@@ -476,6 +476,8 @@
             try {
                 Object.keys(localStorage).forEach(function (k) {
                     if (/^de-(lp|sp):/.test(k) && (!uid || k.indexOf(":" + uid + "|") !== -1)) localStorage.removeItem(k);
+                    /* القصص (keyword-story.js): ماشي ديال حساب واحد — كيتمسحو كاملين */
+                    if (k.indexOf("de-story:") === 0) localStorage.removeItem(k);
                 });
             } catch (e) { /* */ }
             try {

@@ -1,10 +1,10 @@
 {
-  "build": "21e42799b4cd",
+  "build": "b5b2b79776a6",
   "assets": {
     "assets/admin-templates.js": "47410b77",
-    "assets/app-install.js": "0ee6f2d5",
+    "assets/app-install.js": "6e044997",
     "assets/auth.css": "37532702",
-    "assets/diag.js": "60c221e3",
+    "assets/diag.js": "d5e0a7ba",
     "assets/einstufung.js": "4f3853ea",
     "assets/fortschritt.js": "02e0b48b",
     "assets/fx.js": "0438fb69",
