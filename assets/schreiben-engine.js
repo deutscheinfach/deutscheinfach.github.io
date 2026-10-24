@@ -188,9 +188,20 @@ function renderAd(box, text) {
             };
             /* النسخة المحفوظة غير بلا أنترنت. الأنترنت كاينة: من الـ Worker
                (الجديد + التأكد من الاشتراك)، والمحفوظة إلا طاح الطلب (لتحت) */
-            const off = navigator.onLine === false ? await stored() : null;
+            const mode = !!(window.__deOfflineMode && window.__deOfflineMode());
+            const off = navigator.onLine === false || mode ? await stored() : null;
             if (off && Array.isArray(off.points)) {
                 topic = Object.assign({}, meta, off);
+                /* «تحميل بلا أنترنت» + الأنترنت كاينة: الجديدة ف الخفا مرة ف النهار */
+                const RK = "de-sch-ref:" + KEY;
+                let last = 0;
+                try { last = Number(localStorage.getItem(RK) || 0); } catch (e) { last = Date.now(); }
+                if (mode && navigator.onLine !== false && Date.now() - last > 24 * 3600 * 1000) setTimeout(function () {
+                    loadPremiumTopic(TOPIC_ID).then(function (data) {
+                        if (window.__deStore) window.__deStore.put(KEY, data);
+                        try { localStorage.setItem(RK, String(Date.now())); } catch (e) { /* */ }
+                    }).catch(function () { /* المرة الجاية */ });
+                }, 4000);
             } else try {
                 const data = await loadPremiumTopic(TOPIC_ID).catch(async function (error) {
                     /* الـ Worker ما جاوبش (الشبكة): المحفوظة إلا كاينة */
