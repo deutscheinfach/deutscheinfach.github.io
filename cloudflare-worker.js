@@ -303,7 +303,9 @@ export default {
           lesenTopic = sprechenAll?.[lesenId];
         }
 
-        if (!lesenTopic) {
+        /* Sprechen ماعمرو كان ف premium-lesen (517 KB): بلا ما نقراوه، الـ 404
+           ديال bundle ناقص (sprechen-b2-t2…) كيرجع دغيا بدل 10–20 ثانية ف 3G */
+        if (!lesenTopic && !lesenId.startsWith("sprechen-")) {
           const lesenAll = await kvJson(env, "premium-lesen");
           lesenTopic = lesenAll?.[lesenId];
         }
