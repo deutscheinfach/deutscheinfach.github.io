@@ -197,7 +197,9 @@
                 select.appendChild(new Option(NONE + " — keine Situation", NONE));
                 top.appendChild(select);
                 box.appendChild(top);
-                if (window.__deStory) {
+                /* القصة غير للإعلانات اللي عندهم وضعية (فيهم تصحيح) — الإعلان اللي
+                   ماكاين حتى وضعية كتمشي معاه (X) ماعندوش قصة */
+                if (window.__deStory && wantFor[ad.key]) {
                     const want = sits.find(function (sit, i) { return String(sit.no || (i + 11)) === String(wantFor[ad.key]); });
                     const baseAds = index > 0 ? (variants[0].ads || []) : [];
                     const base = baseAds.find(function (x) { return x.key === ad.key; });
