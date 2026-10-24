@@ -186,9 +186,21 @@ function renderAd(box, text) {
             const stored = function () {
                 return window.__deStore ? window.__deStore.get(KEY) : Promise.resolve(null);
             };
-            const off = navigator.onLine === false ? await stored() : null;
+            /* النسخة المحفوظة ف التيليفون أولا (أنترنت ضعيفة: بلا ما نتسناو
+               Firebase والـ Worker)، والجديدة كتتجاب ف الخفا مرة ف النهار */
+            const off = await stored();
             if (off && Array.isArray(off.points)) {
                 topic = Object.assign({}, meta, off);
+                const RK = "de-sch-ref:" + KEY;
+                let last = 0;
+                try { last = Number(localStorage.getItem(RK) || 0); } catch (e) { last = Date.now(); }
+                if (navigator.onLine !== false && Date.now() - last > 24 * 3600 * 1000) setTimeout(function () {
+                    loadPremiumTopic(TOPIC_ID).then(function (data) {
+                        if (window.__deStore) window.__deStore.put(KEY, data);
+                        cacheSet(data);
+                        try { localStorage.setItem(RK, String(Date.now())); } catch (e) { /* */ }
+                    }).catch(function () { /* المرة الجاية */ });
+                }, 4000);
             } else try {
                 const data = await loadPremiumTopic(TOPIC_ID).catch(async function (error) {
                     /* الـ Worker ما جاوبش (الشبكة): المحفوظة إلا كاينة */
