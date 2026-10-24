@@ -161,47 +161,20 @@
     });
     queueBar();
 
-    /* اللوحة اللاصقة (Überschriften…) ف PC: الطول ديالها = البلاصة الخاوية
-       بين الراس ديالها والشريط ديال الأزرار. ف الفوق ديال الصفحة (قبل ما
-       تلصق) كتكون قصيرة، وكتطول ملي تنزل — هكا آخر عنوان (J) ديما باين
-       فوق الشريط وماكيتخباش تحتو. */
-    let fitQueued = false;
-    function fitPanels() {
-        fitQueued = false;
-        const panels = document.querySelectorAll(".t1-panel");
-        if (!panels.length) return;
-        const on = WIDE.matches && document.body.classList.contains("has-lesen-bar") && !bar.hidden;
-        /* ?nav=0 (اختبر نفسك): الشريط مخبي بـ display:none والأزرار عند
-           الصفحة الأم — اللوحة كتاخد الطول ديال الـiframe كامل. */
-        const barShown = on && bar.getClientRects().length > 0;
-        const limit = on ? (barShown ? bar.getBoundingClientRect().top - 14 : window.innerHeight - 12) : 0;
-        panels.forEach(function (panel) {
-            if (!on || !panel.getClientRects().length) {
-                if (panel.style.maxHeight) panel.style.maxHeight = "";
-                return;
-            }
-            /* الطول = من الخط اللاصق (top ديال CSS) حتى للشريط ديال تحت.
-               ماكيتعلقش بالسكرول نهائياً → العناوين ماكيتحركوش ولا كيترعشو.
-               (قبل كان كيتحسب من البلاصة ديال اللوحة ولا من آخر نص، وف آخر
-               الصفحة كانت كتطوال وتقصر بلا حبس.) */
-            const stick = parseFloat(getComputedStyle(panel).top) || 0;
-            const room = Math.max(220, Math.round(limit - stick));
-            /* فرق صغير (pixels مكسورين ف شاشات 125%) ما كنبدلوش — وإلا
-               كيتبدل الطول بلا حبس واللوحة كترعش */
-            const now = parseFloat(panel.style.maxHeight) || 0;
-            if (Math.abs(now - room) >= 2) panel.style.maxHeight = room + "px";
-        });
+    /* اللوحة اللاصقة (Überschriften…) ف PC: الطول ديالها كيتحسب ف CSS بوحدو
+       (section.css: 100vh − الراس − الشريط ديال الأزرار). هنا غير كنقيسو الشريط
+       (--lesen-bar-h) ملي يتبدل الطول ديالو (سطرين ف الامتحان، مخبي ف ?nav=0).
+       قبل كان الـ JS كيكتب max-height ف اللوحة كل 1.5 ثانية وف كل scroll —
+       وهادشي كيرجع يبدل الشريط، واللوحة كانت كتطلع وتهبط بوحدها (ترعاد). */
+    function barHeight() {
+        const h = !bar.hidden && bar.getClientRects().length ? Math.round(bar.getBoundingClientRect().height) : 0;
+        const css = h + "px";
+        if (document.documentElement.style.getPropertyValue("--lesen-bar-h") !== css) {
+            document.documentElement.style.setProperty("--lesen-bar-h", css);
+        }
     }
-    function queueFit() {
-        if (fitQueued) return;
-        fitQueued = true;
-        requestAnimationFrame(fitPanels);
-    }
-    window.addEventListener("scroll", queueFit, { passive: true });
-    window.addEventListener("resize", queueFit);
-    new MutationObserver(queueFit).observe(document.body, { attributes: true, attributeFilter: ["class"] });
-    setInterval(queueFit, 1500);   /* لوحة جديدة (تبديل النسخة / التمرين) */
-    queueFit();
+    if (window.ResizeObserver) new ResizeObserver(barHeight).observe(bar);
+    barHeight();
 
     /* من بعد ما يختار جواب: فالـPC اللوحة كتسكرولي بوحدها للسؤال الجاي
        اللي مازال ماتجاوبش — ماكيحتاجش يقلب عليه. الصفحة ماكتتحركش. */
