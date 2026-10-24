@@ -349,6 +349,41 @@
             window.__lesenPremiumFetch(themaId, { bg: true });
         } catch (error) { /* غير تسريع */ }
     };
+    /* ===== أنترنت ضعيفة: النسخة المحفوظة ف التيليفون أولا =====
+       الموضوع اللي تجاب من قبل (app-install.js، ولا فتحو الطالب) ساكن ف
+       __deStore. كنعطيوه دغيا بلا ما نتسناو Firebase ولا الـ Worker (كانت
+       كتوصل لـ 20 ثانية + محاولة ثانية ف 3G)، ومن بعد كنجددوه ف الخفا
+       (مرة ف النهار) للمرة الجاية. __deStore.get كيرفض إلا الاشتراك سالا. */
+    const network = window.__lesenPremiumFetch;
+    const REFRESH_MS = 24 * 3600 * 1000;
+    function refreshLater(themaId) {
+        const mark = "de-lp-ref:" + themaId;
+        try { if (Date.now() - Number(localStorage.getItem(mark) || 0) < REFRESH_MS) return; } catch (e) { return; }
+        const end = Date.now() + 60000;
+        (function poll() {
+            const user = currentUser();
+            if (!user) { if (Date.now() < end) setTimeout(poll, 2000); return; }
+            if (navigator.onLine === false) return;
+            state.done.delete(user.uid + "|" + themaId);
+            network(themaId, { bg: true }).then(function (r) {
+                if (r && r.ok && !r.offline) { try { localStorage.setItem(mark, String(Date.now())); } catch (e) { /* */ } }
+            }, function () { /* المرة الجاية */ });
+        })();
+    }
+    window.__lesenPremiumFetch = function (themaId, opts) {
+        const user = currentUser();
+        const uid = user ? user.uid : (window.__deutschEinfachIsPremium ? lastUid() : "");
+        if ((opts && opts.bg) || !uid || !window.__deStore
+            || diskGet(uid, themaId) || state.done.has(uid + "|" + themaId)) return network(themaId, opts);
+        return window.__deStore.get("l:" + themaId).then(function (off) {
+            if (!off) return network(themaId, opts);
+            const hit = { ok: true, data: off, offline: true };
+            state.done.set(uid + "|" + themaId, hit);
+            setTimeout(function () { refreshLater(themaId); }, 4000);
+            return hit;
+        }, function () { return network(themaId, opts); });
+    };
+
     /* نصوص بدلهم الأدمين: key الجديد → key الأصل (kw-custom.js) */
     const fetchTopic = window.__lesenPremiumFetch;
     window.__lesenPremiumFetch = function () {
