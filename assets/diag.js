@@ -231,8 +231,8 @@
     const ICON_AGAIN = '<svg ' + SVG + '><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>';
 
     const TEXT = {
-        off:  { title: "ماكاينش اتصال بالأنترنت",
-                lead: "تأكد من الويفي ولا الأنترنت ديال التيليفون، ومن بعد برك على «عاود المحاولة»." },
+        off:  { title: "هاد التمرين ما تحملش ف التيليفون",
+                lead: "ماكاينش الأنترنت دابا. ملي ترجع: القائمة ديال الحساب ← «تحميل للاستعمال بلا أنترنت»، وكلشي غادي يخدم من بعد بلا أنترنت." },
         slow: { title: "الاتصال ديالك ضعيف",
                 lead: "التمرين كيتحمل — غادي ياخد شوية ديال الوقت. خليك ف الصفحة." }
     };
@@ -326,7 +326,7 @@
         }
         bar.classList.toggle("is-good", !off);
         bar.innerHTML = off
-            ? ICON_OFF + "<span>تقطع الاتصال بالأنترنت</span>"
+            ? ICON_OFF + "<span>بلا أنترنت — كتخدم بالنسخة المحفوظة ف التيليفون</span>"
             : '<svg ' + SVG + '><path d="M20 6L9 17l-5-5"/></svg><span>رجع الاتصال</span>';
         if (!bar.isConnected) document.body.appendChild(bar);
         if (!off) hideTimer = setTimeout(function () { if (bar) bar.remove(); }, 2500);

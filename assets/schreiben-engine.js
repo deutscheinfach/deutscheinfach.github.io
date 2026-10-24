@@ -735,10 +735,13 @@ function renderAd(box, text) {
         console.warn("Schreiben:", code, errorHint(code));
         /* الطالب خرج من الصفحة والطلب تقطع (Failed to fetch): ماشي مشكل */
         if (window.__deDiag && !leaving) window.__deDiag("fail", "Schreiben " + LEVEL + "-" + TOPIC_ID + ": " + code);
+        const offline = navigator.onLine === false;
         showNotice(
             "📶",
-            "ما قدرناش نجيبو الموضوع",
-            "غالبا المشكل ف الأنترنت (ضعيفة ولا مقطوعة). تأكد من الاتصال وعاود المحاولة.",
+            offline ? "هاد الموضوع ما تحملش ف التيليفون" : "ما قدرناش نجيبو الموضوع",
+            offline
+                ? "ماكاينش الأنترنت دابا. ملي ترجع: القائمة ديال الحساب ← «تحميل للاستعمال بلا أنترنت»، وكاع المواضيع غادي يخدمو من بعد بلا أنترنت."
+                : "غالبا المشكل ف الأنترنت (ضعيفة ولا مقطوعة). تأكد من الاتصال وعاود المحاولة.",
             '<button class="premium-btn gold" type="button" onclick="location.reload()">عاود المحاولة</button>' + back,
             false
         );

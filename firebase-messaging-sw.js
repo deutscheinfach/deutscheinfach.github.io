@@ -211,7 +211,11 @@ function precache() {
 }
 
 self.addEventListener("message", function (event) {
-    if (event.data && event.data.type === "de-precache") event.waitUntil(precache());
+    if (event.data && event.data.type === "de-precache") {
+        /* «تحميل بلا أنترنت» (app-install.js) كيتسنى الجواب باش يقول «واجد» */
+        const port = event.ports && event.ports[0];
+        event.waitUntil(precache().then(function () { if (port) port.postMessage("done"); }));
+    }
 });
 
 /* الراوتر (site-header.js) كيجيب الصفحات بـ fetch (ماشي navigate):
