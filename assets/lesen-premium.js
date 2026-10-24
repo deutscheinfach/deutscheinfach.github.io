@@ -69,7 +69,9 @@
         if (navigator.onLine === false && window.__deOfflinePass && !window.__deOfflinePass.ok(uid)) return null;
         try {
             const v = JSON.parse(localStorage.getItem(DISK + uid + "|" + id) || "null");
-            if (v && v.data && Date.now() - v.t < DISK_TTL) return { ok: true, data: v.data };
+            /* الأنترنت كاينة: غير إلا تجاب قبل شوية (10 دقايق) — وإلا من الـ Worker */
+            const ttl = navigator.onLine === false ? DISK_TTL : 10 * 60 * 1000;
+            if (v && v.data && Date.now() - v.t < ttl) return { ok: true, data: v.data };
         } catch (e) { /* */ }
         return null;
     }
@@ -349,39 +351,23 @@
             window.__lesenPremiumFetch(themaId, { bg: true });
         } catch (error) { /* غير تسريع */ }
     };
-    /* ===== أنترنت ضعيفة: النسخة المحفوظة ف التيليفون أولا =====
-       الموضوع اللي تجاب من قبل (app-install.js، ولا فتحو الطالب) ساكن ف
-       __deStore. كنعطيوه دغيا بلا ما نتسناو Firebase ولا الـ Worker (كانت
-       كتوصل لـ 20 ثانية + محاولة ثانية ف 3G)، ومن بعد كنجددوه ف الخفا
-       (مرة ف النهار) للمرة الجاية. __deStore.get كيرفض إلا الاشتراك سالا. */
+    /* ===== الأنترنت كاينة: ديما من الـ Worker =====
+       باش يبان الجديد، والـ Worker يتأكد واش الاشتراك باقي. النسخة المحفوظة
+       ف التيليفون (__deStore، كيرفض إلا الاشتراك سالا) كتبان غير بلا أنترنت
+       (network كيديرها)، ولا إلا الـ Worker ما جاوبش ف 8 ثواني (أنترنت ضعيفة
+       بزاف) — والجواب ديالو، إلا وصل من بعد، كيتحفظ للمرة الجاية. */
     const network = window.__lesenPremiumFetch;
-    const REFRESH_MS = 24 * 3600 * 1000;
-    function refreshLater(themaId) {
-        const mark = "de-lp-ref:" + themaId;
-        try { if (Date.now() - Number(localStorage.getItem(mark) || 0) < REFRESH_MS) return; } catch (e) { return; }
-        const end = Date.now() + 60000;
-        (function poll() {
-            const user = currentUser();
-            if (!user) { if (Date.now() < end) setTimeout(poll, 2000); return; }
-            if (navigator.onLine === false) return;
-            state.done.delete(user.uid + "|" + themaId);
-            network(themaId, { bg: true }).then(function (r) {
-                if (r && r.ok && !r.offline) { try { localStorage.setItem(mark, String(Date.now())); } catch (e) { /* */ } }
-            }, function () { /* المرة الجاية */ });
-        })();
-    }
     window.__lesenPremiumFetch = function (themaId, opts) {
-        const user = currentUser();
-        const uid = user ? user.uid : (window.__deutschEinfachIsPremium ? lastUid() : "");
-        if ((opts && opts.bg) || !uid || !window.__deStore
-            || diskGet(uid, themaId) || state.done.has(uid + "|" + themaId)) return network(themaId, opts);
-        return window.__deStore.get("l:" + themaId).then(function (off) {
-            if (!off) return network(themaId, opts);
-            const hit = { ok: true, data: off, offline: true };
-            state.done.set(uid + "|" + themaId, hit);
-            setTimeout(function () { refreshLater(themaId); }, 4000);
-            return hit;
-        }, function () { return network(themaId, opts); });
+        const net = network(themaId, opts);
+        if ((opts && opts.bg) || !window.__deStore || navigator.onLine === false) return net;
+        const slow = new Promise(function (resolve) {
+            setTimeout(function () {
+                window.__deStore.get("l:" + themaId).then(function (off) {
+                    if (off) resolve({ ok: true, data: off, offline: true });
+                }, function () { /* */ });
+            }, 8000);
+        });
+        return Promise.race([net, slow]);
     };
 
     /* نصوص بدلهم الأدمين: key الجديد → key الأصل (kw-custom.js) */
