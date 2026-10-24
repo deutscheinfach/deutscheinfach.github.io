@@ -358,7 +358,7 @@
        بزاف) — والجواب ديالو، إلا وصل من بعد، كيتحفظ للمرة الجاية. */
     const network = window.__lesenPremiumFetch;
     /* «تحميل بلا أنترنت» مفعّل: النسخة المحفوظة أولا (__deStore كيرفض إلا
-       الاشتراك سالا / دازو 48 ساعة بلا تأكد)، والجديدة ف الخفا مرة ف النهار */
+       الاشتراك سالا / دازو 24 ساعة بلا تأكد)، والجديدة ف الخفا مرة ف النهار */
     function refreshLater(themaId) {
         const mark = "de-lp-ref:" + themaId;
         try { if (Date.now() - Number(localStorage.getItem(mark) || 0) < 24 * 3600 * 1000) return; } catch (e) { return; }
