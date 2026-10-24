@@ -3186,11 +3186,18 @@ html body :is(.e1-box, .e1-task) ::selection { background: rgba(214,178,94,.45);
 body.has-lesen-bar { padding-bottom: 84px; }
 /* اللوحة اللاصقة (Überschriften / Anzeigen…) كتسالى فوق الشريط ديال الأزرار،
    وإلا آخر عنوان (J) كيتخبى تحتو. */
+/* ف آخر الصفحة العمود ديال اللوحة كيسالى قبل النصوص بشوية، والـ sticky كان
+   كيدفع اللوحة لفوق تحت الراس (العنوان ديالها كيتخبى). كنطولو العمود 160px
+   لتحت (فارغ وماكيشدش الضغطات) باش اللوحة تبقى ف بلاصتها حتى للخر. */
+@media (min-width: 1001px) {
+    .t1-side { margin-bottom: -160px; pointer-events: none; }
+    .t1-side > * { pointer-events: auto; }
+}
 @media (min-width: 1001px) {
     body.has-lesen-bar .t1-panel {
         box-sizing: border-box;
         top: calc(var(--site-header-h, 92px) + 10px);
-        max-height: calc(100vh - var(--site-header-h, 92px) - 10px - 84px - 14px);
+        max-height: calc(100vh - var(--site-header-h, 92px) - 10px - var(--lesen-bar-h, 84px) - 14px);
     }
 }
 .lesen-score, .sp2-pop { scroll-margin: 110px 0; }

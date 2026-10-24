@@ -1,5 +1,5 @@
 {
-  "build": "b5b2b79776a6",
+  "build": "8d3d2aca7d3a",
   "assets": {
     "assets/admin-templates.js": "47410b77",
     "assets/app-install.js": "6e044997",
@@ -21,7 +21,7 @@
     "assets/lesen-b1-topics.js": "abfe33b5",
     "assets/lesen-b2-topics.js": "940fb40d",
     "assets/lesen-edit.js": "6ced1e62",
-    "assets/lesen-engine.js": "c3c4fa86",
+    "assets/lesen-engine.js": "ef42064b",
     "assets/lesen-free.js": "38b3b45c",
     "assets/lesen-hub.js": "82d82275",
     "assets/lesen-keys.js": "fb3de18d",
@@ -47,7 +47,7 @@
     "assets/schreiben-topics-b1.js": "99954537",
     "assets/schreiben-topics-b2.js": "575a76e9",
     "assets/scroll-cue.js": "4d23dcaf",
-    "assets/section.css": "eeda196e",
+    "assets/section.css": "3f14b35e",
     "assets/selbsttest.js": "966af378",
     "assets/session-guard.js": "f21ad6fd",
     "assets/share-card.js": "73834578",
