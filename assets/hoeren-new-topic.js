@@ -41,8 +41,15 @@
     /* ---- اللائحة + الجمل ---- */
     let extra = [];
     async function loadContent(entry) {
+        /* بلا أنترنت: النسخة المحفوظة ف التيليفون (__deStore، diag.js) */
+        const KEY = "l:hoeren-" + entry.kv;
+        const offline = async function () {
+            const d = window.__deStore ? await window.__deStore.get(KEY) : null;
+            if (d && Array.isArray(d.questions)) entry.questions = d.questions;
+        };
+        if (navigator.onLine === false) return offline();
         const u = await waitUser(10000);
-        if (!u) return;
+        if (!u) return offline();
         try {
             const res = await fetch(ENDPOINT, {
                 method: "POST",
@@ -51,8 +58,11 @@
             });
             if (!res.ok) return;
             const d = await res.json();
-            if (d && Array.isArray(d.questions)) entry.questions = d.questions;
-        } catch (e) { /* بلا أنترنت */ }
+            if (d && Array.isArray(d.questions)) {
+                entry.questions = d.questions;
+                if (window.__deStore) window.__deStore.put(KEY, d);
+            }
+        } catch (e) { await offline(); }
     }
     fetch(ENDPOINT + "?hoerenlist=" + LV + "-" + TEIL, { credentials: "omit" })
         .then(function (r) { return r.ok ? r.json() : []; })
