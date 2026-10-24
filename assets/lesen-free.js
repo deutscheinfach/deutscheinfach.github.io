@@ -81,7 +81,7 @@
             /* الأنترنت كاينة: الجديد من الأنترنت. المحفوظة غير بلا أنترنت،
                ولا إلا الطلب طاح، ولا ما جاوبش ف 8 ثواني */
             const has = function (d) { return d && Object.keys(d).length ? d : null; };
-            const first = navigator.onLine === false
+            const first = navigator.onLine === false || (window.__deOfflineMode && window.__deOfflineMode())
                 ? saved.then(function (old) { return has(old) || net; })
                 : Promise.race([
                     net.then(function (d) { return has(d) || saved.then(function (old) { return has(old) || d; }); }),

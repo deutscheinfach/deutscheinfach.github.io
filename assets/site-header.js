@@ -543,7 +543,7 @@
        القائمة ما كتتبناش دابا: ماكاينش لعجلة، وهي محتاجة
        الإيميل الحقيقي. كتوجد ملي يجاوب Firebase. */
     /* بلا أنترنت: Premium غير إلا التصريح (diag.js) باقي صالح — الاشتراك
-       ما سالاش وما فاتوش 7 أيام بلا ما نتأكدو */
+       ما سالاش وما فاتوش 48 ساعة بلا ما نتأكدو */
     function passOk(uid) {
         if (navigator.onLine !== false) return true;
         return !window.__deOfflinePass || window.__deOfflinePass.ok(uid);
@@ -1341,7 +1341,7 @@
                     });
                 }
 
-                /* التصريح ديال الاستعمال بلا أنترنت: حتى لنهاية الاشتراك (ولا 7 أيام).
+                /* التصريح ديال الاستعمال بلا أنترنت: حتى لنهاية الاشتراك (ولا 48 ساعة).
                    ماشي مشترك → كنمسحو المحتوى المدفوع من التيليفون. */
                 function grantOffline(data, isPremium) {
                     const pass = window.__deOfflinePass;
@@ -1352,6 +1352,14 @@
                         pass.grant(person.uid, end);
                     } else {
                         pass.revoke(person.uid);
+                        /* «تحميل بلا أنترنت»: الصفحة يمكن بانت من النسخة المحفوظة قبل ما
+                           يجاوب Firebase. الاشتراك سالا → نعاودو نحلوها مقفولة (مرة وحدة:
+                           الحالة الجديدة كتتحفظ قبل). */
+                        const was = recall();
+                        if (was && was.uid === person.uid && was.premium === true) {
+                            remember({ name: was.name || name, premium: false, uid: person.uid });
+                            location.reload();
+                        }
                     }
                 }
                 function isActive(data) {

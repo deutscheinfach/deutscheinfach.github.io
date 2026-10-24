@@ -224,6 +224,14 @@
     if (window.__deNetHint) return;
 
     function offline() { return navigator.onLine === false; }
+    /* Premium محفوظ ف التيليفون، ولكن دازت 48 ساعة بلا ما نتأكدو أونلاين */
+    function passExpired() {
+        try {
+            const a = JSON.parse(localStorage.getItem("deutschEinfachLastAccount") || "null");
+            const P = window.__deOfflinePass;
+            return !!(a && a.uid && a.premium === true && P && P.why(a.uid) !== "صالح");
+        } catch (e) { return false; }
+    }
 
     const SVG = 'viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
     const ICON_OFF  = '<svg ' + SVG + '><path d="M2 2l20 20"/><path d="M8.5 16.4a5 5 0 0 1 7 0"/><path d="M5 12.9a10 10 0 0 1 5.2-2.8"/><path d="M19 12.9a10 10 0 0 0-2.3-1.6"/><path d="M2 8.8a15 15 0 0 1 4.2-2.7"/><path d="M22 8.8A15 15 0 0 0 11 4.9"/><path d="M12 20h.01"/></svg>';
@@ -233,6 +241,8 @@
     const TEXT = {
         off:  { title: "هاد التمرين ما تحملش ف التيليفون",
                 lead: "ماكاينش الأنترنت دابا. ملي ترجع: القائمة ديال الحساب ← «تحميل للاستعمال بلا أنترنت»، وكلشي غادي يخدم من بعد بلا أنترنت." },
+        expired: { title: "خاصك الأنترنت باش نتأكدو من الاشتراك",
+                lead: "دازو 48 ساعة بلا أنترنت. حل الأنترنت مرة وحدة، ومن بعد المواضيع المحفوظة غادي يرجعو يخدمو بلا أنترنت." },
         slow: { title: "الاتصال ديالك ضعيف",
                 lead: "التمرين كيتحمل — غادي ياخد شوية ديال الوقت. خليك ف الصفحة." }
     };
@@ -291,7 +301,7 @@
                 return;
             }
             const off = offline();
-            const t = off ? TEXT.off : TEXT.slow;
+            const t = off ? (passExpired() ? TEXT.expired : TEXT.off) : TEXT.slow;
             card.classList.toggle("is-slow", !off);
             card.querySelector(".de-net-ico").innerHTML = off ? ICON_OFF : ICON_SLOW;
             card.querySelector(".de-net-title").textContent = t.title;
@@ -431,7 +441,7 @@
 
 /* ===== بلا أنترنت: حتى لإمتى المشترك يقدر يخدم =====
    ملي كيتأكد الموقع من الاشتراك (أونلاين، site-header.js) كيكتب «تصريح»:
-   صالح حتى لنهاية الاشتراك (subscriptionEnd) ولا 7 أيام — اللي جا الأول.
+   صالح حتى لنهاية الاشتراك (subscriptionEnd) ولا 48 ساعة — اللي جا الأول.
    بلا أنترنت: Premium غير إلا التصريح باقي صالح. من بعد خاصو يدخل
    للأنترنت مرة باش يتجدد (وإلا سالا الاشتراك → المحتوى كيتقفل ويتمسح).
    الساعة ديال التيليفون رجعات لور (باش يطول المدة)؟ التصريح كيسقط. */
@@ -439,7 +449,7 @@
     "use strict";
     if (window.__deOfflinePass) return;
     const KEY = "de-offline-pass";
-    const MAX = 7 * 24 * 3600 * 1000;
+    const MAX = 48 * 3600 * 1000;
     const SLACK = 10 * 60 * 1000;
     function read() {
         try { return JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { return null; }
@@ -447,6 +457,12 @@
     function write(v) {
         try { if (v) localStorage.setItem(KEY, JSON.stringify(v)); else localStorage.removeItem(KEY); } catch (e) { /* */ }
     }
+    /* برك على «تحميل للاستعمال بلا أنترنت» (app-install.js): المحتوى المدفوع
+       كيتعطى من التيليفون حتى والأنترنت كاينة (دغيا)، وكيتجدد ف الخفا مرة ف
+       النهار. Firebase (site-header.js) كيبقى كيتأكد من الاشتراك ف كل صفحة. */
+    window.__deOfflineMode = function () {
+        try { return localStorage.getItem("de-offline-on") === "1"; } catch (e) { return false; }
+    };
     window.__deOfflinePass = {
         /* أونلاين، الاشتراك صالح: end = نهاية الاشتراك (ms) ولا 0 إلا ماكايناش */
         grant: function (uid, end) {
@@ -486,7 +502,7 @@
             if (!uid) return false;
             /* ما كاينش تصريح لهاد الحساب (ما زال ما تأكدناش أونلاين من بعد
                هاد التحديث، ولا قطع الأنترنت قبل ما يجاوب Firebase): آخر حالة
-               معروفة كانت Premium → مهلة 3 أيام، مرة وحدة. المحتوى المحفوظ
+               معروفة كانت Premium → مهلة 48 ساعة، مرة وحدة. المحتوى المحفوظ
                ف التيليفون ما تجابش غير ملي كان الاشتراك صالح (الـ Worker). */
             if (!p || p.uid !== uid) {
                 let last = null;
@@ -495,7 +511,7 @@
                 try { used = localStorage.getItem(KEY + "-grace") === uid; } catch (e) { /* */ }
                 if (!last || last.uid !== uid || last.premium !== true || used) return false;
                 const now0 = Date.now();
-                p = { uid: uid, until: now0 + 3 * 24 * 3600 * 1000, seen: now0, grace: true };
+                p = { uid: uid, until: now0 + MAX, seen: now0, grace: true };
                 write(p);
                 try { localStorage.setItem(KEY + "-grace", uid); } catch (e) { /* */ }
             }
