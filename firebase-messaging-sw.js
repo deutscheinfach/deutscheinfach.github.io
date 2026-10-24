@@ -267,6 +267,21 @@ self.addEventListener("fetch", function (event) {
         return;
     }
 
+    /* لوائح المواضيع اللي زادهم الأدمين (?lesenlist / ?hoerenlist / ?schreibenlist):
+       من الـ Worker ديما، والنسخة الأخيرة بلا أنترنت — وإلا كانو كيختفيو */
+    if (WORKER.indexOf(url.origin) === 0 && /^\?(lesenlist|hoerenlist|schreibenlist)=[\w-]+$/.test(url.search)) {
+        event.respondWith(fetch(request).then(function (res) {
+            if (res && res.ok) {
+                const copy = res.clone();
+                caches.open(ASSET_CACHE).then(function (c) { c.put(url.href, copy); });
+            }
+            return res;
+        }).catch(function () {
+            return caches.match(url.href).then(function (hit) { return hit || Response.error(); });
+        }));
+        return;
+    }
+
     if (isImmutable(url)) {
         /* ملف بـ ?v جديد ما وصلش (الأنترنت طاحت ف وسط التحميل): النسخة اللي
            عندنا من نفس الملف (?v قديم) حسن من صفحة بلا CSS/JS */
@@ -278,7 +293,7 @@ self.addEventListener("fetch", function (event) {
     } else if (url.hostname === "fonts.googleapis.com") {
         event.respondWith(staleWhileRevalidate(request).catch(function () { return fetch(request); }));
     }
-    /* الباقي (Firestore، الصوت، الفيديو، الـ Worker...) كيمشي عادي */
+    /* الباقي (Firestore، الفيديو، الـ Worker...) كيمشي عادي */
 });
 
 /* Firebase ف try: إلا ماتحملش (بلا انترنت ف أول مرة)، الـ worker

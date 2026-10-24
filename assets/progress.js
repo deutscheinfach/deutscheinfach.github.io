@@ -264,6 +264,8 @@
         clearTimeout(syncTimer);
         syncTimer = setTimeout(sync, 2500);
     }
+    /* النتائج اللي تسجلو بلا أنترنت (localStorage) كيتصيفطو ملي ترجع */
+    window.addEventListener("online", scheduleSync);
 
     /* ---------- الأحداث ديال التمارين ---------- */
     function params() {

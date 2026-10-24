@@ -1,5 +1,5 @@
 {
-  "build": "797e987c79c2",
+  "build": "fab817c4c8b1",
   "assets": {
     "assets/admin-templates.js": "47410b77",
     "assets/app-install.js": "0ee6f2d5",
@@ -10,7 +10,7 @@
     "assets/fx.js": "0438fb69",
     "assets/hoeren-keys.js": "91afef95",
     "assets/hoeren-nav.css": "a2c34333",
-    "assets/hoeren-new-topic.js": "d4c83d96",
+    "assets/hoeren-new-topic.js": "72486298",
     "assets/hoeren-premium.js": "fd4e4d09",
     "assets/hoeren-toc.js": "f5f43865",
     "assets/https-upgrade.js": "473efbeb",
@@ -37,7 +37,7 @@
     "assets/premium-gate.js": "2b48456e",
     "assets/premium-wa.css": "6d49a4b0",
     "assets/presence.js": "ea34c6d5",
-    "assets/progress.js": "222ee4fc",
+    "assets/progress.js": "792a4c23",
     "assets/report.js": "c13e01ac",
     "assets/schreiben-auth.js": "9fae8527",
     "assets/schreiben-engine.js": "85118e0d",
