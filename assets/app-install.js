@@ -171,7 +171,23 @@
                       .then(next);
                 });
             }
-            return Promise.all([next(), next()]).then(function () {
+            /* القصص ديال Lesen / Hören (keyword-story.js كيقرا «de-story:<doc>»): طلب واحد */
+            function stories() {
+                return user.getIdToken().then(function (token) {
+                    return fetch(WORKER, {
+                        method: "POST",
+                        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+                        body: JSON.stringify({ storiesAll: true, idToken: token })
+                    });
+                }).then(function (res) { return res.ok ? res.json() : null; }).then(function (out) {
+                    var all = out && out.stories;
+                    if (!all) return;
+                    Object.keys(all).forEach(function (doc) {
+                        store("de-story:" + doc, JSON.stringify({ t: Date.now(), map: all[doc] }));
+                    });
+                }).catch(function () { /* المرة الجاية */ });
+            }
+            return Promise.all([next(), next(), stories()]).then(function () {
                 if (i >= jobs.length && failures <= 8) {
                     store(mark, String(Date.now()));
                     if (shown || force) progress(true);

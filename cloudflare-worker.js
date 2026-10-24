@@ -639,10 +639,11 @@ export default {
       /* ===== قصص الربط (Keyword story) =====
          KV «stories:<doc>» = { "<key ديال النص>": { h, t, story } }
          القراية: { storiesGet: doc, idToken } → غير Premium (ولا الأدمين).
+                  { storiesAll: true, idToken } → كاع القصص (التحميل بلا أنترنت).
          الكتابة: { adminSetStory: { doc, key, h, t, story }, idToken } → غير الأدمين
          (story خاوية = نحيدو القصة). */
       const STORY_DOC = /^[a-z0-9][a-z0-9._-]{2,120}$/i;
-      if (typeof body.storiesGet === "string" || body.adminSetStory) {
+      if (typeof body.storiesGet === "string" || body.adminSetStory || body.storiesAll === true) {
         if (!env.TOPICS) return jsonResponse({ error: "kv_missing" }, 500, allowedOrigin);
         let caller;
         try {
@@ -659,6 +660,27 @@ export default {
         const readMap = async (doc) => {
           try { return JSON.parse((await env.TOPICS.get("stories:" + doc, { type: "text" })) || "{}") || {}; } catch (e) { return {}; }
         };
+
+        /* «تحميل للاستعمال بلا أنترنت»: كاع القصص ف طلب واحد → { stories: { doc: map } } */
+        if (body.storiesAll === true) {
+          let ok = false;
+          try { ok = await hasActiveSubscription(caller.sub, body.idToken); } catch (e) { ok = false; }
+          if (!ok) ok = await isAdminCaller();
+          if (!ok) return jsonResponse({ error: "not_subscribed" }, 403, allowedOrigin);
+          const docs = [];
+          let cursor;
+          do {
+            const page = await env.TOPICS.list({ prefix: "stories:", cursor: cursor });
+            page.keys.forEach((k) => docs.push(k.name.slice(8)));
+            cursor = page.list_complete ? null : page.cursor;
+          } while (cursor);
+          const all = {};
+          await Promise.all(docs.map(async (doc) => {
+            const map = await readMap(doc);
+            if (Object.keys(map).length) all[doc] = map;
+          }));
+          return jsonResponse({ stories: all }, 200, allowedOrigin);
+        }
 
         if (typeof body.storiesGet === "string") {
           const doc = body.storiesGet;
