@@ -78,10 +78,17 @@
                 return data;
             });
             const saved = cacheRead(lv);
-            /* اللي وصل الأول: النسخة المحفوظة (إلا كاينة) ولا الأنترنت */
-            const first = saved.then(function (old) {
-                return old && Object.keys(old).length ? old : net;
-            });
+            /* الأنترنت كاينة: الجديد من الأنترنت. المحفوظة غير بلا أنترنت،
+               ولا إلا الطلب طاح، ولا ما جاوبش ف 8 ثواني */
+            const has = function (d) { return d && Object.keys(d).length ? d : null; };
+            const first = navigator.onLine === false
+                ? saved.then(function (old) { return has(old) || net; })
+                : Promise.race([
+                    net.then(function (d) { return has(d) || saved.then(function (old) { return has(old) || d; }); }),
+                    new Promise(function (go) { setTimeout(go, 8000); }).then(function () {
+                        return saved.then(function (old) { return has(old) || net; });
+                    })
+                ]);
             jobs[lv] = first.then(function (data) {
                 window[key] = Object.assign(window[key] || {}, data || {});
                 /* نصوص بدلهم الأدمين: key الجديد → key الأصل (kw-custom.js) */

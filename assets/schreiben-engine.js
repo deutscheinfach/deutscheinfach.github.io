@@ -186,21 +186,11 @@ function renderAd(box, text) {
             const stored = function () {
                 return window.__deStore ? window.__deStore.get(KEY) : Promise.resolve(null);
             };
-            /* النسخة المحفوظة ف التيليفون أولا (أنترنت ضعيفة: بلا ما نتسناو
-               Firebase والـ Worker)، والجديدة كتتجاب ف الخفا مرة ف النهار */
-            const off = await stored();
+            /* النسخة المحفوظة غير بلا أنترنت. الأنترنت كاينة: من الـ Worker
+               (الجديد + التأكد من الاشتراك)، والمحفوظة إلا طاح الطلب (لتحت) */
+            const off = navigator.onLine === false ? await stored() : null;
             if (off && Array.isArray(off.points)) {
                 topic = Object.assign({}, meta, off);
-                const RK = "de-sch-ref:" + KEY;
-                let last = 0;
-                try { last = Number(localStorage.getItem(RK) || 0); } catch (e) { last = Date.now(); }
-                if (navigator.onLine !== false && Date.now() - last > 24 * 3600 * 1000) setTimeout(function () {
-                    loadPremiumTopic(TOPIC_ID).then(function (data) {
-                        if (window.__deStore) window.__deStore.put(KEY, data);
-                        cacheSet(data);
-                        try { localStorage.setItem(RK, String(Date.now())); } catch (e) { /* */ }
-                    }).catch(function () { /* المرة الجاية */ });
-                }, 4000);
             } else try {
                 const data = await loadPremiumTopic(TOPIC_ID).catch(async function (error) {
                     /* الـ Worker ما جاوبش (الشبكة): المحفوظة إلا كاينة */
@@ -596,7 +586,9 @@ function renderAd(box, text) {
         if (!key) return null;
         try {
             const v = JSON.parse(localStorage.getItem(key) || "null");
-            if (v && v.data && Array.isArray(v.data.points) && Date.now() - v.t < 3 * 24 * 3600 * 1000) return v.data;
+            /* الأنترنت كاينة: غير إلا تجاب قبل شوية (10 دقايق) */
+            const ttl = navigator.onLine === false ? 3 * 24 * 3600 * 1000 : 10 * 60 * 1000;
+            if (v && v.data && Array.isArray(v.data.points) && Date.now() - v.t < ttl) return v.data;
         } catch (e) { /* */ }
         return null;
     }

@@ -46,7 +46,6 @@
         window.addEventListener("load", function () {
             navigator.serviceWorker.register("firebase-messaging-sw.js").catch(function () { /* ماشي ضروري */ });
         });
-        offlineReady();
     }
 
     /* ---- 1ب) بلا أنترنت: الموقع والمحتوى ف التيليفون ----
@@ -56,26 +55,9 @@
          من الـ Worker وكيتحفظ ف __deStore (diag.js). كيكمل من فين حبس، وكل
          موضوع كيتجدد من بعد 7 أيام. 2 ف نفس الوقت، من بعد ما يبان المحتوى.
        ما كيدير والو ف «توفير البيانات» (Save-Data) ولا بلا أنترنت. */
-    function offlineReady() {
-        var conn = navigator.connection || {};
-        if (conn.saveData || navigator.onLine === false) return;
-        var later = window.__deAfterContent || function (fn) { setTimeout(fn, 3000); };
-        later(function () {
-            setTimeout(function () {
-                if (navigator.onLine === false) return;
-                /* الصفحات: كل نص ساعة كنسولو (الـ worker كيقارن الـ build — رخيص) */
-                if (Date.now() - Number(read("de-precache-at") || 0) > 30 * 60 * 1000) {
-                    navigator.serviceWorker.ready.then(function (reg) {
-                        if (reg.active) { reg.active.postMessage({ type: "de-precache" }); store("de-precache-at", String(Date.now())); }
-                    }).catch(function () { /* */ });
-                }
-                if (window.__deutschEinfachIsPremium === true) premiumOffline();
-                else document.addEventListener("de-premium", function () {
-                    if (window.__deutschEinfachIsPremium === true) premiumOffline();
-                }, { once: true });
-            }, 1500);
-        });
-    }
+    /* التحميل للاستعمال بلا أنترنت ما بقاش أوتوماتيكي (كان كيصرف الأنترنت ديال
+       الطالب وكيضرب الـ Worker بـ 340 طلب ف الأسبوع لكل مشترك): غير ملي يبرك
+       على «تحميل للاستعمال بلا أنترنت» ف القائمة ديال الحساب (offlineNow). */
 
     /* شارة صغيرة لتحت: «كنحضرو الموقع بلا أنترنت — 45%» / «✅ واجد» */
     var pill = null;
@@ -210,6 +192,7 @@
         if (navigator.onLine === false) { pillShow("📶 ماكاينش الأنترنت دابا. حلها ومن بعد عاود.", "bad"); return; }
         if (!("serviceWorker" in navigator)) { pillShow("المتصفح ديالك ما كيدعمش الخدمة بلا أنترنت.", "bad"); return; }
         pillShow("⬇️ كنحضرو الموقع للاستعمال بلا أنترنت…");
+        store("de-offline-on", "1");   /* site-header.js: كيجدد الصفحات المحفوظة ملي يتبدل الموقع */
         navigator.serviceWorker.ready.then(function (reg) {
             return new Promise(function (done) {
                 if (!reg.active) return done();

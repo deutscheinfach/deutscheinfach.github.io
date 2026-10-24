@@ -2105,10 +2105,11 @@
                 sessionStorage.setItem("de-build", manifest.build);
             } catch (error) { return; }
 
-            /* الصفحات المحفوظة ف التيليفون (offline) قدام حتى هي: نجددوهم */
+            /* الصفحات المحفوظة ف التيليفون (offline) قدام حتى هي: نجددوهم —
+               غير للي برك على «تحميل للاستعمال بلا أنترنت» (app-install.js) */
             try {
                 const sw = navigator.serviceWorker && navigator.serviceWorker.controller;
-                if (sw) sw.postMessage({ type: "de-precache" });
+                if (sw && localStorage.getItem("de-offline-on") === "1") sw.postMessage({ type: "de-precache" });
             } catch (error) { /* */ }
 
             const next = new URL(location.href);
