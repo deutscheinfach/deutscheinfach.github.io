@@ -285,8 +285,12 @@
                 if (off) result = { ok: true, data: off, offline: true };
             }
             if (window.__deDiag) {
-                if (!result.ok && result.status !== 404) window.__deDiag("fail", "Lesen Worker: " + (result.status || "") + " " + (result.why || "") + " [" + themaId + "]", { ms: Date.now() - t0 });
-                else if (!bg && Date.now() - t0 > 8000) window.__deDiag("slow", "Lesen Worker بطا: " + Math.round((Date.now() - t0) / 1000) + "s [" + themaId + "]", { ms: Date.now() - t0 });
+                const label = themaId.indexOf("sprechen-") === 0 ? "Sprechen Worker" : "Lesen Worker";
+                /* التحميل ف الخفا: إلا الشبكة طاحت (التبويب تخبى، الأنترنت تقطعات)
+                   الطالب ما شاف والو — كيتعاود ملي يحل الموضوع */
+                if (!result.ok && bg && !result.status) { /* */ }
+                else if (!result.ok && result.status !== 404) window.__deDiag("fail", label + ": " + (result.status || "") + " " + (result.why || "") + " [" + themaId + "]", { ms: Date.now() - t0 });
+                else if (!bg && Date.now() - t0 > 8000) window.__deDiag("slow", label + " بطا: " + Math.round((Date.now() - t0) / 1000) + "s [" + themaId + "]", { ms: Date.now() - t0 });
             }
 
             if (result.ok) {

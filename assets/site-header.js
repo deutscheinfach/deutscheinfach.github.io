@@ -1649,6 +1649,7 @@
             });
         } catch (error) {
             console.warn("Header: Firebase ما تحملش", error);
+            if (window.__deDiag) window.__deDiag("fail", "Firebase (الحساب) ما تحملش: " + ((error && error.message) || error));
             setPremiumState("error");
 
             /* كان هنا غير `guest.hidden = false` — بلا ما يخبي

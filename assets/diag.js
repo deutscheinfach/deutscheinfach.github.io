@@ -120,7 +120,12 @@
             /* إضافات ومتصفحات ف iPhone (محافظ crypto، Firefox iOS، Dark Reader) */
             || /window\.ethereum|selectedAddress|__firefox__|DarkReader/.test(text || "")
             /* Firebase Auth: الأنترنت تقطعات ولا التبويب تسد — كيعاود بوحدو */
-            || /Database is closing|auth\/network-request-failed/.test(text || "");
+            || /Database is closing|auth\/network-request-failed/.test(text || "")
+            /* Safari كيقطع IndexedDB ملي التيليفون كيخبي التبويب — كيرجع بوحدو */
+            || /Connection to Indexed Database server lost/.test(text || "")
+            /* تطبيقات iPhone (WebView) كيعيطو onLoad() / onReady() ديالهم ف الصفحة
+               — ماكايناش ف الكود ديالنا */
+            || /^(ReferenceError: )?(Can't find variable: |)(onLoad|onReady)( is not defined)?$/.test(text || "");
     }
 
     window.addEventListener("error", function (e) {
@@ -136,6 +141,11 @@
             let host = "";
             try { host = new URL(url, location.href).hostname; } catch (err) { return; }
             if (host !== location.hostname && host !== "www.gstatic.com") return;
+            /* modulepreload (تسريع فقط): إلا Firebase ما تحملش بصح، site-header
+               كيصيفط تقرير وحدو — هادا غير تكرار */
+            if (t.rel === "modulepreload") return;
+            /* 2G / 3G: ملف ما وصلش = الشبكة، ماشي الموقع */
+            if (/(^|-)(2g|3g)$/.test((navigator.connection || {}).effectiveType || "")) return;
             send("load", "ما تحملش: " + url.replace(/\?v=[0-9a-f]+/, ""));
             return;
         }
