@@ -77,44 +77,49 @@
         });
     }
 
+    /* شارة صغيرة لتحت: «كنحضرو الموقع بلا أنترنت — 45%» / «✅ واجد» */
+    var pill = null;
+    function pillShow(text, state) {
+        if (!pill) {
+            pill = document.createElement("div");
+            pill.setAttribute("role", "status");
+            pill.dir = "rtl";
+            pill.style.cssText = "position:fixed;left:12px;bottom:12px;z-index:2147482500;padding:8px 14px;border-radius:999px;"
+                + "max-width:calc(100% - 24px);color:#fff;font:700 13px/1.4 Cairo,system-ui,sans-serif;"
+                + "box-shadow:0 8px 22px rgba(0,0,0,.3);opacity:.94;pointer-events:none";
+        }
+        clearTimeout(pill._t);
+        if (!pill.isConnected && document.body) document.body.appendChild(pill);   /* الراوتر بدل الصفحة */
+        pill.textContent = text;
+        pill.style.background = state === "ok" ? "#1e7d3a" : state === "bad" ? "#9b1c1c" : "#2a0710";
+        if (state) pill._t = setTimeout(function () { if (pill) pill.remove(); }, state === "ok" ? 4000 : 6000);
+    }
+
     var premiumRunning = false;
-    function premiumOffline() {
-        if (premiumRunning || !window.__deStore || !window.caches) return;
+    function premiumOffline(force) {
+        if (!window.__deStore || !window.caches) return Promise.resolve(false);
+        if (premiumRunning) return premiumRunning;
         var auth = window.__deutschEinfachAuth;
         var user = auth && auth.currentUser;
-        if (!user) return;
+        if (!user) return Promise.resolve(false);
         var mark = "de-offline-at:" + user.uid;
-        if (Date.now() - Number(read(mark) || 0) < 12 * 3600 * 1000) return;
-        premiumRunning = true;
+        if (!force && Date.now() - Number(read(mark) || 0) < 12 * 3600 * 1000) return Promise.resolve(true);
         var WORKER = "https://deutsch-einfach-correction.soufianemouyr.workers.dev";
         var WEEK = 7 * 24 * 3600 * 1000;
-        fetch("offline.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (off) {
+        premiumRunning = fetch("offline.json", { cache: "no-cache" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (off) {
             if (!off) return;
             var jobs = (off.lesen || []).map(function (id) { return { key: "l:" + id, body: { lesenId: id } }; })
                 .concat((off.schreibenB2 || []).map(function (id) { return { key: "t:" + id, body: { topicId: id } }; }));
             var i = 0, failures = 0, fetched = 0;
             /* شارة صغيرة لتحت: «كنحضرو الموقع بلا أنترنت — 45%». كتبان غير
                ملي كاين بزاف ما يتجاب (أول مرة) — باش الطالب يعرف يتسنى. */
-            var pill = null, firstRun = !read("de-offline-ready:" + user.uid);
+            var firstRun = force || !read("de-offline-ready:" + user.uid), shown = false;
             function progress(done) {
                 if (!firstRun) return;
-                if (!pill) {
-                    pill = document.createElement("div");
-                    pill.setAttribute("role", "status");
-                    pill.dir = "rtl";
-                    pill.style.cssText = "position:fixed;left:12px;bottom:12px;z-index:2147482500;padding:8px 14px;border-radius:999px;"
-                        + "background:#2a0710;color:#fff;font:700 13px/1.4 Cairo,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.3);"
-                        + "opacity:.92;pointer-events:none";
-                }
-                if (!pill.isConnected && document.body) document.body.appendChild(pill);   /* الراوتر بدل الصفحة */
-                if (done) {
-                    pill.textContent = "✅ الموقع واجد للاستعمال بلا أنترنت";
-                    pill.style.background = "#1e7d3a";
-                    setTimeout(function () { if (pill) pill.remove(); }, 4000);
-                    return;
-                }
+                if (done) { pillShow("✅ الموقع واجد للاستعمال بلا أنترنت", "ok"); return; }
+                shown = true;
                 var pct = Math.min(99, Math.round(i / Math.max(1, jobs.length) * 100));
-                pill.textContent = "⬇️ كنحضرو الموقع للاستعمال بلا أنترنت — " + pct + "%";
+                pillShow("⬇️ كنحضرو الموقع للاستعمال بلا أنترنت — " + pct + "%");
             }
             function fresh(key) {
                 return caches.open("de-data-v1").then(function (c) {
@@ -140,7 +145,7 @@
                 if (i >= jobs.length || failures > 8 || navigator.onLine === false
                     || window.__deutschEinfachIsPremium !== true) return Promise.resolve();
                 var job = jobs[i++];
-                if (fetched > 3) progress(false);
+                if (fetched > 3 || force) progress(false);
                 return fresh(job.key).then(function (ok) {
                     if (ok) {
                         var sid = job.body.lesenId, sneed = sid && off.parts && off.parts[sid];
@@ -187,11 +192,37 @@
             return Promise.all([next(), next()]).then(function () {
                 if (i >= jobs.length && failures <= 8) {
                     store(mark, String(Date.now()));
-                    if (pill) progress(true);
+                    if (shown || force) progress(true);
                     store("de-offline-ready:" + user.uid, "1");
-                } else if (pill) { pill.remove(); }
+                    return true;
+                }
+                if (shown || force) pillShow("⚠️ ما كملش التحميل (الأنترنت). عاود من بعد.", "bad");
+                return false;
             });
-        }).catch(function () { /* المرة الجاية */ }).then(function () { premiumRunning = false; });
+        }).catch(function () { return false; }).then(function (ok) { premiumRunning = false; return !!ok; });
+        return premiumRunning;
+    }
+
+    /* القائمة ديال الحساب ← «تحميل بلا أنترنت»: دابا، بلا ما نتسناو
+       نص ساعة / 12 ساعة. الصفحات والملفات (service worker) + المحتوى
+       المدفوع للمشترك. */
+    function offlineNow() {
+        if (navigator.onLine === false) { pillShow("📶 ماكاينش الأنترنت دابا. حلها ومن بعد عاود.", "bad"); return; }
+        if (!("serviceWorker" in navigator)) { pillShow("المتصفح ديالك ما كيدعمش الخدمة بلا أنترنت.", "bad"); return; }
+        pillShow("⬇️ كنحضرو الموقع للاستعمال بلا أنترنت…");
+        navigator.serviceWorker.ready.then(function (reg) {
+            return new Promise(function (done) {
+                if (!reg.active) return done();
+                var ch = new MessageChannel();
+                ch.port1.onmessage = function () { done(); };
+                reg.active.postMessage({ type: "de-precache" }, [ch.port2]);
+                setTimeout(done, 180000);
+            });
+        }).then(function () {
+            store("de-precache-at", String(Date.now()));
+            if (window.__deutschEinfachIsPremium === true) return premiumOffline(true);
+            pillShow("✅ الموقع واجد بلا أنترنت (المواضيع المجانية)", "ok");
+        }).catch(function () { pillShow("⚠️ ما كملش التحميل. عاود من بعد.", "bad"); });
     }
 
     window.addEventListener("beforeinstallprompt", function (e) {
@@ -519,6 +550,7 @@
 
     window.__deApp = {
         install: install,
+        offline: offlineNow,
         show: function () { store(DISMISS_KEY, null); paint(); },
         askDaily: function () { store(ASK_KEY, null); askDaily(0); }
     };

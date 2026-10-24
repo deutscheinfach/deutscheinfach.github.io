@@ -1593,6 +1593,18 @@
                         menu.appendChild(app);
                     }
 
+                    /* بلا أنترنت: كلشي ف التيليفون دابا (assets/app-install.js) */
+                    const offBtn = item("app", "تحميل للاستعمال بلا أنترنت");
+                    offBtn.addEventListener("click", function () {
+                        openMenu(false);
+                        if (window.__deApp && window.__deApp.offline) { window.__deApp.offline(); return; }
+                        const script = document.createElement("script");
+                        script.src = "assets/app-install.js";
+                        script.onload = function () { if (window.__deApp && window.__deApp.offline) window.__deApp.offline(); };
+                        document.head.appendChild(script);
+                    });
+                    menu.appendChild(offBtn);
+
                     /* تسجيل الخروج */
                     const out = item("out", "تسجيل الخروج");
                     out.classList.add("site-menu-out");
