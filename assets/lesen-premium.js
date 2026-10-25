@@ -357,23 +357,10 @@
        (network كيديرها)، ولا إلا الـ Worker ما جاوبش ف 8 ثواني (أنترنت ضعيفة
        بزاف) — والجواب ديالو، إلا وصل من بعد، كيتحفظ للمرة الجاية. */
     const network = window.__lesenPremiumFetch;
-    /* «تحميل بلا أنترنت» مفعّل: النسخة المحفوظة أولا (__deStore كيرفض إلا
-       الاشتراك سالا / دازو 24 ساعة بلا تأكد)، والجديدة ف الخفا مرة ف النهار */
-    function refreshLater(themaId) {
-        const mark = "de-lp-ref:" + themaId;
-        try { if (Date.now() - Number(localStorage.getItem(mark) || 0) < 24 * 3600 * 1000) return; } catch (e) { return; }
-        const end = Date.now() + 60000;
-        (function poll() {
-            const user = currentUser();
-            if (!user) { if (Date.now() < end) setTimeout(poll, 2000); return; }
-            if (navigator.onLine === false) return;
-            state.done.delete(user.uid + "|" + themaId);
-            network(themaId, { bg: true }).then(function (r) {
-                if (r && r.ok && !r.offline) { try { localStorage.setItem(mark, String(Date.now())); } catch (e) { /* */ } }
-            }, function () { /* المرة الجاية */ });
-        })();
-    }
+    /* «تحميل بلا أنترنت» مفعّل والأنترنت كاينة: حتى هو الجديد من الـ Worker
+       (التعديلات كيبانو دغيا)، ولكن كنتسناوه غير 3 ثواني قبل المحفوظة. */
     function online(themaId, opts) {
+        const wait = window.__deOfflineMode && window.__deOfflineMode() ? 3000 : 8000;
         const net = network(themaId, opts);
         if ((opts && opts.bg) || !window.__deStore || navigator.onLine === false) return net;
         const slow = new Promise(function (resolve) {
@@ -381,19 +368,16 @@
                 window.__deStore.get("l:" + themaId).then(function (off) {
                     if (off) resolve({ ok: true, data: off, offline: true });
                 }, function () { /* */ });
-            }, 8000);
+            }, wait);
         });
         return Promise.race([net, slow]);
     }
     window.__lesenPremiumFetch = function (themaId, opts) {
         /* بلا أنترنت حتى هو: المحفوظة دغيا، حتى إلا Firebase باقي ما عرف الحساب
            (قبل: كنا كنتسناو 10 ثواني ومن بعد «ماشي داخل بحساب») */
-        const off0 = navigator.onLine === false;
-        if ((opts && opts.bg) || !window.__deStore
-            || !(off0 || (window.__deOfflineMode && window.__deOfflineMode()))) return online(themaId, opts);
+        if ((opts && opts.bg) || !window.__deStore || navigator.onLine !== false) return online(themaId, opts);
         return window.__deStore.get("l:" + themaId).then(function (off) {
             if (!off) return online(themaId, opts);
-            if (!off0) setTimeout(function () { refreshLater(themaId); }, 4000);
             return { ok: true, data: off, offline: true };
         }, function () { return online(themaId, opts); });
     };

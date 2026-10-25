@@ -188,22 +188,21 @@ function renderAd(box, text) {
             };
             /* النسخة المحفوظة غير بلا أنترنت. الأنترنت كاينة: من الـ Worker
                (الجديد + التأكد من الاشتراك)، والمحفوظة إلا طاح الطلب (لتحت) */
+            /* بلا أنترنت: المحفوظة. الأنترنت كاينة: من الـ Worker (الجديد + التأكد من
+               الاشتراك)؛ «تحميل بلا أنترنت»: إلا ما جاوبش ف 3 ثواني، المحفوظة */
             const mode = !!(window.__deOfflineMode && window.__deOfflineMode());
-            const off = navigator.onLine === false || mode ? await stored() : null;
+            const off = navigator.onLine === false ? await stored() : null;
             if (off && Array.isArray(off.points)) {
                 topic = Object.assign({}, meta, off);
-                /* «تحميل بلا أنترنت» + الأنترنت كاينة: الجديدة ف الخفا مرة ف النهار */
-                const RK = "de-sch-ref:" + KEY;
-                let last = 0;
-                try { last = Number(localStorage.getItem(RK) || 0); } catch (e) { last = Date.now(); }
-                if (mode && navigator.onLine !== false && Date.now() - last > 24 * 3600 * 1000) setTimeout(function () {
-                    loadPremiumTopic(TOPIC_ID).then(function (data) {
-                        if (window.__deStore) window.__deStore.put(KEY, data);
-                        try { localStorage.setItem(RK, String(Date.now())); } catch (e) { /* */ }
-                    }).catch(function () { /* المرة الجاية */ });
-                }, 4000);
             } else try {
-                const data = await loadPremiumTopic(TOPIC_ID).catch(async function (error) {
+                const fromNet = loadPremiumTopic(TOPIC_ID);
+                const slowSaved = mode ? new Promise(function (go) { setTimeout(go, 3000); }).then(async function () {
+                    const late = await stored();
+                    return late && Array.isArray(late.points) ? Object.assign({ __offline: true }, late) : fromNet;
+                }) : null;
+                /* الجواب ديال الـ Worker إلا وصل من بعد: كيتحفظ للمرة الجاية */
+                if (slowSaved) fromNet.then(function (d) { if (window.__deStore) window.__deStore.put(KEY, d); cacheSet(d); }, function () { /* */ });
+                const data = await (slowSaved ? Promise.race([fromNet, slowSaved]) : fromNet).catch(async function (error) {
                     /* الـ Worker ما جاوبش (الشبكة): المحفوظة إلا كاينة */
                     if (error && (error.code === "network" || /fetch|network|abort|timeout/i.test(String(error.message || error)))) {
                         const late = await stored();

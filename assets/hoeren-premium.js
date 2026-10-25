@@ -70,51 +70,40 @@
             return window.__deStore ? window.__deStore.get(KEY) : Promise.resolve(null);
         };
         cache[teil] = (async function () {
-            const mode = !!(window.__deOfflineMode && window.__deOfflineMode());
-            if (navigator.onLine === false || mode) {
-                const off = await stored();
-                if (off) {
-                    /* «تحميل بلا أنترنت» + الأنترنت كاينة: الجديدة ف الخفا مرة ف النهار */
-                    const RK = "de-hp-ref:" + teil;
-                    let last = 0;
-                    try { last = Number(localStorage.getItem(RK) || 0); } catch (e) { last = Date.now(); }
-                    if (mode && navigator.onLine !== false && Date.now() - last > 24 * 3600 * 1000) setTimeout(async function () {
-                        try {
-                            const t = await token();
-                            if (!t) return;
-                            const res = await fetch(ENDPOINT, {
-                                method: "POST",
-                                headers: { "Content-Type": "text/plain;charset=UTF-8" },
-                                body: JSON.stringify({ lesenId: "hoeren-" + teil, idToken: t })
-                            });
-                            if (!res.ok) return;
-                            if (window.__deStore) await window.__deStore.put(KEY, await res.json());
-                            localStorage.setItem(RK, String(Date.now()));
-                        } catch (e) { /* المرة الجاية */ }
-                    }, 4000);
-                    return { ok: true, data: off, offline: true };
-                }
-            }
-            const idToken = await token();
-            if (!idToken) {
-                const off = await stored();
-                return off ? { ok: true, data: off, offline: true } : { ok: false, why: "ماشي داخل بحساب." };
-            }
-            try {
-                const res = await fetch(ENDPOINT, {
-                    method: "POST",
-                    headers: { "Content-Type": "text/plain;charset=UTF-8" },
-                    body: JSON.stringify({ lesenId: "hoeren-" + teil, idToken: idToken })
-                });
-                if (!res.ok) return { ok: false, status: res.status, why: WHY[res.status] || ("HTTP " + res.status) };
-                const data = await res.json();
-                if (window.__deStore) window.__deStore.put(KEY, data);
-                return { ok: true, data: data };
-            } catch (e) {
+            if (navigator.onLine === false) {
                 const off = await stored();
                 if (off) return { ok: true, data: off, offline: true };
-                return { ok: false, why: "ما وصلناش للـ Worker. شوف الأنترنت." };
             }
+            const net = (async function () {
+                const idToken = await token();
+                if (!idToken) {
+                    const off = await stored();
+                    return off ? { ok: true, data: off, offline: true } : { ok: false, why: "ماشي داخل بحساب." };
+                }
+                try {
+                    const res = await fetch(ENDPOINT, {
+                        method: "POST",
+                        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+                        body: JSON.stringify({ lesenId: "hoeren-" + teil, idToken: idToken })
+                    });
+                    if (!res.ok) return { ok: false, status: res.status, why: WHY[res.status] || ("HTTP " + res.status) };
+                    const data = await res.json();
+                    if (window.__deStore) window.__deStore.put(KEY, data);
+                    return { ok: true, data: data };
+                } catch (e) {
+                    const off = await stored();
+                    if (off) return { ok: true, data: off, offline: true };
+                    return { ok: false, why: "ما وصلناش للـ Worker. شوف الأنترنت." };
+                }
+            })();
+            /* «تحميل بلا أنترنت» والأنترنت كاينة: الجديد (التعديلات كيبانو دغيا)،
+               ولكن إلا ما جاوبش ف 3 ثواني: المحفوظة */
+            if (!(window.__deOfflineMode && window.__deOfflineMode())) return net;
+            const slow = new Promise(function (go) { setTimeout(go, 3000); }).then(async function () {
+                const off = await stored();
+                return off ? { ok: true, data: off, offline: true } : net;
+            });
+            return Promise.race([net, slow]);
         })();
         cache[teil].then(function (r) {
             if (r.ok) return;
