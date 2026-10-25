@@ -1,7 +1,6 @@
 {
-  "build": "1a67fd7677b3",
+  "build": "5fa20ba124d6",
   "assets": {
-    "assets/admin-templates.js": "47410b77",
     "assets/app-install.js": "e0be8860",
     "assets/auth.css": "37532702",
     "assets/diag.js": "d5e0a7ba",
