@@ -81,11 +81,13 @@
             /* الأنترنت كاينة: الجديد من الأنترنت. المحفوظة غير بلا أنترنت،
                ولا إلا الطلب طاح، ولا ما جاوبش ف 8 ثواني */
             const has = function (d) { return d && Object.keys(d).length ? d : null; };
-            const first = navigator.onLine === false || (window.__deOfflineMode && window.__deOfflineMode())
+            /* «تحميل بلا أنترنت»: كنتسناو الأنترنت غير 3 ثواني */
+            const wait = window.__deOfflineMode && window.__deOfflineMode() ? 3000 : 8000;
+            const first = navigator.onLine === false
                 ? saved.then(function (old) { return has(old) || net; })
                 : Promise.race([
                     net.then(function (d) { return has(d) || saved.then(function (old) { return has(old) || d; }); }),
-                    new Promise(function (go) { setTimeout(go, 8000); }).then(function () {
+                    new Promise(function (go) { setTimeout(go, wait); }).then(function () {
                         return saved.then(function (old) { return has(old) || net; });
                     })
                 ]);
