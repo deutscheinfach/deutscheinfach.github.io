@@ -62,6 +62,27 @@
         try { return await user.getIdToken(); } catch (e) { return null; }
     }
 
+    /* مرة وحدة: النسخ القديمة ديال Hören المحفوظة ف التيليفون كيتمسحو (فيهم
+       مواضيع ناقصة تصلحو ف KV، بحال Dorothea ف B2 Teil 2) — كيتجابو جداد */
+    const PURGE = "de-hp-purge";
+    const PURGE_V = "2";
+    let purged = null;
+    function purgeOld() {
+        if (purged) return purged;
+        let done = true;
+        try { done = localStorage.getItem(PURGE) === PURGE_V; } catch (e) { /* */ }
+        if (done || !window.caches) return (purged = Promise.resolve());
+        purged = caches.open("de-data-v1").then(function (c) {
+            return c.keys().then(function (reqs) {
+                return Promise.all(reqs.filter(function (r) { return /\/l%3Ahoeren-/.test(r.url); })
+                    .map(function (r) { return c.delete(r); }));
+            });
+        }).then(function () {
+            try { localStorage.setItem(PURGE, PURGE_V); } catch (e) { /* */ }
+        }, function () { /* */ });
+        return purged;
+    }
+
     window.__hoerenPremiumLoad = function (teil) {
         if (cache[teil]) return cache[teil];
         /* بلا أنترنت: النسخة المحفوظة ف التيليفون (__deStore، diag.js) */
@@ -70,6 +91,7 @@
             return window.__deStore ? window.__deStore.get(KEY) : Promise.resolve(null);
         };
         cache[teil] = (async function () {
+            await purgeOld();
             if (navigator.onLine === false) {
                 const off = await stored();
                 if (off) return { ok: true, data: off, offline: true };
