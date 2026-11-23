@@ -1,5 +1,5 @@
 {
-  "build": "d34538fc6090",
+  "build": "fa2b242630fc",
   "assets": {
     "assets/app-install.js": "e0be8860",
     "assets/auth.css": "37532702",
@@ -35,7 +35,7 @@
     "assets/modelltest.js": "5903c129",
     "assets/premium-gate.js": "2b48456e",
     "assets/premium-wa.css": "6d49a4b0",
-    "assets/presence.js": "ea87c022",
+    "assets/presence.js": "6b170e7f",
     "assets/progress.js": "792a4c23",
     "assets/report.js": "c13e01ac",
     "assets/schreiben-auth.js": "9fae8527",

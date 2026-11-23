@@ -43,8 +43,9 @@
             });
             var db = fsMod.getFirestore(app);
             var ref = fsMod.doc(db, "presence", id);
-            var BEAT_MS = 5 * 60000;
-            var IDLE_MS = 10 * 60000;   /* بلا حركة 10 د (وبلا صوت خدام) = ماكيتحسبش */
+            var BEAT_MS = 5 * 60000;      /* بلا حساب: غير العدد */
+            var USER_BEAT_MS = 2 * 60000; /* داخل بحسابو: الوقت كيتكتب كل 2 د */
+            var IDLE_MS = 10 * 60000;     /* بلا حركة 10 د (وبلا صوت خدام) = ماكيتحسبش */
             var last = 0;
 
             /* الحساب (إلا داخل): باش الأدمين يعرف شكون ومشحال من وقت */
@@ -58,7 +59,24 @@
                 authMod.onAuthStateChanged(auth, function (u) { user = u; });
             } catch (e) { /* بلا حساب: غير العدد */ }
 
-            /* الوقت: غير ملي الصفحة باينة والطالب كيتحرك (ولا كيسمع) */
+            /* الوقت: غير ملي الصفحة باينة والطالب كيتحرك (ولا كيسمع).
+
+               الوقت اللي ما تكتبش باقي كيتخبا ف localStorage (de-presence-acc)
+               ماشي ف الذاكرة: الطالب كيبدل الصفحة كل دقيقة ولا جوج، والكتبة
+               ملي كتسد الصفحة ما كتوصلش — كان كيضيع كلشي وكيبان «0 د».
+               دابا الصفحة الجاية كتكمل من فين وقفات السابقة. */
+            var ACC_KEY = "de-presence-acc";
+            function readAcc() {
+                try {
+                    var v = JSON.parse(localStorage.getItem(ACC_KEY) || "null");
+                    if (v && user && v.uid === user.uid && typeof v.ms === "number") return v.ms;
+                } catch (e) { /* */ }
+                return 0;
+            }
+            function saveAcc(ms) {
+                if (!user) return;
+                try { localStorage.setItem(ACC_KEY, JSON.stringify({ uid: user.uid, ms: Math.max(0, ms) })); } catch (e) { /* */ }
+            }
             var lastMove = Date.now();
             ["pointerdown", "keydown", "scroll", "touchstart", "mousemove"].forEach(function (evt) {
                 document.addEventListener(evt, function () { lastMove = Date.now(); }, { passive: true, capture: true });
@@ -66,16 +84,17 @@
             function playing() {
                 return Array.prototype.some.call(document.querySelectorAll("audio, video"), function (m) { return !m.paused && !m.ended; });
             }
-            var acc = 0;
-            var since = document.visibilityState === "visible" ? Date.now() : null;
+            /* كنحسبو من اللحظة اللي بدات فيها الصفحة، ماشي من ملي تحمل Firebase */
+            var start = (window.performance && performance.timeOrigin) ? Math.round(performance.timeOrigin) : Date.now();
+            var since = document.visibilityState === "visible" ? Math.min(start, Date.now()) : null;
             function tick() {
                 var now = Date.now();
                 if (since != null) {
                     var active = now - lastMove < IDLE_MS || playing();
                     /* التيليفون/الحاسوب نعس: الـ interval ماخدمش — ماكنحسبوش الوقت كامل */
-                    if (active) acc += Math.min(now - since, BEAT_MS + 60000);
-                    since = document.visibilityState === "visible" ? now : null;
+                    if (active && user) saveAcc(readAcc() + Math.min(now - since, 2 * 60000 + 30000));
                 }
+                since = document.visibilityState === "visible" ? now : null;
             }
             function today() {
                 try { return new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Casablanca" }); }
@@ -83,12 +102,15 @@
             }
             var full = true;   /* القواعد القديمة كيقبلو غير { at } */
             function write(force) {
-                if (!force && Date.now() - last < BEAT_MS - 60000) return;
+                var gap = (user && full) ? USER_BEAT_MS : BEAT_MS;
+                if (!force && Date.now() - last < gap - 15000) return;
                 last = Date.now();
                 var data = { at: fsMod.serverTimestamp() };
+                var mins = 0;
                 if (full && user) {
-                    var mins = Math.round(acc / 60000);
-                    acc -= mins * 60000;
+                    var ms = readAcc();
+                    mins = Math.floor(ms / 60000);
+                    saveAcc(ms - mins * 60000);   /* الباقي (أقل من دقيقة) كيبقى للمرة الجاية */
                     var day = today(), prevDay = null, prevUid = null;
                     try { prevDay = localStorage.getItem("de-presence-day"); prevUid = localStorage.getItem("de-presence-uid"); } catch (e) { /* */ }
                     var fresh = prevUid !== user.uid;
@@ -102,25 +124,27 @@
                     try { localStorage.setItem("de-presence-day", day); localStorage.setItem("de-presence-uid", user.uid); } catch (e) { /* */ }
                 }
                 fsMod.setDoc(ref, data, { merge: true }).catch(function () {
+                    /* ما تكتبش: نرجعو الدقايق للخزنة باش ما يضيعوش */
+                    if (mins) saveAcc(readAcc() + mins * 60000);
                     /* firestore.rules الجديدة ما تنشراتش: نرجعو للعدد بوحدو */
                     if (full && data.uid) { full = false; fsMod.setDoc(ref, { at: fsMod.serverTimestamp() }, { merge: true }).catch(function () {}); }
                 });
             }
+            /* كل دقيقة كنزيدو الوقت للخزنة؛ الكتبة لـFirestore كل 2 د (5 بلا حساب) */
             function beat() {
                 tick();
                 if (document.visibilityState !== "visible") return;
-                /* الـ interval كيجي كل BEAT_MS؛ الحاجز كيمنع غير الرجوع السريع
-                   للتبويب (visibilitychange) يكتب كل مرة. */
                 write(false);
             }
+            tick();
             write(true);
-            setInterval(beat, BEAT_MS);
+            setInterval(beat, 60000);
             document.addEventListener("visibilitychange", function () {
-                if (document.visibilityState === "visible") { since = Date.now(); beat(); return; }
-                /* خرج من التبويب: نكتبو الوقت اللي تجمع (إلا فات دقيقة) */
+                /* خرج / رجع: الوقت كيتخبا ف الخزنة، والكتبة كتجي ف الصفحة الجاية */
                 tick();
-                if (user && full && acc >= 60000) write(true);
+                if (document.visibilityState === "visible") beat();
             });
+            window.addEventListener("pagehide", tick);
         } catch (e) { /* بلا انترنت */ }
     });
 })();
