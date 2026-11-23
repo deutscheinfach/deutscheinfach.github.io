@@ -348,16 +348,26 @@ async function loadDiag() {
 }
 $("adm-diag-reload").addEventListener("click", loadDiag);
 $("adm-diag-clear").addEventListener("click", async function () {
-    if (!diagIds.length || !confirm("نمسحو " + diagIds.length + " تقرير؟")) return;
+    /* كنجيبو غير 300 ف اللائحة، ولكن يقدر يكون كثر: ملي كنمسحو غير
+       اللي باينين، القدام كيطلعو ف بلاصتهم وكيبان بحال إلا ما تمسح والو.
+       دابا كنمسحو كلشي، 400 ب 400، حتى تخوا. */
+    if (!diagIds.length || !confirm("نمسحو جميع التقارير؟")) return;
     const btn = this;
+    const label = btn.textContent;
     btn.disabled = true;
+    let total = 0;
     try {
-        for (let i = 0; i < diagIds.length; i += 400) {
+        for (let round = 0; round < 50; round++) {
+            const snap = await fs.getDocs(fs.query(fs.collection(db, "diag"), fs.limit(400)));
+            if (snap.empty) break;
             const batch = fs.writeBatch(db);
-            diagIds.slice(i, i + 400).forEach(function (id) { batch.delete(fs.doc(db, "diag", id)); });
+            snap.docs.forEach(function (d) { batch.delete(d.ref); });
             await batch.commit();
+            total += snap.size;
+            btn.textContent = "كنمسحو… " + total;
         }
-    } catch (e) { alert("ما تمسحوش: " + (e.code || e.message)); }
+    } catch (e) { alert("ما تمسحوش (" + total + " تمسحو): " + (e.code || e.message)); }
+    btn.textContent = label;
     btn.disabled = false;
     loadDiag();
 });
