@@ -2,7 +2,7 @@
 
 <head>
 <meta charset="UTF-8">
-<script src="assets/diag.js?v=d5e0a7ba"></script>
+<script src="assets/diag.js?v=86a1d40b"></script>
 <script src="assets/https-upgrade.js?v=473efbeb"></script>
 <script src="assets/theme-toggle.js?v=582e5683"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1124,7 +1124,6 @@ if(h)h.onclick=function(e){e.preventDefault();location.href='./';};
 </script>
 
 
-<div id="warningBox">Tu vas être déconnecté dans <span id="countdown">30</span> secondes d'inactivité</div>
 
 <div class="telc-exercise-topbar telc-exercise-toolbar"></div>
 
@@ -1790,68 +1789,7 @@ window.__deutschEinfachPremiumReady = (async function () {
   });
 })();
 </script>
-<script>
-let pingTimeout;
-let logoutTimer;
-let warningTimer;
-let countdownTimer;
-let lastPing = 0;
 
-const INACTIVITY_LIMIT = 15 * 60 * 1000; // 15 minutes
-const WARNING_BEFORE_LOGOUT = 30 * 1000; // 30 seconds
-const warningBox = document.getElementById("warningBox");
-const countdownEl = document.getElementById("countdown");
-
-function sendPing() {
-    const now = Date.now();
-    if (now - lastPing < 10000) return; 
-    lastPing = now;
-    /* GitHub Pages ماعندوش /ping، ف ما كنصيفطو والو: كنحسبو غير النشاط محليا. */
-}
-
-function resetTimers() {
-    clearTimeout(pingTimeout);
-    clearTimeout(logoutTimer);
-    clearTimeout(warningTimer);
-    clearInterval(countdownTimer);
-
-    warningBox.style.display = "none"; // 🟡 hide warning if active again
-
-    sendPing();
-    pingTimeout = setTimeout(sendPing, 60 * 1000);
-
-    // Show warning 30s before logout
-    warningTimer = setTimeout(() => {
-        let remaining = 30;
-        warningBox.style.display = "block";
-        countdownEl.textContent = remaining;
-
-        countdownTimer = setInterval(() => {
-            remaining--;
-            countdownEl.textContent = remaining;
-            if (remaining <= 0) {
-                clearInterval(countdownTimer);
-            }
-        }, 1000);
-    }, INACTIVITY_LIMIT - WARNING_BEFORE_LOGOUT);
-
-    // Auto logout
-    logoutTimer = setTimeout(() => {
-        fetch("/logout", { method: "POST" })
-          .then(() => { window.location.href='./'; });
-    }, INACTIVITY_LIMIT);
-}
-
-// Events
-["mousemove", "keydown", "scroll", "click", "touchstart"].forEach(evt => {
-    document.addEventListener(evt, resetTimers);
-});
-
-window.addEventListener("pageshow", sendPing);
-window.addEventListener("pagehide", sendPing);
-
-resetTimers();
-</script>
 
 <!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cb8d3f37e8a34a1584ced7e8750df016"}'></script><!-- Cloudflare Pages Analytics --><script>
 (function(){

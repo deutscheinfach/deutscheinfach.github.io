@@ -1610,19 +1610,15 @@ const KV_MEMO = new Map();
 const KV_MEMO_TTL = 60 * 1000;
 const KV_EDGE_TTL = 300;
 
-/* طلبين ف نفس اللحظة لنفس الشي (الكليان كيطلب جوج مفاتيح بالتوازي)
-   كيتقاسمو نفس القراءة، ماشي كل واحد يقرا بوحدو. */
-const KV_PENDING = new Map();
-const SUB_PENDING = new Map();
+/* ما كنتقاسموش promise بين طلبين: Cloudflare كيرفض promise تخلقات ف طلب
+   سالا ولا تقطع (الطالب بدل الصفحة) → "This promise was created by a request
+   that has since ended" → 502 / 500 للطالب الثاني. الذاكرة (MEMO) كافية. */
 
 function kvJson(env, key) {
   const hit = KV_MEMO.get(key);
   if (hit && hit.exp > Date.now()) return Promise.resolve(hit.value);
 
-  const running = KV_PENDING.get(key);
-  if (running) return running;
-
-  const pending = (async () => {
+  return (async () => {
     /* نص ونحللوه حنا: JSON مكسور ف KV (فاصلة ناقصة…) كان كيطيح الطلب
        بـ "Internal server error" بلا ما نعرفو شمن مفتاح. دابا الخطأ كيقول
        المفتاح باش يتصلح ف KV. */
@@ -1642,29 +1638,20 @@ function kvJson(env, key) {
       KV_MEMO.set(key, { value, exp: Date.now() + KV_MEMO_TTL });
     }
     return value;
-  })().finally(() => KV_PENDING.delete(key));
-
-  KV_PENDING.set(key, pending);
-  return pending;
+  })();
 }
 
 function hasActiveSubscription(uid, idToken) {
   const memo = SUB_MEMO.get(uid);
   if (memo && memo.exp > Date.now()) return Promise.resolve(memo.ok);
 
-  const running = SUB_PENDING.get(uid);
-  if (running) return running;
-
-  const pending = (async () => {
+  return (async () => {
     const ok = await lookupSubscription(uid, idToken);
 
     if (SUB_MEMO.size >= 500) SUB_MEMO.delete(SUB_MEMO.keys().next().value);
     SUB_MEMO.set(uid, { ok, exp: Date.now() + (ok ? SUB_TTL_YES : SUB_TTL_NO) });
     return ok;
-  })().finally(() => SUB_PENDING.delete(uid));
-
-  SUB_PENDING.set(uid, pending);
-  return pending;
+  })();
 }
 
 async function lookupSubscription(uid, idToken) {
@@ -1682,7 +1669,9 @@ async function lookupSubscription(uid, idToken) {
 
   const fields = (await res.json()).fields || {};
 
-  if (fields.subscriptionActive?.booleanValue !== true) return false;
+  /* "true" كنص (تكتب باليد ف Console) كان كيرجع not_subscribed لمشترك */
+  const active = fields.subscriptionActive || {};
+  if (active.booleanValue !== true && active.stringValue !== "true") return false;
 
   const end = fields.subscriptionEnd?.timestampValue;
   if (end && new Date(end).getTime() <= Date.now()) return false;
