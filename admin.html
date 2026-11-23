@@ -37,6 +37,10 @@
 .adm-note { margin: 10px 0 0; font-size: 14px; line-height: 1.7; }
 .adm-live-row { display: flex; align-items: baseline; gap: 12px; margin: 4px 0; }
 .adm-live-row b { font-size: 48px; font-weight: 900; line-height: 1; color: var(--accent-text); }
+.adm-on { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+.adm-on th, .adm-on td { text-align: start; padding: 7px 6px; border-bottom: 1px solid var(--line, #e5e5e5); }
+.adm-on th { font-size: 12px; opacity: .7; }
+.adm-on td.num { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .adm-bc { display: grid; gap: 10px; }
 .adm-bc input, .adm-bc textarea, .adm-bc select { width: 100%; font: inherit; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line, #ddd); background: var(--surface, #fff); color: var(--text, #222); box-sizing: border-box; }
 .adm-bc textarea { resize: vertical; }
@@ -123,8 +127,13 @@
         <!-- 0) شكون ف الموقع دابا -->
         <section class="adm-card adm-live">
             <h2>ف الموقع دابا</h2>
-            <p class="adm-live-row"><b id="adm-live-n">…</b><span>زائر ف آخر 3 دقايق</span></p>
-            <p class="adm-note" id="adm-live-sub">كيتجدد بوحدو كل 30 ثانية.</p>
+            <p class="adm-live-row"><b id="adm-live-n">…</b><span>زائر ف آخر 7 دقايق</span></p>
+            <p class="adm-note" id="adm-live-sub">كيتجدد بوحدو كل دقيقة.</p>
+            <div id="adm-live-list"></div>
+            <h2 style="margin-top:22px">⏱ شكون خدم أكثر</h2>
+            <p class="adm-note">الوقت اللي الصفحة باينة والطالب كيتحرك ولا كيسمع (من نهار تزادت هاد الخاصية). كل الأجهزة ديالو مجموعين.</p>
+            <div class="adm-row"><button class="adm-btn adm-mini" type="button" id="adm-time-load">📊 جيب الترتيب</button></div>
+            <div id="adm-time-list"></div>
         </section>
 
         <!-- الملاحظات ديال المستخدمين (assets/report.js) -->
@@ -283,7 +292,7 @@ authMod.onAuthStateChanged(auth, async function (me) {
     loadList("active");
     syncUsers(me);
     liveCount();
-    setInterval(liveCount, 30000);
+    setInterval(liveCount, 60000);
     loadReports("new");
     loadDiag();
 });
@@ -431,23 +440,80 @@ async function loadReports(kind) {
 }
 
 /* presence/{id} كيتكتب من assets/presence.js ف كل صفحة */
+function mins(m) {
+    m = Math.max(0, Math.round(m || 0));
+    return m < 60 ? m + " د" : Math.floor(m / 60) + " س " + (m % 60) + " د";
+}
+function today() {
+    try { return new Date().toLocaleDateString("en-CA", { timeZone: "Africa/Casablanca" }); }
+    catch (e) { return new Date().toISOString().slice(0, 10); }
+}
+/* الوثائق ديال presence ديال نفس الحساب (تيليفون + حاسوب) → سطر واحد */
+function byUser(docs) {
+    const day = today(), users = new Map();
+    docs.forEach(function (d) {
+        const v = d.data();
+        if (!v.uid) return;
+        let u = users.get(v.uid);
+        if (!u) { u = { uid: v.uid, name: v.name || "—", premium: false, page: "", at: 0, today: 0, total: 0 }; users.set(v.uid, u); }
+        const at = v.at && v.at.toMillis ? v.at.toMillis() : 0;
+        if (at >= u.at) { u.at = at; u.page = v.page || ""; u.name = v.name || u.name; }
+        if (v.premium) u.premium = true;
+        if (v.day === day) u.today += v.todayMin || 0;
+        u.total += v.totalMin || 0;
+    });
+    return Array.from(users.values());
+}
+function userTable(rows, withPage) {
+    const t = el("table", "adm-on");
+    const h = el("tr");
+    ["الاسم", withPage ? "الصفحة" : "آخر مرة", "اليوم", "المجموع"].forEach(function (x) { h.appendChild(el("th", "", x)); });
+    t.appendChild(h);
+    rows.forEach(function (u) {
+        const r = el("tr");
+        r.appendChild(el("td", "", (u.premium ? "👑 " : "") + u.name));
+        r.appendChild(el("td", "", withPage ? u.page : (u.at ? new Date(u.at).toLocaleString("fr-MA") : "—")));
+        r.appendChild(el("td", "num", mins(u.today)));
+        r.appendChild(el("td", "num", mins(u.total)));
+        t.appendChild(r);
+    });
+    return t;
+}
 async function liveCount() {
     if (document.visibilityState !== "visible") return;
-    const n = $("adm-live-n"), sub = $("adm-live-sub");
+    const n = $("adm-live-n"), sub = $("adm-live-sub"), list = $("adm-live-list");
     try {
         /* assets/presence.js كيكتب كل 5 دقايق (BEAT_MS) — النافذة = 5 + 2 د ديال الهامش */
         const since = fs.Timestamp.fromMillis(Date.now() - 7 * 60000);
-        const q = fs.query(fs.collection(db, "presence"), fs.where("at", ">", since));
-        const snap = await fs.getCountFromServer(q);
-        n.textContent = String(snap.data().count);
+        const snap = await fs.getDocs(fs.query(fs.collection(db, "presence"), fs.where("at", ">", since)));
+        n.textContent = String(snap.size);
+        const users = byUser(snap.docs).sort(function (a, b) { return (b.premium - a.premium) || (b.today - a.today); });
+        const prem = users.filter(function (u) { return u.premium; }).length;
         sub.className = "adm-note";
-        sub.textContent = "آخر تحديث: " + new Date().toLocaleTimeString("fr-MA") + " · كيتجدد كل 30 ثانية.";
+        sub.textContent = users.length + " داخلين بحساب (👑 " + prem + " Premium) · " + (snap.size - users.length) + " بلا حساب / أجهزة أخرى · آخر تحديث: " + new Date().toLocaleTimeString("fr-MA");
+        list.textContent = "";
+        if (users.length) list.appendChild(userTable(users, true));
     } catch (e) {
         n.textContent = "—";
         sub.className = "adm-note bad";
         sub.textContent = "ماقدرناش نحسبو: " + (e.code || e.message) + " — نشر firestore.rules الجديدة ف Firebase.";
     }
 }
+$("adm-time-load").addEventListener("click", async function () {
+    const box = $("adm-time-list");
+    box.textContent = "";
+    box.appendChild(el("p", "adm-empty", "كنجيبو…"));
+    try {
+        const snap = await fs.getDocs(fs.query(fs.collection(db, "presence"), fs.orderBy("totalMin", "desc"), fs.limit(300)));
+        const users = byUser(snap.docs).sort(function (a, b) { return b.total - a.total; }).slice(0, 50);
+        box.textContent = "";
+        if (!users.length) { box.appendChild(el("p", "adm-empty", "ماكاين حتى وقت مسجل باقي — كيبدا يتحسب من دابا.")); return; }
+        box.appendChild(userTable(users, false));
+    } catch (e) {
+        box.textContent = "";
+        box.appendChild(el("p", "adm-note bad", "ماقدرناش نجيبو: " + (e.code || e.message)));
+    }
+});
 
 /* الحسابات اللي ف Authentication وما عندهمش وثيقة كاملة ف users
    (تسجلو والتسجيل طاح، ولا دخلو للشات قبل) — الـWorker كيكمّلهم. */
@@ -860,7 +926,7 @@ async function loadList(kind) {
 }
 </script>
 <script src="assets/session-guard.js?v=f21ad6fd"></script>
-<script src="assets/presence.js?v=ea34c6d5" defer></script>
+<script src="assets/presence.js?v=ea87c022" defer></script>
 <script src="assets/app-install.js?v=e0be8860" defer></script>
 </body>
 </html>
