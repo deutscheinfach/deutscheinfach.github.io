@@ -144,6 +144,9 @@
             /* modulepreload (تسريع فقط): إلا Firebase ما تحملش بصح، site-header
                كيصيفط تقرير وحدو — هادا غير تكرار */
             if (t.rel === "modulepreload") return;
+            /* prefetch ديال الأقسام (site-header): كيتقطع ملي الطالب كيبدل
+               الصفحة ولا الشبكة كتلوح — ماشي ملف ناقص ف الصفحة */
+            if (t.rel === "prefetch" || t.rel === "prerender") return;
             /* 2G / 3G: ملف ما وصلش = الشبكة، ماشي الموقع */
             if (/(^|-)(2g|3g)$/.test((navigator.connection || {}).effectiveType || "")) return;
             send("load", "ما تحملش: " + url.replace(/\?v=[0-9a-f]+/, ""));
